@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+h2.heading {
+    font-size: 30px;
+}
+
+#rating_div_p {
+    transform: translate(0, 20px);
+}
+
+
+.progress {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 40px);
+    width: 90%;
+}
+
+.fas {
+    position: relative;
+    transform: translate(780px, 0px) scale(1.8);
+    color: rgba(62, 226, 226, 0.728);
+}

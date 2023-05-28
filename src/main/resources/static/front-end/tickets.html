@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <title>TripLight | Tickets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <!-- 關鍵字設定 -->
+  <meta
+        name="keywords"
+        content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+  <!-- 網頁介紹 -->
+  <meta
+        name="description"
+        content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+
+  <script>
+    addEventListener(
+      "load",
+      function () {
+        setTimeout(hideURLbar, 0);
+      },
+      false
+    );
+
+    function hideURLbar() {
+      window.scrollTo(0, 1);
+    }
+  </script>
+
+  <!-- css files -->
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- bootstrap css -->
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <!-- custom css -->
+  <link href="css/fontawesome-all.css" rel="stylesheet" />
+  <!-- fontawesome css -->
+  <!-- //css files -->
+
+  <!-- google fonts -->
+  <!-- 載入字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+        rel="stylesheet" />
+  <!-- //google fonts -->
+
+  <!-- 載入icon -->
+  <link rel="shortcut icon" href="./images/icon.png" />
+  <link rel="bookmark" href="./images/icon.png" />
+
+  <!-- 這是正文 -->
+  <style>
+    /* 設定預設高度 保持圖片比例並填滿容器*/
+    .image-tour img {
+      width: 100%;
+      height: 18rem;
+      object-fit: cover;
+    }
+
+    .image-tour-hot img {
+      width: 100%;
+      height: 24rem;
+      object-fit: cover;
+    }
+
+    /* 熱門票券照片內的彈窗 */
+    .my-destinations-info {
+      width: 100%;
+      position: absolute;
+      bottom: -227px;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px 0px 10px;
+      transition: 0.5s all;
+      -webkit-transition: 0.5s all;
+      -moz-transition: 0.5s all;
+      -o-transition: 0.5s all;
+      -ms-transition: 0.5s all;
+      text-align: center;
+    }
+
+    .destinations-grids:hover .my-destinations-info {
+      bottom: 0;
+    }
+
+
+    .my-card {
+      height: 11rem;
+    }
+
+    .my-search-item .card {
+      height: 200px;
+    }
+
+    .my-search-item .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .my-search-item .card-body p {
+      display: -webkit-box;
+
+      /* 顯示幾行文字 */
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 顯示幾行文字 */
+    .package-info p {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .package-info h5 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 搜尋的按鈕 */
+    #btnSearch {
+      border: #26bec9;
+      color: white;
+      background-color: #26bec9;
+    }
+
+    #btnSearch:hover,
+    #btnSearch:focus {
+      border: #26bec9;
+      background-color: #09777d;
+    }
+
+    /* 手風琴的樣式 */
+    .accordion-button,
+    .accordion-button:not(.collapsed) {
+      color: white;
+      background-color: rgba(38, 190, 201, 1);
+
+    }
+
+    .accordion-button:focus {
+      z-index: 3;
+      border: 0;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem transparent;
+      /* border-color: #86b7fe; */
+      /* box-shadow: 0 0 0 0.25rem #26bec9; */
+    }
+
+    /* 箭頭的圖案 */
+    .accordion-button:not(.collapsed)::after {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+      transform: rotate(-180deg);
+    }
+
+    /* 篩選的勾勾 */
+    .form-check-input:checked {
+      background-color: #26bec9;
+      border-color: #26bec9;
+    }
+
+    /* 票券名稱下方的標記 */
+    .my-mark {
+      margin: 0 6px 6px 0;
+      padding: 3px 8px;
+      color: #64b3f4;
+      background-color: rgba(100, 179, 244, .1);
+      display: inline-block;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25em;
+    }
+
+    /* 評價的星星 */
+    .my-ratings .on {
+      color: #26bec9;
+    }
+
+    /* 票券價格 */
+    .my-ticket-price {
+      letter-spacing: 1px;
+      color: #333;
+    }
+
+    .page-item .active {
+      border: 1px solid #26bec9;
+      color: white;
+      background-color: #26bec9;
+    }
+
+    .page-item a {
+      color: #999;
+    }
+
+    /* 文字灰色 */
+    .my-text-lightgray {
+      color: #ccc;
+    }
+  </style>
+  <!-- 正文結束 -->
+
+</head>
+<body>
+  <!-- header -->
+  <header>
+    <div class="container" style="padding-right: 0px">
+      <!-- nav -->
+      <nav class="py-md-4 py-3">
+        <div id="logo">
+          <h1 class="mt-md-0 mt-2">
+            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+              TripLight
+            </a>
+          </h1>
+        </div>
+        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu ml-auto mt-1">
+          <li class=""><a href="index.html">首頁</a></li>
+          <li class=""><a href="booking.html">AI行程規劃</a></li>
+          <li class="active"><a href="tickets.html">票券</a></li>
+          <li class=""><a href="packages.html">套裝行程</a></li>
+          <li class=""><a href="articles.html">旅遊文章</a></li>
+          <li class="booking"><a href="" id="login">登入/註冊</a></li>
+          <li class="">
+            <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+          </li>
+        </ul>
+      </nav>
+      <!-- //nav -->
+    </div>
+  </header>
+  <!-- //header -->
+  <!-- 登入 -->
+
+  <div id="login-container">
+    <!---container--->
+
+    <div class="main-box login">
+      <h3>登入</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />記住我</label>
+          <a href="#">忘記密碼</a>
+        </div>
+        <button type="submit" class="main-btn">Login</button>
+        <div class="register">
+          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="main-box register">
+      <h3>註冊</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-user icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">使用者名稱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />我同意所有條款</label>
+        </div>
+        <button type="submit" class="main-btn">註冊</button>
+        <div class="register">
+          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+        </div>
+      </form>
+    </div>
+
+    <span class="close-icon">
+      <div class="fas fa-times"></div>
+    </span>
+  </div>
+
+  <!-- 登入  -->
+
+  <!-- banner -->
+  <section class="banner_inner" id="home">
+    <div class="banner_inner_overlay"></div>
+  </section>
+  <!-- //banner -->
+
+
+  <!-- tour packages -->
+  <section class="packages py-5">
+    <div class="container py-lg-4 py-sm-3">
+      <h3 class="heading text-capitalize text-center">探索我們的票券</h3>
+      <p class="text mt-2 mb-5 text-center">
+        探索多樣性豐富的套裝行程，讓您的旅行更輕鬆愉快。從浪漫之旅到刺激的冒險，我們提供各種各樣的行程，滿足不同旅客的需求。無論是短途旅行還是長途旅行，我們都有適合您的選擇。
+      </p>
+
+
+
+      <!-- 這是正文 -->
+      <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2" id="ticketsContainer">
+        <!-- 內容給JS填 -->
+      </div>
+      <!-- 正文結束 -->
+
+
+
+
+    </div>
+  </section>
+  <!-- tour packages -->
+
+  <!-- destinations -->
+  <section class="destinations py-5" id="destinations">
+    <div class="container py-xl-5 py-lg-3">
+      <h3 class="heading text-capitalize text-center">熱門票券</h3>
+      <p class="text mt-2 mb-5 text-center">
+        無論您是喜愛自然風光、文化古蹟或是美食之旅，我們都有適合您的票券選擇。
+      </p>
+
+
+      <!-- 這是正文 -->
+      <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2" id="ticketsHotContainer">
+        <!-- 內容給JS填 -->
+      </div>
+      <!-- 正文結束 -->
+
+    </div>
+  </section>
+  <!-- destinations -->
+
+
+  <section class="packages py-5">
+    <div class="container py-lg-4 py-sm-3">
+      <h3 class="heading text-capitalize text-center">搜尋票券</h3>
+      <p class="text mt-2 mb-5 text-center">
+        傑哥救救我 沒有美感怎麼辦。
+      </p>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+
+        <!-- 左側搜尋列 -->
+        <div class="col-12 col-lg-3 mb-3">
+
+          <!-- 第一排 -->
+          <div class="mb-3">
+            <label class="visually-hidden" for="ticketSearchText"></label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="ticketSearchText" placeholder="關鍵字搜尋">
+              <button class="btn btn-lg btn-primary" id="btnSearch">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+
+
+          <!-- 第二排 -->
+          <div class="accordion">
+            <!-- 區塊1 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  選擇類型
+                </button>
+              </h2>
+              <!-- 區塊1的選項 -->
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                <div class="accordion-body p-1 px-5">
+                  <!-- 內容給JS填 -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 區塊2 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                  選擇縣市
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                <!-- 區塊2的選項 -->
+                <div class="accordion-body p-1 px-5">
+                  <!-- 內容給JS填 -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- 右側商品簡介 -->
+        <div class="col-12 col-lg-9" id="ticketsSearchContainer">
+          <!-- 內容給JS填 -->
+        </div>
+
+        <!-- 最下排 -->
+        <div class="d-flex justify-content-center align-items-center my-3" id="searchPagination">
+          <ul class="pagination gap-2">
+            <!-- 內容給JS填 -->
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--footer -->
+  <footer>
+    <section class="footer footer_w3layouts_section_1its py-5">
+      <div class="container py-lg-4 py-3">
+        <div class="row footer-top">
+          <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>地點資訊</h3>
+            </div>
+            <div class="row">
+              <ul class="col-12 links">
+                <li>
+                  <a
+                     href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
+                     target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                </li>
+                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                <li>
+                  <a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
+                </li>
+                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+            <div class="footer-title">
+              <h3>認識TripLight</h3>
+            </div>
+            <div class="row">
+              <ul class="col-10 links">
+                <li><a href="about.html" class="scroll">關於我們</a></li>
+                <li>
+                  <a href="user_terms.html" class="scroll">使用者條款 </a>
+                </li>
+                <li>
+                  <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                </li>
+                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+              </ul>
+            </div>
+          </div>
+          <div
+               class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>成為合作夥伴</h3>
+            </div>
+            <div class="row">
+              <ul class="col-6 links">
+                <li>
+                  <a href="supplier_form.html" class="scroll">成為供應商</a>
+                </li>
+                <li>
+                  <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
+                </li>
+                <li>
+                  <a href="group_form.html" class="scroll">團體客製規劃</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+               class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>聯絡我們</h3>
+            </div>
+            <ul class="social_section_1info">
+              <li>
+                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg" alt="facebook" /></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                       alt="instagram" /></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+              </li>
+              <li class="youtube">
+                <a
+                   href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
+                       alt="youtube" /></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </footer>
+  <!-- //footer -->
+
+  <!-- copyright -->
+  <div class="copyright py-3 text-center">
+    <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+  </div>
+  <!-- //copyright -->
+
+  <!-- move top -->
+  <div class="move-top text-right">
+    <a href="#home" class="move-top">
+      <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- move top -->
+
+
+  <!-- 這是正文 -->
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/jquery-3.6.4.min.js"></script>
+  <script>
+    let result = [];
+    const resultHot = [];
+    const resultSearch =
+    {
+      curPage: 1,
+      totalPage: 10,
+      tickets: []
+    };
+
+    const locationTypes = [
+      '主題樂園', '景點門票', '水族館 & 動物園', '博物館 & 美術館', '歷史景點'
+    ];
+    const taiwanCities = [
+      "基隆市", "台北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣",
+      "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市",
+      "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
+    ];
+
+    $(function () {
+      //一頁08個 一般票券
+      //一頁04個 熱門票券
+
+      //假資料 以後要從資料庫取得
+      for (let i = 1; i < 9; i++) {
+        const ticket = {
+          ticketId: i,
+          name: `票券的名稱#${i}`,
+          price: 55 * (i ** 2),
+          rating: 3,
+          ratingPerson: Math.trunc(Math.random() * 1000),
+          city: '縣市',
+          description: `這是一段關於#${i}的敘述`,
+          image: `https://picsum.photos/600/600/?random=${i}`,
+        };
+        result.push(ticket);
+      }
+      for (let i = 21; i < 25; i++) {
+        const ticket = {
+          ticketId: i,
+          name: `票券的名稱#${i}`,
+          price: 55 * (i ** 2),
+          rating: 3,
+          ratingPerson: Math.trunc(Math.random() * 1000),
+          city: '縣市',
+          description: `這是一段關於#${i}的敘述`,
+          image: `https://picsum.photos/600/600/?random=${i}`,
+        };
+        resultHot.push(ticket);
+      }
+      for (let i = 21; i < 31; i++) {
+        const ticket = {
+          ticketId: i,
+          name: `票券的名稱#${i}`,
+          price: 55 * (i ** 2),
+          rating: Math.trunc((Math.random() * 5) + 1),
+          ratingPerson: Math.trunc(Math.random() * 1000),
+          city: '縣市',
+          description: `這是一段關於#${i}的敘述`,
+          image: `https://picsum.photos/600/600/?random=${i}`,
+        };
+        resultSearch.tickets.push(ticket);
+      }
+      //搜尋按鈕的事件
+      $('#btnSearch').on('click', function () {
+        doSearch();
+      });
+
+      //票券類型的按鈕
+      $(document).on('click', '[id^="ticketType"]', function () {
+        doSearch();
+      });
+      // 全選按鈕的事件
+      $(document).on('click', '#allTicketZone', function () {
+        const checked = $(this).prop('checked');
+        $('[id^="ticketZone"]').prop('checked', checked);
+        doSearch();
+      });
+      // 縣市按鈕的事件
+      $(document).on('click', '[id^="ticketZone"]', function () {
+        const allChecked = ($('[id^="ticketZone"]:checked').length == taiwanCities.length);
+        $('#allTicketZone').prop('checked', allChecked);
+        doSearch();
+      });
+
+      //渲染頁面
+      render();
+      // render_rnd();
+      render_hot();
+      render_search();
+      render_collapse_types();
+      render_collapse_cities();
+    });
+
+    function render() {
+      // 取回隨機票券
+      fetch(`http://localhost:8080/TripLight/rndtickets`)
+        .then(response => response.json())
+        .then(data => {
+          // console.log(result);
+          result = data;
+          render_rnd();
+        })
+        .catch(error => console.log(error));
+    }
+
+    function render_rnd() {
+      $('#ticketsContainer').html('');
+
+      for (let ticket of result) {
+        $('#ticketsContainer').append(`
+          <div class="col mb-3">
+            <div class="image-tour position-relative">
+              <a href="tickets_detail.html?id=${ticket.ticketId}">
+                <img src="${ticket.image}" class="card-img" />
+              </a>
+              <p><span class="fa fa-tags"></span><span>${ticket.price}元</span></p>
+            </div>
+            <div class="package-info my-card">
+              <h6 class="mt-1">
+                <span class="fa fa-map-marker mr-2"></span>台灣, <span>${ticket.city}</span>
+              </h6>
+              <h5 class="my-2">${ticket.name}</h5>
+              <p class="">${ticket.description}</p>
+            </div>
+          </div>
+        `);
+      }
+    }
+    function render_hot() {
+      $('#ticketsHotContainer').html('');
+
+      for (let ticket of resultHot) {
+        $('#ticketsHotContainer').append(`
+          <div class="col destinations-grids mb-3">
+            <h4 class="destination text-center mb-3">${ticket.city}</h4>
+            <div class="image-tour-hot position-relative">
+              <a href="tickets_detail.html?id=${ticket.ticketId}">
+                <img src="${ticket.image}" class="card-img"/>
+              </a>
+              <div class="my-destinations-info">
+                <div class="caption mb-lg-3">
+                  <h4>${ticket.name}</h4>
+                  <a href="tickets_detail.html?id=${ticket.ticketId}">立即購買</a>
+                </div>
+              </div>
+            </div>
+          </div>
+       `);
+      }
+    }
+    function render_search() {
+      // 搜尋的結果
+      $('#ticketsSearchContainer').html('');
+      for (let ticket of resultSearch.tickets) {
+        $('#ticketsSearchContainer').append(
+          `
+          <div class="card mb-3 my-search-item">
+            <a href="tickets_detail.html?id=${ticket.ticketId}">
+              <div class="row g-0 h-100">
+                <div class="col-lg-4 h-100">
+                  <img src="${ticket.image}" class="img-fluid rounded-start">
+                </div>
+                <div class="card-body col-lg-8 d-flex flex-column">
+                  <div class="col">
+                    <h5 class="card-title">${ticket.name}</h5>
+                    <div class="my-mark">即買即用</div>
+                    <p class="card-text">${ticket.description}</p>
+                    <small class="my-text-lightgray">
+                      <span class="fa fa-map-marker mr-3 mt-1"></span>
+                      <span>台灣, ${ticket.city}</span>
+                    </small>
+                  </div>
+                  <div class="mt-auto d-flex">
+                    <div class="my-ratings my-text-lightgray mx-3">
+                      <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+                      <i class="fa fa-star ${ticket.rating >= 2 ? 'on' : ''}"></i>
+                      <i class="fa fa-star ${ticket.rating >= 3 ? 'on' : ''}"></i>
+                      <i class="fa fa-star ${ticket.rating >= 4 ? 'on' : ''}"></i>
+                      <i class="fa fa-star ${ticket.rating >= 5 ? 'on' : ''}"></i>
+                    </div>
+                    <div class="my-text-lightgray">(${ticket.ratingPerson})</div>
+                    <div class="my-ticket-price h4 fw-bold text-dark ms-auto">${ticket.price} 元</div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>          
+          `
+        );
+
+        // 最底下的分頁
+        $('#searchPagination ul').html('');
+
+        if (resultSearch.totalPage > 1) {
+          $('#searchPagination ul').append(`
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span>&laquo;</span>
+                </a>
+              </li>
+          `);
+          for (let i = 1; i <= resultSearch.totalPage; i++) {
+            $('#searchPagination ul').append(`         
+              <li class="page-item"><a class="page-link ${i == resultSearch.curPage ? 'active' : ''}" href="#">${i}</a></li>
+          `);
+          }
+          $('#searchPagination ul').append(`                    
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span>&raquo;</span>
+                </a>
+              </li>
+          `);
+        }
+      }
+    }
+
+    // 條件篩選的票券類型
+    function render_collapse_types() {
+      $('#collapseOne .accordion-body').html('');
+      // 1 2 4 8 16 32
+      locationTypes.forEach((v, i) => {
+        $('#collapseOne .accordion-body').append(
+          `
+        <div class="form-check d-flex gap-3">
+          <input class="form-check-input" type="checkbox" value="${2 ** i}" id="ticketType${i}">
+          <label class="form-check-label align-self-center" for="ticketType${i}">${v}</label>
+        </div>
+        `
+        );
+      });
+    }
+    // 條件篩選的縣市
+    function render_collapse_cities() {
+      $('#collapseTwo .accordion-body').html('');
+      // 選擇全部
+      $('#collapseTwo .accordion-body').append(
+        `
+          <div class="form-check d-flex gap-3">
+            <input class="form-check-input" type="checkbox" value="0" id="allTicketZone">
+            <label class="form-check-label align-self-center" for="allTicketZone">選擇全部</label>
+          </div>
+          `
+      );
+      // 1 2 4 8 16 32
+      taiwanCities.forEach((v, i) => {
+        $('#collapseTwo .accordion-body').append(
+          `
+          <div class="form-check d-flex gap-3">
+            <input class="form-check-input" type="checkbox" value="${2 ** i}" id="ticketZone${i}">
+            <label class="form-check-label align-self-center" for="ticketZone${i}">${v}</label>
+          </div>
+          `
+        );
+      });
+    }
+
+    // 上次的搜尋條件
+    let oldCondition = {
+      keyword: '',
+      typeVal: 0,
+      cityVal: 0,
+    };
+
+    // 送出搜尋條件
+    function doSearch() {
+      const condition = {
+        keyword: $('#ticketSearchText').val(),
+        typeVal: $('[id^="ticketType"]:checked').toArray().reduce((sum, cur) => sum + parseInt(cur.value), 0),
+        cityVal: $('[id^="ticketZone"]:checked').toArray().reduce((sum, cur) => sum + parseInt(cur.value), 0),
+      };
+
+      if (JSON.stringify(oldCondition) === JSON.stringify(condition)) {
+        return false;
+      }
+      console.log(condition);
+      oldCondition = condition;
+
+      //fetch(...).then()
+    }
+
+
+  </script>
+  <!-- 正文結束 -->
+</body>
+<!-- login顯示 -->
+<script src="./js/Login.js"></script>
+<!-- login顯示 -->
+</html>

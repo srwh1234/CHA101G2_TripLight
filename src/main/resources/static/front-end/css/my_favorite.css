@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+/* 下拉選單隱藏 */
+#orderselect,
+#group_orderselect {
+    visibility: hidden;
+}
+
+/* 單筆訂單欄位 */
+.ticket_item_class,
+.group_order_item_class {
+    position: relative;
+    border: 1px solid rgb(180, 174, 174);
+    border-radius: 5px;
+    max-width: 95%;
+    height: 250px;
+    display: block;
+    margin: 10px auto;
+    width: 720px;
+    cursor: pointer;
+}
+
+.ticket_item_class:hover,
+.group_order_item_class:hover {
+    box-shadow: 0 0 5px rgba(109, 109, 114, 0.632);
+}
+
+/* 圖片 */
+.item_img_class,
+.group_item_img_class {
+    position: relative;
+    border-radius: 5px;
+    width: 180px;
+    height: 180px;
+    margin: 20px;
+    background-size: cover;
+    top: 15px;
+    left: 20px;
+}
+
+.item_img,
+.group_item_img {
+    border-radius: 5px;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 我要評論 */
+.item_commend_class {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+}
+
+/* 訂單內容 */
+.item_content {
+    position: absolute;
+    top: 40px;
+    left: 220px;
+    cursor: pointer;
+}
+
+.price,
+.realPrice {
+    display: inline-block;
+    margin: 0;
+    top: 100px;
+}
+
+@media screen and (max-width: 767.98px) {
+
+    #orderselect,
+    .ticket_item_class,
+    .group_order_item_class {
+        width: 100%;
+    }
+
+    .ticket_item_class,
+    .group_order_item_class {
+        margin: 0 0 10px;
+        height: auto;
+    }
+
+    .item_img_class {
+        width: 100%;
+        height: 200px;
+        margin: 10px 0;
+    }
+
+    .item_img {
+        height: 100%;
+    }
+
+    .item_commend_class {
+        position: static;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .item_content {
+        position: static;
+        margin-top: 10px
+    }
+}

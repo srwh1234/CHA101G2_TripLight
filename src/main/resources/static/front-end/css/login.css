@@ -1,0 +1,199 @@
+* {
+    box-sizing: border-box;
+}
+
+/* 右上角會員登入導覽列 */
+header div.container div.member {
+    display: none;
+}
+
+header div.container div.member.-on {
+    font-size: 15 px;
+    float: right;
+    cursor: pointer;
+    position: absolute;
+    right: 9.5%;
+    top: 90%;
+    text-align: center;
+    background-color: white;
+    display: block;
+    width: 130px;
+    padding: 0px;
+
+}
+
+.member_li {
+    padding: 0px;
+}
+
+.member_li:hover,
+.order_content>a:hover {
+    background-color: #b2bdbc;
+    color: white;
+}
+
+.member_li>a:hover {
+    color: white;
+}
+
+/* 處理li.a屬性 */
+.member_li>a,
+.order_content>a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+/* 處理訂單管理中票券訂單/旅遊團訂單 */
+.order_content {
+    display: none;
+}
+
+.order_content.-on {
+    font-size: 15 px;
+    float: right;
+    cursor: pointer;
+    color: black;
+    text-align: center;
+    background-color: white;
+    display: block;
+    width: 130px;
+}
+
+.order_list {
+    display: none;
+}
+
+.order_list.-on {
+    position: absolute;
+    right: 130px;
+    top: 0px;
+    display: block;
+}
+
+#order_li {
+    position: relative;
+}
+
+/* 小視窗圖式和文字距離 */
+.member_li>a>i,
+.order_content>a>i {
+    margin-right: 8px;
+}
+
+/* ================================================ */
+
+
+/* 分頁 */
+a.nav-link {
+    color: rgb(108, 106, 106);
+    text-decoration: none;
+}
+
+a.nav-link:hover {
+    background-color: #b2bdbc;
+    color: white;
+}
+
+/* ================================================ */
+/* 左邊會員欄位 */
+/* 連結 */
+.list-group list-group-flush mt-3 {
+    padding: 0px;
+}
+
+.list_group_item {
+    position: absolute;
+    padding: 0px;
+    text-align: center;
+
+}
+
+.list-group-item>a {
+    padding: inherit;
+    display: inline-block;
+    width: 100%;
+}
+
+/* 訂單管理開合 */
+#order_list2,
+#order_content1,
+#order_content2 {
+    display: none;
+}
+
+#order_list2.-on,
+#order_content1.-on,
+#order_content2.-on {
+    display: block;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+
+
+}
+
+#order_content1.-on>a,
+#order_content2.-on>a {
+    padding: inherit;
+    width: 100%;
+
+}
+
+#order_content1.-on {
+    border-top: 1px solid rgba(231, 231, 231, 0.847);
+    border-bottom: 1px solid rgba(231, 231, 231, 0.847);
+}
+
+#order_content2.-on {
+    border-bottom: 1px solid rgba(231, 231, 231, 0.847);
+}
+
+button#camera {
+    border: 1px solid rgba(19, 18, 18, 0.016);
+}
+
+li.list-group-item {
+    cursor: pointer;
+}
+
+ul.list-group :hover {
+    background-color: rgb(201, 216, 216);
+    color: white;
+}
+
+li.list-group-item>a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 帳號分頁 */
+/* .tab-pane.fade {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+} */
+
+.tab-pane.fade>div.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tab-pane.fade>div.row>div.form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.tab-pane.fade>div.row>div.form-group:last-child {
+    margin-right: 0;
+}
+
+
+.tab-pane.fade>div.row>div.d-flex.align-items-end {
+    align-self: flex-end;
+}
+
+#editEmail {
+    width: 100%
+}

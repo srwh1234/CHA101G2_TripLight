@@ -1,0 +1,20 @@
+1.測試連結
+http://localhost:8080/TripLight/test
+http://localhost:8080/TripLight/front-end/index.html
+
+
+2.請在src/main/resources下 
+
+新增一個application.properties檔案 並貼上以下內容
+
+#/TripLight 路徑下的網頁可以被讀取
+spring.mvc.static-path-pattern=/TripLight/**
+spring.datasource.url=jdbc:mysql://localhost:3306/cha101_g2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=你的密碼
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.properties.hibernate.dialect.storage_engine=innodb
+
+#hibernate操作資料庫時的log
+spring.jpa.show-sql=true

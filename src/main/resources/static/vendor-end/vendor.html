@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登入</title>
+    <style>
+        /* 樣式設定 */
+        body {
+            background-color: #a1b66a26;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 60px;
+            color: rgb(175, 127, 135);
+        }
+
+        form {
+            max-width: 400px;
+            margin-inline: 525px;
+            background-color: rgba(208, 202, 176, 0.927);
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 12px 20px 30px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 50px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgb(101, 92, 224);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>登入行程管理系統(廠商)
+    </h1>
+    <form action="login.php" method="post">
+        <label for="account">帳號</label>
+        <input type="text" id="account" name="account" placeholder="請輸入帳號" required>
+        <label for="password">密碼</label>
+        <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
+        <!-- 驗證條件提示 -->
+        <div class="error" id="account-error"></div>
+        <div class="error" id="password-error"></div>
+
+        <input type="submit" value="登入">
+    </form>
+
+    <script>
+        // 驗證輸入欄位
+        let form = document.querySelector("form");
+        let account = document.getElementById("account");
+        let password = document.getElementById("password");
+        let accountError = document.getElementById("account-error");
+        let passwordError = document.getElementById("password-error");
+
+        form.addEventListener("submit", function (event) {
+            let accountValue = account.value.trim();
+            let passwordValue = password.value.trim();
+
+            // 驗證帳號
+            if (accountValue.length < 1) {
+                accountError.innerHTML = "請輸入帳號或電子信箱。";
+                event.preventDefault();
+            } else {
+                accountError.innerHTML = "";
+            }
+
+            // 驗證密碼
+            if (passwordValue.length < 6 || passwordValue.length > 20) {
+                passwordError.innerHTML = "密碼長度必須介於6到20個字元。";
+                event.preventDefault();
+            } else if (!passwordValue.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/)) {
+                passwordError.innerHTML = "密碼必須包含英文大小寫字母及數字。";
+                event.preventDefault();
+            } else {
+                passwordError.innerHTML = "";
+            }
+        });
+    </script>
+</body>
+
+</html>

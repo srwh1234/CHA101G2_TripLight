@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+}
+
+/* 兌換欄位 */
+#enter_div {
+    height: 100px;
+    transform: translate(20%, 30px);
+}
+
+#enter_coupon {
+    width: 45%;
+    height: 37px;
+    border: 1px solid rgba(199, 196, 196, 0.772);
+    border-radius: 5px;
+    text-indent: 10px;
+}
+
+#enter_coupon:focus {
+
+    outline-color: rgb(155, 155, 155);
+
+}
+
+#enter_coupon,
+.btn-secondary {
+    vertical-align: middle;
+}
+
+.btn-secondary {
+    background-color: rgb(197, 206, 203);
+}
+
+/* 折扣碼欄位 */
+
+
+.flied_div {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.flied {
+    flex: 1;
+    margin: 20px 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+    position: relative;
+    background-image: url(https://i.pinimg.com/564x/7c/24/26/7c242638a869193b4ca50fd06e7df450.jpg);
+}
+
+.discount {
+    font-size: 40px;
+    position: absolute;
+    transform: translate(20px, 30px);
+}
+
+.discount_content {
+    font-size: 20px;
+    position: absolute;
+    transform: translate(20px, 100px);
+}
+
+.dateline {
+    font-size: 20px;
+    position: absolute;
+    transform: translate(20px, 120px);
+    color: grey;
+}
+
+/* 沒優惠券背景圖 */
+#no_coupon_useable {
+    display: none;
+}
+
+.no_coupon_div {
+    width: 40%;
+    height: 300px;
+    transform: translate(90%, 30%);
+    position: absolute;
+    background-image: url(https://i.pinimg.com/564x/c1/57/88/c1578838f2ec09ce29a5e126e980fc3c.jpg);
+    background-repeat: no-repeat;
+}
+
+.no_coupon {
+    font-size: 20px;
+    color: gray;
+    position: relative;
+    transform: translate(10%, 20%);
+}
+
+@media screen and (max-width: 767.98px) {
+
+
+
+    .no_coupon_div {
+        background-size: contain;
+        background-position: center;
+    }
+
+    .no_coupon {
+        font-size: 15px;
+
+    }
+
+    .discount {
+        font-size: 20px;
+        position: static;
+        transform: none;
+        text-align: center;
+    }
+
+    .discount_content {
+        font-size: 15px;
+    }
+
+    .dateline {
+        font-size: 15px;
+    }
+
+    .flied {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-size: cover;
+    }
+
+    .discount_content,
+    .dateline {
+        position: static;
+        transform: translate(0, 50%);
+        text-align: center;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {
+
+    .discount {
+        font-size: 35px;
+        transform: translate(-50%, 20%);
+        text-align: center;
+    }
+
+    .discount_content,
+    .dateline {
+        font-size: 16px;
+    }
+
+
+    .flied {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-size: cover;
+    }
+
+
+    .dateline {
+        position: static;
+        transform: translate(0, 200%);
+        text-align: center;
+    }
+
+    .discount_content {
+        position: static;
+        transform: translate(0, 380%);
+        text-align: center;
+    }
+}
