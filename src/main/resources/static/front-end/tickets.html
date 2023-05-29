@@ -547,9 +547,9 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script>
-    let result = [];
-    const resultHot = [];
-    const resultSearch =
+    let resultRnd = [];
+    let resultHot = [];
+    let resultSearch =
     {
       curPage: 1,
       totalPage: 10,
@@ -581,7 +581,7 @@
           description: `這是一段關於#${i}的敘述`,
           image: `https://picsum.photos/600/600/?random=${i}`,
         };
-        result.push(ticket);
+        resultRnd.push(ticket);
       }
       for (let i = 21; i < 25; i++) {
         const ticket = {
@@ -632,12 +632,10 @@
       });
 
       //渲染頁面
-      render();
-      // render_rnd();
-      render_hot();
-      render_search();
       render_collapse_types();
       render_collapse_cities();
+
+      render();     
     });
 
     function render() {
@@ -645,17 +643,36 @@
       fetch(`http://localhost:8080/TripLight/rndtickets`)
         .then(response => response.json())
         .then(data => {
-          // console.log(result);
-          result = data;
+          // console.log(resultRnd);
+          resultRnd = data;
           render_rnd();
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          console.log(error);
+          render_rnd(); //以後要移除
+        });
+
+      // 取回熱門票券
+      fetch(`http://localhost:8080/TripLight/hottickets`)
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data);
+          resultHot = data;
+          render_hot();
+        })
+        .catch(error => {
+          console.log(error);
+          render_hot(); //以後要移除
+        });
+
+        //預設搜尋
+        doSearch();
     }
 
     function render_rnd() {
       $('#ticketsContainer').html('');
 
-      for (let ticket of result) {
+      for (let ticket of resultRnd) {
         $('#ticketsContainer').append(`
           <div class="col mb-3">
             <div class="image-tour position-relative">
@@ -675,6 +692,7 @@
         `);
       }
     }
+
     function render_hot() {
       $('#ticketsHotContainer').html('');
 
@@ -697,6 +715,10 @@
        `);
       }
     }
+
+
+
+
     function render_search() {
       // 搜尋的結果
       $('#ticketsSearchContainer').html('');
@@ -767,12 +789,12 @@
     // 條件篩選的票券類型
     function render_collapse_types() {
       $('#collapseOne .accordion-body').html('');
-      // 1 2 4 8 16 32
+
       locationTypes.forEach((v, i) => {
         $('#collapseOne .accordion-body').append(
           `
         <div class="form-check d-flex gap-3">
-          <input class="form-check-input" type="checkbox" value="${2 ** i}" id="ticketType${i}">
+          <input class="form-check-input" type="checkbox" value="${i + 1}" id="ticketType${i}" checked>
           <label class="form-check-label align-self-center" for="ticketType${i}">${v}</label>
         </div>
         `
@@ -786,17 +808,17 @@
       $('#collapseTwo .accordion-body').append(
         `
           <div class="form-check d-flex gap-3">
-            <input class="form-check-input" type="checkbox" value="0" id="allTicketZone">
+            <input class="form-check-input" type="checkbox" value="" id="allTicketZone" checked>
             <label class="form-check-label align-self-center" for="allTicketZone">選擇全部</label>
           </div>
           `
       );
-      // 1 2 4 8 16 32
+     
       taiwanCities.forEach((v, i) => {
         $('#collapseTwo .accordion-body').append(
           `
           <div class="form-check d-flex gap-3">
-            <input class="form-check-input" type="checkbox" value="${2 ** i}" id="ticketZone${i}">
+            <input class="form-check-input" type="checkbox" value="${v}" id="ticketZone${i}" checked>
             <label class="form-check-label align-self-center" for="ticketZone${i}">${v}</label>
           </div>
           `
@@ -804,28 +826,58 @@
       });
     }
 
+
+
     // 上次的搜尋條件
     let oldCondition = {
       keyword: '',
-      typeVal: 0,
-      cityVal: 0,
+      types: [],
+      cities: [],
+      page: 0,
+      size: 5,
     };
 
     // 送出搜尋條件
     function doSearch() {
       const condition = {
         keyword: $('#ticketSearchText').val(),
-        typeVal: $('[id^="ticketType"]:checked').toArray().reduce((sum, cur) => sum + parseInt(cur.value), 0),
-        cityVal: $('[id^="ticketZone"]:checked').toArray().reduce((sum, cur) => sum + parseInt(cur.value), 0),
+        types: [],
+        cities: [],
+        page: 0,
+        size: 5,
       };
+
+      $('[id^="ticketType"]:checked').each((i, v) => {
+        condition.types.push(v.value);
+      });
+      $('[id^="ticketZone"]:checked').each((i, v) => {
+        condition.cities.push(v.value);
+      });
 
       if (JSON.stringify(oldCondition) === JSON.stringify(condition)) {
         return false;
       }
-      console.log(condition);
+      // console.log(condition);
       oldCondition = condition;
 
-      //fetch(...).then()
+      fetch(`http://localhost:8080/TripLight/searchtickets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(condition),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data);
+          resultSearch = data;
+          render_search();
+        })
+        .catch(error => {
+          console.log(error);
+          render_search(); //以後要移除
+        });
+
     }
 
 

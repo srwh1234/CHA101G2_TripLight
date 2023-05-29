@@ -1,10 +1,13 @@
 package com.tw.ticket.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,15 +26,41 @@ public class TicketController {
 	private TicketService ticketService;
 
 	@GetMapping("/rndtickets")
-	public List<MappingResponse> randomTickets() {
-		return ticketService.findRnd();
+	public List<RadAndHotResponse> randomTickets() {
+		return ticketService.getRnd();
 	}
 
-	// 定義一個物件回傳
-	@Data
-	static public class MappingResponse {
+	@GetMapping("/hottickets")
+	public List<RadAndHotResponse> hotTickets() {
+		return ticketService.getHot();
+	}
 
-		public MappingResponse(final Ticket ticket) {
+	@PostMapping("/searchtickets")
+	public SearchResponse searchTickets(@RequestBody final SearchRequest searchRequest) {
+		return ticketService.getSearch(searchRequest);
+	}
+
+	// 定義請求物件
+	@Data
+	static public class SearchRequest {
+		private String keyword;
+		private int[] types;
+		private String[] cities;
+		private int page;
+		private int size;
+	}
+
+	// 定義回傳物件
+	@Data
+	static public class SearchResponse {
+		private int curPage;
+		private int totalPage;
+		private ArrayList<RadAndHotResponse> tickets = new ArrayList<>();
+	}
+
+	@Data
+	static public class RadAndHotResponse {
+		public RadAndHotResponse(final Ticket ticket) {
 			this.ticketId = ticket.getTicketId();
 			this.name = ticket.getName();
 			this.price = ticket.getPrice();
@@ -41,13 +70,12 @@ public class TicketController {
 			this.description = ticket.getDescription();
 
 			if (ticket.getTicketImages().isEmpty()) {
-				this.image = String.format("/TripLight/img/%d", 0);
+				this.image = String.format("http://localhost:8080/TripLight/img/%d", 0);
 
 			} else {
 				final TicketImage ticketImage = ticket.getTicketImages().get(0);
-				this.image = String.format("/TripLight/img/%d", ticketImage.getId());
+				this.image = String.format("http://localhost:8080/TripLight/img/%d", ticketImage.getId());
 			}
-
 		}
 
 		private final int ticketId;
