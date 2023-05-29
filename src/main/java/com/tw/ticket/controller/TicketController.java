@@ -42,10 +42,10 @@ public class TicketController {
 
 			if (ticket.getTicketImages().isEmpty()) {
 				this.image = String.format("https://picsum.photos/600/600/?random=%d", 0);
+
 			} else {
 				final TicketImage ticketImage = ticket.getTicketImages().get(0);
-				this.image = String.format(//
-						"https://picsum.photos/600/600/?random=%d", ticketImage.getId());
+				this.image = String.format("/TripLight/img/%d", ticketImage.getId());
 			}
 
 		}
