@@ -8,15 +8,15 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@IdClass(AiLocations.LocationPK.class)
+@IdClass(AiLocations.LocationPK.class)  // 關聯複合PK的Class
 @Table(name = "ai_locations")
 public class AiLocations{
 
-    // 欄位設定
+    // 複合PK
     @Id
     @Column(name = "ai_favorite_id" ,nullable = false)
     private int aiFavoriteId;
-
+    // 複合PK
     @Id
     @Column(name = "location_title" ,nullable = false)
     private String locationTitle;
@@ -29,7 +29,7 @@ public class AiLocations{
 
     @Data
     public static class LocationPK implements Serializable {
-        private Integer aiFavoriteId;
+        private int aiFavoriteId;
         private String locationTitle;
     }
 
