@@ -41,7 +41,7 @@ public class TicketController {
 			this.description = ticket.getDescription();
 
 			if (ticket.getTicketImages().isEmpty()) {
-				this.image = String.format("https://picsum.photos/600/600/?random=%d", 0);
+				this.image = String.format("/TripLight/img/%d", 0);
 
 			} else {
 				final TicketImage ticketImage = ticket.getTicketImages().get(0);
