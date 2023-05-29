@@ -96,7 +96,7 @@ nav {
   margin: 0;
   letter-spacing: 1px;
   color: #fff;
-  padding: 0px 0;
+  padding: 0 0;
   border: none;
   /* font-family: "Raleway", sans-serif; */
 }
@@ -125,7 +125,7 @@ nav ul {
 
 /* Positioning the navigation items inline */
 nav ul li {
-  margin: 0px;
+  margin: 0;
   display: inline-block;
   float: none;
 }
@@ -1437,7 +1437,7 @@ a.move-top span:hover {
 /*-- testimonials --*/
 
 .testimonials {
-  background-image: url("/images/teams_background.jpg");
+  background-image: url(../images/teams_background.jpg);
   background-size: cover;
 }
 
