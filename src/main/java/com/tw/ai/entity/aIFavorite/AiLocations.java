@@ -3,7 +3,6 @@ package com.tw.ai.entity.aIFavorite;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.io.Serializable;
 
 @Entity
@@ -32,5 +31,4 @@ public class AiLocations{
         private int aiFavoriteId;
         private String locationTitle;
     }
-
 }
