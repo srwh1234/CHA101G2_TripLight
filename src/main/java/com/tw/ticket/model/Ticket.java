@@ -7,6 +7,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -60,7 +61,7 @@ public class Ticket implements Serializable {
 	private Integer ratingCount;// 評價人數
 
 	// 逆向 cascade表示存檔時 也一起寫入TicketImage
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ticket_id")
 	private List<TicketImage> ticketImages = new ArrayList<>();
 

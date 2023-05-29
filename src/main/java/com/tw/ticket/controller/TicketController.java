@@ -40,13 +40,14 @@ public class TicketController {
 			this.city = ticket.getCity();
 			this.description = ticket.getDescription();
 
-			final TicketImage ticketImage = ticket.getTicketImages().get(0);
-			if (ticketImage != null) {
+			if (ticket.getTicketImages().isEmpty()) {
+				this.image = String.format("https://picsum.photos/600/600/?random=%d", 0);
+			} else {
+				final TicketImage ticketImage = ticket.getTicketImages().get(0);
 				this.image = String.format(//
 						"https://picsum.photos/600/600/?random=%d", ticketImage.getId());
-			} else {
-				this.image = String.format("https://picsum.photos/600/600/?random=%d", 0);
 			}
+
 		}
 
 		private final int ticketId;
