@@ -3,9 +3,10 @@ package com.tw.ai.service;
 
 import com.google.gson.Gson;
 import com.tw.ai.common.GetMethod;
-import com.tw.ai.dao.TripDAO;
-import com.tw.ai.dao.TripImgDAO;
-import com.tw.ai.entity.trip.Trip;
+
+import com.tw.trip.dao.TripDAO;
+import com.tw.trip.dao.TripImgDAO;
+import com.tw.trip.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

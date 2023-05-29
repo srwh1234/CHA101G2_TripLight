@@ -1,7 +1,8 @@
 package com.tw.ai.common;
 
 
-import com.tw.ai.dao.TripDAO;
+
+import com.tw.trip.dao.TripDAO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
