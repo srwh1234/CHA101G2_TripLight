@@ -1,12 +1,10 @@
 package com.tw.ticket.model;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 @Entity
 @Data
