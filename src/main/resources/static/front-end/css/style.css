@@ -1078,10 +1078,15 @@ p.text {
 }
 .image-tour {
   overflow: hidden;
+  max-height: 15em;
 }
 
 .image-tour img {
   transition: transform 1s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3/2;
 }
 
 .image-tour img:hover {

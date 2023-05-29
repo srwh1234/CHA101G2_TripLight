@@ -3,7 +3,6 @@ package com.tw.ai.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -26,9 +25,9 @@ public class GetLocation {
     public String content;
     private String output;
 
-    private ArrayList<String> locationTitle = new ArrayList<>();;
+    private ArrayList<String> locationTitle = new ArrayList<>();
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = APIKey.getApiKey();
     private static final String MODEL = "gpt-3.5-turbo";
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
@@ -163,21 +162,6 @@ public class GetLocation {
         System.out.println(locations);
 
     }
-
-
-
-    public String toJson(ArrayList<String> list){
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        return json;
-    }
-
-    public String toJsonLocation(ArrayList<Location> list){
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        return json;
-    }
-
 
 }
 
