@@ -54,3 +54,10 @@ spring.jpa.show-sql=true
 
 logging.level.org.hibernate.SQL=debug
 顯示執行SQL語句的詳細信息
+
+
+4. Spring MVC 專案架構建議
+- **controller：主要與前端傳接資料，需要按功能區分**
+- **entity：主要存放實體類別**
+- **dao：主要實現EntityManager，並執行CRUD，按表格區分**
+- **service：主要處理其他閒雜功能(串接API~)，實現DAO**
