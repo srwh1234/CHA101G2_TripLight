@@ -49,7 +49,7 @@ public class AiService implements GetMethod {
         aiFavorite.setBudgetRange(aiFormData.getBudgetRange());
         aiFavorite.setPreferredStyle(aiFormData.getPreferredStyle());
         aiFavorite.setOtherDemands(aiFormData.getOtherDemands());
-        aiFavorite.setMemberId(aiFormData.getId());
+        aiFavorite.setMemberId(1);  // TODO:
         aiFavorite.setPlanningDescription(resultData);
         aiFavorite.setRoute(resultUrl);
 
