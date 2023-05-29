@@ -15,9 +15,9 @@ spring.datasource.password=你的密碼
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 spring.jpa.properties.hibernate.dialect.storage_engine=innodb
+spring.jpa.open-in-view=false
 
 # ========================================== Optional Configuration ===================================================
-spring.jpa.open-in-view=false
 spring.jpa.show-sql=true
 logging.level.org.hibernate.SQL=debug
 
@@ -47,7 +47,7 @@ spring.jpa.properties.hibernate.dialect.storage_engine=innodb
 這行程式碼設定Hibernate的儲存引擎。在這個例子中，使用的是InnoDB儲存引擎。
 
 spring.jpa.open-in-view=false
-這行程式碼禁用了OpenEntityManagerInView（Open Session in View）模式。該模式會在視圖層結束後保持資料庫會話開啟，但在大多數情況下不推薦使用。
+這行程式碼禁用了OpenEntityManagerInView（Open Session in View）模式。可以提高性能
 
 spring.jpa.show-sql=true
 這行程式碼設定JPA是否在控制台上顯示生成的SQL語句。在這個例子中，設定為true，表示在控制台上顯示SQL語句。
