@@ -21,6 +21,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// 更新前存檔
 @RestController
 @EnableScheduling
 public class MainController {
