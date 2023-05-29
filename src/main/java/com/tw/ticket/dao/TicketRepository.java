@@ -26,5 +26,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			@Param("keyword") String keyword,	// 關鍵字
 			@Param("types") int[] types, 		// 類型
 			@Param("cities") String[] cities,	// 縣市
-			Pageable pageable);
+			Pageable pageable					// 分頁
+	);
 }

@@ -51,15 +51,16 @@ public class TicketServiceImpl implements TicketService {
 		return result;
 	}
 
+	// 搜尋票券
 	@Override
 	public SearchResponse getSearch(final SearchRequest searchRequest) {
-		final Pageable pageable = PageRequest.of( //
-				searchRequest.getPage(),// 查詢的頁數，從0起算
-				searchRequest.getSize()	// 查詢的每頁筆數
+		final Pageable pageable = PageRequest.of(	//
+				searchRequest.getPage(),	// 查詢的頁數，從0起算
+				searchRequest.getSize()		// 查詢的每頁筆數
 		);
 
 		final Page<Ticket> page = repository.searchTicketByKeyword(	//
-				searchRequest.getKeyword(), // 關鍵字
+				searchRequest.getKeyword(),	// 關鍵字
 				searchRequest.getTypes(),	// 類型
 				searchRequest.getCities(),	// 縣市
 				pageable					// 分頁物件

@@ -25,16 +25,19 @@ public class TicketController {
 	@Autowired
 	private TicketService ticketService;
 
+	// 隨機票券
 	@GetMapping("/rndtickets")
 	public List<RadAndHotResponse> randomTickets() {
 		return ticketService.getRnd();
 	}
 
+	// 熱門票券
 	@GetMapping("/hottickets")
 	public List<RadAndHotResponse> hotTickets() {
 		return ticketService.getHot();
 	}
 
+	// 搜尋票券
 	@PostMapping("/searchtickets")
 	public SearchResponse searchTickets(@RequestBody final SearchRequest searchRequest) {
 		return ticketService.getSearch(searchRequest);
@@ -69,9 +72,9 @@ public class TicketController {
 			this.city = ticket.getCity();
 			this.description = ticket.getDescription();
 
+			// XXX http://localhost:8080 VsCode測試才要加
 			if (ticket.getTicketImages().isEmpty()) {
 				this.image = String.format("http://localhost:8080/TripLight/img/%d", 0);
-
 			} else {
 				final TicketImage ticketImage = ticket.getTicketImages().get(0);
 				this.image = String.format("http://localhost:8080/TripLight/img/%d", ticketImage.getId());
