@@ -20,6 +20,8 @@ spring.jpa.open-in-view=false
 # ========================================== Optional Configuration ===================================================
 spring.jpa.show-sql=true
 logging.level.org.hibernate.SQL=debug
+spring.main.banner-mode=off
+
 
 
 
@@ -54,6 +56,9 @@ spring.jpa.show-sql=true
 
 logging.level.org.hibernate.SQL=debug
 顯示執行SQL語句的詳細信息
+
+spring.main.banner-mode=off
+可以關掉每次運行時，Spring橫幅
 
 
 4. Spring MVC 專案架構建議
