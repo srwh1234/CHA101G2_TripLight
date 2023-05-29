@@ -55,7 +55,7 @@ spring.jpa.show-sql=true
 這行程式碼設定JPA是否在控制台上顯示生成的SQL語句。在這個例子中，設定為true，表示在控制台上顯示SQL語句。
 
 logging.level.org.hibernate.SQL=debug
-顯示執行SQL語句的詳細信息
+顯示執行SQL語句的詳細信息，開發時好用~~
 
 spring.main.banner-mode=off
 可以關掉每次運行時，Spring橫幅
