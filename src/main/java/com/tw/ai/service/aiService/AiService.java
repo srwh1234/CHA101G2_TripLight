@@ -1,0 +1,147 @@
+package com.tw.ai.service.aiService;
+
+
+import com.tw.ai.common.ChatGPTAPI;
+import com.tw.ai.common.GetLocation;
+import com.tw.ai.common.GetMethod;
+import com.tw.ai.dao.DataDAO;
+import com.tw.ai.entity.aIFavorite.AiFavorite;
+import com.tw.ai.entity.aIFavorite.AiLocations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+
+@Service
+public class AiService implements GetMethod {
+
+    private final DataDAO dataDAO;
+    private final ChatGPTAPI chatGPTAPI;
+    private final GetLocation getLocation;
+    private final Map<String, AiFormData> formDataList;
+    private int id;
+    private Map<String, Long> lastHeartbeatMap;
+
+
+    @Autowired
+    public AiService(DataDAO dataDAO, ChatGPTAPI chatGPTAPI, Map<String, AiFormData> formDataList, GetLocation getLocation) {
+        this.dataDAO = dataDAO;
+        this.chatGPTAPI = chatGPTAPI;
+        this.getLocation = getLocation;
+        this.formDataList = formDataList;
+        this.lastHeartbeatMap = new ConcurrentHashMap<>();
+        id = getLastId();
+    }
+
+    public int save(String resultData, String resultUrl, String memberId) {
+
+        var aiFormData = formDataList.get(memberId);
+        AiFavorite aiFavorite = new AiFavorite();
+
+        aiFavorite.setAiFavoriteId(aiFormData.getId());
+        aiFavorite.setDestination(aiFormData.getDestination());
+        aiFavorite.setTravelDays(aiFormData.getTravelDays());
+        aiFavorite.setPeople(aiFormData.getPeople());
+        aiFavorite.setBudgetRange(aiFormData.getBudgetRange());
+        aiFavorite.setPreferredStyle(aiFormData.getPreferredStyle());
+        aiFavorite.setOtherDemands(aiFormData.getOtherDemands());
+        aiFavorite.setMemberId(aiFormData.getId());
+        aiFavorite.setPlanningDescription(resultData);
+        aiFavorite.setRoute(resultUrl);
+
+        dataDAO.save(aiFavorite);
+        System.out.println("存入資料的ID:" + aiFavorite.getAiFavoriteId());
+
+        return aiFavorite.getAiFavoriteId();
+    }
+
+    public void saveLocation(String memberId, int aiFavoriteId) {
+        var locationList = getLocation.locations.get(memberId);
+
+        System.out.println(locationList);
+        for (var location : locationList) {
+            var locations = new AiLocations();
+            locations.setAiFavoriteId(aiFavoriteId);
+            locations.setLocationTitle(location.getLocationTitle());
+            locations.setLatitude(location.getLatitude());
+            locations.setLongitude(location.getLongitude());
+            dataDAO.save(locations);
+            System.out.println("存入地點資料:" + locations);
+        }
+    }
+
+    public int getLastId() {
+        return dataDAO.getLastId();
+    }
+
+    public List<AiFavorite> findAIFavoriteFromMemberId(int memberId) {
+        return dataDAO.findAIFavoriteFromMemberId(memberId);
+    }
+
+    public void startChatGPT(String memberId, String formData) {
+        chatGPTAPI.start(memberId, formData);
+    }
+
+    public String getChatGPTResult(String memberId) {
+        return chatGPTAPI.getOutput(memberId);
+    }
+
+    public String getLatitudeAndLongitude(String memberId) {
+        var locations = chatGPTAPI.locations.get(memberId);
+        // 將地點轉成經緯度 如果為空陣列，就不要執行了
+        if (locations != null && !locations.isEmpty()) {
+            getLocation.start(memberId, locations);
+            return getLocation.locations.get(memberId).toString();
+        }
+        return null;
+    }
+
+    public ArrayList<String> getChatGPTLocations(String memberId) {
+        return chatGPTAPI.locations.get(memberId);
+    }
+
+    public void clearContent(String memberId) {
+        chatGPTAPI.getOutput().remove(memberId);
+        chatGPTAPI.locations.remove(memberId);
+        formDataList.remove(memberId);
+        getLocation.locations.remove(memberId);
+        lastHeartbeatMap.remove(memberId);
+    }
+
+    public void setFormData(String memberId, String formData) {
+        id++;
+        formDataList.put(memberId, new AiFormData());
+        formDataList.get(memberId).setData(formData);
+        formDataList.get(memberId).setId(id);
+        System.out.println("新增表單編號：" + id);
+    }
+
+    public String getDestination(String memberId) {
+        return formDataList.get(memberId).getDestination();
+    }
+
+    public void updateHeartbeat(String memberId) {
+        lastHeartbeatMap.put(memberId, System.currentTimeMillis());
+    }
+
+    public void checkHeartbeat() {
+        System.out.println("顯示成員名單：" + lastHeartbeatMap.toString());
+        long currentTime = System.currentTimeMillis();
+        long heartbeatThreshold = 10000; // 心跳閾值，單位為毫秒
+
+        // 遍歷鍵值對
+        for (Map.Entry<String, Long> entry : lastHeartbeatMap.entrySet()) {
+            String memberId = entry.getKey();
+            long lastHeartbeatTime = entry.getValue();
+            if (currentTime - lastHeartbeatTime >= heartbeatThreshold) {
+                clearContent(memberId);
+                System.out.println("執行清空操作，清空成員ID： " + memberId);
+            }
+        }
+    }
+
+}

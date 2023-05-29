@@ -5,7 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.tw.ticket.model.Ticket;
 
+import java.util.List;
+
 @Repository
-public interface TikcetRepository extends JpaRepository<Ticket, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
+
+    List<Ticket> findByCityContaining(String city);
 	//
 }

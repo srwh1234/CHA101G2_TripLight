@@ -3,28 +3,30 @@ package com.tw.ticket.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class TicketImage implements Serializable {
-	private static final long serialVersionUID = 1L;
+@Table(name = "ticket_image")
+public class TicketImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;// 流水號
+	@Column(name = "id")
+	private int id;
 
-	private Integer ticket_id;// 圖片所屬的票券編號
+	@Column(name = "ticket_id")
+	private int ticketId;
 
-	private byte[] image;// 圖片內容
+	@Lob
+	@Column(name = "image")
+	private byte[] image;
 
-	private Timestamp uploadTime;// 更新時間
+	@Column(name = "upload_time")
+	private Timestamp uploadTime;
+
+
 }

@@ -1,52 +1,40 @@
-// import { result } from "./ChatGPT_api.js";
-
 let data = "";
+
 // 取得目的地資料
 // let destination = sessionStorage.getItem("destination");
 
+let request = null; // 声明一个全局变量用于存储定时器的 ID
+
 function getArray() {
   $.ajax({
-    url: "/getArray",
+    url: "/getArray/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (locations) {
-      // 檢查是否符合預期
-      if (locations.length === 0) {
-        // 因為locations不為0, 所以直接沿用舊的
-        // 未獲得參數，再次發送請求
-        setTimeout(getArray, 1000); // 每隔 1 秒發送請求
-      } else {
-        // 資料處理  轉成 number
-        data = locations.map((location) => {
-          return {
-            lat: Number(location.lat),
-            lng: Number(location.lng),
-          };
-        });
+      // locations為收到的緯度資料陣列
+      console.log("發起請求：請求緯度資料");
+      // 遍歷locations 並將字串轉為number 生成新陣列data
+      data = locations.map((location) => {
+        return {
+          lat: Number(location.lat),
+          lng: Number(location.lng),
+        };
+      });
 
-        // 取得data資料
-        console.log(data);
-        window.initMap(data);
-        // 可以在這裡更新前端畫面，顯示陣列資料
-        // 呼叫顯示location_icon
-        $("#location-icon").show();
-      }
+      sessionStorage.setItem("LatitudeArr", data);
+      console.log(data);
+      window.initMap(data);
+      // 可以在這裡更新前端畫面，顯示陣列資料
+      // 呼叫顯示location_icon
+      $("#location-icon").show();
     },
     error: function (xhr, status, error) {
-      // 發生錯誤
-      console.error(error); // 印出錯誤訊息
+      console.error(error);
 
       // 可以在這裡顯示錯誤訊息給使用者
     },
   });
 }
-
-// 初始呼叫
-getArray();
-
-// 呼叫另一個 獲得地點標題
-getLocations();
-
 // 初始化地圖
 
 try {
@@ -99,22 +87,25 @@ try {
 //TODO:  連接googlemap地圖 功能
 
 let locationTitle = "";
+let url = "https://www.google.com/maps/dir/";
 function getLocations() {
   $.ajax({
-    url: "/getLocations",
+    url: "/getLocations/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (locations2) {
-      if (locations2.length === 0) {
-        // 因為locations不為0, 所以直接沿用舊的
-        // 未獲得參數，再次發送請求
-        setTimeout(getLocations, 1000); // 每隔 1 秒發送請求
-      } else {
-        locationTitle = locations2;
+      locationTitle = locations2;
+      // 取得locationTitle資料
+      console.log(locationTitle);
 
-        // 取得locationTitle資料
-        console.log(locationTitle);
+      sessionStorage.setItem("locationArray", locationTitle);
+
+      // 在這裡放入url
+      for (let i = 0; i < locationTitle.length; i++) {
+        url += encodeURIComponent(locationTitle[i]) + "/";
       }
+      sessionStorage.setItem("url", url);
+      console.log(url);
     },
     error: function (xhr, status, error) {
       // 發生錯誤
@@ -125,19 +116,9 @@ function getLocations() {
   });
 }
 
-let addresses = "";
+// 點擊地圖icon
 $(".location-icon2").on("click", function (e) {
   e.preventDefault();
   $(this).css("animation-play-state", "paused");
-
-  addresses = locationTitle; //TODO:要加冒號
-  let url = "https://www.google.com/maps/dir/";
-
-
-  for (var i = 0; i < addresses.length; i++) {
-    url += encodeURIComponent(addresses[i]) + "/";
-  }
-
-  console.log(url);
   window.open(url, "_blank");
 });

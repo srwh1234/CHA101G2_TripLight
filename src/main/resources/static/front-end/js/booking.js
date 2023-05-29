@@ -81,7 +81,7 @@ $.ajax({
   url: "/getSessionId",
   type: "GET",
   success: function (response) {
-    var sessionId = response;
+    let sessionId = response;
     console.log("Session ID: " + sessionId);
 
     sessionStorage.setItem("sessionId", sessionId);

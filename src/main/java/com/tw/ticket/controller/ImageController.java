@@ -18,6 +18,8 @@ public class ImageController {
 	@Autowired
 	private ImageServiceImpl imageService;
 
+	// 所以這個url 就是專門存放圖片的?
+	// 這段程式碼定義了一個從 HTTP 路徑 "/img/{imgUrl}" 獲取圖像的方法。當有人訪問這個路徑時，它將從 imageService 中查找 id 對應的圖像，並將該圖像作為 JPEG 圖像返回。
 	@RequestMapping(value = "/img/{imgUrl:[a-zA-Z0-9_.]+}", produces = MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody
 	public byte[] getPhoto(@PathVariable("imgUrl") final long id) {

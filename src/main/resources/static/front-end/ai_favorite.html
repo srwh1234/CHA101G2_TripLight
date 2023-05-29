@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TripLight</title>
+
+    <!-- 加上才能使用RWD -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+
+    <!-- 關鍵字設定 -->
+    <meta
+      name="keywords"
+      content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程"
+    />
+    <!-- 網頁介紹 -->
+    <meta
+      name="description"
+      content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等"
+    />
+
+    <script>
+      addEventListener(
+        "load",
+        function () {
+          setTimeout(hideURLbar, 0);
+        },
+        false
+      );
+
+      function hideURLbar() {
+        window.scrollTo(0, 1);
+      }
+    </script>
+
+    <!-- css files -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap css -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!-- custom css -->
+    <link href="css/fontawesome-all.css" rel="stylesheet" />
+    <!-- fontawesome css -->
+    <!-- //css files -->
+
+    <link
+      href="css/css_slider.css"
+      type="text/css"
+      rel="stylesheet"
+      media="all"
+    />
+
+    <!-- google fonts -->
+    <!-- 載入字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+      rel="stylesheet"
+    />
+    <!-- //google fonts -->
+
+    <!-- 載入icon -->
+    <link rel="shortcut icon" href="./images/icon.png" />
+    <link rel="bookmark" href="./images/icon.png" />
+  </head>
+
+  <body>
+    <div class="container aiFavorite">
+      <h1>我的收藏行程</h1>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h5>destination + travel_days 日遊</h5>
+        </div>
+        <div class="card-body">
+          <p>行程摘要、日期和其他相關資訊</p>
+          <p>第二列</p>
+          <p>第三列</p>
+          <p>第四列</p>
+          <div class="mt-2">
+            <button class="btn btn-danger">刪除</button>
+            <button class="btn btn-primary">編輯</button>
+            <button class="btn btn-secondary">分享</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h5>行程標題</h5>
+        </div>
+        <div class="card-body">
+          <p>行程摘要、日期和其他相關資訊</p>
+          <p>第二列</p>
+          <p>第三列</p>
+          <p>路線連結：<a href=""></a></p>
+        </div>
+        <div style="background-color: aqua">
+          <p style="white-space: pre-wrap" style="background-color: aqua">
+            第四列 第四列第四列第四列第四列 第四列 第四列第四列第四列
+            第四列第四列 第四列第四列 第四列 第四列 第四列
+          </p>
+        </div>
+      </div>
+
+      <!-- 更多收藏行程卡片... -->
+    </div>
+    <!--載入 jQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--載入 jQuery-->
+    <script>
+      //       let aiFavorite = {
+      //         id: 1,
+      //         destination: "台北",
+      //         travelDays: 5,
+      //         people: 5,
+      //         budgetRange: "0-5000 TWD",
+      //         preferredStyle: "浪漫之旅",
+      //         otherDemands: "沒有需求",
+      //         planningDescription: `
+      // [1天]
+
+      // 上午：參訪臺北故宮博物院 [250元]
+      // 中午：在華山文創園區用午餐 [150元]
+      // 下午：逛淡水老街與漁人碼頭 [200元]
+      // 晚上：在士林夜市品嚐美食 [200元]
+      // 住宿：臺北市中山區的普美旅店 [1000元]
+
+      // 所有地點名稱：臺北故宮博物院、華山文創園區、淡水老街、漁人碼頭、士林夜市、普美旅店
+
+      // 備註：以上行程僅供參考，實際花費須依據當日實際情況與需求調整。`,
+      //         route:
+      //           "https://www.google.com/maps/dir/%E5%8F%B0%E5%8C%97%E8%87%BA%E5%8C%97%E6%95%85%E5%AE%AE%E5%8D%9A%E7%89%A9%E9%99%A2/%E5%8F%B0%E5%8C%97%E8%8F%AF%E5%B1%B1%E6%96%87%E5%89%B5%E5%9C%92%E5%8D%80/%E5%8F%B0%E5%8C%97%E6%B7%A1%E6%B0%B4%E8%80%81%E8%A1%97/%E5%8F%B0%E5%8C%97%E6%BC%81%E4%BA%BA%E7%A2%BC%E9%A0%AD/%E5%8F%B0%E5%8C%97%E5%A3%AB%E6%9E%97%E5%A4%9C%E5%B8%82/%E5%8F%B0%E5%8C%97%E6%99%AE%E7%BE%8E%E6%97%85%E5%BA%97/",
+      //         member_id: 2,
+      //       };
+
+      //       $(".aiFavorite").append(`<div class="card mt-3">
+      //               <div class="card-header">
+      //                 <h5>${aiFavorite.destination}${aiFavorite.travelDays}日遊</h5>
+      //               </div>
+      //               <div class="card-body">
+      //                 <p>人數：${aiFavorite.people}</p>
+      //                 <p>預算範圍：${aiFavorite.budgetRange}</p>
+      //                 <p>旅遊風格：${aiFavorite.preferredStyle}</p>
+      //                 <p>路線連結：<a href=${aiFavorite.route}>${aiFavorite.destination}${aiFavorite.travelDays}日遊路線連結</a></p>
+      //                 <p style="white-space: pre-wrap">行程內容：${aiFavorite.planningDescription}</p>
+
+      //                 <div class="mt-2">
+      //                   <button class="btn btn-danger">刪除</button>
+      //                   <button class="btn btn-primary">編輯</button>
+      //                   <button class="btn btn-secondary">分享</button>
+      //                 </div>
+      //               </div>
+      //             </div>`);
+
+      // 接收後台AI行程資料
+      const memberId = sessionStorage.getItem("sessionId");
+      getAiFavorite();
+
+      function getAiFavorite() {
+        $.ajax({
+          url: "/getAiFavorite/" + memberId,
+          method: "GET",
+          dataType: "json",
+          success: function (aiFavorite) {
+            console.log("接收資料");
+            console.log(aiFavorite);
+
+            for (let i = 0; i < aiFavorite.length; i++) {
+              $(".aiFavorite")
+                .append(`      <div class="group_order_item_class">
+                <div class="card-header">
+                  <div class="card_top">
+                    <h5 class="text-center">
+                        <h5>${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊</h5>
+                    </h5>
+                  </div>
+                </div>
+                <div class="card-body card_down">
+                    <p>人數：${aiFavorite[i].people}</p>
+                    <p>預算範圍：${aiFavorite[i].budgetRange}</p>
+                    <p>旅遊風格：${aiFavorite[i].preferredStyle}</p>
+                    <p>路線連結：<a href=${aiFavorite[i].route}>${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊路線連結</a></p>
+                    <p style="white-space: pre-wrap">行程內容：<br>${aiFavorite[i].planningDescription}</p>
+                </div>
+              </div>`);
+            }
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

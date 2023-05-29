@@ -12,7 +12,7 @@ import com.tw.member.model.Member;
 import com.tw.ticket.dao.TicketCartRepository;
 import com.tw.ticket.dao.TicketOrderRepository;
 import com.tw.ticket.dao.TicketSnRepository;
-import com.tw.ticket.dao.TikcetRepository;
+import com.tw.ticket.dao.TicketRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketCart;
 import com.tw.ticket.model.TicketOrder;
@@ -27,7 +27,7 @@ public class Hello {
 	private TicketCartRepository repository;
 
 	@Autowired
-	private TikcetRepository repository2;
+	private TicketRepository repository2;
 
 	@Autowired
 	private MemberRepository repository3;
