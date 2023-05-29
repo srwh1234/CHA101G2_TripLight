@@ -7,18 +7,44 @@ http://localhost:8080/TripLight/front-end/index.html
 
 新增一個application.properties檔案 並貼上以下內容
 
-#/TripLight 路徑下的網頁可以被讀取
+
 spring.mvc.static-path-pattern=/TripLight/**
 spring.datasource.url=jdbc:mysql://localhost:3306/cha101_g2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
 spring.datasource.username=root
 spring.datasource.password=你的密碼
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-# 新版
 spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 spring.jpa.properties.hibernate.dialect.storage_engine=innodb
-
-#不要在每個 HTTP 請求都會在視圖渲染期間持續打開 EntityManage
 spring.jpa.open-in-view=false
-
-#hibernate操作資料庫時的log
 spring.jpa.show-sql=true
+
+
+
+
+3. 部屬檔案功能介紹-- 以下不用貼
+spring.mvc.static-path-pattern=/TripLight/**
+這行程式碼指定靜態資源檔的URL模式。所有以/TripLight/開頭的請求將被映射到靜態資源檔。
+
+spring.datasource.url=jdbc:mysql://localhost:3306/cha101_g2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+這行程式碼設定資料庫的URL。它指定連接到MySQL資料庫的位址、port和資料庫名稱。
+
+spring.datasource.username=root
+這行程式碼設定資料庫的使用者名稱。在這個例子中，使用者名稱是"root"。
+
+spring.datasource.password=你的密碼
+這行程式碼設定資料庫的密碼。在這個例子中，密碼是"你的密碼"。
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+這行程式碼指定資料庫驅動程式的類別名稱。在這個例子中，使用的是MySQL的JDBC驅動程式。
+
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+這行程式碼設定JPA的資料庫方言。它告訴Hibernate在與MySQL資料庫交互時使用MySQL的方言。
+
+spring.jpa.properties.hibernate.dialect.storage_engine=innodb
+這行程式碼設定Hibernate的儲存引擎。在這個例子中，使用的是InnoDB儲存引擎。
+
+spring.jpa.open-in-view=false
+這行程式碼禁用了OpenEntityManagerInView（Open Session in View）模式。該模式會在視圖層結束後保持資料庫會話開啟，但在大多數情況下不推薦使用。
+
+spring.jpa.show-sql=true
+這行程式碼設定JPA是否在控制台上顯示生成的SQL語句。在這個例子中，設定為true，表示在控制台上顯示SQL語句。
