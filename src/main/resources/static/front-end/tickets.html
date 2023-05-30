@@ -642,7 +642,7 @@
         if (page === "Previous") {
           doSearch(Math.max(resultSearch.curPage - 1, 0));
         } else if (page === "Next") {
-          doSearch(Math.min(resultSearch.curPage + 1, resultSearch.totalPage));
+          doSearch(Math.min(resultSearch.curPage + 1, resultSearch.totalPage-1));
         } else if (!isNaN(page)) {
           doSearch(page);
         }
