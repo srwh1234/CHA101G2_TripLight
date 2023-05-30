@@ -9,10 +9,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.tw.ticket.controller.DetailController.DetailResponse;
 import com.tw.ticket.controller.TicketController.RadAndHotResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
 import com.tw.ticket.dao.TicketRepository;
+import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.service.TicketService;
 
@@ -21,6 +23,24 @@ public class TicketServiceImpl implements TicketService {
 
 	@Autowired
 	private TicketRepository repository;
+
+	@Autowired
+	private TicketSnRepository snRepository;
+
+	// 取得票券明細
+	@Override
+	public DetailResponse getTicket(final long id) {
+		final Ticket ticket = repository.findById(id).orElse(null);
+
+		if (ticket == null) {
+			return null;
+		}
+		final DetailResponse detailResponse = new DetailResponse(ticket);
+
+		// 可用數量
+		detailResponse.setAvailable(snRepository.searchUsableSn(id).size());
+		return detailResponse;
+	}
 
 	// 隨機票券
 	@Override

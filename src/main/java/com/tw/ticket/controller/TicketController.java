@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.model.Ticket;
@@ -43,17 +42,11 @@ public class TicketController {
 		return ticketService.getSearch(searchRequest);
 	}
 
-	@GetMapping("/front-end/tickets_detail.html")
-	public List<RadAndHotResponse> test(@RequestParam("id") final Long id) {
-		System.out.println("id=" + id);
-		return null;
-	}
-
 	// 定義請求物件
 	@Data
-	static public class SearchRequest {
+	public static class SearchRequest {
 		private String keyword;
-		private int[] types;
+		private String[] types;
 		private String[] cities;
 		private int page;
 		private int size;
@@ -61,14 +54,14 @@ public class TicketController {
 
 	// 定義回傳物件
 	@Data
-	static public class SearchResponse {
+	public static class SearchResponse {
 		private int curPage;
 		private int totalPage;
 		private ArrayList<RadAndHotResponse> tickets = new ArrayList<>();
 	}
 
 	@Data
-	static public class RadAndHotResponse {
+	public static class RadAndHotResponse {
 		public RadAndHotResponse(final Ticket ticket) {
 			this.ticketId = ticket.getTicketId();
 			this.name = ticket.getName();

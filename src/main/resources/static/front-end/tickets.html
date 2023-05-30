@@ -642,7 +642,7 @@
         if (page === "Previous") {
           doSearch(Math.max(resultSearch.curPage - 1, 0));
         } else if (page === "Next") {
-          doSearch(Math.min(resultSearch.curPage + 1, resultSearch.totalPage-1));
+          doSearch(Math.min(resultSearch.curPage + 1, resultSearch.totalPage - 1));
         } else if (!isNaN(page)) {
           doSearch(page);
         }
@@ -818,7 +818,7 @@
         $('#collapseOne .accordion-body').append(
           `
         <div class="form-check d-flex gap-3">
-          <input class="form-check-input" type="checkbox" value="${i + 1}" id="ticketType${i}" checked>
+          <input class="form-check-input" type="checkbox" value="${v}" id="ticketType${i}" checked>
           <label class="form-check-label align-self-center" for="ticketType${i}">${v}</label>
         </div>
         `

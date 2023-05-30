@@ -450,7 +450,7 @@
             </p>
             <div class="test-img text-center mt-4">
               <img src="images/te1.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                style="max-width: 150px; width: 100%" />
+                   style="max-width: 150px; width: 100%" />
             </div>
             <h3 class="mt-md-4 mt-3">張小姐</h3>
           </div>
@@ -462,7 +462,7 @@
             </p>
             <div class="test-img text-center mt-4">
               <img src="images/te2.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                style="max-width: 150px; width: 100%" />
+                   style="max-width: 150px; width: 100%" />
             </div>
             <h3 class="mt-md-4 mt-3">陳先生</h3>
           </div>
@@ -474,7 +474,7 @@
             </p>
             <div class="test-img text-center mt-4">
               <img src="images/te3.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                style="max-width: 150px; width: 100%" />
+                   style="max-width: 150px; width: 100%" />
             </div>
             <h3 class="mt-md-4 mt-3">王先生</h3>
           </div>
@@ -551,14 +551,14 @@
               </li>
               <li>
                 <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                    alt="instagram" /></a>
+                       alt="instagram" /></a>
               </li>
               <li>
                 <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
               </li>
               <li class="youtube">
                 <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
-                    alt="youtube" /></a>
+                       alt="youtube" /></a>
               </li>
             </ul>
           </div>
@@ -588,7 +588,7 @@
 
   <script>
     //假資料 以後要從資料庫取得
-    const ticket = {
+    let ticket = {
       ticketId: 0,
       ticketType: '票券類型',
       name: '緯育Tibame 後端工程師門票',
@@ -605,9 +605,7 @@
       rating: 4.5,
       ratingPerson: Math.trunc(Math.random() * 1000),
       images: [],
-      allPage: 3,
-      curPage: 1,
-      comments: [],
+
       promotion: {
         price: 97000,
         startDate: '2023/06/21',
@@ -616,18 +614,59 @@
 
     };
 
+    const resultComment =
+    {
+      allPage: 3,
+      curPage: 1,
+      comments: [],
+    }
+
+    function fetch_data() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      fetch(`http://localhost:8080/TripLight/ticketdetail?id=${id ?? 0}`)
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data);
+          ticket = data;
+          //渲染頁面
+          render_carousel();
+          render_title();
+          render_price();
+          render_content();
+          render_note();
+          render_commnet(resultComment.comments);
+        })
+        .catch(error => {
+          console.log(error);
+          //回首頁         
+         // window.location.href = "tickets.html";
+          //渲染頁面 這邊以後要拿掉
+          render_carousel();
+          render_title();
+          render_price();
+          render_content();
+          render_note();
+          render_commnet(resultComment.comments);
+        });
+    }
+
     $(function () {
+
+      //去後端拿資料
+      fetch_data();
 
       //加入購物車的按鈕
       $(document).on('click', '#btnAddToCart', function () {
         const post = {
-          memberId:0,
+          memberId: 0,
           ticketId: 0,
           quantity: parseInt($('#inputQuantity').val()),
         };
         console.log(post)
       });
-      
+
       // 減少數量的按鈕點擊事件
       $(document).on('click', '#btnMinus', function () {
         const val = parseInt($('#inputQuantity').val());
@@ -701,10 +740,10 @@
 
       //更多評論
       $(document).on('click', '#btnMore', function () {
-        const index = ticket.curPage * 10;
-        ticket.curPage++;
+        const index = resultComment.curPage * 10;
+        resultComment.curPage++;
 
-        if (ticket.curPage >= ticket.allPage) {
+        if (resultComment.curPage >= resultComment.allPage) {
           $(this).remove();
         }
 
@@ -740,17 +779,10 @@
         if (i % 3 <= 1) {
           comments.lastEditTime = '';
         }
-        ticket.comments.push(comments);
+        resultComment.comments.push(comments);
       }
 
-
-      //渲染頁面
-      render_carousel();
-      render_title();
-      render_price();
-      render_content();
-      render_note();
-      render_commnet(ticket.comments);
+    
     });
 
 

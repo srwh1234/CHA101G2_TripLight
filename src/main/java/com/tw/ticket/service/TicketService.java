@@ -2,11 +2,15 @@ package com.tw.ticket.service;
 
 import java.util.List;
 
+import com.tw.ticket.controller.DetailController.DetailResponse;
 import com.tw.ticket.controller.TicketController.RadAndHotResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
 
 public interface TicketService {
+
+	// 取得票券
+	public DetailResponse getTicket(long id);
 
 	// 隨機票券
 	public List<RadAndHotResponse> getRnd();

@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,9 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketId;// 票券編號
 
-	private Integer ticketTypeId;// 票券類型編號
+	@OneToOne
+	@JoinColumn(name = "ticket_type_id")
+	private TicketType ticketType;// 票券類型編號
 
 	private String name;// 名稱
 
@@ -66,11 +69,12 @@ public class Ticket implements Serializable {
 	@Transient
 	private String imgUrl;   // 圖片url ???
 
-	// 逆向 cascade表示存檔時 也一起寫入TicketImage
+	// cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ticket_id")
 	private List<TicketImage> ticketImages = new ArrayList<>();
 
+	// ----------------------------
 	// 獲得指定索引的圖片路徑
 	public String getImgUrlEx(final int index) {
 		if (ticketImages.isEmpty()) {
