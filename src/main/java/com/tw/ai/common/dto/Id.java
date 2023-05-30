@@ -1,7 +1,6 @@
-package com.tw.ai.common;
+package com.tw.ai.common.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 @AllArgsConstructor

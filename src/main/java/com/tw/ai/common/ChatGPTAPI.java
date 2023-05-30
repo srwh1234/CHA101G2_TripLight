@@ -3,7 +3,7 @@ package com.tw.ai.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.tw.ai.service.aiService.AiFormData;
+import com.tw.ai.common.dto.AiFormData;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -122,7 +122,7 @@ public class ChatGPTAPI {
 
     public Map<String, String> getOutput() {
         return this.output;
-    };
+    }
 
 
     // TODO:這邊要改成set MAP
@@ -174,19 +174,6 @@ public class ChatGPTAPI {
             }
         }
         System.out.println("地點名稱陣列："+ locations);
-    }
-    public String getDestination(String input){
-        Pattern pattern = Pattern.compile("目的地:(.*?)\\n");
-
-        Matcher matcher = pattern.matcher(input);
-
-        if (matcher.find()) {
-            String destination = matcher.group(1);
-            System.out.println(destination);
-            return destination;
-        } else {
-            return "No match found.";
-        }
     }
 }
 

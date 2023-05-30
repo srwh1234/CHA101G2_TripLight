@@ -1,7 +1,7 @@
 package com.tw.ai.controller;
 
-import com.tw.ai.common.Location;
-import com.tw.ai.service.aiService.AiService;
+import com.tw.ai.common.dto.Location;
+import com.tw.ai.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

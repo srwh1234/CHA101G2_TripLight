@@ -1,13 +1,13 @@
-package com.tw.ai.service.aiService;
+package com.tw.ai.common.dto;
 
 
-import com.tw.ai.common.GetMethod;
+
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
 @Data
-public class AiFormData implements GetMethod {
+public class AiFormData{
 
     private int formId;
     private String destination;

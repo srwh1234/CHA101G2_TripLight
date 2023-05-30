@@ -1,8 +1,8 @@
 package com.tw.ai.controller;
 
-import com.tw.ai.common.Id;
-import com.tw.ai.service.aiService.AiFormData;
-import com.tw.ai.service.aiService.AiService;
+import com.tw.ai.common.dto.Id;
+import com.tw.ai.common.dto.AiFormData;
+import com.tw.ai.service.AiService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

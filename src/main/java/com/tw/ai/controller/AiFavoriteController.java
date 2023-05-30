@@ -1,8 +1,8 @@
 package com.tw.ai.controller;
 
-import com.google.gson.Gson;
+
 import com.tw.ai.entity.aIFavorite.AiFavorite;
-import com.tw.ai.service.aiService.AiService;
+import com.tw.ai.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +19,7 @@ public class AiFavoriteController {
     // 將AI行程收藏傳至前端
     @GetMapping("/getAiFavorite/{memberId}")
     public List<AiFavorite> getAiFavorite(@PathVariable("memberId") String memberId){
-        List<AiFavorite> result = aiService.findAIFavoriteFromMemberId(5);
-        return result;
+        return aiService.findAIFavoriteFromMemberId(5);
     }
     // 存入資料庫
     @PostMapping("/processResultData/{memberId}")

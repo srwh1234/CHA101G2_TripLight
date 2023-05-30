@@ -1,10 +1,11 @@
-package com.tw.ai.service.aiService;
+package com.tw.ai.service;
 
 
 import com.tw.ai.common.ChatGPTAPI;
 import com.tw.ai.common.GetLocation;
 import com.tw.ai.common.GetMethod;
-import com.tw.ai.common.Location;
+import com.tw.ai.common.dto.AiFormData;
+import com.tw.ai.common.dto.Location;
 import com.tw.ai.dao.DataDAO;
 import com.tw.ai.entity.aIFavorite.AiFavorite;
 import com.tw.ai.entity.aIFavorite.AiLocations;
@@ -24,8 +25,7 @@ public class AiService implements GetMethod {
     private final GetLocation getLocation;
     private final Map<String, AiFormData> formDataList;
     private int id;
-    private Map<String, Long> lastHeartbeatMap;
-
+    private final Map<String, Long> lastHeartbeatMap;
 
     @Autowired
     public AiService(DataDAO dataDAO, ChatGPTAPI chatGPTAPI, Map<String, AiFormData> formDataList, GetLocation getLocation) {

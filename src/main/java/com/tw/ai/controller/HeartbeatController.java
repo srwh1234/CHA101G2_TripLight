@@ -1,6 +1,6 @@
 package com.tw.ai.controller;
 
-import com.tw.ai.service.aiService.AiService;
+import com.tw.ai.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
