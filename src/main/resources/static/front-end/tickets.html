@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <title>TripLight | Tickets</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -211,6 +212,7 @@
   <!-- 正文結束 -->
 
 </head>
+
 <body>
   <!-- header -->
   <header>
@@ -551,7 +553,7 @@
     let resultHot = [];
     let resultSearch =
     {
-      curPage: 1,
+      curPage: 0,
       totalPage: 10,
       tickets: []
     };
@@ -611,31 +613,51 @@
       }
       //搜尋按鈕的事件
       $('#btnSearch').on('click', function () {
-        doSearch();
+        doSearch(0);
       });
 
       //票券類型的按鈕
       $(document).on('click', '[id^="ticketType"]', function () {
-        doSearch();
+        doSearch(0);
       });
       // 全選按鈕的事件
       $(document).on('click', '#allTicketZone', function () {
         const checked = $(this).prop('checked');
         $('[id^="ticketZone"]').prop('checked', checked);
-        doSearch();
+        doSearch(0);
       });
       // 縣市按鈕的事件
       $(document).on('click', '[id^="ticketZone"]', function () {
         const allChecked = ($('[id^="ticketZone"]:checked').length == taiwanCities.length);
         $('#allTicketZone').prop('checked', allChecked);
-        doSearch();
+        doSearch(0);
+      });
+
+      //分頁的按鈕事件
+      $(document).on('click', '#searchPagination a', function (e) {
+        e.preventDefault();
+
+        const page = $(this).attr('aria-label');
+
+        if (page === "Previous") {
+          doSearch(Math.max(resultSearch.curPage - 1, 0));
+        } else if (page === "Next") {
+          doSearch(Math.min(resultSearch.curPage + 1, resultSearch.totalPage));
+        } else if (!isNaN(page)) {
+          doSearch(page);
+        }
+
+        //跳回容器頂端
+        $("html, body").animate({
+          scrollTop: $('#ticketSearchText').offset().top,
+        }, 100);
       });
 
       //渲染頁面
       render_collapse_types();
       render_collapse_cities();
 
-      render();     
+      render();
     });
 
     function render() {
@@ -665,8 +687,8 @@
           render_hot(); //以後要移除
         });
 
-        //預設搜尋
-        doSearch();
+      //預設搜尋
+      doSearch(0);
     }
 
     function render_rnd() {
@@ -770,9 +792,11 @@
                 </a>
               </li>
           `);
-          for (let i = 1; i <= resultSearch.totalPage; i++) {
+          for (let i = 0; i < resultSearch.totalPage; i++) {
             $('#searchPagination ul').append(`         
-              <li class="page-item"><a class="page-link ${i == resultSearch.curPage ? 'active' : ''}" href="#">${i}</a></li>
+              <li class="page-item">
+                <a class="page-link ${i == resultSearch.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
+              </li>
           `);
           }
           $('#searchPagination ul').append(`                    
@@ -813,7 +837,7 @@
           </div>
           `
       );
-     
+
       taiwanCities.forEach((v, i) => {
         $('#collapseTwo .accordion-body').append(
           `
@@ -838,12 +862,12 @@
     };
 
     // 送出搜尋條件
-    function doSearch() {
+    function doSearch(curPage) {
       const condition = {
         keyword: $('#ticketSearchText').val(),
         types: [],
         cities: [],
-        page: 0,
+        page: curPage,
         size: 5,
       };
 
@@ -887,4 +911,5 @@
 <!-- login顯示 -->
 <script src="./js/Login.js"></script>
 <!-- login顯示 -->
+
 </html>
