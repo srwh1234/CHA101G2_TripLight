@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class AiFormData implements GetMethod {
 
-    private int id;
+    private int formId;
     private String destination;
     private int travelDays;
     private int people;
@@ -20,15 +20,15 @@ public class AiFormData implements GetMethod {
     private String otherDemands;
 
 
-    public void setData(String formData) {
-        destination = extractValue(formData, "1.目的地:");
-        travelDays = Integer.parseInt(extractValue(formData, "2.旅行天數:"));
-        people = Integer.parseInt(extractValue(formData, "3.人數:"));
-        budgetRange = extractValue(formData, "4.預算:");
-        preferredStyle = extractValue(formData, "5.偏好旅遊風格:");
-        sightseeingValues = extractValue(formData, "6.偏好景點:");
-        activitiesValues = extractValue(formData, "7.偏好活動:");
-        otherDemands = extractValue(formData, "8.其他需求：");
-    }
 
+    public String toMessage() {
+        return "1.目的地:" + destination + "\n" +
+               "2.旅行天數:" + travelDays + "\n" +
+               "3.人數:" + people + "\n" +
+               "4.預算:" + budgetRange + "台幣\n" +
+               "5.偏好旅遊風格:" + preferredStyle + "\n" +
+               "6.偏好景點:" + sightseeingValues + "\n" +
+               "7.偏好活動:" + activitiesValues + "\n" +
+               "8.其他需求：" + otherDemands;
+    }
 }

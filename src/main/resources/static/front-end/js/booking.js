@@ -5,6 +5,7 @@ const form = document.getElementById("myForm");
 
 let sightseeingValues; // 偏好景點
 let activitiesValues; // 偏好活動
+let formId;
 
 $(".select-input").blur(function () {
   sightseeingValues = "";
@@ -40,54 +41,55 @@ form.addEventListener("submit", async function (event) {
     message = message.slice(0, 100);
   }
 
-  // 取得地點
-  // 将变量存储在sessionStorage中
-  sessionStorage.setItem("destination", destination);
-
-  const send = `
-1.目的地:${destination}
-2.旅行天數:${travelDays}
-3.人數:${people}
-4.預算:${budgetRange}台幣
-5.偏好旅遊風格:${preferredStyle}
-6.偏好景點:${sightseeingValues}
-7.偏好活動:${activitiesValues}
-8.其他需求：${message}`;
-  console.log(send);
-
-  // 存入sessionStorage
-  sessionStorage.setItem("formdata", send);
-
-  //   將資料傳至後台;
-  $.ajax({
-    url: "/processVariable",
-    type: "POST",
-    data: { variable: send },
-    // 當請求成功時，將伺服器返回的response印出到console中
-    success: function (response) {
+  // TODO: 傳送表單資料物件
+  let formData = {
+    formId: formId,
+    destination: destination,
+    travelDays: travelDays,
+    people: people,
+    budgetRange: budgetRange,
+    preferredStyle: preferredStyle,
+    sightseeingValues: sightseeingValues,
+    activitiesValues: activitiesValues,
+    otherDemands: message,
+  };
+  // 傳送物件
+  axios
+    .post("/processFormData", formData)
+    .then((response) => {
       console.log(response);
-    },
-    // 當請求失敗時，將錯誤訊息印出到console中
-    error: function (xhr) {
-      console.log(xhr.responseText);
-    },
-  });
-
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   window.location.href = "ai_planning_results.html";
 });
 
 // 獲取 session ID
-$.ajax({
-  url: "/getSessionId",
-  type: "GET",
-  success: function (response) {
-    let sessionId = response;
-    console.log("Session ID: " + sessionId);
+axios
+  .get("/getSessionId")
+  .then((response) => {
+    let data = response.data;
+    sessionStorage.setItem("sessionId", data.sessionId);
+    formId = data.formId;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-    sessionStorage.setItem("sessionId", sessionId);
-    // 在这里进行后续操作，使用sessionId发送请求或进行其他逻辑处理
-  },
-  error: function (error) {
-    console.log("Error retrieving Session ID: " + error);
-  },
-});
+// $.ajax({
+//   url: "/getSessionId",
+//   type: "GET",
+//   success: function (response) {
+//     let data = response.data;
+
+//     let sessionId = response;
+//     console.log("Session ID: " + sessionId);
+
+//     sessionStorage.setItem("sessionId", sessionId);
+//     // 在这里进行后续操作，使用sessionId发送请求或进行其他逻辑处理
+//   },
+//   error: function (error) {
+//     console.log("Error retrieving Session ID: " + error);
+//   },
+// });

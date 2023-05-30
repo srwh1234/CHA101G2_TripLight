@@ -42,7 +42,7 @@ public class AiService implements GetMethod {
         var aiFormData = formDataList.get(memberId);
         AiFavorite aiFavorite = new AiFavorite();
 
-        aiFavorite.setAiFavoriteId(aiFormData.getId());
+        aiFavorite.setAiFavoriteId(aiFormData.getFormId());
         aiFavorite.setDestination(aiFormData.getDestination());
         aiFavorite.setTravelDays(aiFormData.getTravelDays());
         aiFavorite.setPeople(aiFormData.getPeople());
@@ -82,7 +82,7 @@ public class AiService implements GetMethod {
         return dataDAO.findAIFavoriteFromMemberId(memberId);
     }
 
-    public void startChatGPT(String memberId, String formData) {
+    public void startChatGPT(String memberId, AiFormData formData) {
         chatGPTAPI.start(memberId, formData);
     }
 
@@ -112,12 +112,14 @@ public class AiService implements GetMethod {
         lastHeartbeatMap.remove(memberId);
     }
 
-    public void setFormData(String memberId, String formData) {
+    public void setFormDataList(String memberId, AiFormData formData) {
+        formDataList.put(memberId, formData);
+    }
+
+
+    public int getFormId(){
         id++;
-        formDataList.put(memberId, new AiFormData());
-        formDataList.get(memberId).setData(formData);
-        formDataList.get(memberId).setId(id);
-        System.out.println("新增表單編號：" + id);
+        return id;
     }
 
     public String getDestination(String memberId) {

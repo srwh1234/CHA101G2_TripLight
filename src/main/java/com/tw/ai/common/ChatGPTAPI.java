@@ -3,6 +3,7 @@ package com.tw.ai.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.tw.ai.service.aiService.AiFormData;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -61,9 +62,9 @@ public class ChatGPTAPI {
     }
 
 
-    public void start(String sessionID,String message) {
+    public void start(String sessionID, AiFormData formData) {
         locations.clear();
-        destinationInput.put(sessionID,message);  // 拿取資料
+        destinationInput.put(sessionID,formData.getDestination());  // 拿取資料
         String message1 = """
 你今後的對話中，請幫我規畫行程，請用繁體中文回覆，
 花費的部分幫我用當地貨幣計價
@@ -78,7 +79,7 @@ public class ChatGPTAPI {
         
 備註：[備註]
 需考慮每個地點的路程距離，地點名稱須加上地名
-        """ + message;
+        """ + formData.toMessage();
 
         String tempinput = "";   // 每次呼叫，都會清空內容
 
@@ -146,7 +147,7 @@ public class ChatGPTAPI {
     private void getLocation(String sessionID, String input) {
         Pattern pattern = Pattern.compile("地點名稱[：:](.*?)\\\\n");
         Matcher matcher = pattern.matcher(input);
-        String destination = getDestination(destinationInput.get(sessionID));  // FIXME:這邊要修
+        String destination = destinationInput.get(sessionID);  // FIXME:這邊要修
         locations.put(sessionID, new ArrayList<>());
 
         while (matcher.find()) {
