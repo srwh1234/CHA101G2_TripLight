@@ -18,16 +18,12 @@ public class AiFavoriteController {
     }
     // 將AI行程收藏傳至前端
     @GetMapping("/getAiFavorite/{memberId}")
-    @ResponseBody
-    public String getAiFavorite(@PathVariable("memberId") String memberId){
+    public List<AiFavorite> getAiFavorite(@PathVariable("memberId") String memberId){
         List<AiFavorite> result = aiService.findAIFavoriteFromMemberId(5);
-        System.out.println(memberId);
-        var gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
     // 存入資料庫
     @PostMapping("/processResultData/{memberId}")
-    @ResponseBody
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
         int aiFavoriteId = aiService.save(resultData, resultUrl, memberId);
         aiService.saveLocation(memberId, aiFavoriteId);

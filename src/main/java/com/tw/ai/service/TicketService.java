@@ -23,7 +23,7 @@ public class TicketService implements GetMethod {
         this.ticketImageRepository = ticketImageRepository;
     }
 
-    public String getTicket(String destination){
+    public List<Ticket> getTicket(String destination){
         List<Ticket> result = ticketRepository.findByCityContaining(destination);
         for(var ticket:result){
             var ticketImg = ticketImageRepository.findByTicketId(1);
@@ -33,7 +33,6 @@ public class TicketService implements GetMethod {
             ticket.setImgUrl(url);
             // 將圖片byte轉成url
         }
-        var gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 }

@@ -25,7 +25,7 @@ public class TripService implements GetMethod {
         this.tripImgDAO = tripImgDAO;
     }
 
-    public String getTrip(String destination){
+    public List<Trip> getTrip(String destination){
         List<Trip> result = tripDAO.findByCityContaining(destination);
         for(var trip:result){
             var tripImg = tripImgDAO.findByTripId(1);  // TODO:這邊要改
@@ -34,8 +34,7 @@ public class TripService implements GetMethod {
             // 將圖片byte轉成url
             trip.setImgUrl(url);
         }
-        var gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
 

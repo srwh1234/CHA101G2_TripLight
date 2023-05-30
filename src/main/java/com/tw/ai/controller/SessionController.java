@@ -19,18 +19,8 @@ public class SessionController {
     }
 
     // 接收表單資料
-//    @PostMapping("/processVariable")
-//    public String processVariable(@RequestParam("variable") String variable, HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        String sessionId = session.getId();
-//        aiService.setFormData(sessionId,variable);
-//        aiService.startChatGPT(sessionId, variable);
-//        return "success";
-//    }
-
-    // 接收表單資料
     @PostMapping("/processFormData")
-    public ResponseEntity<String> getFormData(@RequestBody AiFormData formDara, HttpServletRequest request){
+    public ResponseEntity<String> processFormData(@RequestBody AiFormData formDara, HttpServletRequest request){
         HttpSession session = request.getSession();
         String sessionId = session.getId();
 
