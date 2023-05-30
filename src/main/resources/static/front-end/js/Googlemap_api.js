@@ -14,10 +14,11 @@ function getArray() {
       // locations為收到的緯度資料陣列
       console.log("發起請求：請求緯度資料");
       // 遍歷locations 並將字串轉為number 生成新陣列data
-      data = locations.map((location) => {
+      console.log(locations);
+      const data = locations.map((location) => {
         return {
-          lat: Number(location.lat),
-          lng: Number(location.lng),
+          lat: location.latitude,
+          lng: location.longitude,
         };
       });
 

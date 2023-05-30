@@ -24,8 +24,6 @@ public class ChatGPTAPI {
 
     private Map<String, String> destinationInput = new HashMap<>();
     public Map<String,ArrayList<String>> locations = new HashMap<>();
-
-    // TODO:這邊的output要改成MAP, key值要加上sessionID, 確保傳給對應的使用者
     private Map<String, String> output = new HashMap<>();
 
     private static final String API_KEY = APIKey.getApiKey();

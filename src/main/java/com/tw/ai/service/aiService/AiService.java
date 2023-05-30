@@ -4,6 +4,7 @@ package com.tw.ai.service.aiService;
 import com.tw.ai.common.ChatGPTAPI;
 import com.tw.ai.common.GetLocation;
 import com.tw.ai.common.GetMethod;
+import com.tw.ai.common.Location;
 import com.tw.ai.dao.DataDAO;
 import com.tw.ai.entity.aIFavorite.AiFavorite;
 import com.tw.ai.entity.aIFavorite.AiLocations;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 @Service
 public class AiService implements GetMethod {
@@ -90,12 +90,12 @@ public class AiService implements GetMethod {
         return chatGPTAPI.getOutput(memberId);
     }
 
-    public String getLatitudeAndLongitude(String memberId) {
+    public ArrayList<Location> getLatitudeAndLongitude(String memberId) {
         var locations = chatGPTAPI.locations.get(memberId);
         // 將地點轉成經緯度 如果為空陣列，就不要執行了
         if (locations != null && !locations.isEmpty()) {
             getLocation.start(memberId, locations);
-            return getLocation.locations.get(memberId).toString();
+            return getLocation.locations.get(memberId);
         }
         return null;
     }

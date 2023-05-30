@@ -41,7 +41,7 @@ form.addEventListener("submit", async function (event) {
     message = message.slice(0, 100);
   }
 
-  // TODO: 傳送表單資料物件
+  // 傳送表單資料物件
   let formData = {
     formId: formId,
     destination: destination,
