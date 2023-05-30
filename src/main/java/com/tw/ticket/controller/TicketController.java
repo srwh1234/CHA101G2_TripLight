@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.model.Ticket;
@@ -40,6 +41,12 @@ public class TicketController {
 	@PostMapping("/searchtickets")
 	public SearchResponse searchTickets(@RequestBody final SearchRequest searchRequest) {
 		return ticketService.getSearch(searchRequest);
+	}
+
+	@GetMapping("/front-end/tickets_detail.html")
+	public List<RadAndHotResponse> test(@RequestParam("id") final Long id) {
+		System.out.println("id=" + id);
+		return null;
 	}
 
 	// 定義請求物件
