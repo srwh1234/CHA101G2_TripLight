@@ -15,6 +15,10 @@ import com.tw.ticket.service.impl.ImageServiceImpl;
 @RequestMapping("/TripLight")
 public class ImageController {
 
+	// XXX http://localhost:8080 VsCode測試才要加
+	// 獲得圖片的URL
+	public static String IMG_URL = "http://localhost:8080/TripLight/img/";
+
 	@Autowired
 	private ImageServiceImpl imageService;
 

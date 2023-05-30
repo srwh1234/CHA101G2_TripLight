@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.model.Ticket;
-import com.tw.ticket.model.TicketImage;
 import com.tw.ticket.service.TicketService;
 
 import lombok.Data;
@@ -71,14 +70,7 @@ public class TicketController {
 			this.ratingPerson = ticket.getRatingCount();
 			this.city = ticket.getCity();
 			this.description = ticket.getDescription();
-
-			// XXX http://localhost:8080 VsCode測試才要加
-			if (ticket.getTicketImages().isEmpty()) {
-				this.image = String.format("http://localhost:8080/TripLight/img/%d", 0);
-			} else {
-				final TicketImage ticketImage = ticket.getTicketImages().get(0);
-				this.image = String.format("http://localhost:8080/TripLight/img/%d", ticketImage.getId());
-			}
+			this.image = ticket.getImgUrlEx(0);
 		}
 
 		private final int ticketId;

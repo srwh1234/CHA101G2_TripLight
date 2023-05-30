@@ -1,5 +1,7 @@
 package com.tw.ticket.model;
 
+import static com.tw.ticket.controller.ImageController.IMG_URL;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -62,11 +64,36 @@ public class Ticket implements Serializable {
 	private Integer ratingCount;// 評價人數
 
 	@Transient
-	private String imgUrl;   // 圖片url
+	private String imgUrl;   // 圖片url ???
 
 	// 逆向 cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ticket_id")
 	private List<TicketImage> ticketImages = new ArrayList<>();
+
+	// 獲得指定索引的圖片路徑
+	public String getImgUrlEx(final int index) {
+		if (ticketImages.isEmpty()) {
+			return IMG_URL + 0;
+		}
+		if (index >= ticketImages.size()) {
+			return IMG_URL + 0;
+		}
+		final TicketImage img = ticketImages.get(index);
+		return IMG_URL + img.getId();
+	}
+
+	// 獲得指定索引的圖片路徑的陣列
+	public ArrayList<String> getImgUrlExs() {
+		final ArrayList<String> result = new ArrayList<>();
+		if (ticketImages.isEmpty()) {
+			result.add(IMG_URL + 0);
+			return result;
+		}
+		ticketImages.forEach(img -> {
+			result.add(IMG_URL + img.getId());
+		});
+		return result;
+	}
 
 }
