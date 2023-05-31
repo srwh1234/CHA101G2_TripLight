@@ -1,46 +1,51 @@
 package com.tw.ai.entity.aIFavorite;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import com.tw.ticket.model.TicketImage;
+import jakarta.persistence.*;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 // 建立實體
 @Data
 @Entity
-@Table(name = "ai_favorite")
-public class AiFavorite{
+@NoArgsConstructor
+@AllArgsConstructor
+public class AiFavorite implements Serializable {
     // 設定欄位
     @Id
-    @Column(name = "ai_favorite_id")
-    private int aiFavoriteId;
+    private int aiFavoriteId;                 // 流水號
 
-    @Column(name = "destination", nullable = false)
-    private String destination;
+    private String destination;               // 目的地
 
-    @Column(name = "travel_days", nullable = false)
-    private int travelDays;
-    @Column(name = "people", nullable = false)
-    private int people;
-    @Column(name = "budget_range", nullable = false)
-    private String budgetRange;
+    private int travelDays;                   // 旅遊天數
 
-    @Column(name = "preferred_style")
-    private String preferredStyle;
+    private int people;                       // 人數
 
-    @Column(name = "other_demands")
-    private String otherDemands;
+    private String budgetRange;               // 預算範圍
 
-    @Column(name = "planning_description", nullable = false, columnDefinition = "TEXT")
-    private String planningDescription;
-    @Column(name = "route")
-    private String route;
+    private String preferredStyle;            // 喜好旅遊風格
 
-    @Column(name = "member_id")
-    private int memberId;
+    private String otherDemands;              // 其他要求
+
+    private String planningDescription;       // AI規劃結果
+
+    private String route;                     // 行程路線
+
+    private int memberId;                     // 會員ID
+
+    // cascade表示存檔時 也一起寫入AiLocations
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "aiFavoriteId")
+    private List<AiLocations> aiLocations = new ArrayList<>();
 }
 
 

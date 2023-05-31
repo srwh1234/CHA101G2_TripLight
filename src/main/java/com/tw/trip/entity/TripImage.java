@@ -3,25 +3,20 @@ package com.tw.trip.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Data
-@Table(name = "trip_image")
-public class TripImage {
+public class TripImage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "trip_id")
     private int tripId;
 
-    @Lob
-    @Column(name = "image")
     private byte[] image;
 
-    @Column(name = "upload_time")
     private Timestamp uploadTime;
 }
