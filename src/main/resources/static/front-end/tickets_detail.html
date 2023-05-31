@@ -614,7 +614,7 @@
 
     };
 
-    const resultComment =
+    let resultComment =
     {
       allPage: 3,
       curPage: 1,
@@ -625,7 +625,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
 
-      fetch(`http://localhost:8080/TripLight/ticketdetail?id=${id ?? 0}`)
+      fetch(`http://localhost:8080/ticketdetail?id=${id ?? 0}`)
         .then(response => response.json())
         .then(data => {
           //console.log(data);
@@ -636,18 +636,52 @@
           render_price();
           render_content();
           render_note();
-          render_commnet(resultComment.comments);
+
         })
         .catch(error => {
           console.log(error);
           //回首頁         
-         // window.location.href = "tickets.html";
+          // window.location.href = "tickets.html";
           //渲染頁面 這邊以後要拿掉
           render_carousel();
           render_title();
           render_price();
           render_content();
           render_note();
+
+        });
+
+      fetch_comment(0);
+    }
+
+    function fetch_comment(curPage) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      const json = {
+        ticketId: id,
+        page: curPage,
+        size: 5,
+      }
+
+      fetch('http://localhost:8080/ticketcomments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json),
+      })
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data);
+          resultComment = data;
+          //渲染頁面         
+          render_commnet(resultComment.comments);
+        })
+        .catch(error => {
+          console.log(error);
+          //回首頁         
+          // window.location.href = "tickets.html";
+          //渲染頁面 這邊以後要拿掉         
           render_commnet(resultComment.comments);
         });
     }
@@ -740,14 +774,21 @@
 
       //更多評論
       $(document).on('click', '#btnMore', function () {
-        const index = resultComment.curPage * 10;
+
         resultComment.curPage++;
 
         if (resultComment.curPage >= resultComment.allPage) {
           $(this).remove();
         }
 
+        if (resultComment.comments) {
+          render_commnet(resultComment.comments);
+          return;
+        }
+
+
         const pageComments = [];
+        const index = resultComment.curPage * 10;
         for (let i = 1; i <= 10; i++) {
           const comments = {
             memberName: `會員名稱${(i + index)}`,
@@ -757,7 +798,6 @@
             postTime: '2023/06/21',
             lastEditTime: '2023/06/21'
           }
-
           pageComments.push(comments);
         }
         render_commnet(pageComments);
@@ -782,7 +822,7 @@
         resultComment.comments.push(comments);
       }
 
-    
+
     });
 
 
@@ -935,23 +975,25 @@
     //會員評論
     function render_commnet(pageComments) {
       for (let comment of pageComments) {
+
+        console.log(comment);
         $('#ticketComment ul').append(
           `
         <li class="list-group-item1 my-3">
               <div class="row">
                 <div class="col-12 col-lg-2 d-flex justify-content-center">
                   <div>
-                    <img src="${comment.memberPhoto}" class="rounded-circle" width="70" height="70">
+                    <img src="data:image/png;base64,${comment.member.memberPic}" class="rounded-circle" width="70" height="70">
                   </div>
                 </div>
                 <div class="col-12 col-lg-10">
-                  <div class="fw-bold">${comment.memberName}</div>
+                  <div class="fw-bold">${(comment.member.memberNameLast+comment.member.memberNameFirst)}</div>
                   <div class="my-ratings my-text-lightgray mt-2 mb-3">
-                    <i class="fa fa-star ${comment.memberRating >= 1 ? 'on' : ''}"></i>
-                    <i class="fa fa-star ${comment.memberRating >= 2 ? 'on' : ''}"></i>
-                    <i class="fa fa-star ${comment.memberRating >= 3 ? 'on' : ''}"></i>
-                    <i class="fa fa-star ${comment.memberRating >= 4 ? 'on' : ''}"></i>
-                    <i class="fa fa-star ${comment.memberRating >= 5 ? 'on' : ''}"></i>
+                    <i class="fa fa-star ${comment.rating >= 1 ? 'on' : ''}"></i>
+                    <i class="fa fa-star ${comment.rating >= 2 ? 'on' : ''}"></i>
+                    <i class="fa fa-star ${comment.rating >= 3 ? 'on' : ''}"></i>
+                    <i class="fa fa-star ${comment.rating >= 4 ? 'on' : ''}"></i>
+                    <i class="fa fa-star ${comment.rating >= 5 ? 'on' : ''}"></i>
                     <span class="m-3">${comment.postTime}</span>
                   </div>
                   <div class="my-comment-bg p-3">

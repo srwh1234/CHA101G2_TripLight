@@ -662,7 +662,7 @@
 
     function render() {
       // 取回隨機票券
-      fetch(`http://localhost:8080/TripLight/rndtickets`)
+      fetch(`http://localhost:8080/rndtickets`)
         .then(response => response.json())
         .then(data => {
           // console.log(resultRnd);
@@ -675,7 +675,7 @@
         });
 
       // 取回熱門票券
-      fetch(`http://localhost:8080/TripLight/hottickets`)
+      fetch(`http://localhost:8080/hottickets`)
         .then(response => response.json())
         .then(data => {
           // console.log(data);
@@ -884,7 +884,7 @@
       // console.log(condition);
       oldCondition = condition;
 
-      fetch(`http://localhost:8080/TripLight/searchtickets`, {
+      fetch(`http://localhost:8080/searchtickets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

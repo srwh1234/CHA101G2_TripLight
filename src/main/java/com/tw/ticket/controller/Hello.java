@@ -4,15 +4,14 @@ import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
 import com.tw.ticket.dao.TicketCartRepository;
 import com.tw.ticket.dao.TicketOrderRepository;
-import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.dao.TicketRepository;
+import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketCart;
 import com.tw.ticket.model.TicketOrder;
@@ -20,7 +19,6 @@ import com.tw.ticket.model.TicketOrderDetail;
 import com.tw.ticket.model.TicketSn;
 
 @RestController
-@RequestMapping("/TripLight")
 public class Hello {
 
 	@Autowired
@@ -66,8 +64,7 @@ public class Hello {
 		});
 
 		// 找出訂單編號1號
-		System.out.println(ticketOrderRepository.findById(1L).get()
-				.getTicketOrderDetails().size());
+		System.out.println(ticketOrderRepository.findById(1L).get().getTicketOrderDetails().size());
 
 		// 測試寫入
 		final TicketSn sn = ticketSnRepository.findById(9L).get();

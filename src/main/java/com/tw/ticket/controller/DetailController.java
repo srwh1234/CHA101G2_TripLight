@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,6 @@ import lombok.Data;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/TripLight")
 public class DetailController {
 
 	@Autowired
@@ -29,12 +29,13 @@ public class DetailController {
 	private CommentService commentService;
 
 	@GetMapping("/ticketdetail")
-	public DetailResponse test(@RequestParam("id") final Long id) {
-
-		// test
-		commentService.getComment(id);
-
+	public DetailResponse ticketInfo(@RequestParam("id") final Long id) {
 		return ticketService.getTicket(id);
+	}
+
+	@PostMapping("/ticketcomments")
+	public CommentResponse comments(@RequestBody final SearchRequest searchRequest) {
+		return commentService.getComment(searchRequest);
 	}
 
 	// 定義回傳物件
@@ -89,5 +90,13 @@ public class DetailController {
 		private int allPage;
 		private int curPage;
 		private ArrayList<TicketComment> comments = new ArrayList<>();
+	}
+
+	// 定義請求物件
+	@Data
+	public static class SearchRequest {
+		private int ticketId;
+		private int page;
+		private int size;
 	}
 }
