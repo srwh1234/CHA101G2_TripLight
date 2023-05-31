@@ -2,8 +2,6 @@ package com.tw.ticket.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
