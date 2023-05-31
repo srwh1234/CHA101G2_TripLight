@@ -18,7 +18,7 @@ public class TicketSn implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer ticketSnId;// 票券序號編號
+	private Long ticketSnId;// 票券序號編號
 
 	@ManyToOne
 	@JoinColumn(name = "ticket_id")

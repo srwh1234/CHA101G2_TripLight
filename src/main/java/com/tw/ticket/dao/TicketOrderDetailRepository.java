@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.tw.ticket.model.TicketOrderDetail;
 
 @Repository
-public interface TicketOrderDetailRepository extends
-		JpaRepository<TicketOrderDetail, Long> {
+public interface TicketOrderDetailRepository extends JpaRepository<TicketOrderDetail, Long> {
 	//
 }

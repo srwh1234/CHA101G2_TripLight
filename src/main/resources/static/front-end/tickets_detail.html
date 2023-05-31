@@ -691,14 +691,29 @@
       //去後端拿資料
       fetch_data();
 
+
       //加入購物車的按鈕
       $(document).on('click', '#btnAddToCart', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+
         const post = {
-          memberId: 0,
-          ticketId: 0,
+          memberId: 1,
+          ticketId: id,
           quantity: parseInt($('#inputQuantity').val()),
         };
-        console.log(post)
+        fetch('http://localhost:8080/ticketcart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(post),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => console.log(error));
       });
 
       // 減少數量的按鈕點擊事件
@@ -774,19 +789,14 @@
 
       //更多評論
       $(document).on('click', '#btnMore', function () {
-
         resultComment.curPage++;
-
-        if (resultComment.curPage >= resultComment.allPage) {
-          $(this).remove();
-        }
 
         if (resultComment.comments) {
           render_commnet(resultComment.comments);
           return;
         }
 
-
+        //以下以後不要
         const pageComments = [];
         const index = resultComment.curPage * 10;
         for (let i = 1; i <= 10; i++) {
@@ -809,9 +819,12 @@
       }
       for (let i = 1; i <= 10; i++) {
         const comments = {
-          memberName: `會員名稱${i}`,
-          memberPhoto: `https://picsum.photos/300/200/?random=${i}`,
-          memberRating: Math.trunc((Math.random() * 5) + 1),
+          member: {
+            memberNameLast: '會員名稱',
+            memberNameFirst: `${i}`,
+            memberPic: '',
+          },
+          rating: Math.trunc((Math.random() * 5) + 1),
           comment: `評論內容${i}<br>第2行<br>第3行<br>第4行<br>第5行`,
           postTime: '2023/06/21',
           lastEditTime: '2023/06/21'
@@ -821,8 +834,6 @@
         }
         resultComment.comments.push(comments);
       }
-
-
     });
 
 
@@ -972,14 +983,21 @@
       );
     }
 
+    //日期格式
+    function df(dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
+      const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
+      return `${year}/${month}/${day}`;
+    }
+
     //會員評論
     function render_commnet(pageComments) {
       for (let comment of pageComments) {
-
-        console.log(comment);
         $('#ticketComment ul').append(
           `
-        <li class="list-group-item1 my-3">
+            <li class="list-group-item1 my-3">
               <div class="row">
                 <div class="col-12 col-lg-2 d-flex justify-content-center">
                   <div>
@@ -987,19 +1005,21 @@
                   </div>
                 </div>
                 <div class="col-12 col-lg-10">
-                  <div class="fw-bold">${(comment.member.memberNameLast+comment.member.memberNameFirst)}</div>
+                  <div class="fw-bold">${comment.member.memberNameLast + comment.member.memberNameFirst}</div>
                   <div class="my-ratings my-text-lightgray mt-2 mb-3">
                     <i class="fa fa-star ${comment.rating >= 1 ? 'on' : ''}"></i>
                     <i class="fa fa-star ${comment.rating >= 2 ? 'on' : ''}"></i>
                     <i class="fa fa-star ${comment.rating >= 3 ? 'on' : ''}"></i>
                     <i class="fa fa-star ${comment.rating >= 4 ? 'on' : ''}"></i>
                     <i class="fa fa-star ${comment.rating >= 5 ? 'on' : ''}"></i>
-                    <span class="m-3">${comment.postTime}</span>
+                    <span class="m-3">${df(comment.postTime)}</span>
                   </div>
                   <div class="my-comment-bg p-3">
                     <div class="my-text-content">${comment.comment}</div>
                     <div class="d-flex">
-                      <div class="text-muted small ms-auto">${comment.lastEditTime ? '編輯時間' + comment.lastEditTime : ''}</div>
+                      <div class="text-muted small ms-auto">
+                        ${comment.lastEditTime ? '編輯時間 ' + df(comment.lastEditTime) : ''}
+                      </div>
                     </div>
                   </div>
                   <hr class="my-5">
@@ -1008,6 +1028,9 @@
             </li>
         `
         );
+      }
+      if (resultComment.curPage >= resultComment.allPage) {
+        $('#btnMore').remove();
       }
     }
 

@@ -20,7 +20,7 @@ public class Coupon implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer couponId;// 優惠券編號
+	private Long couponId;// 優惠券編號
 
 	private String name;// 優惠券名稱
 

@@ -12,5 +12,5 @@ import com.tw.ticket.model.TicketOrder;
 public interface TicketOrderRepository extends JpaRepository<TicketOrder, Long> {
 
 	// 找出同一個Member的TicketOrder
-	List<TicketOrder> findByMember(Member member);
+	public List<TicketOrder> findByMember(Member member);
 }

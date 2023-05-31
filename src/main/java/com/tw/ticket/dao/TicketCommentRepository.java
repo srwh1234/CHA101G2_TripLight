@@ -9,6 +9,7 @@ import com.tw.ticket.model.TicketComment;
 
 @Repository
 public interface TicketCommentRepository extends JpaRepository<TicketComment, Long> {
+
 	// 取得指定票券編號的評論
 	public Page<TicketComment> findAllByTicketId(final long ticketId, Pageable pageable);
 }

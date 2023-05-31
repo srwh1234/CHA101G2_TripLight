@@ -28,11 +28,13 @@ public class DetailController {
 	@Autowired
 	private CommentService commentService;
 
+	// 票券細項
 	@GetMapping("/ticketdetail")
 	public DetailResponse ticketInfo(@RequestParam("id") final Long id) {
 		return ticketService.getTicket(id);
 	}
 
+	// 票券留言
 	@PostMapping("/ticketcomments")
 	public CommentResponse comments(@RequestBody final SearchRequest searchRequest) {
 		return commentService.getComment(searchRequest);
@@ -59,7 +61,7 @@ public class DetailController {
 			this.images = ticket.getImgUrlExs();
 		}
 
-		private int ticketId;
+		private long ticketId;
 		private String ticketType;
 		private String name;
 		private int price;

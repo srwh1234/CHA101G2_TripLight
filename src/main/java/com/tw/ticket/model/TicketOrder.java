@@ -28,7 +28,7 @@ public class TicketOrder implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer ticketOrderId;// 票券訂單編號
+	private Long ticketOrderId;// 票券訂單編號
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")

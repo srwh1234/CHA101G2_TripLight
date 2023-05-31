@@ -30,7 +30,7 @@ public class Ticket implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer ticketId;// 票券編號
+	private Long ticketId;// 票券編號
 
 	@OneToOne
 	@JoinColumn(name = "ticket_type_id")

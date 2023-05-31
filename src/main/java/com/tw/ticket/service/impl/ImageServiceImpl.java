@@ -18,6 +18,7 @@ public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private TicketImageRepository repository;
 
+	// 找出指定圖片 沒有則回傳預設圖片
 	@Override
 	public byte[] findImg(final long id) {
 		final Optional<TicketImage> optional = repository.findById(id);
@@ -36,10 +37,8 @@ public class ImageServiceImpl implements ImageService {
 			}
 			return bytes;
 		}
-		final TicketImage img = repository.findById(id).get();
 
-		return img.getImage();
-
+		return optional.get().getImage();
 	}
 
 }

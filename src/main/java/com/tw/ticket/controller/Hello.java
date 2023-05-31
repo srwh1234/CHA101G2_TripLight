@@ -8,21 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
-import com.tw.ticket.dao.TicketCartRepository;
 import com.tw.ticket.dao.TicketOrderRepository;
 import com.tw.ticket.dao.TicketRepository;
 import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
-import com.tw.ticket.model.TicketCart;
 import com.tw.ticket.model.TicketOrder;
 import com.tw.ticket.model.TicketOrderDetail;
 import com.tw.ticket.model.TicketSn;
 
 @RestController
 public class Hello {
-
-	@Autowired
-	private TicketCartRepository repository;
 
 	@Autowired
 	private TicketRepository repository2;
@@ -43,14 +38,14 @@ public class Hello {
 		final Member m = repository3.findById(1L).get();
 		final Ticket t = repository2.findById(1L).get();
 
-		System.out.println(repository.findByKeyMemberAndKeyTicket(m, t).getQuantity());
+		// System.out.println(repository.findByKeyMemberAndKeyTicket(m, t).getQuantity());
 
 		// 測試寫入
 
-		repository.save(new TicketCart(m, t, 58));
+		// repository.save(new TicketCart(m, t, 158));
 
 		// 測試查詢
-		System.out.println(repository.findByKeyMember(m).size());
+		// System.out.println(repository.findByKeyMember(m).size());
 
 		// 測試從指定使用者
 		// 找出訂單

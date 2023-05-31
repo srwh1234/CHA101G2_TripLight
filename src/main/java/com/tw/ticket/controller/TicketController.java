@@ -71,7 +71,7 @@ public class TicketController {
 			this.image = ticket.getImgUrlEx(0);
 		}
 
-		private final int ticketId;
+		private final long ticketId;
 		private final String name;
 		private final int price;
 		private final int rating;

@@ -18,10 +18,10 @@ public class TicketImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "ticket_id")
-	private Integer ticketId;
+	private Long ticketId;
 
 	@Lob
 	private byte[] image;
