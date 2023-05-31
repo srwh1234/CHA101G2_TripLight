@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TripImgDAO extends JpaRepository<TripImage, Integer> {
-
+public interface TripImageRepository extends JpaRepository<TripImage, Integer> {
     List<TripImage> findByTripId(int tripId);
 }
