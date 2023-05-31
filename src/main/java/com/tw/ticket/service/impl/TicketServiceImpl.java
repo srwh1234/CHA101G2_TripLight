@@ -3,6 +3,7 @@ package com.tw.ticket.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tw.trip.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -96,6 +97,17 @@ public class TicketServiceImpl implements TicketService {
 		});
 
 		return searchResponse;
+	}
+
+	// AI 行程，地點搜尋票券
+	@Override
+	public List<RadAndHotResponse> getTicket(String destination) {
+		final List<RadAndHotResponse> result = new ArrayList<>();
+
+		repository.findByCityContaining(destination).forEach(ticket -> {
+			result.add(new RadAndHotResponse(ticket));
+		});
+		return result;
 	}
 
 }
