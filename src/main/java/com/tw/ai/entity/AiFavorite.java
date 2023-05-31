@@ -1,8 +1,7 @@
-package com.tw.ai.entity.aIFavorite;
+package com.tw.ai.entity;
 
 
 
-import com.tw.ticket.model.TicketImage;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;

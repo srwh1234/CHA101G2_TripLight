@@ -1,7 +1,6 @@
 package com.tw.trip.entity;
 
 
-import com.tw.ai.entity.aIFavorite.AiLocations;
 import jakarta.persistence.*;
 import lombok.Data;
 

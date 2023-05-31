@@ -6,9 +6,9 @@ import com.tw.ai.common.GetLocation;
 import com.tw.ai.common.GetMethod;
 import com.tw.ai.common.dto.AiFormData;
 import com.tw.ai.common.dto.Location;
-import com.tw.ai.dao.DataDAO;
-import com.tw.ai.entity.aIFavorite.AiFavorite;
-import com.tw.ai.entity.aIFavorite.AiLocations;
+import com.tw.ai.dao.AiFavoriteRepository;
+import com.tw.ai.entity.AiFavorite;
+import com.tw.ai.entity.AiLocations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class AiService implements GetMethod {
 
-    private final DataDAO dataDAO;
+    private final AiFavoriteRepository aiFavoriteRepository;
     private final ChatGPTAPI chatGPTAPI;
     private final GetLocation getLocation;
     private final Map<String, AiFormData> formDataList;
@@ -28,8 +28,8 @@ public class AiService implements GetMethod {
     private final Map<String, Long> lastHeartbeatMap;
 
     @Autowired
-    public AiService(DataDAO dataDAO, ChatGPTAPI chatGPTAPI, Map<String, AiFormData> formDataList, GetLocation getLocation) {
-        this.dataDAO = dataDAO;
+    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTAPI chatGPTAPI, Map<String, AiFormData> formDataList, GetLocation getLocation) {
+        this.aiFavoriteRepository = aiFavoriteRepository;
         this.chatGPTAPI = chatGPTAPI;
         this.getLocation = getLocation;
         this.formDataList = formDataList;
@@ -53,7 +53,7 @@ public class AiService implements GetMethod {
         aiFavorite.setPlanningDescription(resultData);
         aiFavorite.setRoute(resultUrl);
 
-        dataDAO.save(aiFavorite);
+        aiFavoriteRepository.save(aiFavorite);
         System.out.println("存入資料的ID:" + aiFavorite.getAiFavoriteId());
 
         return aiFavorite.getAiFavoriteId();
@@ -69,17 +69,17 @@ public class AiService implements GetMethod {
             locations.setLocationTitle(location.getLocationTitle());
             locations.setLatitude(location.getLatitude());
             locations.setLongitude(location.getLongitude());
-            dataDAO.save(locations);
+            aiFavoriteRepository.save(locations);
             System.out.println("存入地點資料:" + locations);
         }
     }
 
     public int getLastId() {
-        return dataDAO.getLastId();
+        return aiFavoriteRepository.getLastId();
     }
 
     public List<AiFavorite> findAIFavoriteFromMemberId(int memberId) {
-        return dataDAO.findAIFavoriteFromMemberId(memberId);
+        return aiFavoriteRepository.findAIFavoriteFromMemberId(memberId);
     }
 
     public void startChatGPT(String memberId, AiFormData formData) {

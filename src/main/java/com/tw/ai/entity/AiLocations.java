@@ -1,4 +1,4 @@
-package com.tw.ai.entity.aIFavorite;
+package com.tw.ai.entity;
 
 
 import jakarta.persistence.*;

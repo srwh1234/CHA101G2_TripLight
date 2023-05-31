@@ -22,7 +22,5 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args)  {
         System.out.println("伺服器部屬完畢時執行");
-        var aiFavoriteFromMemberId = aiService.findAIFavoriteFromMemberId(3);
-        System.out.println(aiFavoriteFromMemberId.toString());
     }
 }

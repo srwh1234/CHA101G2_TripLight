@@ -2,8 +2,8 @@ package com.tw.ai.dao;
 
 
 
-import com.tw.ai.entity.aIFavorite.AiFavorite;
-import com.tw.ai.entity.aIFavorite.AiLocations;
+import com.tw.ai.entity.AiFavorite;
+import com.tw.ai.entity.AiLocations;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -18,11 +18,11 @@ import java.util.Objects;
 // Spring bean
 // 自動注入EntityManager
 @Repository
-public class DataDAOImpl implements DataDAO {
+public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
     private final EntityManager entityManager;  // 宣告entityManager
 
     @Autowired
-    public DataDAOImpl(EntityManager entityManager) {
+    public AiFavoriteRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
