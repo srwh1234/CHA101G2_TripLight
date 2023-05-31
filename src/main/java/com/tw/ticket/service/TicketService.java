@@ -6,6 +6,7 @@ import com.tw.ticket.controller.DetailController.DetailResponse;
 import com.tw.ticket.controller.TicketController.RadAndHotResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
+import com.tw.ticket.model.Ticket;
 
 public interface TicketService {
 
@@ -20,4 +21,8 @@ public interface TicketService {
 
 	// 搜尋票券
 	public SearchResponse getSearch(SearchRequest searchRequest);
+
+	// 取得票券
+
+	List<RadAndHotResponse> getTicket(String destination);
 }

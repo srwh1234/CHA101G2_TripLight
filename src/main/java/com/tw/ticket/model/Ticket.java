@@ -16,7 +16,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,9 +64,6 @@ public class Ticket implements Serializable {
 	private Integer ratingSum;// 累計評價分數
 
 	private Integer ratingCount;// 評價人數
-
-	@Transient
-	private String imgUrl;   // 圖片url ???
 
 	// cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
