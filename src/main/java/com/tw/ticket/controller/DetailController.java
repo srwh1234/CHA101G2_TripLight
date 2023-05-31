@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.model.Ticket;
+import com.tw.ticket.model.TicketComment;
+import com.tw.ticket.service.CommentService;
 import com.tw.ticket.service.TicketService;
 
 import lombok.Data;
@@ -23,8 +25,15 @@ public class DetailController {
 	@Autowired
 	private TicketService ticketService;
 
+	@Autowired
+	private CommentService commentService;
+
 	@GetMapping("/ticketdetail")
 	public DetailResponse test(@RequestParam("id") final Long id) {
+
+		// test
+		commentService.getComment(id);
+
 		return ticketService.getTicket(id);
 	}
 
@@ -73,5 +82,12 @@ public class DetailController {
 		private int price;
 		private Date startDate;
 		private Date endDate;
+	}
+
+	@Data
+	public static class CommentResponse {
+		private int allPage;
+		private int curPage;
+		private ArrayList<TicketComment> comments = new ArrayList<>();
 	}
 }

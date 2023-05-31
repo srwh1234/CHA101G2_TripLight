@@ -3,14 +3,10 @@ package com.tw.ticket.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.tw.member.model.Member;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,13 +22,9 @@ public class TicketComment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;// 流水號
 
-	@ManyToOne
-	@JoinColumn(name = "ticket_id")
-	private Ticket ticket;// 被評論的票券編號
+	private Integer ticketId;// 被評論的票券編號
 
-	@ManyToOne
-	@JoinColumn(name = "member_id")
-	private Member member;// 評論者的會員編號
+	private Integer memberId;// 評論者的會員編號
 
 	private String comment;// 評論內容
 
