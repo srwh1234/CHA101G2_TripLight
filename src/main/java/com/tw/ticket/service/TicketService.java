@@ -22,7 +22,6 @@ public interface TicketService {
 	// 搜尋票券
 	public SearchResponse getSearch(SearchRequest searchRequest);
 
-	// 取得票券
-
+	// 輸入地點取得票券
 	List<RadAndHotResponse> getTicket(String destination);
 }

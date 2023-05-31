@@ -67,7 +67,7 @@ public class Ticket implements Serializable {
 
 	// cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "ticket_id")
+	@JoinColumn(name = "ticketId")
 	private List<TicketImage> ticketImages = new ArrayList<>();
 
 	// ----------------------------
