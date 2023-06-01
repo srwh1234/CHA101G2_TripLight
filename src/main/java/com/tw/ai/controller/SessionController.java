@@ -1,7 +1,7 @@
 package com.tw.ai.controller;
 
-import com.tw.ai.common.dto.Id;
-import com.tw.ai.common.dto.AiFormData;
+import com.tw.ai.dto.IdDto;
+import com.tw.ai.dto.AiFormDataDto;
 import com.tw.ai.service.AiService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ public class SessionController {
 
     // 接收表單資料
     @PostMapping("/processFormData")
-    public ResponseEntity<String> processFormData(@RequestBody AiFormData formDara, HttpServletRequest request){
+    public ResponseEntity<String> processFormData(@RequestBody AiFormDataDto formDara, HttpServletRequest request){
         HttpSession session = request.getSession();
         String sessionId = session.getId();
 
@@ -35,11 +35,11 @@ public class SessionController {
 
     // 發送sessionID與表單id給進入表單頁面的使用者
     @GetMapping("/getSessionId")
-    public ResponseEntity<Id> getSessionId(HttpServletRequest request) {
+    public ResponseEntity<IdDto> getSessionId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String sessionId = session.getId();
 
-        var id = new Id(aiService.getFormId(),sessionId);
+        var id = new IdDto(aiService.getFormId(),sessionId);
         return ResponseEntity.ok(id);
     }
 }

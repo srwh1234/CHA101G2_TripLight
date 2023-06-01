@@ -3,7 +3,7 @@ package com.tw.ai.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.tw.ai.common.dto.Location;
+import com.tw.ai.dto.AiLocationsDto;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Component
 public class GetLocation {
 
-    public Map<String,ArrayList<Location>> locations = new HashMap<>();
+    public Map<String,ArrayList<AiLocationsDto>> locations = new HashMap<>();
 
     public String content;
     private String output;
@@ -157,7 +157,7 @@ public class GetLocation {
             }
 
             System.out.println(latitude+","+ longitude);
-            locations.get(sessionID).add(new Location( locationTitle.get(i),latitude,longitude));
+            locations.get(sessionID).add(new AiLocationsDto( locationTitle.get(i),latitude,longitude));
             i++;
         }
         System.out.println(locations);

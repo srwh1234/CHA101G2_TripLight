@@ -4,8 +4,8 @@ package com.tw.ai.service;
 import com.tw.ai.common.ChatGPTAPI;
 import com.tw.ai.common.GetLocation;
 import com.tw.ai.common.GetMethod;
-import com.tw.ai.common.dto.AiFormData;
-import com.tw.ai.common.dto.Location;
+import com.tw.ai.dto.AiFormDataDto;
+import com.tw.ai.dto.AiLocationsDto;
 import com.tw.ai.dao.AiFavoriteRepository;
 import com.tw.ai.entity.AiFavorite;
 import com.tw.ai.entity.AiLocations;
@@ -23,12 +23,12 @@ public class AiService implements GetMethod {
     private final AiFavoriteRepository aiFavoriteRepository;
     private final ChatGPTAPI chatGPTAPI;
     private final GetLocation getLocation;
-    private final Map<String, AiFormData> formDataList;
+    private final Map<String, AiFormDataDto> formDataList;
     private int id;
     private final Map<String, Long> lastHeartbeatMap;
 
     @Autowired
-    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTAPI chatGPTAPI, Map<String, AiFormData> formDataList, GetLocation getLocation) {
+    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTAPI chatGPTAPI, Map<String, AiFormDataDto> formDataList, GetLocation getLocation) {
         this.aiFavoriteRepository = aiFavoriteRepository;
         this.chatGPTAPI = chatGPTAPI;
         this.getLocation = getLocation;
@@ -82,7 +82,7 @@ public class AiService implements GetMethod {
         return aiFavoriteRepository.findAIFavoriteFromMemberId(memberId);
     }
 
-    public void startChatGPT(String memberId, AiFormData formData) {
+    public void startChatGPT(String memberId, AiFormDataDto formData) {
         chatGPTAPI.start(memberId, formData);
     }
 
@@ -90,7 +90,7 @@ public class AiService implements GetMethod {
         return chatGPTAPI.getOutput(memberId);
     }
 
-    public ArrayList<Location> getLatitudeAndLongitude(String memberId) {
+    public ArrayList<AiLocationsDto> getLatitudeAndLongitude(String memberId) {
         var locations = chatGPTAPI.locations.get(memberId);
         // 將地點轉成經緯度 如果為空陣列，就不要執行了
         if (locations != null && !locations.isEmpty()) {
@@ -112,7 +112,7 @@ public class AiService implements GetMethod {
         lastHeartbeatMap.remove(memberId);
     }
 
-    public void setFormDataList(String memberId, AiFormData formData) {
+    public void setFormDataList(String memberId, AiFormDataDto formData) {
         formDataList.put(memberId, formData);
     }
 

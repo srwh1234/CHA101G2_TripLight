@@ -3,12 +3,10 @@ package com.tw.ai.entity;
 
 
 import jakarta.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 // 建立實體
@@ -40,9 +38,9 @@ public class AiFavorite{
     private int memberId;                     // 會員ID
 
     // cascade表示存檔時 也一起寫入AiLocations
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "aiFavoriteId")
-    private List<AiLocations> aiLocations = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "aiFavoriteId")
+//    private List<AiLocations> aiLocations = new ArrayList<>();
 }
 
 

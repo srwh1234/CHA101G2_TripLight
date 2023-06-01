@@ -3,7 +3,7 @@ package com.tw.ai.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.tw.ai.common.dto.AiFormData;
+import com.tw.ai.dto.AiFormDataDto;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -61,7 +61,7 @@ public class ChatGPTAPI {
     }
 
 
-    public void start(String sessionID, AiFormData formData) {
+    public void start(String sessionID, AiFormDataDto formData) {
         locations.clear();
         destinationInput.put(sessionID,formData.getDestination());  // 拿取資料
         String message1 = """

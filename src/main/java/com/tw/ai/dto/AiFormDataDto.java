@@ -1,4 +1,4 @@
-package com.tw.ai.common.dto;
+package com.tw.ai.dto;
 
 
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-public class AiFormData{
+public class AiFormDataDto {
 
     private int formId;
     private String destination;

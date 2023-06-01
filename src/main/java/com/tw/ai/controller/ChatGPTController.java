@@ -1,6 +1,6 @@
 package com.tw.ai.controller;
 
-import com.tw.ai.common.dto.Location;
+import com.tw.ai.dto.AiLocationsDto;
 import com.tw.ai.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,7 +29,7 @@ public class ChatGPTController {
     }
     // 將緯度資料傳至前端  在行程傳輸完畢時呼叫
     @GetMapping("/getArray/{memberId}")
-    public ArrayList<Location> getArray(@PathVariable("memberId") String memberId) {
+    public ArrayList<AiLocationsDto> getArray(@PathVariable("memberId") String memberId) {
         return aiService.getLatitudeAndLongitude(memberId);
     }
     // 將地點資料傳至前端  在行程傳輸完畢呼叫
