@@ -21,151 +21,115 @@ camera.addEventListener('click', function () {
   });
   input.click();
 });
-// <!-- 右邊會員資料--票券訂單 -->
-//已完成訂單的假資料
-const valid = {
-  url: "https://www.kkday.com/zh-tw/product/142053-thredbo-resort-ski-snowboard-day-tour-from-haymarket-parramatta-australia",
-  imgUrl: "https://blog.asiayo.com/wp-content/uploads/67817447_xl-1.jpg",
-  title: "滑雪場門票",
-  Number: "#0012",
-  realPrice: 400,
-};
-//未完成訂單的假資料
-const valid2 = {
-  url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
-  imgUrl: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
-  title: "露營",
-  Number: "#A4001",
-  realPrice: 1200,
-};
-//存進sessionStorage
-sessionStorage.setItem('test_order_done', JSON.stringify(valid));
-sessionStorage.setItem('test_order_imcomplete', JSON.stringify(valid2));
-//一載入頁面在"未完成訂單上"
-const orderIncomplete = JSON.parse(sessionStorage.getItem('test_order_imcomplete'));
-// $("#orderselectdiv").append(generateTicketItem(orderIncomplete));
-//"未完成訂單"和"已完成訂單"切換
-$("#orderselect").on("change", function (e) {
-  $(".ticket_item_class").remove();
-  var selectedOption = $(this).val();
-  var newTicketItem = "";
-
-  if (selectedOption === "已完成訂單") {
-    const orderDone = JSON.parse(sessionStorage.getItem('test_order_done'));
-    newTicketItem = generateTicketItem(orderDone);
+// ==========================右邊會員資料--票券評價 =====================================
+//填入假資料
+const dataObj = {};
+const valid = [
+  {
+    url: "http://google.com.tw",
+    imgUrl: "https://blog.asiayo.com/wp-content/uploads/67817447_xl-1.jpg",
+    title: "評價1",
+    summary: "簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介介簡介簡介簡介介簡介簡介簡介簡介簡介簡介簡介v簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介",
+    realPrice: "2020/02/02",
+  },
+  {
+    url: "http://google.com.tw",
+    imgUrl: "https://blog.asiayo.com/wp-content/uploads/67817447_xl-1.jpg",
+    title: "評價22",
+    summary: "222222222222222222222222222222222222222222222222222222222222222222222222222222簡介簡介簡介簡介簡介",
+    realPrice: "2020/02/02",
   }
-  else if (selectedOption === "未完成訂單") {
-    const orderIncomplete = JSON.parse(sessionStorage.getItem('test_order_imcomplete'));
-    newTicketItem = generateTicketItem(orderIncomplete);
-  }
-  if (newTicketItem !== "") {
-    $(this).after(newTicketItem);
-    sessionStorage.setItem("ticketAdded", "false");
-  }
-});
-function generateTicketItem(order) {
-  return `
-      <div class="ticket_item_class">
-        <a href=${order.url} class="orderurl">
-          <div class="item_img_class">
-            <img src=${order.imgUrl} class="item_img">
-          </div>
-          <div class="item_commend_class">
-            <a href="#"><i class="fa-solid fa-pen-to-square">我要評論</i></a>
-          </div>
-          <div class="item_content">
-            <h1 class="item_title">${order.title}</h1>
-            <div>
-              <p class="serialNumber">訂單編號：</p>
-              <p class="Number">${order.Number}</p>
-            </div>
-            <div>
-              <p class="price">TWD</p>
-              <p class="realPrice">${order.realPrice}</p>
-            </div>
-          </div>
-        </a>
-      </div>
-    `;
+];
+for (let i = 0; i < valid.length; i++) {
+  Object.assign(dataObj, valid[i]);
+  $(".orderselectclass").append(ticketComment(valid[i]));
+}
+//移除背景圖 
+if (Object.keys(dataObj).length !== 0) {
+  $(".no_comment_div").first().toggleClass("-out")
 }
 
-
-// <!-- 右邊會員資料--旅遊團訂單 -->
-//已完成訂單的假資料
-const valid3 = {
-  url: "https://www.kkday.com/zh-tw/product/142053-thredbo-resort-ski-snowboard-day-tour-from-haymarket-parramatta-australia",
-  imgUrl: "https://blog.asiayo.com/wp-content/uploads/67817447_xl-1.jpg",
-  title: "已完成旅遊團TEST",
-  Number: "#0012",
-  realPrice: 1234,
-};
-//未完成訂單的假資料
-const valid4 = {
-  url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
-  imgUrl: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
-  title: "未完成旅遊團test",
-  Number: "#sdfh",
-  realPrice: 5678,
-};
-//存進sessionStorage
-sessionStorage.setItem('test_group_done', JSON.stringify(valid3));
-sessionStorage.setItem('test_group_incomplete', JSON.stringify(valid4));
-
-//一載入頁面在"未完成訂單上"
-const test_group_incomplete = JSON.parse(sessionStorage.getItem('test_group_incomplete'));
-// $("#group_orderselectdiv").append(generateGroupOrderItem(test_group_incomplete));
-
-//"未完成訂單"和"已完成訂單"切換（旅遊團訂單）
-$("#group_orderselect").on("change", function (e) {
-  $(".group_order_item_class").remove();
-  var selectedOption = $(this).val();
-  var newGroupOrderItem = "";
-
-  if (selectedOption === "已完成訂單") {
-    const groupOrderDone = JSON.parse(sessionStorage.getItem('test_group_done'));
-    newGroupOrderItem = generateGroupOrderItem(groupOrderDone);
-  } else if (selectedOption === "未完成訂單") {
-    const groupOrderIncomplete = JSON.parse(sessionStorage.getItem('test_group_incomplete'));
-    newGroupOrderItem = generateGroupOrderItem(groupOrderIncomplete);
-  }
-
-  if (newGroupOrderItem !== "") {
-    $("#group_orderselectdiv").append(newGroupOrderItem);
-    sessionStorage.setItem("groupOrderAdded", "false");
-  }
-});
-function generateGroupOrderItem(groupOrder) {
+function ticketComment(t_comment) {
   return `
-      <div class="group_order_item_class">
-        <a href=${groupOrder.url} class="group_order_url">
-          <div class="item_img_class">
-            <img src=${groupOrder.imgUrl} class="item_img">
-          </div>
-          <div class="item_commend_class">
-            <a href="#"><i class="fa-solid fa-pen-to-square">我要評論</i></a>
-          </div>
-          <div class="item_content">
-            <h1 class="item_title">${groupOrder.title}</h1>
-            <div>
-              <p class="serialNumber">訂單編號：</p>
-              <p class="Number">${groupOrder.Number}</p>
-            </div>
-            <div>
-              <p class="price">TWD</p>
-              <p class="realPrice">${groupOrder.realPrice}</p>
-            </div>
-          </div>
-        </a>
+  <div class="ticket_item_class">
+    <a href="${t_comment.url}" class="orderurl">
+      <div class="item_img_class">
+          <img src="${t_comment.imgUrl}" class="item_img">
       </div>
+        <div class="item_content">
+          <h1 class="item_title">${t_comment.title}</h1>
+        <div class="box">
+          <p class="Number">${t_comment.summary}  </p>
+        </div>
+        <div class="date_div">
+          <p class="date">${t_comment.realPrice}</p>
+        </div>
+      </div>
+      <div class="item_commend_class">
+        <i class="fa-solid fa-pen-to-square">我要評論</i>
+      </div>
+    </a>
+  </div>
       `;
 }
 
+// <!-- 右邊會員資料--旅遊團訂單 -->
+//填入假資料
+const g_dataObj = {};
+const g_valid = [
+  {
+    url: "http://google.com.tw",
+    imgUrl: "https://blog.asiayo.com/wp-content/uploads/67817447_xl-1.jpg",
+    title: "group",
+    summary: "簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介介簡介簡介簡介介簡介簡介簡介簡介簡介簡介簡介v簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介",
+    realPrice: "2020/02/02",
+  },
+  {
+    url: "http://google.com.tw",
+    imgUrl: "https://blog.asiayo.com/wp-content/uploads/67817447_xl-1.jpg",
+    title: "grouprurer",
+    summary: "222222222222222222222222222222222222222222222222222222222222222222222222222222簡介簡介簡介簡介簡介",
+    realPrice: "2020/02/02",
+  }
+];
+for (let i = 0; i < g_valid.length; i++) {
+  Object.assign(g_dataObj, g_valid[i]);
+  $(".orderselectclass").eq(1).append(groupComment(g_valid[i]));
+}
+//移除背景圖 
+if (Object.keys(g_dataObj).length !== 0) {
+  $(".no_comment_div").eq(1).toggleClass("-out")
+}
+// 處理第一個分頁內容跑到別的分頁
+$(".nav-item").eq(1).on("click", function () {
+  $("#group_orderselectdiv .ticket_item_class").remove();
+});
 
-//移除背景圖
-// if (true) {
-//   $(".no_comment_div").toggle();
-// }
+function groupComment(g_comment) {
+  return `
+  <div class="group_item_class">
+    <a href="${g_comment.url}" class="orderurl">
+      <div class="item_img_class">
+          <img src="${g_comment.imgUrl}" class="item_img">
+      </div>
+        <div class="item_content">
+          <h1 class="item_title">${g_comment.title}</h1>
+        <div class="box">
+          <p class="Number">${g_comment.summary}  </p>
+        </div>
+        <div class="date_div">
+          <p class="date">${g_comment.realPrice}</p>
+        </div>
+      </div>
+      <div class="item_commend_class">
+        <i class="fa-solid fa-pen-to-square">我要評論</i>
+      </div>
+    </a>
+  </div>
+      `;
+}
 
+// ======================================================================
 //簡介超過超過100個字以"..."取代
 $(function () {
   var len = 100;

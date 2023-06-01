@@ -1,0 +1,60 @@
+.container6 {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.chat-title6 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chat-room6 {
+  height: 400px;
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.message6 {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.message6.sender6 {
+  background-color: #e9ecef;
+  align-self: flex-end;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.message6.receiver6 {
+  background-color: #007bff;
+  color: #fff;
+  align-self: flex-start;
+  margin-left: 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.rating6 {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+.rating6 .submit-btn6 button:hover {
+  background-color: #9a9a9b;
+}

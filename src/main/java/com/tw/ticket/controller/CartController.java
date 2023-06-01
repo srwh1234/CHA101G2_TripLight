@@ -14,12 +14,16 @@ import lombok.Data;
 @RestController
 public class CartController {
 
+	public static int ADD_CART_OK = 1; // 添加成功
+	public static int ADD_CART_SOLDOUT = 2;// 此商品已完售
+	public static int ADD_CART_ERROR = 3;// 發生未知的錯誤
+
 	@Autowired
 	private CartService cartService;
 
 	// 票券購物車車
 	@PostMapping("/ticketcart")
-	public boolean comments(@RequestBody final CartRequest cartRequest) {
+	public int comments(@RequestBody final CartRequest cartRequest) {
 		return cartService.addItem(cartRequest);
 	}
 

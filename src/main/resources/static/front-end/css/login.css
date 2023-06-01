@@ -169,12 +169,6 @@ li.list-group-item>a {
 }
 
 /* 帳號分頁 */
-/* .tab-pane.fade {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-} */
-
 .tab-pane.fade>div.row {
     display: flex;
     justify-content: space-between;

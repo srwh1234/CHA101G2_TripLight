@@ -58,6 +58,8 @@ window.addEventListener('load', function () {
     });
   }
 });
+
+//=======================================================
 // 右上導覽列訂單管理
 $("#order_li").on("mouseover", function () {
   $(".order_list").addClass("-on");
@@ -68,12 +70,9 @@ $("#order_li").on("mouseout", function () {
   $(".order_list").removeClass("-on");
   $(".order_content").removeClass("-on");
 })
-
+//=======================================================
 // 左列會員訂單管理
 
-$("#order_li2 a").on("click", function (e) {
-  e.preventDefault();
-});
 $("#order_li2").on("mouseover", function () {
   $("#order_list2, #order_content1, #order_content2").addClass("-on");
 });
@@ -81,3 +80,14 @@ $("#order_li2").on("mouseout", function () {
   $("#order_list2, #order_content1, #order_content2").removeClass("-on");
 })
 
+
+//登出
+const logout_li = document.querySelector("#logout_li");
+
+$(logout_li).on("click", function (e) {
+  e.preventDefault();
+  window.location.assign("index.html")
+  document.querySelector('#login').innerHTML = ` 登入/註冊`;
+
+  //unfinished
+})

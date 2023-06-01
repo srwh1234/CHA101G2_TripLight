@@ -5,5 +5,5 @@ import com.tw.ticket.controller.CartController.CartRequest;
 public interface CartService {
 
 	// 放入購物車
-	public boolean addItem(CartRequest cartRequest);
+	public int addItem(CartRequest cartRequest);
 }

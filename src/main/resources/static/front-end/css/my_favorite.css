@@ -10,7 +10,9 @@
 
 /* 單筆訂單欄位 */
 .ticket_item_class,
-.group_order_item_class {
+.group_order_item_class,
+.group_item_class,
+.article_item_class {
     position: relative;
     border: 1px solid rgb(180, 174, 174);
     border-radius: 5px;
@@ -23,7 +25,9 @@
 }
 
 .ticket_item_class:hover,
-.group_order_item_class:hover {
+.group_order_item_class:hover,
+.group_item_class:hover,
+.article_item_class:hover {
     box-shadow: 0 0 5px rgba(109, 109, 114, 0.632);
 }
 
@@ -56,32 +60,90 @@
 }
 
 /* 訂單內容 */
+.box {
+    height: 130px;
+    width: 420px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform: translate(0, 10px);
+}
+
 .item_content {
     position: absolute;
     top: 40px;
-    left: 220px;
+    left: 250px;
     cursor: pointer;
+
 }
 
 .price,
 .realPrice {
     display: inline-block;
-    margin: 0;
-    top: 100px;
+    position: relative;
+    top: -20px;
 }
+
+/* 沒有評價背景圖 */
+
+.no_comment_div {
+    display: block;
+    flex: 1;
+    margin: 40px 40px;
+    padding: 10px;
+    height: 300px;
+    width: 600px;
+    transform: translate(12%, -10px);
+    background-image: url(https://i.pinimg.com/564x/2a/67/34/2a6734bab313c76305f6381310daf7d6.jpg
+);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20%;
+}
+
+.no_comment_div img {
+    filter: brightness(10%) blur(2px);
+    /* 同时应用亮度和模糊效果 */
+}
+
+.no_comment {
+    font-size: 20px;
+    color: gray;
+    transform: translate(27%, 30%);
+}
+
+.no_comment_div.-out {
+    display: none;
+
+}
+
 
 @media screen and (max-width: 767.98px) {
 
-    #orderselect,
-    .ticket_item_class,
-    .group_order_item_class {
-        width: 100%;
+    .no_comment_div {
+        background-size: 12%;
+        background-position: center;
+        transform: translate(-25%, -20%);
+    }
+
+    .no_comment {
+        font-size: 15px;
     }
 
     .ticket_item_class,
-    .group_order_item_class {
+    .group_order_item_class,
+    .group_item_class,
+    .article_item_class {
+        width: 90%;
+        left: 5%;
+    }
+
+    .ticket_item_class,
+    .group_order_item_class,
+    .group_item_class,
+    .article_item_class {
         margin: 0 0 10px;
         height: auto;
+
     }
 
     .item_img_class {
@@ -91,17 +153,66 @@
     }
 
     .item_img {
-        height: 100%;
+        height: 80%;
     }
 
     .item_commend_class {
-        position: static;
-        margin-top: 10px;
+        margin-top: 30%;
         text-align: center;
     }
 
     .item_content {
         position: static;
-        margin-top: 10px
+        transform: translate(10px, 0);
+    }
+
+    .Number {
+        width: 80%
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {
+
+    .no_comment_div {
+        background-size: 18%;
+        background-position: center;
+        transform: translate(-15%, -20%);
+    }
+
+    .no_comment {
+        height: 100px;
+        font-size: 15px;
+        transform: translate(32%, 30%);
+    }
+
+    .box {
+        max-width: 50%;
+        max-height: 110px;
+        overflow: hidden;
+    }
+
+    .price,
+    .realPrice {
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        transform: translate(10%, 40px);
+    }
+}
+
+@media screen and (min-width:992px) {
+
+    .box {
+        max-width: 90%;
+        max-height: 110px;
+        overflow: hidden;
+    }
+
+    .price,
+    .realPrice {
+        display: inline-block;
+        position: relative;
+        top: -20px;
+        transform: translate(10%, 40px);
     }
 }

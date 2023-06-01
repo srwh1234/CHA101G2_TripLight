@@ -1,5 +1,9 @@
 package com.tw.ticket.service.impl;
 
+import static com.tw.ticket.controller.CartController.ADD_CART_ERROR;
+import static com.tw.ticket.controller.CartController.ADD_CART_OK;
+import static com.tw.ticket.controller.CartController.ADD_CART_SOLDOUT;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +30,14 @@ public class CartServiceImpl implements CartService {
 
 	// 放入購物車
 	@Override
-	public boolean addItem(final CartRequest cartRequest) {
+	public int addItem(final CartRequest cartRequest) {
 		final int memberId = cartRequest.getMemberId();
 		final int ticketId = cartRequest.getTicketId();
 		final int quantity = cartRequest.getQuantity();
 
 		// 確認數量
 		if (quantity <= 0) {
-			return false;
+			return ADD_CART_SOLDOUT;
 		}
 
 		final Member member = memberRepository.findById(memberId).orElse(null);
@@ -41,7 +45,7 @@ public class CartServiceImpl implements CartService {
 
 		// 確認會員和票券
 		if (member == null || ticket == null) {
-			return false;
+			return ADD_CART_ERROR;
 		}
 
 		// 確認票券數量
@@ -57,6 +61,6 @@ public class CartServiceImpl implements CartService {
 		}
 
 		ticketCartRepository.save(ticketCart);
-		return true;
+		return ADD_CART_OK;
 	}
 }
