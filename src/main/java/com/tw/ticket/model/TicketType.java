@@ -16,7 +16,7 @@ public class TicketType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ticketTypeId;
+	private Integer ticketTypeId;
 
 	private String name;
 }

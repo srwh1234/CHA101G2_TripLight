@@ -21,7 +21,7 @@ public class ImageController {
 	private ImageServiceImpl imageService;
 
 	@GetMapping(value = "/img/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
-	public byte[] getPhoto(@PathVariable("imgUrl") final long id) {
+	public byte[] getPhoto(@PathVariable("imgUrl") final int id) {
 		return imageService.findImg(id);
 	}
 }

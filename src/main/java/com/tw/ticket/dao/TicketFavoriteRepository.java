@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.tw.ticket.model.TicketFavorite;
 
 @Repository
-public interface TicketFavoriteRepository extends JpaRepository<TicketFavorite, Long> {
+public interface TicketFavoriteRepository extends JpaRepository<TicketFavorite, Integer> {
 	//
 }

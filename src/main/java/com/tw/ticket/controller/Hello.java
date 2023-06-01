@@ -35,8 +35,8 @@ public class Hello {
 	public String hello() {
 
 		// 測試取得
-		final Member m = repository3.findById(1L).get();
-		final Ticket t = repository2.findById(1L).get();
+		final Member m = repository3.findById(1).get();
+		final Ticket t = repository2.findById(1).get();
 
 		// System.out.println(repository.findByKeyMemberAndKeyTicket(m, t).getQuantity());
 
@@ -51,7 +51,7 @@ public class Hello {
 		// 找出訂單
 		// 找出訂單明細
 		// 找出目標票券
-		final Member member = repository3.findById(1L).get();
+		final Member member = repository3.findById(1).get();
 
 		// 訂單列表
 		ticketOrderRepository.findByMember(member).forEach(order -> {
@@ -59,10 +59,10 @@ public class Hello {
 		});
 
 		// 找出訂單編號1號
-		System.out.println(ticketOrderRepository.findById(1L).get().getTicketOrderDetails().size());
+		System.out.println(ticketOrderRepository.findById(1).get().getTicketOrderDetails().size());
 
 		// 測試寫入
-		final TicketSn sn = ticketSnRepository.findById(9L).get();
+		final TicketSn sn = ticketSnRepository.findById(9).get();
 
 		final TicketOrder ticketOrder = new TicketOrder();
 		ticketOrder.setMember(member);

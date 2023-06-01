@@ -20,7 +20,7 @@ public class ImageServiceImpl implements ImageService {
 
 	// 找出指定圖片 沒有則回傳預設圖片
 	@Override
-	public byte[] findImg(final long id) {
+	public byte[] findImg(final int id) {
 		final Optional<TicketImage> optional = repository.findById(id);
 
 		// 沒有指定編號的圖片

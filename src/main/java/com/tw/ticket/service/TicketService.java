@@ -6,12 +6,11 @@ import com.tw.ticket.controller.DetailController.DetailResponse;
 import com.tw.ticket.controller.TicketController.RadAndHotResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
-import com.tw.ticket.model.Ticket;
 
 public interface TicketService {
 
 	// 取得票券
-	public DetailResponse getTicket(long id);
+	public DetailResponse getTicket(int id);
 
 	// 隨機票券
 	public List<RadAndHotResponse> getRnd();

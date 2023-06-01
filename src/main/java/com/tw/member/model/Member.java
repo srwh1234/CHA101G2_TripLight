@@ -21,13 +21,13 @@ public class Member implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int memberId;
+	private Integer memberId;
 
 	private String memberAccount;
 
 	private String memberPassword;
 
-	private int memberStatus;
+	private Integer memberStatus;
 
 	private String memberNameLast;
 
@@ -39,7 +39,7 @@ public class Member implements Serializable {
 
 	private Date memberBirth;
 
-	private int memberGender;
+	private Integer memberGender;
 
 	@Lob
 	private byte[] memberPic;
@@ -54,5 +54,5 @@ public class Member implements Serializable {
 
 	private Date memberJoinTime;
 
-	private int memberGrade;
+	private Integer memberGrade;
 }

@@ -3,7 +3,6 @@ package com.tw.ticket.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tw.trip.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +29,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// 取得票券明細
 	@Override
-	public DetailResponse getTicket(final long id) {
+	public DetailResponse getTicket(final int id) {
 		final Ticket ticket = repository.findById(id).orElse(null);
 
 		if (ticket == null) {
@@ -101,7 +100,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// AI 行程，地點搜尋票券
 	@Override
-	public List<RadAndHotResponse> getTicket(String destination) {
+	public List<RadAndHotResponse> getTicket(final String destination) {
 		final List<RadAndHotResponse> result = new ArrayList<>();
 
 		repository.findByCityContaining(destination).forEach(ticket -> {

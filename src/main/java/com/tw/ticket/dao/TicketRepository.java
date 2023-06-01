@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.tw.ticket.model.Ticket;
 
 @Repository
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
 	// 指定城市的所有票券
 	public List<Ticket> findByCityContaining(String city);

@@ -30,7 +30,7 @@ public class DetailController {
 
 	// 票券細項
 	@GetMapping("/ticketdetail")
-	public DetailResponse ticketInfo(@RequestParam("id") final Long id) {
+	public DetailResponse ticketInfo(@RequestParam("id") final int id) {
 		return ticketService.getTicket(id);
 	}
 

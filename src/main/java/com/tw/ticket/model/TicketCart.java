@@ -17,7 +17,7 @@ public class TicketCart implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// 非必要的建構子 只是為了輸入方便
-	public TicketCart(final Long memberId, final Long ticketId, final Integer quantity) {
+	public TicketCart(final Integer memberId, final Integer ticketId, final Integer quantity) {
 		this.key = new PrimaryKey(memberId, ticketId);
 		this.quantity = quantity;
 	}
@@ -44,8 +44,8 @@ public class TicketCart implements Serializable {
 	public static class PrimaryKey implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		private Long memberId;// 會員編號
+		private Integer memberId;// 會員編號
 
-		private Long ticketId;// 欲購買的票券編號
+		private Integer ticketId;// 欲購買的票券編號
 	}
 }

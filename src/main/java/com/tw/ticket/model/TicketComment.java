@@ -24,9 +24,9 @@ public class TicketComment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;// 流水號
+	private Integer id;// 流水號
 
-	private Long ticketId;// 被評論的票券編號
+	private Integer ticketId;// 被評論的票券編號
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")

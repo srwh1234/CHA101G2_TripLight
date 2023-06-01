@@ -9,7 +9,7 @@ import com.tw.member.model.Member;
 import com.tw.ticket.model.TicketOrder;
 
 @Repository
-public interface TicketOrderRepository extends JpaRepository<TicketOrder, Long> {
+public interface TicketOrderRepository extends JpaRepository<TicketOrder, Integer> {
 
 	// 找出同一個Member的TicketOrder
 	public List<TicketOrder> findByMember(Member member);

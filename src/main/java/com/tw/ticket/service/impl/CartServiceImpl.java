@@ -27,8 +27,8 @@ public class CartServiceImpl implements CartService {
 	// 放入購物車
 	@Override
 	public boolean addItem(final CartRequest cartRequest) {
-		final long memberId = cartRequest.getMemberId();
-		final long ticketId = cartRequest.getTicketId();
+		final int memberId = cartRequest.getMemberId();
+		final int ticketId = cartRequest.getTicketId();
 		final int quantity = cartRequest.getQuantity();
 
 		// 確認數量

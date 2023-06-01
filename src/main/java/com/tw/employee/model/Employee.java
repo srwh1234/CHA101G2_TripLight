@@ -29,6 +29,6 @@ public class Employee implements Serializable {
 
 	private String employeePassword;
 
-	private int employeeStatus;
+	private Integer employeeStatus;
 
 }

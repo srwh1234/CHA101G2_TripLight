@@ -26,8 +26,8 @@ public class CartController {
 	// 定義請求物件
 	@Data
 	public static class CartRequest {
-		private long memberId;
-		private long ticketId;
+		private int memberId;
+		private int ticketId;
 		private int quantity;
 	}
 }
