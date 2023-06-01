@@ -1,7 +1,5 @@
 package com.tw.ticket.model;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -14,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketSn implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class TicketSn {
 
 	@Id
 	private Integer ticketSnId;// 票券序號編號

@@ -2,7 +2,6 @@ package com.tw.ticket.model;
 
 import static com.tw.ticket.controller.ImageController.IMG_URL;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ticket implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Ticket {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

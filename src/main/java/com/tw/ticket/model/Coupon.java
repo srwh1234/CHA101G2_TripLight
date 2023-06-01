@@ -1,6 +1,5 @@
 package com.tw.ticket.model;
 
-import java.io.Serializable;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
@@ -15,8 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Coupon implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Coupon {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,5 @@
 package com.tw.ticket.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketOrder implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class TicketOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

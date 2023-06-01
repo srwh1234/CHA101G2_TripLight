@@ -1,6 +1,5 @@
 package com.tw.ticket.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
@@ -15,8 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketImage implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class TicketImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

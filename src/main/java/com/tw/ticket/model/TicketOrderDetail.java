@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketOrderDetail implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class TicketOrderDetail {
 
 	// 非必要的建構子 只是為了輸入方便
 	public TicketOrderDetail(final TicketOrder ticketOrder, final TicketSn ticketSn) {
