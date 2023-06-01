@@ -3,14 +3,12 @@ package com.tw.trip.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
-public class Trip implements Serializable {
+public class Trip{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

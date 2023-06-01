@@ -2,13 +2,11 @@ package com.tw.trip.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Data
-public class TripImage implements Serializable {
+public class TripImage{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

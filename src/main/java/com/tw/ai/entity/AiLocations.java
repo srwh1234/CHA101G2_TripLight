@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @IdClass(AiLocations.LocationPK.class)  // 關聯複合PK的Class
-public class AiLocations implements Serializable{
+public class AiLocations{
 
     // 複合PK
     @Id
