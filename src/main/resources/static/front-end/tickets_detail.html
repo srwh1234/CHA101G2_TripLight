@@ -593,7 +593,7 @@
       ticketType: '票券類型',
       name: '緯育Tibame 後端工程師門票',
       price: 107000,
-      available: 10, //可買數量
+      available: 0, //可買數量
       totalSales: 100,
       description: '票券描述<br>第2行<br>第3行<br>第4行<br>第5行',
       content: '票券說明<br>第2行<br>第3行<br>第4行<br>第5行',
@@ -897,68 +897,78 @@
 
     //票券價格
     function render_price() {
-      $('#ticketPrice').html('');
 
+      $('#ticketPrice').html(
+        `
+        <div class="card my-4">
+            <div class="card-body p-3"></div>
+        </div>
+        `
+      );
+
+      const promotion = $('<div class="promotion mb-5">');
       //有促銷
       if (ticket.promotion) {
-        $('#ticketPrice').html(
+        promotion.append(
           `
-          <div class="card my-4">
-            <div class="card-body p-3">
-              <div class="mb-5">
-                <div>
+               <div>
                   <span class="h2 fw-bold me-2">${ticket.promotion.price} 元</span>
                   <span class="text-decoration-line-through text-muted">${ticket.price} 元</span>
                 </div>
                 <div class="my-mark">${ticket.promotion.startDate}~${ticket.promotion.endDate}</div>
-              </div>
-
-              <div class="row my-2 g-2">
-                <div class="col-6">
-                  <div class="input-group input-group">
-                    <button class="btn btn-primary" type="button" id="btnMinus">-</button>
-                    <input type="text" class="form-control" value="1" max="${ticket.available}" id="inputQuantity">
-                    <button class="btn btn-primary" type="button" id="btnPlus">+</button>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary" type="button" id="btnAddToCart">加入購物車</button>
-                </div>
-              </div>
-            </div>
-          </div>
-      `
-        );
-      } else {
-        $('#ticketPrice').html(
           `
-          <div class="card my-4">
-            <div class="card-body p-3">
-              <div class="mb-5">
-                <div>
-                  <span class="h2 fw-bold me-2">${ticket.price} 元</span>
-                  
-                </div>
-               
-              </div>
+        );
 
-              <div class="row my-2 g-2">
-                <div class="col-6">
-                  <div class="input-group input-group">
-                    <button class="btn btn-primary" type="button" id="btnMinus">-</button>
-                    <input type="text" class="form-control" value="1" max="${ticket.available}" id="inputQuantity">
-                    <button class="btn btn-primary" type="button" id="btnPlus">+</button>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary" type="button" id="btnAddToCart">加入購物車</button>
-                </div>
-              </div>
-            </div>
-          </div>
-      `
+      } else {
+        promotion.append(
+          `
+              <div>
+                  <span class="h2 fw-bold me-2">${ticket.price} 元</span>
+              </div>                
+          `
         );
       }
+      $('#ticketPrice .card-body').append(promotion);
+
+
+      //---------------
+      if (ticket.available) {
+        $('#ticketPrice .card-body').append(
+          `
+              <div class="row my-2 g-2">
+                <div class="col-6">
+                  <div class="input-group input-group">
+                    <button class="btn btn-primary" type="button" id="btnMinus">-</button>
+                    <input type="text" class="form-control" value="1" max="${ticket.available}" id="inputQuantity">
+                    <button class="btn btn-primary" type="button" id="btnPlus">+</button>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <button class="btn btn-primary" type="button" id="btnAddToCart">加入購物車</button>
+                </div>
+              </div>
+        `
+        );
+      } else {
+        $('#ticketPrice .card-body').append(
+          `
+          <div class="row my-2 g-2">
+                <div class="col-6">
+                  <div class="input-group input-group">
+                    <button class="btn btn-primary" type="button" id="btnMinus">-</button>
+                    <input type="text" class="form-control" value="0" max="${ticket.available}" id="inputQuantity">
+                    <button class="btn btn-primary" type="button" id="btnPlus">+</button>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <button class="btn btn-danger" type="button">已完售</button>
+                </div>
+              </div>
+          `
+        );
+      }
+
+
     }
 
     //票券內容
