@@ -25,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
 
 		// 沒有指定編號的圖片
 		if (optional.isEmpty()) {
-			final ClassPathResource resource = new ClassPathResource("images/bb.gif");
+			final ClassPathResource resource = new ClassPathResource("images/aa.gif");
 
 			byte[] bytes = null;
 			try (final InputStream is = resource.getInputStream();) {
