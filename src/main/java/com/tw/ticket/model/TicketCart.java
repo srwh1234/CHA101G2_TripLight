@@ -32,7 +32,7 @@ public class TicketCart {
 	}
 
 	// 獲得票券編號
-	public long getTicketId() {
+	public int getTicketId() {
 		return key.getTicketId();
 	}
 

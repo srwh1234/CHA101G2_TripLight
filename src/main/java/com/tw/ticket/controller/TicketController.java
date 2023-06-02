@@ -74,6 +74,7 @@ public class TicketController {
 		private final long ticketId;
 		private final String name;
 		private final int price;
+		private int available;
 		private final int rating;
 		private final int ratingPerson;
 		private final String city;

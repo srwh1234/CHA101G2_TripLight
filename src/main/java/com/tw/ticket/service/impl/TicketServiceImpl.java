@@ -38,7 +38,7 @@ public class TicketServiceImpl implements TicketService {
 		final DetailResponse detailResponse = new DetailResponse(ticket);
 
 		// 可用數量
-		detailResponse.setAvailable(snRepository.searchUsableSn(id).size());
+		detailResponse.setAvailable(snRepository.countUsableSn(id));
 		return detailResponse;
 	}
 
