@@ -29,7 +29,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// 取得票券明細
 	@Override
-	public DetailResponse getTicket(final int id) {
+	public DetailResponse getItem(final int id) {
 		final Ticket ticket = repository.findById(id).orElse(null);
 
 		if (ticket == null) {
@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// 隨機票券
 	@Override
-	public List<RadAndHotResponse> getRnd() {
+	public List<RadAndHotResponse> getRandomItem() {
 		final List<RadAndHotResponse> result = new ArrayList<>();
 
 		repository.findAll().forEach(ticket -> {
@@ -58,7 +58,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// 熱門票券
 	@Override
-	public List<RadAndHotResponse> getHot() {
+	public List<RadAndHotResponse> getHotItem() {
 		final List<RadAndHotResponse> result = new ArrayList<>();
 
 		repository.findAllByOrderByTotalSalesDesc().forEach(ticket -> {
@@ -73,7 +73,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// 搜尋票券
 	@Override
-	public SearchResponse getSearch(final SearchRequest searchRequest) {
+	public SearchResponse getSearchItem(final SearchRequest searchRequest) {
 		final Pageable pageable = PageRequest.of(	//
 				searchRequest.getPage(),	// 查詢的頁數，從0起算
 				searchRequest.getSize()		// 查詢的每頁筆數

@@ -754,7 +754,7 @@
           break;
         case 2:
           $('#responseMsg').addClass('my-text-lightred');
-          $('#responseMsg').text('此商品已完售');
+          $('#responseMsg').text('此商品數量不足');
           break;
 
         default:
@@ -783,7 +783,7 @@
           ticketId: id,
           quantity: parseInt($('#inputQuantity').val()),
         };
-        fetch('http://localhost:8080/ticketcart', {
+        fetch('http://localhost:8080/addcart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

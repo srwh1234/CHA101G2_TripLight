@@ -15,11 +15,13 @@ import com.tw.member.model.Member;
 import com.tw.ticket.controller.CartController.CartRequest;
 import com.tw.ticket.controller.CartController.CartResponse;
 import com.tw.ticket.controller.CartController.CartTicketResponse;
+import com.tw.ticket.controller.CartController.ModifyRequest;
 import com.tw.ticket.dao.TicketCartRepository;
 import com.tw.ticket.dao.TicketRepository;
 import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketCart;
+import com.tw.ticket.model.TicketCart.PrimaryKey;
 import com.tw.ticket.service.CartService;
 
 @Service
@@ -39,7 +41,7 @@ public class CartServiceImpl implements CartService {
 
 	// 票券購物車清單
 	@Override
-	public List<CartResponse> getMemberCarts(final int membeId) {
+	public List<CartResponse> getItems(final int membeId) {
 
 		final List<CartResponse> result = new ArrayList<>();
 
@@ -71,7 +73,7 @@ public class CartServiceImpl implements CartService {
 
 		// 確認數量
 		if (quantity <= 0) {
-			return ADD_CART_SOLDOUT;
+			return ADD_CART_ERROR;
 		}
 
 		final Member member = memberRepository.findById(memberId).orElse(null);
@@ -83,11 +85,14 @@ public class CartServiceImpl implements CartService {
 		}
 
 		// 確認票券數量
+		if (quantity > snRepository.countUsableSn(ticketId)) {
+			return ADD_CART_SOLDOUT;
+		}
 
-		// 確認購物車
+		// 購物車物件
 		TicketCart ticketCart = ticketCartRepository.findByKeyMemberIdAndKeyTicketId(memberId, ticketId);
 
-		// 如果有
+		// 如果有就只是增加數量
 		if (ticketCart != null) {
 			ticketCart.addQuantity(quantity);
 		} else {
@@ -96,5 +101,41 @@ public class CartServiceImpl implements CartService {
 
 		ticketCartRepository.save(ticketCart);
 		return ADD_CART_OK;
+	}
+
+	// 變更購物車數量
+	@Override
+	public boolean updateItem(final ModifyRequest modifyRequest) {
+		final int memberId = modifyRequest.getMemberId();
+		final int ticketId = modifyRequest.getTicketId();
+		final int modify = modifyRequest.getModify();
+
+		// 購物車物件
+		final TicketCart ticketCart = //
+				ticketCartRepository.findByKeyMemberIdAndKeyTicketId(memberId, ticketId);
+
+		if (ticketCart == null) {
+			return false;
+		}
+		final int available = snRepository.countUsableSn(ticketId);
+		int quantity = ticketCart.getQuantity() + modify;
+
+		if (quantity < 0) {
+			return false;
+		}
+		// 超過可獲得數量
+		if (quantity > available) {
+			quantity = available;
+		}
+		ticketCart.setQuantity(quantity);
+		ticketCartRepository.save(ticketCart);
+		return true;
+	}
+
+	// 移除購物車物件
+	@Override
+	public boolean removeItem(final int memberId, final int ticketId) {
+		ticketCartRepository.deleteById(new PrimaryKey(memberId, ticketId));
+		return true;
 	}
 }

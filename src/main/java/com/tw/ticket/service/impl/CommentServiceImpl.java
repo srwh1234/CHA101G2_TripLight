@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
 	private TicketCommentRepository repository;
 
 	@Override
-	public CommentResponse getComment(final SearchRequest searchRequest) {
+	public CommentResponse getItems(final SearchRequest searchRequest) {
 		final Pageable pageable = PageRequest.of(//
 				searchRequest.getPage(), 	// 第幾頁
 				searchRequest.getSize()		// 一頁幾個
@@ -27,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
 
 		final Page<TicketComment> page = repository.findAllByTicketId(searchRequest.getTicketId(), pageable);
 
+		// 填寫回應
 		final CommentResponse commentResponse = new CommentResponse();
 		commentResponse.setCurPage(searchRequest.getPage());
 		commentResponse.setCurPage(page.getTotalPages());

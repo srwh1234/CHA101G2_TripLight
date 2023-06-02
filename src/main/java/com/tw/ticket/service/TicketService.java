@@ -10,16 +10,16 @@ import com.tw.ticket.controller.TicketController.SearchResponse;
 public interface TicketService {
 
 	// 取得票券
-	public DetailResponse getTicket(int id);
+	public DetailResponse getItem(int id);
 
 	// 隨機票券
-	public List<RadAndHotResponse> getRnd();
+	public List<RadAndHotResponse> getRandomItem();
 
 	// 熱門票券
-	public List<RadAndHotResponse> getHot();
+	public List<RadAndHotResponse> getHotItem();
 
 	// 搜尋票券
-	public SearchResponse getSearch(SearchRequest searchRequest);
+	public SearchResponse getSearchItem(SearchRequest searchRequest);
 
 	// 輸入地點取得票券
 	List<RadAndHotResponse> getTicket(String destination);

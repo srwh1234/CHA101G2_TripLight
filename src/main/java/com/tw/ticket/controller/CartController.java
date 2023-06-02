@@ -21,23 +21,36 @@ import lombok.Data;
 public class CartController {
 
 	public static int ADD_CART_OK = 1; // 添加成功
-	public static int ADD_CART_SOLDOUT = 2;// 此商品已完售
+	public static int ADD_CART_SOLDOUT = 2;// 此商品數量不足
 	public static int ADD_CART_ERROR = 3;// 發生未知的錯誤
 
 	@Autowired
 	private CartService cartService;
 
 	// 票券購物車車
-	@GetMapping("/ticketcart")
-	public List<CartResponse> getCarts(@RequestParam("id") final int memberId) {
-		System.out.println(memberId);
-		return cartService.getMemberCarts(memberId);
+	@GetMapping("/carts")
+	public List<CartResponse> getCarts(@RequestParam("memberId") final int memberId) {
+		return cartService.getItems(memberId);
 	}
 
 	// 加入購物車
-	@PostMapping("/addticketcart")
-	public int addToCart(@RequestBody final CartRequest cartRequest) {
+	@PostMapping("/addcart")
+	public int addCart(@RequestBody final CartRequest cartRequest) {
 		return cartService.addItem(cartRequest);
+	}
+
+	// 變更購物車數量
+	@PostMapping("/modifycart")
+	public boolean modifyCart(@RequestBody final ModifyRequest modifyRequest) {
+		return cartService.updateItem(modifyRequest);
+	}
+
+	// 移除購物車物件
+	@GetMapping("/removecart")
+	public boolean removeCart( //
+			@RequestParam("memberId") final int memberId, //
+			@RequestParam("ticketId") final int ticketId) {
+		return cartService.removeItem(memberId, ticketId);
 	}
 
 	// 定義請求物件
@@ -46,6 +59,13 @@ public class CartController {
 		private int memberId;
 		private int ticketId;
 		private int quantity;
+	}
+
+	@Data
+	public static class ModifyRequest {
+		private int memberId;
+		private int ticketId;
+		private int modify;
 	}
 
 	// 定義回傳物件

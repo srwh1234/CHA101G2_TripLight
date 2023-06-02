@@ -4,12 +4,19 @@ import java.util.List;
 
 import com.tw.ticket.controller.CartController.CartRequest;
 import com.tw.ticket.controller.CartController.CartResponse;
+import com.tw.ticket.controller.CartController.ModifyRequest;
 
 public interface CartService {
 
 	// 票券購物車清單
-	public List<CartResponse> getMemberCarts(int membeId);
+	public List<CartResponse> getItems(int membeId);
 
 	// 放入購物車
 	public int addItem(CartRequest cartRequest);
+
+	// 變更數量
+	public boolean updateItem(ModifyRequest modifyRequest);
+
+	// 移除購物車物件
+	public boolean removeItem(int memberId, int ticketId);
 }

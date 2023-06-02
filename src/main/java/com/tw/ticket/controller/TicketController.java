@@ -25,19 +25,19 @@ public class TicketController {
 	// 隨機票券
 	@GetMapping("/rndtickets")
 	public List<RadAndHotResponse> randomTickets() {
-		return ticketService.getRnd();
+		return ticketService.getRandomItem();
 	}
 
 	// 熱門票券
 	@GetMapping("/hottickets")
 	public List<RadAndHotResponse> hotTickets() {
-		return ticketService.getHot();
+		return ticketService.getHotItem();
 	}
 
 	// 搜尋票券
 	@PostMapping("/searchtickets")
 	public SearchResponse searchTickets(@RequestBody final SearchRequest searchRequest) {
-		return ticketService.getSearch(searchRequest);
+		return ticketService.getSearchItem(searchRequest);
 	}
 
 	// 定義請求物件

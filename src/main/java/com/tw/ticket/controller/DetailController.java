@@ -30,14 +30,14 @@ public class DetailController {
 
 	// 票券細項
 	@GetMapping("/ticketdetail")
-	public DetailResponse ticketInfo(@RequestParam("id") final int id) {
-		return ticketService.getTicket(id);
+	public DetailResponse detail(@RequestParam("id") final int id) {
+		return ticketService.getItem(id);
 	}
 
 	// 票券留言
 	@PostMapping("/ticketcomments")
 	public CommentResponse comments(@RequestBody final SearchRequest searchRequest) {
-		return commentService.getComment(searchRequest);
+		return commentService.getItems(searchRequest);
 	}
 
 	// 定義回傳物件

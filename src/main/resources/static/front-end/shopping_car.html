@@ -28,9 +28,9 @@
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-          crossorigin="anonymous"></script>
+          crossorigin="anonymous"></script> -->
   <!--會員登入-->
   <link href="css/login.css" rel="stylesheet" />
 
@@ -488,6 +488,29 @@
 
     ];
 
+    function changeCount(ticketId, modify) {
+      const post = {
+        memberId: 1,
+        ticketId: ticketId,
+        modify: modify,
+      };
+      fetch(`http://localhost:8080/modifycart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data);
+          if (!data) {
+            // 渲染頁面
+            render();
+          }
+        })
+        .catch(error => console.log(error));
+    }
     $(function () {
 
       // 這邊是假資料
@@ -512,13 +535,11 @@
         result.push(ticket_cart);
       }
 
-
-
       const memberId = 1;
-      fetch(`http://localhost:8080/ticketcart?id=${memberId ?? 0}`)
+      fetch(`http://localhost:8080/carts?memberId=${memberId}`)
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
           result = data;
           // 渲染頁面
           render();
@@ -526,23 +547,42 @@
         .catch(error => console.log(error));
 
 
-
-      //刪除品項的按鈕
-      $('#btnDeleteConfirm').on('click', function () {
+      //前往結帳的按鈕
+      $('#btnCheckOut').on('click', function () {
         const post = {
-          memberId: 0,
-          ticketId: $(this).data('ticket-id'),
+          memberId: 1,
+          couponId: $('#discountSelect').val(),
         };
 
         console.log(post);
       });
 
+
+      //刪除品項的按鈕
+      $('#btnDeleteConfirm').on('click', function () {
+        const ticketId = parseInt($(this).data('ticket-id'));
+
+        fetch(`http://localhost:8080/removecart?memberId=${memberId}&&ticketId=${ticketId}`)
+          .then(response => response.json())
+          .then(data => {
+            // console.log(data);
+            result = result.filter(e => e.ticket.ticketId != ticketId);
+            // 渲染頁面
+            render();
+          })
+          .catch(error => console.log(error));
+        $('#confirmModal').modal('hide');
+      });
+
       // 減少數量的按鈕點擊事件
       $(document).on('click', '.btn-minus', function () {
+        const ticketId = parseInt($(this).data('id'));
         const theText = $(this).closest('.input-group').find('.count-text');
         const val = parseInt($(theText).val());
         if (val > 1) {
           $(theText).val(val - 1);
+
+          changeCount(ticketId, -1);
           render_subtotal(theText);
           render_price();
         }
@@ -550,11 +590,14 @@
 
       // 增加數量的按鈕點擊事件
       $(document).on('click', '.btn-plus', function () {
+        const ticketId = parseInt($(this).data('id'));
         const theText = $(this).closest('.input-group').find('.count-text');
         const max = parseInt($(theText).attr('max'));
         const val = parseInt($(theText).val());
         if (val < max) {
           $(theText).val(val + 1);
+
+          changeCount(ticketId, 1);
           render_subtotal(theText);
           render_price();
         }
@@ -562,7 +605,9 @@
 
       // 折扣碼選單
       $('#discountSelect').on("change", function () {
-        $("#discount").text($(this).val());
+        const couponId = parseInt($(this).val());
+        const discount = coupons.find(e => e.couponId == couponId).discount;
+        $("#discount").text(discount);
         render_price();
       });
 
@@ -606,9 +651,12 @@
           price = cart.ticket.promotion.price;
         }
 
-        if(cart.quantity>cart.ticket.available){
-          cart.quantity=cart.ticket.available;
+        let showAvailable = cart.ticket.available < 10;
+        if (cart.quantity > cart.ticket.available) {
+          cart.quantity = cart.ticket.available;
+          showAvailable = true;
         }
+
 
         $('#orderContainer').append(
           `
@@ -625,11 +673,12 @@
             </div>
             <div class="col-12 col-lg-2">
               <div class="input-group input-group">
-                <button class="btn btn-primary btn-minus" type="button">-</button>
+                <button class="btn btn-primary btn-minus" type="button" data-id="${cart.ticket.ticketId}">-</button>
                 <input type="text" class="form-control count-text"
                        value="${cart.quantity}" max="${cart.ticket.available}" disabled>
-                <button class="btn btn-primary btn-plus" type="button">+</button>
+                <button class="btn btn-primary btn-plus" type="button" data-id="${cart.ticket.ticketId}"">+</button>
               </div>
+              <p class="${showAvailable ? "" : "d-none"} text-center">剩餘庫存:${cart.ticket.available}</p>
             </div>
             <div class="col-12 col-lg-2 my-text-lightblue text-center">
               小計
@@ -651,9 +700,7 @@
       $('#discountSelect').html(`<option value="0" selected>請選擇折扣碼</option>`);
       for (let coupon of coupons) {
         $('#discountSelect').append(
-          `
-          <option value="${coupon.discount}">${coupon.name}</option>
-          `
+          `<option value="${coupon.couponId}">${coupon.name}</option>`
         );
       }
       //計算價格
@@ -671,7 +718,14 @@
     // 計算總金額
     function render_price() {
       const sumSubtotal = $('.item-subtotal').toArray().reduce((sum, cur) => sum + parseInt(cur.textContent), 0);
-      const discount = parseInt($('#discountSelect').val());
+
+      let discount = 0;
+      const couponId = parseInt($('#discountSelect').val());
+      if (couponId) {
+        discount = coupons.find(e => e.couponId == couponId).discount;
+      }
+
+
       const actualPrice = Math.max((sumSubtotal - discount), 1);
 
       $('#sumSubtotal').text(sumSubtotal);
