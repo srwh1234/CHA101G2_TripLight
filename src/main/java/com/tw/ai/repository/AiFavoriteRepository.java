@@ -9,7 +9,7 @@ import java.util.List;
 public interface AiFavoriteRepository {
     void save(AiFavorite aiFavorite);
     void save(AiLocations aiLocations);
-    List<AiFavorite> findAIFavoriteFromMemberId(int memberId);
+    List<AiFavorite> findAIFavoriteByMemberId(int memberId);
     int getLastId();
 
 }

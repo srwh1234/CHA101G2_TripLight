@@ -1,12 +1,12 @@
-package com.tw.ai.common;
+package com.tw.ai.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.tw.ai.config.AppConfig;
-import com.tw.ai.dto.AiFormDataDto;
+import com.tw.ai.dto.AiLocationsDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,28 +20,24 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
+public class GetLocation {
 
+    public Map<String,ArrayList<AiLocationsDto>> locations = new HashMap<>();
 
+    public String content;
+    private String output;
 
-@Service
-public class ChatGPTAPI {
-
-
-
-
-    private Map<String, String> destinationInput = new HashMap<>();
-    public Map<String,ArrayList<String>> locations = new HashMap<>();
-    private Map<String, String> output = new HashMap<>();
+    private ArrayList<String> locationTitle = new ArrayList<>();
 
     private final String API_KEY;
     private static final String MODEL = "gpt-3.5-turbo";
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
     @Autowired
-    public ChatGPTAPI(AppConfig appConfig) {
+    public GetLocation(AppConfig appConfig) {
         this.API_KEY = appConfig.getApiKey();
     }
-
 
     // 這個方法會傳回一個 InputStream，該 InputStream 會連線到 ChatGPT API 並傳送 message
     private BufferedReader chatGPT(String message) throws IOException {
@@ -53,7 +49,7 @@ public class ChatGPTAPI {
         ObjectNode messageNode = messagesNode.addObject();
         messageNode.put("role", "user");
         messageNode.put("content", message);
-        rootNode.put("max_tokens", 2500);
+        rootNode.put("max_tokens", 1000);
         rootNode.put("stream", true);
         String data = objectMapper.writeValueAsString(rootNode);
 
@@ -73,27 +69,21 @@ public class ChatGPTAPI {
     }
 
 
-    public void start(String sessionID, AiFormDataDto formData) {
-        locations.clear();
-        destinationInput.put(sessionID,formData.getDestination());  // 拿取資料
+    // 以下是各地點的經緯度：
+    //
+    //東京: 35.6895° N, 139.6917° E
+    //高雄: 22.6273° N, 120.3014° E
+    //台中: 24.1477° N, 120.6736° E
+    //花蓮: 23.9769° N, 121.6044° E
+    //注意，經度（Longitude）表
+    public void start(String sessionId, ArrayList<String> message) {
+        this.locationTitle = message;
+
         String message1 = """
-你今後的對話中，請幫我規畫行程，請用繁體中文回覆，
-花費的部分幫我用當地貨幣計價
-格式如下
-[天數]:
-上午：[行程][花費]
-中午：[行程][花費]
-下午：[行程][花費]
-晚上：[行程][花費]
-住宿：[飯店名稱][花費]
-所有地點名稱：[地點名稱]
-        
-備註：[備註]
-需考慮每個地點的路程距離，地點名稱須加上地名
-        """ + formData.toMessage();
-
-        String tempinput = "";   // 每次呼叫，都會清空內容
-
+        請將我提供的地點轉換成經緯度，以小數度（Decimal Degrees）為單位，
+        [地點]:[緯度,經度]
+        """ + message;
+        String input = "";
         try (BufferedReader chatReader = chatGPT(message1)) {
 
             // 處理回傳的資料
@@ -113,35 +103,31 @@ public class ChatGPTAPI {
                     break;
                 }
 
-                String content;
                 // 取得回傳的內容，並印出
                 content = getContent(line);
-                tempinput += content;
-                this.output.put(sessionID,tempinput);   // 新的內容會覆蓋舊的內容
+                input += content;
+                setOutput(input);
 
             }
 
+
             // 處理所有資料並回傳google map
-            getLocation(sessionID,output.get(sessionID));
+
+            getLocation(sessionId, input, this.locationTitle);
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String getOutput(String sessionID) {
-            return this.output.get(sessionID);
+    public String getOutput() {
+        return output;
     }
 
-    public Map<String, String> getOutput() {
-        return this.output;
+    public void setOutput(String output) {
+        this.output = output;
     }
-
-
-    // TODO:這邊要改成set MAP
-//    public void setOutput(Map<String, String> output) {
-//        this.output = output;
-//    }
 
     // 從回傳的 JSON 格式資料中取得 content 欄位
     private String getContent(String response) {
@@ -155,37 +141,39 @@ public class ChatGPTAPI {
         return parts[1].substring(start, end);
     }
 
-    private void getLocation(String sessionID, String input) {
-        Pattern pattern = Pattern.compile("地點名稱[：:](.*?)\\\\n");
-        Matcher matcher = pattern.matcher(input);
-        String destination = destinationInput.get(sessionID);  // FIXME:這邊要修
-        locations.put(sessionID, new ArrayList<>());
 
+
+    private void getLocation(String sessionID ,String input, ArrayList<String> locationTitle) {
+
+        // 先對input 做分析，檢查地點是否有° S 或 ° W
+        // 如果有的話，要在前面加負號
+        Pattern pattern = Pattern.compile("(-?\\d+\\.\\d+)°?\\s*([NS])?,?\\s*(-?\\d+\\.\\d+)°?\\s*([EW])?");
+        Matcher matcher = pattern.matcher(input);
+        locations.put(sessionID,new ArrayList<>());   // 會是全新的內容
+        int i = 0;
         while (matcher.find()) {
-            String[] strings;
-            String location = matcher.group(1);
-            if (location.contains("、")) {
-                strings = location.split("、");
-                for (var s : strings) {
-                    locations.get(sessionID).add(destination+s);
-                }
-            } else if(location.contains("，")) {
-                strings = location.split("，");
-                for (var s : strings) {
-                    locations.get(sessionID).add(destination+s);
-                }
-            }else if(location.contains(",")){
-                strings = location.split(",");
-                for (var s : strings) {
-                    locations.get(sessionID).add(destination+s);
-                }
-            }else {
-                strings = location.split(",");
-                for (var s : strings) {
-                    locations.get(sessionID).add(destination+s);
-                }
+            double latitude = Double.parseDouble(matcher.group(1));
+            double longitude = Double.parseDouble(matcher.group(3));
+
+            if (matcher.group(2) != null && matcher.group(2).equals("S")) {
+                latitude *= -1;
             }
+
+            if (matcher.group(4) != null && matcher.group(4).equals("W")) {
+                longitude *= -1;
+            }
+
+
+            locations.get(sessionID).add(new AiLocationsDto( locationTitle.get(i),latitude,longitude));
+            i++;
         }
+
+
     }
+
 }
+
+
+// TODO:先讓文字框置中，等到地圖收到資訊後顯示
+
 

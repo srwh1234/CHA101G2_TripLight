@@ -1,4 +1,4 @@
-package com.tw.ai.common;
+package com.tw.ai.util;
 
 import java.util.Base64;
 

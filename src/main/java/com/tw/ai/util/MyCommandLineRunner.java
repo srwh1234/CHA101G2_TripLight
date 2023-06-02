@@ -1,4 +1,4 @@
-package com.tw.ai.common;
+package com.tw.ai.util;
 
 import com.tw.ai.service.AiService;
 import com.tw.ticket.service.TicketService;

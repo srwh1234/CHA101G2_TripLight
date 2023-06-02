@@ -1,8 +1,8 @@
 package com.tw.ai.service;
 
 
-import com.tw.ai.common.ChatGPTAPI;
-import com.tw.ai.common.GetLocation;
+import com.tw.ai.util.ChatGPTAPI;
+import com.tw.ai.util.GetLocation;
 import com.tw.ai.dto.AiFormDataDto;
 import com.tw.ai.dto.AiLocationsDto;
 import com.tw.ai.repository.AiFavoriteRepository;
@@ -81,7 +81,7 @@ public class AiService {
     }
 
     public List<AiFavorite> findAIFavoriteFromMemberId(int memberId) {
-        return aiFavoriteRepository.findAIFavoriteFromMemberId(memberId);
+        return aiFavoriteRepository.findAIFavoriteByMemberId(memberId);
     }
 
     public void startChatGPT(String memberId, AiFormDataDto formData) {

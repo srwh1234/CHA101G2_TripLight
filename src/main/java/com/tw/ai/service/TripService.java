@@ -1,7 +1,7 @@
 package com.tw.ai.service;
 
 
-import com.tw.ai.common.DateUtils;
+import com.tw.ai.util.DateUtils;
 
 import com.tw.trip.dao.TripRepository;
 import com.tw.trip.dao.TripImageRepository;
