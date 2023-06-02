@@ -9,6 +9,8 @@ import com.tw.ai.dto.AiLocationsDto;
 import com.tw.ai.dao.AiFavoriteRepository;
 import com.tw.ai.entity.AiFavorite;
 import com.tw.ai.entity.AiLocations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class AiService implements GetMethod {
     private final Map<String, AiFormDataDto> formDataList;
     private int id;
     private final Map<String, Long> lastHeartbeatMap;
+
+    private final Logger logger
+            = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTAPI chatGPTAPI, Map<String, AiFormDataDto> formDataList, GetLocation getLocation) {
@@ -54,15 +59,13 @@ public class AiService implements GetMethod {
         aiFavorite.setRoute(resultUrl);
 
         aiFavoriteRepository.save(aiFavorite);
-        System.out.println("存入資料的ID:" + aiFavorite.getAiFavoriteId());
+        logger.info("存入資料的ID:" + aiFavorite.getAiFavoriteId());
 
         return aiFavorite.getAiFavoriteId();
     }
 
     public void saveLocation(String memberId, int aiFavoriteId) {
         var locationList = getLocation.locations.get(memberId);
-
-        System.out.println(locationList);
         for (var location : locationList) {
             var locations = new AiLocations();
             locations.setAiFavoriteId(aiFavoriteId);
@@ -70,11 +73,11 @@ public class AiService implements GetMethod {
             locations.setLatitude(location.getLatitude());
             locations.setLongitude(location.getLongitude());
             aiFavoriteRepository.save(locations);
-            System.out.println("存入地點資料:" + locations);
         }
     }
 
     public int getLastId() {
+
         return aiFavoriteRepository.getLastId();
     }
 
@@ -83,6 +86,7 @@ public class AiService implements GetMethod {
     }
 
     public void startChatGPT(String memberId, AiFormDataDto formData) {
+        logger.info("執行chatGPT");
         chatGPTAPI.start(memberId, formData);
     }
 
@@ -110,9 +114,11 @@ public class AiService implements GetMethod {
         formDataList.remove(memberId);
         getLocation.locations.remove(memberId);
         lastHeartbeatMap.remove(memberId);
+        logger.info(memberId+"執行清空作業");
     }
 
     public void setFormDataList(String memberId, AiFormDataDto formData) {
+        logger.info("接收表單資料");
         formDataList.put(memberId, formData);
     }
 
@@ -131,7 +137,7 @@ public class AiService implements GetMethod {
     }
 
     public void checkHeartbeat() {
-        System.out.println("顯示成員名單：" + lastHeartbeatMap.toString());
+        logger.info("顯示成員名單：" + lastHeartbeatMap.toString());
         long currentTime = System.currentTimeMillis();  // 獲得1970年起至今的毫秒數
         long heartbeatThreshold = 10000; // 心跳閾值，單位為毫秒
 
@@ -141,7 +147,7 @@ public class AiService implements GetMethod {
             long lastHeartbeatTime = entry.getValue();
             if (currentTime - lastHeartbeatTime >= heartbeatThreshold) {
                 clearContent(memberId);
-                System.out.println("執行清空操作，清空成員ID： " + memberId);
+                logger.info(memberId+"執行清空作業");
             }
         }
     }

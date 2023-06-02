@@ -31,14 +31,14 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
     public void save(AiFavorite aiFavorite) {
         // 如果用merge()  沒有該PK則新增，有則覆蓋
         entityManager.merge(aiFavorite);
-        System.out.println("儲存" + aiFavorite);
+
     }
 
     @Override
     @Transactional
     public void save(AiLocations aiLocations) {
         entityManager.merge(aiLocations);
-        System.out.println("儲存" + aiLocations);
+
     }
 
     public int getLastId() {

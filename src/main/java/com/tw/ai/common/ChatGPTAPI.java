@@ -106,7 +106,7 @@ public class ChatGPTAPI {
                 content = getContent(line);
                 tempinput += content;
                 this.output.put(sessionID,tempinput);   // 新的內容會覆蓋舊的內容
-                System.out.print(content);
+
             }
 
             // 處理所有資料並回傳google map
@@ -174,7 +174,6 @@ public class ChatGPTAPI {
                 }
             }
         }
-        System.out.println("地點名稱陣列："+ locations);
     }
 }
 

@@ -21,7 +21,6 @@ public class HeartbeatController {
     // 判斷用戶是否離開該網頁
     @PostMapping("/notifyBackend/{memberId}")
     public void handleNotification(@PathVariable("memberId") String memberId) {
-        System.out.println("以下成員離開網頁，成員ID： " + memberId+"執行清空作業");
         aiService.clearContent(memberId);
     }
     // 每30秒接收1次訊息, 更新使用者的最後活動時間

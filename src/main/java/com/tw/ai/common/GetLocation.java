@@ -100,9 +100,9 @@ public class GetLocation {
                 content = getContent(line);
                 input += content;
                 setOutput(input);
-                System.out.print(content);
+
             }
-            System.out.println();
+
 
             // 處理所有資料並回傳google map
 
@@ -156,11 +156,11 @@ public class GetLocation {
                 longitude *= -1;
             }
 
-            System.out.println(latitude+","+ longitude);
+
             locations.get(sessionID).add(new AiLocationsDto( locationTitle.get(i),latitude,longitude));
             i++;
         }
-        System.out.println(locations);
+
 
     }
 

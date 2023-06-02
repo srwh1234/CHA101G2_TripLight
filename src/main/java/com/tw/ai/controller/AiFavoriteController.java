@@ -25,7 +25,6 @@ public class AiFavoriteController {
     @PostMapping("/processResultData/{memberId}")
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
         int aiFavoriteId = aiService.save(resultData, resultUrl, memberId);
-        System.out.println(aiFavoriteId);
         aiService.saveLocation(memberId, aiFavoriteId);
         return "success";
     }

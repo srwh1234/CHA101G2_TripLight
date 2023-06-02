@@ -23,9 +23,6 @@ public class SessionController {
     public ResponseEntity<String> processFormData(@RequestBody AiFormDataDto formDara, HttpServletRequest request){
         HttpSession session = request.getSession();
         String sessionId = session.getId();
-
-        System.out.println(formDara);
-
         aiService.setFormDataList(sessionId,formDara);
 
         aiService.startChatGPT(sessionId,formDara);
