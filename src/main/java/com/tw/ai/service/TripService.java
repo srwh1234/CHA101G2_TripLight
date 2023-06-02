@@ -1,7 +1,7 @@
 package com.tw.ai.service;
 
 
-import com.tw.ai.common.GetMethod;
+import com.tw.ai.common.DateUtils;
 
 import com.tw.trip.dao.TripRepository;
 import com.tw.trip.dao.TripImageRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TripService implements GetMethod {
+public class TripService{
 
 
     private final TripRepository tripRepository;
@@ -29,7 +29,7 @@ public class TripService implements GetMethod {
         for(var trip:result){
             var tripImg = tripImageRepository.findByTripId(1);  // TODO:這邊要改
             byte[] image = tripImg.get(0).getImage();  // 獲得圖片byte[]
-            var url = convertBlobToUrl(image);
+            var url = DateUtils.convertBlobToUrl(image);
             // 將圖片byte轉成url
             trip.setImgUrl(url);
         }

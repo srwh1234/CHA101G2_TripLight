@@ -1,4 +1,4 @@
-package com.tw.ai.entity;
+package com.tw.ai.model;
 
 
 

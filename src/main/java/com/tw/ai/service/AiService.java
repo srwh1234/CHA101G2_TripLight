@@ -3,12 +3,11 @@ package com.tw.ai.service;
 
 import com.tw.ai.common.ChatGPTAPI;
 import com.tw.ai.common.GetLocation;
-import com.tw.ai.common.GetMethod;
 import com.tw.ai.dto.AiFormDataDto;
 import com.tw.ai.dto.AiLocationsDto;
-import com.tw.ai.dao.AiFavoriteRepository;
-import com.tw.ai.entity.AiFavorite;
-import com.tw.ai.entity.AiLocations;
+import com.tw.ai.repository.AiFavoriteRepository;
+import com.tw.ai.model.AiFavorite;
+import com.tw.ai.model.AiLocations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class AiService implements GetMethod {
+public class AiService {
 
     private final AiFavoriteRepository aiFavoriteRepository;
     private final ChatGPTAPI chatGPTAPI;

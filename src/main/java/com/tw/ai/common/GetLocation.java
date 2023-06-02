@@ -3,7 +3,9 @@ package com.tw.ai.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.tw.ai.config.AppConfig;
 import com.tw.ai.dto.AiLocationsDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -28,9 +30,14 @@ public class GetLocation {
 
     private ArrayList<String> locationTitle = new ArrayList<>();
 
-    private static final String API_KEY = APIKey.getApiKey();
+    private final String API_KEY;
     private static final String MODEL = "gpt-3.5-turbo";
     private static final String URL = "https://api.openai.com/v1/chat/completions";
+
+    @Autowired
+    public GetLocation(AppConfig appConfig) {
+        this.API_KEY = appConfig.getApiKey();
+    }
 
     // 這個方法會傳回一個 InputStream，該 InputStream 會連線到 ChatGPT API 並傳送 message
     private BufferedReader chatGPT(String message) throws IOException {

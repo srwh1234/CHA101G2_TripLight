@@ -1,8 +1,8 @@
-package com.tw.ai.dao;
+package com.tw.ai.repository;
 
 
-import com.tw.ai.entity.AiFavorite;
-import com.tw.ai.entity.AiLocations;
+import com.tw.ai.model.AiFavorite;
+import com.tw.ai.model.AiLocations;
 
 import java.util.List;
 
