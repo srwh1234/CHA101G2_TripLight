@@ -1,9 +1,10 @@
-package com.tw.ai.repository;
+package com.tw.ai.repository.impl;
 
 
 
 import com.tw.ai.model.AiFavorite;
 import com.tw.ai.model.AiLocations;
+import com.tw.ai.repository.AiFavoriteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
