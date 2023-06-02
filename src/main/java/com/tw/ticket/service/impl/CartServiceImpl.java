@@ -44,7 +44,10 @@ public class CartServiceImpl implements CartService {
 		final List<CartResponse> result = new ArrayList<>();
 
 		ticketCartRepository.findByKeyMemberId(membeId).forEach(cart -> {
+
+			// XXX 這邊好像要查詢很多次...
 			final Ticket ticket = ticketRepository.findById(cart.getTicketId()).orElse(null);
+
 			if (ticket != null) {
 				final CartTicketResponse response = new CartTicketResponse(ticket);
 				// 可用數量
@@ -56,7 +59,6 @@ public class CartServiceImpl implements CartService {
 				result.add(cartResponse);
 			}
 		});
-
 		return result;
 	}
 
