@@ -10,15 +10,11 @@ import java.io.Serializable;
 @IdClass(AiLocations.LocationPK.class)  // 關聯複合PK的Class
 public class AiLocations{
 
-    // 複合PK
     @Id
     private int aiFavoriteId;
-    // 複合PK
     @Id
     private String locationTitle;
-
     private double latitude;
-
     private double longitude;
 
     @Data

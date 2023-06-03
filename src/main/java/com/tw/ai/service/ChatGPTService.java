@@ -1,4 +1,4 @@
-package com.tw.ai.util;
+package com.tw.ai.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 
 @Service
-public class ChatGPTAPI {
+public class ChatGPTService {
 
 
 
@@ -38,7 +38,7 @@ public class ChatGPTAPI {
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
     @Autowired
-    public ChatGPTAPI(AppConfig appConfig) {
+    public ChatGPTService(AppConfig appConfig) {
         this.API_KEY = appConfig.getApiKey();
     }
 

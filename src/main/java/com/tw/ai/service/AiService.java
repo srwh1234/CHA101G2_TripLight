@@ -1,7 +1,6 @@
 package com.tw.ai.service;
 
 
-import com.tw.ai.util.ChatGPTAPI;
 import com.tw.ai.util.GetLocation;
 import com.tw.ai.dto.AiFormDataDto;
 import com.tw.ai.dto.AiLocationsDto;
@@ -22,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AiService {
 
     private final AiFavoriteRepository aiFavoriteRepository;
-    private final ChatGPTAPI chatGPTAPI;
+    private final ChatGPTService chatGPTService;
     private final GetLocation getLocation;
     private final Map<String, AiFormDataDto> formDataList;
     private int id;
@@ -32,9 +31,9 @@ public class AiService {
             = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTAPI chatGPTAPI, Map<String, AiFormDataDto> formDataList, GetLocation getLocation) {
+    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTService chatGPTService, Map<String, AiFormDataDto> formDataList, GetLocation getLocation) {
         this.aiFavoriteRepository = aiFavoriteRepository;
-        this.chatGPTAPI = chatGPTAPI;
+        this.chatGPTService = chatGPTService;
         this.getLocation = getLocation;
         this.formDataList = formDataList;
         this.lastHeartbeatMap = new ConcurrentHashMap<>();
@@ -86,15 +85,15 @@ public class AiService {
 
     public void startChatGPT(String memberId, AiFormDataDto formData) {
         logger.info("執行chatGPT");
-        chatGPTAPI.start(memberId, formData);
+        chatGPTService.start(memberId, formData);
     }
 
     public String getChatGPTResult(String memberId) {
-        return chatGPTAPI.getOutput(memberId);
+        return chatGPTService.getOutput(memberId);
     }
 
     public ArrayList<AiLocationsDto> getLatitudeAndLongitude(String memberId) {
-        var locations = chatGPTAPI.locations.get(memberId);
+        var locations = chatGPTService.locations.get(memberId);
         // 將地點轉成經緯度 如果為空陣列，就不要執行了
         if (locations != null && !locations.isEmpty()) {
             getLocation.start(memberId, locations);
@@ -104,12 +103,12 @@ public class AiService {
     }
 
     public ArrayList<String> getChatGPTLocations(String memberId) {
-        return chatGPTAPI.locations.get(memberId);
+        return chatGPTService.locations.get(memberId);
     }
 
     public void clearContent(String memberId) {
-        chatGPTAPI.getOutput().remove(memberId);
-        chatGPTAPI.locations.remove(memberId);
+        chatGPTService.getOutput().remove(memberId);
+        chatGPTService.locations.remove(memberId);
         formDataList.remove(memberId);
         getLocation.locations.remove(memberId);
         lastHeartbeatMap.remove(memberId);
