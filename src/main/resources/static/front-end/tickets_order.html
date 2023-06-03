@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <title>TripLight | Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <!-- 關鍵字設定 -->
+  <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+  <!-- 網頁介紹 -->
+  <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+
+  <script>
+    addEventListener(
+      "load",
+      function () {
+        setTimeout(hideURLbar, 0);
+      },
+      false
+    );
+
+    function hideURLbar() {
+      window.scrollTo(0, 1);
+    }
+  </script>
+
+  <!--jQuery-->
+  <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+          crossorigin="anonymous"></script>
+  <!--會員登入-->
+  <link href="css/login.css" rel="stylesheet" />
+
+
+  <!-- css files -->
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- bootstrap css -->
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <!-- custom css -->
+  <link href="css/fontawesome-all.css" rel="stylesheet" />
+  <!-- fontawesome css -->
+  <!-- //css files -->
+
+  <!-- google fonts -->
+  <!-- 載入字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
+  <!-- //google fonts -->
+
+  <!-- 載入icon -->
+  <link rel="shortcut icon" href="./images/icon.png" />
+  <link rel="bookmark" href="./images/icon.png" />
+
+  <!-- <link href="css/bootstrap-table.min.css" rel="stylesheet" /> -->
+
+  <style>
+    .container-fluid,
+    .modal-body {
+      background-color: #f5f5f5;
+    }
+
+
+
+    .my-border-radius {
+      border-radius: 10px;
+      padding: 3rem;
+      background-color: #fff;
+    }
+
+    /* 讓table不要突顯 */
+    .table {
+      --bs-table-hover-bg: transparent;
+    }
+
+    /* 查看的按鈕 */
+    .btn-detail,
+    .btn-serial,
+    .btn-refund,
+    .btn-mylink,
+    .btn-comment {
+      border: #26bec9;
+      color: white;
+      background-color: #26bec9;
+    }
+
+    .btn-detail:hover,
+    .btn-serial:hover,
+    .btn-refund:hover,
+    .btn-mylink:hover,
+    .btn-comment:hover,
+    .btn-detail:focus,
+    .btn-serial:focus,
+    .btn-refund:focus,
+    .btn-mylink:focus,
+    .btn-comment:focus {
+      border: #26bec9;
+      background-color: #09777d;
+    }
+
+
+    /* 底下的分頁選項 */
+    .page-item .active {
+      border: 1px solid #26bec9;
+      color: white;
+      background-color: #26bec9;
+    }
+
+    .page-item a,
+    td {
+      color: #999;
+    }
+
+    /* 文字灰色 */
+    .my-text-lightgray {
+      color: #ccc;
+    }
+
+    /* 文字水藍 */
+    .my-text-lightblue {
+      color: #26bec9;
+    }
+
+    /* 文字淺紅 */
+    .my-text-lightred {
+      color: #ef7a70;
+    }
+
+    /* 票券名稱下方的標記 */
+    .my-mark {
+      margin: 0 6px 6px 0;
+      padding: 3px 8px;
+      color: #64b3f4;
+      background-color: rgba(100, 179, 244, .1);
+      display: inline-block;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25em;
+    }
+
+    /* 評價的星星 */
+    .my-ratings .on {
+      color: #26bec9;
+    }
+
+    .my-ratings {
+      cursor: pointer;
+      display: inline-block
+    }
+
+    /* 避免表格被過度壓縮 */
+    .my-th-width {
+      min-width: 8.5rem;
+    }
+
+    /* 避免表格被過度壓縮 小按鈕*/
+    .my-th-width-sm {
+      min-width: 7rem;
+    }
+
+    .error-text {
+      display: none;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- header -->
+  <header>
+    <div class="container" style="padding-right: 0px">
+      <!-- nav -->
+      <nav class="py-md-4 py-3">
+        <div id="logo">
+          <h1 class="mt-md-0 mt-2">
+            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+              TripLight
+            </a>
+          </h1>
+        </div>
+        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu ml-auto mt-1">
+          <li class=""><a href="index.html">首頁</a></li>
+          <li class=""><a href="booking.html">AI行程規劃</a></li>
+          <li class=""><a href="tickets.html">票券</a></li>
+          <li class=""><a href="packages.html">套裝行程</a></li>
+          <li class=""><a href="articles.html">旅遊文章</a></li>
+          <li class="booking"><a href="" id="login">登入/註冊</a></li>
+          <li class="">
+            <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+          </li>
+        </ul>
+      </nav>
+      <!-- //nav -->
+      <div class="member">
+        <ul class="member_list">
+          <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+          </li>
+          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+            <ul class="order_list">
+              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
+              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+              </li>
+            </ul>
+          </li>
+          <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+          <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
+          <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
+          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
+          <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <!-- //header -->
+  <!-- 登入 -->
+
+  <div id="login-container">
+    <!---container--->
+
+    <div class="main-box login">
+      <h3>登入</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" id="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" id="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />記住我</label>
+          <a href="#">忘記密碼</a>
+        </div>
+        <button type="submit" class="main-btn">Login</button>
+        <div class="register">
+          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="main-box register">
+      <h3>註冊</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-user icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">使用者名稱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />我同意所有條款</label>
+        </div>
+        <button type="submit" class="main-btn">註冊</button>
+        <div class="register">
+          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+        </div>
+      </form>
+    </div>
+
+    <span class="close-icon">
+      <div class="fas fa-times"></div>
+    </span>
+  </div>
+
+  <!-- 登入  -->
+
+  <!-- banner -->
+  <section class="banner_inner" id="home">
+    <div class="banner_inner_overlay"></div>
+  </section>
+  <!-- //banner -->
+
+  <div class="container" id="orderContainer">
+    <div class="row p-3">
+      <div class="h3 my-5">票券訂單</div>
+
+      <div class="table-responsive">
+        <table class="table" data-toggle="table" data-sortable="true">
+          <thead>
+            <tr>
+              <th class="my-th-width-sm" data-field="ticket_order_id" data-sortable="true">訂單編號</th>
+              <th class="my-th-width-sm" data-field="ticket_count" data-sortable="true">總品項</th>
+              <th class="my-th-width-sm" data-field="pay_date" data-sortable="true">訂購日期</th>
+              <th class="my-th-width-sm" data-field="pay_type" data-sortable="true">付款方式</th>
+              <th class="my-th-width-sm" data-field="coupon" data-sortable="true">優惠券</th>
+              <th class="my-th-width-sm" data-field="actual_price" data-sortable="true">總金額</th>
+              <th class="my-th-width"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 內容給JS填 -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 最下排 -->
+      <div class="d-flex justify-content-center align-items-center my-3" id="orderPagination">
+        <ul class="pagination gap-2">
+          <!-- 內容給JS填 -->
+        </ul>
+      </div>
+
+
+    </div>
+
+
+  </div>
+  <div class="container-fluid">
+
+    <div class="container my-5 d-none" id="detailContainer">
+      <div class="row p-3">
+        <div class="h3 my-5">
+          票券訂單明細<span class="text-muted mx-2">#<span id="orderId">0000</span></span>
+        </div>
+
+        <div class="my-border-radius">
+          <div class="table-responsive">
+            <table class="table" data-toggle="table" data-sortable="true">
+              <thead>
+                <tr>
+                  <th class="my-th-width-sm" data-field="index" data-sortable="true">#</th>
+                  <th class="my-th-width" data-field="ticket_name" data-sortable="true">票券名稱</th>
+                  <th class="my-th-width-sm" data-field="actual_price" data-sortable="true">單價</th>
+                  <th class="my-th-width" data-field="expiry_date" data-sortable="true">到期日期</th>
+                  <th class="my-th-width-sm">序號</th>
+                  <th class="my-th-width-sm">狀態</th>
+                  <th class="my-th-width-sm"></th>
+                  <th class="my-th-width-sm"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 內容給JS填 -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- 稱高度用的 -->
+    <div style="height:30vh"></div>
+  </div>
+
+  <!-- QRCode按下去的Modal畫面 -->
+  <div class="modal fade" id="serialNumberModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 my-mark" id="serialNumberModal">序號放這邊</h1>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body text-center py-5">
+          <!-- qrcode會放在這邊 -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 退貨按鈕按下去的Modal畫面 -->
+  <div class="modal fade" id="refundModal" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 my-text-lightred">退貨</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mx-4">
+            <textarea class="form-control mt-3" id="inputRefund" rows="5" placeholder="請告訴我們不喜歡的原因"></textarea>
+            <p class="my-text-lightblue">工作人員確認後會盡速退回款項</p>
+
+            <div class="position-relative">
+              <p class="my-text-lightred error-text">請填寫原因</p>
+            </div>
+
+          </div>
+          <div class="d-flex justify-content-end my-3">
+            <button type="button" class="btn btn-primary btn-refund" id="btnRefundConfirm">送出退貨申請</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 評價按鈕按下去的Modal畫面 -->
+  <div class="modal fade" id="commentModal" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 my-text-lightblue">評價</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mx-4">
+            <textarea class="form-control my-3" id="inputComment" rows="5" placeholder="留下您的評論"></textarea>
+            <p class="my-text-lightblue">評價</p>
+            <div class="my-ratings my-text-lightgray mt-2 mb-3">
+              <span class="star" data-star="1"><i class="fa fa-star"></i></span>
+              <span class="star" data-star="2"><i class="fa fa-star"></i></span>
+              <span class="star" data-star="3"><i class="fa fa-star"></i></span>
+              <span class="star" data-star="4"><i class="fa fa-star"></i></span>
+              <span class="star" data-star="5"><i class="fa fa-star"></i></span>
+              <span class="score">0</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end my-3">
+            <button type="button" class="btn btn-primary btn-refund" id="btnCommentConfirm">送出評價</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--footer -->
+  <footer>
+    <section class="footer footer_w3layouts_section_1its py-5">
+      <div class="container py-lg-4 py-3">
+        <div class="row footer-top">
+          <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>地點資訊</h3>
+            </div>
+            <div class="row">
+              <ul class="col-12 links">
+                <li>
+                  <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓" target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                </li>
+                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                <li>
+                  <a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
+                </li>
+                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+            <div class="footer-title">
+              <h3>認識TripLight</h3>
+            </div>
+            <div class="row">
+              <ul class="col-10 links">
+                <li><a href="about.html" class="scroll">關於我們</a></li>
+                <li>
+                  <a href="user_terms.html" class="scroll">使用者條款 </a>
+                </li>
+                <li>
+                  <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                </li>
+                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>成為合作夥伴</h3>
+            </div>
+            <div class="row">
+              <ul class="col-6 links">
+                <li>
+                  <a href="supplier_form.html" class="scroll">成為供應商</a>
+                </li>
+                <li>
+                  <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
+                </li>
+                <li>
+                  <a href="group_form.html" class="scroll">團體客製規劃</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>聯絡我們</h3>
+            </div>
+            <ul class="social_section_1info">
+              <li>
+                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg" alt="facebook" /></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                       alt="instagram" /></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+              </li>
+              <li class="youtube">
+                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
+                       alt="youtube" /></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </footer>
+  <!-- //footer -->
+
+  <!-- copyright -->
+  <div class="copyright py-3 text-center">
+    <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+  </div>
+  <!-- //copyright -->
+
+  <!-- move top -->
+  <div class="move-top text-right">
+    <a href="#home" class="move-top">
+      <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- move top -->
+  <!-- 這是正文 -->
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/jquery-3.6.4.min.js"></script>
+  <!-- <script src="/js/bootstrap-table.min.js"></script> -->
+  <script src="./js/jquery.qrcode.min.js"></script>
+
+
+
+  <script>
+    // 這邊是假資料
+    const result =
+    {
+      curPage: 1,
+      totalPage: 10,
+      orders: [
+        {
+          ticketOrderId: 1,
+          ticketCount: 5,
+          couponName: null,
+          payDate: '2023-03-06 09:00',
+          payType: '信用卡',
+          actualPrice: '97000',
+        },
+        {
+          ticketOrderId: 2,
+          ticketCount: 1,
+          couponName: null,
+          payDate: '2023-07-08 10:00',
+          payType: 'ATM',
+          actualPrice: '500',
+        },
+        {
+          ticketOrderId: 3,
+          ticketCount: 1,
+          couponName: '開站優惠',
+          payDate: '2023-09-10 19:00',
+          payType: '信用卡',
+          actualPrice: '16800',
+        }
+      ]
+    };
+
+    $(function () {
+
+      //退貨的按鈕
+      $('#btnRefundConfirm').on('click', function () {
+        const reason = $('#inputRefund').val().trim();
+        if (!reason) {
+          $('.error-text').fadeIn(200).fadeOut(10000);
+          return false;
+        }
+        const post = {
+          memberId: 0,
+          ticketSnId: $(this).data('ticket-sn-id'),
+          refundReason: reason,
+        };
+
+        console.log(post);
+        $('#refundModal').modal('hide');
+      });
+
+      //評價的按鈕
+      $('#btnCommentConfirm').on('click', function () {
+
+        const post = {
+          memberId: 0,
+          ticketSnId: $(this).data('ticket-id'),
+          rating: $('#commentModal .score').text(),
+          comment: $('#inputComment').val().trim(),
+        };
+        console.log(post);
+        $('#commentModal').modal('hide');
+      });
+
+
+      //評價的星星按鈕
+      $('#commentModal .star').on('click', function () {
+        const val = parseInt($(this).data('star'));
+        $('#commentModal .star').removeClass('on');
+
+        $('#commentModal .star').each((i, v) => {
+          if (parseInt($(v).data('star')) <= val) {
+            $(v).addClass('on');
+          }
+        })
+        $('#commentModal .score').text(val);
+      });
+      //顯示序號的按鈕
+      $('#serialNumberModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const sn = button.data('bs-whatever');
+
+        $(this).find('.modal-title').text(sn);
+        $(this).find('.modal-body').html('');
+        $(this).find('.modal-body').qrcode({
+          width: 256,
+          height: 256,
+          text: sn,
+        });
+      });
+
+      //我要退貨的參數傳遞
+      $('#refundModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const value = button.data('bs-whatever').split('-');
+        const orderId = value[0];
+        const sn = value[1];
+        const name = value[2];
+        $(this).find('.modal-title').text(name);
+        $('#btnRefundConfirm').data('ticket-sn-id', sn);
+      });
+
+      //評價的參數傳遞
+      $('#commentModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const value = button.data('bs-whatever').split('-');
+        const ticketId = value[0];
+        const sn = value[1];
+        const name = value[2];
+        $(this).find('.modal-title').text(name);
+        $(this).find('.star').addClass('on');
+        $(this).find('.score').text('5');
+        $('#btnCommentConfirm').data('ticket-id', ticketId);
+      });
+
+      // 查看詳情的按鈕
+      $(document).on('click', '.btn-detail', function () {
+        $('#detailContainer').removeClass('d-none');
+
+        const orderId = $(this).closest('tr').find('.ticket_order_id').text();
+        const count = parseInt($(this).closest('tr').find('.ticket_count').text());
+
+        $('#orderId').text(orderId);
+
+        // 這邊是假資料
+        const resultDetail = [];
+        for (let i = 1; i <= count; i++) {
+          const detail = {
+            ticketId: i,
+            ticketSnId: Math.trunc(1 + Math.random() * 1000),
+            serialNumber: `U${i}ER${i}AA${i}GG${i}`,
+            name: `#${orderId}訂單內的 票券${i}號`,
+            price: (100 * i ** 3),
+            expiryDate: '2023-12-31 22:00',
+            refundStatus: Math.trunc(Math.random() * 3),
+          };
+          resultDetail.push(detail);
+        }
+
+
+        $('#detailContainer table tbody').html('');
+
+        for (detail of resultDetail) {
+          const theTr = $('<tr>')
+
+          $(theTr).append(
+            `
+                <td class="index">${detail.ticketSnId}</td>
+                <td class="ticket_name">${detail.name}</td>
+                <td class="actual_price">${detail.price} 元</td>
+                <td class="expiry_date">${detail.expiryDate}</td>
+            `
+          );
+
+          //退貨中或以退貨 就不顯示序號按鈕
+          if (detail.refundStatus === 0) {
+            $(theTr).append(
+              `
+              <td>
+                <button class="btn btn-sm btn-primary btn-serial" type="button" data-bs-toggle="modal"
+                  data-bs-target="#serialNumberModal" data-bs-whatever="${detail.serialNumber}">
+                  <i class="fa fa-qrcode me-2"></i>顯示序號
+                </button>
+              </td>
+              `
+            );
+
+          } else {
+            $(theTr).append('<td>--</td>');
+          }
+
+          //狀態 (0:無退款 1:退款中 2:退款完成)
+          if (detail.refundStatus === 0) {
+            $(theTr).append(
+              `
+              <td>
+                <button class="btn btn-sm btn-primary btn-refund" type="button" data-bs-toggle="modal"
+                  data-bs-target="#refundModal" data-bs-whatever="${orderId}-${detail.ticketSnId}-${detail.name}">
+                  <i class="fa fa-undo me-2"></i>我要退貨
+                </button>
+              </td>
+              `
+            );
+          } else if (detail.refundStatus === 1) {
+            $(theTr).append('<td class="my-text-lightblue">退貨處理中</td>');
+          } else {
+            $(theTr).append('<td class="my-text-lightred">已退貨</td>');
+          }
+
+          $(theTr).append(
+            `
+                <td class="text-center">
+                  <button class="btn btn-sm btn-primary btn-comment" type="button" data-bs-toggle="modal"
+                    data-bs-target="#commentModal" data-bs-whatever="${detail.ticketId}-${detail.ticketSnId}-${detail.name}">
+                    <i class="fa fa-thumbs-up me-2"></i>給予評價
+                  </button>
+                </td>       
+                <td class="text-center">
+                  <a href="tickets_detail.html?id=${detail.ticketId}" 
+                     class="btn btn-sm btn-primary btn-mylink" type="button">
+                     <i class="fa fa-share me-2"></i>前往商品
+                  </a>
+                </td>
+
+            `
+          );
+          // 填入這一筆資料
+          $('#detailContainer table tbody').append(theTr);
+        }
+      });
+
+      //渲染頁面
+      render();
+    });
+
+    function render() {
+      // 填入訂單資料
+      $('#orderContainer table tbody').html('');
+
+
+      for (let order of result.orders) {
+        $('#orderContainer table tbody').append(
+          `
+          <tr>
+            <td class="ticket_order_id">${order.ticketOrderId}</td>
+            <td class="ticket_count">${order.ticketCount} 張</td>
+            <td class="pay_date">${order.payDate}</td>
+            <td class="pay_type">${order.payType}</td>
+            <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
+            <td class="actual_price">${order.actualPrice} 元</td>
+            <td class="text-center">
+              <button class="btn btn-primary btn-detail" type="button">
+                <i class="fa fa-search me-2"></i>查看詳情
+              </button>
+            </td>
+          </tr>
+          `
+        );
+      }
+
+
+      // 最底下的分頁
+      $('#orderPagination ul').html('');
+
+      if (result.totalPage > 1) {
+        $('#orderPagination ul').append(
+          `
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span>&laquo;</span>
+            </a>
+          </li>
+          `
+        );
+        for (let i = 1; i <= result.totalPage; i++) {
+          $('#orderPagination ul').append(
+            `         
+                <li class="page-item"><a class="page-link ${i == result.curPage ? 'active' : ''}" href="#">${i}</a></li>
+            `
+          );
+        }
+        $('#orderPagination ul').append(
+          `                    
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span>&raquo;</span>
+            </a>
+          </li>
+          `
+        );
+      }
+    }
+  </script>
+</body>
+<!-- login顯示 -->
+<script src="./js/Login.js"></script>
+<!-- login顯示 -->
+
+</html>

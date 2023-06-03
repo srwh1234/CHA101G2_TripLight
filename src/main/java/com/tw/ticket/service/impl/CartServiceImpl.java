@@ -123,13 +123,16 @@ public class CartServiceImpl implements CartService {
 		if (quantity < 0) {
 			return false;
 		}
+		boolean isValid = true;
+
 		// 超過可獲得數量
 		if (quantity > available) {
 			quantity = available;
+			isValid = false;
 		}
 		ticketCart.setQuantity(quantity);
 		ticketCartRepository.save(ticketCart);
-		return true;
+		return isValid;
 	}
 
 	// 移除購物車物件
