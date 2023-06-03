@@ -54,7 +54,7 @@ public class Hello {
 		final Member member = repository3.findById(1).get();
 
 		// 訂單列表
-		ticketOrderRepository.findByMember(member).forEach(order -> {
+		ticketOrderRepository.findByMemberId(member.getMemberId()).forEach(order -> {
 			System.out.println(order.getTicketOrderId());
 		});
 
@@ -65,7 +65,7 @@ public class Hello {
 		final TicketSn sn = ticketSnRepository.findById(9).get();
 
 		final TicketOrder ticketOrder = new TicketOrder();
-		ticketOrder.setMember(member);
+		ticketOrder.setMemberId(member.getMemberId());
 		ticketOrder.setPayType("TEST");
 		ticketOrder.setPayDate(new Timestamp(System.currentTimeMillis()));
 		ticketOrder.setTotalPrice(100);

@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tw.member.model.Member;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +26,7 @@ public class TicketOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketOrderId;// 票券訂單編號
 
-	@ManyToOne
-	@JoinColumn(name = "member_id")
-	private Member member;// 擁有者的會員編號
+	private Integer memberId;// 擁有者的會員編號
 
 	@ManyToOne
 	@JoinColumn(name = "coupon_id")

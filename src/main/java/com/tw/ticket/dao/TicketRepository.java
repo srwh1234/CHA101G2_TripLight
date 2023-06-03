@@ -1,5 +1,6 @@
 package com.tw.ticket.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -28,4 +29,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 			@Param("cities") String[] cities,	// 縣市
 			Pageable pageable					// 分頁
 	);
+
+	// 找出符合編號陣列的票券
+	public List<Ticket> findByTicketIdIn(Collection<Integer> array);
 }

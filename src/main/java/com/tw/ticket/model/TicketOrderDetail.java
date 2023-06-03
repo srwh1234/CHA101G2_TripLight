@@ -29,7 +29,7 @@ public class TicketOrderDetail {
 
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
-	private Employee employee;// 退款處裡的員工編號
+	private Employee employee;// 退款處理的員工編號
 
 	private Integer unitPrice;// 付款單價
 

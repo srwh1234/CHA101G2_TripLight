@@ -3,6 +3,7 @@ package com.tw.ticket.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.service.OrderService;
@@ -23,4 +24,10 @@ public class OrderController {
 		return orderService.ecpayCheckout();
 	}
 
+	@GetMapping("/testCheckout")
+	public boolean testCheckout(//
+			@RequestParam("memberId") final int memberId,//
+			@RequestParam("couponId") final int couponId) {
+		return orderService.makeOrder(memberId, couponId);
+	}
 }

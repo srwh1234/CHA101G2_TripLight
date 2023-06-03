@@ -18,4 +18,7 @@ public interface TicketCartRepository extends JpaRepository<TicketCart, PrimaryK
 
 	// 找出同一個MemberId的TicketCart
 	public List<TicketCart> findByKeyMemberId(int memberId);
+
+	// 移除指定會員的購物車資料
+	public void deleteByKeyMemberId(int memberId);
 }
