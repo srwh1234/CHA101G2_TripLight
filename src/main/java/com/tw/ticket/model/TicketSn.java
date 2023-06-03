@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TicketSn {
 
-	public static int STATUS_NOT_USE = 0;
-	public static int STATUS_IN_USE = 1;
+	public static int NOT_USED = 0;
+	public static int IN_USED = 1;
 
 	@Id
 	private Integer ticketSnId;// 票券序號編號

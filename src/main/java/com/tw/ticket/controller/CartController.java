@@ -29,7 +29,7 @@ public class CartController {
 
 	// 票券購物車車
 	@GetMapping("/carts")
-	public List<CartResponse> getCarts(@RequestParam("memberId") final int memberId) {
+	public List<CartResponse> carts(@RequestParam("memberId") final int memberId) {
 		return cartService.getItems(memberId);
 	}
 

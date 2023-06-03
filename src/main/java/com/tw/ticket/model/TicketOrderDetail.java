@@ -19,7 +19,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TicketOrderDetail {
 
-	// 非必要的建構子 只是為了輸入方便
+	public static int REFUND_NONE = 0;
+	public static int REFUND_REVIEW = 1;
+	public static int REFUND_FINISH = 2;
+
+	// 建構子 只是為了輸入方便
 	public TicketOrderDetail(final TicketOrder ticketOrder, final TicketSn ticketSn) {
 		this.key = new PrimaryKey(ticketOrder, ticketSn);
 	}

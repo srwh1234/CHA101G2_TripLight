@@ -544,7 +544,7 @@
 
   <script>
     // 這邊是假資料
-    const result =
+    let result =
     {
       curPage: 1,
       totalPage: 10,
@@ -576,7 +576,39 @@
       ]
     };
 
+
+
+    function doPage(curPage) {
+      const post = {
+        memberId: 1,
+        page: curPage,
+        size: 5,
+      };
+
+      fetch(`http://localhost:8080/ticketorders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data);
+          result = data;
+          //渲染頁面
+          render();
+        })
+        .catch(error => {
+          console.log(error);
+          //渲染頁面
+          render();
+        });
+
+    }
+
     $(function () {
+      doPage(0);
 
       //退貨的按鈕
       $('#btnRefundConfirm').on('click', function () {
@@ -755,9 +787,33 @@
         }
       });
 
+      //分頁的按鈕事件
+      $(document).on('click', '#orderPagination a', function (e) {
+        e.preventDefault();
+
+        const page = $(this).attr('aria-label');
+
+        if (page === "Previous") {
+          doPage(Math.max(result.curPage - 1, 0));
+        } else if (page === "Next") {
+          doPage(Math.min(result.curPage + 1, result.totalPage - 1));
+        } else if (!isNaN(page)) {
+          doPage(page);
+        }
+      });
+
       //渲染頁面
       render();
     });
+
+    //日期格式
+    function df(dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
+      const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
+      return `${year}/${month}/${day}`;
+    }
 
     function render() {
       // 填入訂單資料
@@ -770,7 +826,7 @@
           <tr>
             <td class="ticket_order_id">${order.ticketOrderId}</td>
             <td class="ticket_count">${order.ticketCount} 張</td>
-            <td class="pay_date">${order.payDate}</td>
+            <td class="pay_date">${df(order.payDate)}</td>
             <td class="pay_type">${order.payType}</td>
             <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
             <td class="actual_price">${order.actualPrice} 元</td>
@@ -798,10 +854,12 @@
           </li>
           `
         );
-        for (let i = 1; i <= result.totalPage; i++) {
+        for (let i = 0; i < result.totalPage; i++) {
           $('#orderPagination ul').append(
             `         
-                <li class="page-item"><a class="page-link ${i == result.curPage ? 'active' : ''}" href="#">${i}</a></li>
+                <li class="page-item">
+                  <a class="page-link ${i == result.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
+                </li>
             `
           );
         }

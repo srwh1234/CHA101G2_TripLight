@@ -140,6 +140,7 @@
     }
 
     #btnCheckOut,
+    #btnCheckOut2,
     #btnBack,
     #btnOrder,
     #btnDeleteConfirm {
@@ -326,13 +327,16 @@
 
       <div id="buyContainer">
         <div class="row my-5">
-          <div class="col-12 col-lg-4 offset-lg-8 d-flex my-5">
+          <div class="col-12 col-lg-6 offset-lg-6 d-flex my-5">
             <div class="h3 align-self-center">
               <span>總金額:</span>
               <span class="my-text-lightblue" id="actualPrice">1</span>
             </div>
             <div class="ms-5 align-self-center">
-              <button class="btn btn-primary btn-lg p-3" type="button" id="btnCheckOut">前往結帳</button>
+              <button class="btn btn-primary btn-lg p-3" type="button" id="btnCheckOut">前往結帳(綠界)</button>
+            </div>
+            <div class="ms-5 align-self-center">
+              <button class="btn btn-primary btn-lg p-3" type="button" id="btnCheckOut2">前往結帳</button>
             </div>
           </div>
         </div>
@@ -547,17 +551,35 @@
         .catch(error => console.log(error));
 
 
-      //前往結帳的按鈕
+      //前往結帳(綠界)的按鈕
       $('#btnCheckOut').on('click', function () {
         const post = {
           memberId: 1,
           couponId: $('#discountSelect').val(),
         };
-
         //綠界支付的介面
         window.location.href = 'http://localhost:8080/ecpayCheckout';
       });
 
+      //前往結帳的按鈕
+      $('#btnCheckOut2').on('click', function () {
+
+        const memberId = 1;
+        const couponId = $('#discountSelect').val();
+
+        fetch(`http://localhost:8080/testCheckout?memberId=${memberId}&&couponId=${couponId}`)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            if (data) {
+              window.location.href = 'tickets_order.html';
+            } else {
+              // 渲染頁面
+              render();
+            }
+          })
+          .catch(error => console.log(error));
+      });
 
       //刪除品項的按鈕
       $('#btnDeleteConfirm').on('click', function () {
