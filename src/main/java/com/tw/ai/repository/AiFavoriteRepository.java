@@ -11,5 +11,6 @@ public interface AiFavoriteRepository {
     void save(AiLocations aiLocations);
     List<AiFavorite> findAIFavoriteByMemberId(int memberId);
     int getLastId();
+    List<AiFavorite> findAll();
 
 }

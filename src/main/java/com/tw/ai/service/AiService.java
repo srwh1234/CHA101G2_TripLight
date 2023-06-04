@@ -75,8 +75,10 @@ public class AiService {
     }
 
     public int getLastId() {
-
         return aiFavoriteRepository.getLastId();
+    }
+    public List<AiFavorite> findAll() {
+        return aiFavoriteRepository.findAll();
     }
 
     public List<AiFavorite> findAIFavoriteFromMemberId(int memberId) {
@@ -149,5 +151,4 @@ public class AiService {
             }
         }
     }
-
 }

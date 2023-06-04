@@ -21,6 +21,17 @@ public class AiFavoriteController {
     public List<AiFavorite> getAiFavorite(@PathVariable("memberId") String memberId){
         return aiService.findAIFavoriteFromMemberId(5);
     }
+// 可以改成這樣
+//    @GetMapping("/getAiFavorite/{memberId}")
+//    public List<AiFavorite> getAiFavorite(@PathVariable("memberId") int memberId){
+//        if(memberId >= aiService.findAll().size()){
+//            return aiService.findAIFavoriteFromMemberId(5);
+//        }else {
+//            return aiService.findAIFavoriteFromMemberId(memberId);
+//        }
+//    }
+
+
     // 存入資料庫
     @PostMapping("/processResultData/{memberId}")
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {

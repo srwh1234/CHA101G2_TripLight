@@ -52,6 +52,12 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
         return Objects.requireNonNullElse(lastId, 1);
     }
 
+    @Override
+    public List<AiFavorite> findAll() {
+        TypedQuery<AiFavorite> theQuery = entityManager.createQuery("FROM AiFavorite", AiFavorite.class);
+        return theQuery.getResultList();
+    }
+
     public List<AiFavorite> findAIFavoriteByMemberId(int memberId) {
 
         // 使用entityManager 呼叫 createQuery 放入 JPQL指令

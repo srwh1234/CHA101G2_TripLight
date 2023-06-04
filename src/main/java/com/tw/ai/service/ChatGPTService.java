@@ -7,7 +7,6 @@ import com.tw.ai.config.AppConfig;
 import com.tw.ai.dto.AiFormDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,14 +19,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-
-
 @Service
 public class ChatGPTService {
-
-
-
 
     private Map<String, String> destinationInput = new HashMap<>();
     public Map<String,ArrayList<String>> locations = new HashMap<>();
@@ -71,7 +64,6 @@ public class ChatGPTService {
         // 取得回傳的 BufferedReader
         return new BufferedReader(new InputStreamReader(connection.getInputStream()));
     }
-
 
     public void start(String sessionID, AiFormDataDto formData) {
         locations.clear();
