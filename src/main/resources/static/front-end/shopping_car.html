@@ -553,12 +553,11 @@
 
       //前往結帳(綠界)的按鈕
       $('#btnCheckOut').on('click', function () {
-        const post = {
-          memberId: 1,
-          couponId: $('#discountSelect').val(),
-        };
+        const memberId = 1;
+        const couponId = $('#discountSelect').val();
+
         //綠界支付的介面
-        window.location.href = 'http://localhost:8080/ecpayCheckout';
+        window.location.href = `/ecpayCheckout?memberId=${memberId}&&couponId=${couponId}`;
       });
 
       //前往結帳的按鈕

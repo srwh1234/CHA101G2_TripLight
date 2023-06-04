@@ -1,5 +1,6 @@
-package com.tw.ticket.thirdparty;
+package com.tw.ticket;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyUtils {
@@ -29,5 +30,13 @@ public class MyUtils {
 	 */
 	public static boolean isContainNow(final Date begin, final Date end) {
 		return isBeforeNow(begin) && isAfterNow(end);
+	}
+
+	/**
+	 * 回傳目前時間的字串
+	 */
+	public static String getNowDateTimeString() {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		return dateFormat.format(new Date());
 	}
 }

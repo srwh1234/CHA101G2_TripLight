@@ -82,7 +82,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 		final TicketOrderDetail detail = ticketOrderDetailRepository.findByKeyId(//
 				request.getOrderId(),		//
-				request.getTicketSnId()	//
+				request.getTicketSnId()		//
 		);
 
 		if (detail == null || detail.getRefundStatus() != REFUND_NONE) {
@@ -98,15 +98,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	// 評價
 	@Override
-	public boolean ratingItem(final DetailRequest detailRequest) {
-		final Member member = memberRepository.findById(detailRequest.getMemberId()).orElse(null);
+	public boolean ratingItem(final DetailRequest request) {
+		final Member member = memberRepository.findById(request.getMemberId()).orElse(null);
 		if (member == null) {
 			return false;
 		}
 
 		final TicketOrderDetail detail = ticketOrderDetailRepository.findByKeyId(//
-				detailRequest.getOrderId(),		//
-				detailRequest.getTicketSnId()	//
+				request.getOrderId(),		//
+				request.getTicketSnId()	//
 		);
 
 		if (detail == null) {
@@ -118,10 +118,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		final TicketComment comment = new TicketComment();
 		comment.setTicketId(ticketId);
 		comment.setMember(member);
-		comment.setComment(detailRequest.getComment());
+		comment.setComment(request.getComment());
 		comment.setStatus(STATUS_SHOW);
 		comment.setPostTime(new Timestamp(System.currentTimeMillis()));
-		comment.setRating(detailRequest.getRating());
+		comment.setRating(request.getRating());
 
 		ticketCommentRepository.save(comment);
 		return true;

@@ -9,7 +9,7 @@ public interface OrderService {
 	public OrderPageResponse getItems(OrderRequest request);
 
 	// 綠界的支付介面設定
-	public String ecpayCheckout();
+	public String ecpayCheckout(int memberId, int couponId);
 
 	// 成立訂單
 	public boolean makeOrder(int memberId, int couponId);
