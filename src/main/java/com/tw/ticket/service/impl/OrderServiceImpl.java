@@ -23,6 +23,7 @@ import com.tw.ticket.controller.OrderController.OrderRequest;
 import com.tw.ticket.controller.OrderController.OrderResponse;
 import com.tw.ticket.dao.CouponRepository;
 import com.tw.ticket.dao.TicketCartRepository;
+import com.tw.ticket.dao.TicketOrderDetailRepository;
 import com.tw.ticket.dao.TicketOrderRepository;
 import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Coupon;
@@ -55,22 +56,25 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private TicketOrderRepository ticketOrderRepository;
 
+	@Autowired
+	private TicketOrderDetailRepository ticketOrderDetailRepository;
+
 	// 訂單清單
 	@Override
-	public OrderPageResponse getItems(final OrderRequest orderRequest) {
+	public OrderPageResponse getItems(final OrderRequest request) {
 		final Pageable pageable = PageRequest.of(	//
-				orderRequest.getPage(),	// 查詢的頁數，從0起算
-				orderRequest.getSize()		// 查詢的每頁筆數
+				request.getPage(),		// 查詢的頁數，從0起算
+				request.getSize()		// 查詢的每頁筆數
 		);
 
 		final Page<TicketOrder> page = ticketOrderRepository.findByMemberId(//
-				orderRequest.getMemberId(),	// 會員編號
-				pageable					// 分頁
+				request.getMemberId(),	// 會員編號
+				pageable				// 分頁
 		);
 
 		// 轉成自己定義的物件
 		final OrderPageResponse pageResponse = new OrderPageResponse();
-		pageResponse.setCurPage(orderRequest.getPage());
+		pageResponse.setCurPage(request.getPage());
 		pageResponse.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(order -> {
@@ -159,17 +163,24 @@ public class OrderServiceImpl implements OrderService {
 				ticketSn.setStatus(IN_USED);
 				snRepository.save(ticketSn);
 
-				final TicketOrderDetail detail = new TicketOrderDetail(order, ticketSn);
+				// 訂單明細清單
+				final TicketOrderDetail detail = new TicketOrderDetail(null, ticketSn);
 				detail.setUnitPrice(ticketSn.getTicket().getPrice());
 				detail.setRefundStatus(REFUND_NONE);
 				orderDetails.add(detail);
 			}
 		}
-		// 加到訂單明細清單
-		order.setTicketOrderDetails(orderDetails);
 
 		// 存檔
 		ticketOrderRepository.save(order);
+
+		// 更新訂單明細中的訂單編號
+		orderDetails.forEach(detail -> {
+			detail.getKey().setTicketOrderId(order.getTicketOrderId());
+		});
+
+		// 存檔訂單明細
+		ticketOrderDetailRepository.saveAll(orderDetails);
 
 		// 清空購物車
 		ticketCartRepository.deleteByKeyMemberId(memberId);

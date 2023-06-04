@@ -12,10 +12,10 @@ public interface CartService {
 	public List<CartResponse> getItems(int membeId);
 
 	// 放入購物車
-	public int addItem(CartRequest cartRequest);
+	public int addItem(CartRequest request);
 
 	// 變更數量
-	public boolean updateItem(ModifyRequest modifyRequest);
+	public boolean updateItem(ModifyRequest request);
 
 	// 移除購物車物件
 	public boolean removeItem(int memberId, int ticketId);

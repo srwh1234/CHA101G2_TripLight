@@ -24,8 +24,8 @@ public class OrderController {
 
 	// 訂單清單
 	@PostMapping("/ticketorders")
-	public OrderPageResponse ticketOrders(@RequestBody final OrderRequest orderRequest) {
-		return orderService.getItems(orderRequest);
+	public OrderPageResponse ticketOrders(@RequestBody final OrderRequest request) {
+		return orderService.getItems(request);
 	}
 
 	/**

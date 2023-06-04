@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.ticket.controller.DetailController.PromotionResponse;
+import com.tw.ticket.controller.TicketDetailController.PromotionResponse;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.service.CartService;
 
@@ -35,14 +35,14 @@ public class CartController {
 
 	// 加入購物車
 	@PostMapping("/addcart")
-	public int addCart(@RequestBody final CartRequest cartRequest) {
-		return cartService.addItem(cartRequest);
+	public int addCart(@RequestBody final CartRequest request) {
+		return cartService.addItem(request);
 	}
 
 	// 變更購物車數量
 	@PostMapping("/modifycart")
-	public boolean modifyCart(@RequestBody final ModifyRequest modifyRequest) {
-		return cartService.updateItem(modifyRequest);
+	public boolean modifyCart(@RequestBody final ModifyRequest request) {
+		return cartService.updateItem(request);
 	}
 
 	// 移除購物車物件

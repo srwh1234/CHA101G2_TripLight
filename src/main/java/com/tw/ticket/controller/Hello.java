@@ -1,7 +1,5 @@
 package com.tw.ticket.controller;
 
-import java.sql.Timestamp;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,11 +8,7 @@ import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
 import com.tw.ticket.dao.TicketOrderRepository;
 import com.tw.ticket.dao.TicketRepository;
-import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
-import com.tw.ticket.model.TicketOrder;
-import com.tw.ticket.model.TicketOrderDetail;
-import com.tw.ticket.model.TicketSn;
 
 @RestController
 public class Hello {
@@ -27,9 +21,6 @@ public class Hello {
 
 	@Autowired
 	private TicketOrderRepository ticketOrderRepository;
-
-	@Autowired
-	private TicketSnRepository ticketSnRepository;
 
 	@GetMapping("/test")
 	public String hello() {
@@ -60,28 +51,6 @@ public class Hello {
 
 		// 找出訂單編號1號
 		System.out.println(ticketOrderRepository.findById(1).get().getTicketOrderDetails().size());
-
-		// 測試寫入
-		final TicketSn sn = ticketSnRepository.findById(9).get();
-
-		final TicketOrder ticketOrder = new TicketOrder();
-		ticketOrder.setMemberId(member.getMemberId());
-		ticketOrder.setPayType("TEST");
-		ticketOrder.setPayDate(new Timestamp(System.currentTimeMillis()));
-		ticketOrder.setTotalPrice(100);
-		ticketOrder.setActualPrice(100);
-
-		final TicketOrderDetail od = new TicketOrderDetail(ticketOrder, sn);
-		od.setUnitPrice(100);
-		od.setRefundStatus(0);
-
-		ticketOrder.getTicketOrderDetails().add(od);
-
-		ticketOrderRepository.save(ticketOrder);
-
-		od.setRefundStatus(1);
-
-		ticketOrderRepository.save(ticketOrder);
 
 		return "hello12";
 	}

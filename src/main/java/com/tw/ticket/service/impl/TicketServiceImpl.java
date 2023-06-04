@@ -9,10 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tw.ticket.controller.DetailController.DetailResponse;
 import com.tw.ticket.controller.TicketController.RadAndHotResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
+import com.tw.ticket.controller.TicketDetailController.DetailResponse;
 import com.tw.ticket.dao.TicketRepository;
 import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
@@ -73,22 +73,22 @@ public class TicketServiceImpl implements TicketService {
 
 	// 搜尋票券
 	@Override
-	public SearchResponse getSearchItem(final SearchRequest searchRequest) {
+	public SearchResponse getSearchItem(final SearchRequest request) {
 		final Pageable pageable = PageRequest.of(	//
-				searchRequest.getPage(),	// 查詢的頁數，從0起算
-				searchRequest.getSize()		// 查詢的每頁筆數
+				request.getPage(),		// 查詢的頁數，從0起算
+				request.getSize()		// 查詢的每頁筆數
 		);
 
 		final Page<Ticket> page = repository.searchTicketByKeyword(	//
-				searchRequest.getKeyword(),	// 關鍵字
-				searchRequest.getTypes(),	// 類型
-				searchRequest.getCities(),	// 縣市
-				pageable					// 分頁物件
+				request.getKeyword(),	// 關鍵字
+				request.getTypes(),		// 類型
+				request.getCities(),	// 縣市
+				pageable				// 分頁物件
 		);
 
 		// 轉成自己定義的物件
 		final SearchResponse searchResponse = new SearchResponse();
-		searchResponse.setCurPage(searchRequest.getPage());
+		searchResponse.setCurPage(request.getPage());
 		searchResponse.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(ticket -> {

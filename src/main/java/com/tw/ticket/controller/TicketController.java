@@ -36,8 +36,8 @@ public class TicketController {
 
 	// 搜尋票券
 	@PostMapping("/searchtickets")
-	public SearchResponse searchTickets(@RequestBody final SearchRequest searchRequest) {
-		return ticketService.getSearchItem(searchRequest);
+	public SearchResponse searchTickets(@RequestBody final SearchRequest request) {
+		return ticketService.getSearchItem(request);
 	}
 
 	// 定義請求物件

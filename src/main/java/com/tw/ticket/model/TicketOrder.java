@@ -6,6 +6,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,9 +41,9 @@ public class TicketOrder {
 
 	private Integer actualPrice;// 總金額
 
-	// 逆向 cascade表示TicketOrder存檔時 也一起寫入ticketOrderDetails
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "ticket_order_id")
+	// cascade表示TicketOrder存檔時 也一起寫入ticketOrderDetails
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "ticketOrderId")
 	private List<TicketOrderDetail> ticketOrderDetails = new ArrayList<>();
 
 }

@@ -51,13 +51,13 @@ public class CartServiceImpl implements CartService {
 			final Ticket ticket = ticketRepository.findById(cart.getTicketId()).orElse(null);
 
 			if (ticket != null) {
-				final CartTicketResponse response = new CartTicketResponse(ticket);
+				final CartTicketResponse cartTicketResponse = new CartTicketResponse(ticket);
 				// 可用數量
-				response.setAvailable(snRepository.countUsableSn(cart.getTicketId()));
+				cartTicketResponse.setAvailable(snRepository.countUsableSn(cart.getTicketId()));
 
 				final CartResponse cartResponse = new CartResponse();
 				cartResponse.setQuantity(cart.getQuantity());
-				cartResponse.setTicket(response);
+				cartResponse.setTicket(cartTicketResponse);
 				result.add(cartResponse);
 			}
 		});
@@ -66,10 +66,10 @@ public class CartServiceImpl implements CartService {
 
 	// 放入購物車
 	@Override
-	public int addItem(final CartRequest cartRequest) {
-		final int memberId = cartRequest.getMemberId();
-		final int ticketId = cartRequest.getTicketId();
-		final int quantity = cartRequest.getQuantity();
+	public int addItem(final CartRequest request) {
+		final int memberId = request.getMemberId();
+		final int ticketId = request.getTicketId();
+		final int quantity = request.getQuantity();
 
 		// 確認數量
 		if (quantity <= 0) {
@@ -105,10 +105,10 @@ public class CartServiceImpl implements CartService {
 
 	// 變更購物車數量
 	@Override
-	public boolean updateItem(final ModifyRequest modifyRequest) {
-		final int memberId = modifyRequest.getMemberId();
-		final int ticketId = modifyRequest.getTicketId();
-		final int modify = modifyRequest.getModify();
+	public boolean updateItem(final ModifyRequest request) {
+		final int memberId = request.getMemberId();
+		final int ticketId = request.getTicketId();
+		final int modify = request.getModify();
 
 		// 購物車物件
 		final TicketCart ticketCart = //

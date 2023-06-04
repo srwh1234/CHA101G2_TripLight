@@ -24,8 +24,8 @@ public class TicketOrderDetail {
 	public static int REFUND_FINISH = 2;
 
 	// 建構子 只是為了輸入方便
-	public TicketOrderDetail(final TicketOrder ticketOrder, final TicketSn ticketSn) {
-		this.key = new PrimaryKey(ticketOrder, ticketSn);
+	public TicketOrderDetail(final Integer ticketOrderId, final TicketSn ticketSn) {
+		this.key = new PrimaryKey(ticketOrderId, ticketSn);
 	}
 
 	@EmbeddedId
@@ -48,9 +48,7 @@ public class TicketOrderDetail {
 	public static class PrimaryKey implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		@ManyToOne
-		@JoinColumn(name = "ticket_order_id")
-		private TicketOrder ticketOrder;// 票券訂單編號
+		private Integer ticketOrderId;// 票券訂單編號
 
 		@ManyToOne
 		@JoinColumn(name = "ticket_sn_id")

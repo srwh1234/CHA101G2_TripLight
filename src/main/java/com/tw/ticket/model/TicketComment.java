@@ -20,6 +20,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TicketComment {
 
+	public static int STATUS_HIDE = 0;
+	public static int STATUS_SHOW = 1;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;// 流水號
@@ -36,7 +39,7 @@ public class TicketComment {
 
 	private Timestamp postTime;// 發表時間
 
-	private Integer editCount;// 編輯次數
+	private Integer editCount = 0;// 編輯次數
 
 	private Timestamp lastEditTime;// 最後編輯時間
 

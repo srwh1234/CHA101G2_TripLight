@@ -20,7 +20,7 @@ import lombok.Data;
 
 @CrossOrigin(origins = "*")
 @RestController
-public class DetailController {
+public class TicketDetailController {
 
 	@Autowired
 	private TicketService ticketService;
@@ -36,8 +36,8 @@ public class DetailController {
 
 	// 票券留言
 	@PostMapping("/ticketcomments")
-	public CommentResponse comments(@RequestBody final SearchRequest searchRequest) {
-		return commentService.getItems(searchRequest);
+	public CommentResponse comments(@RequestBody final SearchRequest request) {
+		return commentService.getItems(request);
 	}
 
 	// 定義回傳物件

@@ -6,7 +6,7 @@ import com.tw.ticket.controller.OrderController.OrderRequest;
 public interface OrderService {
 
 	// 訂單清單
-	public OrderPageResponse getItems(OrderRequest orderRequest);
+	public OrderPageResponse getItems(OrderRequest request);
 
 	// 綠界的支付介面設定
 	public String ecpayCheckout();
