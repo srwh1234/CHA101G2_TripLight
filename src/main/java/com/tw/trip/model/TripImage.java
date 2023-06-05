@@ -1,4 +1,4 @@
-package com.tw.trip.entity;
+package com.tw.trip.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

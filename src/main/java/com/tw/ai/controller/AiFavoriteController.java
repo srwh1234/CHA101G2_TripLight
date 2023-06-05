@@ -16,25 +16,21 @@ public class AiFavoriteController {
     public AiFavoriteController(AiService theaiService) {
         aiService = theaiService;
     }
-    // 將AI行程收藏傳至前端
+
     @GetMapping("/aiFavorite/{memberId}")
-    public List<AiFavorite> getAiFavorite(@PathVariable("memberId") String memberId){
-        return aiService.findAIFavoriteFromMemberId(5);
+    public List<AiFavorite> getAiFavorite(@PathVariable("memberId") int memberId){
+        var aiFavoriteFromMemberId = aiService.findAIFavoriteFromMemberId(memberId);
+        if(aiFavoriteFromMemberId.size() == 0){
+            return null;
+        }else {
+            return aiService.findAIFavoriteFromMemberId(memberId);
+        }
     }
-// 可以改成這樣
-//    @GetMapping("/getAiFavorite/{memberId}")
-//    public List<AiFavorite> getAiFavorite(@PathVariable("memberId") int memberId){
-//        if(memberId >= aiService.findAll().size()){
-//            return aiService.findAIFavoriteFromMemberId(5);
-//        }else {
-//            return aiService.findAIFavoriteFromMemberId(memberId);
-//        }
-//    }
     // 存入資料庫
     @PostMapping("/aiFavorite/{memberId}")
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
         int aiFavoriteId = aiService.save(resultData, resultUrl, memberId);
         aiService.saveLocation(memberId, aiFavoriteId);
-        return "success";
+        return "儲存成功";
     }
 }

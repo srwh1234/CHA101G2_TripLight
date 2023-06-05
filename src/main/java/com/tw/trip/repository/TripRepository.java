@@ -1,5 +1,5 @@
-package com.tw.trip.dao;
-import com.tw.trip.entity.Trip;
+package com.tw.trip.repository;
+import com.tw.trip.model.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

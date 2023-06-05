@@ -119,7 +119,6 @@ $(window).on("beforeunload", function (event) {
 
 // 接收後台套裝行程資料
 getPackages();
-
 function getPackages() {
   $.ajax({
     url: "/trips/" + memberId,
@@ -133,7 +132,7 @@ function getPackages() {
         $(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
           <a href="packages_detail.html"
-            ><img src=${packages[i].imgUrl} alt="" class="card-img"
+            ><img src=${packages[i].tripImage} alt="" class="card-img"
           /></a>
           <p><span class="fa fa-tags"></span> <span>${packages[i].priceAdult}起</span></p>
         </div>
