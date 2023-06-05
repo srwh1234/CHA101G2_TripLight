@@ -227,7 +227,7 @@ $(".nav-item")
 // console.log(memberId);
 function getAiFavorite() {
   $.ajax({
-    url: "/getAiFavorite/" + memberId,
+    url: "/aiFavorite/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (aiFavorite) {

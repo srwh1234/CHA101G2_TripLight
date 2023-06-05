@@ -63,7 +63,7 @@ $("#storage-planning").on("click", function (e) {
   console.log(text);
   // 將url 與 文字框內容回傳至後端, 以及表單資料formdata
   $.ajax({
-    url: "/processResultData/" + memberId,
+    url: "/aiFavorite/" + memberId,
     type: "POST",
     data: {
       resultData: text,
@@ -122,7 +122,7 @@ getPackages();
 
 function getPackages() {
   $.ajax({
-    url: "/getPackages/" + memberId,
+    url: "/trips/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (packages) {
@@ -163,7 +163,7 @@ function getPackages() {
 getTickets();
 function getTickets() {
   $.ajax({
-    url: "/getTickets/" + memberId,
+    url: "/ai/tickets/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (Tickets) {

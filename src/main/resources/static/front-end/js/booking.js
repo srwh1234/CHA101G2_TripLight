@@ -55,7 +55,7 @@ form.addEventListener("submit", async function (event) {
   };
   // 傳送物件
   axios
-    .post("/processFormData", formData)
+    .post("/formData", formData)
     .then((response) => {
       console.log(response);
     })
@@ -67,7 +67,7 @@ form.addEventListener("submit", async function (event) {
 
 // 獲取 session ID
 axios
-  .get("/getSessionId")
+  .get("/sessionId")
   .then((response) => {
     let data = response.data;
     sessionStorage.setItem("sessionId", data.sessionId);

@@ -7,7 +7,7 @@ let request = null; // 声明一个全局变量用于存储定时器的 ID
 
 function getArray() {
   $.ajax({
-    url: "/getArray/" + memberId,
+    url: "/longitude/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (locations) {
@@ -91,7 +91,7 @@ let locationTitle = "";
 let url = "https://www.google.com/maps/dir/";
 function getLocations() {
   $.ajax({
-    url: "/getLocations/" + memberId,
+    url: "/locations/" + memberId,
     method: "GET",
     dataType: "json",
     success: function (locations2) {

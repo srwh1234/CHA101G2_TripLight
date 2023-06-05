@@ -21,7 +21,7 @@ public class AiTripController {
         aiService = theaiService;
     }
     // 將推薦行程傳至前端  在表單送出時呼叫
-    @GetMapping("/getPackages/{memberId}")
+    @GetMapping("/trips/{memberId}")
     public List<Trip> getPackages(@PathVariable("memberId") String memberId) {
         var destination = aiService.getDestination(memberId);
         return tripService.getTrip(destination);

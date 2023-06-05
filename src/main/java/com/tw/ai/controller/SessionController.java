@@ -19,7 +19,7 @@ public class SessionController {
     }
 
     // 接收表單資料
-    @PostMapping("/processFormData")
+    @PostMapping("/formData")
     public ResponseEntity<String> processFormData(@RequestBody AiFormDataDto formDara, HttpServletRequest request){
         HttpSession session = request.getSession();
         String sessionId = session.getId();
@@ -31,7 +31,7 @@ public class SessionController {
     }
 
     // 發送sessionID與表單id給進入表單頁面的使用者
-    @GetMapping("/getSessionId")
+    @GetMapping("/sessionId")
     public ResponseEntity<IdDto> getSessionId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String sessionId = session.getId();

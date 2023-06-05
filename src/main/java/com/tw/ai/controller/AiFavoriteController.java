@@ -17,7 +17,7 @@ public class AiFavoriteController {
         aiService = theaiService;
     }
     // 將AI行程收藏傳至前端
-    @GetMapping("/getAiFavorite/{memberId}")
+    @GetMapping("/aiFavorite/{memberId}")
     public List<AiFavorite> getAiFavorite(@PathVariable("memberId") String memberId){
         return aiService.findAIFavoriteFromMemberId(5);
     }
@@ -31,7 +31,7 @@ public class AiFavoriteController {
 //        }
 //    }
     // 存入資料庫
-    @PostMapping("/processResultData/{memberId}")
+    @PostMapping("/aiFavorite/{memberId}")
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
         int aiFavoriteId = aiService.save(resultData, resultUrl, memberId);
         aiService.saveLocation(memberId, aiFavoriteId);

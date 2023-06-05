@@ -28,12 +28,12 @@ public class ChatGPTController {
                 .distinctUntilChanged();
     }
     // 將緯度資料傳至前端  在行程傳輸完畢時呼叫
-    @GetMapping("/getArray/{memberId}")
+    @GetMapping("/longitude/{memberId}")
     public ArrayList<AiLocationsDto> getArray(@PathVariable("memberId") String memberId) {
         return aiService.getLatitudeAndLongitude(memberId);
     }
     // 將地點資料傳至前端  在行程傳輸完畢呼叫
-    @GetMapping("/getLocations/{memberId}")
+    @GetMapping("/locations/{memberId}")
     public ArrayList<String> getLocations(@PathVariable("memberId") String memberId) {
         return aiService.getChatGPTLocations(memberId);
     }
