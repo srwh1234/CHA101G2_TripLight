@@ -1,7 +1,8 @@
 1.測試連結
 http://localhost:8080/TripLight/test
 http://localhost:8080/TripLight/front-end/index.html
-
+http://localhost:8080/testServlet
+http://localhost:8080/testJsp
 
 2.請在src/main/resources下 
 

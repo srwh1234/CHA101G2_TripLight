@@ -39,4 +39,28 @@ public class MyUtils {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		return dateFormat.format(new Date());
 	}
+
+	/**
+	 * 關閉實現 AutoCloseable 接口的物件
+	 */
+	public static void close(final AutoCloseable closeable) {
+		try {
+			if (closeable != null) {
+				closeable.close();
+			}
+		} catch (final Exception e) {
+			// ignore
+		}
+	}
+
+	/**
+	 * 關閉實現 AutoCloseable 接口的物件們
+	 */
+	public static void close(final AutoCloseable... closeables) {
+		if (closeables != null) {
+			for (final AutoCloseable c : closeables) {
+				close(c);
+			}
+		}
+	}
 }
