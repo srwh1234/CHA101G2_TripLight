@@ -29,8 +29,8 @@ public class AiFavoriteController {
     // 存入資料庫
     @PostMapping("/aiFavorite/{memberId}")
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
-        int aiFavoriteId = aiService.save(resultData, resultUrl, memberId);
-        aiService.saveLocation(memberId, aiFavoriteId);
+        aiService.save(resultData, resultUrl, memberId);
+//        aiService.saveLocation(memberId, aiFavoriteId);
         return "儲存成功";
     }
 }

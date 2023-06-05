@@ -3,10 +3,14 @@ package com.tw.ai.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
 @IdClass(AiLocations.LocationPK.class)  // 關聯複合PK的Class
 public class AiLocations{
 
