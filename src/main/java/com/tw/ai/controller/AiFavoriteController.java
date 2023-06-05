@@ -1,7 +1,5 @@
 package com.tw.ai.controller;
 
-
-import com.tw.ai.model.AiFavorite;
 import com.tw.ai.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

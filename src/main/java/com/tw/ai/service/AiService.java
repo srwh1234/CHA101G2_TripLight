@@ -42,38 +42,41 @@ public class AiService {
 
     public boolean save(String resultData, String resultUrl, String memberId) {
         try {
-        var aiFormData = formDataList.get(memberId);
-        AiFavorite aiFavorite = new AiFavorite();
+            var aiFormData = formDataList.get(memberId);
+            AiFavorite aiFavorite = new AiFavorite();
 
-        aiFavorite.setAiFavoriteId(aiFormData.getFormId());
-        aiFavorite.setDestination(aiFormData.getDestination());
-        aiFavorite.setTravelDays(aiFormData.getTravelDays());
-        aiFavorite.setPeople(aiFormData.getPeople());
-        aiFavorite.setBudgetRange(aiFormData.getBudgetRange());
-        aiFavorite.setPreferredStyle(aiFormData.getPreferredStyle());
-        aiFavorite.setOtherDemands(aiFormData.getOtherDemands());
-        aiFavorite.setMemberId(1);  // TODO:
-        aiFavorite.setPlanningDescription(resultData);
-        aiFavorite.setRoute(resultUrl);
+            aiFavorite.setAiFavoriteId(aiFormData.getFormId());
+            aiFavorite.setDestination(aiFormData.getDestination());
+            aiFavorite.setTravelDays(aiFormData.getTravelDays());
+            aiFavorite.setPeople(aiFormData.getPeople());
+            aiFavorite.setBudgetRange(aiFormData.getBudgetRange());
+            aiFavorite.setPreferredStyle(aiFormData.getPreferredStyle());
+            aiFavorite.setOtherDemands(aiFormData.getOtherDemands());
+            aiFavorite.setMemberId(1);  // TODO:
+            aiFavorite.setPlanningDescription(resultData);
+            aiFavorite.setRoute(resultUrl);
 
-        var locationList = getLocation.locations.get(memberId);
-        var aiLocations = new ArrayList<AiLocations>();
-        for (var location : locationList) {
-            var locations = new AiLocations();
-            locations.setAiFavoriteId(aiFormData.getFormId());
-            locations.setLocationTitle(location.getLocationTitle());
-            locations.setLatitude(location.getLatitude());
-            locations.setLongitude(location.getLongitude());
-            aiLocations.add(locations);
-        }
-        aiFavorite.setAiLocations(aiLocations);
+            var locationList = getLocation.locations.get(memberId);
+            var aiLocations = new ArrayList<AiLocations>();
+            if (locationList != null) {
+                for (var location : locationList) {
+                    var locations = new AiLocations();
+                    locations.setAiFavoriteId(aiFormData.getFormId());
+                    locations.setLocationTitle(location.getLocationTitle());
+                    locations.setLatitude(location.getLatitude());
+                    locations.setLongitude(location.getLongitude());
+                    aiLocations.add(locations);
+                }
+            }
+
+            aiFavorite.setAiLocations(aiLocations);
 
 
-        aiFavoriteRepository.save(aiFavorite);
-        logger.info("存入資料的ID:" + aiFavorite.getAiFavoriteId());
+            aiFavoriteRepository.save(aiFavorite);
+            logger.info("存入資料的ID:" + aiFavorite.getAiFavoriteId());
 
-        return true;}
-        catch (Exception e){
+            return true;
+        } catch (Exception e) {
             logger.error("表單資料為空");
             return false;
         }
@@ -116,7 +119,7 @@ public class AiService {
         formDataList.remove(memberId);
         getLocation.locations.remove(memberId);
         lastHeartbeatMap.remove(memberId);
-        logger.info(memberId+"執行清空作業");
+        logger.info(memberId + "執行清空作業");
     }
 
     public void setFormDataList(String memberId, AiFormDataDto formData) {
@@ -125,7 +128,7 @@ public class AiService {
     }
 
 
-    public int getFormId(){
+    public int getFormId() {
         id++;
         return id;
     }
@@ -149,7 +152,7 @@ public class AiService {
             long lastHeartbeatTime = entry.getValue();
             if (currentTime - lastHeartbeatTime >= heartbeatThreshold) {
                 clearContent(memberId);
-                logger.info(memberId+"執行清空作業");
+                logger.info(memberId + "執行清空作業");
             }
         }
     }
