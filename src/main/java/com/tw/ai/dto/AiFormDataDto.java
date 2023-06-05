@@ -19,8 +19,6 @@ public class AiFormDataDto {
     private String activitiesValues;
     private String otherDemands;
 
-
-
     public String toMessage() {
         return "1.目的地:" + destination + "\n" +
                "2.旅行天數:" + travelDays + "\n" +

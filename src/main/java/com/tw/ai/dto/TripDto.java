@@ -6,13 +6,13 @@ import lombok.Data;
 @Data
 public class TripDto {
 
-    private int tripId;
-    private String tripName;
-    private int priceAdult;
-    private String tripDescription;
-    private int tripDay;
-    private String city;
-    private String tripImage;
+    private final int tripId;
+    private final String tripName;
+    private final int priceAdult;
+    private final String tripDescription;
+    private final int tripDay;
+    private final String city;
+    private final String tripImage;
 
 
     public TripDto(final Trip trip) {
