@@ -1,9 +1,6 @@
 package com.tw.ai.repository.impl;
 
-
-
 import com.tw.ai.model.AiFavorite;
-import com.tw.ai.model.AiLocations;
 import com.tw.ai.repository.AiFavoriteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -11,8 +8,6 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
 import java.util.List;
 import java.util.Objects;
 
@@ -42,12 +37,6 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
         // 如果最後一個 ID 為空，則將 ID 設置為 1
         // 獲得最後一個 ID 的值
         return Objects.requireNonNullElse(lastId, 1);
-    }
-
-    @Override
-    public List<AiFavorite> findAll() {
-        TypedQuery<AiFavorite> theQuery = entityManager.createQuery("FROM AiFavorite", AiFavorite.class);
-        return theQuery.getResultList();
     }
 
     public List<AiFavorite> findAIFavoriteByMemberId(int memberId) {

@@ -41,7 +41,7 @@ public class AiService {
     }
 
     public int save(String resultData, String resultUrl, String memberId) {
-
+        try {
         var aiFormData = formDataList.get(memberId);
         AiFavorite aiFavorite = new AiFavorite();
 
@@ -72,7 +72,11 @@ public class AiService {
         aiFavoriteRepository.save(aiFavorite);
         logger.info("存入資料的ID:" + aiFavorite.getAiFavoriteId());
 
-        return aiFavorite.getAiFavoriteId();
+        return aiFavorite.getAiFavoriteId();}
+        catch (Exception e){
+            logger.error("表單資料為空");
+            return -1;
+        }
     }
 
     public int getLastId() {
