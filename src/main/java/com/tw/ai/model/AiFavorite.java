@@ -3,17 +3,16 @@ package com.tw.ai.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 // 建立實體
-@Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class AiFavorite{
     // 設定欄位
     @Id
@@ -29,9 +28,9 @@ public class AiFavorite{
     private int memberId;                     // 會員ID
 
     // cascade表示存檔時 也一起寫入AiLocations
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "aiFavoriteId")
-//    private List<AiLocations> aiLocations = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "aiFavoriteId")
+    private List<AiLocations> aiLocations = new ArrayList<>();
 }
 
 

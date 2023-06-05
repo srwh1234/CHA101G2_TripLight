@@ -56,22 +56,23 @@ public class AiService {
         aiFavorite.setPlanningDescription(resultData);
         aiFavorite.setRoute(resultUrl);
 
+        var locationList = getLocation.locations.get(memberId);
+        var aiLocations = new ArrayList<AiLocations>();
+        for (var location : locationList) {
+            var locations = new AiLocations();
+            locations.setAiFavoriteId(aiFormData.getFormId());
+            locations.setLocationTitle(location.getLocationTitle());
+            locations.setLatitude(location.getLatitude());
+            locations.setLongitude(location.getLongitude());
+            aiLocations.add(locations);
+        }
+        aiFavorite.setAiLocations(aiLocations);
+
+
         aiFavoriteRepository.save(aiFavorite);
         logger.info("存入資料的ID:" + aiFavorite.getAiFavoriteId());
 
         return aiFavorite.getAiFavoriteId();
-    }
-
-    public void saveLocation(String memberId, int aiFavoriteId) {
-        var locationList = getLocation.locations.get(memberId);
-        for (var location : locationList) {
-            var locations = new AiLocations();
-            locations.setAiFavoriteId(aiFavoriteId);
-            locations.setLocationTitle(location.getLocationTitle());
-            locations.setLatitude(location.getLatitude());
-            locations.setLongitude(location.getLongitude());
-            aiFavoriteRepository.save(locations);
-        }
     }
 
     public int getLastId() {
