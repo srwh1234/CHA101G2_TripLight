@@ -82,14 +82,17 @@ public class OrderServiceImpl implements OrderService {
 		pageResponse.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(order -> {
+			int couponId = 0;
 			String couponName = null;
 			if (order.getCoupon() != null) {
+				couponId = order.getCoupon().getCouponId();
 				couponName = order.getCoupon().getName();
 			}
 
 			final OrderResponse response = new OrderResponse();
 			response.setTicketOrderId(order.getTicketOrderId());
 			response.setTicketCount(order.getTicketOrderDetails().size());
+			response.setCouponId(couponId);
 			response.setCouponName(couponName);
 			response.setPayDate(order.getPayDate());
 			response.setPayType(order.getPayType());
@@ -100,14 +103,13 @@ public class OrderServiceImpl implements OrderService {
 		return pageResponse;
 	}
 
-	// 成立訂單
-	@Override
-	public boolean makeOrder(final int memberId, final int couponId) {
+	// 建立訂單
+	private TicketOrder makeOrder(final int memberId, final int couponId) {
 		// 確認會員
 		final Member member = memberRepository.findById(memberId).orElse(null);
 
 		if (member == null) {
-			return false;
+			return null;
 		}
 
 		// 總價與實際價格
@@ -124,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// 票券序號不足
 			if (ticketSns.size() < cart.getQuantity()) {
-				return false;
+				return null;
 			}
 			temps.put(cart.getTicketId(), ticketSns);
 
@@ -139,10 +141,10 @@ public class OrderServiceImpl implements OrderService {
 		final Coupon coupon = couponRepository.findById(couponId).orElse(null);
 		if (coupon != null) {
 			if (ticketOrderRepository.findByMemberIdAndCoupon(memberId, coupon) != null) {
-				return false;
+				return null;
 			}
 			if (!MyUtils.isContainNow(coupon.getStartDate(), coupon.getExpiryDate())) {
-				return false;
+				return null;
 			}
 			actualPrice -= coupon.getDiscount();
 		}
@@ -152,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setMemberId(member.getMemberId());
 		order.setCoupon(coupon);
 		order.setPayDate(new Timestamp(System.currentTimeMillis()));
-		order.setPayType("TEST");
+		order.setPayType("");
 		order.setTotalPrice(totalPrice);
 		order.setActualPrice(actualPrice);
 
@@ -188,56 +190,78 @@ public class OrderServiceImpl implements OrderService {
 
 		// 清空購物車
 		ticketCartRepository.deleteByKeyMemberId(memberId);
+		return order;
+	}
+
+	// 完成訂單
+	private boolean confirmOrder(final int orderId, final String payType) {
+		final TicketOrder order = ticketOrderRepository.findById(orderId).orElse(null);
+		if (order == null) {
+			return false;
+		}
+		order.setPayType(payType);
+		// 存檔
+		ticketOrderRepository.save(order);
 		return true;
 	}
 
-	// 綠界的支付介面設定
+	// 成立訂單(test)
 	@Override
-	public String ecpayCheckout(final int memberId, final int couponId) {
+	public boolean testOrder(final int memberId, final int couponId) {
+		final TicketOrder order = makeOrder(memberId, couponId);
 
-		// 確認會員
-		final Member member = memberRepository.findById(memberId).orElse(null);
+		if (order == null) {
+			return false;
+		}
+		confirmOrder(order.getTicketOrderId(), "TEST");
+		return true;
+	}
 
-		if (member == null) {
+	// 綠界的支付結果
+	@Override
+	public void ecpayConfirm(final int memberId, final int orderId, final String payType) {
+		final TicketOrder order = ticketOrderRepository.findById(orderId).orElse(null);
+		if (order == null) {
+			return;
+		}
+		confirmOrder(order.getTicketOrderId(), payType);
+	}
+
+	// XXX 綠界的支付介面設定(現有訂單)
+	@Override
+	public String ecpayCheckoutOrder(final int memberId, final int orderId) {
+		final TicketOrder order = ticketOrderRepository.findById(orderId).orElse(null);
+		if (order == null) {
+			return null;
+		}
+		return getAllInOnePage(memberId, order);
+	}
+
+	// 綠界的支付介面設定(新增訂單)
+	@Override
+	public String ecpayCheckoutMake(final int memberId, final int couponId) {
+
+		// 建立訂單
+		final TicketOrder order = makeOrder(memberId, couponId);
+
+		if (order == null) {
 			return null;
 		}
 
-		// 實際價格
-		int actualPrice = 0;
+		return getAllInOnePage(memberId, order);
+	}
 
-		// 會員購物車
-		final List<TicketCart> ticketCarts = ticketCartRepository.findByKeyMemberId(memberId);
-
-		for (final TicketCart cart : ticketCarts) {
-			final List<TicketSn> ticketSns = snRepository.searchUsableSn(cart.getTicketId());
-
-			// 票券序號不足
-			if (ticketSns.size() < cart.getQuantity()) {
-				return null;
-			}
-
-			// 計算總價
-			final Ticket ticket = ticketSns.get(0).getTicket();
-			actualPrice += ticket.getPrice() * cart.getQuantity();
+	private String getAllInOnePage(final int memberId, final TicketOrder order) {
+		int couponId = 0;
+		if (order.getCoupon() != null) {
+			couponId = order.getCoupon().getCouponId();
 		}
-		// 判斷是否使用了已經用過的優惠券
-		final Coupon coupon = couponRepository.findById(couponId).orElse(null);
-		if (coupon != null) {
-			if (ticketOrderRepository.findByMemberIdAndCoupon(memberId, coupon) != null) {
-				return null;
-			}
-			if (!MyUtils.isContainNow(coupon.getStartDate(), coupon.getExpiryDate())) {
-				return null;
-			}
-			actualPrice -= coupon.getDiscount();
-		}
-
 		final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
 
 		final AioCheckOutALL obj = new AioCheckOutALL();
 		obj.setMerchantTradeNo(uuId);
 		obj.setMerchantTradeDate(MyUtils.getNowDateTimeString());
-		obj.setTotalAmount(String.valueOf(actualPrice));
+		obj.setTotalAmount(String.valueOf(order.getActualPrice()));
 		obj.setTradeDesc("test Description");
 		obj.setItemName("TripLight訂單###");
 		obj.setReturnURL(config.getEcpayReturnUrl() + "/callback");
@@ -246,9 +270,9 @@ public class OrderServiceImpl implements OrderService {
 		// 參數傳遞
 		obj.setCustomField1(String.valueOf(memberId));
 		obj.setCustomField2(String.valueOf(couponId));
+		obj.setCustomField3(String.valueOf(order.getTicketOrderId()));
 		obj.setNeedExtraPaidInfo("Y");
 
 		return new AllInOne("").aioCheckOut(obj, null);
 	}
-
 }

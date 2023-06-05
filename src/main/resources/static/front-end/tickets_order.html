@@ -552,6 +552,7 @@
         {
           ticketOrderId: 1,
           ticketCount: 5,
+          couponId: 0,
           couponName: null,
           payDate: '2023-03-06 09:00',
           payType: '信用卡',
@@ -560,6 +561,7 @@
         {
           ticketOrderId: 2,
           ticketCount: 1,
+          couponId: 0,
           couponName: null,
           payDate: '2023-07-08 10:00',
           payType: 'ATM',
@@ -568,9 +570,10 @@
         {
           ticketOrderId: 3,
           ticketCount: 1,
+          couponId: 1,
           couponName: '開站優惠',
           payDate: '2023-09-10 19:00',
-          payType: '信用卡',
+          payType: '',
           actualPrice: '16800',
         }
       ]
@@ -629,6 +632,19 @@
     $(function () {
       doPage(0);
 
+      //TODO: 結帳的按鈕
+      $(document).on('click', '.btn-checkout', function () {
+        const memberId = 1;
+        const orderId = parseInt($(this).closest('tr').find('.ticket_order_id').text());
+        //優惠券
+        // const couponId = result.orders.find(e =>  e.ticketOrderId === orderId).couponId;
+        // console.log('111111111=' + orderId);
+        // console.log( couponId);
+        //綠界支付的介面
+        window.location.href = `/ecpayCheckoutorder?memberId=${memberId}&&orderId=${orderId}`;
+      });
+
+
       //退貨的按鈕
       $('#btnRefundConfirm').on('click', function () {
         const reason = $('#inputRefund').val().trim();
@@ -685,7 +701,7 @@
           .then(response => response.json())
           .then(data => {
             //console.log(data);
-           // fetch_detail(post.orderId)
+            // fetch_detail(post.orderId)
           })
           .catch(error => console.log(error));
 
@@ -807,23 +823,65 @@
 
 
       for (let order of result.orders) {
-        $('#orderContainer table tbody').append(
+        const theTr = $('<tr>');
+        theTr.append(
           `
-          <tr>
             <td class="ticket_order_id">${order.ticketOrderId}</td>
             <td class="ticket_count">${order.ticketCount} 張</td>
             <td class="pay_date">${df(order.payDate)}</td>
-            <td class="pay_type">${order.payType}</td>
-            <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
+          `
+        );
+
+        if (order.payType === "") {
+          theTr.append(
+            `
+            <td class="pay_type">
+              <button class="btn btn-primary btn-checkout" type="button">
+                 付款
+              </button>
+            </td>
+            `
+          );
+        } else {
+          theTr.append(
+            ` <td class="pay_type">${order.payType}</td>`
+          );
+        }
+
+
+        theTr.append(
+          `
+           <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
             <td class="actual_price">${order.actualPrice} 元</td>
             <td class="text-center">
               <button class="btn btn-primary btn-detail" type="button">
                 <i class="fa fa-search me-2"></i>查看詳情
               </button>
             </td>
-          </tr>
           `
         );
+        $('#orderContainer table tbody').append(theTr);
+        //---------
+
+        // $('#orderContainer table tbody').append(
+        //   `
+        //   <tr>
+        //     <td class="ticket_order_id">${order.ticketOrderId}</td>
+        //     <td class="ticket_count">${order.ticketCount} 張</td>
+        //     <td class="pay_date">${df(order.payDate)}</td>
+        //     <td class="pay_type">${order.payType}</td>
+        //     <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
+        //     <td class="actual_price">${order.actualPrice} 元</td>
+        //     <td class="text-center">
+        //       <button class="btn btn-primary btn-detail" type="button">
+        //         <i class="fa fa-search me-2"></i>查看詳情
+        //       </button>
+        //     </td>
+        //   </tr>
+        //   `
+        // );
+
+
       }
 
 

@@ -100,7 +100,7 @@ a.nav-link:hover {
 /* ================================================ */
 /* 左邊會員欄位 */
 /* 連結 */
-.list-group list-group-flush mt-3 {
+/* .list-group list-group-flush mt-3 {
     padding: 0px;
 }
 
@@ -115,7 +115,7 @@ a.nav-link:hover {
     padding: inherit;
     display: inline-block;
     width: 100%;
-}
+} */
 
 /* 訂單管理開合 */
 #order_list2,
@@ -154,7 +154,7 @@ button#camera {
     border: 1px solid rgba(19, 18, 18, 0.016);
 }
 
-li.list-group-item {
+/* li.list-group-item {
     cursor: pointer;
 }
 
@@ -166,7 +166,7 @@ ul.list-group :hover {
 li.list-group-item>a {
     text-decoration: none;
     color: black;
-}
+} */
 
 /* 帳號分頁 */
 .tab-pane.fade>div.row {

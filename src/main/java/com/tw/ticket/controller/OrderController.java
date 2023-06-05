@@ -35,19 +35,27 @@ public class OrderController {
 	public boolean testCheckout(//
 			@RequestParam("memberId") final int memberId,//
 			@RequestParam("couponId") final int couponId) {
-		return orderService.makeOrder(memberId, couponId);
+		return orderService.testOrder(memberId, couponId);
 	}
 
 	/**
 	 * 安全碼 : 222
 	 * 一般信用卡測試卡號 : 4311-9522-2222-2222
 	 */
-	// 付款介面(綠界)
+	// 付款介面新增訂單(綠界)
 	@GetMapping("/ecpayCheckout")
 	public String ecpayCheckout(//
 			@RequestParam("memberId") final int memberId,//
 			@RequestParam("couponId") final int couponId) {
-		return orderService.ecpayCheckout(memberId, couponId);
+		return orderService.ecpayCheckoutMake(memberId, couponId);
+	}
+
+	// 付款介面現有訂單(綠界)
+	@GetMapping("/ecpayCheckoutorder")
+	public String ecpayCheckoutOrder(//
+			@RequestParam("memberId") final int memberId,//
+			@RequestParam("orderId") final int orderId) {
+		return orderService.ecpayCheckoutOrder(memberId, orderId);
 	}
 
 	/**
@@ -69,12 +77,13 @@ public class OrderController {
 	public ResponseEntity<String> handleCallback(@RequestParam final Map<String, String> map) {
 		final int memberId = Integer.parseInt(map.get("CustomField1"));
 		final int couponId = Integer.parseInt(map.get("CustomField2"));
+		final int orderId = Integer.parseInt(map.get("CustomField3"));
 		final int rtnCode = Integer.parseInt(map.get("RtnCode"));
 		final String payType = map.get("PaymentType");
 
 		// 結帳
 		if (rtnCode == 1) {
-			orderService.makeOrder(memberId, couponId);
+			orderService.ecpayConfirm(memberId, orderId, payType);
 		}
 		return ResponseEntity.ok("OK");
 	}
@@ -99,6 +108,7 @@ public class OrderController {
 	public static class OrderResponse {
 		private int ticketOrderId;
 		private int ticketCount;
+		private int couponId;
 		private String couponName;
 		private Timestamp payDate;
 		private String payType;
