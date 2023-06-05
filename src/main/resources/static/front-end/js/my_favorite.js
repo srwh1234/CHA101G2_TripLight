@@ -224,7 +224,7 @@ $(".nav-item")
   });
 
 // 接收後台AI行程資料
-let memberId = 1;
+let memberId = 5;
 function getAiFavorite() {
   $.ajax({
     url: "/aiFavorite/"+ memberId ,
