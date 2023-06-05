@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +57,7 @@ public class AiService {
 
             var locationList = getLocation.locations.get(memberId);
             var aiLocations = new ArrayList<AiLocations>();
+            // 如果為空值，就不執行後續動作
             if (locationList != null) {
                 for (var location : locationList) {
                     var locations = new AiLocations();
@@ -106,6 +106,7 @@ public class AiService {
             getLocation.start(memberId, locations);
             return getLocation.locations.get(memberId);
         }
+        logger.error("地點陣列為空，無法轉換為經緯度");
         return null;
     }
 
@@ -126,7 +127,6 @@ public class AiService {
         logger.info("接收表單資料");
         formDataList.put(memberId, formData);
     }
-
 
     public int getFormId() {
         id++;

@@ -8,7 +8,6 @@ public class AppConfig {
 
     @Value("${API_KEY}")
     private String apiKey;
-
     public String getApiKey() {
         return apiKey;
     }
