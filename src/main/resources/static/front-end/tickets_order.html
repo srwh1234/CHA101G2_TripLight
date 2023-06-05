@@ -680,13 +680,13 @@
         $('#refundModal').modal('hide');
       });
 
-      //評價的按鈕
+      //TODO: 評價的按鈕
       $('#btnCommentConfirm').on('click', function () {
 
         const post = {
           memberId: 1,
           orderId: parseInt($('#orderId').text()),
-          ticketSnId: $(this).data('ticket-id'),
+          ticketSnId: $(this).data('ticket-sn'),
           rating: $('#commentModal .score').text(),
           comment: $('#inputComment').val().trim(),
         };
@@ -757,7 +757,7 @@
         $(this).find('.modal-title').text(name);
         $(this).find('.star').addClass('on');
         $(this).find('.score').text('5');
-        $('#btnCommentConfirm').data('ticket-id', ticketId);
+        $('#btnCommentConfirm').data('ticket-sn', sn);
       });
 
       // 查看詳情的按鈕

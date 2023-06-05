@@ -106,7 +106,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 		final TicketOrderDetail detail = ticketOrderDetailRepository.findByKeyId(//
 				request.getOrderId(),		//
-				request.getTicketSnId()	//
+				request.getTicketSnId()		//
 		);
 
 		if (detail == null) {
