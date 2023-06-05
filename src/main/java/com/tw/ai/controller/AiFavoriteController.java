@@ -30,8 +30,6 @@ public class AiFavoriteController {
 //            return aiService.findAIFavoriteFromMemberId(memberId);
 //        }
 //    }
-
-
     // 存入資料庫
     @PostMapping("/processResultData/{memberId}")
     public String processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
