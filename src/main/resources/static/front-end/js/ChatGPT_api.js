@@ -45,13 +45,7 @@ const intervalId = setInterval(() => {
 $("#storage-planning").on("click", function (e) {
   e.preventDefault();
 
-  // 儲存成功動畫
-  Swal.fire({
-    icon: "success",
-    title: "儲存成功",
-    showConfirmButton: false,
-    timer: 1500,
-  });
+
 
   // 取得 textarea 與 url 資料
   let text = $("textarea").val();
@@ -71,7 +65,22 @@ $("#storage-planning").on("click", function (e) {
     },
     // 當請求成功時，將伺服器返回的response印出到console中
     success: function (response) {
-      console.log(response);
+      if(response){
+        // 儲存成功動畫
+        Swal.fire({
+          icon: "success",
+          title: "儲存成功",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }else {
+        Swal.fire({
+          icon: "error",
+          title: "儲存失敗",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     },
     // 當請求失敗時，將錯誤訊息印出到console中
     error: function (xhr) {
