@@ -1,15 +1,16 @@
 package com.tw.trip.model;
 
-
-import com.tw.ticket.model.TicketImage;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.tw.ticket.controller.ImageController.IMG_URL;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Trip{
 
@@ -58,7 +59,6 @@ public class Trip{
         if (index < 0 || index >= tripImage.size()) {
             return IMG_URL +"trip/"+ 0;
         }
-        System.out.println(tripImage.get(index).getId());
         return IMG_URL +"trip/"+ tripImage.get(index).getId();   // 獲得第一個圖片的id
     }
 
