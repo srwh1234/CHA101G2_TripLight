@@ -1,4 +1,4 @@
-package com.tw.ticket.dao;
+package com.tw.ticket.model.dao;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

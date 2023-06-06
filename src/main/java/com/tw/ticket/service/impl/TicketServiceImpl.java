@@ -13,9 +13,9 @@ import com.tw.ticket.controller.TicketController.RadAndHotResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
 import com.tw.ticket.controller.TicketDetailController.DetailResponse;
-import com.tw.ticket.dao.TicketRepository;
-import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
+import com.tw.ticket.model.dao.TicketRepository;
+import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.TicketService;
 
 @Service

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import com.tw.ticket.dao.TicketImageRepository;
 import com.tw.ticket.model.TicketImage;
+import com.tw.ticket.model.dao.TicketImageRepository;
 import com.tw.ticket.service.ImageService;
 
 @Service

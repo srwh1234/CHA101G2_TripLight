@@ -15,14 +15,14 @@ import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
 import com.tw.ticket.controller.OrderDetailController.DetailRequest;
 import com.tw.ticket.controller.OrderDetailController.DetailResponse;
-import com.tw.ticket.dao.TicketCommentRepository;
-import com.tw.ticket.dao.TicketOrderDetailRepository;
-import com.tw.ticket.dao.TicketOrderRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketComment;
 import com.tw.ticket.model.TicketOrder;
 import com.tw.ticket.model.TicketOrderDetail;
 import com.tw.ticket.model.TicketSn;
+import com.tw.ticket.model.dao.TicketCommentRepository;
+import com.tw.ticket.model.dao.TicketOrderDetailRepository;
+import com.tw.ticket.model.dao.TicketOrderRepository;
 import com.tw.ticket.service.OrderDetailService;
 
 @Service

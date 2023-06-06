@@ -1,4 +1,4 @@
-package com.tw.ticket.dao;
+package com.tw.ticket.model.dao;
 
 import java.util.Collection;
 import java.util.List;

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.tw.ticket.controller.TicketDetailController.CommentResponse;
 import com.tw.ticket.controller.TicketDetailController.SearchRequest;
-import com.tw.ticket.dao.TicketCommentRepository;
 import com.tw.ticket.model.TicketComment;
+import com.tw.ticket.model.dao.TicketCommentRepository;
 import com.tw.ticket.service.CommentService;
 
 @Service

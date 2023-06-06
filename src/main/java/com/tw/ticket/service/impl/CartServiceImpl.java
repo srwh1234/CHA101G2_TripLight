@@ -16,12 +16,12 @@ import com.tw.ticket.controller.CartController.CartRequest;
 import com.tw.ticket.controller.CartController.CartResponse;
 import com.tw.ticket.controller.CartController.CartTicketResponse;
 import com.tw.ticket.controller.CartController.ModifyRequest;
-import com.tw.ticket.dao.TicketCartRepository;
-import com.tw.ticket.dao.TicketRepository;
-import com.tw.ticket.dao.TicketSnRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketCart;
 import com.tw.ticket.model.TicketCart.PrimaryKey;
+import com.tw.ticket.model.dao.TicketCartRepository;
+import com.tw.ticket.model.dao.TicketRepository;
+import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.CartService;
 
 @Service
