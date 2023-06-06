@@ -1,6 +1,6 @@
 1.測試連結
-http://localhost:8080/TripLight/test
-http://localhost:8080/TripLight/front-end/index.html
+http://localhost:8080/test
+http://localhost:8080/front-end/index.html
 http://localhost:8080/testServlet
 http://localhost:8080/testJsp
 
