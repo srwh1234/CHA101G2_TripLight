@@ -1,17 +1,13 @@
 package com.tw.ai.util;
 
-import com.tw.ai.dto.TripDto;
 import com.tw.ai.service.AiService;
-import com.tw.ai.service.TripService;
+import com.tw.trip.service.TripService;
 import com.tw.ticket.service.TicketService;
-import com.tw.trip.model.Trip;
 import com.tw.trip.repository.TripRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {

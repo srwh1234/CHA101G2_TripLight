@@ -1,4 +1,4 @@
-package com.tw.ai.service;
+package com.tw.trip.service;
 
 
 import com.tw.ai.dto.TripDto;
@@ -14,8 +14,6 @@ import java.util.List;
 
 @Service
 public class TripService{
-
-
     private final TripRepository tripRepository;
     private final TripImageRepository tripImageRepository;
 
@@ -25,14 +23,14 @@ public class TripService{
         this.tripImageRepository = tripImageRepository;
     }
 
-    // 找出指定圖片 沒有則回傳預設圖片
+    // 提供img id, 得到Image 的 byte陣列
     public byte[] findImg(final int id) {
         var tripImage = tripImageRepository.findById(id);
         // TripImage::getImage：引用TripImage的getImage()
         // map (裡面對象如果存在則執行)
         return tripImage.map(TripImage::getImage).orElse(null);
     }
-
+    // 提供地點名稱，獲得包含該地點名稱的行程
     public List<TripDto> getTrip(String destination){
         var tripDtoArrayList = new ArrayList<TripDto>();
         tripRepository.findByCityContaining(destination).forEach(trip -> tripDtoArrayList.add(new TripDto(trip)));

@@ -1,6 +1,6 @@
 package com.tw.trip.controller;
 
-import com.tw.ai.service.TripService;
+import com.tw.trip.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

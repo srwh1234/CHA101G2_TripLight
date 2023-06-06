@@ -1,7 +1,7 @@
 package com.tw.ai.controller;
 
 import com.tw.ai.dto.TripDto;
-import com.tw.ai.service.TripService;
+import com.tw.trip.service.TripService;
 import com.tw.ai.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
