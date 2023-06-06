@@ -7,5 +7,5 @@ import com.tw.member.model.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
-	//
+	Member findMemberByMemberEmail(String email);
 }
