@@ -107,7 +107,7 @@ setInterval(function () {
       console.error("心跳請求失敗:", error);
     },
   });
-}, 10000); // 每隔30秒發送一次心跳請求
+}, 30000); // 每隔30秒發送一次心跳請求
 
 // 離開網頁
 $(window).on("beforeunload", function (event) {

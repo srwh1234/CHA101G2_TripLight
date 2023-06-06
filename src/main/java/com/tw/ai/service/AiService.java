@@ -125,7 +125,7 @@ public class AiService {
     public void checkHeartbeat() {
         logger.info("顯示成員名單：" + lastHeartbeatMap.toString());
         long currentTime = System.currentTimeMillis();  // 獲得1970年起至今的毫秒數
-        long heartbeatThreshold = 10000; // 心跳閾值，單位為毫秒
+        long heartbeatThreshold = 60000; // 心跳閾值，單位為毫秒，每分鐘
 
         // 遍歷鍵值對
         for (Map.Entry<String, Long> entry : lastHeartbeatMap.entrySet()) {

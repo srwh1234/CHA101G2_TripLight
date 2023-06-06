@@ -29,7 +29,7 @@ public class HeartbeatController {
         aiService.updateHeartbeat(memberId);
     }
     // 每分鐘檢查所有連線
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 60000)
     public void checkHeartbeat() {
         aiService.checkHeartbeat();
     }
