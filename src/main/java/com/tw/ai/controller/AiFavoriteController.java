@@ -30,7 +30,15 @@ public class AiFavoriteController {
 
     // 存入資料庫
     @PostMapping("/aiFavorite/{memberId}")
-    public Boolean processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
-        return aiService.save(resultData, resultUrl, memberId);
+    public ResponseEntity<Boolean> processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId) {
+        try {
+            boolean saved = aiService.save(resultData, resultUrl, memberId);
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            // 處理異常狀況
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
     }
+
+
 }

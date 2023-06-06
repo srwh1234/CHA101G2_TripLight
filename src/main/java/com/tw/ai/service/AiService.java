@@ -76,7 +76,7 @@ public class AiService {
 
             return true;
         } catch (Exception e) {
-            logger.warn("Ai表單資料為空");
+            logger.warn("Ai表單資料為空：資料庫儲存失敗");
             return false;
         }
     }
