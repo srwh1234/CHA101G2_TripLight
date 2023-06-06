@@ -11,7 +11,7 @@ import jakarta.servlet.annotation.WebFilter;
 
 // 請求的文字編碼
 // 加了求心安
-@WebFilter("/*")
+//@WebFilter("/*")
 public class CharEncodingFilter implements Filter {
 	@Override
 	public void doFilter(final ServletRequest request,//
