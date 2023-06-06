@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
 @Service
 public class ChatGPTService {
 
-    private Map<String, String> destinationInput = new HashMap<>();
-    public Map<String,ArrayList<String>> locations = new HashMap<>();
-    private Map<String, String> output = new HashMap<>();
+    private final Map<String, String> destinationInput;
+    public Map<String,ArrayList<String>> locations;
+    private final Map<String, String> output;
 
     private final String API_KEY;
     private static final String MODEL = "gpt-3.5-turbo";
@@ -33,8 +33,10 @@ public class ChatGPTService {
     @Autowired
     public ChatGPTService(AppConfig appConfig) {
         this.API_KEY = appConfig.getApiKey();
+        this.destinationInput = new HashMap<>();
+        this.output = new HashMap<>();
+        this.locations = new HashMap<>();
     }
-
 
     // 這個方法會傳回一個 InputStream，該 InputStream 會連線到 ChatGPT API 並傳送 message
     private BufferedReader chatGPT(String message) throws IOException {

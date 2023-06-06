@@ -73,11 +73,11 @@ public class AiService {
 
 
             aiFavoriteRepository.save(aiFavorite);
-            logger.info("存入資料的ID:" + aiFavorite.getAiFavoriteId());
+            logger.info("存入AiFavorite資料, ID:" + aiFavorite.getAiFavoriteId());
 
             return true;
         } catch (Exception e) {
-            logger.error("表單資料為空");
+            logger.error("Ai表單資料為空");
             return false;
         }
     }
@@ -90,10 +90,6 @@ public class AiService {
         return aiFavoriteRepository.findAIFavoriteByMemberId(memberId);
     }
 
-    public void startChatGPT(String memberId, AiFormDataDto formData) {
-        logger.info("執行chatGPT");
-        chatGPTService.start(memberId, formData);
-    }
 
     public String getChatGPTResult(String memberId) {
         return chatGPTService.getOutput(memberId);

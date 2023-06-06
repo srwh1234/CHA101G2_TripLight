@@ -3,6 +3,7 @@ package com.tw.ai.controller;
 import com.tw.ai.dto.IdDto;
 import com.tw.ai.dto.AiFormDataDto;
 import com.tw.ai.service.AiService;
+import com.tw.ai.service.ChatGPTService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class SessionController {
     private final AiService aiService;
 
+    private final ChatGPTService chatGPTService;
+
     @Autowired
-    public SessionController(AiService theaiService) {
-        aiService = theaiService;
+    public SessionController(AiService aiService,ChatGPTService chatGPTService) {
+        this.aiService = aiService;
+        this.chatGPTService = chatGPTService;
     }
 
     // 接收表單資料
@@ -24,9 +28,7 @@ public class SessionController {
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         aiService.setFormDataList(sessionId,formDara);
-
-        aiService.startChatGPT(sessionId,formDara);
-
+        chatGPTService.start(sessionId,formDara);
         return ResponseEntity.ok("get FormData");
     }
 
@@ -35,7 +37,6 @@ public class SessionController {
     public ResponseEntity<IdDto> getSessionId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String sessionId = session.getId();
-
         var id = new IdDto(aiService.getFormId(),sessionId);
         return ResponseEntity.ok(id);
     }

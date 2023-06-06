@@ -29,7 +29,7 @@ public class ChatGPTController {
     }
     // 將緯度資料傳至前端  在行程傳輸完畢時呼叫
     @GetMapping("/longitude/{memberId}")
-    public ArrayList<AiLocationsDto> getArray(@PathVariable("memberId") String memberId) {
+    public ArrayList<AiLocationsDto> getLongitude(@PathVariable("memberId") String memberId) {
         return aiService.getLatitudeAndLongitude(memberId);
     }
     // 將地點資料傳至前端  在行程傳輸完畢呼叫
