@@ -17,7 +17,6 @@ function loginin(e) {
 }
 loginbtn.addEventListener("click", loginin);
 
-
 //關閉登入小視窗
 const closeIcon = document.querySelector(".close-icon");
 closeIcon.addEventListener("click", (e) => {
@@ -25,26 +24,51 @@ closeIcon.addEventListener("click", (e) => {
 });
 
 // 取得按鈕
-const the_main_btn = document.querySelector('.main-btn');
+const the_main_btn = document.querySelector(".main-btn");
 //按下login
-the_main_btn.addEventListener('click', function () {
+the_main_btn.addEventListener("click", function (e) {
+  // 獲得cookie=============================================================================================
+  let email = $("#email").val();
+  let password = $("#password").val();
+
+  console.log(email);
+  console.log(password);
+
+  $.ajax({
+    type: "POST",
+    url: "/login",
+    data: {
+      username: email,
+      password: password,
+    },
+
+    success: function (response) {
+      console.log(response);
+    },
+  });
+  // 獲得cookie=============================================================================================
+
   //取得值 (幫他加一個id應該更好取得)
   const valid = {
-    account: document.querySelector("#email").value,
-    password: document.querySelector("#password").value,
-  }
+    account: email,
+    password: password,
+  };
+  // const valid = {
+  //   account: document.querySelector("#email").value,
+  //   password: document.querySelector("#password").value,
+  // };
 
   //先暫存
-  sessionStorage.setItem('test-login', JSON.stringify(valid));
+  sessionStorage.setItem("test-login", JSON.stringify(valid));
   loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
+});
 
-})
-
-
-window.addEventListener('load', function () {
-  const valid = JSON.parse(sessionStorage.getItem('test-login'));
+window.addEventListener("load", function () {
+  const valid = JSON.parse(sessionStorage.getItem("test-login"));
   if (valid) {
-    document.querySelector('#login').innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
+    document.querySelector(
+      "#login"
+    ).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
 
     loginbtn.addEventListener("click", function (e) {
       if (valid) {
@@ -52,9 +76,7 @@ window.addEventListener('load', function () {
         container.classList.remove("active-popup");
         loginbtn.removeEventListener("click", loginin);
         document.querySelector(".member").classList.toggle("-on");
-
       }
-
     });
   }
 });
@@ -64,12 +86,11 @@ window.addEventListener('load', function () {
 $("#order_li").on("mouseover", function () {
   $(".order_list").addClass("-on");
   $(".order_content").addClass("-on");
-
 });
 $("#order_li").on("mouseout", function () {
   $(".order_list").removeClass("-on");
   $(".order_content").removeClass("-on");
-})
+});
 //=======================================================
 // 左列會員訂單管理
 
@@ -78,16 +99,15 @@ $("#order_li2").on("mouseover", function () {
 });
 $("#order_li2").on("mouseout", function () {
   $("#order_list2, #order_content1, #order_content2").removeClass("-on");
-})
-
+});
 
 //登出
 const logout_li = document.querySelector("#logout_li");
 
 $(logout_li).on("click", function (e) {
   e.preventDefault();
-  window.location.assign("index.html")
-  document.querySelector('#login').innerHTML = ` 登入/註冊`;
+  window.location.assign("index.html");
+  document.querySelector("#login").innerHTML = ` 登入/註冊`;
 
   //unfinished
-})
+});
