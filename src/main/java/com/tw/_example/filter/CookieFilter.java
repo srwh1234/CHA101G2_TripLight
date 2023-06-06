@@ -43,27 +43,29 @@ public class CookieFilter implements Filter {
 			// 這邊可以判斷cookie夾帶的資訊
 			final Cookie[] cookies = req.getCookies();
 
-			// 沒有的話請重新登入
-			if (cookies == null) {
-				res.sendRedirect("/front-end/_test_login.html");
-				return;
-			}
+			String validCode = null;
+			if (cookies != null) {
+				for (final Cookie cookie : cookies) {
 
-			for (final Cookie cookie : cookies) {
+					// 我們定義的key
+					if (cookie.getName().equals(TestLogin.SESSION_ID_COOKIE_NAME)) {
+						validCode = cookie.getValue();
 
-				// 我們定義的key
-				if (cookie.getName().equals(TestLogin.SESSION_ID_COOKIE_NAME)) {
-					final String validCode = cookie.getValue();
+						// 找看看有沒有 [驗證成功當下的session id]
+						final Object ret = request.getServletContext().getAttribute(validCode);
 
-					// 找看看有沒有 [驗證成功當下的session id]
-					final Object ret = request.getServletContext().getAttribute(validCode);
-
-					// 沒有的話請重新登入
-					if (ret == null) {
-						res.sendRedirect("/front-end/_test_login.html");
-						return;
+						// 沒有的話請重新登入
+						if (ret == null) {
+							res.sendRedirect("/front-end/_test_login.html");
+							return;
+						}
 					}
 				}
+			}
+			// 沒有的話請重新登入
+			if (validCode == null) {
+				res.sendRedirect("/front-end/_test_login.html");
+				return;
 			}
 
 		}
