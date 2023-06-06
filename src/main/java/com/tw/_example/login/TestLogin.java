@@ -47,6 +47,7 @@ public class TestLogin {
 
 			// 寫cookie 並回應給客戶端
 			final Cookie cookie = new Cookie(SESSION_ID_COOKIE_NAME, sessionId);
+			cookie.setMaxAge(3600);
 			cookie.setHttpOnly(true);
 			cookie.setPath("/");
 			response.addCookie(cookie);
