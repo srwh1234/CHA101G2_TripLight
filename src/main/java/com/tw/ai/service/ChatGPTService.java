@@ -25,17 +25,13 @@ import java.util.regex.Pattern;
 
 @Service
 public class ChatGPTService {
-
     private final Map<String, String> destinationInput;
     public Map<String,ArrayList<String>> locations;
     private final Map<String, String> output;
-
     private final GetLocation getLocation;
-
     private final String API_KEY;
     private static final String MODEL = "gpt-3.5-turbo";
     private static final String URL = "https://api.openai.com/v1/chat/completions";
-
     private final Logger logger
             = LoggerFactory.getLogger(this.getClass());
 
