@@ -3,7 +3,6 @@ package com.tw.ai.service;
 
 import com.tw.ai.util.GetLocation;
 import com.tw.ai.dto.AiFormDataDto;
-import com.tw.ai.dto.AiLocationsDto;
 import com.tw.ai.repository.AiFavoriteRepository;
 import com.tw.ai.model.AiFavorite;
 import com.tw.ai.model.AiLocations;
@@ -77,7 +76,7 @@ public class AiService {
 
             return true;
         } catch (Exception e) {
-            logger.error("Ai表單資料為空");
+            logger.warn("Ai表單資料為空");
             return false;
         }
     }
@@ -88,26 +87,6 @@ public class AiService {
 
     public List<AiFavorite> findAIFavoriteFromMemberId(int memberId) {
         return aiFavoriteRepository.findAIFavoriteByMemberId(memberId);
-    }
-
-
-    public String getChatGPTResult(String memberId) {
-        return chatGPTService.getOutput(memberId);
-    }
-
-    public ArrayList<AiLocationsDto> getLatitudeAndLongitude(String memberId) {
-        var locations = chatGPTService.locations.get(memberId);
-        // 將地點轉成經緯度 如果為空陣列，就不要執行了
-        if (locations != null && !locations.isEmpty()) {
-            getLocation.start(memberId, locations);
-            return getLocation.locations.get(memberId);
-        }
-        logger.error("地點陣列為空，無法轉換為經緯度");
-        return null;
-    }
-
-    public ArrayList<String> getChatGPTLocations(String memberId) {
-        return chatGPTService.locations.get(memberId);
     }
 
     public void clearContent(String memberId) {
@@ -130,7 +109,13 @@ public class AiService {
     }
 
     public String getDestination(String memberId) {
-        return formDataList.get(memberId).getDestination();
+        var aiFormDataDto = formDataList.get(memberId);
+        if (aiFormDataDto != null) {
+            return aiFormDataDto.getDestination();
+        } else {
+            logger.warn("表單資料為空, 無法推薦票券與行程");
+            return null;
+        }
     }
 
     public void updateHeartbeat(String memberId) {

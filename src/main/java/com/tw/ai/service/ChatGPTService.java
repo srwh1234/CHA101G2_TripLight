@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.tw.ai.config.AppConfig;
 import com.tw.ai.dto.AiFormDataDto;
+import com.tw.ai.dto.AiLocationsDto;
+import com.tw.ai.util.GetLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
@@ -26,16 +30,22 @@ public class ChatGPTService {
     public Map<String,ArrayList<String>> locations;
     private final Map<String, String> output;
 
+    private final GetLocation getLocation;
+
     private final String API_KEY;
     private static final String MODEL = "gpt-3.5-turbo";
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
+    private final Logger logger
+            = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
-    public ChatGPTService(AppConfig appConfig) {
+    public ChatGPTService(AppConfig appConfig,GetLocation getLocation) {
         this.API_KEY = appConfig.getApiKey();
         this.destinationInput = new HashMap<>();
         this.output = new HashMap<>();
         this.locations = new HashMap<>();
+        this.getLocation = getLocation;
     }
 
     // 這個方法會傳回一個 InputStream，該 InputStream 會連線到 ChatGPT API 並傳送 message
@@ -180,6 +190,17 @@ public class ChatGPTService {
                 }
             }
         }
+    }
+
+    public ArrayList<AiLocationsDto> getLatitudeAndLongitude(String memberId) {
+        var locations = this.locations.get(memberId);
+        // 將地點轉成經緯度 如果為空陣列，就不要執行了
+        if (locations != null && !locations.isEmpty()) {
+            getLocation.start(memberId, locations);
+            return getLocation.locations.get(memberId);
+        }
+        logger.warn("地點陣列為空，無法轉換為經緯度");
+        return null;
     }
 }
 

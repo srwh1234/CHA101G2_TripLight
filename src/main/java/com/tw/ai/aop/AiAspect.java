@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class AiAspect {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
     @Before("execution(* com.tw.ai.controller.SessionController.processFormData(..)) || execution(* com.tw.ai.controller.ChatGPTController.getLongitude(..))")
     public void beforeStartMethod() {
         logger.info("chatGPT開始執行");
