@@ -38,7 +38,7 @@ the_main_btn.addEventListener("click", function (e) {
     type: "POST",
     url: "/login",
     data: {
-      username: email,
+      email: email,
       password: password,
     },
 
@@ -62,6 +62,48 @@ the_main_btn.addEventListener("click", function (e) {
   sessionStorage.setItem("test-login", JSON.stringify(valid));
   loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
 });
+// 取得註冊按鈕=====================================================
+const register_btn = $(".register").find(".main-btn");
+register_btn.on("click", (e) => {
+  e.preventDefault();
+  container.classList.remove("active-popup");
+  let email = $("#register_email").val();
+  let password = $("#register_password").val();
+  let account = $("#register_account").val();
+  $.ajax({
+    type: "POST",
+    url: "/register",
+    data: {
+      account: account,
+      email: email,
+      password: password,
+    },
+    success: function (response) {
+      console.log(response);
+      if (response) {
+        // 儲存成功動畫
+        Swal.fire({
+          icon: "success",
+          title: "註冊成功",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "註冊失敗",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
+    // 當請求失敗時，將錯誤訊息印出到console中
+    error: function (xhr) {
+      console.log(xhr.responseText);
+    },
+  });
+});
+// 取得註冊按鈕=====================================================
 
 window.addEventListener("load", function () {
   const valid = JSON.parse(sessionStorage.getItem("test-login"));
