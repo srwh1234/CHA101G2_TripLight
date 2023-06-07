@@ -38,7 +38,7 @@ public class AiService {
         id = getLastId();
     }
 
-    public boolean save(String resultData, String resultUrl, String memberId) {
+    public boolean save(String resultData, String resultUrl, String memberId,Integer userId) {
         try {
             var aiFormData = formDataList.get(memberId);
             AiFavorite aiFavorite = new AiFavorite();
@@ -50,7 +50,7 @@ public class AiService {
             aiFavorite.setBudgetRange(aiFormData.getBudgetRange());
             aiFavorite.setPreferredStyle(aiFormData.getPreferredStyle());
             aiFavorite.setOtherDemands(aiFormData.getOtherDemands());
-            aiFavorite.setMemberId(1);  // TODO:
+            aiFavorite.setMemberId(userId);  // TODO:
             aiFavorite.setPlanningDescription(resultData);
             aiFavorite.setRoute(resultUrl);
 

@@ -133,7 +133,7 @@ function generateGroup(g_favorite) {
           `;
 }
 
-//移除背景圖                     
+//移除背景圖
 if (Object.keys(g_dataObj).length !== 0) {
   $(".no_comment_div").eq(1).toggleClass("-out")
 }
@@ -224,10 +224,9 @@ $(".nav-item")
   });
 
 // 接收後台AI行程資料
-let memberId = 1;
 function getAiFavorite() {
   $.ajax({
-    url: "/aiFavorite/"+ memberId ,
+    url: "/aiFavorite",
     method: "GET",
     dataType: "json",
     success: function (aiFavorite) {
@@ -265,7 +264,8 @@ function getAiFavorite() {
             </p>
             <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br>${aiFavorite[i].planningDescription}</p>
           </div>
-          </div>`);}
+          </div>`);
+        }
       }
     },
     error: function (error) {
