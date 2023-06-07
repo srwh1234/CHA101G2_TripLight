@@ -40,6 +40,7 @@ public class CookieFilter implements Filter {
 		// 正確的做法應該是@WebFilter 或其他設定方式 填入要檢驗的位置
 		if (htmlName.equals("shopping_car.html") || htmlName.equals("tickets_order.html")) {
 
+			System.out.println("此網頁有先經過 CookieFilter.java");
 			// 這邊可以判斷cookie夾帶的資訊
 			final Cookie[] cookies = req.getCookies();
 
@@ -75,5 +76,3 @@ public class CookieFilter implements Filter {
 	}
 
 }
-
-
