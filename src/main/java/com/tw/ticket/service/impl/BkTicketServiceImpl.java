@@ -11,6 +11,7 @@ import com.tw.ticket.controller.BkTicketController.TicketResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.dao.TicketRepository;
+import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.BkTicketService;
 
 @Service
@@ -18,6 +19,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 	@Autowired
 	private TicketRepository repository;
+
+	@Autowired
+	private TicketSnRepository snRepository;
 
 	@Override
 	public SearchResponse getItems(final SearchRequest request) {
@@ -35,13 +39,16 @@ public class BkTicketServiceImpl implements BkTicketService {
 		response.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(ticket -> {
+
+			final int available = snRepository.countUsableSn(ticket.getTicketId());
+
 			final TicketResponse ticketResponse = new TicketResponse();
 			ticketResponse.setTicketId(ticket.getTicketId());
 			ticketResponse.setTicketName(ticket.getName());
 			ticketResponse.setTicketType(ticket.getTicketType().getName());
 			ticketResponse.setTicketCity(ticket.getCity());
 			ticketResponse.setSupplierName(ticket.getSupplierName());
-			ticketResponse.setAvailable(10);// XXX
+			ticketResponse.setAvailable(available);
 			response.getTickets().add(ticketResponse);
 
 		});

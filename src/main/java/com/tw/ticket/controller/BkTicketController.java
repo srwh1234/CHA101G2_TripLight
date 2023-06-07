@@ -1,5 +1,6 @@
 package com.tw.ticket.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,35 @@ public class BkTicketController {
 	@PostMapping("/searchtickets")
 	public SearchResponse searchTickets(@RequestBody final SearchRequest request) {
 		return bkTicketService.getItems(request);
+	}
+
+	// 新增票券
+	@PostMapping("/addticket")
+	public boolean addticket(@RequestBody final TikcetRequest request) {
+		System.out.println(request);
+		return true;
+	}
+
+	// 定義請求物件
+	@Data
+	public static class TikcetRequest {
+		private int ticketId;
+		private String ticketType;
+		private String name;
+		private int price;
+		private int available;
+		private int totalSales;
+		private Date expiryDate;
+		private String description;
+		private String conten;
+		private String supplierName;
+		private String city;
+		private String address;
+		private double latitude;
+		private double longitude;
+		private int rating;
+		private int ratingPerson;
+		private final List<byte[]> images = new ArrayList<>();
 	}
 
 	// 定義回傳物件
