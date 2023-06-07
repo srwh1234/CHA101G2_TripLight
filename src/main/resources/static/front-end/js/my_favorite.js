@@ -1,18 +1,18 @@
-let camera = document.getElementById('camera');
-let img = document.querySelector('.card-body img');
+let camera = document.getElementById("camera");
+let img = document.querySelector(".card-body img");
 
 // <!-- 左邊會員照片+導覽列 -->
 // ============================上傳大頭照=====================================
-camera.addEventListener('click', function () {
-  const input = document.createElement('input');
-  input.type = 'file';
+camera.addEventListener("click", function () {
+  const input = document.createElement("input");
+  input.type = "file";
 
   input.addEventListener("change", function () {
     const file = this.files[0];
     const reader = new FileReader();
 
     reader.addEventListener("load", function () {
-      sessionStorage.setItem('uploadedPhoto', reader.result);
+      sessionStorage.setItem("uploadedPhoto", reader.result);
       img.src = reader.result;
     });
     if (file) {
@@ -28,18 +28,21 @@ const dataObj = {};
 const valid = [
   {
     url: "http://google.com.tw",
-    imgUrl: "https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
+    imgUrl:
+      "https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
     title: "票券收藏1",
-    summary: "簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介介簡介簡介簡介介簡介簡介簡介簡介簡介簡介簡介v簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介",
+    summary:
+      "簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介介簡介簡介簡介介簡介簡介簡介簡介簡介簡介簡介v簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介",
     realPrice: 400,
   },
   {
     url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
-    imgUrl: "https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
+    imgUrl:
+      "https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
     title: "票券收藏2",
     summary: "簡介",
     realPrice: 1200,
-  }
+  },
 ];
 
 for (let i = 0; i < valid.length; i++) {
@@ -73,14 +76,16 @@ function generateTicket(t_favorite) {
   </div>
       `;
 }
-//移除背景圖                     
+//移除背景圖
 if (Object.keys(dataObj).length !== 0) {
-  $(".no_comment_div").first().toggleClass("-out")
+  $(".no_comment_div").first().toggleClass("-out");
 }
 //移除收藏
 $(document).on("click", ".remove_btn", function (e) {
   $(this).closest(".ticket_item_class").remove();
-  var ticketItems = document.querySelectorAll('#orderselectdiv .ticket_item_class');
+  var ticketItems = document.querySelectorAll(
+    "#orderselectdiv .ticket_item_class"
+  );
   if (ticketItems.length !== 0) {
     $(".no_comment_div").first().toggleClass("-out", true);
   } else {
@@ -89,17 +94,23 @@ $(document).on("click", ".remove_btn", function (e) {
 });
 // ==========================右邊會員資料--旅遊團收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
-$(".nav-item").eq(1).on("click", function () {
-  $("#group_order .ticket_item_class").remove();
-});
+$(".nav-item")
+  .eq(1)
+  .on("click", function () {
+    $("#group_order .ticket_item_class").remove();
+  });
 const g_dataObj = {};
-const g_valid = [{
-  url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
-  imgUrl: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
-  title: "旅遊團test",
-  summary: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-  realPrice: 5678,
-}];
+const g_valid = [
+  {
+    url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
+    imgUrl:
+      "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
+    title: "旅遊團test",
+    summary:
+      "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+    realPrice: 5678,
+  },
+];
 //填入假資料
 for (let i = 0; i < g_valid.length; i++) {
   Object.assign(g_dataObj, g_valid[i]);
@@ -135,7 +146,7 @@ function generateGroup(g_favorite) {
 
 //移除背景圖
 if (Object.keys(g_dataObj).length !== 0) {
-  $(".no_comment_div").eq(1).toggleClass("-out")
+  $(".no_comment_div").eq(1).toggleClass("-out");
 }
 //移除收藏
 $(document).on("click", ".remove_btn", function (e) {
@@ -149,18 +160,24 @@ $(document).on("click", ".remove_btn", function (e) {
 });
 // ==========================右邊會員資料--文章收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
-$(".nav-item").eq(2).on("click", function () {
-  $("#article_order .ticket_item_class").remove();
-});
+$(".nav-item")
+  .eq(2)
+  .on("click", function () {
+    $("#article_order .ticket_item_class").remove();
+  });
 
 const a_dataObj = {};
-const a_valid = [{
-  url: "http://google.com.tw",
-  imgUrl: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
-  title: "文章文章",
-  summary: "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
-  realPrice: "2020 / 02 / 02",
-}];
+const a_valid = [
+  {
+    url: "http://google.com.tw",
+    imgUrl:
+      "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
+    title: "文章文章",
+    summary:
+      "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+    realPrice: "2020 / 02 / 02",
+  },
+];
 // 填入假資料
 for (let i = 0; i < a_valid.length; i++) {
   Object.assign(a_dataObj, a_valid[i]);
@@ -192,10 +209,10 @@ function generateArticle(a_favorite) {
   </div>
    `;
 }
-//移除背景圖     
+//移除背景圖
 
 if (Object.keys(a_dataObj).length !== 0) {
-  $(".no_comment_div").eq(2).toggleClass("-out")
+  $(".no_comment_div").eq(2).toggleClass("-out");
 }
 // //移除收藏
 $(document).on("click", ".remove_btn", function (e) {
@@ -211,9 +228,11 @@ $(document).on("click", ".remove_btn", function (e) {
 
 // =================================================================
 // 處理第一個分頁內容跑到別的分頁
-$(".nav-item").eq(3).on("click", function () {
-  $("#AI_order .ticket_item_class").remove();
-});
+$(".nav-item")
+  .eq(3)
+  .on("click", function () {
+    $("#AI_order .ticket_item_class").remove();
+  });
 // 設定點擊AI行程規劃
 $(".nav-item")
   .eq(3) // 選第四個
@@ -232,14 +251,21 @@ function getAiFavorite() {
     success: function (aiFavorite) {
       console.log("接收資料");
       console.log(aiFavorite);
-      if (!$(".tab-pane").eq(3).find("#group_orderselect").next().hasClass("group_order_item_class")){
-      for (let i = 0; i < aiFavorite.length; i++) {
-        $(".tab-pane").eq(3).find("#group_orderselect")
-          .after(`<div class="group_order_item_class">
+      if (
+        !$(".tab-pane")
+          .eq(3)
+          .find("#group_orderselect")
+          .next()
+          .hasClass("group_order_item_class")
+      ) {
+        for (let i = 0; i < aiFavorite.length; i++) {
+          $(".tab-pane").eq(3).find("#group_orderselect")
+            .after(`<div class="group_order_item_class">
           <div class="card-header">
           <div class="card-top">
               <h5 class="text-center">
                   <h5>${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊</h5>
+                  <i class="fa-solid fa-heart heart remove_btn"></i>
               </h5>
               </div>
               </div>
@@ -264,6 +290,7 @@ function getAiFavorite() {
             </p>
             <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br>${aiFavorite[i].planningDescription}</p>
           </div>
+          <div class = "aiFavoriteId">${aiFavorite[i].aiFavoriteId}</div>
           </div>`);
         }
       }
@@ -274,6 +301,43 @@ function getAiFavorite() {
   });
 }
 
+// 設定刪除按鈕
+$(document).on("click", ".remove_btn", function (e) {
+  $(this).closest(".group_order_item_class").remove();
+  var groupItems = document.querySelectorAll(".group_order_item_class");
+
+  let aiFavoriteId = $(this)
+    .closest(".group_order_item_class")
+    .find(".aiFavoriteId")
+    .text();
+  console.log(aiFavoriteId);
+
+  // 連接後端刪除=========================================
+  $.ajax({
+    type: "POST",
+    url: "/aiFavorite/delete",
+    data: {
+      aiFavoriteId: aiFavoriteId,
+    },
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (error) {
+      console.error(error);
+    },
+  });
+  // 連接後端刪除=========================================
+
+  if (groupItems.length !== 0) {
+    $(".no_comment_div").eq(1).toggleClass("-out", true);
+  } else {
+    $(".no_comment_div").eq(1).toggleClass("-out", false);
+  }
+});
+
+if (Object.keys(g_dataObj).length !== 0) {
+  $(".no_comment_div").eq(3).toggleClass("-out");
+}
 
 // 設定卡片展開與關閉
 $(document).on("click", ".group_order_item_class", function () {
@@ -319,9 +383,11 @@ $(function () {
   $(".Number").each(function (i) {
     if ($(this).text().length > len) {
       $(this).attr("title", $(this).text());
-      var text = $(this).text().substring(0, len - 1) + "...";
+      var text =
+        $(this)
+          .text()
+          .substring(0, len - 1) + "...";
       $(this).text(text);
     }
   });
 });
-

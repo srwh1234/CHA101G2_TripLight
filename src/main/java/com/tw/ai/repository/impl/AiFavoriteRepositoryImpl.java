@@ -39,6 +39,13 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
         return Objects.requireNonNullElse(lastId, 1);
     }
 
+
+    @Transactional
+    public Boolean delete(Integer aiFavoriteId) {
+        entityManager.remove(aiFavoriteId);
+        return true;
+    }
+
     public List<AiFavorite> findAIFavoriteByMemberId(int memberId) {
 
         // 使用entityManager 呼叫 createQuery 放入 JPQL指令
@@ -49,5 +56,8 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
         return theQuery.getResultList();
 
     }
+
+
+
 
 }

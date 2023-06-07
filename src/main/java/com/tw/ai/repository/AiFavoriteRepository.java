@@ -6,4 +6,5 @@ public interface AiFavoriteRepository {
     void save(AiFavorite aiFavorite);
     List<AiFavorite> findAIFavoriteByMemberId(int memberId);
     int getLastId();
+    Boolean delete(Integer aiFavoriteId);
 }

@@ -81,6 +81,10 @@ public class AiService {
         }
     }
 
+    public boolean delete(int aiFavoriteId){
+        return aiFavoriteRepository.delete(aiFavoriteId);
+    }
+
     public int getLastId() {
         return aiFavoriteRepository.getLastId();
     }
