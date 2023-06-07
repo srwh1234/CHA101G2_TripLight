@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,9 +43,9 @@ public class ChatGPTService {
     @Autowired
     public ChatGPTService(AppConfig appConfig,GetLocation getLocation) {
         this.API_KEY = appConfig.getApiKey();
-        this.destinationInput = new HashMap<>();
-        this.output = new HashMap<>();
-        this.locations = new HashMap<>();
+        this.destinationInput = new ConcurrentHashMap<>();
+        this.output = new ConcurrentHashMap<>();
+        this.locations = new ConcurrentHashMap<>();
         this.getLocation = getLocation;
     }
 

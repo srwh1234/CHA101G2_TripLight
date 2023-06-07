@@ -29,11 +29,11 @@ public class AiService {
             = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTService chatGPTService, Map<String, AiFormDataDto> formDataList, GetLocation getLocation) {
+    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTService chatGPTService, GetLocation getLocation) {
         this.aiFavoriteRepository = aiFavoriteRepository;
         this.chatGPTService = chatGPTService;
         this.getLocation = getLocation;
-        this.formDataList = formDataList;
+        this.formDataList = new ConcurrentHashMap<>();
         this.lastHeartbeatMap = new ConcurrentHashMap<>();
         id = getLastId();
     }

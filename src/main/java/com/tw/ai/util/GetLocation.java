@@ -17,13 +17,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
 public class GetLocation {
 
-    public Map<String,ArrayList<AiLocationsDto>> locations = new HashMap<>();
+    public Map<String,ArrayList<AiLocationsDto>> locations = new ConcurrentHashMap<>();
 
     public String content;
     private String output;
