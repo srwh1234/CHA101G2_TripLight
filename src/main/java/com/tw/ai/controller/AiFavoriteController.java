@@ -32,7 +32,7 @@ public class AiFavoriteController {
     }
 
     // 刪除資料 TODO
-    @PostMapping ("/aiFavorite/delete")
+    @DeleteMapping("/aiFavorite")
     public ResponseEntity<Boolean> deleteData(@RequestParam("aiFavoriteId") int aiFavoriteId) {
         try {
             aiService.deleteAiLocations(aiFavoriteId);
