@@ -1,6 +1,7 @@
 package com.tw.ai.repository.impl;
 
 import com.tw.ai.model.AiFavorite;
+import com.tw.ai.model.AiLocations;
 import com.tw.ai.repository.AiFavoriteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -41,10 +42,24 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
 
 
     @Transactional
-    public Boolean delete(Integer aiFavoriteId) {
-        entityManager.remove(aiFavoriteId);
-        return true;
+    public void deleteAiFavorite(Integer aiFavoriteId) {
+        AiFavorite aiFavorite = entityManager.find(AiFavorite.class, aiFavoriteId);
+        if (aiFavorite != null) {
+            entityManager.remove(aiFavorite);
+        }
     }
+    @Transactional
+    public void deleteAiLocations(Integer aiFavoriteId) {
+        TypedQuery<AiLocations> theQuery = entityManager.createQuery("FROM AiLocations a WHERE a.aiFavoriteId = :aiFavoriteId", AiLocations.class);
+        theQuery.setParameter("aiFavoriteId", aiFavoriteId);
+        var resultList = theQuery.getResultList();
+        for(var result:resultList){
+            entityManager.remove(result);
+        }
+    }
+
+
+
 
     public List<AiFavorite> findAIFavoriteByMemberId(int memberId) {
 

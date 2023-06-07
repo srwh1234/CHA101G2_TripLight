@@ -34,11 +34,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(final String... args) {
-		// var member = new Member();
-		// member.setMemberEmail("y2sssssss");
-		// member.setMemberPassword("asdasdasdasd");
-		// member.setMemberAccount("jay");
-		// memberRepository.save(member);
 		logger.info("伺服器部屬完畢");
 	}
 }

@@ -1,6 +1,7 @@
 package com.tw.ai.service;
 
 
+import com.tw.ai.repository.AiLocationsRepository;
 import com.tw.ai.util.GetLocation;
 import com.tw.ai.dto.AiFormDataDto;
 import com.tw.ai.repository.AiFavoriteRepository;
@@ -19,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AiService {
 
     private final AiFavoriteRepository aiFavoriteRepository;
+    private final AiLocationsRepository aiLocationsRepository;
     private final ChatGPTService chatGPTService;
     private final GetLocation getLocation;
     private final Map<String, AiFormDataDto> formDataList;
@@ -29,12 +31,13 @@ public class AiService {
             = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTService chatGPTService, GetLocation getLocation) {
+    public AiService(AiFavoriteRepository aiFavoriteRepository, ChatGPTService chatGPTService, GetLocation getLocation,AiLocationsRepository aiLocationsRepository) {
         this.aiFavoriteRepository = aiFavoriteRepository;
         this.chatGPTService = chatGPTService;
         this.getLocation = getLocation;
         this.formDataList = new ConcurrentHashMap<>();
         this.lastHeartbeatMap = new ConcurrentHashMap<>();
+        this.aiLocationsRepository = aiLocationsRepository;
         id = getLastId();
     }
 
@@ -81,9 +84,19 @@ public class AiService {
         }
     }
 
-    public boolean delete(int aiFavoriteId){
-        return aiFavoriteRepository.delete(aiFavoriteId);
+
+    public boolean deleteAiFavorite(int aiFavoriteId){
+        aiFavoriteRepository.deleteAiFavorite(aiFavoriteId);
+        return true;
     }
+
+    public boolean deleteAiLocations(int aiFavoriteId){
+        aiFavoriteRepository.deleteAiLocations(aiFavoriteId);
+        return true;
+    }
+
+
+
 
     public int getLastId() {
         return aiFavoriteRepository.getLastId();

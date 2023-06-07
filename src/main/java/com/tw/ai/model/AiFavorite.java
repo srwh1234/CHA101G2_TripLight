@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 public class AiFavorite{
     // 設定欄位
     @Id
@@ -28,7 +29,7 @@ public class AiFavorite{
     private int memberId;                     // 會員ID
 
     // cascade表示存檔時 也一起寫入AiLocations
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "aiFavoriteId")
     private List<AiLocations> aiLocations = new ArrayList<>();
 }

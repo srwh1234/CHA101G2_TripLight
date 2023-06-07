@@ -32,17 +32,17 @@ public class AiFavoriteController {
     }
 
     // 刪除資料 TODO
-//    @PostMapping ("/aiFavorite/delete")
-//    public ResponseEntity<Boolean> deleteData(@RequestParam("aiFavoriteId") int aiFavoriteId) {
-//        try {
-//            boolean delete = aiService.delete(aiFavoriteId);
-//            System.out.println("刪除成功");
-//            return ResponseEntity.ok(delete);
-//        } catch (Exception e) {
-//            // 处理异常情况
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-//        }
-//    }
+    @PostMapping ("/aiFavorite/delete")
+    public ResponseEntity<Boolean> deleteData(@RequestParam("aiFavoriteId") int aiFavoriteId) {
+        try {
+            aiService.deleteAiLocations(aiFavoriteId);
+            aiService.deleteAiFavorite(aiFavoriteId);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            // 处理异常情况
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
+    }
 
 
 
