@@ -87,15 +87,15 @@ public class TicketServiceImpl implements TicketService {
 		);
 
 		// 轉成自己定義的物件
-		final SearchResponse searchResponse = new SearchResponse();
-		searchResponse.setCurPage(request.getPage());
-		searchResponse.setTotalPage(page.getTotalPages());
+		final SearchResponse response = new SearchResponse();
+		response.setCurPage(request.getPage());
+		response.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(ticket -> {
-			searchResponse.getTickets().add(new RadAndHotResponse(ticket));
+			response.getTickets().add(new RadAndHotResponse(ticket));
 		});
 
-		return searchResponse;
+		return response;
 	}
 
 	// AI 行程，地點搜尋票券

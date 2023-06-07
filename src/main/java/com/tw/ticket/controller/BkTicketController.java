@@ -25,13 +25,13 @@ public class BkTicketController {
 
 	// 後台票券清單
 	@PostMapping("/searchtickets")
-	public PageResponse searchTickets(@RequestBody final SearchRequest request) {
+	public SearchResponse searchTickets(@RequestBody final SearchRequest request) {
 		return bkTicketService.getItems(request);
 	}
 
 	// 定義回傳物件
 	@Data
-	public static class PageResponse {
+	public static class SearchResponse {
 		private int curPage;
 		private int totalPage;
 		private List<TicketResponse> tickets = new ArrayList<>();
