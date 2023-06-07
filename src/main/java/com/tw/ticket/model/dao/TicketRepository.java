@@ -30,6 +30,12 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 			Pageable pageable					// 分頁
 	);
 
+	@Query("SELECT t FROM Ticket t WHERE t.name LIKE %:keyword%")
+	public Page<Ticket> searchTicketByKeyword(	//
+			@Param("keyword") String keyword,	// 關鍵字
+			Pageable pageable					// 分頁
+	);
+
 	// 找出符合編號陣列的票券
 	public List<Ticket> findByTicketIdIn(Collection<Integer> array);
 }
