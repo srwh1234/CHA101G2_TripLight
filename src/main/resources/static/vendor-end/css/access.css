@@ -1,0 +1,25 @@
+/* 自訂表格樣式 */
+#employeeTable {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    border-collapse: collapse;
+}
+
+#employeeTable th,
+#employeeTable td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#employeeTable th {
+    background-color: #333;
+    color: #fff;
+}
+
+#employeeTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#employeeTable tr:hover {
+    background-color: #ebebeb;
+}

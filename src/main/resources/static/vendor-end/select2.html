@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>編輯資料</title>
+
+    <!-- 自訂字型 -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="botcss/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <script src="jquery-3.7.0.min.js"></script>
+    <script src="login.js"></script>
+    <script src="EMPQuety.js"></script>
+    <!-- 自訂樣式 -->
+    <link href="css/TripLight.min.css" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top" style="overflow-y: scroll;">
+    <!-- 頁面包裹區域 -->
+    <div id="wrapper">
+
+        <!-- 側邊欄 -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- 側邊欄 - 品牌 -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <img src="img/icon.png" alt="Icon" class="sidebar-brand-icon rotate-n-15"
+                    style="width: 30px; height: 30px;">
+                <div class="sidebar-brand-text mx-3">TripLight SCM</div>
+            </a>
+
+            <!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+
+            <!-- 導覽項目 -  -->
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="https://triplight.netlify.app/">
+                    <span>TirpLight</span></a>
+            </li> -->
+            <!-- 導覽項目 - 頁面折疊選單 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" target="_blank" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <span>廠商資料</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                </div>
+            </li>
+
+            <!-- 導覽項目 - 公用程式折疊選單 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <span>行程管理</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="NewItinerary.html">新增行程</a>
+                        <a class="collapse-item" href="Select.html">編輯行程</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <!-- 功能頁面 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <span>旅行團管理</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="NewItinerary.html">新增資料</a>
+                        <a class="collapse-item" href="select2.html">編輯資料</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets"
+                    aria-expanded="true" aria-controls="collapseTickets">
+                    <span>客戶訂單管理</span>
+                </a>
+                <div id="collapseTickets" class="collapse" aria-labelledby="headingTickets"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="Order.html">訂單管理</a>
+                        <a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
+                    aria-expanded="true" aria-controls="collapseCustomerService">
+                    <span>活動問題管理</span>
+                </a>
+                <div id="collapseCustomerService" class="collapse" aria-labelledby="headingCustomerService"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="QuestionForm.html">問題表單管理</a>
+                        <a class="collapse-item" href="QuestionRespond.html">問題回報</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 側邊欄切換器（側邊欄） -->
+            <!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+        </ul>
+        <!-- 側邊導覽列結束 -->
+
+
+        <!-- 內容包裹區域 -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- 主要內容 -->
+            <div id="content">
+
+                <!-- 上導覽列 -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- 側邊欄開關按鈕 -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- 上導覽列導覽選單 -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">李蒸蚌</span>
+                                <i class="fas fa-user-circle fa-lg"></i>
+                            </a>
+                            <!-- 下拉選單 - 使用者資訊 -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" id="logoutLink">
+                                    登出
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h4 class="m-0 font-weight-bold text-primary">行程資料管理</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>行程編號</th>
+                                        <th>廠商編號</th>
+                                        <th>行程名稱</th>
+                                        <th>內容簡介</th>
+                                        <th>天數</th>
+                                        <th>縣市</th>
+                                        <th>價格</th>
+                                        <th>人數規定(最少出團人數/額滿)</th>
+                                        <th>行程描述</th>
+                                        <th>特別說明</th>
+                                        <th>行程狀態</th>
+                                        <th>編輯</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2001</td>
+                                        <td>1</td>
+                                        <td>宿霧宿宿叫<br>薄荷雙島豪華６日遊</td>
+                                        <td>
+                                            世界潛點巴里卡薩島大斷層<br>海豚遊蹤<br>鯨鯊共游<br>最美資生堂島<br>阿羅納海灘赫納度假村<br>宿霧拜伊大飯店 
+                                        </td>
+                                        <td>5 Days</td>
+                                        <td>菲律賓<br>宿霧、薄荷島</td>
+                                        <td>$34,900 /人(有床位)<br>
+                                            3-12歲 $30,900 /人(有床位)<br>
+                                            3歲以下 $21,000/人(無床位)
+                                            </td>
+                                        <td>6人/15人</td>
+                                        <td>行程資訊 －
+                                            <br>
+                                            ‧D1-桃園國際機場／宿霧－SM百貨商場-碼頭搭乘交通船前往薄荷島－蜜蜂農場特色海景晚餐<br>
+                                            ‧D2-薄荷島海豚遊蹤－巴里卡薩島大斷層浮潛－大小處女島<br>
+                                            ‧D3-薄荷島賞鯨鯊－羅伯河漂流竹筏叢林體驗－探訪世界最小眼鏡猴－巧克力山－搭乘交通船返回宿霧<br>
+                                            ‧D4-宿霧－資生堂島－娜魯蘇安島<br>
+                                            ‧D5-宿霧市區觀光／桃園國際機場<br>
+                                        </td>
+
+                                        <td>‧1.6人以上成行，10人以上派台灣領隊。<br>
+                                            ‧2.如無台灣領隊隨團，當地有華語導遊全程服務。<br>
+                                            ‧3.全程飯店皆採2人一室，指定單人房另補單人房差價。<br>
+                                            ‧4.宿霧海島飯店一經確認後，需全額付費，如遇取消，飯店費用百分百全額沒收，如訂金不足酒店全額款項，旅客取消仍需支付費用，敬請注意。<br>
+                                            ‧5.出海當天，若遇氣候風浪不佳，導遊會經得旅客同意調整行程，但若停留期間都無法安排出海，則改退費。<br>
+                                            ‧6.旅客從台灣購買免稅品入竟菲律賓如未拆封海關可能會課進口稅，敬請旅客注意。<br>
+                                            ‧7.本行程順序、班機時間及住宿飯店之確認以說明會資料為主。<br>
+                                        </td>
+                                        <td>1</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm btn-edit">編輯</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">編輯行程資料</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm">
+                                <div class="form-group">
+                                    <label for="tripId">行程編號:</label>
+                                    <input type="text" class="form-control" id="tripId">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vendorId">廠商編號:</label>
+                                    <input type="text" class="form-control" id="vendorId">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tripName">行程名稱:</label>
+                                    <input type="text" class="form-control" id="tripName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="introduction">內容簡介:</label>
+                                    <input type="text" class="form-control" id="introduction">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date">天數:</label>
+                                    <input type="date" class="form-control" id="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="county">縣市:</label>
+                                    <input type="text" class="form-control" id="county">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pricr">價格:</label>
+                                    <input type="text" class="form-control" id="price">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberLimit">人數規定:</label>
+                                    <input type="text" class="form-control" id="numberLimit">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tripDescription">行程描述:</label>
+                                    <input type="text" class="form-control" id="tripDescription">
+                                </div>
+                                <div class="form-group">
+                                    <label for="note">特別說明:</label>
+                                    <input type="text" class="form-control" id="note">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                            <button type="button" class="btn btn-primary" id="btnSave">儲存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bootstrap 核心 JavaScript -->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+            <!-- 核心插件 JavaScript -->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+            <!-- 自訂腳本，適用於所有頁面 -->
+            <script src="js/TripLight-2.min.js"></script>
+
+            <!-- 頁面級別的插件 -->
+            <script src="vendor/chart.js/Chart.min.js"></script>
+
+            <!-- 頁面級別的自訂腳本 -->
+            <script src="js/demo/chart-area-demo.js"></script>
+            <script src="js/demo/chart-pie-demo.js"></script>
+
+
+            <!--引入datables-->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script src="js/demo/datatables-demo.js"></script>
+</body>
+
+</html>

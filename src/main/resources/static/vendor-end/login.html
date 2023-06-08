@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<title>Vendor Login</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords"
+		content="Desk Signup form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	<!-- //Meta tag Keywords -->
+
+	<link href="//fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
+
+	<!--/Style-CSS -->
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<!--//Style-CSS -->
+	<style>
+		body {
+    		background-image: url("img/photo1.jpg");
+    		background-size: cover;
+		}
+	</style>
+	
+</head>
+
+<body>
+	<section class="w3l-forms-main-61">
+		<div class="form-inner">
+			<div class="wrapper">
+				<div class="d-grid top-form">
+					<div class="logo">
+							<h1>
+								<img src="img/icon.png" alt="TripLight ICON" style="height: 90px;">
+								TripLight廠商登入系統
+							</h1>
+						<!-- if logo is image enable this   
+								<a class="brand-logo" href="#index.html">
+									<img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+								</a> -->
+					</div>
+				</div>
+				<div class="form-bg-blur">
+					<div class="form-61 form-register">
+						<h4 class="form-head">Sign Up</h4>
+
+						<form action="" method="GET">
+							<div class="">
+								<p class="text-head">Vendor E-mail</p>
+								<input type="text" name="email" id="mail" class="input" placeholder=" Enter Your E-mail" required />
+							</div>
+							<div class="">
+								<p class="text-head">Account</p>
+								<input type="text" name="account" id="account" class="input" placeholder=" Enter Account"  required />
+							</div>
+							<div class="">
+								<p class="text-head">Password</p>
+								<input type="password" name="password" id="password" placeholder=" Enter Password" class="input" required />
+							</div>
+							<label class="remember">
+								<input type="checkbox">
+								<span class="checkmark"></span>Remeber Me<a href="#"></a>
+							</label>
+							
+							<div class="error" id="mail-error"  style="color: red;"></div>
+							<div class="error" id="account-error"  style="color: red;"></div>
+                			<div class="error" id="password-error" style="color: red";></div>
+							<button type="submit" id="submit" class="signinbutton btn" style="color: red" href="index.html">Login</button>
+						</form>
+					</div>
+				</div>
+				<!-- <div class="go-to-home text-center">
+					<p>Already have an account? <a class="btn" href="login.html"> Signin </a></p>
+				</div>-->
+			</div> 
+			<div class="copyright text-center">
+				<div class="wrapper">
+					<p class="copy-footer-29">COPYRIGHT © 2023 TripLight All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+        // 驗證輸入欄位
+        // let form = document.querySelector("form");
+        let mail = document.getElementById("mail");
+		let account = document.getElementById("account");
+        let password = document.getElementById("password");
+        let mailError = document.getElementById("mail-error");
+		let accountError = document.getElementById("account-error");
+        let passwordError = document.getElementById("password-error");
+		let submit=document.getElementById("submit");
+        submit.addEventListener("click", function (event) {
+        let mailValue = mail.value.trim();
+		let accountValue = account.value.trim();
+        let passwordValue = password.value.trim();
+
+            // 驗證電子信箱
+            if (mailValue.length < 1) {
+				alert("請輸入電子信箱。");
+                mailError.innerHTML = "請輸入電子信箱。";
+				mailValue.value="";
+                accountError.innerHTML = "";
+				passwordValue.value="";
+                event.preventDefault();
+            } else {
+                mailError.innerHTML = "";
+            }
+
+			//驗證帳號
+			if (accountValue.length < 1) {
+                accountError.innerHTML = "請輸入廠商帳號";
+				mailValue.value="";
+                accountError.innerHTML = "";
+				passwordValue.value="";
+				alert("請輸入廠商帳號。");
+                event.preventDefault();
+            } else {
+				accountError.innerHTML = "";
+            }
+
+            // 驗證密碼
+            if (passwordValue.length < 6 || passwordValue.length > 20) {
+                passwordError.innerHTML = "密碼長度必須介於6到20個字元。";
+				mailValue.value="";
+                accountError.innerHTML = "";
+				passwordValue.value="";;
+				alert( "密碼長度必須介於6到20個字元。");
+                event.preventDefault();
+            } else if (!passwordValue.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/)) {
+                passwordError.innerHTML = "密碼必須包含英文大小寫字母及數字。";
+				alert("密碼必須包含英文大小寫字母及數字。");
+                event.preventDefault();
+				mailValue.value="";
+                accountError.innerHTML = "";
+				passwordValue.value="";
+            } else {
+                passwordError.innerHTML = "";
+            }
+        }); 
+    </script>
+</body>
+
+</html>
