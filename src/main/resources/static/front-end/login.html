@@ -43,10 +43,6 @@
   <!-- 載入icon -->
   <link rel="shortcut icon" href="./images/icon.png" />
   <link rel="bookmark" href="./images/icon.png" />
-  <!--會員登入-->
-  <link href="css/login.css" rel="stylesheet" />
-  <!--會員專區-->
-  <link href="css/member.css" rel="stylesheet" />
   <!--jQuery-->
   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -54,6 +50,40 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
+  <!--會員登入-->
+  <link href="css/login.css" rel="stylesheet" />
+  <style>
+    .list-group list-group-flush mt-3 {
+      padding: 0px;
+    }
+
+    .list_group_item {
+      position: absolute;
+      padding: 0px;
+      text-align: center;
+
+    }
+
+    .list-group-item>a {
+      padding: inherit;
+      display: inline-block;
+      width: 100%;
+    }
+
+    li.list-group-item {
+      cursor: pointer;
+    }
+
+    ul.list-group :hover {
+      background-color: rgb(201, 216, 216);
+      color: white;
+    }
+
+    li.list-group-item>a {
+      text-decoration: none;
+      color: black;
+    }
+  </style>
 </head>
 
 <body>
@@ -88,20 +118,21 @@
         <ul class="member_list">
           <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
           </li>
-          <li class="member_li" id="order_li"><a href="#"><i class="fa-solid fa-plane"></i>訂單管理</a>
+          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
             <ul class="order_list">
-              <li class="order_content"><a href="https://www.google.com"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
-              <li class="order_content"><a href="https://www.google.com"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
+              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
               </li>
             </ul>
           </li>
           <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-solid fa-copy"></i>我的文章</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-gem"></i>會員分級</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>提出問題</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+          <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
+          <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
+          <li class="member_li"><a href="checkQuestion.html"><i class="fa-regular fa-comment"></i>查看問題</a></li>
+          <li class="member_li" id="logout_li"><a href="index.html"><i class="fa-solid fa-right-from-bracket"></i>登出</a>
           </li>
         </ul>
       </div>
@@ -189,7 +220,8 @@
         <div class="card-body">
           <div class="d-flex justify-content-center align-items-center">
             <div class="position-relative">
-              <img src="https://fakeimg.pl/300x200/200" alt="會員照片" class="rounded-circle" width="150" height="150">
+              <img src="https://i.pinimg.com/564x/95/14/a2/9514a2106bdf506dc2ed2047ae4ba908.jpg" alt="會員照片"
+                class="rounded-circle" width="150" height="150">
               <a href="#" class="position-absolute bottom-0 end-0">
                 <i class="bi bi-camera-fill h2"></i>
               </a>
@@ -198,18 +230,19 @@
           <button id="camera"><i class="fa-solid fa-camera"></i></button>
           <ul class="list-group list-group-flush mt-3">
             <li class="list-group-item"><a href="login.html">管理帳戶</a></li>
-            <li id="order_li2" class="list-group-item"><a href="#">訂單管理</a>
+            <li id="order_li2" class="list-group-item"><a href="">訂單管理</a>
               <ul id="order_list2">
-                <li id="order_content1" class="list-group-item"><a href="https://www.google.com">票券訂單</a></li>
-                <li id="order_content2" class="list-group-item"><a href="https://www.google.com">旅遊團訂單</a></li>
+                <li id="order_content1" class="list-group-item"><a href="tickets_order.html">票券訂單</a></li>
+                <li id="order_content2" class="list-group-item"><a href="group_order.html">旅遊團訂單</a></li>
               </ul>
             </li>
             <li class="list-group-item"><a href="my_favorite.html">我的收藏</a></li>
-            <li class="list-group-item"><a href="order_management.html">我的評價</a></li>
-            <li class="list-group-item"><a href="order_management.html">我的文章</a></li>
-            <li class="list-group-item"><a href="order_management.html">會員分級</a></li>
-            <li class="list-group-item"><a href="order_management.html">優惠碼</a></li>
-            <li class="list-group-item"><a href="order_management.html">提出問題</a></li>
+            <li class="list-group-item"><a href="comment.html">我的評價</a></li>
+            <li class="list-group-item"><a href="article_myfavorite.html">我的文章</a></li>
+            <li class="list-group-item"><a href="membership_rating.html">會員分級</a></li>
+            <li class="list-group-item"><a href="coupon.html">優惠碼</a></li>
+            <li class="list-group-item"><a href="question_form.html">提出問題</a></li>
+            <li class="list-group-item"><a href="checkQuestion.html">查看問題</a></li>
           </ul>
         </div>
       </div>
@@ -218,7 +251,7 @@
       <div class="col-9">
 
         <div class="card">
-          <div class="h3 m-3">帳號設定</div>
+          <div class="h3 m-3">會員資料</div>
 
           <ul class="nav nav-tabs mt-3">
             <li class="nav-item">
@@ -360,14 +393,15 @@
               <div class="h3 m-3">修改信箱</div>
 
               <!-- 第四排 -->
-              <div class="row m-4">
-                <div class="form-group col-8">
-                  <input type="email" class="form-control" id="editEmail">
+              <div class="d-flex align-items-center p-3">
+                <div class="form-group mx-3 flex-fill">
+                  <label for="editEmail" class="form-label">電子信箱</label>
+                  <input type="text" class="form-control" id="editEmail">
                 </div>
-                <!-- 第五排 -->
-                <div class="d-flex align-items-center col-8 my-4">
-                  <button class="btn btn-secondary ms-auto" id="saveData2">儲存</button>
-                </div>
+              </div>
+              <!-- 第七排 -->
+              <div class="d-flex align-items-center p-3 px-5">
+                <button class="btn btn-secondary ms-auto" id="saveData2">儲存</button>
               </div>
 
             </div>
@@ -482,8 +516,8 @@
 
 </body>
 <!-- login顯示 -->
-<script src="/js/Login.js"></script>
+<script src="js/Login.js"></script>
 <!-- 會員首頁 -->
-<script src="/js/member.js"></script>
+<script src="js/member.js"></script>
 
 </html>
