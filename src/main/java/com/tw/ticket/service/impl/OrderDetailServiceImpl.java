@@ -11,8 +11,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
+import com.tw.member.model.dao.MemberRepository;
 import com.tw.ticket.controller.OrderDetailController.DetailRequest;
 import com.tw.ticket.controller.OrderDetailController.DetailResponse;
 import com.tw.ticket.model.Ticket;

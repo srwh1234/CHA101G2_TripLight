@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.tw.ai.service.AiService;
-import com.tw.member.dao.MemberRepository;
+import com.tw.member.model.dao.MemberRepository;
 import com.tw.ticket.service.TicketService;
 import com.tw.trip.repository.TripRepository;
 import com.tw.trip.service.TripService;

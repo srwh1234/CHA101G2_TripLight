@@ -1,4 +1,4 @@
-package com.tw.member.dao;
+package com.tw.member.model.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
+import com.tw.member.model.dao.MemberRepository;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.dao.TicketOrderRepository;
 import com.tw.ticket.model.dao.TicketRepository;
