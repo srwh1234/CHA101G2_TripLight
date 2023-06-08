@@ -1,319 +1,1002 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-  <head>
-    <title>TripLight | Packages</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <!-- 關鍵字設定 -->
-    <meta
-      name="keywords"
-      content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程"
-    />
-    <!-- 網頁介紹 -->
-    <meta
-      name="description"
-      content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等"
-    />
 
-    <script>
-      addEventListener(
-        "load",
-        function () {
-          setTimeout(hideURLbar, 0);
-        },
-        false
-      );
+<head>
+  <title>TripLight | Packages</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <!-- 關鍵字設定 -->
+  <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+  <!-- 網頁介紹 -->
+  <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
 
-      function hideURLbar() {
-        window.scrollTo(0, 1);
-      }
-    </script>
+  <script>
+    addEventListener(
+      "load",
+      function () {
+        setTimeout(hideURLbar, 0);
+      },
+      false
+    );
 
-    <!-- css files -->
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <!-- bootstrap css -->
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <!-- custom css -->
-    <link href="css/fontawesome-all.css" rel="stylesheet" />
-    <!-- fontawesome css -->
-    <!-- //css files -->
+    function hideURLbar() {
+      window.scrollTo(0, 1);
+    }
+  </script>
 
-    <!-- google fonts -->
-    <!-- 載入字體 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
-      rel="stylesheet"
-    />
-    <!-- //google fonts -->
+  <!-- css files -->
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- bootstrap css -->
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <!-- custom css -->
+  <link href="css/fontawesome-all.css" rel="stylesheet" />
+  <!-- fontawesome css -->
+  <!-- //css files -->
 
-    <!-- 載入icon -->
-    <link rel="shortcut icon" href="./images/icon.png" />
-    <link rel="bookmark" href="./images/icon.png" />
-  </head>
-  <body>
-    <!-- header -->
-    <header>
-      <div class="container" style="padding-right: 0px">
-        <!-- nav -->
-        <nav class="py-md-4 py-3">
-          <div id="logo">
-            <h1 class="mt-md-0 mt-2">
-              <a href="index.html"
-                ><img src="./images/icon.png" class="icon_triplight" />
-                TripLight
-              </a>
-            </h1>
-          </div>
-          <label for="drop" class="toggle"
-            ><span class="fa fa-bars"></span
-          ></label>
-          <input type="checkbox" id="drop" />
-          <ul class="menu ml-auto mt-1">
-            <li class=""><a href="index.html">首頁</a></li>
-            <li class=""><a href="booking.html">AI行程規劃</a></li>
-            <li class=""><a href="tickets.html">票券</a></li>
-            <li class=""><a href="packages.html">套裝行程</a></li>
-            <li class="active"><a href="articles.html">旅遊文章</a></li>
-            <li class="booking"><a href="" id="login">登入/註冊</a></li>
-            <li class="">
-              <a href="shopping_car.html"
-                ><img src="./images/shoppingCar.svg" alt="" style="width: 2em"
-              /></a>
-            </li>
-          </ul>
-        </nav>
-        <!-- //nav -->
+  <!-- google fonts -->
+  <!-- 載入字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
+  <!-- //google fonts -->
+
+  <!-- 載入icon -->
+  <link rel="shortcut icon" href="./images/icon.png" />
+  <link rel="bookmark" href="./images/icon.png" />
+
+  <!-- 使用BootStrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <!-- 使用BootStrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+  <!-- 使用Bootstrap-table -->
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+
+  <!-- 使用Summernote -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.css" rel="stylesheet">
+
+  <!-- 使用Bootstrap-icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+
+  <!-- 使用gijgo -->
+  <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css">
+  <!-- 使用Sortable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
+
+  <!-- 使用daterangepicker 選取日期區間 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+
+  <!-- 使用fullcalendar 顯示日曆視圖 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css">
+
+  <!--jQuery-->
+  <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <!--會員登入-->
+  <link href="css/login.css" rel="stylesheet" />
+
+  <style>
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .forumtopic {
+      border: 1px solid #333;
+      border-collapse: separate;
+      width: 100%;
+    }
+
+    table.forumtopic td.top,
+    table.forumtopic td.pos {
+      text-align: right;
+    }
+
+    .forumtopic tbody tr:nth-child(odd) {
+      background-color: #f2f2f2;
+    }
+
+    .forumtopic tbody tr:nth-child(even) {
+      background-color: #ffffff;
+    }
+
+    .more-link {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* 下拉選單容器 */
+    .dropdown-menu {
+      position:fixed;
+      display:flow-root;
+    }
+
+    /* 下拉選單內容 */
+    .dropdown-menu .dropdown-item {
+      display: none;
+      /* 預設隱藏選項 */
+      padding: 8px 16px;
+      background-color: #f9f9f9;
+      color: #333;
+      text-decoration: none;
+    }
+
+    /* 滑鼠懸停在下拉選單容器上方時，顯示下拉選單內容 */
+    .dropdown-menu:hover .dropdown-item {
+      display: block;
+    }
+
+    /* 調整下拉選單內容位置 */
+    .dropdown-menu .dropdown-item:first-child {
+      margin-top: 8px;
+    }
+
+    /* 調整下拉選單內容之間的間距 */
+    .dropdown-menu .dropdown-item+.dropdown-item {
+      margin-top: 4px;
+    }
+  </style>
+
+  <!-- header -->
+  <header>
+    <div class="container" style="padding-right: 0px">
+      <!-- nav -->
+      <div class="member">
+        <ul class="member_list">
+          <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+          </li>
+          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+            <ul class="order_list">
+              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
+              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+              </li>
+            </ul>
+          </li>
+          <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+          <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
+          <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
+          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
+          <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+          </li>
+        </ul>
       </div>
-    </header>
-    <!-- //header -->
-    <!-- 登入 -->
+      <!-- //nav -->
+    </div>
+  </header>
+</head>
 
-    <div id="login-container">
-      <!---container--->
-
-      <div class="main-box login">
-        <h3>登入</h3>
-        <form action="">
-          <div class="input-box">
-            <i class="fas fa-envelope icon2"></i>
-            <input type="email" name="email" required />
-            <label for="">信箱</label>
-          </div>
-          <div class="input-box">
-            <i class="fas fa-lock icon2"></i>
-            <input type="password" name="password" required />
-            <label for="">密碼</label>
-          </div>
-          <div class="check">
-            <label><input type="checkbox" />記住我</label>
-            <a href="#">忘記密碼</a>
-          </div>
-          <button type="submit" class="main-btn">Login</button>
-          <div class="register">
-            <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
-          </div>
-        </form>
+<body>
+  <!-- header -->
+  <header>
+    <div class="container" style="padding-right: 0px">
+      <!-- nav -->
+      <nav class="py-md-4 py-3">
+        <div id="logo">
+          <h1 class="mt-md-0 mt-2">
+            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+              TripLight
+            </a>
+          </h1>
+        </div>
+        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu ml-auto mt-1">
+          <li class=""><a href="index.html">首頁</a></li>
+          <li class=""><a href="booking.html">AI行程規劃</a></li>
+          <li class=""><a href="tickets.html">票券</a></li>
+          <li class=""><a href="packages.html">套裝行程</a></li>
+          <li class=""><a href="articles.html">旅遊文章</a></li>
+          <li class="booking"><a href="" id="login">登入/註冊</a></li>
+          <li class="">
+            <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+          </li>
+        </ul>
+      </nav>
+      <!-- //nav -->
+      <div class="member">
+        <ul class="member_list">
+          <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+          </li>
+          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+            <ul class="order_list">
+              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
+              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+              </li>
+            </ul>
+          </li>
+          <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+          <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
+          <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
+          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
+          <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+          </li>
+        </ul>
       </div>
+    </div>
+  </header>
+  <!-- //header -->
 
-      <div class="main-box register">
-        <h3>註冊</h3>
-        <form action="">
-          <div class="input-box">
-            <i class="fas fa-user icon2"></i>
-            <input type="email" name="email" required />
-            <label for="">使用者名稱</label>
-          </div>
-          <div class="input-box">
-            <i class="fas fa-envelope icon2"></i>
-            <input type="email" name="email" required />
-            <label for="">信箱</label>
-          </div>
-          <div class="input-box">
-            <i class="fas fa-lock icon2"></i>
-            <input type="password" name="password" required />
-            <label for="">密碼</label>
-          </div>
-          <div class="check">
-            <label><input type="checkbox" />我同意所有條款</label>
-          </div>
-          <button type="submit" class="main-btn">註冊</button>
-          <div class="register">
-            <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
-          </div>
-        </form>
-      </div>
+  <!-- 登入  -->
+  <div id="login-container">
+    <!---container--->
 
-      <span class="close-icon">
-        <div class="fas fa-times"></div>
-      </span>
+    <div class="main-box login">
+      <h3>登入</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" id="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" id="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />記住我</label>
+          <a href="#">忘記密碼</a>
+        </div>
+        <button type="submit" class="main-btn">Login</button>
+        <div class="register">
+          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+        </div>
+      </form>
     </div>
 
-    <!-- 登入  -->
+    <div class="main-box register">
+      <h3>註冊</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-user icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">使用者名稱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />我同意所有條款</label>
+        </div>
+        <button type="submit" class="main-btn">註冊</button>
+        <div class="register">
+          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+        </div>
+      </form>
+    </div>
 
-    <!-- banner -->
-    <section class="banner_inner" id="home">
-      <div class="banner_inner_overlay"></div>
-    </section>
-    <!-- //banner -->
+    <span class="close-icon">
+      <div class="fas fa-times"></div>
+    </span>
+  </div>
+  <!-- 登入  -->
 
-    <!-- tour packages -->
-    <section class="packages pt-5">
-      <div class="container py-lg-4 py-sm-3">
-        <h2 class="heading text-capitalize text-center">旅遊文章專欄</h2>
-        <p class="text mt-2 mb-5 text-center">
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-        </p>
+  <!-- banner -->
+  <section class="banner_inner" id="home">
+    <div class="banner_inner_overlay"></div>
+  </section>
+  <!-- //banner -->
+
+  <!-- 第一排 -->
+  <div class="d-flex justify-content-center">
+    <div class="d-flex align-items-between">
+      <div class="input-group mb-2" style="margin-top: 30px">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+          aria-expanded="false" class="btn btn-outline-secondary" style="width: 200px;">標題</button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">全部</a></li>
+          <li><a class="dropdown-item" href="#">食記</a></li>
+          <li><a class="dropdown-item" href="#">遊記</a></li>
+          <li><a class="dropdown-item" href="#">評論</a></li>
+          <li><a class="dropdown-item" href="#">問題</a></li>
+        </ul>
+        <input type="text" class="form-control" placeholder="關鍵字查詢" aria-label="Text input with dropdown button"
+          class="btn btn-outline-secondary" style="width: 400px;">
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 150px;"
+          onclick="redirectToMyFavorite()">我的收藏</button>
+
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 150px;"
+          onclick="redirectToMyList()">我的文章</button>
+
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+          class="btn btn-outline-secondary" style="width: 200px;">發表文章</button>
       </div>
-    </section>
-    <!-- tour packages -->
+    </div>
+  </div>
 
-    <!-- destinations -->
-    <section class="destinations py-5" id="destinations">
-      <div class="container py-xl-5 py-lg-3">
-        <h3 class="heading text-capitalize text-center">
-          旅遊文章專欄下半區塊
-        </h3>
-        <p class="text mt-2 mb-5 text-center">
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-          自己想內容，加油!自己想內容，加油!自己想內容，加油!自己想內容，加油!
-        </p>
+  <!-- tour packages -->
+  <section class="packages pt-5 border-bottom">
+    <div class="container py-lg-4 py-sm-3">
+      <div class="my-3">
+        <div class="h2">文章專區</div>
+        <!-- 一行4個卡片 -->
+        <div class="row row-cols-4 g-2">
+          <!-- class 內有my-nav-link 則點選元素 會跳轉到href指定的位置-->
+          <div class="col">
+            <div class="card my-nav-link">
+              <a href="article_detail.html">
+                <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <div class="d-flex justify-content-between">
+                  <p>10 comments</p>
+                  <p>by Jay Chen</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card my-nav-link">
+              <a href="article_list.html">
+                <img src="https://picsum.photos/800/600/?random=37" class="card-img-top" alt="...">
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <div class="d-flex justify-content-between">
+                  <p>15 comments</p>
+                  <p>by Lesllie C</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card my-nav-link" href="#article_detail">
+              <img src="https://picsum.photos/800/600/?random=38" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <div class="d-flex justify-content-between">
+                  <p>32 comments</p>
+                  <p>by Xiang Lo</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card my-nav-link" href="#article_detail">
+              <img src="https://picsum.photos/800/600/?random=39" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text.</p>
+                <p class="card-text"><small class="text-muted">Last updated 6 mins ago</small></p>
+                <div class="d-flex justify-content-between">
+                  <p>50 comments</p>
+                  <p>by Rocky Z</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card my-nav-link" href="#article_detail">
+              <img src="https://picsum.photos/800/600/?random=40" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text.</p>
+                <p class="card-text"><small class="text-muted">Last updated 6 mins ago</small></p>
+                <div class="d-flex justify-content-between">
+                  <p>52 comments</p>
+                  <p>by Srwh W</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card my-nav-link" href="#article_detail">
+              <img src="https://picsum.photos/800/600/?random=41" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text.</p>
+                <p class="card-text"><small class="text-muted">Last updated 6 mins ago</small></p>
+                <div class="d-flex justify-content-between">
+                  <p>54 comments</p>
+                  <p>by Victoria C</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-    <!-- destinations -->
+      <div class="container align-items-center justify-content-between d-flex">
+        <div class="more-link">
+          <a href="article_list.html">更多文章</a>
+        </div>
+        <div class="report">
+          <a href="進入檢舉頁面">我要檢舉</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- tour packages -->
 
-    <!--footer -->
-    <footer>
-      <section class="footer footer_w3layouts_section_1its py-5">
-        <div class="container py-lg-4 py-3">
-          <div class="row footer-top">
-            <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
-              <div class="footer-title">
-                <h3>地點資訊</h3>
+  <!-- destinations -->
+  <section class="destinations py-5" id="destinations">
+    <div class="container py-xl-5 py-lg-3">
+      <h4 class="heading text-capitalize text-center">
+        點選以下任一主題進入論壇：
+      </h4>
+      <table class="forumtopic" cellpadding="4" cellspacing="0">
+        <tbody>
+          <tr>
+            <td class="tHead">
+              <div>
+                <font style="vertical-align: inherit;">論壇</font>
               </div>
-              <div class="row">
-                <ul class="col-12 links">
-                  <li>
-                    <a
-                      href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
-                      target="_blank"
-                      >地址：桃園市中壢區復興路46號9樓</a
-                    >
-                  </li>
-                  <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
-                  <li>
-                    <a href="mailto:contact@example.com"
-                      >信箱：triplirht@gmail.com</a
-                    >
-                  </li>
-                  <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
-                </ul>
+            </td>
+            <td class="tHead top">
+              <div>
+                <font style="vertical-align: inherit;">＃ 主題</font>
+              </div>
+            </td>
+            <td class="tHead pos">
+              <div>
+                <font style="vertical-align: inherit;"># 帖子</font>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="article_list.html">
+                <font style="vertical-align: inherit;">台灣</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">110,936</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">1,349,797</font>
+            </td>
+          </tr>
+          <tr>
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i12337-Antarctic_Adventures.html">
+                <font style="vertical-align: inherit;">離島地區</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">8,202</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">70,729</font>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i12290-Bargain_Travel.html">
+                <font style="vertical-align: inherit;">日本</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">182,091</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">2,124,564</font>
+            </td>
+          </tr>
+          <tr>
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i12289-Beach_Vacations.html">
+                <font style="vertical-align: inherit;">韓國</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">9,128</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">92,820</font>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i12407-Business_Travel.html">
+                <font style="vertical-align: inherit;">大陸</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">8,704</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">86,560</font>
+            </td>
+          </tr>
+          <tr>
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i10703-Cruises.html">
+                <font style="vertical-align: inherit;">香港澳門</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">6,336</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">72,893</font>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i12292-Destination_Weddings.html">
+                <font style="vertical-align: inherit;">印尼</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">4,382</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">18,916</font>
+            </td>
+          </tr>
+          <tr>
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i12291-Ecotourism.html">
+                <font style="vertical-align: inherit;">菲律賓</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">3,196</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">24,953</font>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i9658-Family_Travel.html">
+                <font style="vertical-align: inherit;">泰國</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">13,717</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">64,740</font>
+            </td>
+          </tr>
+          <tr>
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i32200-Food_and_Travel.html">
+                <font style="vertical-align: inherit;">越南</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">11,659</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">20,412</font>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i50384-Games.html">
+                <font style="vertical-align: inherit;">新加坡</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">5,169</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">39,266</font>
+            </td>
+          </tr>
+          <tr>
+            <td class="fname" onclick="setPID(34597);">
+              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
+              <a href="/ShowForum-g1-i15987-Golf_Vacations.html">
+                <font style="vertical-align: inherit;">馬來西亞</font>
+              </a>
+            </td>
+            <td class="top">
+              <font style="vertical-align: inherit;">6,357</font>
+            </td>
+            <td class="pos">
+              <font style="vertical-align: inherit;">41,571</font>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- destinations -->
+
+  <!-- 發表文章按鈕按下去的Modal畫面 -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">發表文章</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- <button class="form-title">文章標題</button> -->
+          <input type="text" id="title-input" placeholder="請在此輸入標題" aria-label="Text input with dropdown button"
+            style="width: 100%;">
+          <div class="form-group mb-3">
+            <label class="form-label"></label>
+            <input type="file" class="form-control" id="inputArticleImg">
+            <div id="preview"></div>
+          </div>
+
+          <!-- 編輯器區域 -->
+          <div id="editor" placeholder="請在此輸入內容" style="display: none;">
+            <p>請在此輸入內容</p>
+          </div>
+          <div class="note-editor note-frame card">
+            <div class="note-dropzone">
+              <div class="note-dropzone-message"></div>
+            </div>
+            <div class="note-toolbar card-header" role="toolbar">
+              <div class="note-btn-group btn-group note-style"><button type="button"
+                  class="note-btn btn btn-light btn-sm note-btn-bold" tabindex="-1" aria-label="粗體 (CTRL+B)"
+                  data-bs-original-title="粗體 (CTRL+B)"><i class="note-icon-bold"></i></button><button type="button"
+                  class="note-btn btn btn-light btn-sm note-btn-italic" tabindex="-1" aria-label="斜體 (CTRL+I)"
+                  data-bs-original-title="斜體 (CTRL+I)"><i class="note-icon-italic"></i></button><button type="button"
+                  class="note-btn btn btn-light btn-sm note-btn-underline" tabindex="-1" aria-label="底線 (CTRL+U)"
+                  data-bs-original-title="底線 (CTRL+U)"><i class="note-icon-underline"></i></button><button type="button"
+                  class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="清除格式 (CTRL+\)"
+                  data-bs-original-title="清除格式 (CTRL+\)"><i class="note-icon-eraser"></i></button>
+              </div>
+              <div class="note-btn-group btn-group note-font"><button type="button"
+                  class="note-btn btn btn-light btn-sm note-btn-strikethrough" tabindex="-1"
+                  aria-label="刪除線 (CTRL+SHIFT+S)" data-bs-original-title="刪除線 (CTRL+SHIFT+S)"><i
+                    class="note-icon-strikethrough"></i></button><button type="button"
+                  class="note-btn btn btn-light btn-sm note-btn-superscript" tabindex="-1" aria-label="上標"
+                  data-bs-original-title="上標"><i class="note-icon-superscript"></i></button><button type="button"
+                  class="note-btn btn btn-light btn-sm note-btn-subscript" tabindex="-1" aria-label="下標"
+                  data-bs-original-title="下標"><i class="note-icon-subscript"></i></button></div>
+              <div class="note-btn-group btn-group note-para"><button type="button"
+                  class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="項目清單 (CTRL+SHIFT+NUM7)"
+                  data-bs-original-title="項目清單 (CTRL+SHIFT+NUM7)"><i
+                    class="note-icon-unorderedlist"></i></button><button type="button"
+                  class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="編號清單 (CTRL+SHIFT+NUM8)"
+                  data-bs-original-title="編號清單 (CTRL+SHIFT+NUM8)"><i class="note-icon-orderedlist"></i></button>
               </div>
             </div>
-            <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-              <div class="footer-title">
-                <h3>認識TripLight</h3>
+            <div class="note-editing-area">
+              <div class="note-placeholder" style="display: none;">請輸入內容</div>
+              <div class="note-handle">
+                <div class="note-control-selection">
+                  <div class="note-control-selection-bg"></div>
+                  <div class="note-control-holder note-control-nw"></div>
+                  <div class="note-control-holder note-control-ne"></div>
+                  <div class="note-control-holder note-control-sw"></div>
+                  <div class="note-control-sizing note-control-se"></div>
+                  <div class="note-control-selection-info"></div>
+                </div>
+              </div><textarea class="note-codable" aria-multiline="true"></textarea>
+              <div class="note-editable card-block" contenteditable="true" role="textbox" aria-multiline="true"
+                spellcheck="true" autocorrect="true" placeholder="請在此輸入內容" style="height: 300px;">
+                <!-- <p>請在此輸入內容</p> -->
               </div>
-              <div class="row">
-                <ul class="col-10 links">
-                  <li><a href="about.html" class="scroll">關於我們</a></li>
-                  <li>
-                    <a href="user_terms.html" class="scroll">使用者條款 </a>
-                  </li>
-                  <li>
-                    <a href="privacy_policy.html" class="scroll"
-                      >隱私權保護政策</a
-                    >
-                  </li>
-                  <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
-                </ul>
-              </div>
-            </div>
-            <div
-              class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3"
-            >
-              <div class="footer-title">
-                <h3>成為合作夥伴</h3>
-              </div>
-              <div class="row">
-                <ul class="col-6 links">
-                  <li>
-                    <a href="supplier_form.html" class="scroll">成為供應商</a>
-                  </li>
-                  <li>
-                    <a href="blogger_photographer.html" class="scroll"
-                      >部落客/攝影師合作計畫</a
-                    >
-                  </li>
-                  <li>
-                    <a href="group_form.html" class="scroll">團體客製規劃</a>
-                  </li>
-                </ul>
+            </div><output class="note-status-output" role="status" aria-live="polite"></output>
+            <div class="note-statusbar" role="status">
+              <div class="note-resizebar" aria-label="Resize">
+                <div class="note-icon-bar"></div>
+                <div class="note-icon-bar"></div>
+                <div class="note-icon-bar"></div>
               </div>
             </div>
-            <div
-              class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3"
-            >
-              <div class="footer-title">
-                <h3>聯絡我們</h3>
+            <div class="modal note-modal link-dialog" aria-hidden="false" tabindex="-1" role="dialog" aria-label="插入連結">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">插入連結</h4><button type="button" class="close" data-dismiss="modal"
+                      aria-label="Close" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group note-form-group"><label for="note-dialog-link-txt-16848468744231"
+                        class="note-form-label">顯示文字</label><input id="note-dialog-link-txt-16848468744231"
+                        class="note-link-text form-control note-form-control note-input" type="text"></div>
+                    <div class="form-group note-form-group"><label for="note-dialog-link-url-16848468744231"
+                        class="note-form-label">連結網址</label><input id="note-dialog-link-url-16848468744231"
+                        class="note-link-url form-control note-form-control note-input" type="text" value="http://">
+                    </div>
+                    <div class="form-check sn-checkbox-open-in-new-window"><label class="form-check-label"><input
+                          type="checkbox" class="form-check-input" checked="" aria-label="在新視窗開啟" aria-checked="true">
+                        在新視窗開啟</label></div>
+                    <div class="form-check sn-checkbox-use-protocol"><label class="form-check-label"><input
+                          type="checkbox" class="form-check-input" checked="" aria-label="Use default protocol"
+                          aria-checked="true"> Use
+                        default protocol</label></div>
+                  </div>
+                  <div class="modal-footer"><input type="button" href="#"
+                      class="btn btn-primary note-btn note-btn-primary note-link-btn" value="插入連結" disabled="">
+                  </div>
+                </div>
               </div>
-              <ul class="social_section_1info">
+            </div>
+            <div class="note-popover popover in note-link-popover bottom">
+              <div class="arrow"></div>
+              <div class="popover-content note-children-container"><span><a target="_blank"></a>&nbsp;</span>
+                <div class="note-btn-group btn-group note-link"><button type="button"
+                    class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="編輯連結"
+                    data-bs-original-title="編輯連結"><i class="note-icon-link"></i></button><button type="button"
+                    class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="取消連結"
+                    data-bs-original-title="取消連結"><i class="note-icon-chain-broken"></i></button></div>
+              </div>
+            </div>
+            <div class="modal note-modal" aria-hidden="false" tabindex="-1" role="dialog" aria-label="插入圖片">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">插入圖片</h4><button type="button" class="close" data-dismiss="modal"
+                      aria-label="Close" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group note-form-group note-group-select-from-files"><label
+                        for="note-dialog-image-file-16848468744231" class="note-form-label">從本機上傳</label><input
+                        id="note-dialog-image-file-16848468744231"
+                        class="note-image-input form-control-file note-form-control note-input" type="file" name="files"
+                        accept="image/*" multiple="multiple"></div>
+                    <div class="form-group note-group-image-url"><label for="note-dialog-image-url-16848468744231"
+                        class="note-form-label">圖片網址</label><input id="note-dialog-image-url-16848468744231"
+                        class="note-image-url form-control note-form-control note-input" type="text"></div>
+                  </div>
+                  <div class="modal-footer"><input type="button" href="#"
+                      class="btn btn-primary note-btn note-btn-primary note-image-btn" value="插入圖片" disabled="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-2 mt-3">
+            <select class="form-select" id="inputZone">
+              <option selected="">請選擇分類</option>
+              <option value="1">食記</option>
+              <option value="2">遊記</option>
+              <option value="3">評論</option>
+              <option value="3">問題</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">送出文章</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--footer -->
+  <footer>
+    <section class="footer footer_w3layouts_section_1its py-5">
+      <div class="container py-lg-4 py-3">
+        <div class="row footer-top">
+          <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>地點資訊</h3>
+            </div>
+            <div class="row">
+              <ul class="col-12 links">
                 <li>
-                  <a href="https://www.facebook.com/TibaMe"
-                    ><img src="./images/facebook.svg" alt="facebook"
-                  /></a>
+                  <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓" target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                </li>
+                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                <li>
+                  <a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
+                </li>
+                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+            <div class="footer-title">
+              <h3>認識TripLight</h3>
+            </div>
+            <div class="row">
+              <ul class="col-10 links">
+                <li><a href="about.html" class="scroll">關於我們</a></li>
+                <li>
+                  <a href="user_terms.html" class="scroll">使用者條款 </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/tibame_wiedu/"
-                    ><img src="./images/instagram.svg" alt="instagram"
-                  /></a>
+                  <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                </li>
+                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>成為合作夥伴</h3>
+            </div>
+            <div class="row">
+              <ul class="col-6 links">
+                <li>
+                  <a href="supplier_form.html" class="scroll">成為供應商</a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/"
-                    ><img src="./images/twitter.svg" alt="twitter"
-                  /></a>
+                  <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
                 </li>
-                <li class="youtube">
-                  <a
-                    href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"
-                    ><img src="./images/youtube.svg" alt="youtube"
-                  /></a>
+                <li>
+                  <a href="group_form.html" class="scroll">團體客製規劃</a>
                 </li>
               </ul>
             </div>
           </div>
+          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+            <div class="footer-title">
+              <h3>聯絡我們</h3>
+            </div>
+            <ul class="social_section_1info">
+              <li>
+                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg" alt="facebook" /></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                    alt="instagram" /></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+              </li>
+              <li class="youtube">
+                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
+                    alt="youtube" /></a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </section>
-    </footer>
-    <!-- //footer -->
+      </div>
+    </section>
+  </footer>
+  <!-- //footer -->
 
-    <!-- copyright -->
-    <div class="copyright py-3 text-center">
-      <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
-    </div>
-    <!-- //copyright -->
+  <!-- copyright -->
+  <div class="copyright py-3 text-center">
+    <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+  </div>
+  <!-- //copyright -->
 
-    <!-- move top -->
-    <div class="move-top text-right">
-      <a href="#home" class="move-top">
-        <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
-      </a>
-    </div>
-    <!-- move top -->
-  </body>
-  <!-- login顯示 -->
-  <script src="/js/Login.js"></script>
-  <!-- login顯示 -->
+  <!-- move top -->
+  <div class="move-top text-right">
+    <a href="#home" class="move-top">
+      <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- move top -->
+
+</body>
+<!-- login顯示 -->
+<script src="./js/Login.js"></script>
+<!-- login顯示 -->
+
+<!-- 使用BootStrap-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!-- 使用JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+<!-- 使用Summernote -->
+<script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote/dist/lang/summernote-zh-TW.min.js"></script>
+
+<!-- 使用Bootstrap-table -->
+<script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+<!-- 使用gijgo -->
+<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/gijgo@1.9.14/js/messages/messages.zh-tw.js" type="text/javascript"></script>
+
+<!-- 引入SortableJS的JS文件 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+<!-- 使用daterangepicker 選取日期區間 -->
+<script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- <script type="text/javascript">
+  ta.store('tablet_google_search_app_open_same_tab', true);
+</script> -->
+
+<!-- QRCode.js 生成二維碼 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+<script>
+  function initMap() { }
+
+  $(document).ready(() => {
+    // 載入首頁的內容
+    $("#content").load("home.html");
+    // 設定 只要是.my-nav-link的點擊事件委派
+    $(document).on("click", ".my-nav-link", function () {
+      var page = $(this).attr("href").substring(1) + '.html';
+      // 讀取.my-nav-link的指定頁面
+      $("#content").load(page, () => {
+        // 讀取指定頁面後 初始化Summernote編輯器
+        $('#editor').summernote(
+          {
+            height: 300, // 設定編輯器高度
+            placeholder: '請輸入內容', // 設定編輯器預設文字
+            toolbar: [
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['font', ['strikethrough', 'superscript', 'subscript']],
+              // ['color', ['color']],
+              ['para', ['ul', 'ol']],
+              // ['height', ['height']]
+            ], // 設定編輯器工具列
+            lang: 'zh-TW',
+          }
+        );
+      });
+      //導覽列指定當下的選單
+      $(".my-nav-link").removeClass("active");
+      $(this).addClass("active");
+      // 摺疊選單為收合狀態
+      $(".dropdown-menu").collapse('hide');
+      return false;
+    });
+  });
+
+  window.addEventListener("load", function () {
+    var previewEl = document.getElementById("preview");
+    var fileInputEl = document.getElementById("inputArticleImg");
+
+    var previewImage = function (file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.addEventListener("load", function () {
+        var img = document.createElement("img");
+        img.src = reader.result;
+        img.className = "inputArticleImg";
+        img.style.width = "25%";
+        previewEl.innerHTML = "";
+        previewEl.appendChild(img);
+      });
+    };
+
+    fileInputEl.addEventListener("change", function () {
+      if (this.files.length > 0) {
+        previewImage(this.files[0]);
+      } else {
+        previewEl.innerHTML = '<label class="form-label">照片預覽</label>';
+      }
+    });
+  });
+
+  function redirectToMyFavorite() {
+    window.location.href = "article_myfavorite.html";
+  };
+
+  function redirectToMyList() {
+    window.location.href = "article_mylist.html";
+  };
+
+</script>
+
 </html>
