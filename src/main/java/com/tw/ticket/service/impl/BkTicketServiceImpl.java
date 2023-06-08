@@ -1,5 +1,7 @@
 package com.tw.ticket.service.impl;
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.tw.ticket.controller.BkTicketController.SearchResponse;
 import com.tw.ticket.controller.BkTicketController.TicketResponse;
+import com.tw.ticket.controller.BkTicketController.TikcetRequest;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.dao.TicketRepository;
@@ -22,6 +25,18 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 	@Autowired
 	private TicketSnRepository snRepository;
+
+	// 後台新增票券
+	@Override
+	public boolean addItems(final TikcetRequest request) {
+
+		for (final String base64Str : request.getImages()) {
+			final byte[] array = Base64.getDecoder().decode(base64Str);
+
+			System.out.println(array.length);
+		}
+		return true;
+	}
 
 	@Override
 	public SearchResponse getItems(final SearchRequest request) {

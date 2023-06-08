@@ -33,8 +33,7 @@ public class BkTicketController {
 	// 新增票券
 	@PostMapping("/addticket")
 	public boolean addticket(@RequestBody final TikcetRequest request) {
-		System.out.println(request);
-		return true;
+		return bkTicketService.addItems(request);
 	}
 
 	// 定義請求物件
@@ -56,7 +55,7 @@ public class BkTicketController {
 		private double longitude;
 		private int rating;
 		private int ratingPerson;
-		private final List<byte[]> images = new ArrayList<>();
+		private final List<String> images = new ArrayList<>();
 	}
 
 	// 定義回傳物件
