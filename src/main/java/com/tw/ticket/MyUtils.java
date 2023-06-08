@@ -4,6 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyUtils {
+	/**
+	 * 判斷字串是否為空值或空白或全空格
+	 */
+	public static boolean isEmpty(final String str) {
+		if (str == null || str.trim().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Date 是否在目前時間以前

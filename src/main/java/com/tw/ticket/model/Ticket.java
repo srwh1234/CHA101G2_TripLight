@@ -25,6 +25,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Ticket {
 
+	public static int DISABLED = 0;
+	public static int ENABLED = 1;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketId;// 票券編號

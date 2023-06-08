@@ -1,6 +1,8 @@
 package com.tw.ticket.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,6 +20,7 @@ public class TicketSn {
 	public static int IN_USED = 1;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketSnId;// 票券序號編號
 
 	@ManyToOne

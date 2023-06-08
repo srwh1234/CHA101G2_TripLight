@@ -33,6 +33,7 @@ public class BkTicketController {
 	// 新增票券
 	@PostMapping("/addticket")
 	public boolean addticket(@RequestBody final TikcetRequest request) {
+		System.out.println(request);
 		return bkTicketService.addItems(request);
 	}
 
@@ -47,7 +48,8 @@ public class BkTicketController {
 		private int totalSales;
 		private Date expiryDate;
 		private String description;
-		private String conten;
+		private String content;
+		private String note;
 		private String supplierName;
 		private String city;
 		private String address;
