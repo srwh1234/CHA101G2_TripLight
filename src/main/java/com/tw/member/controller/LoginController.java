@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
+import com.tw.member.model.dao.MemberRepository;
 
 import jakarta.servlet.http.HttpSession;
 

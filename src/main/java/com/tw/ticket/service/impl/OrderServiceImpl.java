@@ -16,8 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tw.member.dao.MemberRepository;
 import com.tw.member.model.Member;
+import com.tw.member.model.dao.MemberRepository;
 import com.tw.ticket.Config;
 import com.tw.ticket.MyUtils;
 import com.tw.ticket.controller.OrderController.OrderPageResponse;
