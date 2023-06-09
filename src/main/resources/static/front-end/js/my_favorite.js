@@ -315,10 +315,7 @@ $(document).on("click", ".remove_btn", function (e) {
   // 連接後端刪除=========================================
   $.ajax({
     type: "DELETE",
-    url: "/aiFavorite",
-    data: {
-      aiFavoriteId: aiFavoriteId,
-    },
+    url: "/aiFavorite/"+aiFavoriteId,
     success: function (response) {
       console.log(response);
     },

@@ -21,7 +21,7 @@ public class AiFavoriteController {
 
     @GetMapping("/aiFavorite")
     public ResponseEntity<Object> getAiFavorite(HttpSession session) {
-        var user = (Member)session.getAttribute("user");
+        var user = (Member)session.getAttribute("member");
         var aiFavoriteFromMemberId = aiService.findAIFavoriteFromMemberId(user.getMemberId());
         if (aiFavoriteFromMemberId.isEmpty()) {
             String errorMessage = "No AI favorites found for memberId: " + user.getMemberId();
@@ -32,11 +32,11 @@ public class AiFavoriteController {
     }
 
     // 刪除資料 TODO
-    @DeleteMapping("/aiFavorite")
-    public ResponseEntity<Boolean> deleteData(@RequestParam("aiFavoriteId") int aiFavoriteId) {
+    @DeleteMapping("/aiFavorite/{id}")
+    public ResponseEntity<Boolean> deleteData(@PathVariable int id) {
         try {
-            aiService.deleteAiLocations(aiFavoriteId);
-            aiService.deleteAiFavorite(aiFavoriteId);
+            aiService.deleteAiLocations(id);
+            aiService.deleteAiFavorite(id);
             return ResponseEntity.ok(true);
         } catch (Exception e) {
             // 处理异常情况

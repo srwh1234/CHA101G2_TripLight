@@ -21,9 +21,9 @@ public class LoginController {
 
 	@PostMapping("/login")
 	public String login(@RequestParam final String email, @RequestParam final String password, final HttpSession session) {
-		final Member user = memberRepository.findMemberByMemberEmail(email);
-		if (user != null) {
-			session.setAttribute("user", user);
+		final Member member = memberRepository.findMemberByMemberEmail(email);
+		if (member != null) {
+			session.setAttribute("member", member);
 			return "redirect:/home";
 		}
 		return "login";
