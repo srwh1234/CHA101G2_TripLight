@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@SpringBootTest
 public class test {
 
     private  questReportImpl qRImpl;
