@@ -12,9 +12,6 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class LoginController {
-
-	private static final String SESSION_ID_COOKIE_NAME = "memberId";
-
 	private final MemberRepository memberRepository;
 
 	@Autowired

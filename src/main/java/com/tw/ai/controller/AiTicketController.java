@@ -30,8 +30,6 @@ public class AiTicketController {
         return ResponseEntity.ok(ticketService.getTicket(destination));
     }
 
-
-
 }
 
 
