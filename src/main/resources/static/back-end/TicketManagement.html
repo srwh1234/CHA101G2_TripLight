@@ -53,7 +53,7 @@
 
         /* 避免表格被過度壓縮 */
         .my-th-width {
-            min-width: 9rem;
+            min-width: 12rem;
         }
 
         /* 避免表格被過度壓縮 小按鈕*/
@@ -275,13 +275,14 @@
 
                                     <thead>
                                         <tr>
-                                            <th class="my-th-width-sm" data-field="ticket_id">編號</th>
-                                            <th class="my-th-width" data-field="ticket_name">名稱</th>
-                                            <th class="my-th-width-sm" data-field="ticket_type">類型</th>
-                                            <th class="my-th-width-sm" data-field="ticket_city">縣市</th>
-                                            <th class="my-th-width-sm" data-field="supplier_name">供應商名稱</th>
-                                            <th class="my-th-width-sm" data-field="available">可買數量</th>
-                                            <th class="my-th-width-sm"></th>
+                                            <th class="my-th-width-sm">編號</th>
+                                            <th class="my-th-width">名稱</th>
+                                            <th class="my-th-width-sm">類型</th>
+                                            <th class="my-th-width-sm">縣市</th>
+                                            <th class="my-th-width">供應商名稱</th>
+                                            <th class="my-th-width-sm">可買數量</th>
+                                            <th class="my-th-width">操作</th>
+                                            <th class="my-th-width">狀態</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -500,11 +501,7 @@
                                                     <label class="my-text-lightgray"
                                                            for="editTicketSupplier">票券供應商</label>
                                                 </div>
-                                                <div class="form-floating mb-3">
-                                                    <input type="number" class="form-control" id="editTicketCount" min=1
-                                                           placeholder=".">
-                                                    <label class="my-text-lightgray" for="editTicketCount">增加數量</label>
-                                                </div>
+
                                                 <div class="form-floating mb-3">
                                                     <input type="number" class="form-control" id="editTicketRating"
                                                            min=1 max=5 placeholder=".">
@@ -582,6 +579,28 @@
                     </div>
                 </div>
 
+
+                <!-- 新增數量的燈箱 -->
+                <div class="modal fade" id="countTicketModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">新增票券數量</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating m-3">
+                                    <input type="number" class="form-control" id="addTicketCount" min="1" value="1" placeholder=".">
+                                    <label class="my-text-lightblue" for="addTicketCount">增加數量</label>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="addTicketCountSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -618,6 +637,7 @@
                     ticketId: 1,
                     ticketName: `票券的名稱#1`,
                     ticketType: '票券類型',
+                    ticketStatus: 1,
                     ticketCity: 'XX市',
                     supplierName: 'KKDay',
                     available: 10, //可買數量
@@ -626,6 +646,7 @@
                     ticketId: 2,
                     ticketName: `票券的名稱#2`,
                     ticketType: '票券類型',
+                    ticketStatus: 1,
                     ticketCity: 'YY市',
                     supplierName: 'KKDay',
                     available: 10, //可買數量
@@ -634,6 +655,7 @@
                     ticketId: 3,
                     ticketName: `票券的名稱#3`,
                     ticketType: '票券類型',
+                    ticketStatus: 0,
                     ticketCity: 'ZZ市',
                     supplierName: 'KKDay',
                     available: 10, //可買數量
@@ -700,6 +722,76 @@
                 }
             });
 
+
+            //新增票券數量的參數傳遞
+            $('#countTicketModal').on('show.bs.modal', function (event) {
+                const button = $(event.relatedTarget);
+                const ticketId = button.data('bs-whatever');
+                $('#addTicketCountSubmit').data('ticket-id', ticketId);
+            });
+
+            //TODO:新增票券數量
+            $('#addTicketCountSubmit').on('click', function () {
+                const post = {
+                    ticketId: parseInt($(this).data('ticket-id')),
+                    addCount: parseInt($('#addTicketCount').val()),
+                }
+
+                if (post.addCount > 0) {
+                    fetch(`http://localhost:8080/bk/addticketcount`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(post),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data) {
+                                //變更一下舊的條件 才能強制刷新
+                                oldCondition.page = -1;
+                                doPageSearch(result.curPage);
+                            } else {
+                                doPageSearch(0);
+                            }
+                        })
+                        .catch(error => console.log(error))
+                        .finally(() => {
+                            $('#countTicketModal').modal('hide');
+                        });
+                }
+
+
+
+                $('#addTicketCount').val(1);
+            });
+
+
+            //上架下架
+            $(document).on('change', 'input[type="radio"]', function () {
+                const param = $(this).attr('id').split('_');
+                const post = {
+                    ticketId: parseInt(param[1]),
+                    status: parseInt(param[2]),
+                }
+
+                fetch(`http://localhost:8080/bk/enableticket`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(post),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data) { //發生錯誤的時候 刷新頁面
+                            doPageSearch(0);
+                        }
+                    })
+                    .catch(error => console.log(error));
+
+            });
+
             //編輯票券的參數傳遞
             $('#editTicketModal').on('show.bs.modal', function (event) {
                 const button = $(event.relatedTarget);
@@ -736,7 +828,7 @@
                 $('#editTicketName').val(ticket.name);
                 $('#editTicketPrice').val(ticket.price);
                 $('#editTicketSupplier').val(ticket.supplierName);
-                $('#editTicketCount').val(0);
+
 
                 $('#editTicketRating').val(ticket.rating);
                 $('#editTicketRatingCount').val(ticket.ratingPerson);
@@ -816,7 +908,7 @@
                 }
             });
 
-            //TODO: 新增選擇圖片並預覽
+            // 新增選擇圖片並預覽
             $('#ticketImage').on('change', function (e) {
                 if (e.target.files) {
                     for (let file of e.target.files) {
@@ -876,7 +968,7 @@
 
             //測試按鈕
             $('#testBtn').on('click', function () {
-               
+
                 $('#ticketType').val('主題樂園');
                 $('#ticketSupplier').val('T8Me');
                 $('#ticketExpiryDate').val('2024-12-21');
@@ -931,8 +1023,8 @@
                 };
 
                 //TODO: 這邊要判斷資料的正確性
-              
-             
+
+
                 //發請求
                 fetch(`http://localhost:8080/bk/addticket`, {
                     method: 'POST',
@@ -942,16 +1034,16 @@
                     body: JSON.stringify(post),
                 })
                     .then(response => response.json())
-                    .then(data => {   
-                        if(data){
+                    .then(data => {
+                        if (data) {
                             alert('success');
-                        }else{
-                            alert('failure'); 
+                        } else {
+                            alert('failure');
                         }
                     })
                     .catch(error => console.log(error))
-                    .finally(()=>{
-                        $('#addTicketModal').modal('hide'); 
+                    .finally(() => {
+                        $('#addTicketModal').modal('hide');
                         doPageSearch(0);
                     });
 
@@ -963,7 +1055,7 @@
                     ticketType: $('#editTicketType').val(),
                     name: $('#editTicketName').val(),
                     price: $('#editTicketPrice').val(),
-                    available: $('#editTicketCount').val(),
+                    available: 0,
                     totalSales: 100,
                     expiryDate: $('#editTicketExpiryDate').val(),
                     description: $.trim($('#editDescEditor').summernote('code')),
@@ -1022,7 +1114,6 @@
             $('#ticketType').html('<option selected disabled>--</option>');
             $('#editTicketType').html('<option selected disabled>--</option>');
 
-            // 1 2 4 8 16 32
             locationTypes.forEach((v, i) => {
                 $('#ticketType').append(`<option value="${v}">${v}</option>`);
                 $('#editTicketType').append(`<option value="${v}">${v}</option>`);
@@ -1033,14 +1124,13 @@
         function render_cities() {
             $('#ticketCity').html('<option selected disabled>--</option>');
             $('#editTicketCity').html('<option selected disabled>--</option>');
-
-            // 1 2 4 8 16 32
             taiwanCities.forEach((v, i) => {
                 $('#ticketCity').append(`<option value="${v}">${v}</option>`);
                 $('#editTicketCity').append(`<option value="${v}">${v}</option>`);
             });
         }
 
+        //TODO: 
         function render() {
 
 
@@ -1057,8 +1147,24 @@
                     <td class="supplier_name">${ticket.supplierName}</td>
                     <td class="available">${ticket.available}</td>
                     <td>
-                      <button class="btn btn-sm btn-primary open-modal" type="button" data-bs-toggle="modal"
+                      <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
                         data-bs-target="#editTicketModal" data-bs-whatever="${ticket.ticketId}">編輯</button>
+                      <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
+                        data-bs-target="#countTicketModal" data-bs-whatever="${ticket.ticketId}">新增數量</button>
+                    </td>
+                    <td>
+                        <div class="form-check d-flex">
+                            <div class="col">
+                                <input class="form-check-input" type="radio"  
+                                    name="${ticket.ticketId}" id="radio_${ticket.ticketId}_1" ${ticket.ticketStatus ? "checked" : ""}>
+                                <label class="form-check-label" for="radio_${ticket.ticketId}_1">上架</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input" type="radio" 
+                                    name="${ticket.ticketId}" id="radio_${ticket.ticketId}_0" ${ticket.ticketStatus ? "" : "checked"}>
+                                <label class="form-check-label" for="radio_${ticket.ticketId}_0">下架</label>
+                            </div>
+                        </div>                           
                     </td>
                   </tr>
               `

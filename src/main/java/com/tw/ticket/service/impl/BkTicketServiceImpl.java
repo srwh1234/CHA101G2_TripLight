@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,39 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 	@Autowired
 	private TicketImageRepository ticketImageRepository;
+
+	// 後台上下架票券
+	@Override
+	public boolean enableItems(final Map<String, Object> map) {
+		final int ticketId = (int) map.get("ticketId");
+		final int status = (int) map.get("status");
+		final Ticket ticket = repository.findById(ticketId).orElse(null);
+
+		if (ticket == null) {
+			return false;
+		}
+
+		ticket.setStatus(status);
+		repository.save(ticket);
+		return true;
+	}
+
+	// 後台增加票券數量
+	@Override
+	public boolean addItemCount(final Map<String, Object> map) {
+		final int ticketId = (int) map.get("ticketId");
+		final int addCount = (int) map.get("addCount");
+		if (addCount <= 0) {
+			return false;
+		}
+		final Ticket ticket = repository.findById(ticketId).orElse(null);
+
+		if (ticket == null) {
+			return false;
+		}
+		// 隨機序號
+		return createSerialNumber(ticket, addCount).size() > 0;
+	}
 
 	// 後台新增票券
 	@Override
@@ -115,17 +149,7 @@ public class BkTicketServiceImpl implements BkTicketService {
 		repository.save(ticket);
 
 		// 隨機序號
-		final List<TicketSn> ticketSns = new ArrayList<>();
-		for (int i = 0; i < request.getAvailable(); i++) {
-			final TicketSn ticketSn = new TicketSn();
-			ticketSn.setTicket(ticket);
-
-			final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
-			ticketSn.setSerialNumber(uuId);
-			ticketSn.setStatus(NOT_USED);
-			ticketSns.add(ticketSn);
-		}
-		snRepository.saveAll(ticketSns);
+		createSerialNumber(ticket, request.getAvailable());
 
 		// 圖片
 		final List<TicketImage> ticketImages = new ArrayList<>();
@@ -143,6 +167,7 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return true;
 	}
 
+	// 後台票券清單 (分頁)
 	@Override
 	public SearchResponse getItems(final SearchRequest request) {
 		final Pageable pageable = PageRequest.of(	//
@@ -166,6 +191,7 @@ public class BkTicketServiceImpl implements BkTicketService {
 			ticketResponse.setTicketId(ticket.getTicketId());
 			ticketResponse.setTicketName(ticket.getName());
 			ticketResponse.setTicketType(ticket.getTicketType().getName());
+			ticketResponse.setTicketStatus(ticket.getStatus());
 			ticketResponse.setTicketCity(ticket.getCity());
 			ticketResponse.setSupplierName(ticket.getSupplierName());
 			ticketResponse.setAvailable(available);
@@ -173,6 +199,21 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 		});
 		return response;
+	}
+
+	// 票券用的隨機序號
+	private List<TicketSn> createSerialNumber(final Ticket ticket, final int createCount) {
+		final List<TicketSn> result = new ArrayList<>();
+		for (int i = 0; i < createCount; i++) {
+			final TicketSn ticketSn = new TicketSn();
+			ticketSn.setTicket(ticket);
+
+			final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20).toUpperCase();
+			ticketSn.setSerialNumber(uuId);
+			ticketSn.setStatus(NOT_USED);
+			result.add(ticketSn);
+		}
+		return snRepository.saveAll(result);
 	}
 
 }

@@ -21,8 +21,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	// 按照銷售量排序
 	public List<Ticket> findAllByOrderByTotalSalesDesc();
 
-	// 關鍵字搜尋 hql
-	@Query("SELECT t FROM Ticket t WHERE t.name LIKE %:keyword% AND t.city IN :cities AND t.ticketType.name IN :types")
+	// 前台關鍵字搜尋
+	@Query("SELECT t FROM Ticket t WHERE t.name LIKE %:keyword% AND status=1"//
+			+ " AND t.city IN :cities AND t.ticketType.name IN :types")
 	public Page<Ticket> searchTicketByKeyword(	//
 			@Param("keyword") String keyword,	// 關鍵字
 			@Param("types") String[] types, 	// 類型

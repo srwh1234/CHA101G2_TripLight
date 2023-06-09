@@ -1,5 +1,7 @@
 package com.tw.ticket.service.impl;
 
+import static com.tw.ticket.model.Ticket.ENABLED;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,9 @@ public class TicketServiceImpl implements TicketService {
 			if (result.size() >= 4) {
 				return;
 			}
-			result.add(new RadAndHotResponse(ticket));
+			if (ticket.getStatus() == ENABLED) {
+				result.add(new RadAndHotResponse(ticket));
+			}
 		});
 		return result;
 	}
@@ -65,7 +69,9 @@ public class TicketServiceImpl implements TicketService {
 			if (result.size() >= 8) {
 				return;
 			}
-			result.add(new RadAndHotResponse(ticket));
+			if (ticket.getStatus() == ENABLED) {
+				result.add(new RadAndHotResponse(ticket));
+			}
 
 		});
 		return result;

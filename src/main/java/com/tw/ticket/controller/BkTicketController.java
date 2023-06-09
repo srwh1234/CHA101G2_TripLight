@@ -3,6 +3,7 @@ package com.tw.ticket.controller;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,8 +34,19 @@ public class BkTicketController {
 	// 新增票券
 	@PostMapping("/addticket")
 	public boolean addticket(@RequestBody final TikcetRequest request) {
-		System.out.println(request);
 		return bkTicketService.addItems(request);
+	}
+
+	// 上架下架票券
+	@PostMapping("/enableticket")
+	public boolean enableTicket(@RequestBody final Map<String, Object> map) {
+		return bkTicketService.enableItems(map);
+	}
+
+	// 增加票券數量
+	@PostMapping("/addticketcount")
+	public boolean addTicketCount(@RequestBody final Map<String, Object> map) {
+		return bkTicketService.addItemCount(map);
 	}
 
 	// 定義請求物件
@@ -73,6 +85,7 @@ public class BkTicketController {
 		private int ticketId;
 		private String ticketName;
 		private String ticketType;
+		private int ticketStatus;
 		private String ticketCity;
 		private String supplierName;
 		private int available;
