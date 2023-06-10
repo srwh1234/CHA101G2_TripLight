@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,10 @@ public class OrderServiceImpl implements OrderService {
 		// 會員購物車
 		final List<TicketCart> ticketCarts = ticketCartRepository.findByKeyMemberId(memberId);
 
+		if (ticketCarts.size() <= 0) {
+			return null;
+		}
+
 		for (final TicketCart cart : ticketCarts) {
 			final List<TicketSn> ticketSns = snRepository.searchUsableSn(cart.getTicketId());
 
@@ -229,18 +234,23 @@ public class OrderServiceImpl implements OrderService {
 
 	// XXX 綠界的支付介面設定(現有訂單)
 	@Override
-	public String ecpayCheckoutOrder(final int memberId, final int orderId) {
+	public String ecpayCheckoutOrder(final Map<String, Object> map) {
+		final int memberId = (int) map.get("memberId");
+		final int orderId = (int) map.get("orderId");
+		final String backUrl = (String) map.get("backUrl");
 		final TicketOrder order = ticketOrderRepository.findById(orderId).orElse(null);
 		if (order == null) {
 			return null;
 		}
-		return getAllInOnePage(memberId, order);
+		return getAllInOnePage(memberId, order, backUrl);
 	}
 
 	// 綠界的支付介面設定(新增訂單)
 	@Override
-	public String ecpayCheckoutMake(final int memberId, final int couponId) {
-
+	public String ecpayCheckoutMake(final Map<String, Object> map) {
+		final int memberId = (int) map.get("memberId");
+		final int couponId = (int) map.get("couponId");
+		final String backUrl = (String) map.get("backUrl");
 		// 建立訂單
 		final TicketOrder order = makeOrder(memberId, couponId);
 
@@ -248,13 +258,17 @@ public class OrderServiceImpl implements OrderService {
 			return null;
 		}
 
-		return getAllInOnePage(memberId, order);
+		return getAllInOnePage(memberId, order, backUrl);
 	}
 
-	private String getAllInOnePage(final int memberId, final TicketOrder order) {
+	private String getAllInOnePage(final int memberId, final TicketOrder order, final String backUrl) {
 		int couponId = 0;
-		if (order.getCoupon() != null) {
-			couponId = order.getCoupon().getCouponId();
+		String itemName = "TripLight訂單";
+
+		final Coupon coupon = order.getCoupon();
+		if (coupon != null) {
+			couponId = coupon.getCouponId();
+			itemName += String.format(" (%s)", coupon.getName());
 		}
 		final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
 
@@ -265,7 +279,7 @@ public class OrderServiceImpl implements OrderService {
 		obj.setTradeDesc("test Description");
 		obj.setItemName("TripLight訂單###");
 		obj.setReturnURL(config.getEcpayReturnUrl() + "/callback");
-		obj.setClientBackURL(config.getEcpayReturnUrl() + "/front-end/tickets_order.html");
+		obj.setClientBackURL(backUrl);
 
 		// 參數傳遞
 		obj.setCustomField1(String.valueOf(memberId));

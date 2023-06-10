@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.service.OrderService;
@@ -43,19 +44,17 @@ public class OrderController {
 	 * 一般信用卡測試卡號 : 4311-9522-2222-2222
 	 */
 	// 付款介面新增訂單(綠界)
-	@GetMapping("/ecpayCheckout")
-	public String ecpayCheckout(//
-			@RequestParam("memberId") final int memberId,//
-			@RequestParam("couponId") final int couponId) {
-		return orderService.ecpayCheckoutMake(memberId, couponId);
+	@PostMapping("/ecpayCheckout")
+	@ResponseBody
+	public String ecpayCheckout(@RequestBody final Map<String, Object> map) {
+		return orderService.ecpayCheckoutMake(map);
 	}
 
 	// 付款介面現有訂單(綠界)
-	@GetMapping("/ecpayCheckoutorder")
-	public String ecpayCheckoutOrder(//
-			@RequestParam("memberId") final int memberId,//
-			@RequestParam("orderId") final int orderId) {
-		return orderService.ecpayCheckoutOrder(memberId, orderId);
+	@PostMapping("/ecpayCheckoutorder")
+	@ResponseBody
+	public String ecpayCheckoutOrder(@RequestBody final Map<String, Object> map) {
+		return orderService.ecpayCheckoutOrder(map);
 	}
 
 	/**

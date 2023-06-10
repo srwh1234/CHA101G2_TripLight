@@ -627,6 +627,8 @@
     <script src="vendor/summernote/summernote-lite.min.js"></script>
     <script src="vendor/summernote/summernote-zh-TW.min.js"></script>
 
+    <script src="vendor/sweetalert/sweetalert.js"></script>
+
     <script>
         //假資料
         let result = {
@@ -692,14 +694,10 @@
                 body: JSON.stringify(condition),
             })
                 .then(response => response.json())
-                .then(data => {
-                    //  console.log(data);
-                    result = data;
+                .then(data => result = data)
+                .catch(error => console.log(error))
+                .finally(() => {
                     render();
-                })
-                .catch(error => {
-                    console.log(error);
-                    render(); //以後要移除
                 });
         }
 
@@ -1024,6 +1022,11 @@
 
                 //TODO: 這邊要判斷資料的正確性
 
+                console.log(post.ticketType);
+                if (!post.ticketType) {
+                 Swal.fire('Any fool can use a computer')
+                   return;
+                }
 
                 //發請求
                 fetch(`http://localhost:8080/bk/addticket`, {

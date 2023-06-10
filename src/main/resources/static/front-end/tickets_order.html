@@ -365,6 +365,8 @@
 
     <!-- 稱高度用的 -->
     <div style="height:30vh"></div>
+    <!-- 給綠界用的 -->
+    <div id="myHideDiv" style="display: none;"></div>
   </div>
 
   <!-- QRCode按下去的Modal畫面 -->
@@ -637,11 +639,35 @@
         const memberId = 1;
         const orderId = parseInt($(this).closest('tr').find('.ticket_order_id').text());
         //優惠券
-        // const couponId = result.orders.find(e =>  e.ticketOrderId === orderId).couponId;
-        // console.log('111111111=' + orderId);
+        // const couponId = result.orders.find(e =>  e.ticketOrderId === orderId).couponId;       
         // console.log( couponId);
+
         //綠界支付的介面
-        window.location.href = `/ecpayCheckoutorder?memberId=${memberId}&&orderId=${orderId}`;
+        const post = {
+          memberId: 1,
+          orderId: parseInt($(this).closest('tr').find('.ticket_order_id').text()),
+          backUrl: window.location.href,
+        };
+
+        console.log(post.curUrl);
+
+        fetch('http://localhost:8080/ecpayCheckoutorder', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(post),
+        })
+          .then(response => response.text())
+          .then(data => {
+            //console.log(data);
+            if (!data) {
+              doPage(0);
+            } else {
+              $('#myHideDiv').html(data);
+            }
+          })
+          .catch(error => console.log(error));
       });
 
 

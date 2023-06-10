@@ -345,6 +345,8 @@
 
     <!-- 稱高度用的 -->
     <div style="height:30vh"></div>
+    <!-- 給綠界用的 -->
+    <div id="myHideDiv" style="display: none;"></div>
   </div>
 
 
@@ -515,6 +517,21 @@
         })
         .catch(error => console.log(error));
     }
+
+    //取得購物車清單
+    function fetch_data(){
+      const memberId = 1;
+      fetch(`http://localhost:8080/carts?memberId=${memberId}`)
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data);
+          result = data;
+          // 渲染頁面
+          render();
+        })
+        .catch(error => console.log(error));
+    }
+
     $(function () {
 
       // 這邊是假資料
@@ -539,16 +556,8 @@
         result.push(ticket_cart);
       }
 
-      const memberId = 1;
-      fetch(`http://localhost:8080/carts?memberId=${memberId}`)
-        .then(response => response.json())
-        .then(data => {
-          // console.log(data);
-          result = data;
-          // 渲染頁面
-          render();
-        })
-        .catch(error => console.log(error));
+      //取得資料
+      fetch_data();
 
 
       //前往結帳(綠界)的按鈕
@@ -557,7 +566,29 @@
         const couponId = $('#discountSelect').val();
 
         //綠界支付的介面
-        window.location.href = `/ecpayCheckout?memberId=${memberId}&&couponId=${couponId}`;
+        const post = {
+          memberId: 1,
+          couponId: parseInt($('#discountSelect').val()),
+          backUrl: window.location.href,
+        };
+
+        fetch('http://localhost:8080/ecpayCheckout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(post),
+        })
+          .then(response => response.text())
+          .then(data => {
+            if(!data){
+              fetch_data();
+            }else{
+              $('#myHideDiv').html(data);
+            }
+            
+          })
+          .catch(error => console.log(error));
       });
 
       //前往結帳的按鈕
@@ -573,8 +604,7 @@
             if (data) {
               window.location.href = 'tickets_order.html';
             } else {
-              // 渲染頁面
-              render();
+              fetch_data();
             }
           })
           .catch(error => console.log(error));
@@ -582,15 +612,17 @@
 
       //刪除品項的按鈕
       $('#btnDeleteConfirm').on('click', function () {
+        const memberId = 1;
         const ticketId = parseInt($(this).data('ticket-id'));
 
         fetch(`http://localhost:8080/removecart?memberId=${memberId}&&ticketId=${ticketId}`)
           .then(response => response.json())
           .then(data => {
             // console.log(data);
-            result = result.filter(e => e.ticket.ticketId != ticketId);
+            //result = result.filter(e => e.ticket.ticketId != ticketId);
             // 渲染頁面
-            render();
+            //render();
+            fetch_data();
           })
           .catch(error => console.log(error));
         $('#confirmModal').modal('hide');
