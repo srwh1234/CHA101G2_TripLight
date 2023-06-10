@@ -66,6 +66,8 @@ public class Ticket {
 
 	private Integer ratingCount;// 評價人數
 
+	// private String imageMd5;// 圖片用的md5
+
 	// cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ticketId")
