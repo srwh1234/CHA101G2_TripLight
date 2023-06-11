@@ -74,39 +74,36 @@ $(document).ready(function () {
     })
 
 
+// 抬頭
 
 
-});
-
-
-
-
-
-// 抬頭 
-$('.slider').slick({
-    dots: true,
-    arrows: true,
-});
-
-var calendarEl = document.getElementById('calendar');
-var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth'
-});
-calendar.render();
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+    });
+    calendar.render();
 
 // 燈箱按鈕
 // 頁面上的按鈕
-$("#btn_modal").on("click", function () {
-    alert('ttt');
-    $("#lightbox").removeClass("none");
-});
+    $("#btn_modal").on("click", function () {
+        alert('ttt');
+        $("#lightbox").removeClass("none");
+    });
 
 // modal 中的半透明黑色區域
-$("#lightbox").on("click", function () {
-    $("#lightbox").addClass("none");
-});
+    $("#lightbox").on("click", function () {
+        $("#lightbox").addClass("none");
+    });
 
 // 點擊 lightbox 中的白色區域，不會關掉 modal
-$("#lightbox > article").on("click", function (e) {
-    e.stopPropagation();
+    $("#lightbox > article").on("click", function (e) {
+        e.stopPropagation();
+    });
+
+
 });
+
+
+
+
+

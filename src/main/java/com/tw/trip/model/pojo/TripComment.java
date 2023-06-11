@@ -1,8 +1,38 @@
 package com.tw.trip.model.pojo;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class TripComment {
+public class TripComment implements Serializable {
+    private static final long serialVersionUID = 2L;
+
+    // ====== member ======
+    private String name;
+    private byte[] memberPic;
+    private String memberPicBase64;
+
+    public void setName( String name ){
+        this.name = name;
+    };
+    public String getName(){
+        return name;
+    };
+
+    public void setMemberPic(byte[] memberPic){
+        this.memberPic=memberPic;
+    }
+
+    public byte[] getMemberPic(){
+      return memberPic;
+    };
+
+    public void setMemberPicBase64(String memberPicBase64){
+        this.memberPicBase64=memberPicBase64;
+    }
+    public String getMemberPicBase64(){return memberPicBase64;};
+
+    // ====== //member ======
+
     private Integer id;
     private Integer tripId;
     private Integer memberId;
@@ -14,7 +44,6 @@ public class TripComment {
     private Timestamp postTime;
     private Integer editCount;
     private Timestamp lastEditTime;
-
 
     public Integer getId() {
         return id;

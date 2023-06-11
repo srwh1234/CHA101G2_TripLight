@@ -12,22 +12,23 @@ import java.util.List;
 public class TripCommentService {
     private TripCommentDao tripCommentDaoImpl = null;
 
-    public static void main(String[] args){
+    // ====== Test DAO ======
+    /*public static void main(String[] args){
 
         TripCommentService tripCommentService = new TripCommentService();
         List<TripComment> tripComments = tripCommentService.getAll();
         Iterator iterator = tripComments.iterator();
         while(iterator.hasNext()){
-
             System.out.println(iterator.next());
         }
+    }*/
 
 
 
-    }
-    // ====== get dao for accessing DB ======
+    // ====== constructor get dao for accessing DB ======
     public TripCommentService(){
         tripCommentDaoImpl = new TripCommentDaoImpl();
+
     }
 
     // ====== pack parameters get from servlet and store VO ======
@@ -47,6 +48,8 @@ public class TripCommentService {
         return tripComment;
     }
 
+
+
     // ====== get one data by pk ======
     public TripComment getOneTripComment(Integer tripId){
         return tripCommentDaoImpl.findByPrimaryKey(tripId);
@@ -55,5 +58,9 @@ public class TripCommentService {
     // ====== get all data from table ======
     public List<TripComment> getAll(){
         return tripCommentDaoImpl.getAll();
+    }
+
+    public List<TripComment> getTripComments(){
+        return tripCommentDaoImpl.getTripComments();
     }
 }

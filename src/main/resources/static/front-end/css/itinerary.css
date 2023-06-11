@@ -22,7 +22,7 @@ div.content_container {
     margin-top: 20px;
 }
 
-*/
+
 
 /* =====item container===== */
 .item_container {
@@ -44,11 +44,11 @@ div.content_container {
 /* =====item img===== */
 .item_image {
     border: 1px solid grey;
-    display: flex-box;
+    /*display: flex-box;*/
     justify-content: flex-start;
     width: 20%;
     height: 50%;
-    display: flexbox;
+    /*display: flexbox;*/
     border-radius: 10px;
     margin-left: 10px;
     margin-top: 10px;
@@ -271,4 +271,11 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.scrollspy-example-collapsible {
+    position: relative;
+    height: 1000px;
+    overflow: auto;
+    font-size: 16px;
 }

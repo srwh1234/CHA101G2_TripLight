@@ -11,5 +11,6 @@ public interface TripCommentDao {
     public void delete(TripComment tripComment);
     public TripComment findByPrimaryKey(Integer pk);
     public List<TripComment> getAll();
+    public List<TripComment> getTripComments();
 
 }

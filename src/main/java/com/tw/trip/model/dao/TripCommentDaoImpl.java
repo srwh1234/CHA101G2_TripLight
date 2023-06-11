@@ -1,9 +1,13 @@
 package com.tw.trip.model.dao;
 
+import com.tw.trip.model.Trip;
 import com.tw.trip.model.pojo.TripComment;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +21,8 @@ public class TripCommentDaoImpl implements TripCommentDao {
     String passwd = "aecl5505!";
     // ====== SQL Statement ======
     public static final String INSERT_STMT =
-            "INSERT INTO cha101_g2.trip_comment(trip_id, member_id, rating, comment, status, post_time, edit_count, last_edit_time) " +
-                    "VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO cha101_g2.trip_comment(trip_id, member_id, rating, comment, status, edit_count) " +
+                    "VALUES( ?, ?, ?, ?, ?, ?)";
     public static final String UPDATE_STMT =
             "UPDATE cha101_g2.trip_comment" + "SET trip_id = ?, member_id = ?, rating = ?, comment = ?, status = ?, post_time = ?, edit_count = ?, last_edit_time = ?"
                     + "WHERE id= ? ;";
@@ -27,6 +31,10 @@ public class TripCommentDaoImpl implements TripCommentDao {
 
     public static final String SELECT_ONE_STMT =
             "SELECT * FROM cha101_g2.trip_comment WHERE id = ?;";
+
+    public static final String SELECT_FOR_TRIPCOMMENT = "SELECT concat(member_name_last, member_name_first) AS name, member_pic, comment, last_edit_time FROM cha101_g2.member m " +
+            "JOIN cha101_g2.trip_comment tc on tc.member_id =  m.member_id " +
+            "ORDER BY last_edit_time DESC;";
 
     public static final String DELETE_STMT =
             "DELETE FROM cha101_g2.trip_comment WHERE id = ?;";
@@ -46,9 +54,7 @@ public class TripCommentDaoImpl implements TripCommentDao {
             preparedStatement.setInt(3,tripComment.getRating());
             preparedStatement.setString(4,tripComment.getComment());
             preparedStatement.setInt(5,tripComment.getStatus());
-            preparedStatement.setObject(6, tripComment.getPostTime());
-            preparedStatement.setInt(7,tripComment.getEditCount());
-            preparedStatement.setObject(8, tripComment.getLastEditTime());
+            preparedStatement.setInt(6,tripComment.getEditCount());
             preparedStatement.executeUpdate();
 
         }catch (ClassNotFoundException e){
@@ -263,5 +269,68 @@ public class TripCommentDaoImpl implements TripCommentDao {
         }
 
         return tripComments;
+    }
+
+    public List<TripComment> getTripComments(){
+
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        List<TripComment> tripComments = new ArrayList<>();
+        ResultSet resultSet = null;
+        try{
+            Class.forName(Util.DRIVER);
+            con = DriverManager.getConnection(Util.URL, Util.USER_ID, Util.PASSWORD);
+            preparedStatement = con.prepareStatement(SELECT_FOR_TRIPCOMMENT);
+
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                TripComment tripComment = new TripComment();
+                tripComment.setName(resultSet.getString("name"));
+                tripComment.setComment(resultSet.getString("comment"));
+                tripComment.setLastEditTime(resultSet.getTimestamp("last_edit_time"));
+
+                // import pic n store in byte[]
+                BufferedInputStream inputStream = new BufferedInputStream(resultSet.getBinaryStream("member_pic"));
+
+                byte[] buffer = new byte[4*1024];
+                int len;
+                while((len = inputStream.read(buffer)) != -1){
+                    inputStream.read(buffer);
+                }
+                String memberPicBase64 = Base64.getEncoder().encodeToString(buffer);
+                tripComment.setMemberPicBase64(memberPicBase64);
+                inputStream.close();
+
+                tripComments.add(tripComment);
+            }
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+
+        }catch (IOException e){
+            e.printStackTrace();
+
+        }finally {
+            if(preparedStatement != null){
+                try{
+                    preparedStatement.close();
+
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(con!=null){
+                try{
+                    con.close();
+
+                }catch (SQLException e){
+                    e.printStackTrace();
+
+                }
+            }
+            return tripComments;
+        }
     }
 }
