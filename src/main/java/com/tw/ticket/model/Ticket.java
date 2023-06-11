@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Transient;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -65,7 +67,8 @@ public class Ticket {
 
 	private Integer ratingCount;// 評價人數
 
-	private String imageSha;// 圖片用的sha
+	@Transient
+	private String imageSha;// 無使用
 
 	// cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.PERSIST*/)
@@ -73,6 +76,7 @@ public class Ticket {
 	private List<TicketImage> ticketImages = new ArrayList<>();
 
 	// ----------------------------
+
 	// 獲得指定索引的圖片路徑
 	public String getImgUrlEx(final int index) {
 		if (ticketImages.isEmpty()) {

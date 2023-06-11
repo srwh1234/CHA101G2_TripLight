@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.service.BkTicketService;
@@ -27,16 +29,10 @@ public class BkTicketController {
 	@Autowired
 	private BkTicketService bkTicketService;
 
-	// 後台票券清單
+	// 票券清單
 	@PostMapping("/searchtickets")
 	public SearchResponse searchTickets(@RequestBody final SearchRequest request) {
 		return bkTicketService.getItems(request);
-	}
-
-	// 新增票券
-	@PostMapping("/addticket")
-	public boolean addTicket(@RequestBody final TikcetDto dto) {
-		return bkTicketService.addItems(dto);
 	}
 
 	// 上架下架票券
@@ -49,6 +45,14 @@ public class BkTicketController {
 	@PostMapping("/addticketcount")
 	public boolean addTicketCount(@RequestBody final Map<String, Object> map) {
 		return bkTicketService.addItemCount(map);
+	}
+
+	// 新增票券 (使用FormData格式)
+	@PostMapping("/addticketform")
+	public boolean addTicketForm(//
+			@RequestParam("post") final String jsonString,//
+			@RequestPart("images") final MultipartFile[] files) {
+		return bkTicketService.addItems(jsonString, files);
 	}
 
 	// 要編輯的票券

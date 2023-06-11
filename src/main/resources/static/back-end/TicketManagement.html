@@ -557,10 +557,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- 圖片區 -->
+                                <div class="row my-5">
+                                    <div class="col-12 col-lg-12 text-center">
+                                        <button class="btn btn-primary" id="editTicketSubmit">確定</button>
+                                    </div>
+                                </div>
+
+                                <!-- TODO:圖片區 -->
                                 <div class="row justify-content-center m-3">
                                     <div class="col-12 col-lg-6">
-                                        <label class="form-label" for="editTicketImage">上傳圖片</label>
+                                        <label class="form-label" for="editTicketImage">新增圖片</label>
                                         <input type="file" class="form-control" id="editTicketImage" multiple>
                                     </div>
                                 </div>
@@ -569,11 +575,7 @@
                                     <!-- 顯示區 -->
                                 </div>
 
-                                <div class="row my-5">
-                                    <div class="col-12 col-lg-12 text-center">
-                                        <button class="btn btn-primary" id="editTicketSubmit">確定</button>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -831,7 +833,9 @@
                         render_data();
                     });
 
+                $('#editTicketImage').data('ticket-id', ticketId);
                 $('#editTicketSubmit').data('ticket-id', ticketId);
+
             });
 
 
@@ -879,9 +883,7 @@
                     longitude: 0,
                     rating: $('#ticketRating').val(),
                     ratingPerson: $('#ticketRatingCount').val(),
-                    // 從'.img-upload' 取得每個src的值並轉成陣列
-                    images: $('#imgPreview .img-upload').map(
-                        (i, v) => $(v).attr('src').replace(/^data:image\/(png|jpeg|jpg|gif);base64,/, '')).get(),
+                    images: [],
                 };
 
                 //判斷資料的正確性
@@ -889,13 +891,24 @@
                     return;
                 }
 
+                const formData = new FormData();
+                formData.append('post', JSON.stringify(post));
+
+                // Add image files to FormData
+                const imageFiles = $('#imgPreview .img-upload').map((i, v) => convertToBlob($(v).attr('src'))).get();
+                for (let i = 0; i < imageFiles.length; i++) {
+                    formData.append('images', imageFiles[i]);
+                }
+
+                if (imageFiles.length <= 0) {
+                    Swal.fire({ icon: 'error', title: '票券至少一張圖片' });
+                    return;
+                }
+
                 //發請求
-                fetch(`http://localhost:8080/bk/addticket`, {
+                fetch(`http://localhost:8080/bk/addticketform`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
+                    body: formData,
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -921,6 +934,7 @@
 
             // TODO: 編輯的按鈕
             $('#editTicketSubmit').on('click', function () {
+
                 const post = {
                     ticketId: $('#editTicketSubmit').data('ticket-id'),
                     ticketType: $('#editTicketType').val(),
@@ -939,16 +953,12 @@
                     longitude: 0,
                     rating: $('#editTicketRating').val(),
                     ratingPerson: $('#editTicketRatingCount').val(),
-                    // 從'.img-upload' 取得每個src的值並轉成陣列
-                    images: $('#editImgPreview .img-upload').map(
-                        (i, v) => $(v).attr('src').replace(/^data:image\/(png|jpeg|jpg|gif);base64,/, '')).get(),                   
+                    images: [],
                 };
-
                 //判斷資料的正確性
                 if (!isValidData(post)) {
                     return;
                 }
-                console.log(post);
 
                 //發請求
                 fetch(`http://localhost:8080/bk/editticket`, {
@@ -977,6 +987,84 @@
                         $('#editTicketModal').modal('hide');
                         doPageSearch(result.curPage);
                     });
+            });
+
+            //TODO: 編輯票券-移除指定圖片
+            $(document).on('click', '.cur-img-trash', function () {
+
+                const employeeId = 1;
+                const url = $(this).closest('.img-item').find('img').attr('src');
+                const imageId = url.substring(url.lastIndexOf('/') + 1);
+
+                console.log(imageId);
+                //發請求
+                fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
+                    .then(response => response.json())
+                    .then(data => {
+
+                        if (data) {
+                            $(this).closest('.img-item').remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: '圖片刪除成功',
+                            });
+                        }
+                    })
+                    .catch(error => console.log(error));
+
+            });
+
+            // 編輯票券-新增圖片
+            $('#editTicketImage').on('change', function (e) {
+                const ticketId = $('#editTicketImage').data('ticket-id');
+
+                if (e.target.files) {
+                    for (let file of e.target.files) {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function (e) {
+
+
+                            const formData = new FormData();
+                            formData.append('id', ticketId);
+                            formData.append('image', convertToBlob(e.target.result));
+
+                            //發請求
+                            fetch(`http://localhost:8080/bk/addticketimageform`, {
+                                method: 'POST',
+                                body: formData,
+                            })
+                                .then(response => response.text())
+                                .then(data => {
+
+                                    if (data) {
+                                        $('#editImgPreview').append(`
+                                            <div class="col p-3 img-item">
+                                                <div class="card h-100">
+                                                    <div>
+                                                        <img src="${data}" class="img-fluid rounded-start img-upload">
+                                                    </div>
+                                                    <div class="card-body d-flex justify-content-around">                                            
+                                                        <button class="btn btn-primary cur-img-trash"><i class="bi bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            `);
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: '圖片上傳成功',
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: '圖片上傳失敗',
+                                        });
+                                    }
+                                })
+                                .catch(error => console.log(error));
+                        }
+                    }
+                }
             });
 
 
@@ -1052,38 +1140,14 @@
                     }
                 }
             });
-            //編輯選擇圖片並預覽
-            $('#editTicketImage').on('change', function (e) {
-                if (e.target.files) {
-                    for (let file of e.target.files) {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = function (e) {
-                            $('#editImgPreview').append(
-                                `
-                                <div class="col p-3 img-item">
-                                    <div class="card h-100">
-                                        <div>
-                                            <img src="${e.target.result}" class="img-fluid rounded-start img-upload">
-                                        </div>
-                                        <div class="card-body d-flex justify-content-around">                                            
-                                            <button class="btn btn-primary img-trash"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                `
-                            );
-                        }
-                    }
-                }
-            });
-
-
 
             // 設定 只要是.img-trash的點擊事件委派
             $(document).on('click', '.img-trash', function () {
                 $(this).closest('.img-item').remove();
             });
+
+
+
 
 
             //渲染頁面
@@ -1229,15 +1293,15 @@
 
             $('#editImgPreview').html('');
 
-            for (let img of fakeData.images) {
+            for (let imgUrl of fakeData.images) {
                 $('#editImgPreview').append(`
                 <div class="col p-3 img-item">
                     <div class="card h-100">
                         <div>
-                            <img src="data:image/gif;base64,${img}" class="img-fluid rounded-start img-upload">
+                            <img src="${imgUrl}" class="img-fluid rounded-start img-upload">
                         </div>
                         <div class="card-body d-flex justify-content-around">                                            
-                            <button class="btn btn-primary img-trash"><i class="bi bi-trash"></i></button>
+                            <button class="btn btn-primary cur-img-trash"><i class="bi bi-trash"></i></button>
                         </div>
                     </div>
                 </div>
@@ -1322,10 +1386,7 @@
                 Swal.fire({ icon: 'error', title: '票券評分人次必須大於0' });
                 return false;
             }
-            if (!post.images || post.images.length <= 0) {
-                Swal.fire({ icon: 'error', title: '票券至少一張圖片' });
-                return false;
-            }
+
             return true;
         }
 
@@ -1342,16 +1403,25 @@
             return inputDate.getTime() > new Date().getTime();
         }
 
-        //將base64轉 Uint8Array
-        function convert(base64) {
+        // 將base64轉成Blob物件
+        function convertToBlob(base64) {
             const base64String = base64.replace(/^data:image\/(png|jpeg|jpg|gif);base64,/, '');
-            const bineryString = atob(base64String);
-            const byteArray = new Uint8Array(bineryString.length);
+            const byteCharacters = atob(base64String);
+            const byteArrays = [];
 
-            for (let i = 0; i < bineryString.length; i++) {
-                byteArray[i] = bineryString.charAt(i);
-            }           
-            return byteArray;
+            for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            return new Blob(byteArrays, { type: 'image/gif' });
         }
 
     </script>
