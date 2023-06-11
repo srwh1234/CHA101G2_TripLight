@@ -7,10 +7,10 @@ let birthday = document.querySelector('#inputBD');
 let phoneNumber = document.querySelector('#inputPhoneNumber');
 let gender = document.querySelector('#inputGender');
 let city = document.querySelector('#city');
-let area = document.querySelector('#area');
+let dist = document.querySelector('#dist');
 let address = document.querySelector('#inputAddress');
 let email = document.querySelector('#inputEmail');
-let saveData = document.querySelector('#saveData');
+let saveBtn = document.querySelector('#saveData');
 // <!-- 左邊會員照片+導覽列 -->
 // ============================上傳大頭照=====================================
 camera.addEventListener('click', function () {
@@ -36,7 +36,7 @@ camera.addEventListener('click', function () {
 // ============================身分證=====================================
 
 // ============================地址=====================================
-const area_data = {
+const dist_data = {
     '臺北市': [
         '中正區', '大同區', '中山區', '萬華區', '信義區', '松山區', '大安區', '南港區', '北投區', '內湖區', '士林區', '文山區'
     ],
@@ -105,10 +105,10 @@ const area_data = {
     ]
 }
 city.addEventListener('change', (e) => {
-    area.innerHTML = ' ';   //清空
-    const arearr = area_data[e.target.value];
-    for (let text of arearr) {
-        area.insertAdjacentHTML('beforeend', `<option>${text}</option>`);
+    dist.innerHTML = ' ';   //清空
+    const distarr = dist_data[e.target.value];
+    for (let text of distarr) {
+        dist.insertAdjacentHTML('beforeend', `<option>${text}</option>`);
     }
 })
 // ============================生日=====================================
@@ -131,21 +131,90 @@ $(function () {
 
 // ============================地址=====================================
 // ============================儲存=====================================
-saveData.addEventListener("click", function (e) {
-    e.preventDefault();
+//saveData.addEventListener("click", function (e) {
+//    e.preventDefault();
+//
+//    var dataStorage = {};
+//
+//    dataStorage.lastName = lastName.value;
+//    dataStorage.firstName = firstName.value;
+//    dataStorage.IdNumber = IdNumber.value;
+//    dataStorage.birthday = birthday.value;
+//    dataStorage.phoneNumber = phoneNumber.value;
+//    dataStorage.gender = gender.value;
+//    dataStorage.city = city.value;
+//    dataStorage.area = area.value;
+//    dataStorage.address = address.value;
+//    dataStorage.email = email.value;
+//
+//    sessionStorage.setItem("form_data", JSON.stringify(dataStorage));
+//});
 
-    var dataStorage = {};
+saveBtn.addEventListener("click", function() {
+	console.log("btn ok")
+  const lastName = document.getElementById("inputLastName").value;
+  const firstName = document.getElementById("inputFirstName").value;
+  const idNumber = document.getElementById("inputIdNumber").value;
+  const birthday = document.getElementById("inputBD").value;
+  const phoneNumber = document.getElementById("inputPhoneNumber").value;
+  const gender = document.getElementById("inputGender").value;
+  const city = document.getElementById("city").value;
+  const dist = document.getElementById("dist").value;
+  const detailedAddress = document.getElementById("inputAddress").value;
+  const email = document.getElementById("inputEmail").value;
 
-    dataStorage.lastName = lastName.value;
-    dataStorage.firstName = firstName.value;
-    dataStorage.IdNumber = IdNumber.value;
-    dataStorage.birthday = birthday.value;
-    dataStorage.phoneNumber = phoneNumber.value;
-    dataStorage.gender = gender.value;
-    dataStorage.city = city.value;
-    dataStorage.area = area.value;
-    dataStorage.address = address.value;
-    dataStorage.email = email.value;
-
-    sessionStorage.setItem("form_data", JSON.stringify(dataStorage));
+  // 發送 AJAX 請求傳送資料到後端
+  $.ajax({
+    type: "POST",
+    url: "/member/{id}",
+    data: {
+      lastName,
+      firstName,
+      idNumber,
+      birthday,
+      phoneNumber,
+      gender,
+      city,
+      dist,
+      detailedAddress,
+      email
+    },
+    success: function(response) {
+      console.log(response);
+      // 在成功回應後進行一些處理，例如顯示儲存成功訊息或重新載入資料等
+    },
+    error: function(xhr) {
+      console.log(xhr.responseText);
+      // 在錯誤回應時進行處理，例如顯示錯誤訊息等
+    }
+  });
 });
+
+//// 從資料庫中獲取並設定使用者資料到 input
+//function setMemberData(memberData) {
+//  document.getElementById("inputLastName").value = memberData.lastName;
+//  document.getElementById("inputFirstName").value = memberData.firstName;
+//  document.getElementById("inputIdNumber").value = memberData.idNumber;
+//  document.getElementById("inputBD").value = memberData.birthday;
+//  document.getElementById("inputPhoneNumber").value = memberData.phoneNumber;
+//  document.getElementById("inputGender").value = memberData.gender;
+//  document.getElementById("city").value = memberData.city;
+//  document.getElementById("area").value = memberData.area;
+//  document.getElementById("inputAddress").value = memberData.detailedAddress;
+//  document.getElementById("inputEmail").value =memberData.email;
+//}
+//
+//// 發送 AJAX 請求獲取使用者資料
+//$.ajax({
+//  type: "GET",
+//  url: "/getMember/{memberId}",
+//  success: function(response) {
+//    console.log(response);
+//    // 在成功回應後將使用者資料設定到 input
+//    setMemberData(response.memberData);
+//  },
+//  error: function(xhr) {
+//    console.log(xhr.responseText);
+//    // 在錯誤回應時進行處理，例如顯示錯誤訊息等
+//  }
+//});

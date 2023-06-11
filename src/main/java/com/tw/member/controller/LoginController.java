@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -43,5 +44,15 @@ public class LoginController {
 			return false;
 		}
 	}
+	
+	@PostMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			session.invalidate();
+		}
+		return "redirect:/front-end/index.html";
+	}
+	
 
 }
