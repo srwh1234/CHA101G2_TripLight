@@ -3,6 +3,9 @@ package com.tw.ticket.service.impl;
 import static com.tw.ticket.model.Ticket.DISABLED;
 import static com.tw.ticket.model.TicketSn.NOT_USED;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -10,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +38,7 @@ import com.tw.ticket.service.BkTicketService;
 
 @Service
 public class BkTicketServiceImpl implements BkTicketService {
+	private static final Logger log = LoggerFactory.getLogger(BkTicketServiceImpl.class);
 
 	@Autowired
 	private TicketRepository repository;
@@ -157,9 +163,38 @@ public class BkTicketServiceImpl implements BkTicketService {
 			ticket.setLongitude(121.2250227);
 		}
 
-		// 圖片
-		// 比較是否相等
+		// 圖片SHA不相等才要更新
+		boolean isUpdateImg = false;
 
+		final String shaString = calcSha(dto);
+		if (!ticket.getImageSha().equals(shaString)) {
+			ticket.setImageSha(shaString);
+			isUpdateImg = true;
+		}
+
+		// 更新票券
+		repository.save(ticket);
+
+		// 圖片SHA不相等才要更新
+
+		if (isUpdateImg) {
+
+			// 刪掉舊的
+			ticketImageRepository.deleteAll(ticket.getTicketImages());
+
+			// 加入新的圖片
+			final List<TicketImage> ticketImages = new ArrayList<>();
+			for (final String base64Str : dto.getImages()) {
+				final byte[] array = Base64.getDecoder().decode(base64Str);
+
+				final TicketImage image = new TicketImage();
+				image.setTicketId(ticket.getTicketId());
+				image.setImage(array);
+				image.setUploadTime(new Timestamp(System.currentTimeMillis()));
+				ticketImages.add(image);
+			}
+			ticketImageRepository.saveAll(ticketImages);
+		}
 		return true;
 	}
 
@@ -203,6 +238,7 @@ public class BkTicketServiceImpl implements BkTicketService {
 		ticket.setLongitude(dto.getLongitude());
 		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
 		ticket.setRatingCount(dto.getRatingPerson());
+		ticket.setImageSha(calcSha(dto));
 
 		// TODO 經緯度
 		if (ticket.getLatitude() <= 0 || ticket.getLongitude() <= 0) {
@@ -227,6 +263,7 @@ public class BkTicketServiceImpl implements BkTicketService {
 			image.setUploadTime(new Timestamp(System.currentTimeMillis()));
 			ticketImages.add(image);
 		}
+
 		ticketImageRepository.saveAll(ticketImages);
 
 		return true;
@@ -264,6 +301,26 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 		});
 		return response;
+	}
+
+	// ----------------------------------------------------------------------------------
+
+	// 計算上傳圖片的SHA
+	private String calcSha(final TikcetDto dto) {
+		String hexString = "";
+		try {
+			// 使用SHA1 雖然不完全安全 但比SHA3快
+			final MessageDigest digest = MessageDigest.getInstance("SHA-1");
+			for (final String base64Str : dto.getImages()) {
+				final byte[] array = Base64.getDecoder().decode(base64Str);
+				digest.update(array);
+			}
+			hexString = new BigInteger(1, digest.digest()).toString(16);
+
+		} catch (final NoSuchAlgorithmException e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return hexString;
 	}
 
 	// 票券用的隨機序號

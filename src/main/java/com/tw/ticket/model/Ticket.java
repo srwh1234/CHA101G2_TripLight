@@ -6,7 +6,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -66,10 +65,10 @@ public class Ticket {
 
 	private Integer ratingCount;// 評價人數
 
-	// private String imageMd5;// 圖片用的md5
+	private String imageSha;// 圖片用的sha
 
 	// cascade表示存檔時 也一起寫入TicketImage
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.PERSIST*/)
 	@JoinColumn(name = "ticketId")
 	private List<TicketImage> ticketImages = new ArrayList<>();
 

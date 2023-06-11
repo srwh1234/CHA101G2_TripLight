@@ -84,6 +84,7 @@ public class BkTicketController {
 		private int rating;
 		private int ratingPerson;
 		private List<String> images = new ArrayList<>();
+
 	}
 
 	// 定義回傳物件
