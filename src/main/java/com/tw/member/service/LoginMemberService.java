@@ -1,5 +1,7 @@
 package com.tw.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +11,28 @@ import com.tw.member.model.dao.MemberRepository;
 @Service
 public class LoginMemberService {
 	@Autowired
-	private  MemberRepository memberRepository;
+	private MemberRepository memberRepository;
 
 //	public MemberService(MemberRepository memberRepository) {
 //		this.memberRepository = memberRepository;
 //	}
+	// 查詢全部
+    public List<Member> getAllMembers() {
+        return memberRepository.findAll();
+    }
+
+		// 查詢指定ID
+    public Member getMemberById(int id) {
+        return memberRepository.findById(id).orElse(null);
+    }
+
+	// 新增
+	public Member createMember(Member member) {
+		return memberRepository.save(member);
+	}
+
+	// update
+
 	public Member updateMember(int id, Member member) {
 		Member existingMember = memberRepository.findByMemberId(id);
 		if (existingMember != null) {
@@ -31,15 +50,5 @@ public class LoginMemberService {
 		}
 		return null;
 	}
-//
-//	public Member saveMember(Member member) {
-//		// 執行資料庫儲存操作
-//		return memberRepository.save(member);
-//	}
-//
-//	public Member getMemberById(int memberId) {
-//		// 根據會員ID從資料庫中獲取會員
-//		return (Member) memberRepository.findByMemberId(memberId);
-//	}
 
 }

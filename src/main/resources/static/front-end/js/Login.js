@@ -151,14 +151,14 @@ $(logout_li).on("click", function(e) {
 
 	$.ajax({
 		url: "/logout",
-		method: "POST",
+		method: "GET",
 		success: function(response) {
 			if (response) {
 				console.log("成功登出")
 				document.querySelector("#login").innerHTML = ` 登入/註冊`;
 				document.querySelector(".member").classList.toggle("-on");
-//Session還在???
-				//window.location.assign("index.html");
+				sessionStorage.clear();
+				window.location.assign("index.html");
 			}
 		},
 		error: function(xhr) {
