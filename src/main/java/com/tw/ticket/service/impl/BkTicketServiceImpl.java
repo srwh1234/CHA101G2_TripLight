@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import com.tw.ticket.MyUtils;
 import com.tw.ticket.controller.BkTicketController.SearchResponse;
 import com.tw.ticket.controller.BkTicketController.TicketResponse;
-import com.tw.ticket.controller.BkTicketController.TikcetRequest;
+import com.tw.ticket.controller.BkTicketController.TikcetDto;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketImage;
@@ -79,67 +79,132 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return createSerialNumber(ticket, addCount).size() > 0;
 	}
 
+	// 後台取得要編輯的票券
+	@Override
+	public TikcetDto getItem(final int ticketId) {
+		final Ticket ticket = repository.findById(ticketId).orElse(null);
+
+		if (ticket == null) {
+			return null;
+		}
+		final TikcetDto dto = new TikcetDto();
+
+		dto.setTicketId(ticketId);
+		dto.setTicketType(ticket.getTicketType().getName());
+		dto.setName(ticket.getName());
+		dto.setPrice(ticket.getPrice());
+		dto.setAvailable(0);
+		dto.setTotalSales(ticket.getTotalSales());
+		dto.setExpiryDate(ticket.getExpiryDate());
+		dto.setDescription(ticket.getDescription());
+		dto.setContent(ticket.getContent());
+		dto.setNote(ticket.getNote());
+		dto.setSupplierName(ticket.getSupplierName());
+		dto.setCity(ticket.getCity());
+		dto.setAddress(ticket.getAddress());
+		dto.setLatitude(ticket.getLatitude());
+		dto.setLongitude(ticket.getLongitude());
+		dto.setRating(ticket.getRatingSum() / ticket.getRatingCount());
+		dto.setRatingPerson(ticket.getRatingCount());
+
+		// 圖片轉回base64
+		final List<String> images = new ArrayList<>();
+		for (final TicketImage image : ticket.getTicketImages()) {
+			final String base64String = Base64.getEncoder().encodeToString(image.getImage());
+			images.add(base64String);
+		}
+		dto.setImages(images);
+		return dto;
+	}
+
+	// 後台編輯票券
+	@Override
+	public boolean updateItem(final TikcetDto dto) {
+
+		// 判斷票券類型
+		final TicketType type = ticketTypeRepository.findByName(dto.getTicketType());
+
+		if (type == null) {
+			return false;
+		}
+		// 檢查內容
+		if (!isValidData(dto)) {
+			return false;
+		}
+
+		final Ticket ticket = repository.findById(dto.getTicketId()).orElse(null);
+
+		if (ticket == null) {
+			return false;
+		}
+
+		ticket.setName(dto.getName());
+		ticket.setTicketType(type);
+		ticket.setPrice(dto.getPrice());
+		ticket.setExpiryDate(dto.getExpiryDate());
+		ticket.setDescription(dto.getDescription());
+		ticket.setContent(dto.getContent());
+		ticket.setNote(dto.getNote());
+		ticket.setSupplierName(dto.getSupplierName());
+		ticket.setCity(dto.getCity());
+		ticket.setAddress(dto.getAddress());
+		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
+		ticket.setRatingCount(dto.getRatingPerson());
+
+		// TODO 經緯度
+		if (ticket.getAddress() != dto.getAddress()) {
+			ticket.setLatitude(24.9576355);
+			ticket.setLongitude(121.2250227);
+		}
+
+		// 圖片
+		// 比較是否相等
+
+		return true;
+	}
+
 	// 後台新增票券
 	@Override
-	public boolean addItems(final TikcetRequest request) {
+	public boolean addItems(final TikcetDto dto) {
 
 		// 如果是0張
-		if (request.getAvailable() <= 0) {
+		if (dto.getAvailable() <= 0) {
 			return false;
 		}
 
 		// 判斷票券類型
-		final TicketType type = ticketTypeRepository.findByName(request.getTicketType());
+		final TicketType type = ticketTypeRepository.findByName(dto.getTicketType());
 
 		if (type == null) {
+			return false;
+		}
+
+		// 檢查內容
+		if (!isValidData(dto)) {
 			return false;
 		}
 
 		// 預設為未上架
 		final Ticket ticket = new Ticket();
 
-		ticket.setName(request.getName());
+		ticket.setName(dto.getName());
 		ticket.setTicketType(type);
 		ticket.setStatus(DISABLED);
-		ticket.setPrice(request.getPrice());
-		ticket.setTotalSales(request.getTotalSales());
-		ticket.setExpiryDate(request.getExpiryDate());
-		ticket.setDescription(request.getDescription());
-		ticket.setContent(request.getContent());
-		ticket.setNote(request.getNote());
-		ticket.setSupplierName(request.getSupplierName());
-		ticket.setCity(request.getCity());
-		ticket.setAddress(request.getAddress());
-		ticket.setLatitude(request.getLatitude());
-		ticket.setLongitude(request.getLongitude());
-		ticket.setRatingSum(request.getRating() * request.getRatingPerson());
-		ticket.setRatingCount(request.getRatingPerson());
+		ticket.setPrice(dto.getPrice());
+		ticket.setTotalSales(dto.getTotalSales());
+		ticket.setExpiryDate(dto.getExpiryDate());
+		ticket.setDescription(dto.getDescription());
+		ticket.setContent(dto.getContent());
+		ticket.setNote(dto.getNote());
+		ticket.setSupplierName(dto.getSupplierName());
+		ticket.setCity(dto.getCity());
+		ticket.setAddress(dto.getAddress());
+		ticket.setLatitude(dto.getLatitude());
+		ticket.setLongitude(dto.getLongitude());
+		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
+		ticket.setRatingCount(dto.getRatingPerson());
 
-		// 價格
-		if (ticket.getPrice() <= 0) {
-			return false;
-		}
-		// 到期日
-		if (MyUtils.isBeforeNow(ticket.getExpiryDate())) {
-			return false;
-		}
-
-		// 預設評價
-		if (ticket.getRatingSum() <= 0 || ticket.getRatingCount() <= 0) {
-			return false;
-		}
-
-		// 空字串判斷
-		if (MyUtils.isEmpty(ticket.getName())				// 名稱
-				|| MyUtils.isEmpty(ticket.getDescription()) // 票券描述
-				|| MyUtils.isEmpty(ticket.getContent()) 	// 票券說明
-				|| MyUtils.isEmpty(ticket.getNote()) 		// 注意事項
-				|| MyUtils.isEmpty(ticket.getSupplierName())// 供應商名稱
-				|| MyUtils.isEmpty(ticket.getCity()) 		// 縣市
-				|| MyUtils.isEmpty(ticket.getAddress())) { 	// 地址
-			return false;
-		}
-		// 經緯度
+		// TODO 經緯度
 		if (ticket.getLatitude() <= 0 || ticket.getLongitude() <= 0) {
 			ticket.setLatitude(24.9576355);
 			ticket.setLongitude(121.2250227);
@@ -149,11 +214,11 @@ public class BkTicketServiceImpl implements BkTicketService {
 		repository.save(ticket);
 
 		// 隨機序號
-		createSerialNumber(ticket, request.getAvailable());
+		createSerialNumber(ticket, dto.getAvailable());
 
 		// 圖片
 		final List<TicketImage> ticketImages = new ArrayList<>();
-		for (final String base64Str : request.getImages()) {
+		for (final String base64Str : dto.getImages()) {
 			final byte[] array = Base64.getDecoder().decode(base64Str);
 
 			final TicketImage image = new TicketImage();
@@ -214,6 +279,35 @@ public class BkTicketServiceImpl implements BkTicketService {
 			result.add(ticketSn);
 		}
 		return snRepository.saveAll(result);
+	}
+
+	// 檢查規格
+	private boolean isValidData(final TikcetDto dto) {
+		// 價格
+		if (dto.getPrice() <= 0) {
+			return false;
+		}
+		// 到期日
+		if (MyUtils.isBeforeNow(dto.getExpiryDate())) {
+			return false;
+		}
+
+		// 預設評價
+		if (dto.getRating() <= 0 || dto.getRatingPerson() <= 0) {
+			return false;
+		}
+
+		// 空字串判斷
+		if (MyUtils.isEmpty(dto.getName())					// 名稱
+				|| MyUtils.isEmpty(dto.getDescription()) 	// 票券描述
+				|| MyUtils.isEmpty(dto.getContent()) 		// 票券說明
+				|| MyUtils.isEmpty(dto.getNote()) 			// 注意事項
+				|| MyUtils.isEmpty(dto.getSupplierName())	// 供應商名稱
+				|| MyUtils.isEmpty(dto.getCity()) 			// 縣市
+				|| MyUtils.isEmpty(dto.getAddress())) { 	// 地址
+			return false;
+		}
+		return true;
 	}
 
 }

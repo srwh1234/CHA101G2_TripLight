@@ -7,9 +7,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.ticket.controller.TicketController.SearchRequest;
@@ -33,8 +35,8 @@ public class BkTicketController {
 
 	// 新增票券
 	@PostMapping("/addticket")
-	public boolean addticket(@RequestBody final TikcetRequest request) {
-		return bkTicketService.addItems(request);
+	public boolean addTicket(@RequestBody final TikcetDto dto) {
+		return bkTicketService.addItems(dto);
 	}
 
 	// 上架下架票券
@@ -49,9 +51,21 @@ public class BkTicketController {
 		return bkTicketService.addItemCount(map);
 	}
 
+	// 要編輯的票券
+	@GetMapping("/findticket")
+	public TikcetDto findTicket(@RequestParam("id") final int ticketId) {
+		return bkTicketService.getItem(ticketId);
+	}
+
+	// 編輯票券
+	@PostMapping("/editticket")
+	public boolean editTicket(@RequestBody final TikcetDto dto) {
+		return bkTicketService.updateItem(dto);
+	}
+
 	// 定義請求物件
 	@Data
-	public static class TikcetRequest {
+	public static class TikcetDto {
 		private int ticketId;
 		private String ticketType;
 		private String name;
@@ -69,7 +83,7 @@ public class BkTicketController {
 		private double longitude;
 		private int rating;
 		private int ratingPerson;
-		private final List<String> images = new ArrayList<>();
+		private List<String> images = new ArrayList<>();
 	}
 
 	// 定義回傳物件
