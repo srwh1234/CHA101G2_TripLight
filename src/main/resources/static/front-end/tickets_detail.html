@@ -391,24 +391,19 @@
 
   </div>
 
-
-
-  <!-- 加入購物車按鈕按下去的Modal畫面 -->
-  <!-- <div class="modal fade" id="responseModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+ 
+  <!-- TODO: 顯示圖片的燈箱 -->
+  <div class="modal fade" id="imgModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">提示</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" style="height: 20vh">
-          <div class="mx-4">
-            <span class="my-text-lightblue" id="responseMsg"></span>
-          </div>
+        <div class="modal-body text-center">
+          <img src="#" class="img-fluid">
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
+
+
 
   <!-- tabs -->
   <section class="choose" id="choose">
@@ -679,7 +674,7 @@
       comments: [],
     }
 
-      //TODO:
+    //TODO:
     function fetch_data() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
@@ -780,7 +775,7 @@
       //去後端拿資料
       fetch_data();
 
-    
+
       //加入購物車的按鈕
       $(document).on('click', '#btnAddToCart', function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -921,6 +916,13 @@
         }
         resultComment.comments.push(comments);
       }
+
+      // 設定 只要是.lightbox的顯示視窗事件委派
+      $(document).on('show.bs.modal', '#imgModal', function (e) {
+        const btn = e.relatedTarget;
+         const path = $(btn).find('img').attr('src');
+         $(this).find('img').attr('src', path);
+      });
     });
 
 
@@ -940,7 +942,12 @@
         );
         $('#ticketCarousel .carousel-inner').append(
           `
-        <div class="carousel-item ${i == 0 ? 'active' : ''}">
+        <div class="carousel-item ${i == 0 ? 'active' : ''}"
+        href="#" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#imgModal"
+
+        >
               <img src="${v}" class="d-block w-100">
         </div>
         `
