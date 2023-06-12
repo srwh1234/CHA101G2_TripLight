@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     $('.btn-delete').click(function () {
         Swal.fire({
-            text: "確定刪除嗎?",
+            text: "確定停權嗎?",
             showCancelButton: true,
             confirmButtonText: "確認",
             cancelButtonText: "取消",

@@ -1,8 +1,10 @@
 package com.tw.ticket.service.impl;
 
+import static com.tw.ticket.controller.CartController.ADD_CART_DISABLE;
 import static com.tw.ticket.controller.CartController.ADD_CART_ERROR;
 import static com.tw.ticket.controller.CartController.ADD_CART_OK;
 import static com.tw.ticket.controller.CartController.ADD_CART_SOLDOUT;
+import static com.tw.ticket.model.Ticket.DISABLED;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +91,11 @@ public class CartServiceImpl implements CartService {
 		// 確認會員和票券
 		if (member == null || ticket == null) {
 			return ADD_CART_ERROR;
+		}
+
+		// XXX 下架中
+		if (ticket.getStatus() == DISABLED) {
+			return ADD_CART_DISABLE;
 		}
 
 		// 確認票券數量

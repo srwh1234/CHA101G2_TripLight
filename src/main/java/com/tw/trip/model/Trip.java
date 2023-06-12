@@ -7,7 +7,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tw.ticket.controller.ImageController.IMG_URL;
+import static com.tw.trip.controller.TripImageController.IMG_URL;
+
 
 @Getter
 @Setter
@@ -59,9 +60,21 @@ public class Trip{
     // 獲得指定索引的圖片路徑
     public String getImgUrlEx(final int index) {
         if (index < 0 || index >= tripImage.size()) {
-            return IMG_URL +"trip/"+ 0;
+            return IMG_URL + 0;
         }
-        return IMG_URL +"trip/"+ tripImage.get(index).getId();   // 獲得第一個圖片的id
+        return IMG_URL + tripImage.get(index).getId();   // 獲得第一個圖片的id
     }
 
+    // 獲得指定索引的圖片路徑的陣列
+    public ArrayList<String> getImgUrlExs() {
+        final ArrayList<String> result = new ArrayList<>();
+        if (tripImage.isEmpty()) {
+            result.add(IMG_URL + 0);
+            return result;
+        }
+        tripImage.forEach(img -> {
+            result.add(IMG_URL + img.getId());
+        });
+        return result;
+    }
 }

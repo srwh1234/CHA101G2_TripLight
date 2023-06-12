@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import com.tw.ticket.Config;
 import com.tw.ticket.MyUtils;
 import com.tw.ticket.controller.BkTicketController.SearchResponse;
 import com.tw.ticket.controller.BkTicketController.TicketResponse;
@@ -37,6 +40,11 @@ import com.tw.ticket.service.BkTicketService;
 
 @Service
 public class BkTicketServiceImpl implements BkTicketService {
+
+	private static final Logger log = LoggerFactory.getLogger(BkImageServiceImpl.class);
+
+	@Autowired
+	private Config config;
 
 	@Autowired
 	private TicketRepository repository;
@@ -206,21 +214,6 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return true;
 	}
 
-	public LatLng getLatLngFromAddress(final String address) {
-		GeoApiContext geoApiContext;
-		final String apiKey = "AIzaSyBrFAIp9dZWJrtH_tB42MGfdyQ0Jvxe248";
-		geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build();
-		try {
-			final GeocodingResult[] results = GeocodingApi.geocode(geoApiContext, address).await();
-			if (results != null && results.length > 0) {
-				return results[0].geometry.location;
-			}
-		} catch (final Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	// 後台新增票券(form)
 	@Override
 	public boolean addItems(final String jsonString, final MultipartFile[] files) {
@@ -271,9 +264,15 @@ public class BkTicketServiceImpl implements BkTicketService {
 		ticket.setRatingCount(dto.getRatingPerson());
 
 		// TODO 經緯度
-		if (ticket.getLatitude() <= 0 || ticket.getLongitude() <= 0) {
-			ticket.setLatitude(24.9576355);
-			ticket.setLongitude(121.2250227);
+		if (!MyUtils.isEmpty(dto.getAddress())) {
+			final LatLng latLng = getLatLngFromAddress(dto.getAddress());
+			if (latLng == null) {
+				ticket.setLatitude(24.9576355);
+				ticket.setLongitude(121.2250227);
+			} else {
+				ticket.setLatitude(latLng.lat);
+				ticket.setLongitude(latLng.lng);
+			}
 		}
 
 		// 新增票券
@@ -302,6 +301,21 @@ public class BkTicketServiceImpl implements BkTicketService {
 			result.add(ticketSn);
 		}
 		return snRepository.saveAll(result);
+	}
+
+	// 使用Google Api取得指定地址的經緯度
+	private LatLng getLatLngFromAddress(final String address) {
+		final String apiKey = config.getGoogleApiKey();
+		final GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build();
+		try {
+			final GeocodingResult[] results = GeocodingApi.geocode(geoApiContext, address).await();
+			if (results != null && results.length > 0) {
+				return results[0].geometry.location;
+			}
+		} catch (final Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return null;
 	}
 
 	// 檢查規格

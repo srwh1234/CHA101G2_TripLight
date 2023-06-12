@@ -62,7 +62,7 @@
         }
 
         /* 分頁選單定位*/
-        #ticketContainer{
+        #ticketContainer {
             min-height: 60vh;
         }
     </style>
@@ -918,15 +918,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '新增成功 請至列表選擇上架',
-                            });
+                            Swal.fire({ icon: 'success', title: '新增成功 請至列表選擇上架', });
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: '新增失敗',
-                            });
+                            Swal.fire({ icon: 'error', title: '新增失敗', });
                         }
                     })
                     .catch(error => console.log(error))
@@ -976,15 +970,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '編輯成功',
-                            });
+                            Swal.fire({ icon: 'success', title: '編輯成功', });
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: '編輯失敗',
-                            });
+                            Swal.fire({ icon: 'error', title: '編輯失敗', });
                         }
                     })
                     .catch(error => console.log(error))
@@ -1009,10 +997,7 @@
 
                         if (data) {
                             $(this).closest('.img-item').remove();
-                            Swal.fire({
-                                icon: 'success',
-                                title: '圖片刪除成功',
-                            });
+                            Swal.fire({ icon: 'success', title: '圖片刪除成功', });
                         }
                     })
                     .catch(error => console.log(error));
@@ -1055,15 +1040,9 @@
                                                 </div>
                                             </div>
                                             `);
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: '圖片上傳成功',
-                                        });
+                                        Swal.fire({ icon: 'success', title: '圖片上傳成功', });
                                     } else {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: '圖片上傳失敗',
-                                        });
+                                        Swal.fire({ icon: 'error', title: '圖片上傳失敗', });
                                     }
                                 })
                                 .catch(error => console.log(error));
@@ -1151,12 +1130,7 @@
                 $(this).closest('.img-item').remove();
             });
 
-
-
-
-
-            //渲染頁面
-            // render();
+            //渲染頁面           
             render_cities();
             render_types();
         });

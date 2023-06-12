@@ -280,9 +280,9 @@
     <div class="position-fixed">
       <a href="tickets_order.html" class="btn btn-primary rounded-circle" style="width: 7rem; height: 7rem; "
          width="170" height="170" type="button" id="btnOrder">我的訂單</a>
-
     </div>
 
+    <!-- TODO: 這是本體 -->
     <div class="container">
       <div class="row p-3">
         <div class="h3 my-5">票券購物車</div>
@@ -303,8 +303,6 @@
             <a href="tickets.html" class="my-text-lightblue">繼續購物 &gt;</a>
           </div>
         </div>
-
-
 
         <div class="col-12 col-lg-12 py-3 h-100" id="orderContainer">
           <!-- 內容給JS填 -->
@@ -470,12 +468,31 @@
   <!-- move top -->
 
 
-  <!-- 這是正文 -->
+  <!-- TODO: 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script>
-    let result = [];
-    const coupons = [
+
+    //假資料-購物清單
+    let result = [
+      {
+        quantity: 5,
+        ticket: {
+          ticketId: 1,
+          name: `門票1號`,
+          price: (100 * 1),
+          available: 10, //可買數量
+          description: '票券描述<br>第2行<br>第3行<br>第4行<br>第5行',
+          image: `https://picsum.photos/600/600/?random=1`,
+          promotion: {
+            price: (80 * 1),
+            startDate: '2023/06/21',
+            endDate: '2023/07/21'
+          }
+        },
+      },
+    ];
+    let coupons = [
       {
         couponId: 1,
         name: '優惠券1號-100',
@@ -491,142 +508,25 @@
         name: '優惠券3號-400',
         discount: 400
       }
-
     ];
 
-    function changeCount(ticketId, modify) {
-      const post = {
-        memberId: 1,
-        ticketId: ticketId,
-        modify: modify,
-      };
-      fetch(`http://localhost:8080/modifycart`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(post),
-      })
-        .then(response => response.json())
-        .then(data => {
-          // console.log(data);
-          if (!data) {
-            // 渲染頁面
-            render();
-          }
-        })
-        .catch(error => console.log(error));
-    }
 
-    //取得購物車清單
-    function fetch_data(){
-      const memberId = 1;
-      fetch(`http://localhost:8080/carts?memberId=${memberId}`)
-        .then(response => response.json())
-        .then(data => {
-          // console.log(data);
-          result = data;
-          // 渲染頁面
-          render();
-        })
-        .catch(error => console.log(error));
-    }
+    //TODO: ------------------------------------------//onload
 
     $(function () {
-
-      // 這邊是假資料
-      for (let i = 1; i <= 5; i++) {
-        const ticket_cart = {
-          quantity: 5,
-          ticket: {
-            ticketId: i,
-            name: `門票${i}號`,
-            price: (100 * i),
-            available: 10, //可買數量
-            description: '票券描述<br>第2行<br>第3行<br>第4行<br>第5行',
-            image: `https://picsum.photos/600/600/?random=${i}`,
-
-            promotion: {
-              price: (80 * i),
-              startDate: '2023/06/21',
-              endDate: '2023/07/21'
-            }
-          },
-        };
-        result.push(ticket_cart);
-      }
 
       //取得資料
       fetch_data();
 
 
       //前往結帳(綠界)的按鈕
-      $('#btnCheckOut').on('click', function () {
-        const memberId = 1;
-        const couponId = $('#discountSelect').val();
-
-        //綠界支付的介面
-        const post = {
-          memberId: 1,
-          couponId: parseInt($('#discountSelect').val()),
-          backUrl: window.location.href,
-        };
-
-        fetch('http://localhost:8080/ecpayCheckout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post),
-        })
-          .then(response => response.text())
-          .then(data => {
-            if(!data){
-              fetch_data();
-            }else{
-              $('#myHideDiv').html(data);
-            }
-            
-          })
-          .catch(error => console.log(error));
-      });
+      $('#btnCheckOut').on('click', fetch_order);
 
       //前往結帳的按鈕
-      $('#btnCheckOut2').on('click', function () {
-
-        const memberId = 1;
-        const couponId = $('#discountSelect').val();
-
-        fetch(`http://localhost:8080/testCheckout?memberId=${memberId}&&couponId=${couponId}`)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            if (data) {
-              window.location.href = 'tickets_order.html';
-            } else {
-              fetch_data();
-            }
-          })
-          .catch(error => console.log(error));
-      });
+      $('#btnCheckOut2').on('click', fetch_order_test);
 
       //刪除品項的按鈕
-      $('#btnDeleteConfirm').on('click', function () {
-        const memberId = 1;
-        const ticketId = parseInt($(this).data('ticket-id'));
-
-        fetch(`http://localhost:8080/removecart?memberId=${memberId}&&ticketId=${ticketId}`)
-          .then(response => response.json())
-          .then(data => {
-            // console.log(data);
-            //result = result.filter(e => e.ticket.ticketId != ticketId);
-            // 渲染頁面
-            //render();
-            fetch_data();
-          })
-          .catch(error => console.log(error));
-        $('#confirmModal').modal('hide');
-      });
+      $('#btnDeleteConfirm').on('click', fetch_remove);
 
       // 減少數量的按鈕點擊事件
       $(document).on('click', '.btn-minus', function () {
@@ -636,7 +536,7 @@
         if (val > 1) {
           $(theText).val(val - 1);
 
-          changeCount(ticketId, -1);
+          fetch_change(ticketId, -1);
           render_subtotal(theText);
           render_price();
         }
@@ -651,7 +551,7 @@
         if (val < max) {
           $(theText).val(val + 1);
 
-          changeCount(ticketId, 1);
+          fetch_change(ticketId, 1);
           render_subtotal(theText);
           render_price();
         }
@@ -660,12 +560,13 @@
       // 折扣碼選單
       $('#discountSelect').on("change", function () {
         const couponId = parseInt($(this).val());
-        const discount = coupons.find(e => e.couponId == couponId).discount;
+        let discount = 0;
+        if (couponId > 0) {
+          discount = coupons.find(e => e.couponId == couponId).discount;
+        }
         $("#discount").text(discount);
         render_price();
       });
-
-
 
       //確認刪除視窗的參數傳遞
       $('#confirmModal').on('show.bs.modal', function (event) {
@@ -679,6 +580,131 @@
       render();
     });
 
+
+    //TODO: ------------------------------------------//fetch
+
+    /**
+    * 取得購物車清單
+    */
+    function fetch_data() {
+      const memberId = 1;
+      fetch(`http://localhost:8080/carts?memberId=${memberId}`)
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data);
+          result = data;
+          // 渲染頁面
+          render();
+        })
+        .catch(error => console.log(error));
+
+      fetch_coupon();
+    }
+
+    /**
+    * 取得優惠券清單
+    */
+    function fetch_coupon() {
+      const memberId = 1;
+      fetch(`http://localhost:8080/coupons?memberId=${memberId}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          coupons = data;
+        })
+        .catch(error => console.log(error))
+        .finally(() => render_coupons());
+    }
+
+    /**
+    * 數量更新 
+    */
+    function fetch_change(ticketId, modify) {
+      const post = {
+        memberId: 1,
+        ticketId: ticketId,
+        modify: modify,
+      };
+      fetch(`http://localhost:8080/modifycart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (!data) {
+            render();
+          }
+        })
+        .catch(error => console.log(error));
+    }
+
+    /**
+    *  購物車刪除品項
+    */
+    function fetch_remove(e) {
+      const memberId = 1;
+      const ticketId = parseInt($(e.target).data('ticket-id'));
+
+      fetch(`http://localhost:8080/removecart?memberId=${memberId}&&ticketId=${ticketId}`)
+        .then(response => response.json())
+        .then(data => fetch_data())
+        .catch(error => console.log(error))
+        .finally(() => $('#confirmModal').modal('hide'));
+    }
+
+    /**
+    * 綠界結帳
+    */
+    function fetch_order() {
+      const memberId = 1;
+
+      const post = {
+        memberId: 1,
+        couponId: parseInt($('#discountSelect').val()),
+        backUrl: window.location.href,
+      };
+
+      fetch('http://localhost:8080/ecpayCheckout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.text())
+        .then(data => {
+          if (data) {
+            $('#myHideDiv').html(data);
+          } else {
+            fetch_data();
+          }
+        })
+        .catch(error => console.log(error));
+    }
+
+    /**
+    * 測試用結帳
+    */
+    function fetch_order_test() {
+      const memberId = 1;
+      const couponId = $('#discountSelect').val();
+
+      fetch(`http://localhost:8080/testCheckout?memberId=${memberId}&&couponId=${couponId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            window.location.href = 'tickets_order.html';
+          } else {
+            fetch_data();
+          }
+        })
+        .catch(error => console.log(error));
+    }
+
+    //TODO:  ------------------------------------------//render
     function render() {
 
       if (result.length === 0) {
@@ -712,9 +738,8 @@
         }
 
 
-        $('#orderContainer').append(
-          `
-        <div class="row order-item align-items-center m-3 h-100">
+        $('#orderContainer').append(`
+          <div class="row order-item align-items-center m-3 h-100">
             <div class="col-12 col-lg-2 h-100">
               <img src="${cart.ticket.image}" class="img-fluid rounded-start">
             </div>
@@ -746,21 +771,25 @@
             </div>
             <hr class="mt-3 mb-3">
           </div>
-        `
-        );
+        `);
       }
 
-      //下拉式選單
+      render_coupons();
+      //計算價格
+      render_price();
+    }
+
+    /**
+    *  渲染優惠券下拉式選單
+    */
+    function render_coupons() {
       $('#discountSelect').html(`<option value="0" selected>請選擇折扣碼</option>`);
       for (let coupon of coupons) {
         $('#discountSelect').append(
           `<option value="${coupon.couponId}">${coupon.name}</option>`
         );
       }
-      //計算價格
-      render_price();
     }
-
 
     // 計算小計金額
     function render_subtotal(theText) {

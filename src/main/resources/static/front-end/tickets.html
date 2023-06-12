@@ -105,7 +105,7 @@
       height: 200px;
     }
 
-    .my-search-item  img {
+    .my-search-item img {
       width: 100%;
       height: 16rem;
       object-fit: cover;
@@ -220,8 +220,8 @@
       color: #ccc;
     }
 
-     /* 分頁選單定位*/
-    #ticketsSearchContainer{
+    /* 分頁選單定位*/
+    #ticketsSearchContainer {
       min-height: 140vh;
     }
   </style>
@@ -583,17 +583,74 @@
   <!-- move top -->
 
 
-  <!-- 這是正文 -->
+  <!-- TODO: 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script>
-    let resultRnd = [];
-    let resultHot = [];
+    //假資料-隨機
+    let resultRnd = [
+      {
+        ticketId: 1,
+        name: `票券的名稱#1`,
+        price: 55 * (1 ** 2),
+        rating: 3,
+        ratingPerson: Math.trunc(Math.random() * 1000),
+        city: '縣市',
+        description: `這是一段關於#1的敘述`,
+        image: `https://picsum.photos/600/600/?random=1`,
+      },
+      {
+        ticketId: 2,
+        name: `票券的名稱#2`,
+        price: 55 * (2 ** 2),
+        rating: 3,
+        ratingPerson: Math.trunc(Math.random() * 1000),
+        city: '縣市',
+        description: `這是一段關於#2的敘述`,
+        image: `https://picsum.photos/600/600/?random=2`,
+      },
+    ];
+    //假資料-熱門
+    let resultHot = [
+      {
+        ticketId: 3,
+        name: `票券的名稱#3`,
+        price: 55 * (3 ** 2),
+        rating: 3,
+        ratingPerson: Math.trunc(Math.random() * 1000),
+        city: '縣市',
+        description: `這是一段關於#3的敘述`,
+        image: `https://picsum.photos/600/600/?random=3`,
+      },
+      {
+        ticketId: 4,
+        name: `票券的名稱#4`,
+        price: 55 * (4 ** 2),
+        rating: 3,
+        ratingPerson: Math.trunc(Math.random() * 1000),
+        city: '縣市',
+        description: `這是一段關於#4的敘述`,
+        image: `https://picsum.photos/600/600/?random=4`,
+      }
+    ];
+
+    //假資料-搜尋
     let resultSearch =
     {
       curPage: 0,
       totalPage: 10,
-      tickets: []
+      tickets: [
+        {
+          ticketId: 5,
+          name: `票券的名稱#5`,
+          price: 55 * (5 ** 2),
+          rating: Math.trunc((Math.random() * 5) + 1),
+          ratingPerson: Math.trunc(Math.random() * 1000),
+          city: '縣市',
+          description: `這是一段關於#5的敘述`,
+          image: `https://picsum.photos/600/600/?random=5`,
+        },
+      ]
     };
 
     const locationTypes = [
@@ -605,50 +662,13 @@
       "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
     ];
 
-    $(function () {
-      //一頁08個 一般票券
-      //一頁04個 熱門票券
 
-      //假資料 以後要從資料庫取得
-      for (let i = 1; i < 9; i++) {
-        const ticket = {
-          ticketId: i,
-          name: `票券的名稱#${i}`,
-          price: 55 * (i ** 2),
-          rating: 3,
-          ratingPerson: Math.trunc(Math.random() * 1000),
-          city: '縣市',
-          description: `這是一段關於#${i}的敘述`,
-          image: `https://picsum.photos/600/600/?random=${i}`,
-        };
-        resultRnd.push(ticket);
-      }
-      for (let i = 21; i < 25; i++) {
-        const ticket = {
-          ticketId: i,
-          name: `票券的名稱#${i}`,
-          price: 55 * (i ** 2),
-          rating: 3,
-          ratingPerson: Math.trunc(Math.random() * 1000),
-          city: '縣市',
-          description: `這是一段關於#${i}的敘述`,
-          image: `https://picsum.photos/600/600/?random=${i}`,
-        };
-        resultHot.push(ticket);
-      }
-      for (let i = 21; i < 31; i++) {
-        const ticket = {
-          ticketId: i,
-          name: `票券的名稱#${i}`,
-          price: 55 * (i ** 2),
-          rating: Math.trunc((Math.random() * 5) + 1),
-          ratingPerson: Math.trunc(Math.random() * 1000),
-          city: '縣市',
-          description: `這是一段關於#${i}的敘述`,
-          image: `https://picsum.photos/600/600/?random=${i}`,
-        };
-        resultSearch.tickets.push(ticket);
-      }
+    //TODO: ------------------------------------------//onload
+
+    $(function () {
+
+     
+
       //搜尋按鈕的事件
       $('#btnSearch').on('click', function () {
         doSearch(0);
@@ -694,41 +714,90 @@
       //渲染頁面
       render_collapse_types();
       render_collapse_cities();
-
-      render();
+      
+      fetch_data();
     });
 
-    function render() {
+    //TODO: ------------------------------------------//fetch
+
+    /**
+    * 發請求
+    */
+    function fetch_data() {
       // 取回隨機票券
       fetch(`http://localhost:8080/rndtickets`)
         .then(response => response.json())
-        .then(data => {
-          // console.log(resultRnd);
-          resultRnd = data;
+        .then(data => resultRnd = data)
+        .catch(error => console.log(error))
+        .finally(() => {
           render_rnd();
-        })
-        .catch(error => {
-          console.log(error);
-          render_rnd(); //以後要移除
         });
 
       // 取回熱門票券
       fetch(`http://localhost:8080/hottickets`)
         .then(response => response.json())
-        .then(data => {
-          // console.log(data);
-          resultHot = data;
+        .then(data => resultHot = data)
+        .catch(error => console.log(error))
+        .finally(() => {
           render_hot();
-        })
-        .catch(error => {
-          console.log(error);
-          render_hot(); //以後要移除
         });
 
       //預設搜尋
       doSearch(0);
     }
 
+    // 上次的搜尋條件
+    let oldCondition = {
+      keyword: '',
+      types: [],
+      cities: [],
+      page: 0,
+      size: 5,
+    };
+
+    // 送出搜尋條件
+    function doSearch(curPage) {
+      const post = {
+        keyword: $('#ticketSearchText').val(),
+        types: [],
+        cities: [],
+        page: curPage,
+        size: 5,
+      };
+
+      $('[id^="ticketType"]:checked').each((i, v) => {
+        post.types.push(v.value);
+      });
+      $('[id^="ticketZone"]:checked').each((i, v) => {
+        post.cities.push(v.value);
+      });
+
+      if (JSON.stringify(oldCondition) === JSON.stringify(post)) {
+        return false;
+      }
+
+      oldCondition = post;
+
+      fetch(`http://localhost:8080/searchtickets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => resultSearch = data)
+        .catch(error => console.log(error))
+        .finally(() => {
+          render_search();
+        });
+    }
+
+    //TODO:  ------------------------------------------//render
+
+    /**
+    * 渲染隨機票券的內容 
+    */
     function render_rnd() {
       $('#ticketsContainer').html('');
 
@@ -753,6 +822,9 @@
       }
     }
 
+    /**
+    * 渲染熱門票券的內容
+    */
     function render_hot() {
       $('#ticketsHotContainer').html('');
 
@@ -776,48 +848,46 @@
       }
     }
 
-
-
-
+    /**
+    * 搜尋的結果
+    */
     function render_search() {
-      // 搜尋的結果
       $('#ticketsSearchContainer').html('');
+
       for (let ticket of resultSearch.tickets) {
-        $('#ticketsSearchContainer').append(
-          `
-          <div class="card mb-3 my-search-item">
-            <a href="tickets_detail.html?id=${ticket.ticketId}">
-              <div class="row g-0 h-100">
-                <div class="col-lg-4 h-100">
-                  <img src="${ticket.image}" class="img-fluid rounded-start">
-                </div>
-                <div class="card-body col-lg-8 d-flex flex-column">
-                  <div class="col">
-                    <h5 class="card-title">${ticket.name}</h5>
-                    <div class="my-mark">即買即用</div>
-                    <p class="card-text">${ticket.description}</p>
-                    <small class="my-text-lightgray">
-                      <span class="fa fa-map-marker mr-3 mt-1"></span>
-                      <span>台灣, ${ticket.city}</span>
-                    </small>
+        $('#ticketsSearchContainer').append(`
+            <div class="card mb-3 my-search-item">
+              <a href="tickets_detail.html?id=${ticket.ticketId}">
+                <div class="row g-0 h-100">
+                  <div class="col-lg-4 h-100">
+                    <img src="${ticket.image}" class="img-fluid rounded-start">
                   </div>
-                  <div class="mt-auto d-flex">
-                    <div class="my-ratings my-text-lightgray mx-3">
-                      <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
-                      <i class="fa fa-star ${ticket.rating >= 2 ? 'on' : ''}"></i>
-                      <i class="fa fa-star ${ticket.rating >= 3 ? 'on' : ''}"></i>
-                      <i class="fa fa-star ${ticket.rating >= 4 ? 'on' : ''}"></i>
-                      <i class="fa fa-star ${ticket.rating >= 5 ? 'on' : ''}"></i>
+                  <div class="card-body col-lg-8 d-flex flex-column">
+                    <div class="col">
+                      <h5 class="card-title">${ticket.name}</h5>
+                      <div class="my-mark">即買即用</div>
+                      <p class="card-text">${ticket.description}</p>
+                      <small class="my-text-lightgray">
+                        <span class="fa fa-map-marker mr-3 mt-1"></span>
+                        <span>台灣, ${ticket.city}</span>
+                      </small>
                     </div>
-                    <div class="my-text-lightgray">(${ticket.ratingPerson})</div>
-                    <div class="my-ticket-price h4 fw-bold text-dark ms-auto">${ticket.price} 元</div>
+                    <div class="mt-auto d-flex">
+                      <div class="my-ratings my-text-lightgray mx-3">
+                        <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+                        <i class="fa fa-star ${ticket.rating >= 2 ? 'on' : ''}"></i>
+                        <i class="fa fa-star ${ticket.rating >= 3 ? 'on' : ''}"></i>
+                        <i class="fa fa-star ${ticket.rating >= 4 ? 'on' : ''}"></i>
+                        <i class="fa fa-star ${ticket.rating >= 5 ? 'on' : ''}"></i>
+                      </div>
+                      <div class="my-text-lightgray">(${ticket.ratingPerson})</div>
+                      <div class="my-ticket-price h4 fw-bold text-dark ms-auto">${ticket.price} 元</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
-          </div>          
-          `
-        );
+              </a>
+            </div>          
+        `);
 
         // 最底下的分頁
         $('#searchPagination ul').html('');
@@ -835,7 +905,7 @@
               <li class="page-item">
                 <a class="page-link ${i == resultSearch.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
               </li>
-          `);
+            `);
           }
           $('#searchPagination ul').append(`                    
               <li class="page-item">
@@ -848,101 +918,46 @@
       }
     }
 
-    // 條件篩選的票券類型
+
+    /**
+    * 渲染條件篩選的票券類型
+    */
     function render_collapse_types() {
       $('#collapseOne .accordion-body').html('');
 
       locationTypes.forEach((v, i) => {
-        $('#collapseOne .accordion-body').append(
-          `
-        <div class="form-check d-flex gap-3">
-          <input class="form-check-input" type="checkbox" value="${v}" id="ticketType${i}" checked>
-          <label class="form-check-label align-self-center" for="ticketType${i}">${v}</label>
-        </div>
-        `
-        );
+        $('#collapseOne .accordion-body').append(`
+          <div class="form-check d-flex gap-3">
+            <input class="form-check-input" type="checkbox" value="${v}" id="ticketType${i}" checked>
+            <label class="form-check-label align-self-center" for="ticketType${i}">${v}</label>
+          </div>
+        `);
       });
     }
-    // 條件篩選的縣市
+
+    /**
+    * 渲染條件篩選的縣市
+    */
     function render_collapse_cities() {
       $('#collapseTwo .accordion-body').html('');
+
       // 選擇全部
-      $('#collapseTwo .accordion-body').append(
-        `
+      $('#collapseTwo .accordion-body').append(`
           <div class="form-check d-flex gap-3">
             <input class="form-check-input" type="checkbox" value="" id="allTicketZone" checked>
             <label class="form-check-label align-self-center" for="allTicketZone">選擇全部</label>
           </div>
-          `
-      );
+        `);
 
       taiwanCities.forEach((v, i) => {
-        $('#collapseTwo .accordion-body').append(
-          `
+        $('#collapseTwo .accordion-body').append(`
           <div class="form-check d-flex gap-3">
             <input class="form-check-input" type="checkbox" value="${v}" id="ticketZone${i}" checked>
             <label class="form-check-label align-self-center" for="ticketZone${i}">${v}</label>
           </div>
-          `
-        );
+          `);
       });
     }
-
-
-
-    // 上次的搜尋條件
-    let oldCondition = {
-      keyword: '',
-      types: [],
-      cities: [],
-      page: 0,
-      size: 5,
-    };
-
-    // 送出搜尋條件
-    function doSearch(curPage) {
-      const condition = {
-        keyword: $('#ticketSearchText').val(),
-        types: [],
-        cities: [],
-        page: curPage,
-        size: 5,
-      };
-
-      $('[id^="ticketType"]:checked').each((i, v) => {
-        condition.types.push(v.value);
-      });
-      $('[id^="ticketZone"]:checked').each((i, v) => {
-        condition.cities.push(v.value);
-      });
-
-      if (JSON.stringify(oldCondition) === JSON.stringify(condition)) {
-        return false;
-      }
-      // console.log(condition);
-      oldCondition = condition;
-
-      fetch(`http://localhost:8080/searchtickets`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(condition),
-      })
-        .then(response => response.json())
-        .then(data => {
-          // console.log(data);
-          resultSearch = data;
-          render_search();
-        })
-        .catch(error => {
-          console.log(error);
-          render_search(); //以後要移除
-        });
-
-    }
-
-
   </script>
   <!-- 正文結束 -->
 </body>

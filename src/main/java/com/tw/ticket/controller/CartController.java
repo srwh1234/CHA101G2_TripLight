@@ -22,7 +22,8 @@ public class CartController {
 
 	public static int ADD_CART_OK = 1; // 添加成功
 	public static int ADD_CART_SOLDOUT = 2;// 此商品數量不足
-	public static int ADD_CART_ERROR = 3;// 發生未知的錯誤
+	public static int ADD_CART_DISABLE = 3;// 此商品已下架
+	public static int ADD_CART_ERROR = 4;// 發生未知的錯誤
 
 	@Autowired
 	private CartService cartService;

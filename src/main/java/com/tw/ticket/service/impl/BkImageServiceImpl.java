@@ -21,7 +21,7 @@ import com.tw.ticket.service.BkImageService;
 
 @Service
 public class BkImageServiceImpl implements BkImageService {
-	private static final Logger log = LoggerFactory.getLogger(BkTicketServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(BkImageServiceImpl.class);
 
 	@Autowired
 	private TicketRepository repository;
