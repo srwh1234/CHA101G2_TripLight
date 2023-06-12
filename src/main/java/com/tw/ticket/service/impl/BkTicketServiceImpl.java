@@ -17,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 import com.tw.ticket.MyUtils;
 import com.tw.ticket.controller.BkTicketController.SearchResponse;
 import com.tw.ticket.controller.BkTicketController.TicketResponse;
@@ -179,19 +183,42 @@ public class BkTicketServiceImpl implements BkTicketService {
 		ticket.setNote(dto.getNote());
 		ticket.setSupplierName(dto.getSupplierName());
 		ticket.setCity(dto.getCity());
-		ticket.setAddress(dto.getAddress());
+
 		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
 		ticket.setRatingCount(dto.getRatingPerson());
 
 		// TODO 經緯度
 		if (ticket.getAddress() != dto.getAddress()) {
-			ticket.setLatitude(24.9576355);
-			ticket.setLongitude(121.2250227);
+
+			final LatLng latLng = getLatLngFromAddress(dto.getAddress());
+			if (latLng == null) {
+				ticket.setLatitude(24.9576355);
+				ticket.setLongitude(121.2250227);
+			} else {
+				ticket.setLatitude(latLng.lat);
+				ticket.setLongitude(latLng.lng);
+			}
+			ticket.setAddress(dto.getAddress());
 		}
 
 		// 更新票券
 		repository.save(ticket);
 		return true;
+	}
+
+	public LatLng getLatLngFromAddress(final String address) {
+		GeoApiContext geoApiContext;
+		final String apiKey = "AIzaSyBrFAIp9dZWJrtH_tB42MGfdyQ0Jvxe248";
+		geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build();
+		try {
+			final GeocodingResult[] results = GeocodingApi.geocode(geoApiContext, address).await();
+			if (results != null && results.length > 0) {
+				return results[0].geometry.location;
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// 後台新增票券(form)

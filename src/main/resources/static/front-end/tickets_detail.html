@@ -394,7 +394,7 @@
 
 
   <!-- 加入購物車按鈕按下去的Modal畫面 -->
-  <div class="modal fade" id="responseModal" aria-hidden="true">
+  <!-- <div class="modal fade" id="responseModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -408,7 +408,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- tabs -->
   <section class="choose" id="choose">
@@ -639,6 +639,7 @@
   <!-- 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
+  <script src="./js/sweetalert.js"></script>
 
   <script>
     //假資料 以後要從資料庫取得
@@ -741,30 +742,24 @@
     }
 
 
+    //加入購物車-顯示回應的結果
     function responseMsg(reason) {
-      $('#responseMsg').removeClass('my-text-lightblue my-text-lightred');
       switch (reason) {
         case 0:
-          $('#responseMsg').addClass('my-text-lightred');
-          $('#responseMsg').text('與伺服器失去聯繫');
+          Swal.fire({ icon: 'warning', title: '與伺服器失去聯繫', });
           break;
         case 1:
-          $('#responseMsg').addClass('my-text-lightblue');
-          $('#responseMsg').text('添加成功');
+          Swal.fire({ icon: 'success', title: '加入購物車成功', });
           break;
         case 2:
-          $('#responseMsg').addClass('my-text-lightred');
-          $('#responseMsg').text('此商品數量不足');
+          Swal.fire({ icon: 'warning', title: '此商品數量不足', });
           break;
-
         default:
-          $('#responseMsg').addClass('my-text-lightred');
-          $('#responseMsg').text('發生未知的錯誤');
+          Swal.fire({ icon: 'warning', title: '發生未知的錯誤', });
           break;
       }
-
+      //刷新頁面
       fetch_data();
-      $('#responseModal').modal('show');
     }
 
     $(function () {
@@ -772,7 +767,7 @@
       //去後端拿資料
       fetch_data();
 
-
+      //TODO:
       //加入購物車的按鈕
       $(document).on('click', '#btnAddToCart', function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -791,14 +786,8 @@
           body: JSON.stringify(post),
         })
           .then(response => response.json())
-          .then(data => {
-            //console.log(data);
-            responseMsg(data);
-          })
-          .catch(error => {
-            console.log(error);
-            responseMsg(0);
-          });
+          .then(data => responseMsg(data))
+          .catch(error => responseMsg(0));
       });
 
       // 減少數量的按鈕點擊事件
