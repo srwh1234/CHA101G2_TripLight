@@ -157,7 +157,7 @@ $(logout_li).on("click", function(e) {
 				console.log("成功登出")
 				document.querySelector("#login").innerHTML = ` 登入/註冊`;
 				document.querySelector(".member").classList.toggle("-on");
-				sessionStorage.clear();
+//				sessionStorage.clear();
 				window.location.assign("index.html");
 			}
 		},

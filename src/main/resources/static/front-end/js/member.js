@@ -129,83 +129,27 @@ $(function() {
 
 
 
-// ============================地址=====================================
 // ============================儲存=====================================
-//saveData.addEventListener("click", function (e) {
-//    e.preventDefault();
-//
-//    var dataStorage = {};
-//
-//    dataStorage.lastName = lastName.value;
-//    dataStorage.firstName = firstName.value;
-//    dataStorage.IdNumber = IdNumber.value;
-//    dataStorage.birthday = birthday.value;
-//    dataStorage.phoneNumber = phoneNumber.value;
-//    dataStorage.gender = gender.value;
-//    dataStorage.city = city.value;
-//    dataStorage.area = area.value;
-//    dataStorage.address = address.value;
-//    dataStorage.email = email.value;
-//
-//    sessionStorage.setItem("form_data", JSON.stringify(dataStorage));
-//});
 
-//saveBtn.addEventListener("click", function() {
-//	console.log("btn ok")
-//	const lastName = document.getElementById("inputLastName").value;
-//	const firstName = document.getElementById("inputFirstName").value;
-//	const idNumber = document.getElementById("inputIdNumber").value;
-//	const birthday = document.getElementById("inputBD").value;
-//	const phoneNumber = document.getElementById("inputPhoneNumber").value;
-//	const gender = document.getElementById("inputGender").value;
-//	const city = document.getElementById("city").value;
-//	const dist = document.getElementById("dist").value;
-//	const detailedAddress = document.getElementById("inputAddress").value;
-//	const email = document.getElementById("inputEmail").value;
-//
-//	// 發送 AJAX 請求傳送資料到後端
-//	$.ajax({
-//		type: "POST",
-//		url: "/member/{id}",
-//		data: {
-//			lastName,
-//			firstName,
-//			idNumber,
-//			birthday,
-//			phoneNumber,
-//			gender,
-//			city,
-//			dist,
-//			detailedAddress,
-//			email
-//		},
-//		success: function(response) {
-//			console.log(response);
-//			// 在成功回應後進行一些處理，例如顯示儲存成功訊息或重新載入資料等
-//		},
-//		error: function(xhr) {
-//			console.log(xhr.responseText);
-//			// 在錯誤回應時進行處理，例如顯示錯誤訊息等
-//		}
-//	});
-//});
-const data = {
-	lastName: document.getElementById("inputLastName").value,
-	firstName: document.getElementById("inputFirstName").value,
-	idNumber: document.getElementById("inputIdNumber").value,
-	birthday: document.getElementById("inputBD").value,
-	phoneNumber: document.getElementById("inputPhoneNumber").value,
-	gender: document.getElementById("inputGender").value,
-	city: document.getElementById("city").value,
-	dist: document.getElementById("dist").value,
-	detailedAddress: document.getElementById("inputAddress").value,
-	email: document.getElementById("inputEmail").value
-
-}
+const id = "2";
 function getData() {
-	axios.post("/member/{id}", data)
+
+	const data = {
+		memberNameLast: document.querySelector("#inputLastName").value,
+		memberNameFirst: document.getElementById("inputFirstName").value,
+		memberIdCard: document.getElementById("inputIdNumber").value,
+		memberBirth: document.getElementById("inputBD").value,
+		memberPhone: document.getElementById("inputPhoneNumber").value,
+		memberGender: document.getElementById("inputGender").value,
+		memberCity: document.getElementById("city").value,
+		memberDist: document.getElementById("dist").value,
+		memberAddress: document.getElementById("inputAddress").value,
+		memberEmail: document.getElementById("inputEmail").value
+	}
+	console.log('data000=' + data.memberNameLast);
+	axios.post("/member/" + id, data)
 		.then((response) => {
-			console.log(response.data); 
+			console.log(response.data);
 		})
 		// 失敗則顯示
 		.catch((error) => {
@@ -217,31 +161,51 @@ saveBtn.addEventListener("click", function() {
 	getData();
 })
 
-//// 從資料庫中獲取並設定使用者資料到 input
+// 從資料庫中獲取並設定使用者資料到 input
+$(document).ready(function() {
+	$.ajax({
+		url: "/memberdetail",
+		type: "GET",
+		success: function(member) {
+			$('#inputLastName').val(memberNameLast);
+			$('#inputFirstName').val(memberNameFirst);
+			$('#inputIdNumber').val(memberIdCard);
+			$('#inputBD').val(memberBirth);
+			$('#inputPhoneNumber').val(memberPhone);
+			$('#inputGender').val(memberGender);
+			$('#dist').val(memberDist);
+			$('#city').val(memberCity);
+			$('#inputAddress').val(memberAddress);
+			$('#inputEmail').val(memberEmail);
+		}
+	});
+});
 //function setMemberData(memberData) {
-//  document.getElementById("inputLastName").value = memberData.lastName;
-//  document.getElementById("inputFirstName").value = memberData.firstName;
-//  document.getElementById("inputIdNumber").value = memberData.idNumber;
-//  document.getElementById("inputBD").value = memberData.birthday;
-//  document.getElementById("inputPhoneNumber").value = memberData.phoneNumber;
-//  document.getElementById("inputGender").value = memberData.gender;
-//  document.getElementById("city").value = memberData.city;
-//  document.getElementById("area").value = memberData.area;
-//  document.getElementById("inputAddress").value = memberData.detailedAddress;
-//  document.getElementById("inputEmail").value =memberData.email;
-//}
+//	const memberData = {
+//	memberNameLast: document.querySelector("#inputLastName").value,
+//	memberNameFirst: document.getElementById("inputFirstName").value,
+//	memberIdCard: document.getElementById("inputIdNumber").value,
+//	memberBirth: document.getElementById("inputBD").value,
+//	memberPhone: document.getElementById("inputPhoneNumber").value,
+//	 memberGender: document.getElementById("inputGender").value,
+//	memberCity: document.getElementById("city").value,
+//	memberDist: document.getElementById("dist").value,
+//	memberAddress: document.getElementById("inputAddress").value,
+//	memberEmail: document.getElementById("inputEmail").value
+//	}
 //
 //// 發送 AJAX 請求獲取使用者資料
 //$.ajax({
-//  type: "GET",
-//  url: "/getMember/{memberId}",
-//  success: function(response) {
-//    console.log(response);
-//    // 在成功回應後將使用者資料設定到 input
-//    setMemberData(response.memberData);
-//  },
-//  error: function(xhr) {
-//    console.log(xhr.responseText);
-//    // 在錯誤回應時進行處理，例如顯示錯誤訊息等
-//  }
+//	type: "GET",
+//	url: "/getMember/" + id,
+//	success: function(response) {
+//		console.log(response);
+//		// 在成功回應後將使用者資料設定到 input
+//		setMemberData(response.memberData);
+//	},
+//	error: function(xhr) {
+//		console.log(xhr.responseText);
+//		// 在錯誤回應時進行處理，例如顯示錯誤訊息等
+//	}
 //});
+//}

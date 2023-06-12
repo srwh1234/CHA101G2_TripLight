@@ -23,7 +23,8 @@ public class Member implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer memberId;
 
-	private String memberAccount;
+	private String memberAccount ="";
+	
 
 	private String memberPassword;
 

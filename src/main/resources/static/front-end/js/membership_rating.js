@@ -1,6 +1,7 @@
 
 function getRating() {
-	axios.get("/rating")
+	const id=1;
+	axios.get("/rating/"+id)
 		.then((response) => {
 			var totalOrderElement = document.getElementById('total_order');
 			var progressBarElement = document.querySelector('.progress-bar');

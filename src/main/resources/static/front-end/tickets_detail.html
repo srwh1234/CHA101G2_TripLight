@@ -2,15 +2,16 @@
 <html lang="zh-Hant">
 
 <head>
-  <title>TripLight | TicketsForm</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta charset="utf-8" />
-  <!-- 關鍵字設定 -->
-  <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
-  <!-- 網頁介紹 -->
-  <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+<title>TripLight | TicketsForm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8" />
+<!-- 關鍵字設定 -->
+<meta name="keywords"
+	content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+<!-- 網頁介紹 -->
+<meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
 
-  <script>
+<script>
     addEventListener(
       "load",
       function () {
@@ -24,623 +25,607 @@
     }
   </script>
 
-  <!--jQuery-->
-  <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-          crossorigin="anonymous"></script>
-  <!--會員登入-->
-  <link href="css/login.css" rel="stylesheet" />
+<!--jQuery-->
+<link
+	href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<!--會員登入-->
+<link href="css/login.css" rel="stylesheet" />
 
-  <!-- css files -->
-  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-  <!-- bootstrap css -->
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <!-- custom css -->
-  <link href="css/fontawesome-all.css" rel="stylesheet" />
-  <!-- fontawesome css -->
-  <!-- //css files -->
+<!-- css files -->
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<!-- bootstrap css -->
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<!-- custom css -->
+<link href="css/fontawesome-all.css" rel="stylesheet" />
+<!-- fontawesome css -->
+<!-- //css files -->
 
-  <!-- google fonts -->
-  <!-- 載入字體 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
-  <!-- //google fonts -->
+<!-- google fonts -->
+<!-- 載入字體 -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+	rel="stylesheet" />
+<!-- //google fonts -->
 
-  <!-- 載入icon -->
-  <link rel="shortcut icon" href="./images/icon.png" />
-  <link rel="bookmark" href="./images/icon.png" />
+<!-- 載入icon -->
+<link rel="shortcut icon" href="./images/icon.png" />
+<link rel="bookmark" href="./images/icon.png" />
 
-  <style>
-    /*要設定高度*/
-    .my-carousel {
-      height: 36rem;
-    }
+<style>
+/*要設定高度*/
+.my-carousel {
+	height: 36rem;
+}
 
-    .container-fluid {
-      background-color: #f5f5f5;
-    }
+.container-fluid {
+	background-color: #f5f5f5;
+}
 
-    /* 評價的星星 */
-    .my-ratings .on {
-      color: #26bec9;
-    }
+/* 評價的星星 */
+.my-ratings .on {
+	color: #26bec9;
+}
 
-    /* 加入購物車的按鈕 */
-    #btnAddToCart,
-    #btnMinus,
-    #btnPlus,
-    #btnMore {
-      border: #26bec9;
-      color: white;
-      background-color: #26bec9;
-    }
+/* 加入購物車的按鈕 */
+#btnAddToCart, #btnMinus, #btnPlus, #btnMore {
+	border: #26bec9;
+	color: white;
+	background-color: #26bec9;
+}
 
-    #btnAddToCart:hover,
-    #btnMinus:hover,
-    #btnPlus:hover,
-    #btnAddToCart:focus,
-    #btnMinus:focus,
-    #btnPlus:focus {
-      border: #26bec9;
-      background-color: #09777d;
-    }
+#btnAddToCart:hover, #btnMinus:hover, #btnPlus:hover, #btnAddToCart:focus,
+	#btnMinus:focus, #btnPlus:focus {
+	border: #26bec9;
+	background-color: #09777d;
+}
 
+/* 文字灰色 */
+.my-text-lightgray {
+	color: #ccc;
+}
 
-    /* 文字灰色 */
-    .my-text-lightgray {
-      color: #ccc;
-    }
+.my-text-content {
+	margin: 0;
+	font-size: 15px;
+	line-height: 1.8em;
+	letter-spacing: 1px;
+	color: #707579;
+}
 
-    .my-text-content {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.8em;
-      letter-spacing: 1px;
-      color: #707579;
-    }
+/* 票券價格下方的標記 */
+.my-mark {
+	margin: 0 6px 6px 0;
+	padding: 3px 8px;
+	color: #64b3f4;
+	background-color: rgba(100, 179, 244, .1);
+	display: inline-block;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 0.25em;
+}
 
-    /* 票券價格下方的標記 */
-    .my-mark {
-      margin: 0 6px 6px 0;
-      padding: 3px 8px;
-      color: #64b3f4;
-      background-color: rgba(100, 179, 244, .1);
-      display: inline-block;
-      line-height: 1;
-      text-align: center;
-      white-space: nowrap;
-      vertical-align: baseline;
-      border-radius: 0.25em;
-    }
+/* 注意事項 */
+#ticketNote div {
+	border-radius: 10px;
+	padding: 3rem;
+	background: rgba(255, 209, 120, .2);
+}
 
+.my-comment-bg {
+	background-color: #f6f6f6;
+	border-radius: 6px;
+}
 
+.my-hidden {
+	visibility: hidden;
+}
 
-    /* 注意事項 */
-    #ticketNote div {
-      border-radius: 10px;
-      padding: 3rem;
-      background: rgba(255, 209, 120, .2);
-    }
+/* 文字水藍 */
+.my-text-lightblue {
+	color: #26bec9;
+}
 
+/* 文字淺紅 */
+.my-text-lightred {
+	color: #ef7a70;
+}
 
-    .my-comment-bg {
-      background-color: #f6f6f6;
-      border-radius: 6px;
-    }
+/* 右邊的快速導覽列 */
+#rightNav a {
+	padding: 5px 0;
+	font-size: 1.2rem;
+	letter-spacing: 0.2rem;
+	transition: 0.25s;
+}
 
-    .my-hidden {
-      visibility: hidden;
-    }
+#rightNav li :hover {
+	color: #26bec9;
+	transition: 0.25s;
+}
 
-    /* 文字水藍 */
-    .my-text-lightblue {
-      color: #26bec9;
-    }
-
-    /* 文字淺紅 */
-    .my-text-lightred {
-      color: #ef7a70;
-    }
-
-    /* 右邊的快速導覽列 */
-    #rightNav a {
-      padding: 5px 0;
-      font-size: 1.2rem;
-      letter-spacing: 0.2rem;
-      transition: 0.25s;
-    }
-
-    #rightNav li :hover {
-      color: #26bec9;
-      transition: 0.25s;
-    }
-
-    #rightNav .active ::before {
-      content: "";
-      display: inline-block;
-      width: 4px;
-      height: 24px;
-      position: absolute;
-      top: 8px;
-      left: -16px;
-      border-radius: 4px;
-      background-color: #26bec9;
-    }
-  </style>
+#rightNav .active ::before {
+	content: "";
+	display: inline-block;
+	width: 4px;
+	height: 24px;
+	position: absolute;
+	top: 8px;
+	left: -16px;
+	border-radius: 4px;
+	background-color: #26bec9;
+}
+</style>
 </head>
 
 <body>
-  <!-- header -->
-  <header>
-    <div class="container" style="padding-right: 0px">
-      <!-- nav -->
-      <nav class="py-md-4 py-3">
-        <div id="logo">
-          <h1 class="mt-md-0 mt-2">
-            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
-              TripLight
-            </a>
-          </h1>
-        </div>
-        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu ml-auto mt-1">
-          <li class=""><a href="index.html">首頁</a></li>
-          <li class=""><a href="booking.html">AI行程規劃</a></li>
-          <li class="active"><a href="tickets.html">票券</a></li>
-          <li class=""><a href="packages.html">套裝行程</a></li>
-          <li class=""><a href="articles.html">旅遊文章</a></li>
-          <li class="booking"><a href="" id="login">登入/註冊</a></li>
-          <li class="">
-            <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
-          </li>
-        </ul>
-      </nav>
-      <!-- //nav -->
-      <div class="member">
-        <ul class="member_list">
-          <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
-          </li>
-          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
-            <ul class="order_list">
-              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
-              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
-              </li>
-            </ul>
-          </li>
-          <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-          <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
-          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
-          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
-          <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
-          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
-          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
-          <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </header>
-  <!-- //header -->
-  <!-- 登入 -->
+	<!-- header -->
+	<header>
+		<div class="container" style="padding-right: 0px">
+			<!-- nav -->
+			<nav class="py-md-4 py-3">
+				<div id="logo">
+					<h1 class="mt-md-0 mt-2">
+						<a href="index.html"><img src="./images/icon.png"
+							class="icon_triplight" /> TripLight </a>
+					</h1>
+				</div>
+				<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+				<input type="checkbox" id="drop" />
+				<ul class="menu ml-auto mt-1">
+					<li class=""><a href="index.html">首頁</a></li>
+					<li class=""><a href="booking.html">AI行程規劃</a></li>
+					<li class="active"><a href="tickets.html">票券</a></li>
+					<li class=""><a href="packages.html">套裝行程</a></li>
+					<li class=""><a href="articles.html">旅遊文章</a></li>
+					<li class="booking"><a href="" id="login">登入/註冊</a></li>
+					<li class=""><a href="shopping_car.html"><img
+							src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a></li>
+				</ul>
+			</nav>
+			<!-- //nav -->
+			<div class="member">
+				<ul class="member_list">
+					<li class="member_li"><a href="login.html"><i
+							class="fa-regular fa-user"></i>管理帳戶</a></li>
+					<li class="member_li" id="order_li"><a href=""><i
+							class="fa-solid fa-plane"></i>訂單管理</a>
+						<ul class="order_list">
+							<li class="order_content"><a href="tickets_order.html"><i
+									class="fa-solid fa-ticket"></i>票券訂單</a></li>
+							<li class="order_content"><a href="group_order.html"><i
+									class="fa-solid fa-suitcase"></i>旅遊團訂單</a></li>
+						</ul></li>
+					<li class="member_li"><a href="my_favorite.html"><i
+							class="fa-regular fa-heart"></i>我的收藏</a></li>
+					<li class="member_li"><a href="comment.html"><i
+							class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
+					<li class="member_li"><a href="article_myfavorite.html"><i
+							class="fa-solid fa-copy"></i>我的文章</a></li>
+					<li class="member_li"><a href="membership_rating.html"><i
+							class="fa-regular fa-gem"></i>會員分級</a></li>
+					<li class="member_li"><a href="coupon.html"><i
+							class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+					<li class="member_li"><a href="question_form.html"><i
+							class="fa-regular fa-comment"></i>提出問題</a></li>
+					<li class="member_li"><a href="https://www.google.com"><i
+							class="fa-regular fa-comment"></i>查看問題</a></li>
+					<li class="member_li" id="logout_li"><a href=""><i
+							class="fa-solid fa-right-from-bracket"></i>登出</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<!-- //header -->
+	<!-- 登入 -->
 
-  <div id="login-container">
-    <!---container--->
+	<div id="login-container">
+		<!---container--->
 
-    <div class="main-box login">
-      <h3>登入</h3>
-      <form action="">
-        <div class="input-box">
-          <i class="fas fa-envelope icon2"></i>
-          <input type="email" name="email" id="email" required />
-          <label for="">信箱</label>
-        </div>
-        <div class="input-box">
-          <i class="fas fa-lock icon2"></i>
-          <input type="password" name="password" id="password" required />
-          <label for="">密碼</label>
-        </div>
-        <div class="check">
-          <label><input type="checkbox" />記住我</label>
-          <a href="#">忘記密碼</a>
-        </div>
-        <button type="submit" class="main-btn">Login</button>
-        <div class="register">
-          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
-        </div>
-      </form>
-    </div>
+		<div class="main-box login">
+			<h3>登入</h3>
+			<form action="">
+				<div class="input-box">
+					<i class="fas fa-envelope icon2"></i> <input type="email"
+						name="email" id="email" required /> <label for="">信箱</label>
+				</div>
+				<div class="input-box">
+					<i class="fas fa-lock icon2"></i> <input type="password"
+						name="password" id="password" required /> <label for="">密碼</label>
+				</div>
+				<div class="check">
+					<label><input type="checkbox" />記住我</label> <a href="#">忘記密碼</a>
+				</div>
+				<button type="submit" class="main-btn">Login</button>
+				<div class="register">
+					<p>
+						如果沒有帳號?<a href="#" class="register-link">點擊註冊</a>
+					</p>
+				</div>
+			</form>
+		</div>
 
-    <div class="main-box register">
-      <h3>註冊</h3>
-      <form action="">
-        <div class="input-box">
-          <i class="fas fa-user icon2"></i>
-          <input type="email" name="email" required />
-          <label for="">使用者名稱</label>
-        </div>
-        <div class="input-box">
-          <i class="fas fa-envelope icon2"></i>
-          <input type="email" name="email" required />
-          <label for="">信箱</label>
-        </div>
-        <div class="input-box">
-          <i class="fas fa-lock icon2"></i>
-          <input type="password" name="password" required />
-          <label for="">密碼</label>
-        </div>
-        <div class="check">
-          <label><input type="checkbox" />我同意所有條款</label>
-        </div>
-        <button type="submit" class="main-btn">註冊</button>
-        <div class="register">
-          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
-        </div>
-      </form>
-    </div>
+		<div class="main-box register">
+			<h3>註冊</h3>
+			<form action="">
+				<div class="input-box">
+					<i class="fas fa-user icon2"></i> <input type="email" name="email"
+						required /> <label for="">使用者名稱</label>
+				</div>
+				<div class="input-box">
+					<i class="fas fa-envelope icon2"></i> <input type="email"
+						name="email" required /> <label for="">信箱</label>
+				</div>
+				<div class="input-box">
+					<i class="fas fa-lock icon2"></i> <input type="password"
+						name="password" required /> <label for="">密碼</label>
+				</div>
+				<div class="check">
+					<label><input type="checkbox" />我同意所有條款</label>
+				</div>
+				<button type="submit" class="main-btn">註冊</button>
+				<div class="register">
+					<p>
+						已經有帳號?<a href="#" class="login-link">點擊登入</a>
+					</p>
+				</div>
+			</form>
+		</div>
 
-    <span class="close-icon">
-      <div class="fas fa-times"></div>
-    </span>
-  </div>
+		<span class="close-icon">
+			<div class="fas fa-times"></div>
+		</span>
+	</div>
 
-  <!-- 登入  -->
+	<!-- 登入  -->
 
-  <!-- banner -->
-  <section class="banner_inner" id="home">
-    <div class="banner_inner_overlay"></div>
-  </section>
-  <!-- //banner -->
+	<!-- banner -->
+	<section class="banner_inner" id="home">
+		<div class="banner_inner_overlay"></div>
+	</section>
+	<!-- //banner -->
 
-  <!-- 這是正文 -->
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-12">
-        <!-- 輪播 (Carousel) -->
-        <div id="ticketCarousel" class="carousel slide carousel-fade mb-2" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <!-- 內容給JS填 -->
-          </div>
-          <div class="carousel-inner my-carousel">
-            <!-- 內容給JS填 -->
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#ticketCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#ticketCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- 這是正文 -->
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-12">
+				<!-- 輪播 (Carousel) -->
+				<div id="ticketCarousel" class="carousel slide carousel-fade mb-2"
+					data-bs-ride="carousel">
+					<div class="carousel-indicators">
+						<!-- 內容給JS填 -->
+					</div>
+					<div class="carousel-inner my-carousel">
+						<!-- 內容給JS填 -->
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#ticketCarousel" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon"></span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#ticketCarousel" data-bs-slide="next">
+						<span class="carousel-control-next-icon"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="container-fluid mt-3">
-    <div class="container mt-3">
-      <!-- 第二排 -->
-      <div class="row">
+	<div class="container-fluid mt-3">
+		<div class="container mt-3">
+			<!-- 第二排 -->
+			<div class="row">
 
-        <!-- 左邊 -->
-        <div class="col-12 col-lg-8" id="ticketTitle">
-          <!-- 內容給JS填 -->
-        </div>
+				<!-- 左邊 -->
+				<div class="col-12 col-lg-8" id="ticketTitle">
+					<!-- 內容給JS填 -->
+				</div>
 
-        <!-- 右邊 -->
-        <div class="col-12 col-lg-4" id="ticketPrice">
-          <!-- 內容給JS填 -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-
-        <div class="my-5" id="ticketContent">
-          <!-- 內容給JS填 -->
-        </div>
-
-        <hr class="my-5">
-
-        <div class="my-5" id="ticketNote">
-          <!-- 內容給JS填 -->
-        </div>
-
-        <hr class="my-5">
-
-        <div class="my-5" id="ticketMap">
-          <h3>體驗地點</h3>
-          <div class="my-3" id="map" style="width: 100%; height: 500px;"></div>
-        </div>
+				<!-- 右邊 -->
+				<div class="col-12 col-lg-4" id="ticketPrice">
+					<!-- 內容給JS填 -->
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-        <hr class="my-5">
-        <div class="my-3" id="ticketComment">
-          <h3>旅客評論</h3>
-          <ul class="list-group my-5">
-            <!-- 內容給JS填 -->
-          </ul>
-        </div>
-        <!-- 最下排 -->
-        <div class="d-flex justify-content-center align-items-center">
-          <button class="btn btn-outline-secondary" type="button" id="btnMore">更多評論</button>
-        </div>
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-12 col-lg-8">
+
+				<div class="my-5" id="ticketContent">
+					<!-- 內容給JS填 -->
+				</div>
+
+				<hr class="my-5">
+
+				<div class="my-5" id="ticketNote">
+					<!-- 內容給JS填 -->
+				</div>
+
+				<hr class="my-5">
+
+				<div class="my-5" id="ticketMap">
+					<h3>體驗地點</h3>
+					<div class="my-3" id="map" style="width: 100%; height: 500px;"></div>
+				</div>
 
 
-      </div>
-      <!-- 右邊 -->
-      <div class="col-12 col-lg-3 offset-lg-1">
-        <div class="m-5 top-0 position-sticky">
-          <ul class="" id="rightNav">
-            <li class="position-relative"><a class="btn" href="#ticketTitle"> 商品購買</a></li>
-            <li class="position-relative"><a class="btn" href="#ticketContent">商品說明</a></li>
-            <li class="position-relative"><a class="btn" href="#ticketNote">注意事項 </a></li>
-            <li class="position-relative"><a class="btn" href="#ticketMap">體驗地點</a></li>
-            <li class="position-relative"><a class="btn" href="#ticketComment">旅客評論</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+				<hr class="my-5">
+				<div class="my-3" id="ticketComment">
+					<h3>旅客評論</h3>
+					<ul class="list-group my-5">
+						<!-- 內容給JS填 -->
+					</ul>
+				</div>
+				<!-- 最下排 -->
+				<div class="d-flex justify-content-center align-items-center">
+					<button class="btn btn-outline-secondary" type="button"
+						id="btnMore">更多評論</button>
+				</div>
 
 
-  </div>
+			</div>
+			<!-- 右邊 -->
+			<div class="col-12 col-lg-3 offset-lg-1">
+				<div class="m-5 top-0 position-sticky">
+					<ul class="" id="rightNav">
+						<li class="position-relative"><a class="btn"
+							href="#ticketTitle"> 商品購買</a></li>
+						<li class="position-relative"><a class="btn"
+							href="#ticketContent">商品說明</a></li>
+						<li class="position-relative"><a class="btn"
+							href="#ticketNote">注意事項 </a></li>
+						<li class="position-relative"><a class="btn"
+							href="#ticketMap">體驗地點</a></li>
+						<li class="position-relative"><a class="btn"
+							href="#ticketComment">旅客評論</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
 
 
 
-  <!-- 加入購物車按鈕按下去的Modal畫面 -->
-  <div class="modal fade" id="responseModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">提示</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" style="height: 20vh">
-          <div class="mx-4">
-            <span class="my-text-lightblue" id="responseMsg"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- 加入購物車按鈕按下去的Modal畫面 -->
+	<div class="modal fade" id="responseModal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">提示</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body" style="height: 20vh">
+					<div class="mx-4">
+						<span class="my-text-lightblue" id="responseMsg"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <!-- tabs -->
-  <section class="choose" id="choose">
-    <div class="overlay-all py-5">
-      <div class="container py-lg-5 py-sm-4">
-        <h2 class="heading text-capitalize text-center mb-lg-5 mb-4"></h2>
-        <div class="edu-exp-grids">
-          <div class="tab-main">
-            <input id="tab1" type="radio" name="tabs" class="w3pvt-sm" checked />
-            <label for="tab1">我們提供</label>
-            <input id="tab2" type="radio" class="w3pvt-sm" name="tabs" />
-            <label for="tab2">我們保證</label>
-            <section id="content1">
-              <div class="row text-center">
-                <div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
-                  <div class="inner-sec-grid">
-                    <span class="fa fa-gift"></span>
-                    <h4 class="mt-md-4 mt-2">精心策劃的行程安排</h4>
-                    <p class="mt-3">
-                      我們的專業策劃團隊會為您打造一個充滿精彩活動和美食的行程，讓您輕鬆暢遊當地，享受一個難忘的旅程。
-                    </p>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
-                  <div class="inner-sec-grid">
-                    <span class="fa fa-gift"></span>
-                    <h4 class="mt-md-4 mt-2">舒適的住宿體驗</h4>
-                    <p class="mt-3">
-                      我們提供各種等級的飯店和民宿選擇，無論您喜歡豪華還是簡約舒適，都可以找到適合您的住宿選擇。
-                    </p>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
-                  <div class="inner-sec-grid">
-                    <span class="fa fa-gift"></span>
-                    <h4 class="mt-md-4 mt-2">專業的導遊服務</h4>
-                    <p class="mt-3">
-                      我們的導遊團隊擁有豐富的當地知識和經驗，可以為您提供專業的導遊服務，讓您深入了解當地的文化和歷史。
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-            <section id="content2">
-              <div class="row text-center">
-                <div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
-                  <div class="inner-sec-grid">
-                    <span class="fa fa-gift"></span>
-                    <h4 class="mt-md-4 mt-2">安全的旅行環境</h4>
-                    <p class="mt-3">
-                      我們會確保您的旅行環境安全，保護您和您的家人的健康。
-                    </p>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
-                  <div class="inner-sec-grid">
-                    <span class="fa fa-gift"></span>
-                    <h4 class="mt-md-4 mt-2">優質的服務態度</h4>
-                    <p class="mt-3">
-                      我們的團隊會以優質的服務態度迎接您的到來，並全程照顧您的需要。
-                    </p>
-                  </div>
-                </div>
-                <div class="col-lg-4 inner-w3pvt-wrap">
-                  <div class="inner-sec-grid">
-                    <span class="fa fa-gift"></span>
-                    <h4 class="mt-md-4 mt-2">公正透明的價格</h4>
-                    <p class="mt-3">
-                      我們的套裝行程價格公正透明，沒有隱藏費用，讓您放心出行，無後顧之憂。
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- tabs -->
+	<!-- tabs -->
+	<section class="choose" id="choose">
+		<div class="overlay-all py-5">
+			<div class="container py-lg-5 py-sm-4">
+				<h2 class="heading text-capitalize text-center mb-lg-5 mb-4"></h2>
+				<div class="edu-exp-grids">
+					<div class="tab-main">
+						<input id="tab1" type="radio" name="tabs" class="w3pvt-sm" checked />
+						<label for="tab1">我們提供</label> <input id="tab2" type="radio"
+							class="w3pvt-sm" name="tabs" /> <label for="tab2">我們保證</label>
+						<section id="content1">
+							<div class="row text-center">
+								<div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
+									<div class="inner-sec-grid">
+										<span class="fa fa-gift"></span>
+										<h4 class="mt-md-4 mt-2">精心策劃的行程安排</h4>
+										<p class="mt-3">
+											我們的專業策劃團隊會為您打造一個充滿精彩活動和美食的行程，讓您輕鬆暢遊當地，享受一個難忘的旅程。</p>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
+									<div class="inner-sec-grid">
+										<span class="fa fa-gift"></span>
+										<h4 class="mt-md-4 mt-2">舒適的住宿體驗</h4>
+										<p class="mt-3">
+											我們提供各種等級的飯店和民宿選擇，無論您喜歡豪華還是簡約舒適，都可以找到適合您的住宿選擇。</p>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
+									<div class="inner-sec-grid">
+										<span class="fa fa-gift"></span>
+										<h4 class="mt-md-4 mt-2">專業的導遊服務</h4>
+										<p class="mt-3">
+											我們的導遊團隊擁有豐富的當地知識和經驗，可以為您提供專業的導遊服務，讓您深入了解當地的文化和歷史。</p>
+									</div>
+								</div>
+							</div>
+						</section>
+						<section id="content2">
+							<div class="row text-center">
+								<div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
+									<div class="inner-sec-grid">
+										<span class="fa fa-gift"></span>
+										<h4 class="mt-md-4 mt-2">安全的旅行環境</h4>
+										<p class="mt-3">我們會確保您的旅行環境安全，保護您和您的家人的健康。</p>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-6 inner-w3pvt-wrap">
+									<div class="inner-sec-grid">
+										<span class="fa fa-gift"></span>
+										<h4 class="mt-md-4 mt-2">優質的服務態度</h4>
+										<p class="mt-3">我們的團隊會以優質的服務態度迎接您的到來，並全程照顧您的需要。</p>
+									</div>
+								</div>
+								<div class="col-lg-4 inner-w3pvt-wrap">
+									<div class="inner-sec-grid">
+										<span class="fa fa-gift"></span>
+										<h4 class="mt-md-4 mt-2">公正透明的價格</h4>
+										<p class="mt-3">我們的套裝行程價格公正透明，沒有隱藏費用，讓您放心出行，無後顧之憂。</p>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- tabs -->
 
-  <!-- testimonials -->
-  <section class="testimonials py-5" id="testi">
-    <div class="container py-lg-5 py-md-3">
-      <h3 class="heading text-capitalize text-center mb-lg-5 mb-4">
-        我們的客戶評價
-      </h3>
-      <div class="row pt-xl-4">
-        <div class="col-md-4 test-grid px-lg-4">
-          <div class="testi-info text-center">
-            <p class="text-li">
-              "這是一個令人難忘的旅行經驗。整個行程非常安排妥當，旅館和交通工具都很好。導遊非常專業和友好，總是願意回答我們的問題。我們的旅行充滿了歡笑和驚喜。謝謝你們！"
-            </p>
-            <div class="test-img text-center mt-4">
-              <img src="images/te1.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                   style="max-width: 150px; width: 100%" />
-            </div>
-            <h3 class="mt-md-4 mt-3">張小姐</h3>
-          </div>
-        </div>
-        <div class="col-md-4 test-grid px-lg-4 my-md-0 my-5">
-          <div class="testi-info text-center">
-            <p class="text-li">
-              "這是我們第一次參加套裝旅遊行程，我們很滿意。導遊非常友好和熱情，每個景點都很精彩。我們住的旅館也很舒適，食物很好吃。整個旅行充滿了歡樂和愉悅。謝謝你們的協助！"
-            </p>
-            <div class="test-img text-center mt-4">
-              <img src="images/te2.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                   style="max-width: 150px; width: 100%" />
-            </div>
-            <h3 class="mt-md-4 mt-3">陳先生</h3>
-          </div>
-        </div>
-        <div class="col-md-4 test-grid px-lg-4">
-          <div class="testi-info text-center">
-            <p class="text-li">
-              "這是一個非常出色的套裝旅遊行程。我們參觀了很多著名的景點，都讓我們印象深刻。導遊和司機都很專業和友好。我們的旅行經驗超出了我們的期望。謝謝你們！"
-            </p>
-            <div class="test-img text-center mt-4">
-              <img src="images/te3.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                   style="max-width: 150px; width: 100%" />
-            </div>
-            <h3 class="mt-md-4 mt-3">王先生</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- //testimonials -->
+	<!-- testimonials -->
+	<section class="testimonials py-5" id="testi">
+		<div class="container py-lg-5 py-md-3">
+			<h3 class="heading text-capitalize text-center mb-lg-5 mb-4">
+				我們的客戶評價</h3>
+			<div class="row pt-xl-4">
+				<div class="col-md-4 test-grid px-lg-4">
+					<div class="testi-info text-center">
+						<p class="text-li">
+							"這是一個令人難忘的旅行經驗。整個行程非常安排妥當，旅館和交通工具都很好。導遊非常專業和友好，總是願意回答我們的問題。我們的旅行充滿了歡笑和驚喜。謝謝你們！"
+						</p>
+						<div class="test-img text-center mt-4">
+							<img src="images/te1.jpg" class="img-thumbnail img-fluid"
+								alt="user-image" style="max-width: 150px; width: 100%" />
+						</div>
+						<h3 class="mt-md-4 mt-3">張小姐</h3>
+					</div>
+				</div>
+				<div class="col-md-4 test-grid px-lg-4 my-md-0 my-5">
+					<div class="testi-info text-center">
+						<p class="text-li">
+							"這是我們第一次參加套裝旅遊行程，我們很滿意。導遊非常友好和熱情，每個景點都很精彩。我們住的旅館也很舒適，食物很好吃。整個旅行充滿了歡樂和愉悅。謝謝你們的協助！"
+						</p>
+						<div class="test-img text-center mt-4">
+							<img src="images/te2.jpg" class="img-thumbnail img-fluid"
+								alt="user-image" style="max-width: 150px; width: 100%" />
+						</div>
+						<h3 class="mt-md-4 mt-3">陳先生</h3>
+					</div>
+				</div>
+				<div class="col-md-4 test-grid px-lg-4">
+					<div class="testi-info text-center">
+						<p class="text-li">
+							"這是一個非常出色的套裝旅遊行程。我們參觀了很多著名的景點，都讓我們印象深刻。導遊和司機都很專業和友好。我們的旅行經驗超出了我們的期望。謝謝你們！"
+						</p>
+						<div class="test-img text-center mt-4">
+							<img src="images/te3.jpg" class="img-thumbnail img-fluid"
+								alt="user-image" style="max-width: 150px; width: 100%" />
+						</div>
+						<h3 class="mt-md-4 mt-3">王先生</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //testimonials -->
 
-  <!--footer -->
-  <footer>
-    <section class="footer footer_w3layouts_section_1its py-5">
-      <div class="container py-lg-4 py-3">
-        <div class="row footer-top">
-          <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
-            <div class="footer-title">
-              <h3>地點資訊</h3>
-            </div>
-            <div class="row">
-              <ul class="col-12 links">
-                <li>
-                  <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓" target="_blank">地址：桃園市中壢區復興路46號9樓</a>
-                </li>
-                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
-                <li>
-                  <a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
-                </li>
-                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-            <div class="footer-title">
-              <h3>認識TripLight</h3>
-            </div>
-            <div class="row">
-              <ul class="col-10 links">
-                <li><a href="about.html" class="scroll">關於我們</a></li>
-                <li>
-                  <a href="user_terms.html" class="scroll">使用者條款 </a>
-                </li>
-                <li>
-                  <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
-                </li>
-                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
-            <div class="footer-title">
-              <h3>成為合作夥伴</h3>
-            </div>
-            <div class="row">
-              <ul class="col-6 links">
-                <li>
-                  <a href="supplier_form.html" class="scroll">成為供應商</a>
-                </li>
-                <li>
-                  <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
-                </li>
-                <li>
-                  <a href="group_form.html" class="scroll">團體客製規劃</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
-            <div class="footer-title">
-              <h3>聯絡我們</h3>
-            </div>
-            <ul class="social_section_1info">
-              <li>
-                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg" alt="facebook" /></a>
-              </li>
-              <li>
-                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                       alt="instagram" /></a>
-              </li>
-              <li>
-                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
-              </li>
-              <li class="youtube">
-                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
-                       alt="youtube" /></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  </footer>
-  <!-- //footer -->
+	<!--footer -->
+	<footer>
+		<section class="footer footer_w3layouts_section_1its py-5">
+			<div class="container py-lg-4 py-3">
+				<div class="row footer-top">
+					<div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+						<div class="footer-title">
+							<h3>地點資訊</h3>
+						</div>
+						<div class="row">
+							<ul class="col-12 links">
+								<li><a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
+									target="_blank">地址：桃園市中壢區復興路46號9樓</a></li>
+								<li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+								<li><a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
+								</li>
+								<li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+						<div class="footer-title">
+							<h3>認識TripLight</h3>
+						</div>
+						<div class="row">
+							<ul class="col-10 links">
+								<li><a href="about.html" class="scroll">關於我們</a></li>
+								<li><a href="user_terms.html" class="scroll">使用者條款 </a></li>
+								<li><a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+								</li>
+								<li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+							</ul>
+						</div>
+					</div>
+					<div
+						class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+						<div class="footer-title">
+							<h3>成為合作夥伴</h3>
+						</div>
+						<div class="row">
+							<ul class="col-6 links">
+								<li><a href="supplier_form.html" class="scroll">成為供應商</a></li>
+								<li><a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
+								</li>
+								<li><a href="group_form.html" class="scroll">團體客製規劃</a></li>
+							</ul>
+						</div>
+					</div>
+					<div
+						class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+						<div class="footer-title">
+							<h3>聯絡我們</h3>
+						</div>
+						<ul class="social_section_1info">
+							<li><a href="https://www.facebook.com/TibaMe"><img
+									src="./images/facebook.svg" alt="facebook" /></a></li>
+							<li><a href="https://www.instagram.com/tibame_wiedu/"><img
+									src="./images/instagram.svg" alt="instagram" /></a></li>
+							<li><a href="https://twitter.com/"><img
+									src="./images/twitter.svg" alt="twitter" /></a></li>
+							<li class="youtube"><a
+								href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
+									src="./images/youtube.svg" alt="youtube" /></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</footer>
+	<!-- //footer -->
 
-  <!-- copyright -->
-  <div class="copyright py-3 text-center">
-    <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
-  </div>
-  <!-- //copyright -->
+	<!-- copyright -->
+	<div class="copyright py-3 text-center">
+		<p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+	</div>
+	<!-- //copyright -->
 
-  <!-- move top -->
-  <div class="move-top text-right">
-    <a href="#home" class="move-top">
-      <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
-    </a>
-  </div>
-  <!-- move top -->
+	<!-- move top -->
+	<div class="move-top text-right">
+		<a href="#home" class="move-top"> <span
+			class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+		</a>
+	</div>
+	<!-- move top -->
 
-  <!-- 這是正文 -->
-  <script src="./js/bootstrap.bundle.min.js"></script>
-  <script src="./js/jquery-3.6.4.min.js"></script>
+	<!-- 這是正文 -->
+	<script src="./js/bootstrap.bundle.min.js"></script>
+	<script src="./js/jquery-3.6.4.min.js"></script>
 
-  <script>
+	<script>
     //假資料 以後要從資料庫取得
     let ticket = {
       ticketId: 0,
