@@ -13,6 +13,7 @@ public class TripDto {
     private final int tripDay;
     private final String city;
     private final String tripImage;
+    private final String tripContent;;
 
 
     public TripDto(final Trip trip) {
@@ -23,6 +24,7 @@ public class TripDto {
         this.tripDay = trip.getTripDay();
         this.city = trip.getCity();
         this.tripImage = trip.getImgUrlEx(0);
+        this.tripContent = trip.getTripContent();
     }
 }
 
