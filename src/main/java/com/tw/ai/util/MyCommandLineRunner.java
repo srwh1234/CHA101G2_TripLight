@@ -17,9 +17,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 	private final TripRepository tripRepository;
 	private final TicketService ticketService;
 	private final AiService aiService;
-
 	private final TripService tripService;
-
 	private final MemberRepository memberRepository;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

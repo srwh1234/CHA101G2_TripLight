@@ -42,6 +42,12 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
+		<!--    spring data REST    -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+
 
 		<!-- Logback 相依性 -->
 		<dependency>
