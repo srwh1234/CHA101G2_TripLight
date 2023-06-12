@@ -642,6 +642,9 @@
   <script src="./js/sweetalert.js"></script>
 
   <script>
+    let map;
+    let marker;
+
     //假資料 以後要從資料庫取得
     let ticket = {
       ticketId: 0,
@@ -676,6 +679,7 @@
       comments: [],
     }
 
+      //TODO:
     function fetch_data() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
@@ -691,6 +695,12 @@
           render_price();
           render_content();
           render_note();
+
+          const newLatLng = new google.maps.LatLng(ticket.latitude, ticket.longitude);
+
+          console.log(ticket.latitude + "/" + ticket.longitude);
+          marker.setPosition(newLatLng);
+          map.panTo(newLatLng);
 
         })
         .catch(error => {
@@ -754,6 +764,9 @@
         case 2:
           Swal.fire({ icon: 'warning', title: '此商品數量不足', });
           break;
+        case 3:
+          Swal.fire({ icon: 'warning', title: '此商品已下架', });
+          break;
         default:
           Swal.fire({ icon: 'warning', title: '發生未知的錯誤', });
           break;
@@ -767,7 +780,7 @@
       //去後端拿資料
       fetch_data();
 
-      //TODO:
+    
       //加入購物車的按鈕
       $(document).on('click', '#btnAddToCart', function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -1140,13 +1153,13 @@
       let center = new google.maps.LatLng(24.9576355, 121.2250227);
 
       //這個必須要 如果不想顯示 則需要把div隱藏起來
-      let map = new google.maps.Map(document.getElementById('map'), {
+      map = new google.maps.Map(document.getElementById('map'), {
         center: center,
         zoom: 13
       });
 
       // 在地圖上加入標記
-      var marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         position: center,  // 設定標記位置
         map: map,  // 設定標記所在的地圖物件
         title: '所在地'  // 設定標記提示文字

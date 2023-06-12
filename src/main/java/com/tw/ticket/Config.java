@@ -12,4 +12,8 @@ public class Config {
 	@Value("${ecpay-return-url}")
 	private String ecpayReturnUrl;
 
+	@Getter
+	@Value("${google-api-key}")
+	private String googleApiKey;
+
 }
