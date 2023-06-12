@@ -131,6 +131,7 @@ public class OrderServiceImpl implements OrderService {
 
 			// 票券序號不足
 			if (ticketSns.size() < cart.getQuantity()) {
+				System.out.println("票券序號不足" + cart.getQuantity() + "/" + ticketSns.size());
 				return null;
 			}
 			temps.put(cart.getTicketId(), ticketSns);

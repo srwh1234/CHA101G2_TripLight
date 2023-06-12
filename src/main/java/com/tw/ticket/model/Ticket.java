@@ -68,7 +68,7 @@ public class Ticket {
 	private Integer ratingCount;// 評價人數
 
 	@Transient
-	private String imageSha;// 無使用
+	private String imageSha = "";// 無使用
 
 	// cascade表示存檔時 也一起寫入TicketImage
 	@OneToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.PERSIST*/)

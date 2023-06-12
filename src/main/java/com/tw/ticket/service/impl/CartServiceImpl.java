@@ -53,11 +53,18 @@ public class CartServiceImpl implements CartService {
 			if (ticket != null) {
 				final CartTicketResponse cartTicketResponse = new CartTicketResponse(ticket);
 				// 可用數量
-				cartTicketResponse.setAvailable(snRepository.countUsableSn(cart.getTicketId()));
+				final int available = snRepository.countUsableSn(cart.getTicketId());
+				cartTicketResponse.setAvailable(available);
+
+				if (cart.getQuantity() > available) {
+					cart.setQuantity(available);
+					ticketCartRepository.save(cart);
+				}
 
 				final CartResponse cartResponse = new CartResponse();
 				cartResponse.setQuantity(cart.getQuantity());
 				cartResponse.setTicket(cartTicketResponse);
+
 				result.add(cartResponse);
 			}
 		});
