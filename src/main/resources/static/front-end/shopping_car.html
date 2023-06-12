@@ -574,10 +574,7 @@
         const ticket_cart = result.find((elem) => elem.ticket.ticketId == id);
         $(".modal-body span").text(ticket_cart.ticket.name);
         $('#btnDeleteConfirm').data('ticket-id', id);
-      });
-
-      // 渲染頁面
-      render();
+      });    
     });
 
 
@@ -590,13 +587,9 @@
       const memberId = 1;
       fetch(`http://localhost:8080/carts?memberId=${memberId}`)
         .then(response => response.json())
-        .then(data => {
-          // console.log(data);
-          result = data;
-          // 渲染頁面
-          render();
-        })
-        .catch(error => console.log(error));
+        .then(data => result = data)
+        .catch(error => console.log(error))
+        .finally(() => render());
 
       fetch_coupon();
     }

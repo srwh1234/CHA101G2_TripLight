@@ -169,7 +169,7 @@
     }
 
     /* 分頁選單定位*/
-    #orderContainer .table-responsive{
+    #orderContainer .table-responsive {
       min-height: 40vh;
     }
   </style>
@@ -298,6 +298,7 @@
   </section>
   <!-- //banner -->
 
+  <!-- TODO: 這是正文 -->
   <div class="container" id="orderContainer">
     <div class="row p-3">
       <div class="h3 my-5">票券訂單</div>
@@ -541,16 +542,16 @@
     </a>
   </div>
   <!-- move top -->
+
+
   <!-- 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <!-- <script src="/js/bootstrap-table.min.js"></script> -->
   <script src="./js/jquery.qrcode.min.js"></script>
 
-
-
   <script>
-    // 這邊是假資料
+    // 假資料-訂單列表
     let result =
     {
       curPage: 1,
@@ -585,161 +586,49 @@
         }
       ]
     };
+    // 假資料-訂單明細
+    let resultDetail = [
+      {
+        ticketId: 1,
+        ticketSnId: Math.trunc(1 + Math.random() * 1000),
+        serialNumber: 'FWE456-GJRQ-OORE4R',
+        name: '票券1號',
+        price: (100 * 3),
+        expiryDate: '2023-12-31 22:00',
+        refundStatus: Math.trunc(Math.random() * 3),
+      },
+    ];
 
-
-
-    function doPage(curPage) {
-      const post = {
-        memberId: 1,
-        page: curPage,
-        size: 5,
-      };
-
-      fetch(`http://localhost:8080/ticketorders`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(post),
-      })
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          result = data;
-          //渲染頁面
-          render();
-        })
-        .catch(error => {
-          console.log(error);
-          //渲染頁面
-          render();
-        });
-    }
-
-
-    let resultDetail = [];
-
-    function fetch_detail(orderId) {
-      const memberId = 1;
-      fetch(`http://localhost:8080/ticketorderdetails?memberId=${memberId}&&orderId=${orderId}`)
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          resultDetail = data;
-          //渲染頁面
-          render_detail();
-        })
-        .catch(error => {
-          console.log(error);
-          //渲染頁面
-          render_detail();
-        });
-    }
-
+    //TODO: ------------------------------------------//onload
     $(function () {
+
       doPage(0);
 
-      //TODO: 結帳的按鈕
-      $(document).on('click', '.btn-checkout', function () {
-        const memberId = 1;
-        const orderId = parseInt($(this).closest('tr').find('.ticket_order_id').text());
-        //優惠券
-        // const couponId = result.orders.find(e =>  e.ticketOrderId === orderId).couponId;       
-        // console.log( couponId);
-
-        //綠界支付的介面
-        const post = {
-          memberId: 1,
-          orderId: parseInt($(this).closest('tr').find('.ticket_order_id').text()),
-          backUrl: window.location.href,
-        };
-
-        console.log(post.curUrl);
-
-        fetch('http://localhost:8080/ecpayCheckoutorder', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post),
-        })
-          .then(response => response.text())
-          .then(data => {
-            //console.log(data);
-            if (!data) {
-              doPage(0);
-            } else {
-              $('#myHideDiv').html(data);
-            }
-          })
-          .catch(error => console.log(error));
-      });
-
-
       //退貨的按鈕
-      $('#btnRefundConfirm').on('click', function () {
-        const reason = $('#inputRefund').val().trim();
-        if (!reason) {
-          $('.error-text').fadeIn(200).fadeOut(10000);
-          return false;
+      $('#btnRefundConfirm').on('click', fetch_refund);
+
+      //評價的按鈕
+      $('#btnCommentConfirm').on('click', fetch_comment);
+
+      // 綠界支付結帳的按鈕     
+      $(document).on('click', '.btn-checkout', fetch_order);
+
+      // 查看詳情的按鈕
+      $(document).on('click', '.btn-detail', fetch_detail);
+
+      //分頁的按鈕事件
+      $(document).on('click', '#orderPagination a', function (e) {
+        e.preventDefault();
+
+        const page = $(this).attr('aria-label');
+        if (page === "Previous") {
+          doPage(Math.max(result.curPage - 1, 0));
+        } else if (page === "Next") {
+          doPage(Math.min(result.curPage + 1, result.totalPage - 1));
+        } else if (!isNaN(page)) {
+          doPage(page);
         }
-
-        const post = {
-          memberId: 1,
-          orderId: parseInt($('#orderId').text()),
-          ticketSnId: $(this).data('ticket-sn-id'),
-          refundReason: reason,
-        };
-
-
-        fetch('http://localhost:8080/refundticketorderdetail', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post),
-        })
-          .then(response => response.json())
-          .then(data => {
-            //console.log(data);
-            fetch_detail(post.orderId)
-          })
-          .catch(error => console.log(error));
-
-
-        //console.log(post);
-        $('#refundModal').modal('hide');
       });
-
-      //TODO: 評價的按鈕
-      $('#btnCommentConfirm').on('click', function () {
-
-        const post = {
-          memberId: 1,
-          orderId: parseInt($('#orderId').text()),
-          ticketSnId: $(this).data('ticket-sn'),
-          rating: $('#commentModal .score').text(),
-          comment: $('#inputComment').val().trim(),
-        };
-
-        fetch('http://localhost:8080/ratingticketorderdetail', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post),
-        })
-          .then(response => response.json())
-          .then(data => {
-            //console.log(data);
-            // fetch_detail(post.orderId)
-          })
-          .catch(error => console.log(error));
-
-        console.log(post);
-        $('#commentModal').modal('hide');
-      });
-
 
       //評價的星星按鈕
       $('#commentModal .star').on('click', function () {
@@ -753,6 +642,7 @@
         })
         $('#commentModal .score').text(val);
       });
+
       //顯示序號的按鈕
       $('#serialNumberModal').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
@@ -791,53 +681,276 @@
         $('#btnCommentConfirm').data('ticket-sn', sn);
       });
 
-      // 查看詳情的按鈕
-      $(document).on('click', '.btn-detail', function () {
-        $('#detailContainer').removeClass('d-none');
-
-        const orderId = $(this).closest('tr').find('.ticket_order_id').text();
-        const count = parseInt($(this).closest('tr').find('.ticket_count').text());
-
-        $('#orderId').text(orderId);
-
-        // 這邊是假資料
-        resultDetail = [];
-        for (let i = 1; i <= count; i++) {
-          const detail = {
-            ticketId: i,
-            ticketSnId: Math.trunc(1 + Math.random() * 1000),
-            serialNumber: `U${i}ER${i}AA${i}GG${i}`,
-            name: `#${orderId}訂單內的 票券${i}號`,
-            price: (100 * i ** 3),
-            expiryDate: '2023-12-31 22:00',
-            refundStatus: Math.trunc(Math.random() * 3),
-          };
-          resultDetail.push(detail);
-        }
-
-        render_detail();
-
-        fetch_detail(orderId);
-      });
-
-      //分頁的按鈕事件
-      $(document).on('click', '#orderPagination a', function (e) {
-        e.preventDefault();
-
-        const page = $(this).attr('aria-label');
-
-        if (page === "Previous") {
-          doPage(Math.max(result.curPage - 1, 0));
-        } else if (page === "Next") {
-          doPage(Math.min(result.curPage + 1, result.totalPage - 1));
-        } else if (!isNaN(page)) {
-          doPage(page);
-        }
-      });
-
       //渲染頁面
       render();
     });
+
+
+    //TODO: ------------------------------------------//fetch
+
+
+    /**
+    * 分頁顯示列表 
+    */
+    function doPage(curPage) {
+      const post = {
+        memberId: 1,
+        page: curPage,
+        size: 5,
+      };
+
+      fetch(`http://localhost:8080/ticketorders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => result = data)
+        .catch(error => console.log(error))
+        .finally(() => render());
+    }
+
+    /**
+    * 綠界補結帳
+    */
+    function fetch_order(e) {
+      const post = {
+        memberId: 1,
+        orderId: parseInt($(e.target).closest('tr').find('.ticket_order_id').text()),
+        backUrl: window.location.href,
+      };
+
+      fetch('http://localhost:8080/ecpayCheckoutorder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.text())
+        .then(data => {
+          if (data) {
+            $('#myHideDiv').html(data);
+          } else {
+            doPage(0);
+          }
+        })
+        .catch(error => console.log(error));
+    }
+
+    /**
+    * 退貨申請 
+    */
+    function fetch_refund(e) {
+      const reason = $('#inputRefund').val().trim();
+      if (!reason) {
+        $('.error-text').fadeIn(200).fadeOut(10000);
+        return false;
+      }
+
+      const post = {
+        memberId: 1,
+        orderId: parseInt($('#orderId').text()),
+        ticketSnId: $(e.target).data('ticket-sn-id'),
+        refundReason: reason,
+      };
+
+
+      fetch('http://localhost:8080/refundticketorderdetail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => fetch_detail(post.orderId))
+        .catch(error => console.log(error))
+        .finally(() => $('#refundModal').modal('hide'));
+    }
+
+    /**
+    * 票券評價的請求
+    */
+    function fetch_comment(e) {
+      const post = {
+        memberId: 1,
+        orderId: parseInt($('#orderId').text()),
+        ticketSnId: $(e.target).data('ticket-sn'),
+        rating: $('#commentModal .score').text(),
+        comment: $('#inputComment').val().trim(),
+      };
+
+      fetch('http://localhost:8080/ratingticketorderdetail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => { })
+        .catch(error => console.log(error))
+        .finally(() => $('#commentModal').modal('hide'));
+    }
+
+
+    /**
+    *  獲得票券明細的請求
+    */
+    function fetch_detail(e) {
+      const memberId = 1;
+      const orderId = $(e.target).closest('tr').find('.ticket_order_id').text();
+
+      fetch(`http://localhost:8080/ticketorderdetails?memberId=${memberId}&&orderId=${orderId}`)
+        .then(response => response.json())
+        .then(data => resultDetail = data)
+        .catch(error => console.log(error))
+        .finally(() => {         
+          $('#orderId').text(orderId);
+          $('#detailContainer').removeClass('d-none');
+          render_detail();
+        });
+    }
+
+    //TODO:  ------------------------------------------//render
+
+    /**
+    * 渲染訂單列表
+    */
+    function render() {      
+      $('#orderContainer table tbody').html('');
+
+      for (let order of result.orders) {
+        const theTr = $('<tr>');
+        theTr.append(`
+          <td class="ticket_order_id">${order.ticketOrderId}</td>
+          <td class="ticket_count">${order.ticketCount} 張</td>
+          <td class="pay_date">${df(order.payDate)}</td>
+        `);        
+        //未付款要顯示按鈕
+        if (order.payType === "") {
+          theTr.append(`
+            <td class="pay_type">
+              <button class="btn btn-primary btn-checkout" type="button">
+                 付款
+              </button>
+            </td>
+          `);
+        } else {
+          theTr.append(`<td class="pay_type">${order.payType}</td>`);
+        }
+
+        theTr.append(`
+          <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
+            <td class="actual_price">${order.actualPrice} 元</td>
+            <td class="text-center">
+            <button class="btn btn-primary btn-detail" type="button">
+              <i class="fa fa-search me-2"></i>查看詳情
+            </button>
+          </td>
+        `);
+
+        $('#orderContainer table tbody').append(theTr);
+      }
+      // 最底下的分頁
+      $('#orderPagination ul').html('');
+
+      if (result.totalPage > 1) {
+        $('#orderPagination ul').append(`
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span>&laquo;</span>
+            </a>
+          </li>
+        `);
+        for (let i = 0; i < result.totalPage; i++) {
+          $('#orderPagination ul').append(`         
+            <li class="page-item">
+              <a class="page-link ${i == result.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
+            </li>
+          `);
+        }
+        $('#orderPagination ul').append(`                    
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span>&raquo;</span>
+            </a>
+          </li>
+        `);
+      }
+    }
+
+    /**
+    * 渲染訂單明細
+    */
+    function render_detail() {
+
+      $('#detailContainer table tbody').html('');
+
+      for (detail of resultDetail) {
+        const theTr = $('<tr>')
+
+        $(theTr).append(`
+          <td class="index">${detail.ticketSnId}</td>
+          <td class="ticket_name">${detail.name}</td>
+          <td class="actual_price">${detail.price} 元</td>
+          <td class="expiry_date">${detail.expiryDate}</td>
+        `);
+
+        //退貨中或已退貨 就不顯示序號按鈕
+        if (detail.refundStatus === 0) {
+          $(theTr).append(`
+            <td>
+              <button class="btn btn-sm btn-primary btn-serial" type="button" data-bs-toggle="modal"
+                data-bs-target="#serialNumberModal" data-bs-whatever="${detail.serialNumber}">
+                <i class="fa fa-qrcode me-2"></i>顯示序號
+              </button>
+            </td>
+          `);
+
+        } else {
+          $(theTr).append('<td>--</td>');
+        }
+
+        //狀態 (0:無退款 1:退款中 2:退款完成)
+        if (detail.refundStatus === 0) {
+          $(theTr).append(`
+            <td>
+              <button class="btn btn-sm btn-primary btn-refund" type="button" data-bs-toggle="modal"
+                data-bs-target="#refundModal" data-bs-whatever="${orderId}-${detail.ticketSnId}-${detail.name}">
+                <i class="fa fa-undo me-2"></i>我要退貨
+              </button>
+            </td>
+          `);
+        } else if (detail.refundStatus === 1) {
+          $(theTr).append('<td class="my-text-lightblue">退貨處理中</td>');
+        } else {
+          $(theTr).append('<td class="my-text-lightred">已退貨</td>');
+        }
+
+        $(theTr).append(`
+          <td class="text-center">
+            <button class="btn btn-sm btn-primary btn-comment" type="button" data-bs-toggle="modal"
+              data-bs-target="#commentModal" data-bs-whatever="${detail.ticketId}-${detail.ticketSnId}-${detail.name}">
+              <i class="fa fa-thumbs-up me-2"></i>給予評價
+            </button>
+          </td>       
+          <td class="text-center">
+            <a href="tickets_detail.html?id=${detail.ticketId}" 
+              class="btn btn-sm btn-primary btn-mylink" type="button">
+              <i class="fa fa-share me-2"></i>前往商品
+            </a>
+          </td>
+        `);
+        // 填入這一筆資料
+        $('#detailContainer table tbody').append(theTr);
+      }
+    }
+
+    //TODO:  ------------------------------------------//好用的函式
 
     //日期格式
     function df(dateStr) {
@@ -846,181 +959,6 @@
       const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
       const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
       return `${year}/${month}/${day}`;
-    }
-
-    function render() {
-      // 填入訂單資料
-      $('#orderContainer table tbody').html('');
-
-
-      for (let order of result.orders) {
-        const theTr = $('<tr>');
-        theTr.append(
-          `
-            <td class="ticket_order_id">${order.ticketOrderId}</td>
-            <td class="ticket_count">${order.ticketCount} 張</td>
-            <td class="pay_date">${df(order.payDate)}</td>
-          `
-        );
-
-        if (order.payType === "") {
-          theTr.append(
-            `
-            <td class="pay_type">
-              <button class="btn btn-primary btn-checkout" type="button">
-                 付款
-              </button>
-            </td>
-            `
-          );
-        } else {
-          theTr.append(
-            ` <td class="pay_type">${order.payType}</td>`
-          );
-        }
-
-
-        theTr.append(
-          `
-           <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
-            <td class="actual_price">${order.actualPrice} 元</td>
-            <td class="text-center">
-              <button class="btn btn-primary btn-detail" type="button">
-                <i class="fa fa-search me-2"></i>查看詳情
-              </button>
-            </td>
-          `
-        );
-        $('#orderContainer table tbody').append(theTr);
-        //---------
-
-        // $('#orderContainer table tbody').append(
-        //   `
-        //   <tr>
-        //     <td class="ticket_order_id">${order.ticketOrderId}</td>
-        //     <td class="ticket_count">${order.ticketCount} 張</td>
-        //     <td class="pay_date">${df(order.payDate)}</td>
-        //     <td class="pay_type">${order.payType}</td>
-        //     <td class="coupon">${order.couponName ? order.couponName : '無'}</td>
-        //     <td class="actual_price">${order.actualPrice} 元</td>
-        //     <td class="text-center">
-        //       <button class="btn btn-primary btn-detail" type="button">
-        //         <i class="fa fa-search me-2"></i>查看詳情
-        //       </button>
-        //     </td>
-        //   </tr>
-        //   `
-        // );
-
-
-      }
-
-
-      // 最底下的分頁
-      $('#orderPagination ul').html('');
-
-      if (result.totalPage > 1) {
-        $('#orderPagination ul').append(
-          `
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span>&laquo;</span>
-            </a>
-          </li>
-          `
-        );
-        for (let i = 0; i < result.totalPage; i++) {
-          $('#orderPagination ul').append(
-            `         
-                <li class="page-item">
-                  <a class="page-link ${i == result.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
-                </li>
-            `
-          );
-        }
-        $('#orderPagination ul').append(
-          `                    
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span>&raquo;</span>
-            </a>
-          </li>
-          `
-        );
-      }
-    }
-
-    function render_detail() {
-
-      $('#detailContainer table tbody').html('');
-
-      for (detail of resultDetail) {
-        const theTr = $('<tr>')
-
-        $(theTr).append(
-          `
-        <td class="index">${detail.ticketSnId}</td>
-        <td class="ticket_name">${detail.name}</td>
-        <td class="actual_price">${detail.price} 元</td>
-        <td class="expiry_date">${detail.expiryDate}</td>
-         `
-        );
-
-        //退貨中或以退貨 就不顯示序號按鈕
-        if (detail.refundStatus === 0) {
-          $(theTr).append(
-            `
-            <td>
-              <button class="btn btn-sm btn-primary btn-serial" type="button" data-bs-toggle="modal"
-                data-bs-target="#serialNumberModal" data-bs-whatever="${detail.serialNumber}">
-                <i class="fa fa-qrcode me-2"></i>顯示序號
-              </button>
-            </td>
-            `
-          );
-
-        } else {
-          $(theTr).append('<td>--</td>');
-        }
-
-        //狀態 (0:無退款 1:退款中 2:退款完成)
-        if (detail.refundStatus === 0) {
-          $(theTr).append(
-            `
-            <td>
-              <button class="btn btn-sm btn-primary btn-refund" type="button" data-bs-toggle="modal"
-                data-bs-target="#refundModal" data-bs-whatever="${orderId}-${detail.ticketSnId}-${detail.name}">
-                <i class="fa fa-undo me-2"></i>我要退貨
-              </button>
-            </td>
-            `
-          );
-        } else if (detail.refundStatus === 1) {
-          $(theTr).append('<td class="my-text-lightblue">退貨處理中</td>');
-        } else {
-          $(theTr).append('<td class="my-text-lightred">已退貨</td>');
-        }
-
-        $(theTr).append(
-          `
-            <td class="text-center">
-              <button class="btn btn-sm btn-primary btn-comment" type="button" data-bs-toggle="modal"
-                data-bs-target="#commentModal" data-bs-whatever="${detail.ticketId}-${detail.ticketSnId}-${detail.name}">
-                <i class="fa fa-thumbs-up me-2"></i>給予評價
-              </button>
-            </td>       
-            <td class="text-center">
-              <a href="tickets_detail.html?id=${detail.ticketId}" 
-                class="btn btn-sm btn-primary btn-mylink" type="button">
-                <i class="fa fa-share me-2"></i>前往商品
-              </a>
-            </td>
-
-            `
-        );
-        // 填入這一筆資料
-        $('#detailContainer table tbody').append(theTr);
-      }
     }
   </script>
 </body>

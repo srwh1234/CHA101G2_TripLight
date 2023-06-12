@@ -127,11 +127,13 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		for (final TicketCart cart : ticketCarts) {
+			if (cart.getQuantity() <= 0) {
+				continue;
+			}
 			final List<TicketSn> ticketSns = snRepository.searchUsableSn(cart.getTicketId());
 
 			// 票券序號不足
 			if (ticketSns.size() < cart.getQuantity()) {
-				System.out.println("票券序號不足" + cart.getQuantity() + "/" + ticketSns.size());
 				return null;
 			}
 			temps.put(cart.getTicketId(), ticketSns);

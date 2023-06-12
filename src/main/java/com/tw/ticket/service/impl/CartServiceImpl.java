@@ -93,7 +93,7 @@ public class CartServiceImpl implements CartService {
 			return ADD_CART_ERROR;
 		}
 
-		// XXX 下架中
+		// 下架中
 		if (ticket.getStatus() == DISABLED) {
 			return ADD_CART_DISABLE;
 		}

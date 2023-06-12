@@ -296,7 +296,7 @@
   </section>
   <!-- //banner -->
 
-  <!-- 這是正文 -->
+  <!-- TODO: 這是正文 -->
   <div class="container my-5">
     <div class="row">
       <div class="col-12">
@@ -391,10 +391,10 @@
 
   </div>
 
- 
-  <!-- TODO: 顯示圖片的燈箱 -->
+
+  <!--  顯示圖片的燈箱 -->
   <div class="modal fade" id="imgModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body text-center">
           <img src="#" class="img-fluid">
@@ -631,16 +631,17 @@
   </div>
   <!-- move top -->
 
-  <!-- 這是正文 -->
+  <!-- TODO: 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script src="./js/sweetalert.js"></script>
 
   <script>
+    //Google Map
     let map;
     let marker;
 
-    //假資料 以後要從資料庫取得
+    //假資料-票券
     let ticket = {
       ticketId: 0,
       ticketType: '票券類型',
@@ -657,8 +658,10 @@
       longitude: '經度',
       rating: 4.5,
       ratingPerson: Math.trunc(Math.random() * 1000),
-      images: [],
-
+      images: [
+        'https://picsum.photos/800/600/?random=1',
+        'https://picsum.photos/800/600/?random=2',
+      ],
       promotion: {
         price: 97000,
         startDate: '2023/06/21',
@@ -667,108 +670,27 @@
 
     };
 
+    //假資料-評論
     let resultComment =
     {
       allPage: 3,
       curPage: 1,
-      comments: [],
-    }
-
-    //TODO:
-    function fetch_data() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-
-      fetch(`http://localhost:8080/ticketdetail?id=${id ?? 0}`)
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          ticket = data;
-          //渲染頁面
-          render_carousel();
-          render_title();
-          render_price();
-          render_content();
-          render_note();
-
-          const newLatLng = new google.maps.LatLng(ticket.latitude, ticket.longitude);
-
-          console.log(ticket.latitude + "/" + ticket.longitude);
-          marker.setPosition(newLatLng);
-          map.panTo(newLatLng);
-
-        })
-        .catch(error => {
-          console.log(error);
-          //回首頁         
-          // window.location.href = "tickets.html";
-          //渲染頁面 這邊以後要拿掉
-          render_carousel();
-          render_title();
-          render_price();
-          render_content();
-          render_note();
-
-        });
-
-      fetch_comment(0);
-    }
-
-    function fetch_comment(curPage) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      const json = {
-        ticketId: id,
-        page: curPage,
-        size: 5,
-      }
-
-      fetch('http://localhost:8080/ticketcomments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
+      comments: [
+        {
+          member: {
+            memberNameLast: '會員名稱',
+            memberNameFirst: '1號',
+            memberPic: '',
+          },
+          rating: Math.trunc((Math.random() * 5) + 1),
+          comment: `評論內容1<br>第2行<br>第3行<br>第4行<br>第5行`,
+          postTime: '2023/06/21',
+          lastEditTime: '2023/06/21'
         },
-        body: JSON.stringify(json),
-      })
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          resultComment = data;
-          //渲染頁面         
-          render_commnet(resultComment.comments);
-        })
-        .catch(error => {
-          console.log(error);
-          //回首頁         
-          // window.location.href = "tickets.html";
-          //渲染頁面 這邊以後要拿掉         
-          render_commnet(resultComment.comments);
-        });
+      ],
     }
 
-
-    //加入購物車-顯示回應的結果
-    function responseMsg(reason) {
-      switch (reason) {
-        case 0:
-          Swal.fire({ icon: 'warning', title: '與伺服器失去聯繫', });
-          break;
-        case 1:
-          Swal.fire({ icon: 'success', title: '加入購物車成功', });
-          break;
-        case 2:
-          Swal.fire({ icon: 'warning', title: '此商品數量不足', });
-          break;
-        case 3:
-          Swal.fire({ icon: 'warning', title: '此商品已下架', });
-          break;
-        default:
-          Swal.fire({ icon: 'warning', title: '發生未知的錯誤', });
-          break;
-      }
-      //刷新頁面
-      fetch_data();
-    }
+    //TODO: ------------------------------------------//onload
 
     $(function () {
 
@@ -777,26 +699,7 @@
 
 
       //加入購物車的按鈕
-      $(document).on('click', '#btnAddToCart', function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get("id");
-
-        const post = {
-          memberId: 1,
-          ticketId: id,
-          quantity: parseInt($('#inputQuantity').val()),
-        };
-        fetch('http://localhost:8080/addcart', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(post),
-        })
-          .then(response => response.json())
-          .then(data => responseMsg(data))
-          .catch(error => responseMsg(0));
-      });
+      $(document).on('click', '#btnAddToCart', fetch_cart);
 
       // 減少數量的按鈕點擊事件
       $(document).on('click', '#btnMinus', function () {
@@ -841,7 +744,6 @@
       $('#rightNav > li').on('click', function () {
         $('#rightNav > li').removeClass('active');
         $('#rightNav > li').find('a').removeClass('my-text-lightblue');
-
         $(this).addClass('active');
         $(this).find('a').addClass('my-text-lightblue');
       });
@@ -875,91 +777,150 @@
 
         if (resultComment.comments) {
           render_commnet(resultComment.comments);
-          return;
         }
-
-        //以下以後不要
-        const pageComments = [];
-        const index = resultComment.curPage * 10;
-        for (let i = 1; i <= 10; i++) {
-          const comments = {
-            memberName: `會員名稱${(i + index)}`,
-            memberPhoto: `https://picsum.photos/300/200/?random=${(i + index)}`,
-            memberRating: Math.trunc((Math.random() * 5) + 1),
-            comment: `評論內容${(i + index)}<br>第2行<br>第3行<br>第4行<br>第5行`,
-            postTime: '2023/06/21',
-            lastEditTime: '2023/06/21'
-          }
-          pageComments.push(comments);
-        }
-        render_commnet(pageComments);
       });
 
-      //填入假資料
-      for (let i = 0; i < 5; i++) {
-        ticket.images.push(`https://picsum.photos/800/600/?random=${i}`);
-      }
-      for (let i = 1; i <= 10; i++) {
-        const comments = {
-          member: {
-            memberNameLast: '會員名稱',
-            memberNameFirst: `${i}`,
-            memberPic: '',
-          },
-          rating: Math.trunc((Math.random() * 5) + 1),
-          comment: `評論內容${i}<br>第2行<br>第3行<br>第4行<br>第5行`,
-          postTime: '2023/06/21',
-          lastEditTime: '2023/06/21'
-        }
-        if (i % 3 <= 1) {
-          comments.lastEditTime = '';
-        }
-        resultComment.comments.push(comments);
-      }
 
       // 設定 只要是.lightbox的顯示視窗事件委派
       $(document).on('show.bs.modal', '#imgModal', function (e) {
         const btn = e.relatedTarget;
-         const path = $(btn).find('img').attr('src');
-         $(this).find('img').attr('src', path);
+        const path = $(btn).find('img').attr('src');
+        $(this).find('img').attr('src', path);
       });
     });
 
+    //TODO: ------------------------------------------//fetch
+
+    /**
+    * 取得票券資料
+    */
+    function fetch_data() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      fetch(`http://localhost:8080/ticketdetail?id=${id ?? 0}`)
+        .then(response => response.json())
+        .then(data => ticket = data)
+        .catch(error => console.log(error))
+        .finally(() => {
+          render_carousel();
+          render_title();
+          render_price();
+
+          const newLatLng = new google.maps.LatLng(ticket.latitude, ticket.longitude);
+          marker.setPosition(newLatLng);
+          map.panTo(newLatLng);
+        });
+
+      fetch_comment(0);
+    }
+
+    /**
+    * 取得票券評論
+    */
+    function fetch_comment(curPage) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      const post = {
+        ticketId: id,
+        page: curPage,
+        size: 5,
+      }
+
+      fetch('http://localhost:8080/ticketcomments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => resultComment = data)
+        .catch(error => console.log(error))
+        .finally(() => render_commnet(resultComment.comments));
+    }
 
 
-    // 輪播
+    /**
+    * 加入購物車 
+    */
+    function fetch_cart() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      const post = {
+        memberId: 1,
+        ticketId: id,
+        quantity: parseInt($('#inputQuantity').val()),
+      };
+      fetch('http://localhost:8080/addcart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post),
+      })
+        .then(response => response.json())
+        .then(data => responseMsg(data))
+        .catch(error => responseMsg(0));
+    }
+
+    //加入購物車-顯示回應的結果
+    function responseMsg(reason) {
+      switch (reason) {
+        case 0:
+          Swal.fire({ icon: 'warning', title: '與伺服器失去聯繫', });
+          break;
+        case 1:
+          Swal.fire({ icon: 'success', title: '加入購物車成功', });
+          break;
+        case 2:
+          Swal.fire({ icon: 'warning', title: '此商品數量不足', });
+          break;
+        case 3:
+          Swal.fire({ icon: 'warning', title: '此商品已下架', });
+          break;
+        default:
+          Swal.fire({ icon: 'warning', title: '發生未知的錯誤', });
+          break;
+      }
+      //刷新頁面
+      fetch_data();
+    }
+
+
+
+    //TODO:  ------------------------------------------//render
+
+
+    /**
+    *  渲染票券圖片到輪播中
+    */
     function render_carousel() {
       $('#ticketCarousel .carousel-indicators').html('');
       $('#ticketCarousel .carousel-inner').html('');
 
       ticket.images.forEach((v, i) => {
-        $('#ticketCarousel .carousel-indicators').append(
-          `
+        $('#ticketCarousel .carousel-indicators').append(`
         <button type="button" data-bs-target="#ticketCarousel"
                 data-bs-slide-to="${i}" class="${i == 0 ? 'active' : ''}">
         </button>
-        `
-        );
-        $('#ticketCarousel .carousel-inner').append(
-          `
-        <div class="carousel-item ${i == 0 ? 'active' : ''}"
-        href="#" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#imgModal"
+        ` );
 
-        >
-              <img src="${v}" class="d-block w-100">
-        </div>
-        `
-        );
+        $('#ticketCarousel .carousel-inner').append(`
+          <div class="carousel-item ${i == 0 ? 'active' : ''}" 
+               href="#" data-bs-toggle="modal" data-bs-target="#imgModal">
+            <img src="${v}" class="d-block w-100">
+          </div>
+        `);
       });
     }
 
-    //票券名稱
+    /**
+    * 渲染票券描述/內容/額外說明
+    */
     function render_title() {
-      $('#ticketTitle').html('');
-      $('#ticketTitle').html(
-        `
+      $('#ticketTitle').html(`
         <div class="h2 my-4">
               <span>${ticket.name} | ${ticket.ticketType}</span>
         </div>
@@ -985,122 +946,89 @@
         <div class="my-5" id="ticketDesc">
             <p class="">${ticket.description}</p>
         </div>     
-      `
-      );
+      `);
+      $('#ticketContent').html(`
+        <h3>商品說明</h3>      
+        <div class="my-3 my-text-content">${ticket.content}</div>
+      `);
+      $('#ticketNote').html(`
+        <h3>注意事項</h3>
+        <div class="my-3 my-text-content">${ticket.note}</div>
+      `);
     }
 
-    //票券價格
+    /**
+    * 渲染票券價格
+    */
     function render_price() {
 
-      $('#ticketPrice').html(
-        `
+      $('#ticketPrice').html(`
         <div class="card my-4">
             <div class="card-body p-3"></div>
         </div>
-        `
-      );
+      `);
 
       const promotion = $('<div class="promotion mb-5">');
+
       //有促銷
       if (ticket.promotion) {
-        promotion.append(
-          `
-               <div>
-                  <span class="h2 fw-bold me-2">${ticket.promotion.price} 元</span>
-                  <span class="text-decoration-line-through text-muted">${ticket.price} 元</span>
-                </div>
-                <div class="my-mark">${ticket.promotion.startDate}~${ticket.promotion.endDate}</div>
-          `
-        );
+        promotion.append(`
+          <div>
+            <span class="h2 fw-bold me-2">${ticket.promotion.price} 元</span>
+            <span class="text-decoration-line-through text-muted">${ticket.price} 元</span>
+          </div>
+          <div class="my-mark">${ticket.promotion.startDate}~${ticket.promotion.endDate}</div>
+        `);
 
       } else {
-        promotion.append(
-          `
-              <div>
-                  <span class="h2 fw-bold me-2">${ticket.price} 元</span>
-              </div>                
-          `
-        );
+        promotion.append(`
+          <div>
+            <span class="h2 fw-bold me-2">${ticket.price} 元</span>
+          </div>                
+        `);
       }
       $('#ticketPrice .card-body').append(promotion);
 
-
-      //---------------
+      //庫存狀態
       if (ticket.available) {
-        $('#ticketPrice .card-body').append(
-          `
-              <div class="row my-2 g-2">
-                <div class="col-6">
-                  <div class="input-group input-group">
-                    <button class="btn btn-primary" type="button" id="btnMinus">-</button>
-                    <input type="text" class="form-control" value="1" max="${ticket.available}" id="inputQuantity">
-                    <button class="btn btn-primary" type="button" id="btnPlus">+</button>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary" type="button" id="btnAddToCart">加入購物車</button>
+        $('#ticketPrice .card-body').append(`
+            <div class="row my-2 g-2">
+              <div class="col-6">
+                <div class="input-group input-group">
+                  <button class="btn btn-primary" type="button" id="btnMinus">-</button>
+                  <input type="text" class="form-control" value="1" max="${ticket.available}" id="inputQuantity">
+                  <button class="btn btn-primary" type="button" id="btnPlus">+</button>
                 </div>
               </div>
-        `
-        );
+              <div class="col-6">
+                <button class="btn btn-primary" type="button" id="btnAddToCart">加入購物車</button>
+              </div>
+            </div>
+        `);
       } else {
-        $('#ticketPrice .card-body').append(
-          `
-          <div class="row my-2 g-2">
-                <div class="col-6">
-                  <div class="input-group input-group">
-                    <button class="btn btn-primary" type="button" id="btnMinus">-</button>
-                    <input type="text" class="form-control" value="0" max="${ticket.available}" id="inputQuantity">
-                    <button class="btn btn-primary" type="button" id="btnPlus">+</button>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-danger" type="button">已完售</button>
+        $('#ticketPrice .card-body').append(`
+            <div class="row my-2 g-2">
+              <div class="col-6">
+                <div class="input-group input-group">
+                  <button class="btn btn-primary" type="button" id="btnMinus">-</button>
+                  <input type="text" class="form-control" value="0" max="${ticket.available}" id="inputQuantity">
+                  <button class="btn btn-primary" type="button" id="btnPlus">+</button>
                 </div>
               </div>
-          `
-        );
+              <div class="col-6">
+                <button class="btn btn-danger" type="button">已完售</button>
+              </div>
+            </div>
+        `);
       }
-
-
     }
 
-    //票券內容
-    function render_content() {
-      $('#ticketContent').html('');
-      $('#ticketContent').html(
-        `
-      <h3>商品說明</h3>      
-      <div class="my-3 my-text-content">${ticket.content}</div>
-      `
-      );
-    }
-
-    //額外說明
-    function render_note() {
-      $('#ticketNote').html('');
-      $('#ticketNote').html(
-        `
-      <h3>注意事項</h3>
-      <div class="my-3 my-text-content">${ticket.note}</div>
-      `
-      );
-    }
-
-    //日期格式
-    function df(dateStr) {
-      const date = new Date(dateStr);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
-      const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
-      return `${year}/${month}/${day}`;
-    }
-
-    //會員評論
+    /**
+    * 會員評論
+    */
     function render_commnet(pageComments) {
       for (let comment of pageComments) {
-        $('#ticketComment ul').append(
-          `
+        $('#ticketComment ul').append(`
             <li class="list-group-item1 my-3">
               <div class="row">
                 <div class="col-12 col-lg-2 d-flex justify-content-center">
@@ -1130,16 +1058,25 @@
                 </div>
               </div>
             </li>
-        `
-        );
+        `);
       }
       if (resultComment.curPage >= resultComment.allPage) {
         $('#btnMore').remove();
       }
     }
 
+    //TODO:  ------------------------------------------//好用函式
 
-    /*以下是GoogleMap*/
+    //日期格式
+    function df(dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
+      const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
+      return `${year}/${month}/${day}`;
+    }
+
+    //TODO:  ------------------------------------------//API
 
     // 檢查是否已載入 Google Maps JavaScript API
     if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
@@ -1172,6 +1109,9 @@
         title: '所在地'  // 設定標記提示文字
       });
     }
+
+
+    
   </script>
 </body>
 <!-- login顯示 -->
