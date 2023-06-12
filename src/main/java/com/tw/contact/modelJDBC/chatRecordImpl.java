@@ -1,4 +1,4 @@
-package com.tw.contact.model_1;
+package com.tw.contact.modelJDBC;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

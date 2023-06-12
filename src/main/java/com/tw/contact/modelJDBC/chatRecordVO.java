@@ -1,4 +1,4 @@
-package com.tw.contact.model_1;
+package com.tw.contact.modelJDBC;
 
 import java.time.LocalDateTime;
 

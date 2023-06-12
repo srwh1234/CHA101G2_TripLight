@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data //@Getter @Setter @ToString @EqualsAndHashCode @RequiredArgsConstructor
 @Entity
-@Table(name="questReport")
+@Table(name="quest_report")
 public class QuestReport {
 
     @Id
@@ -23,7 +23,7 @@ public class QuestReport {
     private int memberId;
 
     @Column(name = "employee_id")
-    private int employeeId;
+    private Integer employeeId;
 
     @Column(name = "q_content")
     private String qContent;
