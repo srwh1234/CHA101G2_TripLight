@@ -45,8 +45,6 @@ const intervalId = setInterval(() => {
 $("#storage-planning").on("click", function (e) {
   e.preventDefault();
 
-
-
   // 取得 textarea 與 url 資料
   let text = $("textarea").val();
   let url = sessionStorage.getItem("url");
@@ -65,7 +63,7 @@ $("#storage-planning").on("click", function (e) {
     },
     // 當請求成功時，將伺服器返回的response印出到console中
     success: function (response) {
-      if(response){
+      if (response) {
         // 儲存成功動畫
         Swal.fire({
           icon: "success",
@@ -73,7 +71,7 @@ $("#storage-planning").on("click", function (e) {
           showConfirmButton: false,
           timer: 1500,
         });
-      }else {
+      } else {
         Swal.fire({
           icon: "error",
           title: "儲存失敗",
@@ -150,7 +148,7 @@ function getPackages() {
             <span class="fa fa-map-marker mr-2"></span> ${packages[i].city}
           </h6>
           <h5 class="my-2">${packages[i].tripName}</h5>
-          <p class="">${packages[i].tripDescription}</p>
+          <p class="">${packages[i].tripContent}</p>
           <ul class="listing mt-3">
             <li>
               Duration :

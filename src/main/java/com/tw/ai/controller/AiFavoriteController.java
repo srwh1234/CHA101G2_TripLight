@@ -50,7 +50,7 @@ public class AiFavoriteController {
     @PostMapping("/aiFavorite/{memberId}")
     public ResponseEntity<Boolean> processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId, HttpSession session) {
         try {
-            var user = (Member)session.getAttribute("user");
+            var user = (Member)session.getAttribute("member");
             boolean saved = aiService.save(resultData, resultUrl, memberId,user.getMemberId());
             return ResponseEntity.ok(saved);
         } catch (Exception e) {

@@ -1,10 +1,8 @@
 package com.tw.member.controller;
 
-import java.util.List;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,63 +12,73 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.member.model.Member;
 import com.tw.member.service.LoginMemberService;
+import com.tw.ticket.controller.TicketDetailController.DetailResponse;
 
-import jakarta.servlet.http.HttpSession;
+import lombok.Data;
 
 @RestController
 public class LoginMemberController {
 	@Autowired
 	private LoginMemberService memberService;
 
-//	@PostMapping("/member/{id}")
-//	public Member updateMember(@RequestBody Member member) {
-//		return memberService.updateMember(int id, member);
-//	}
-
-//	@PostMapping("/saveMember")
-//	public ResponseEntity<String> saveMember (@RequestBody Member member){
-//		Member savedMember = memberService.saveMember(member);
-//		return ResponseEntity.ok("User data saved successlly");
-//	}
-//	@GetMapping("/getMember/{memberId}")
-//	public ResponseEntity<Member> getMember(@PathVariable int memberId){
-//		Member member = memberService.getMemberById(memberId);
+//	@GetMapping("/getMember/{Id}")
+//	public ResponseEntity<Member> getMemberById(@PathVariable int Id, @RequestBody Member data) {
+//		Member member = memberService.getMemberById(Id, data);
 //		return ResponseEntity.ok(member);
-//		}
-//
-//	// 查詢
-//    @GetMapping("/member")
-//    public List<Member> getMember() {
-//        return memberService.getAllMembers();
-//    }
-//	// 新增
-//    @PostMapping("/member")
-//    public Member processMember(@RequestBody Member member) {
-//        return memberService.createMember(member);
-//    }
+//	}
+	@GetMapping("/memberdetail")
+	public MemberDetail detail(@RequestParam("id") final int id) {
+		return memberService.getItem(id);
+	}
 
-    // update
-//    @PostMapping("/member/{id}")
-//    public Member updateMember(@PathVariable int id,@RequestBody Member data) {
-//    	String message = "Hello, " + data.getMemberNameFirst() ;
-//        return memberService.updateMember(id, data);
-//    }
-//    @PostMapping("/member")
-//    public String createMember(@RequestBody Member data) {
-//        // 在這裡處理接收到的資料物件
-//        // 可以根據需要進行適當的操作
-//        return message;
-    //}
-    
-//    @PostMapping("/member/{memberId}")
-//    public ResponseEntity<Boolean> processResultData(@RequestParam("resultData") String resultData, @RequestParam("resultUrl") String resultUrl, @PathVariable("memberId") String memberId, HttpSession session) {
-//        try {
-//            var user = (Member)session.getAttribute("user");
-//            boolean saved = aiService.save(resultData, resultUrl, memberId,user.getMemberId());
-//            return ResponseEntity.ok(saved);
-//        } catch (Exception e) {
-//            // 處理異常狀況
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-//        }
-//    }
+
+
+	@Data
+	public static class MemberDetail {
+		public MemberDetail(Member member) {
+			this.memberNameLast = member.getMemberNameLast();
+			this.memberNameFirst = member.getMemberNameFirst();
+			this.memberIdCard = member.getMemberIdCard();
+			this.memberBirth = member.getMemberBirth();
+			this.memberPhone = member.getMemberPhone();
+			this.memberGender = member.getMemberGender();
+			this.memberCity = member.getMemberCity();
+			this.memberDist = member.getMemberDist();
+			this.memberAddress = member.getMemberAddress();
+			this.memberEmail = member.getMemberEmail();
+		}
+
+		private String memberNameLast;
+
+		private String memberNameFirst;
+
+		private String memberPhone;
+
+		private String memberEmail;
+
+		private Date memberBirth;
+
+		private Integer memberGender;
+
+		private String memberIdCard;
+
+		private String memberCity;
+
+		private String memberDist;
+
+		private String memberAddress;
+
+	}
+//	 @GetMapping("/user")
+//	    public User getUser() {
+//	        User user = // 從資料庫或其他來源取得使用者資料
+//	        return user;
+//	    }
+
+	// update
+	@PostMapping("/member/{id}")
+	public Member update(@PathVariable("id") int id, @RequestBody Member data) {
+		return memberService.updateMember(id, data);
+	}
+
 }
