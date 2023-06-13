@@ -2,6 +2,7 @@ package com.tw.ticket.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -58,7 +59,6 @@ public class TicketDetailController {
 			this.longitude = ticket.getLongitude();
 			this.rating = ticket.getRatingSum() / ticket.getRatingCount();
 			this.ratingPerson = ticket.getRatingCount();
-			this.images = ticket.getImgUrlExs();
 		}
 
 		private long ticketId;
@@ -76,7 +76,7 @@ public class TicketDetailController {
 		private double longitude;
 		private double rating;
 		private int ratingPerson;
-		private ArrayList<String> images;
+		private List<String> images;
 		private PromotionResponse promotion;// XXX 未完成
 	}
 

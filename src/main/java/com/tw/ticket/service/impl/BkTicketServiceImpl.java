@@ -58,6 +58,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 	@Autowired
 	private BkImageService bkImageService;
 
+	@Autowired
+	private ImageServiceImpl imageService;
+
 	// 後台票券清單 (分頁)
 	@Override
 	public SearchResponse getItems(final SearchRequest request) {
@@ -87,7 +90,6 @@ public class BkTicketServiceImpl implements BkTicketService {
 			ticketResponse.setSupplierName(ticket.getSupplierName());
 			ticketResponse.setAvailable(available);
 			response.getTickets().add(ticketResponse);
-
 		});
 		return response;
 	}
@@ -121,8 +123,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 		dto.setRatingPerson(ticket.getRatingCount());
 
 		// 圖片url
-		if (!ticket.getTicketImages().isEmpty()) {
-			dto.setImages(ticket.getImgUrlExs());
+		final List<String> images = imageService.findImgUrls(ticketId);
+		if (!images.isEmpty()) {
+			dto.setImages(images);
 		}
 
 		return dto;
