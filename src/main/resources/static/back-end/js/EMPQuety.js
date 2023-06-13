@@ -50,9 +50,9 @@ $(document).ready(function () {
         $(row).find('td:eq(6)').text(permission);
     });
 
-    $('.btn-delete').click(function () {
+   $('.btn-delete').click(function () {
         Swal.fire({
-            text: "確定停權嗎?",
+            text: "確定要停權嗎?",
             showCancelButton: true,
             confirmButtonText: "確認",
             cancelButtonText: "取消",
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 // ...
 
                 // 顯示刪除成功訊息
-                Swal.fire("刪除成功", "", "success");
+                Swal.fire("操作成功", "", "success");
             }
         });
     });
