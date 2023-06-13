@@ -412,13 +412,13 @@
                 >
                     <section id="example-1-collapsible">
                         <h3>營區資訊</h3>
-                        <pre style="font-size: 16px">
+                        <pre style="font-size: 20px" id="tripDescription">
                         </pre>
                         <img style="weight:80%;  height: 500px;" src="https://picsum.photos/800/600/?random=43" class="d-block w-100" alt="...">
                     </section>
                     <section id="example-2-collapsible">
                         <h3>營區介紹</h3>
-                        <pre style="font-size: 20px" id="tripDescription">
+                        <pre style="font-size: 20px" id="tripNote">
                         </pre>
                     </section>
                     <section id="example-3-collapsible">
@@ -698,6 +698,7 @@
         $('#tripName').text(`${response.tripName}`);
         $('#tripContent').text(`${response.tripContent}`);
         $('#tripDescription').html(`${response.tripDescription}`);
+        $('#tripNote').html(`${response.tripNote}`);
 
 
     })
