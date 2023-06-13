@@ -30,7 +30,7 @@ public class QuestReport {
     private Employee employee;
 
     @Column(name = "q_content")
-    private String qContent="";
+    private String qContent;
 
     @Column(name = "r_content")
     private String rContent;
@@ -39,7 +39,7 @@ public class QuestReport {
     private int state;
 
     @Column(name = "start_time")
-    private LocalDateTime startTime = LocalDateTime.now();
+    private LocalDateTime startTime;
 
     @Column(name = "end_time")
     private LocalDateTime endTime;
