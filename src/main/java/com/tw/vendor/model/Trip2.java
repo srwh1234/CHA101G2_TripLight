@@ -20,68 +20,66 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name="Trip")
+@Table(name = "Trip")
 public class Trip2 {  // 表格名稱
-    @Id  // 標示id為主鍵
-    private int tripId; 
-    
-    private int vendorId;
-    
-    private int tripTypeId;
-    
-    private String tripName;
-    
-    private String tripDescription;
-    
-    private String tripNote;
-    
-    private int tripDay;
-    
-    private String city;
-    
-    private int totalSales;
-    
-    private int priceAdult;
-    
-    private int priceChild;
-    
-    private int minTravelersNo;
-    
-    private int maxRavelersNo;
-    
-    private double ratinSum;
-    
-    private int ratingCount;
-    
-    private byte status;
-    
- // cascade表示存檔時 也一起寫入AiLocations
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "tripId")
-    private List<TripImage2> tripImage2 = new ArrayList<>();
+	@Id  // 標示id為主鍵
+	private int tripId;
 
-    // ----------------------------
-    // 獲得指定索引的圖片路徑
-    public String getImgUrlEx(final int index) {
-        if (index < 0 || index >= tripImage2.size()) {
-            return IMG_URL + 0;
-        }
-        return IMG_URL + tripImage2.get(index).getId();   // 獲得第一個圖片的id
-    }
+	private int vendorId;
 
-    // 獲得指定索引的圖片路徑的陣列
-    public ArrayList<String> getImgUrlExs() {
-        final ArrayList<String> result = new ArrayList<>();
-        if (tripImage2.isEmpty()) {
-            result.add(IMG_URL + 0);
-            return result;
-        }
-        tripImage2.forEach(img -> {
-            result.add(IMG_URL + img.getId());
-        });
-        return result;
-    }
-    
+	private int tripTypeId;
+
+	private String tripName;
+
+	private String tripDescription;
+
+	private String tripNote;
+
+	private int tripDay;
+
+	private String city;
+
+	private int totalSales;
+
+	private int priceAdult;
+
+	private int priceChild;
+
+	private int minTravelersNo;
+
+	private int maxTravelersNo;
+
+	private double ratingSum;
+
+	private int ratingCount;
+
+	private byte status;
+
+	// cascade表示存檔時 也一起寫入AiLocations
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "tripId")
+	private List<TripImage2> tripImage2 = new ArrayList<>();
+
+	// ----------------------------
+	// 獲得指定索引的圖片路徑
+	public String getImgUrlEx(final int index) {
+		if (index < 0 || index >= tripImage2.size()) {
+			return IMG_URL + 0;
+		}
+		return IMG_URL + tripImage2.get(index).getId();   // 獲得第一個圖片的id
+	}
+
+	// 獲得指定索引的圖片路徑的陣列
+	public ArrayList<String> getImgUrlExs() {
+		final ArrayList<String> result = new ArrayList<>();
+		if (tripImage2.isEmpty()) {
+			result.add(IMG_URL + 0);
+			return result;
+		}
+		tripImage2.forEach(img -> {
+			result.add(IMG_URL + img.getId());
+		});
+		return result;
+	}
+
 }
-
-
