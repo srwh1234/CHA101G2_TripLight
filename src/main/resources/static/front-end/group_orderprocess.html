@@ -206,10 +206,11 @@
                 <hr>
                 <div class="col-10">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> 旅遊團日期: 2022-07-24 (GMT+8) </li>
-                        <li class="list-group-item"> 方案: 登島＋環繞龜山島＋401高地攻頂</li>
-                        <li class="list-group-item"> 人數: 2 人 </li>
-                        <li class="list-group-item"> 總金額: 3000 元 </li>
+                        <li style="font-size: 20px" class="list-group-item" id="groupDate"> </li>
+                        <li class="list-group-item" id="tripName"></li>
+                        <li class="list-group-item" id="qtyChild"></li>
+                        <li class="list-group-item" id="qtyAdult"></li>
+                        <li class="list-group-item" id="totalAmount"></li>
                     </ul>
                 </div>
 
@@ -396,6 +397,34 @@
         <script>
             // ===== 確認彈窗 =====
             $(document).ready(function () {
+
+
+                $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response){
+
+                    $('#tripName').text(`方案 : ${response.tripName}`);
+                    let tripDay = response.tripDay;
+
+                    let date = sessionStorage.getItem('Date');
+                    let startDate = new Date(date);
+                    let endDate = new Date(startDate.getTime());
+                    endDate.setDate(startDate.getDate()+ tripDay);
+                    console.log(tripDay);
+
+                    $('#groupDate').html(`旅遊團日期: ${startDate} 至 ${endDate}`);
+                    console.log(endDate);
+
+                })
+
+                $.getJSON("http://localhost:8080/tourGroupGet?tripId=1", function (response){
+                    console.log(response.priceAdult);
+                    let priceChild = parseInt(response.priceChild);
+                    let priceAdult = parseInt(response.priceAdult);
+
+
+
+
+                })
+
                 // 当点击返回按钮时触发
                 $('#order_confirmed').click(function () {
                     // 弹出警告框

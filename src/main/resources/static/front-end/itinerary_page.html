@@ -273,7 +273,7 @@
                     <i class="fa-solid fa-heart fa-lg" style="color: #ff0000;"></i>
                 </div>
                 <div class="row m-5">
-                    <h3>USD 143.51 起</h3>
+                    <h3 id="beginPrice"></h3>
                 </div>
                 <div class="row m-5">
                     <button type="button" class="btn btn-info">選擇方案</button>
@@ -312,17 +312,17 @@
                         </div>
 
                         <div class="col-6">
-                            <h5 class="text-secondary" id="confirmTravelersNo"> 10 人</h5>
+                            <h5 class="text-secondary" id="confirmedTravelersNo"></h5>
                         </div>
                     </div>
                     <!-- 選項人數列 -->
                     <!-- 選項人數列 -->
                     <div class="row justify-content-center">
                         <div class="col-5">
-                            <h5 class="text-secondary" id="minTravelersNo"> 最少成團人數: </h5>
+                            <h5 class="text-secondary"> 最少成團人數: </h5>
                         </div>
                         <div class="col-6">
-                            <h5 class="text-secondary"> 10 人</h5>
+                            <h5 class="text-secondary" id="minTravelersNo"></h5>
                         </div>
                     </div>
                     <!-- 選項人數列 -->
@@ -337,7 +337,7 @@
                             <h5> 兒童 </h5>
                         </div>
                         <div class="col-4">
-                            <span id="price_child" value="100"> 100 元/每人 </span>
+                            <span id="priceChild" value="100"> 100 元/每人 </span>
                         </div>
                         <div class="col-5">
                             <div class="input-group input-group">
@@ -358,7 +358,7 @@
                             <h5> 大人 </h5>
                         </div>
                         <div class="col-4">
-                            <span id="price_adult" value="200"> 100 元/每人 </span>
+                            <span id="priceAdult"></span>
                         </div>
                         <div class="col-5">
                             <div class="input-group input-group">
@@ -380,12 +380,12 @@
                             <h5> 總金額 </h5>
                         </div>
                         <div class="col-9">
-                            <h5 id="amount" value="350"> 350 元 </h5>
+                            <h5 id="amount" value="100"> </h5>
                         </div>
                     </div>
                     <!-- 選項價格列 -->
 
-                    <dir class="row"></dir>
+                    <div class="row"></div>
                     <div class="row">
                         <button onclick="window.location.href='group_orderprocess.html'" type="button"
                             class="btn btn-primary btn-lg">我要預定</button>
@@ -690,20 +690,114 @@
         calendar.render();
     });
 
-    // ====== get pic from DB n display in headers ======
-    $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response){
-        console.log(response);
-        console.log(response.tripName);
-        console.log(response.tripDescription);
-        $('#tripName').text(`${response.tripName}`);
-        $('#tripContent').text(`${response.tripContent}`);
-        $('#tripDescription').html(`${response.tripDescription}`);
-        $('#tripNote').html(`${response.tripNote}`);
+    // ====== get trip infor from DB n display in headers ======
+            $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response){
+                console.log(response);
+                console.log(response.tripName);
+                console.log(response.tripDescription);
+                $('#tripName').text(`${response.tripName}`);
+                sessionStorage.setItem('tripName', `${response.tripName}`);
+                $('#tripContent').text(`${response.tripContent}`);
+                $('#tripDescription').html(`${response.tripDescription}`);
+                $('#tripNote').html(`${response.tripNote}`);
 
+
+            })
+
+    // ====== get tourgroup infor from DB n display in headers ======
+            $.getJSON("http://localhost:8080/tourGroupGet?tripId=1", function (response){
+
+                // ====== confirmedTravelersNo ======
+                $('#confirmedTravelersNo').text(`${response.confirmedTravelersNo} 人`);
+
+                // ====== minTravelersNo ======
+                $('#minTravelersNo').text(`${response.minTravelersNo} 人`);
+
+                // ====== priceAdult ======
+                $('#priceAdult').text(`${response.priceAdult}/每人`);
+                $('#priceAdult').attr('value', response.priceAdult);
+
+
+                // ====== priceChild ======
+                $('#priceChild').text(`${response.priceChild}/每人`);
+                $('#priceChild').attr('value', response.priceChild); // attribute value only workable in this area
+
+                // ====== number & price area ======
+                // 數量欄
+                let count_child = $("#count_child");
+                let count_adult = $("#count_adult");
+
+                let currentQtyChild = parseInt(count_child.val());
+                let currentQtyAdult = parseInt(count_adult.val());
+
+                // 價格
+                let priceChild = parseInt($('#priceChild').attr('value'));
+                let priceAdult = parseInt($('#priceAdult').attr('value'));
+
+                // 總金額
+                let amount = $('#amount');
+                let amountValue = parseInt($('#amount').val());
+
+                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                amount.html(`${amountValue} 元`);
+
+                // ====== origin price ======
+                $('#beginPrice').html(`${priceChild} 元 起`);
+
+
+                // ===== 兒童 =====
+                // 減號按鈕
+                $("#minus_child").on("click", function () {
+                    if (currentQtyChild > 1) {
+                        currentQtyChild--;
+                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                        count_child.val(currentQtyChild);
+
+                        amountValue -= priceChild;
+                        amount.html(`${amountValue} 元`);
+                    }
+                })
+                // 加號按鈕
+                $("#plus_child").on("click", function () {
+                    currentQtyChild++;
+                    sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                    count_child.val(currentQtyChild);
+
+                    amountValue += priceChild;
+                    amount.html(`${amountValue} 元`);
+                })
+        // ===== 大人 =====
+
+                // 減號按鈕(大人)
+                $("#minus_adult").on("click", function () {
+                    if (currentQtyAdult > 1) {
+                        currentQtyAdult--;
+                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                        count_adult.val(currentQtyAdult);
+
+                        // 金額增減
+                        amountValue -= priceAdult;
+                        amount.html(`${amountValue} 元`);
+                    }
+                })
+
+                // 加號按鈕 (大人)
+                $("#plus_adult").on("click", function () {
+                    currentQtyAdult++;
+                    sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                    count_adult.val(currentQtyAdult);
+                    // 金額增減
+                    amountValue += priceAdult;
+                    amount.html(`${amountValue} 元`);
+
+                })
 
     })
 
+
+
     // ====== get data from DB n display in comments ======
+
     $.getJSON('http://localhost:8080/tripCommentSent', function (response){
         // console.log(atob(response[0].memberPicBase64));
         let parentEl = $('#commentParent');

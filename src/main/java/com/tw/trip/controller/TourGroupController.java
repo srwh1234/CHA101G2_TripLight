@@ -1,33 +1,31 @@
 package com.tw.trip.controller;
 
-
 import com.google.gson.Gson;
-import com.tw.trip.model.dao.TripDao;
-import com.tw.trip.model.pojo.Trip;
-import jakarta.servlet.ServletException;
+import com.tw.trip.model.dao.TourGroupDao;
+import com.tw.trip.model.dao.TourGroupDaoImpl;
+import com.tw.trip.model.pojo.TourGroup;
 import jakarta.servlet.annotation.WebServlet;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.IOException;
 
-@WebServlet("/tripGet")
-public class TripController extends HttpServlet {
+@WebServlet("/tourGroupGet")
+public class TourGroupController extends HttpServlet {
 
     @Autowired
-    TripDao tripDao;
+    TourGroupDao tourGroupDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         Integer tripId = Integer.valueOf(request.getParameter("tripId"));
-        Trip trip = tripDao.findByPrimaryKey(tripId);
+        TourGroup tourGroup = tourGroupDao.selectById(tripId);
 
-
-        String json = new Gson().toJson(trip);
+        String json = new Gson().toJson(tourGroup);
 
         response.setContentType("application/json; charset=utf-8");
         response.getWriter().write(json);
