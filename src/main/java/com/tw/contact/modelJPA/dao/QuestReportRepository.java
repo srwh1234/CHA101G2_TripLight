@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface QuestReportRepository extends JpaRepository<QuestReport, Integer> {
-
-}
+public interface QuestReportRepository extends JpaRepository<QuestReport, Integer> {}
