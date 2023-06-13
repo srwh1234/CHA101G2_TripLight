@@ -77,11 +77,7 @@ $(document).ready(function () {
 // 抬頭
 
 
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth'
-    });
-    calendar.render();
+
 
 // 燈箱按鈕
 // 頁面上的按鈕
