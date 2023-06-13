@@ -291,7 +291,16 @@
                     <div class="row h-25 d-inline-block">
                     </div>
 
+                    <!-- 選擇的日期 -->
+                    <div class="row justify-content-center">
+                        <div class="col-5 ">
+                            <h5 class="text-secondary"> 選擇日期: </h5>
 
+                        </div>
+
+                        <div class="col-6" id="selectedDate">
+                        </div>
+                    </div>
                     <!-- 選項人數列 -->
                     <div class="row justify-content-center">
                         <div class="col-5 ">
@@ -552,36 +561,6 @@
                     <!-- 評論本體 -->
                     <div class="h3 mt-3"></div>
                     <ul class="list-group" id="commentParent">
-                        <li class="list-group-item">
-                            <div class="d-flex align-items-start">
-                                <div class="flex-shrink-0">
-                                    <img src="https://picsum.photos/64" alt="..." class="rounded-circle" width="60">
-                                </div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">John Doe</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum, arcu ut
-                                        finibus
-                                        tempor, dolor nulla vehicula nisl, vel ullamcorper turpis diam quis magna. </p>
-                                    <div class="text-muted small">2 hours ago</div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- 評論本體 -->
-                        <li class="list-group-item">
-                            <div class="d-flex align-items-start">
-                                <div class="flex-shrink-0">
-                                    <img src="https://picsum.photos/64" alt="..." class="rounded-circle" width="60">
-                                </div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">Jane Smith</div>
-                                    <p>Nullam commodo eu felis vel eleifend. Duis commodo turpis in mollis pharetra.
-                                        Nullam
-                                        malesuada laoreet dolor vel consectetur.</p>
-                                    <div class="text-muted small">1 day ago</div>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
 
                 </div>
@@ -729,15 +708,21 @@
 
 <script>
 
+
     // ====== calendar initialized n get value  ======
+
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             selectable: true, // 啟用選擇功能
             select: function(info) {
-                var start = info.startStr; // 選擇的起始日期時間
-                var end = info.endStr; // 選擇的結束日期時間
+                let start = info.startStr; // 選擇的起始日期時間
+                let end = info.endStr; // 選擇的結束日期時間
+
+                let selectedDate = $('#selectedDate');
+                let date = `<h5 class="text-secondary"> ${start}</h5>`;
+                selectedDate.append(date);
 
                 // 在這裡可以處理選擇的日期
                 console.log('選擇的日期範圍:', start, '至', end);
@@ -746,18 +731,23 @@
         calendar.render();
     });
 
-    // ====== get data from DB  ======
+    // ====== get pic from DB n display in headers ======
+    $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response){
+        console.log(response);
+
+
+    })
+    // ====== get data from DB n display in comments ======
     $.getJSON('http://localhost:8080/tripCommentSent', function (response){
-        console.log(response[0].comment);
-        console.log(response[0].memberPicBase64);
+        // console.log(response[0].comment);
+        // console.log(response[0].memberPicBase64);
         console.log(atob(response[0].memberPicBase64));
         let parentEl = $('#commentParent');
 
 
         for (let i=0; i<response.length; i++){
-            // tbd 確認問題 已經將atob過後或是尚未atob的字串都試過 仍然讀不到
-            // let base64DecodedString = atob(response[i].memberPicBase64);
             let base64Url= 'data:image/gif;base64,' + response[i].memberPicBase64;
+            console.log(base64Url);
 
             let newChildEl = `<li class="list-group-item">
                             <div class="d-flex align-items-start">

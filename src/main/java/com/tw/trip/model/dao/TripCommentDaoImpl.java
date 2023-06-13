@@ -1,15 +1,11 @@
 package com.tw.trip.model.dao;
 
-import com.tw.trip.model.Trip;
 import com.tw.trip.model.pojo.TripComment;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 import com.tw.trip.util.Util;
 public class TripCommentDaoImpl implements TripCommentDao {
@@ -285,21 +281,13 @@ public class TripCommentDaoImpl implements TripCommentDao {
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 TripComment tripComment = new TripComment();
+
                 tripComment.setName(resultSet.getString("name"));
                 tripComment.setComment(resultSet.getString("comment"));
                 tripComment.setLastEditTime(resultSet.getTimestamp("last_edit_time"));
-
-                // import pic n store in byte[]
-                BufferedInputStream inputStream = new BufferedInputStream(resultSet.getBinaryStream("member_pic"));
-
-                byte[] buffer = new byte[4*1024];
-                int len;
-                while((len = inputStream.read(buffer)) != -1){
-                    inputStream.read(buffer);
-                }
+                final byte[] buffer = resultSet.getBytes("member_pic");
                 String memberPicBase64 = Base64.getEncoder().encodeToString(buffer);
                 tripComment.setMemberPicBase64(memberPicBase64);
-                inputStream.close();
 
                 tripComments.add(tripComment);
             }
@@ -307,9 +295,6 @@ public class TripCommentDaoImpl implements TripCommentDao {
             e.printStackTrace();
 
         }catch (SQLException e){
-            e.printStackTrace();
-
-        }catch (IOException e){
             e.printStackTrace();
 
         }finally {
