@@ -54,6 +54,8 @@ public class Trip2 {  // 表格名稱
 	private int ratingCount;
 
 	private byte status;
+	
+	private String tripContent;
 
 	// cascade表示存檔時 也一起寫入AiLocations
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
