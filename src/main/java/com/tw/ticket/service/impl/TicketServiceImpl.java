@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tw.ticket.controller.TicketController.RadAndHotResponse;
+import com.tw.ticket.controller.TicketController.DescResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
 import com.tw.ticket.controller.TicketDetailController.DetailResponse;
@@ -29,6 +29,9 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private TicketSnRepository snRepository;
 
+	@Autowired
+	private ImageServiceImpl imageService;
+
 	// 取得票券明細
 	@Override
 	public DetailResponse getItem(final int id) {
@@ -38,6 +41,8 @@ public class TicketServiceImpl implements TicketService {
 			return null;
 		}
 		final DetailResponse detailResponse = new DetailResponse(ticket);
+		final List<String> images = imageService.findImgUrls(ticket.getTicketId());
+		detailResponse.setImages(images);
 
 		// 可用數量
 		detailResponse.setAvailable(snRepository.countUsableSn(id));
@@ -46,15 +51,18 @@ public class TicketServiceImpl implements TicketService {
 
 	// 隨機票券
 	@Override
-	public List<RadAndHotResponse> getRandomItem() {
-		final List<RadAndHotResponse> result = new ArrayList<>();
+	public List<DescResponse> getRandomItem() {
+		final List<DescResponse> result = new ArrayList<>();
 
 		repository.findAll().forEach(ticket -> {
 			if (result.size() >= 4) {
 				return;
 			}
 			if (ticket.getStatus() == ENABLED) {
-				result.add(new RadAndHotResponse(ticket));
+				final DescResponse response = new DescResponse(ticket);
+				final String image = imageService.findImgUrl(ticket.getTicketId());
+				response.setImage(image);
+				result.add(response);
 			}
 		});
 		return result;
@@ -62,15 +70,18 @@ public class TicketServiceImpl implements TicketService {
 
 	// 熱門票券
 	@Override
-	public List<RadAndHotResponse> getHotItem() {
-		final List<RadAndHotResponse> result = new ArrayList<>();
+	public List<DescResponse> getHotItem() {
+		final List<DescResponse> result = new ArrayList<>();
 
 		repository.findAllByOrderByTotalSalesDesc().forEach(ticket -> {
 			if (result.size() >= 8) {
 				return;
 			}
 			if (ticket.getStatus() == ENABLED) {
-				result.add(new RadAndHotResponse(ticket));
+				final DescResponse response = new DescResponse(ticket);
+				final String image = imageService.findImgUrl(ticket.getTicketId());
+				response.setImage(image);
+				result.add(response);
 			}
 
 		});
@@ -98,7 +109,10 @@ public class TicketServiceImpl implements TicketService {
 		response.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(ticket -> {
-			response.getTickets().add(new RadAndHotResponse(ticket));
+			final DescResponse radAndHotResponse = new DescResponse(ticket);
+			final String image = imageService.findImgUrl(ticket.getTicketId());
+			radAndHotResponse.setImage(image);
+			response.getTickets().add(radAndHotResponse);
 		});
 
 		return response;
@@ -106,11 +120,14 @@ public class TicketServiceImpl implements TicketService {
 
 	// AI 行程，地點搜尋票券
 	@Override
-	public List<RadAndHotResponse> getTicket(final String destination) {
-		final List<RadAndHotResponse> result = new ArrayList<>();
+	public List<DescResponse> getTicket(final String destination) {
+		final List<DescResponse> result = new ArrayList<>();
 
 		repository.findByCityContaining(destination).forEach(ticket -> {
-			result.add(new RadAndHotResponse(ticket));
+			final DescResponse radAndHotResponse = new DescResponse(ticket);
+			final String image = imageService.findImgUrl(ticket.getTicketId());
+			radAndHotResponse.setImage(image);
+			result.add(radAndHotResponse);
 		});
 		return result;
 	}

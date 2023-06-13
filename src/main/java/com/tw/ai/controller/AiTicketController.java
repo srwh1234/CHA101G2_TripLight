@@ -25,7 +25,7 @@ public class AiTicketController {
     }
     // 將推薦票券傳至前端  在表單送出時呼叫
     @GetMapping("/ai/tickets/{memberId}")
-    public ResponseEntity<List<TicketController.RadAndHotResponse>> getTickets(@PathVariable("memberId") String memberId){
+    public ResponseEntity<List<TicketController.DescResponse>> getTickets(@PathVariable("memberId") String memberId){
         var destination = aiService.getDestination(memberId);
         return ResponseEntity.ok(ticketService.getTicket(destination));
     }

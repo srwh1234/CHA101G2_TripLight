@@ -131,7 +131,6 @@ $(function() {
 
 // ============================儲存=====================================
 
-const id = "2";
 function getData() {
 
 	const data = {
@@ -161,51 +160,27 @@ saveBtn.addEventListener("click", function() {
 	getData();
 })
 
+const id = "2";
 // 從資料庫中獲取並設定使用者資料到 input
-$(document).ready(function() {
-	$.ajax({
-		url: "/memberdetail",
-		type: "GET",
-		success: function(member) {
-			$('#inputLastName').val(memberNameLast);
-			$('#inputFirstName').val(memberNameFirst);
-			$('#inputIdNumber').val(memberIdCard);
-			$('#inputBD').val(memberBirth);
-			$('#inputPhoneNumber').val(memberPhone);
-			$('#inputGender').val(memberGender);
-			$('#dist').val(memberDist);
-			$('#city').val(memberCity);
-			$('#inputAddress').val(memberAddress);
-			$('#inputEmail').val(memberEmail);
-		}
-	});
+document.addEventListener("DOMContentLoaded", function() {
+    axios.get("/memberdetail/" + id)
+        .then(function(response) {
+            let member = response.data;
+            console.log(member);
+
+            $('#inputLastName').val(member.memberNameLast);
+            $('#inputFirstName').val(member.memberNameFirst);
+            $('#inputIdNumber').val(member.memberIdCard);
+            $('#inputBD').val(member.memberBirth);
+            $('#inputPhoneNumber').val(member.memberPhone);
+            $('#inputGender').val(member.memberGender);
+            $('#dist').val(member.memberDist);
+            $('#city').val(member.memberCity);
+            $('#inputAddress').val(member.memberAddress);
+            $('#inputEmail').val(member.memberEmail);
+        })
+        .catch(function(error) {
+            console.log(error.response);
+            // 在錯誤回應時進行處理，例如顯示錯誤訊息等
+        });
 });
-//function setMemberData(memberData) {
-//	const memberData = {
-//	memberNameLast: document.querySelector("#inputLastName").value,
-//	memberNameFirst: document.getElementById("inputFirstName").value,
-//	memberIdCard: document.getElementById("inputIdNumber").value,
-//	memberBirth: document.getElementById("inputBD").value,
-//	memberPhone: document.getElementById("inputPhoneNumber").value,
-//	 memberGender: document.getElementById("inputGender").value,
-//	memberCity: document.getElementById("city").value,
-//	memberDist: document.getElementById("dist").value,
-//	memberAddress: document.getElementById("inputAddress").value,
-//	memberEmail: document.getElementById("inputEmail").value
-//	}
-//
-//// 發送 AJAX 請求獲取使用者資料
-//$.ajax({
-//	type: "GET",
-//	url: "/getMember/" + id,
-//	success: function(response) {
-//		console.log(response);
-//		// 在成功回應後將使用者資料設定到 input
-//		setMemberData(response.memberData);
-//	},
-//	error: function(xhr) {
-//		console.log(xhr.responseText);
-//		// 在錯誤回應時進行處理，例如顯示錯誤訊息等
-//	}
-//});
-//}

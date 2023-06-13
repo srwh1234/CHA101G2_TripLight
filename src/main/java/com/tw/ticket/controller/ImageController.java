@@ -13,10 +13,6 @@ import com.tw.ticket.service.impl.ImageServiceImpl;
 @RestController
 public class ImageController {
 
-	// XXX http://localhost:8080 VsCode測試才要加
-	// 獲得圖片的URL
-	public static String IMG_URL = "http://localhost:8080/img/";
-
 	@Autowired
 	private ImageServiceImpl imageService;
 

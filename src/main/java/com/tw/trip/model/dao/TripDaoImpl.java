@@ -16,8 +16,7 @@ import java.util.List;
 public class TripDaoImpl implements TripDao {
 
     @PersistenceContext // JPA API for getting Session
-    private EntityManager entityManager;
-    Session session = entityManager.unwrap(Session.class);
+    private Session session;
 
     @Override
     public void insert(Trip trip) {

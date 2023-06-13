@@ -38,7 +38,7 @@ public class CouponDaoImpl implements CouponDao {
 
 	@Override
 	public Coupon selectById(final Integer id) {
-		return session.get(Coupon.class, id);
+		return session.get(Coupon.class, id); // for query via OID
 	}
 
 	@Override

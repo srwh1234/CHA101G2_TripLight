@@ -41,6 +41,9 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private TicketSnRepository snRepository;
 
+	@Autowired
+	private ImageServiceImpl imageService;
+
 	// 票券購物車清單
 	@Override
 	public List<CartResponse> getItems(final int membeId) {
@@ -57,6 +60,10 @@ public class CartServiceImpl implements CartService {
 				// 可用數量
 				final int available = snRepository.countUsableSn(cart.getTicketId());
 				cartTicketResponse.setAvailable(available);
+
+				// 圖片
+				final String image = imageService.findImgUrl(ticket.getTicketId());
+				cartTicketResponse.setImage(image);
 
 				if (cart.getQuantity() > available) {
 					cart.setQuantity(available);

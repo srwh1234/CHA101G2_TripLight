@@ -1,6 +1,6 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.controller.ImageController.IMG_URL;
+import static com.tw.ticket.service.impl.ImageServiceImpl.IMG_URL;
 
 import java.io.IOException;
 import java.sql.Timestamp;
