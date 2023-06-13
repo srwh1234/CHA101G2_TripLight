@@ -104,13 +104,16 @@ const dist_data = {
 		'南竿鄉', '北竿鄉', '莒光鄉', '東引鄉'
 	]
 }
+
 city.addEventListener('change', (e) => {
+	console.log('RRRRRRRRRRRRRRRRRRRR');
 	dist.innerHTML = ' ';   //清空
 	const distarr = dist_data[e.target.value];
 	for (let text of distarr) {
 		dist.insertAdjacentHTML('beforeend', `<option>${text}</option>`);
 	}
 })
+
 // ============================生日=====================================
 $(function() {
 	$("#inputBD").datepicker();
@@ -163,24 +166,40 @@ saveBtn.addEventListener("click", function() {
 const id = "2";
 // 從資料庫中獲取並設定使用者資料到 input
 document.addEventListener("DOMContentLoaded", function() {
-    axios.get("/memberdetail/" + id)
-        .then(function(response) {
-            let member = response.data;
-            console.log(member);
+	axios.get("/memberdetail/" + id)
+		.then(function(response) {
+			let member = response.data;
+			console.log(member);
 
-            $('#inputLastName').val(member.memberNameLast);
-            $('#inputFirstName').val(member.memberNameFirst);
-            $('#inputIdNumber').val(member.memberIdCard);
-            $('#inputBD').val(member.memberBirth);
-            $('#inputPhoneNumber').val(member.memberPhone);
-            $('#inputGender').val(member.memberGender);
-            $('#dist').val(member.memberDist);
-            $('#city').val(member.memberCity);
-            $('#inputAddress').val(member.memberAddress);
-            $('#inputEmail').val(member.memberEmail);
-        })
-        .catch(function(error) {
-            console.log(error.response);
-            // 在錯誤回應時進行處理，例如顯示錯誤訊息等
-        });
+			$('#inputLastName').val(member.memberNameLast);
+			$('#inputFirstName').val(member.memberNameFirst);
+			$('#inputIdNumber').val(member.memberIdCard);
+			$('#inputBD').val(member.memberBirth);
+			$('#inputPhoneNumber').val(member.memberPhone);
+			$('#inputGender').val(member.memberGender);
+			$('#city').val(member.memberCity);
+			$('#dist').val(member.memberDist);
+			$('#inputAddress').val(member.memberAddress);
+			$('#inputEmail').val(member.memberEmail);
+
+		
+			if ($('#city').val() !== null) {
+				city.trigger('change'); // 觸發change事件
+			}
+			city.addEventListener('change', (e) => {
+				console.log('RRRRRRRRRRRRRRRRRRRR');
+				dist.innerHTML = ''; // 清空
+				//const distarr = dist_data[e.target.value]
+				const distarr = dist_data.indexOf(member.memberCity);
+				for (let text of distarr) {
+					dist.insertAdjacentHTML('beforeend', `<option>${text}</option>`);
+				}
+			});
+
+		})
+		.catch(function(error) {
+			console.log(error);
+			console.log(error.response);
+			// 在錯誤回應時進行處理，例如顯示錯誤訊息等
+		});
 });
