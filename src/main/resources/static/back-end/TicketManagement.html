@@ -636,7 +636,7 @@
     <script src="vendor/sweetalert/sweetalert.js"></script>
 
     <script>
-        //假資料
+        //假資料-票券列表
         let result = {
             curPage: 1,
             totalPage: 10,
@@ -670,7 +670,7 @@
                 }
             ]
         };
-        //假資料 以後要從資料庫取得
+        //假資料-票券明細
         let fakeData = {
             ticketId: 0,
             ticketType: '博物館 & 美術館',
@@ -691,162 +691,20 @@
             ratingPerson: Math.trunc(Math.random() * 1000),
             images: [],
         };
+        const locationTypes = [
+            '主題樂園', '景點門票', '水族館 & 動物園', '博物館 & 美術館', '歷史景點'
+        ];
+        const taiwanCities = [
+            "基隆市", "台北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣",
+            "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市",
+            "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
+        ];
 
-
-        // 上次的搜尋條件
-        let oldCondition = {
-            keyword: 'nnn',
-            page: 0,
-            size: 8,
-        };
-
-        //  送出搜尋條件
-        function doPageSearch(curPage) {
-
-            const condition = {
-                keyword: $('#ticketSearchText').val(),
-                page: curPage,
-                size: 8,
-            };
-            if (JSON.stringify(oldCondition) === JSON.stringify(condition)) {
-                return false;
-            }
-            // console.log(condition);
-            oldCondition = condition;
-
-            fetch(`http://localhost:8080/bk/searchtickets`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(condition),
-            })
-                .then(response => response.json())
-                .then(data => result = data)
-                .catch(error => console.log(error))
-                .finally(() => {
-                    render();
-                });
-        }
-
+        //TODO: ------------------------------------------//onload
         $(function () {
-            doPageSearch(0);
-
-
-            //分頁的按鈕事件
-            $(document).on('click', '#orderPagination a', function (e) {
-                e.preventDefault();
-
-                const page = $(this).attr('aria-label');
-
-                if (page === "Previous") {
-                    doPageSearch(Math.max(result.curPage - 1, 0));
-                } else if (page === "Next") {
-                    doPageSearch(Math.min(result.curPage + 1, result.totalPage - 1));
-                } else if (!isNaN(page)) {
-                    doPageSearch(page);
-                }
-            });
-
-
-            //新增票券數量的參數傳遞
-            $('#countTicketModal').on('show.bs.modal', function (event) {
-                const button = $(event.relatedTarget);
-                const ticketId = button.data('bs-whatever');
-                $('#addTicketCountSubmit').data('ticket-id', ticketId);
-            });
-
-            //新增票券數量
-            $('#addTicketCountSubmit').on('click', function () {
-                const post = {
-                    ticketId: parseInt($(this).data('ticket-id')),
-                    addCount: parseInt($('#addTicketCount').val()),
-                }
-
-                if (post.addCount <= 0) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '數字輸入錯誤',
-                        text: '輸入大於0的數字...好嗎!?',
-                    })
-                    return;
-                }
-                //發請求
-                fetch(`http://localhost:8080/bk/addticketcount`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            //變更一下舊的條件 才能強制刷新
-                            oldCondition.page = -1;
-                            doPageSearch(result.curPage);
-                        } else {
-                            doPageSearch(0);
-                        }
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        $('#countTicketModal').modal('hide');
-                    });
-                $('#addTicketCount').val(1);
-            });
-
-
-            //上架下架
-            $(document).on('change', 'input[type="radio"]', function () {
-                const param = $(this).attr('id').split('_');
-                const post = {
-                    ticketId: parseInt(param[1]),
-                    status: parseInt(param[2]),
-                }
-
-                fetch(`http://localhost:8080/bk/enableticket`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data) { //發生錯誤的時候 刷新頁面
-                            doPageSearch(0);
-                        }
-                    })
-                    .catch(error => console.log(error));
-
-            });
-
-            // 編輯票券的參數傳遞
-            $('#editTicketModal').on('show.bs.modal', function (event) {
-                const button = $(event.relatedTarget);
-                const ticketId = button.data('bs-whatever');
-
-                fetch(`http://localhost:8080/bk/findticket?id=${ticketId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        //console.log(data);
-                        fakeData = data;
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        render_data();
-                    });
-
-                $('#editTicketImage').data('ticket-id', ticketId);
-                $('#editTicketSubmit').data('ticket-id', ticketId);
-
-            });
-
 
             //測試按鈕
             $('#testBtn').on('click', function () {
-
                 $('#ticketType').val('主題樂園');
                 $('#ticketSupplier').val('T8Me');
                 $('#ticketExpiryDate').val('2024-12-21');
@@ -860,208 +718,85 @@
                 $('#descEditor').summernote('code', '1<br>1<br>1<br>1<br>1<br>1<br>');
                 $('#contentEditor').summernote('code', '2<br>2<br>2<br>2<br>2<br>2<br>');
                 $('#noteEditor').summernote('code', '3<br>3<br>3<br>3<br>3<br>3<br>');
-
                 //判斷上色
                 $('.form-floating .form-control').each((i, v) => renderTextColor(v));
                 $('.form-floating .form-select').each((i, v) => renderTextColor(v));
             });
 
 
+            doPageSearch(0);
 
-            // 新增的按鈕
-            $('#ticketSubmit').on('click', function () {
-                const post = {
-                    ticketId: 0,
-                    ticketType: $('#ticketType').val(),
-                    name: $('#ticketName').val(),
-                    price: $('#ticketPrice').val(),
-                    available: $('#ticketCount').val(),
-                    totalSales: 0,
-                    expiryDate: $('#ticketExpiryDate').val(),
-                    description: $.trim($('#descEditor').summernote('code')),
-                    content: $.trim($('#contentEditor').summernote('code')),
-                    note: $.trim($('#noteEditor').summernote('code')),
-                    supplierName: $('#ticketSupplier').val(),
-                    city: $('#ticketCity').val(),
-                    address: $('#ticketAddress').val(),
-                    latitude: 0,
-                    longitude: 0,
-                    rating: $('#ticketRating').val(),
-                    ratingPerson: $('#ticketRatingCount').val(),
-                    images: [],
-                };
-
-                //判斷資料的正確性
-                if (!isValidData(post)) {
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('post', JSON.stringify(post));
-
-                // Add image files to FormData
-                const imageFiles = $('#imgPreview .img-upload').map((i, v) => convertToBlob($(v).attr('src'))).get();
-                for (let i = 0; i < imageFiles.length; i++) {
-                    formData.append('images', imageFiles[i]);
-                }
-
-                if (imageFiles.length <= 0) {
-                    Swal.fire({ icon: 'error', title: '票券至少一張圖片' });
-                    return;
-                }
-
-                //發請求
-                fetch(`http://localhost:8080/bk/addticketform`, {
-                    method: 'POST',
-                    body: formData,
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            Swal.fire({ icon: 'success', title: '新增成功 請至列表選擇上架', });
-                        } else {
-                            Swal.fire({ icon: 'error', title: '新增失敗', });
-                        }
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        $('#addTicketModal').modal('hide');
-                        doPageSearch(0);
-                    });
-
+            //增加票券數量-參數傳遞
+            $('#countTicketModal').on('show.bs.modal', function (event) {
+                const button = $(event.relatedTarget);
+                const ticketId = button.data('bs-whatever');
+                $('#addTicketCountSubmit').data('ticket-id', ticketId);
             });
 
-            // TODO: 編輯的按鈕
-            $('#editTicketSubmit').on('click', function () {
+            // 增加票券數量-確認
+            $('#addTicketCountSubmit').on('click', fetch_count);
 
-                const post = {
-                    ticketId: $('#editTicketSubmit').data('ticket-id'),
-                    ticketType: $('#editTicketType').val(),
-                    name: $('#editTicketName').val(),
-                    price: $('#editTicketPrice').val(),
-                    available: 1,
-                    totalSales: 1,
-                    expiryDate: $('#editTicketExpiryDate').val(),
-                    description: $.trim($('#editDescEditor').summernote('code')),
-                    content: $.trim($('#editContentEditor').summernote('code')),
-                    note: $.trim($('#editNoteEditor').summernote('code')),
-                    supplierName: $('#editTicketSupplier').val(),
-                    city: $('#editTicketCity').val(),
-                    address: $('#editTicketAddress').val(),
-                    latitude: 0,
-                    longitude: 0,
-                    rating: $('#editTicketRating').val(),
-                    ratingPerson: $('#editTicketRatingCount').val(),
-                    images: [],
-                };
-                //判斷資料的正確性
-                if (!isValidData(post)) {
-                    return;
-                }
+            // 新增票券-確認
+            $('#ticketSubmit').on('click', fetch_insert);
 
-                //發請求
-                fetch(`http://localhost:8080/bk/editticket`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            Swal.fire({ icon: 'success', title: '編輯成功', });
-                        } else {
-                            Swal.fire({ icon: 'error', title: '編輯失敗', });
-                        }
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        $('#editTicketModal').modal('hide');
-                        doPageSearch(result.curPage);
-                    });
-            });
+            // 編輯票券-確認
+            $('#editTicketSubmit').on('click', fetch_edit);
 
-            //TODO: 編輯票券-移除指定圖片
-            $(document).on('click', '.cur-img-trash', function () {
-
-                const employeeId = 1;
-                const url = $(this).closest('.img-item').find('img').attr('src');
-                const imageId = url.substring(url.lastIndexOf('/') + 1);
-
-                console.log(imageId);
-                //發請求
-                fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
-                    .then(response => response.json())
-                    .then(data => {
-
-                        if (data) {
-                            $(this).closest('.img-item').remove();
-                            Swal.fire({ icon: 'success', title: '圖片刪除成功', });
-                        }
-                    })
-                    .catch(error => console.log(error));
-
-            });
+            // 編輯票券-參數傳遞
+            $('#editTicketModal').on('show.bs.modal', fetch_data_edit);
 
             // 編輯票券-新增圖片
-            $('#editTicketImage').on('change', function (e) {
-                const ticketId = $('#editTicketImage').data('ticket-id');
+            $('#editTicketImage').on('change', fetch_add_img);
 
-                if (e.target.files) {
-                    for (let file of e.target.files) {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = function (e) {
+            // 編輯票券-移除指定圖片
+            $(document).on('click', '.cur-img-trash', fetch_remove_img);
 
-
-                            const formData = new FormData();
-                            formData.append('id', ticketId);
-                            formData.append('image', convertToBlob(e.target.result));
-
-                            //發請求
-                            fetch(`http://localhost:8080/bk/addticketimageform`, {
-                                method: 'POST',
-                                body: formData,
-                            })
-                                .then(response => response.text())
-                                .then(data => {
-
-                                    if (data) {
-                                        $('#editImgPreview').append(`
-                                            <div class="col p-3 img-item">
-                                                <div class="card h-100">
-                                                    <div>
-                                                        <img src="${data}" class="img-fluid rounded-start img-upload">
-                                                    </div>
-                                                    <div class="card-body d-flex justify-content-around">                                            
-                                                        <button class="btn btn-primary cur-img-trash"><i class="bi bi-trash"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            `);
-                                        Swal.fire({ icon: 'success', title: '圖片上傳成功', });
-                                    } else {
-                                        Swal.fire({ icon: 'error', title: '圖片上傳失敗', });
-                                    }
-                                })
-                                .catch(error => console.log(error));
-                        }
-                    }
-                }
-            });
-
-
-            //搜尋按鈕的事件
-            $('#btnSearch').on('click', function () {
-                doPageSearch(0);
-            });
+            // 票券列表-上架下架
+            $(document).on('change', 'input[type="radio"]', fetch_enable);
 
             // tab切換到哪一頁
             $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var target = $(e.target).attr("href");
                 console.log("Switched to tab " + target);
             });
+
+            // 票券列表-搜尋
+            $('#btnSearch').on('click', function () {
+                doPageSearch(0);
+            });
+
+            // 票券列表-切換分頁
+            $(document).on('click', '#orderPagination a', function (e) {
+                e.preventDefault();
+
+                const page = $(this).attr('aria-label');
+                if (page === "Previous") {
+                    doPageSearch(Math.max(result.curPage - 1, 0));
+                } else if (page === "Next") {
+                    doPageSearch(Math.min(result.curPage + 1, result.totalPage - 1));
+                } else if (!isNaN(page)) {
+                    doPageSearch(page);
+                }
+            });
+
+            // 新增票券-選擇圖片並預覽
+            $('#ticketImage').on('change', function (e) {
+                if (e.target.files) {
+                    for (let file of e.target.files) {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function (e) {
+                            render_img_base64(e.target.result);                            
+                        }
+                    }
+                }
+            });
+
+            // 新增票券-移除不要的圖片
+            $(document).on('click', '.img-trash', function () {
+                $(this).closest('.img-item').remove();
+            });
+
 
             // 浮動標籤的變色
             $('.form-floating .form-control').on('input', function () {
@@ -1099,85 +834,314 @@
                 }
             });
 
-            // 新增選擇圖片並預覽
-            $('#ticketImage').on('change', function (e) {
-                if (e.target.files) {
-                    for (let file of e.target.files) {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = function (e) {
-                            $('#imgPreview').append(
-                                `
-                                <div class="col p-3 img-item">
-                                    <div class="card h-100">
-                                        <div>
-                                            <img src="${e.target.result}" class="img-fluid rounded-start img-upload">
-                                        </div>
-                                        <div class="card-body d-flex justify-content-around">                                            
-                                            <button class="btn btn-primary img-trash"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                `
-                            );
-                        }
-                    }
-                }
-            });
-
-            // 設定 只要是.img-trash的點擊事件委派
-            $(document).on('click', '.img-trash', function () {
-                $(this).closest('.img-item').remove();
-            });
 
             //渲染頁面           
             render_cities();
             render_types();
         });
 
+        //TODO: ------------------------------------------//fetch
+
+        // 上次的搜尋條件
+        let oldCondition = {
+            keyword: 'nnn',
+            page: 0,
+            size: 8,
+        };
+
+        /**
+        * 分頁顯示列表 
+        */
+        function doPageSearch(curPage) {
+
+            const post = {
+                keyword: $('#ticketSearchText').val(),
+                page: curPage,
+                size: 8,
+            };
+            if (JSON.stringify(oldCondition) === JSON.stringify(post)) {
+                return false;
+            }
+
+            oldCondition = post;
+
+            fetch(`http://localhost:8080/bk/searchtickets`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    result = data})
+                .catch(error => console.log(error))
+                .finally(() => render());
+        }
 
 
+        /**
+        * 增加數量的請求
+        */
+        function fetch_count(e) {
+            const post = {
+                ticketId: parseInt($(e.target).data('ticket-id')),
+                addCount: parseInt($('#addTicketCount').val()),
+            }
 
-        // 標籤文字上色
-        function renderTextColor(elem) {
-            $(elem).siblings('label').removeClass('my-text-lightgray text-primary');
-            if ($(elem).val()) {
-                $(elem).siblings('label').addClass('text-primary');
-            } else {
-                $(elem).siblings('label').addClass('my-text-lightgray');
+            if (post.addCount <= 0) {
+                Swal.fire({ icon: 'error', title: '數字輸入錯誤', text: '輸入大於0的數字...好嗎!?', })
+                return;
+            }
+            //發請求
+            fetch(`http://localhost:8080/bk/addticketcount`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        //變更一下舊的條件 才能強制刷新
+                        oldCondition.page = -1;
+                        doPageSearch(result.curPage);
+                    } else {
+                        doPageSearch(0);
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#addTicketCount').val(1);
+                    $('#countTicketModal').modal('hide');
+                });
+
+        }
+
+        /**
+        * 上架下架的請求 
+        */
+        function fetch_enable(e) {
+            const param = $(e.target).attr('id').split('_');
+            const post = {
+                ticketId: parseInt(param[1]),
+                status: parseInt(param[2]),
+            }
+
+            fetch(`http://localhost:8080/bk/enableticket`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data) { //發生錯誤的時候 刷新頁面
+                        doPageSearch(0);
+                    }
+                })
+                .catch(error => console.log(error));
+        }
+
+        /**
+        * 取得要編輯的票券的請求
+        */
+        function fetch_data_edit(e) {
+            const button = $(e.relatedTarget);
+            const ticketId = button.data('bs-whatever');
+
+            fetch(`http://localhost:8080/bk/findticket?id=${ticketId}`)
+                .then(response => response.json())
+                .then(data => fakeData = data)
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#editTicketImage').data('ticket-id', ticketId);
+                    $('#editTicketSubmit').data('ticket-id', ticketId);
+                    render_data();
+                });
+        }
+
+        /**
+        * 送出確定編輯的請求
+        */
+        function fetch_edit() {
+            const post = {
+                ticketId: $('#editTicketSubmit').data('ticket-id'),
+                ticketType: $('#editTicketType').val(),
+                name: $('#editTicketName').val(),
+                price: $('#editTicketPrice').val(),
+                available: 1,
+                totalSales: 1,
+                expiryDate: $('#editTicketExpiryDate').val(),
+                description: $.trim($('#editDescEditor').summernote('code')),
+                content: $.trim($('#editContentEditor').summernote('code')),
+                note: $.trim($('#editNoteEditor').summernote('code')),
+                supplierName: $('#editTicketSupplier').val(),
+                city: $('#editTicketCity').val(),
+                address: $('#editTicketAddress').val(),
+                latitude: 0,
+                longitude: 0,
+                rating: $('#editTicketRating').val(),
+                ratingPerson: $('#editTicketRatingCount').val(),
+                images: [],
+            };
+            //判斷資料的正確性
+            if (!isValidData(post)) {
+                return;
+            }
+
+            //發請求
+            fetch(`http://localhost:8080/bk/editticket`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '編輯成功', });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '編輯失敗', });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#editTicketModal').modal('hide');
+                    doPageSearch(result.curPage);
+                });
+        }
+
+        /**
+        * 送出新增票券的請求
+        */
+        function fetch_insert() {
+            const post = {
+                ticketId: 0,
+                ticketType: $('#ticketType').val(),
+                name: $('#ticketName').val(),
+                price: $('#ticketPrice').val(),
+                available: $('#ticketCount').val(),
+                totalSales: 0,
+                expiryDate: $('#ticketExpiryDate').val(),
+                description: $.trim($('#descEditor').summernote('code')),
+                content: $.trim($('#contentEditor').summernote('code')),
+                note: $.trim($('#noteEditor').summernote('code')),
+                supplierName: $('#ticketSupplier').val(),
+                city: $('#ticketCity').val(),
+                address: $('#ticketAddress').val(),
+                latitude: 0,
+                longitude: 0,
+                rating: $('#ticketRating').val(),
+                ratingPerson: $('#ticketRatingCount').val(),
+                images: [],
+            };
+
+            //判斷資料的正確性
+            if (!isValidData(post)) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('post', JSON.stringify(post));
+
+            // Add image files to FormData
+            const imageFiles = $('#imgPreview .img-upload').map((i, v) => convertToBlob($(v).attr('src'))).get();
+            for (let i = 0; i < imageFiles.length; i++) {
+                formData.append('images', imageFiles[i]);
+            }
+
+            if (imageFiles.length <= 0) {
+                Swal.fire({ icon: 'error', title: '票券至少一張圖片' });
+                return;
+            }
+
+            //發請求
+            fetch(`http://localhost:8080/bk/addticketform`, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '新增成功 請至列表選擇上架', });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '新增失敗', });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#addTicketModal').modal('hide');
+                    doPageSearch(0);
+                });
+        }
+
+        /**
+        * 編輯票券-移除圖片的請求
+        */
+        function fetch_remove_img(e) {
+            const employeeId = 1;
+            const url = $(e.target).closest('.img-item').find('img').attr('src');
+            const imageId = url.substring(url.lastIndexOf('/') + 1);
+
+            console.log(imageId);
+            //發請求
+            fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data) {
+                        $(e.target).closest('.img-item').remove();
+                        Swal.fire({ icon: 'success', title: '圖片刪除成功', });
+                    }
+                })
+                .catch(error => console.log(error));
+        }
+
+        /**
+        * 編輯照片-新增圖片的請求
+        */
+        function fetch_add_img(e) {
+            const ticketId = $('#editTicketImage').data('ticket-id');
+
+            if (e.target.files) {
+                for (let file of e.target.files) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+
+
+                        const formData = new FormData();
+                        formData.append('id', ticketId);
+                        formData.append('image', convertToBlob(e.target.result));
+
+                        //發請求
+                        fetch(`http://localhost:8080/bk/addticketimageform`, {
+                            method: 'POST',
+                            body: formData,
+                        })
+                            .then(response => response.text())
+                            .then(data => {
+
+                                if (data) {
+                                    render_img_url(data);
+                                    Swal.fire({ icon: 'success', title: '圖片上傳成功', });
+                                } else {
+                                    Swal.fire({ icon: 'error', title: '圖片上傳失敗', });
+                                }
+                            })
+                            .catch(error => console.log(error));
+                    }
+                }
             }
         }
-
-        const locationTypes = [
-            '主題樂園', '景點門票', '水族館 & 動物園', '博物館 & 美術館', '歷史景點'
-        ];
-        const taiwanCities = [
-            "基隆市", "台北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣",
-            "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市",
-            "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
-        ];
+        //TODO:  ------------------------------------------//render
 
 
-        // 票券類型
-        function render_types() {
-            $('#ticketType').html('<option selected disabled>--</option>');
-            $('#editTicketType').html('<option selected disabled>--</option>');
-
-            locationTypes.forEach((v, i) => {
-                $('#ticketType').append(`<option value="${v}">${v}</option>`);
-                $('#editTicketType').append(`<option value="${v}">${v}</option>`);
-            });
-        }
-
-        // 縣市
-        function render_cities() {
-            $('#ticketCity').html('<option selected disabled>--</option>');
-            $('#editTicketCity').html('<option selected disabled>--</option>');
-            taiwanCities.forEach((v, i) => {
-                $('#ticketCity').append(`<option value="${v}">${v}</option>`);
-                $('#editTicketCity').append(`<option value="${v}">${v}</option>`);
-            });
-        }
 
         //TODO: 
         //渲染票券列表的資料
@@ -1250,6 +1214,38 @@
             }
         }
 
+        // 標籤文字上色
+        function renderTextColor(elem) {
+            $(elem).siblings('label').removeClass('my-text-lightgray text-primary');
+            if ($(elem).val()) {
+                $(elem).siblings('label').addClass('text-primary');
+            } else {
+                $(elem).siblings('label').addClass('my-text-lightgray');
+            }
+        }
+
+
+        // 票券類型
+        function render_types() {
+            $('#ticketType').html('<option selected disabled>--</option>');
+            $('#editTicketType').html('<option selected disabled>--</option>');
+
+            locationTypes.forEach((v, i) => {
+                $('#ticketType').append(`<option value="${v}">${v}</option>`);
+                $('#editTicketType').append(`<option value="${v}">${v}</option>`);
+            });
+        }
+
+        // 縣市
+        function render_cities() {
+            $('#ticketCity').html('<option selected disabled>--</option>');
+            $('#editTicketCity').html('<option selected disabled>--</option>');
+            taiwanCities.forEach((v, i) => {
+                $('#ticketCity').append(`<option value="${v}">${v}</option>`);
+                $('#editTicketCity').append(`<option value="${v}">${v}</option>`);
+            });
+        }
+
         //渲染編輯票券的頁面
         function render_data() {
             $(`#editTicketType option:contains('${fakeData.ticketType}')`).prop("selected", true);
@@ -1257,23 +1253,26 @@
             $('#editTicketName').val(fakeData.name);
             $('#editTicketPrice').val(fakeData.price);
             $('#editTicketSupplier').val(fakeData.supplierName);
-
-
             $('#editTicketRating').val(fakeData.rating);
             $('#editTicketRatingCount').val(fakeData.ratingPerson);
-
-
             $(`#editTicketCity option:contains('${fakeData.city}')`).prop("selected", true);
-
             $('#editTicketAddress').val(fakeData.address);
             $('#editDescEditor').summernote('code', fakeData.description);
             $('#editContentEditor').summernote('code', fakeData.content);
             $('#editNoteEditor').summernote('code', fakeData.note);
-
             $('#editImgPreview').html('');
 
             for (let imgUrl of fakeData.images) {
-                $('#editImgPreview').append(`
+                render_img_url(imgUrl);
+            }
+
+            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+        }
+
+        //編輯票券-新增圖片
+        function render_img_url(imgUrl) {
+            $('#editImgPreview').append(`
                 <div class="col p-3 img-item">
                     <div class="card h-100">
                         <div>
@@ -1284,14 +1283,26 @@
                         </div>
                     </div>
                 </div>
-                `);
-            }
-
-            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
-            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+            `);
         }
 
-        //TODO: 判斷輸入格式
+        //新增票券-新增圖片
+        function render_img_base64(base64String) {
+            $('#imgPreview').append(`
+                <div class="col p-3 img-item">
+                    <div class="card h-100">
+                    <div>
+                        <img src="${base64String}" class="img-fluid rounded-start img-upload">
+                    </div>
+                    <div class="card-body d-flex justify-content-around">                                            
+                        <button class="btn btn-primary img-trash"><i class="bi bi-trash"></i></button>
+                    </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        //判斷輸入格式
         function isValidData(post) {
             if (!post.ticketType) {
                 Swal.fire({ icon: 'error', title: '票券類型未輸入' });
@@ -1370,7 +1381,7 @@
         }
 
 
-        //TODO: 好用的函式
+        //TODO: ------------------------------------------//好用的函式
 
         //輸入的日期字串(yyyy-mm-dd) 是否在目前日期以後
         function isDateAfterNow(dateString) {
