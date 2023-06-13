@@ -248,17 +248,20 @@
             <div class="col-8">
                 <div class="row">
                     <div style="padding: 20px 20px 20px 20px;" class="col-md-12">
-                        <h2>【KKday獨家】苗栗｜小日子露營區｜開幕贈一泊二食</h2>
+                        <h2 id="tripName"></h2>
                         <hr class="hr" />
                         <span>☆☆☆☆</span>
                         <hr class="hr" />
-                        <ul>
-                            <li>各區獨立擁有空間及衛浴，可以盡情享受野外旅宿的樂趣</li>
-                            <li>夕陽，夜景，盡收眼底的高空觀景台，輕鬆寫意有夠Chill！</li>
-                            <li>營區活動豐富，現正進行：週六、連假免費加值空拍服務</li>
-                            <li>歡慶開幕！2023/06/30 前下訂即免費贈送烤肉晚餐及早餐</li>
-                            <li>另有加購高鐵車票享最低75折起，獨家高鐵方案『免費升等經典帳』再贈一支氣泡水，點擊連結搭高鐵去露營！</li>
-                        </ul>
+                        <div id="tripContent">
+
+                        </div>
+<!--                        <ul>-->
+<!--                            <li>各區獨立擁有空間及衛浴，可以盡情享受野外旅宿的樂趣</li>-->
+<!--                            <li>夕陽，夜景，盡收眼底的高空觀景台，輕鬆寫意有夠Chill！</li>-->
+<!--                            <li>營區活動豐富，現正進行：週六、連假免費加值空拍服務</li>-->
+<!--                            <li>歡慶開幕！2023/06/30 前下訂即免費贈送烤肉晚餐及早餐</li>-->
+<!--                            <li>另有加購高鐵車票享最低75折起，獨家高鐵方案『免費升等經典帳』再贈一支氣泡水，點擊連結搭高鐵去露營！</li>-->
+<!--                        </ul>-->
                     </div>
                 </div>
 
@@ -309,14 +312,14 @@
                         </div>
 
                         <div class="col-6">
-                            <h5 class="text-secondary"> 10 人</h5>
+                            <h5 class="text-secondary" id="confirmTravelersNo"> 10 人</h5>
                         </div>
                     </div>
                     <!-- 選項人數列 -->
                     <!-- 選項人數列 -->
                     <div class="row justify-content-center">
                         <div class="col-5">
-                            <h5 class="text-secondary"> 最少成團人數: </h5>
+                            <h5 class="text-secondary" id="minTravelersNo"> 最少成團人數: </h5>
                         </div>
                         <div class="col-6">
                             <h5 class="text-secondary"> 10 人</h5>
@@ -410,57 +413,12 @@
                     <section id="example-1-collapsible">
                         <h3>營區資訊</h3>
                         <pre style="font-size: 16px">
-                        － 營區資訊 －
-
-                        營地名稱：小日子露營地
-
-                        入住時間：15:30 後
-
-                        退房時間：11:00 前
-
-                        營區配備：
-
-                        （1）停車位：一帳一車位，若有多於一車位的需求請於訂單備註告知
-
-                        （2）衛浴設備：公共衛浴有冷 / 熱水、洗髮精、沐浴乳、洗手乳、衛生紙、吹風機
-
-                        （3）冷藏 / 冷凍冰箱
-
-                        （4）洗菜台（附菜瓜布、洗潔精）
-
-
-
-
                         </pre>
                         <img style="weight:80%;  height: 500px;" src="https://picsum.photos/800/600/?random=43" class="d-block w-100" alt="...">
                     </section>
                     <section id="example-2-collapsible">
                         <h3>營區介紹</h3>
-                        <pre>
-                            － 營區介紹 －
-
-                        生活偶爾的留白，就讓小日子露營區的悠閒自得填滿吧！
-                            一個專屬的場域，網美最夯的鐘型帳，喝酒談心的炊事帳，還有夕陽，夜景，盡收眼底的高空觀景台，輕鬆寫意有夠Chill！
-
-
-
-                        －免費贈送烤肉晚餐及早餐－
-
-                        1.活動時間： 2023/8/31 前下訂免費贈送烤肉晚餐
-
-                        2.食材說明：詳見圖文說明
-
-
-
-                        －免費加值空拍服務－
-
-                        服務介紹：營區將提供免費空拍服務，旅客將獲得從上帝視角拍攝的青春美照，誠摯邀請您一起來小日子露營區留下深刻而動人的回憶。
-
-                        服務時間：每週六 15:00 ~ 17:00（視天氣情況進行，如當日天氣昏暗或氣候不佳，將不提供空拍活動，無法保證）
-
-                        ＊如星期五入住、星期六退房恕無法享有空拍服務
-
-                        位於小山坡上，坐擁苗栗夕陽美麗景致
+                        <pre style="font-size: 20px" id="tripDescription">
                         </pre>
                     </section>
                     <section id="example-3-collapsible">
@@ -718,14 +676,15 @@
             selectable: true, // 啟用選擇功能
             select: function(info) {
                 let start = info.startStr; // 選擇的起始日期時間
-                let end = info.endStr; // 選擇的結束日期時間
+                // let end = info.endStr; // 選擇的結束日期時間
+                let date = `<h5 class="text-secondary"> ${start}</h5>`;
 
                 let selectedDate = $('#selectedDate');
-                let date = `<h5 class="text-secondary"> ${start}</h5>`;
-                selectedDate.append(date);
 
-                // 在這裡可以處理選擇的日期
-                console.log('選擇的日期範圍:', start, '至', end);
+                selectedDate.empty();
+                selectedDate.append(date);
+                sessionStorage.setItem('Date', start);
+
             }
         });
         calendar.render();
@@ -734,16 +693,19 @@
     // ====== get pic from DB n display in headers ======
     $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response){
         console.log(response);
+        console.log(response.tripName);
+        console.log(response.tripDescription);
+        $('#tripName').text(`${response.tripName}`);
+        $('#tripContent').text(`${response.tripContent}`);
+        $('#tripDescription').html(`${response.tripDescription}`);
 
 
     })
+
     // ====== get data from DB n display in comments ======
     $.getJSON('http://localhost:8080/tripCommentSent', function (response){
-        // console.log(response[0].comment);
-        // console.log(response[0].memberPicBase64);
-        console.log(atob(response[0].memberPicBase64));
+        // console.log(atob(response[0].memberPicBase64));
         let parentEl = $('#commentParent');
-
 
         for (let i=0; i<response.length; i++){
             let base64Url= 'data:image/gif;base64,' + response[i].memberPicBase64;

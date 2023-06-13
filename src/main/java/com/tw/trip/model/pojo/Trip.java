@@ -1,9 +1,11 @@
-package com.tw.trip.model;
+package com.tw.trip.model.pojo;
 
+import com.tw.trip.model.TripImage;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +15,13 @@ import static com.tw.trip.controller.TripImageController.IMG_URL;
 @Getter
 @Setter
 @Entity
-public class Trip{
+public class Trip implements Serializable {
+
+    public static final long serialVersionUID = 3L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int tripId;
 
     private int vendorId;
@@ -47,7 +52,7 @@ public class Trip{
 
     private int ratingCount;
 
-    private byte status;
+    private Integer status;
 
     private String tripContent;
 
