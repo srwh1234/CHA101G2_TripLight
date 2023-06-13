@@ -43,4 +43,5 @@ public class Trip {  // 表格名稱
     private int ratingCount;
     
     private byte status;
+    
 }
