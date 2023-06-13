@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TirpLight後台</title>
+
+<!-- 自訂字型 -->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link href="botcss/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<script src="js/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="css/sweetalert2.min.css">
+<script src="js/sweetalert2.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/EMPQuety.js"></script>
+<!-- 自訂樣式 -->
+<link href="css/TripLight.min.css" rel="stylesheet">
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+</head>
+
+<body id="page-top" style="overflow-y: scroll;">
+	<!-- 頁面包裹區域 -->
+	<div id="wrapper">
+
+		<!-- 側邊欄 -->
+		<ul
+			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+			id="accordionSidebar">
+			<!-- 側邊欄 - 品牌 -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="index.html"> <img src="img/icon.png" alt="Icon"
+				class="sidebar-brand-icon rotate-n-15"
+				style="width: 30px; height: 30px;">
+				<div class="sidebar-brand-text mx-3">後台</div>
+			</a>
+
+			<!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+
+			<!-- 導覽項目 -  -->
+			<li class="nav-item active"><a class="nav-link"
+				href="https://triplight.netlify.app/"> <span>TirpLight</span></a></li>
+			<!-- 導覽項目 - 頁面折疊選單 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseTwo"
+				aria-expanded="true" aria-controls="collapseTwo"> <span>員工管理</span>
+			</a>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="EmployeeQuety.html">查詢資料</a> <a
+							class="collapse-item" href="EmployeeRevise.html">新增資料</a>
+					</div>
+				</div></li>
+
+			<!-- 導覽項目 - 公用程式折疊選單 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseUtilities"
+				aria-expanded="true" aria-controls="collapseUtilities"> <span>會員管理</span>
+			</a>
+				<div id="collapseUtilities" class="collapse"
+					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="MemberQuety.html">查詢資料</a> <a
+							class="collapse-item" href="MemberRevise.html">修改資料</a>
+					</div>
+				</div></li>
+
+
+			<!-- 功能頁面 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapsePages"
+				aria-expanded="true" aria-controls="collapsePages"> <span>廠商管理</span>
+			</a>
+				<div id="collapsePages" class="collapse"
+					aria-labelledby="headingPages" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="FirmInert.html">新增資料</a> <a
+							class="collapse-item" href="FirmRevise.html">修改資料</a> <a
+							class="collapse-item" href="FirmReport.html">檢舉廠商</a>
+					</div>
+				</div></li>
+
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseTickets"
+				aria-expanded="true" aria-controls="collapseTickets"> <span>票卷管理</span>
+			</a>
+				<div id="collapseTickets" class="collapse"
+					aria-labelledby="headingTickets" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="TicketManagement.html">票卷資料管理</a> <a
+							class="collapse-item" href="TicketOrderManagement.html">票卷訂單管理</a>
+						<a class="collapse-item" href="TicketPromotionManagement.html">票卷促銷管理</a>
+						<a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a>
+					</div>
+				</div></li>
+
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseWebManagement"
+				aria-expanded="true" aria-controls="collapseWebManagement"> <span>網頁管理</span>
+			</a>
+				<div id="collapseWebManagement" class="collapse"
+					aria-labelledby="headingWebManagement"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="TravelArticles.html">文章管理</a> <a
+							class="collapse-item" href="ReportAriocles.html">檢舉管理</a>
+					</div>
+				</div></li>
+
+
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapsePermissions"
+				aria-expanded="true" aria-controls="collapsePermissions"> <span>權限設定</span>
+			</a>
+				<div id="collapsePermissions" class="collapse"
+					aria-labelledby="headingPermissions"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="SetEmployeePermissions.html">設定員工權限</a>
+						<a class="collapse-item" href="SetFirmPermissions.html">設定廠商權限</a>
+					</div>
+				</div></li>
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseCustomerService"
+				aria-expanded="true" aria-controls="collapseCustomerService"> <span>客服中心</span>
+			</a>
+				<div id="collapseCustomerService" class="collapse"
+					aria-labelledby="headingCustomerService"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="QuestionFormManagement.html">問題表單管理</a>
+						<a class="collapse-item" href="CustomerServiceChatManagement.html">客服聊天管理</a>
+					</div>
+				</div></li>
+
+
+			<!-- 側邊欄切換器（側邊欄） -->
+			<!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+		</ul>
+		<!-- 側邊導覽列結束 -->
+
+
+		<!-- 內容包裹區域 -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- 主要內容 -->
+			<div id="content">
+
+				<!-- 上導覽列 -->
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- 側邊欄開關按鈕 -->
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+
+					<!-- 上導覽列導覽選單 -->
+					<ul class="navbar-nav ml-auto">
+
+						<li class="nav-item dropdown no-arrow"><a
+							class="nav-link dropdown-toggle" href="#" id="userDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <span
+								class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
+								<i class="fas fa-user-circle fa-lg"></i>
+						</a> <!-- 下拉選單 - 使用者資訊 -->
+							<div
+								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#" id="logoutLink"> 登出 </a>
+							</div></li>
+					</ul>
+				</nav>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>員工編號</th>
+									<th>員工姓名</th>
+									<th>電話</th>
+									<th>權限</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>TL20230520</td>
+									<td>王小明</td>
+									<td>0912-590367</td>
+									<td>超級管理員</td>
+									<td>
+										<button class="btn btn-primary btn-sm btn-edit">編輯</button>
+										<button class="btn btn-danger btn-sm btn-delete">停權</button>
+									</td>
+								</tr>
+								<tr>
+									<td>TL20230523</td>
+									<td>陳小甫</td>
+									<td>0912-590367</td>
+									<td>超級管理員</td>
+									<td>
+										<button class="btn btn-primary btn-sm btn-edit">編輯</button>
+										<button class="btn btn-danger btn-sm btn-delete">停權</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+					aria-labelledby="editModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<!-- <h5 class="modal-title" id="editModalLabel">編輯員工資料</h5> -->
+								<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> -->
+							</div>
+							<div class="modal-body">
+								<form id="editForm">
+									<div class="form-group">
+										<label for="employeeId">員工編號:</label> <input type="text"
+											class="form-control" id="employeeId">
+									</div>
+									<div class="form-group">
+										<label for="employeeName">員工姓名:</label> <input type="text"
+											class="form-control" id="employeeName">
+									</div>
+									<div class="form-group">
+										<label for="phone">電話號碼:</label> <input type="text"
+											class="form-control" id="phone">
+									</div>
+									<div class="form-group">
+										<label for="permission">權限:</label> <select
+											class="form-control" class="form-control" id="permission">
+											<option value="超級管理員">超級管理員</option>
+											<option value="網頁管理員">網頁管理員</option>
+											<option value="訂單管理員">訂單管理員</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">關閉</button>
+								<button type="button" class="btn btn-primary" id="btnSave">儲存</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<script>
+                    $(document).ready(function () {
+
+
+                        setInterval(function() {
+  $.ajax({
+    url: "/employees/employee",
+    method: "GET",
+    success: function(response) {
+    },
+    error: function(error) {
+
+    }
+  });
+}, 1000); //設置一秒更新
+    // 編輯按鈕點擊事件
+    $('.btn-edit').click(function () {
+        var row = $(this).closest('tr'); // 找到最近的父級 <tr> 元素
+        var cells = row.find('td'); // 獲取所有 <td> 元素
+
+        // 獲取各個欄位的值
+        var employeeId = $(cells[0]).text();
+        var employeeName = $(cells[1]).text();
+        var department = $(cells[2]).text();
+        var position = $(cells[3]).text();
+        
+        // 將值填充到表單中
+        $('#employeeId').val(employeeId);
+        $('#employeeName').val(employeeName);
+        $('#phone').val(department);
+        $('#permission').val(position );
+
+        // 顯示修改資料的模態框
+        $('#editModal').modal('show');
+    });
+
+    // 確定修改按鈕點擊事件
+    $('#btnSave').click(function () {
+        // 獲取表單中的值
+        var employeeId = $('#employeeId').val();
+        var employeeName = $('#employeeName').val();
+        var department = $('#department').val();
+        var position = $('#position').val();
+        var hireDate = $('#hireDate').val();
+        var phone = $('#phone').val();
+        var permission = $('#permission').val();
+
+        // 關閉修改資料的模態框
+        $('#editModal').modal('hide');
+
+        // 更新表格中的資料
+        var row = $('#dataTable').find('td:contains(' + employeeId + ')').closest('tr');
+        $(row).find('td:eq(1)').text(employeeName);
+        $(row).find('td:eq(2)').text(department);
+        $(row).find('td:eq(3)').text(position);
+        $(row).find('td:eq(4)').text(hireDate);
+        $(row).find('td:eq(5)').text(phone);
+        $(row).find('td:eq(6)').text(permission);
+    });
+
+
+
+    $('.btn-delete').click(function () {
+        Swal.fire({
+            text: "確定要停權嗎?",
+            showCancelButton: true,
+            confirmButtonText: "確認",
+            cancelButtonText: "取消",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 在此處理刪除的邏輯
+                // ...
+
+                // 顯示刪除成功訊息
+                Swal.fire("操作成功", "", "success");
+            }
+        });
+    });
+});
+
+                </script>
+				<!-- Bootstrap 核心 JavaScript -->
+				<script src="vendor/jquery/jquery.min.js"></script>
+				<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+				<!-- 核心插件 JavaScript -->
+				<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+				<!-- 自訂腳本，適用於所有頁面 -->
+				<script src="js/TripLight-2.min.js"></script>
+
+				<!-- 頁面級別的插件 -->
+				<script src="vendor/chart.js/Chart.min.js"></script>
+
+				<!-- 頁面級別的自訂腳本 -->
+				<script src="js/demo/chart-area-demo.js"></script>
+				<script src="js/demo/chart-pie-demo.js"></script>
+
+
+				<!--引入datables-->
+				<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+				<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+				<script src="js/demo/datatables-demo.js"></script>
+</body>
+
+</html>
