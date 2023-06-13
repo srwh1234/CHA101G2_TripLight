@@ -26,8 +26,9 @@ public class LoginMemberController {
 //		Member member = memberService.getMemberById(Id, data);
 //		return ResponseEntity.ok(member);
 //	}
-	@GetMapping("/memberdetail")
-	public MemberDetail detail(@RequestParam("id") final int id) {
+	@GetMapping("/memberdetail/{id}")
+	public MemberDetail detail(@PathVariable("id") int id) {
+		System.out.println(id);
 		return memberService.getItem(id);
 	}
 
