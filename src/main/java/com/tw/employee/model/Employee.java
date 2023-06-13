@@ -6,14 +6,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,8 +31,10 @@ public class Employee implements Serializable {
 	private String employeeName;
 
 	private String employeeTel;
-
+	
+	
 	private String employeeAccount;
+	
 
 	private String employeePassword;
 
