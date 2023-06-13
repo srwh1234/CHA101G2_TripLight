@@ -24,7 +24,7 @@ public class Member implements Serializable {
 	private Integer memberId;
 
 	private String memberAccount ="";
-	
+//	private String memberAccount;	
 
 	private String memberPassword;
 

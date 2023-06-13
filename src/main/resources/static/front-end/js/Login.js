@@ -63,20 +63,58 @@ the_main_btn.addEventListener("click", function(e) {
 	loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
 });
 // 取得註冊按鈕=====================================================
+function validateEmail(email) {
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return emailRegex.test(email);
+}
+function validatePassword(password) {
+	const goodPassword = /^.{8,}$/;
+	return goodPassword.test(password);
+}
 const register_btn = $(".register").find(".main-btn");
 register_btn.on("click", (e) => {
 	e.preventDefault();
 	container.classList.remove("active-popup");
-	let email = $("#register_email").val();
-	let password = $("#register_password").val();
-	let account = $("#register_account").val();
+	let memberEmail = $("#register_email").val();
+	let memberPassword = $("#register_password").val();
+	let memberAccount = $("#register_account").val();
+	if (!validateEmail(memberEmail)) {
+		Swal.fire({
+			icon: "error",
+			title: "註冊失敗",
+			text: "請輸入有效的電子郵件地址",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		return;
+	}
+	if (!validatePassword(memberPassword)) {
+		Swal.fire({
+			icon: "error",
+			title: "註冊失敗",
+			text: "密碼至少需要 8 個字元",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		return;
+	}
+	if (memberAccount.trim() === "") {
+		Swal.fire({
+			icon: "error",
+			title: "註冊失敗",
+			text: "請輸入有效的使用者名稱",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		return;
+	}
 	$.ajax({
 		type: "POST",
 		url: "/register",
 		data: {
-			account: account,
-			email: email,
-			password: password,
+			account: memberAccount,
+			email: memberEmail,
+			password: memberPassword,
 		},
 		success: function(response) {
 			console.log(response);
@@ -88,6 +126,11 @@ register_btn.on("click", (e) => {
 					showConfirmButton: false,
 					timer: 1500,
 				});
+				// 清空欄位
+				$("#register_email").val("");
+				$("#register_password").val("");
+				$("#register_account").val("");
+
 			} else {
 				Swal.fire({
 					icon: "error",
@@ -157,7 +200,7 @@ $(logout_li).on("click", function(e) {
 				console.log("成功登出")
 				document.querySelector("#login").innerHTML = ` 登入/註冊`;
 				document.querySelector(".member").classList.toggle("-on");
-//				sessionStorage.clear();
+				sessionStorage.clear();
 				window.location.assign("index.html");
 			}
 		},
