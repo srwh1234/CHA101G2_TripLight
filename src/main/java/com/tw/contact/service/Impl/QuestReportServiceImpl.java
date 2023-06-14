@@ -37,5 +37,10 @@ public class QuestReportServiceImpl implements QuestReportService {
         return questReportRepository.findByMemberMemberId(memberId);
     }
 
+    @Override
+    public void deleteQuestReport(int i) {
+        questReportRepository.deleteById(i);
+    }
+
 
 }

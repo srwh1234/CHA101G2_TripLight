@@ -12,4 +12,5 @@ public interface QuestReportService {
     public List<QuestReport> showQuestReportById(int memberId);
 
 //    public QuestReport findById(int i);
+    public void deleteQuestReport(int i);
 }

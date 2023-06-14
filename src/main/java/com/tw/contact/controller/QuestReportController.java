@@ -73,4 +73,10 @@ public class QuestReportController {
     public List<QuestReport> showMemberQuestionList(@RequestParam("member") int memberId){
         return questReportService.showQuestReportById(memberId);
     }
+
+
+    @DeleteMapping("/quest_report/{id}")
+    public void deleteQuestReport(@PathVariable int id) {
+        questReportService.deleteQuestReport();
+    }
 }
