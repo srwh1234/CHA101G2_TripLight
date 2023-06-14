@@ -7,7 +7,6 @@ import com.tw.trip.model.dao.TourGroupDaoImpl;
 import com.tw.trip.model.pojo.TourGroup;
 import com.tw.trip.service.TourGroupService;
 import jakarta.servlet.annotation.WebServlet;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.servlet.ServletException;
@@ -22,18 +21,24 @@ public class TourGroupController extends HttpServlet {
     @Autowired
     TourGroupService tourGroupService;
 
+    @Autowired
+    TourGroupDao tourGroupDao;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         Integer tripId = Integer.valueOf(request.getParameter("tripId"));
-        tourGroupService.getTourGroupDates(tripId,2);
-        tourGroupService.getTourGroupById(tripId);
+        TourGroup tourGroup = tourGroupService.getTourGroupWithDates(tripId,2,tourGroupDao);
 
-//        System.out.println(tourGroupService.getFormattedEndDate());
-
-        String json = new Gson().toJson(tourGroupService);
+        String json = new Gson().toJson(tourGroup);
 
         response.setContentType("application/json; charset=utf-8");
         response.getWriter().write(json);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     }
 }

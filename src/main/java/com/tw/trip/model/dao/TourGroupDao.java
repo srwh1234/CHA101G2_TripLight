@@ -9,6 +9,5 @@ public interface TourGroupDao {
     public void update(TourGroup tourGroup);
     public void deleteById(Integer id);
     public TourGroup selectById(Integer id);
-
     public List<TourGroup> getAll();
 }
