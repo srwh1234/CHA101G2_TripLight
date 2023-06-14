@@ -2,6 +2,10 @@ const container = document.querySelector(" #login-container ");
 const loginLink = document.querySelector(".login-link");
 const registerLink = document.querySelector(".register-link");
 const loginbtn = document.getElementById("login");
+//清除登入/註冊屬性
+
+loginbtn.href = '';
+
 //點擊註冊
 registerLink.addEventListener("click", () => {
 	container.classList.add("active");
@@ -22,68 +26,75 @@ const closeIcon = document.querySelector(".close-icon");
 closeIcon.addEventListener("click", (e) => {
 	container.classList.remove("active-popup");
 });
-
+//================================登入=====================================
 // 取得按鈕
 const login33 = document.querySelectorAll(".main-btn")[0];
 //按下login
 login33.addEventListener("click", function(e) {
-	
+	e.preventDefault();
+	container.classList.remove("active-popup");
+	//================================獲得後端資料=====================================
 	let memberEmail = $("#email").val();
 	let memberPassword = $("#password").val();
-
-	console.log(memberEmail);
-	console.log(memberPassword);
 
 	$.ajax({
 		type: "POST",
 		url: "/login",
 		data: {
 			email: memberEmail,
-			password: memberPassword,
+			password: memberPassword,			
 		},
 		success: function(response) {
 			console.log(response);
-			if(!response){
+			if (!response) {
 				Swal.fire({
 					icon: "error",
 					title: "登入失敗",
-					text: "查無此帳號",
+					text: "帳號/密碼錯誤",
 					showConfirmButton: false,
 					timer: 1500,
 				});
+				// 清空欄位
+				$("#email").val("");
+				$("#password").val("");
 			}
-			else{
+			else {
 				Swal.fire({
 					icon: "success",
 					title: "登入成功",
-					text: "查無此帳號",
 					showConfirmButton: false,
 					timer: 1500,
 				});
+				// 清空欄位
+				$("#email").val("");
+				$("#password").val("");
+				//先暫存
+				const valid = {
+					email: memberEmail,
+					password: memberPassword,
+				};
+				sessionStorage.setItem("test-login", JSON.stringify(valid));
+				loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
+				container.classList.remove("active-popup");
+				loginbtn.removeEventListener("click", loginin);
+
+
 			}
-		},error: function(xhr) {
+		}, error: function(xhr) {
 			console.log(xhr.responseText);
 		},
 	});
-	// 獲得cookie=============================================================================================
-
-	//取得值 (幫他加一個id應該更好取得)
-	const valid = {
-		account: email,
-		password: password,
-	};
-	// const valid = {
-	//   account: document.querySelector("#email").value,
-	//   password: document.querySelector("#password").value,
-	// };
-
-	//先暫存
-	sessionStorage.setItem("test-login", JSON.stringify(valid));
-	loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
-console.log("btn ok");
 });
-	// 獲得cookie=============================================================================================
+//================================如果有資料，登入/註冊改成燈泡=====================================
+if (sessionStorage.getItem('test-login') === 'true') {
+	loginbtn.addEventListener("click", function(e) {
 
+		container.classList.remove("active-popup");
+		loginbtn.removeEventListener("click", loginin);
+		document.querySelector(".member").classList.toggle("-on");
+	})
+};
+//================================註冊=====================================
 // 取得註冊按鈕=====================================================
 function validateEmail(email) {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

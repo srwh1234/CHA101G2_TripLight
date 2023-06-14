@@ -6,8 +6,8 @@ let IdNumber = document.querySelector('#inputIdNumber');
 let birthday = document.querySelector('#inputBD');
 let phoneNumber = document.querySelector('#inputPhoneNumber');
 let gender = document.querySelector('#inputGender');
-let city = document.querySelector('#city');
-let dist = document.querySelector('#dist');
+//let city = document.querySelector('#city');
+//let dist = document.getElementById('dist');
 let address = document.querySelector('#inputAddress');
 let email = document.querySelector('#inputEmail');
 let saveBtn = document.querySelector('#saveData');
@@ -105,7 +105,7 @@ const dist_data = {
 	]
 }
 
-city.addEventListener('change', (e) => {
+$("#city").change((e) =>{
 	console.log('RRRRRRRRRRRRRRRRRRRR');
 	dist.innerHTML = ' ';   //清空
 	const distarr = dist_data[e.target.value];
@@ -184,17 +184,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		
 			if ($('#city').val() !== null) {
-				city.trigger('change'); // 觸發change事件
+				$('#city').trigger('change'); // 觸發change事件
+			}else{
+				console.log('GGGGGGGGGG');
 			}
-			city.addEventListener('change', (e) => {
-				console.log('RRRRRRRRRRRRRRRRRRRR');
-				dist.innerHTML = ''; // 清空
-				//const distarr = dist_data[e.target.value]
-				const distarr = dist_data.indexOf(member.memberCity);
-				for (let text of distarr) {
-					dist.insertAdjacentHTML('beforeend', `<option>${text}</option>`);
-				}
-			});
+
 
 		})
 		.catch(function(error) {

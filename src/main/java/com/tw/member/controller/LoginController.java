@@ -21,59 +21,51 @@ public class LoginController {
 	public LoginController(final MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
+
 	@Autowired
 	public LoginService loginService;
 
-//	@PostMapping("/login")
-//	public String login(@RequestParam final String email, @RequestParam final String password, final HttpSession session) {
-//		final Member member = memberRepository.findMemberByMemberEmail(email);
-//		if (member != null) {
-//			session.setAttribute("member", member);
-//			return "redirect:/home";
-//		}
-//		return "login";
-//	}
-
-//	@PostMapping("/login")
-//	public String login (@RequestBody String email, @RequestBody String password, HttpSession session) {
-//		if(email == login.)
-//		return null;
-//	}
 	@PostMapping("/login")
 	public boolean login(@RequestParam String email, @RequestParam String password, HttpSession session) {
-		
+
 		Member result = loginService.login(email, password);
-		if(result == null) {
-			System.out.println("沒有此帳號");;
+		if (result == null) {
+			System.out.println("沒有此帳號");
 			return false;
-		}else {
+		} else {
 			System.out.println("後端成功");
 			// 設置Session
 			session.setAttribute("member", result);
-			return true;			
+			return true;
 		}
 	}
-
+//	@PostMapping("getId")
+//	public Integer getMemberId(@RequestParam String email) {
+//		if(login === true) {
+//			
+//		}
+//	}
 	@PostMapping("/register")
 	public boolean register(@RequestParam String email, @RequestParam String password, @RequestParam String account) {
-		
+
 		boolean registerStatus = loginService.register(email, password, account);
-		if(registerStatus) {
+		if (registerStatus) {
 			System.out.println("success");
 			return true;
-		}else {
+		} else {
 			System.out.println("fail");
 //			return "redirect:/front-end/index.html";
 			return false;
 		}
 	}
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session, SessionStatus sessionStatus) {
-		
-		if(session.getAttribute("member") != null){
+
+		if (session.getAttribute("member") != null) {
 			session.removeAttribute("member");
 			sessionStatus.setComplete();
-		}		
+		}
 		return "redirect:/front-end/index.html";
 	}
 
