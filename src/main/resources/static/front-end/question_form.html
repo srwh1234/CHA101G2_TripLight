@@ -434,16 +434,27 @@
     document.querySelector('.quest-report').addEventListener('submit', function(e) {
         e.preventDefault();
         var content = document.getElementById('message').value;
-        axios.post('/createQuestReport', {
-            qContent: content,
+        console.log(content)
+        fetch('/createQuestReport', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                qContent: content,
+            }),
         })
             .then(function(response) {
-                console.log(response);
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
             })
             .catch(function(error) {
                 console.log(error);
             });
     });
+
 
 </script>
 <!-- login顯示 -->

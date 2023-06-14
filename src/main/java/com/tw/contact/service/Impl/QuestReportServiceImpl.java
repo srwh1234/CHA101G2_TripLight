@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestReportServiceImpl implements QuestReportService {
@@ -19,9 +21,22 @@ public class QuestReportServiceImpl implements QuestReportService {
     }
 
     @Override
-    public QuestReport save(QuestReport questReport) {
+    public void save(QuestReport questReport) {
         ZoneId zoneId = ZoneId.of("Asia/Shanghai");
         questReport.setStartTime(LocalDateTime.now(zoneId));
-        return questReportRepository.save(questReport);
+        questReportRepository.save(questReport);
     }
+
+    @Override
+    public List<QuestReport> showQuestReport(){
+
+        return questReportRepository.findAll();
+    }
+
+    @Override
+    public List<QuestReport> showQuestReportById(int memberId) {
+        return questReportRepository.findByMemberMemberId(memberId);
+    }
+
+
 }
