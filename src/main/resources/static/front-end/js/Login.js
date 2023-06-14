@@ -3,7 +3,6 @@ const loginLink = document.querySelector(".login-link");
 const registerLink = document.querySelector(".register-link");
 const loginbtn = document.getElementById("login");
 //清除登入/註冊屬性
-
 loginbtn.href = '';
 
 //點擊註冊
@@ -42,11 +41,12 @@ login33.addEventListener("click", function(e) {
 		url: "/login",
 		data: {
 			email: memberEmail,
-			password: memberPassword,			
+			password: memberPassword,
 		},
 		success: function(response) {
 			console.log(response);
 			if (!response) {
+			
 				Swal.fire({
 					icon: "error",
 					title: "登入失敗",
@@ -68,32 +68,26 @@ login33.addEventListener("click", function(e) {
 				// 清空欄位
 				$("#email").val("");
 				$("#password").val("");
-				//先暫存
+				//資料存入sessionStorage
 				const valid = {
 					email: memberEmail,
 					password: memberPassword,
+					memberId: response,
 				};
 				sessionStorage.setItem("test-login", JSON.stringify(valid));
+				//登入後變成燈泡
 				loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
 				container.classList.remove("active-popup");
 				loginbtn.removeEventListener("click", loginin);
-
 
 			}
 		}, error: function(xhr) {
 			console.log(xhr.responseText);
 		},
 	});
-});
-//================================如果有資料，登入/註冊改成燈泡=====================================
-if (sessionStorage.getItem('test-login') === 'true') {
-	loginbtn.addEventListener("click", function(e) {
 
-		container.classList.remove("active-popup");
-		loginbtn.removeEventListener("click", loginin);
-		document.querySelector(".member").classList.toggle("-on");
-	})
-};
+});
+
 //================================註冊=====================================
 // 取得註冊按鈕=====================================================
 function validateEmail(email) {
