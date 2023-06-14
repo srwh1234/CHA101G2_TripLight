@@ -277,6 +277,8 @@
 
                 <div class="container-fluid">
 
+
+
                     <div class="container my-5 d-none" id="detailContainer">
                         <div class="row p-3">
                             <div class="h3 my-5">
@@ -448,8 +450,10 @@
             //關鍵字搜尋的按鈕
             $('#btnSearch').on('click', function () {
                 doSearch(0);
-                console.log('111');
             });
+
+            // 查看詳情的按鈕
+            $(document).on('click', '.btn-detail', fetch_detail);
 
             //分頁的按鈕事件
             $(document).on('click', '#orderPagination a', function (e) {
@@ -462,7 +466,9 @@
                 } else if (!isNaN(page)) {
                     doSearch(page);
                 }
+                $('#detailContainer').addClass('d-none');
             });
+
             //我要退貨的參數傳遞
             $('#checkRefundModal').on('show.bs.modal', function (event) {
                 const button = $(event.relatedTarget);
@@ -473,52 +479,86 @@
                 const refundReason = value[3]
                 $(this).find('.modal-title').text(name);
                 $('#inputRefund').val(refundReason)
-
                 $('#btnRefundOk').data('ticket-sn-id', sn);
                 $('#btnRefundFail').data('ticket-sn-id', sn);
             });
 
             //退貨OK的按鈕
             $('#btnRefundOk').on('click', function () {
+                const employeeId = 1;
                 const post = {
-                    ticketSnId: $(this).data('ticket-sn-id'),
+                    employeeId: employeeId,
+                    orderId: parseInt($('#orderId').text()),
+                    ticketSnId: parseInt($(this).data('ticket-sn-id')),
                     status: 1,
                 };
-
-                console.log(post);
-                $('#checkRefundModal').modal('hide');
+                fetch_refund(post);
             });
+
             $('#btnRefundFail').on('click', function () {
+                const employeeId = 1;
                 const post = {
-                    ticketSnId: $(this).data('ticket-sn-id'),
+                    employeeId: employeeId,
+                    orderId: parseInt($('#orderId').text()),
+                    ticketSnId: parseInt($(this).data('ticket-sn-id')),
                     status: 2,
                 };
-
-                console.log(post);
-                $('#checkRefundModal').modal('hide');
+                fetch_refund(post);
             });
 
 
-            // 查看詳情的按鈕
-            $(document).on('click', '.btn-detail', function () {
-                const employeeId = 1;
-                const orderId = $(this).closest('tr').find('.order_id').text();
 
-                //發請求
-                fetch(`http://localhost:8080/bk/orderdetail?employeeId=${employeeId}&&orderId=${orderId}`)
-                    .then(response => response.json())
-                    .then(data => result = data)
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        render_detail(orderId);
-                    });
-
-            });
 
 
         })
         //TODO: ------------------------------------------//fetch
 
+        function fetch_refund(post) {
+
+
+
+            //發請求
+            fetch(`http://localhost:8080/bk/refund`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => { })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    fetch_detail(post.orderId);
+                    $('#checkRefundModal').modal('hide');
+                });
+        }
+
+        function fetch_detail(e) {
+            const employeeId = 1;
+
+            let orderId;
+
+            if (typeof e === 'object') {
+                orderId = $(e.target).closest('tr').find('.order_id').text();
+            } else {
+                orderId = e;
+            }
+
+            const params = new URLSearchParams();
+            params.append('employeeId', employeeId);
+            params.append('orderId', orderId);
+
+
+            //發請求
+            fetch(`http://localhost:8080/bk/orderdetail?${params}`)
+                .then(response => response.json())
+                .then(data => resultDetail = data)
+                .catch(error => console.log(error))
+                .finally(() => {
+                    render_detail(orderId);
+                });
+        }
 
         /**
         * 分頁搜尋
@@ -619,8 +659,8 @@
         * 渲染訂單明細
         */
         function render_detail(orderId) {
-            $('#detailContainer').removeClass('d-none');          
-           
+            $('#detailContainer').removeClass('d-none');
+
 
             $('#orderId').text(orderId);
 

@@ -786,7 +786,7 @@
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
                         reader.onload = function (e) {
-                            render_img_base64(e.target.result);                            
+                            render_img_base64(e.target.result);
                         }
                     }
                 }
@@ -873,9 +873,7 @@
                 body: JSON.stringify(post),
             })
                 .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    result = data})
+                .then(data => { result = data })
                 .catch(error => console.log(error))
                 .finally(() => render());
         }
@@ -1088,7 +1086,6 @@
             const url = $(e.target).closest('.img-item').find('img').attr('src');
             const imageId = url.substring(url.lastIndexOf('/') + 1);
 
-            console.log(imageId);
             //發請求
             fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
                 .then(response => response.json())
@@ -1186,31 +1183,25 @@
             $('#orderPagination ul').html('');
 
             if (result.totalPage > 1) {
-                $('#orderPagination ul').append(
-                    `
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span>&laquo;</span>
-                </a>
-              </li>
-              `
-                );
+                $('#orderPagination ul').append(`
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                        <span>&laquo;</span>
+                        </a>
+                    </li>
+                `);
                 for (let i = 0; i < result.totalPage; i++) {
-                    $('#orderPagination ul').append(
-                        `         
+                    $('#orderPagination ul').append(`         
                         <a class="page-link ${i == result.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
-                        `
-                    );
+                    `);
                 }
-                $('#orderPagination ul').append(
-                    `                    
+                $('#orderPagination ul').append(`                    
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                         <span>&raquo;</span>
                         </a>
                     </li>
-                    `
-                );
+                `);
             }
         }
 
