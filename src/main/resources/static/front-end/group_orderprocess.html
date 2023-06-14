@@ -272,78 +272,91 @@
                 </div>
 
 
-                <!--  第三列  -->
-                <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5">
+                <!-- ====== Traveler List ======  -->
+                <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5 justify-content-center">
 
+
+                    <!-- ====== Traveler List ======  -->
                     <h3 class="pt-2"> 旅客名單 </h3>
                     <hr>
 
-                    <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">姓名</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
+                    <!-- ====== Traveler Detail ======  -->
+
+                    <form id="travelerList">
 
 
-                    </div>
-                    <div class="col-1">
-                        <label for="inputPassword6" class="col-form-label">性別</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
+                   <div class="row justify-content-end">
+                       <div class="col-9">
+                           <h5 class="pt-2"> 旅客 1 </h5>
+                       </div>
+                       <div class="col-3">
+                           <button type="button" class="btn btn-light">清空</button>
+                       </div>
+                   </div>
 
+                   <div class="row">
+                        <!-- name -->
+                        <div class="col-2">
+                            <label for="travelerName" class="col-form-label">姓名</label>
+                            <input type="text" id="travelerName" class="form-control">
+                        </div>
 
-                    </div>
-                    <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">電話</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
+                        <!-- age -->
+                        <div class="col-1">
+                            <label for="travelerAge" class="col-form-label">年齡</label>
+                            <input type="number" id="travelerAge" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
 
-                    </div>
-                    <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">郵件</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
+                        <!-- gender -->
+                        <div class="col-3">
+                            <label for="travelerGender" class="col-form-label">性別</label>
+                            <br>
+                            <select id="travelerGender" class="form-select" aria-label="Default select example">
+                                <option selected>請選擇</option>
+                                <option value="0">女</option>
+                                <option value="1">男</option>
+                            </select>
 
-                    </div>
-
-                    <hr class="mt-5">
-
-                    <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">姓名</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
-
-
-                    </div>
-                    <div class="col-1">
-                        <label for="inputPassword6" class="col-form-label">性別</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
-
-
-                    </div>
-                    <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">電話</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
-
-                    </div>
-                    <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">郵件</label>
-                        <input type="password" id="inputPassword6" class="form-control"
-                            aria-describedby="passwordHelpInline">
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <label for="inputPassword6" class="col-form-label">特殊需求: </label>
-                            <div class="form-group">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
                         </div>
 
 
                     </div>
+
+                   <div class="row">
+                       <!-- phone -->
+                       <div class="col-2">
+                           <label for="travelerPhone" class="col-form-label">電話</label>
+                           <input type="text" id="travelerPhone" class="form-control"
+                                  aria-describedby="passwordHelpInline">
+
+                       </div>
+                       <!-- email -->
+                       <div class="col-auto">
+                           <label for="travelerEmail" class="col-form-label">郵件</label>
+                           <input type="text" id="travelerEmail" class="form-control"
+                                  aria-describedby="passwordHelpInline">
+
+                       </div>
+                       <hr class="mt-5">
+                   </div>
+
+                    <!-- ====== //Traveler Detail ======  -->
+
+
+                    <!-- ====== 特殊需求 ======  -->
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="inputPassword6" class="col-form-label">特殊需求: </label>
+                            <div class="form-group">
+                                <textarea style="height: 200px" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ====== //特殊需求 ======  -->
+
+                    </form>
                 </div>
 
 
@@ -405,10 +418,10 @@
                     let tripDay = response.tripDay;
 
                     let date = sessionStorage.getItem('Date');
-                    let startDate = new Date(date);
-                    let endDate = new Date(startDate.getTime());
-                    endDate.setDate(startDate.getDate()+ tripDay);
-                    console.log(tripDay);
+                    let startDate = new Date(new Date(date).getTime());
+                    let endDate = startDate.setDate(startDate.getDate()+ tripDay);
+
+
 
                     $('#groupDate').html(`旅遊團日期: ${startDate} 至 ${endDate}`);
                     console.log(endDate);

@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Proxy;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.sql.Date;
 @Entity
 @Setter
 @Getter
+@Proxy(lazy = false)
 public class TourGroup implements Serializable {
     public static final long serialVersionUID = 33L;
 
