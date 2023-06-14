@@ -1,5 +1,6 @@
 package com.tw.ticket.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import org.springframework.data.annotation.Transient;
@@ -18,7 +19,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ticket {
+public class Ticket implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int DISABLED = 0;
 	public static int ENABLED = 1;

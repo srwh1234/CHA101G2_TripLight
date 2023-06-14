@@ -13,7 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketCart {
+public class TicketCart implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	// 非必要的建構子 只是為了輸入方便
 	public TicketCart(final Integer memberId, final Integer ticketId, final Integer quantity) {

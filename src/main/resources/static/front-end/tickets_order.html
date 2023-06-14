@@ -802,13 +802,19 @@
     */
     function fetch_detail(e) {
       const memberId = 1;
-      const orderId = $(e.target).closest('tr').find('.ticket_order_id').text();
+      let orderId = $(e.target).closest('tr').find('.ticket_order_id').text();
+
+      if (typeof e === 'object') {
+        orderId = $(e.target).closest('tr').find('.ticket_order_id').text();
+      } else {
+        orderId = e;      
+      }
 
       fetch(`http://localhost:8080/ticketorderdetails?memberId=${memberId}&&orderId=${orderId}`)
         .then(response => response.json())
         .then(data => resultDetail = data)
         .catch(error => console.log(error))
-        .finally(() => {         
+        .finally(() => {
           $('#orderId').text(orderId);
           $('#detailContainer').removeClass('d-none');
           render_detail();
@@ -820,7 +826,7 @@
     /**
     * 渲染訂單列表
     */
-    function render() {      
+    function render() {
       $('#orderContainer table tbody').html('');
 
       for (let order of result.orders) {
@@ -829,7 +835,7 @@
           <td class="ticket_order_id">${order.ticketOrderId}</td>
           <td class="ticket_count">${order.ticketCount} 張</td>
           <td class="pay_date">${df(order.payDate)}</td>
-        `);        
+        `);
         //未付款要顯示按鈕
         if (order.payType === "") {
           theTr.append(`

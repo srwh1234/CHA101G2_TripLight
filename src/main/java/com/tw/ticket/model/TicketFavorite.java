@@ -18,7 +18,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketFavorite {
+public class TicketFavorite implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private PrimaryKey key; // 複合主鍵的關係
