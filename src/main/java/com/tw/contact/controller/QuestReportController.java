@@ -17,7 +17,6 @@ public class QuestReportController {
     private final QuestReportService questReportService;
     private final MemberRepository memberRepository;
 
-
     @Autowired
     QuestReportController(QuestReportService questReportService,
                           MemberRepository memberRepository) {
@@ -25,13 +24,15 @@ public class QuestReportController {
         this.memberRepository = memberRepository;
     }
 
-    @PostMapping("/createQuestReport")
-    public void save(@RequestBody QuestReportDTO questReportDTO){
-        QuestReport questReport = new QuestReport();
-        questReport.setQContent(questReportDTO.getqContent());
-        questReport.setMember(memberRepository.findByMemberId(2));
-        questReportService.save(questReport);
-    }
+
+    //送出問題
+//    @PostMapping("/createQuestReport")
+//    public void save(@RequestBody QuestReportDTO questReportDTO){
+//        QuestReport questReport = new QuestReport();
+//        questReport.setQContent(questReportDTO.getqContent());
+//        questReport.setMember(memberRepository.findByMemberId(2));
+//        questReportService.save(questReport);
+//    }
 
 //    @GetMapping("/ShowQuestReport")
 //    public List<QuestReportDTO> showQuestReport(){
@@ -48,19 +49,28 @@ public class QuestReportController {
 //        return questReportDTOS;
 //    }
 
-    @GetMapping("/ShowQuestReport")
-    public List<QuestReportDTO> showQuestReport(){
-        List<QuestReport> questReports = questReportService.showQuestReportById(3);
-        List<QuestReportDTO> questReportDTOS = new ArrayList<>();
-        for (QuestReport questReport : questReports) {
-            QuestReportDTO dto = new QuestReportDTO();
-            dto.setId(questReport.getId());
-            dto.setqContent(questReport.getQContent());
-            dto.setrContent(questReport.getRContent());
-            dto.setMemberId(questReport.getMember().getMemberId());
-            questReportDTOS.add(dto);
-        }
-        return questReportDTOS;
-    }
 
+    //依會員邊號顯示問題
+//    @GetMapping("/ShowQuestReport")
+//    public List<QuestReportDTO> showQuestReport(){
+//        List<QuestReport> questReports = questReportService.showQuestReportById(3);
+//        List<QuestReportDTO> questReportDTOS = new ArrayList<>();
+//        for (QuestReport questReport : questReports) {
+//            QuestReportDTO dto = new QuestReportDTO();
+//            dto.setId(questReport.getId());
+//            dto.setMemberId(questReport.getMember().getMemberId());
+//            dto.setqContent(questReport.getQContent());
+//            dto.setrContent(questReport.getRContent());
+//
+//
+//            questReportDTOS.add(dto);
+//        }
+//        return questReportDTOS;
+//    }
+
+    //會員查自己的問題回報紀錄
+    @GetMapping("/quest_report")
+    public List<QuestReport> showMemberQuestionList(@RequestParam("member") int memberId){
+        return questReportService.showQuestReportById(memberId);
+    }
 }

@@ -29,7 +29,6 @@ public class QuestReportServiceImpl implements QuestReportService {
 
     @Override
     public List<QuestReport> showQuestReport(){
-
         return questReportRepository.findAll();
     }
 
