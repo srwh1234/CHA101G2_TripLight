@@ -47,6 +47,11 @@
         .my-text-lightred {
             color: #ef7a70;
         }
+
+        /* 分頁選單定位*/
+        #orderContainer {
+            min-height: 40vh;
+        }
     </style>
 </head>
 
@@ -231,6 +236,12 @@
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
+                                <div class="form-check m-1">
+                                    <input class="form-check-input" type="checkbox" id="refundCheck">
+                                    <label class="form-check-label" for="refundCheck">
+                                        只顯示有退貨申請的訂單
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -277,9 +288,7 @@
 
                 <div class="container-fluid">
 
-
-
-                    <div class="container my-5 d-none" id="detailContainer">
+                    <div class="container d-none" id="detailContainer">
                         <div class="row p-3">
                             <div class="h3 my-5">
                                 票券訂單明細<span class="text-muted mx-2">#<span id="orderId">0000</span></span>
@@ -432,15 +441,8 @@
                 refundStatus: Math.trunc(Math.random() * 3),
                 refundReason: `因為天氣不好我想退貨2`,
             }
-        ]
+        ];
 
-        // 上次的搜尋條件
-        let oldCondition = {
-            keyword: 'nn',
-            employeeId: 1,
-            page: 0,
-            size: 5,
-        };
 
         //TODO: ------------------------------------------//onload
         $(function () {
@@ -449,6 +451,11 @@
 
             //關鍵字搜尋的按鈕
             $('#btnSearch').on('click', function () {
+                doSearch(0);
+            });
+
+            //只查看退貨申請
+            $('#refundCheck').on('click', function () {              
                 doSearch(0);
             });
 
@@ -466,7 +473,6 @@
                 } else if (!isNaN(page)) {
                     doSearch(page);
                 }
-                $('#detailContainer').addClass('d-none');
             });
 
             //我要退貨的參數傳遞
@@ -560,14 +566,24 @@
                 });
         }
 
+
+        // 上次的搜尋條件
+        let oldCondition = {
+            keyword: 'nn',
+            refundChecked: false,
+            employeeId: 1,
+            page: 0,
+            size: 5,
+        };
         /**
         * 分頁搜尋
         */
         function doSearch(curPage) {
             const employeeId = 1;
-
+           
             const post = {
                 keyword: $('#ticketSearchText').val(),
+                refundChecked: $('#refundCheck').prop('checked') ,
                 employeeId: employeeId,
                 page: curPage,
                 size: 5,
@@ -591,6 +607,7 @@
                 .then(data => result = data)
                 .catch(error => console.log(error))
                 .finally(() => {
+                    $('#detailContainer').addClass('d-none');
                     render();
                 });
         }

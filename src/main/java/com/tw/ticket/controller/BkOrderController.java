@@ -47,6 +47,7 @@ public class BkOrderController {
 	@Data
 	public static class OrderRequest {
 		private String keyword;
+		private boolean refundChecked;
 		private int employeeId;
 		private int page;
 		private int size;

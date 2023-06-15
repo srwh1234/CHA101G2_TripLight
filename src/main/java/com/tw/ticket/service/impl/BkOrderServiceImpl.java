@@ -54,10 +54,21 @@ public class BkOrderServiceImpl implements BkOrderService {
 				request.getSize()		// 查詢的每頁筆數
 		);
 
-		final Page<TicketOrder> page = repository.searchOrderByKeyword(//
-				request.getKeyword(),	// 關鍵字
-				pageable				// 分頁
-		);
+		final Page<TicketOrder> page;
+
+		// 如果只想找有退貨需求的訂單
+		if (request.isRefundChecked()) {
+
+			page = repository.searchOrderByKeywordRefund(//
+					request.getKeyword(),		// 關鍵字
+					pageable					// 分頁
+			);
+		} else {
+			page = repository.searchOrderByKeyword(//
+					request.getKeyword(),		// 關鍵字
+					pageable					// 分頁
+			);
+		}
 
 		final PageResponse response = new PageResponse();
 		response.setCurPage(request.getPage());
