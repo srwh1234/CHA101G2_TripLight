@@ -9,6 +9,7 @@ import com.tw.employee.model.Employee;
 public interface EmployeeRepository  extends JpaRepository<Employee , Integer> {
 	
 	 Employee findByEmployeeName(String employeeName);
+	 Employee findByEmployeeAccount(String employeeAccount);
 	
 
 }

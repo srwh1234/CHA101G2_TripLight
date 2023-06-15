@@ -27,7 +27,12 @@ public class EmployeeService{
         return employeeRepository.findById(id).orElse(null);
     }
     
-    public List<Employee> getRealtimeEmployeeData() {
-        return employeeRepository.findAll();
-    }
+//    
+//    public List<Employee> getRealtimeEmployeeData() {
+//        return employeeRepository.findAll();
+//    }
+//    
+//    public List<Employee> getLatestEmployees() {
+//        return employeeRepository.findAll();
+//    }
 }
