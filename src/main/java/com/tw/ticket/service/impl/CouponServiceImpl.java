@@ -56,4 +56,37 @@ public class CouponServiceImpl implements CouponService {
 	public Coupon getItem(final int couponId) {
 		return couponRepository.findById(couponId).orElse(null);
 	}
+
+	// 編輯優惠券
+	@Override
+	public boolean updateItem(final Coupon coupon) {
+		// 不存在的資料
+		if (!couponRepository.existsById(coupon.getCouponId())) {
+			return false;
+		}
+
+		// 條件檢查
+		if (MyUtils.isEmpty(coupon.getName())) {
+			return false;
+		}
+
+		// 日期輸入錯誤
+		if (coupon.getStartDate() == null || coupon.getExpiryDate() == null) {
+			return false;
+		}
+		if (coupon.getExpiryDate().before(coupon.getStartDate())) {
+			return false;
+		}
+
+		// 優惠券到期日已經過期
+		if (MyUtils.isBeforeNow(coupon.getExpiryDate())) {
+			return false;
+		}
+		// 折扣金額不可小於1
+		if (coupon.getDiscount() <= 0) {
+			return false;
+		}
+		couponRepository.save(coupon);
+		return true;
+	}
 }
