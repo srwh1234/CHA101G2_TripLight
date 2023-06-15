@@ -44,4 +44,16 @@ public class CouponServiceImpl implements CouponService {
 		}
 		return result;
 	}
+
+	// 取得全部的優惠券
+	@Override
+	public List<Coupon> getItems() {
+		return couponRepository.findAll();
+	}
+
+	// 取得指定的優惠券
+	@Override
+	public Coupon getItem(final int couponId) {
+		return couponRepository.findById(couponId).orElse(null);
+	}
 }
