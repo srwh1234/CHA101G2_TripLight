@@ -11,4 +11,5 @@ import java.util.List;
 public interface QuestReportRepository extends JpaRepository<QuestReport, Integer> {
     List<QuestReport> findByMemberMemberId(int memberId);
 
+
 }

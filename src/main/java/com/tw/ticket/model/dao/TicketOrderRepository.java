@@ -28,7 +28,17 @@ public interface TicketOrderRepository extends JpaRepository<TicketOrder, Intege
 	@Query("SELECT t FROM TicketOrder t WHERE t.memberId IN "//
 			+ "(SELECT m.memberId FROM Member m WHERE m.memberNameLast LIKE %:keyword% OR m.memberNameFirst LIKE %:keyword%)")
 	public Page<TicketOrder> searchOrderByKeyword(	//
-			@Param("keyword") String keyword,	// 關鍵字
-			Pageable pageable					// 分頁
+			@Param("keyword") String keyword,					// 關鍵字
+			Pageable pageable									// 分頁
+	);
+
+	// 找出指定關鍵字的訂單 且有退貨需求
+	@Query("SELECT t FROM TicketOrder t WHERE t.memberId IN "//
+			+ "(SELECT m.memberId FROM Member m WHERE m.memberNameLast LIKE %:keyword% OR m.memberNameFirst LIKE %:keyword%) "//
+			+ "AND t.ticketOrderId IN "//
+			+ "(SELECT d.key.ticketOrderId FROM TicketOrderDetail d WHERE d.refundStatus=1)")
+	public Page<TicketOrder> searchOrderByKeywordRefund(	//
+			@Param("keyword") String keyword,					// 關鍵字
+			Pageable pageable									// 分頁
 	);
 }

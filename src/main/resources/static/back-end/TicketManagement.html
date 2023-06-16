@@ -22,13 +22,14 @@
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
 
+    <!-- 使用Bootstrap-table -->
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
 
     <!-- 使用BootStrap-->
     <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <!-- 使用Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.css" rel="stylesheet">
-
 
     <style>
         .note-color .note-dropdown-menu {
@@ -236,15 +237,15 @@
                         </li>
                     </ul>
                 </nav>
+
                 <!-- TODO: -->
                 <div class="container-fluid mt-3">
                     <ul class="nav nav-tabs mt-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#tabPage1"
-                               data-bs-toggle="tab">票券清單</a>
+                            <a class="nav-link active" aria-current="page" href="#tabPage1" data-bs-toggle="tab">票券清單</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tabPage2" data-bs-toggle="tab">票券類型</a>
+                            <a class="nav-link" href="#tabPage2" data-bs-toggle="tab">優惠券清單</a>
                         </li>
 
 
@@ -308,11 +309,40 @@
                             <div style="height:30vh"></div>
                         </div>
 
-                        <!-- 票券種類 -->
+                        <!-- 優惠券 -->
                         <div class="tab-pane fade" id="tabPage2">
-                            <!-- 稱高度用的 -->
-                            <div style="height:20vh"></div>
-                            <h1 style="margin-left:30vw;">有空我會寫 真心不騙</h1>
+
+                            <div class="table-responsive p-3" id="couponContainer">
+                                <table class="table"
+                                       data-toggle="table"
+                                       data-sortable="true"
+                                       data-sort-class="table-active"
+                                       data-search="true"
+                                       data-search-align="left"
+                                       data-url="http://localhost:8080/bk/coupons">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="my-th-width-sm" data-field="couponId" data-sortable="true">編號</th>
+                                            <th class="my-th-width" data-field="name" data-sortable="true">名稱</th>
+                                            <th class="my-th-width" data-field="startDate" data-sortable="true">開始日期</th>
+                                            <th class="my-th-width" data-field="expiryDate" data-sortable="true">結束日期</th>
+                                            <th class="my-th-width-sm" data-field="discount" data-sortable="true">折扣金額</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <!-- 內容給JS填 -->
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
+                                        data-bs-target="#addCouponModal">
+                                    新增優惠券
+                                </button>
+                            </div>
                             <!-- 稱高度用的 -->
                             <div style="height:30vh"></div>
                         </div>
@@ -608,6 +638,81 @@
                         </div>
                     </div>
                 </div>
+
+
+                <!-- 新增優惠券的燈箱 -->
+                <div class="modal fade" id="addCouponModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">新增優惠券</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating m-3">
+                                            <input type="text" class="form-control" id="addCoupontName" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontName">名稱</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontStartDate">開始日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontExpiryDate">到期日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="number" class="form-control" id="addCoupontPrice" min="1" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontPrice">折扣金額</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="addCoupontSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 編輯優惠券的燈箱 -->
+                <div class="modal fade" id="editCouponModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">編輯優惠券</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating m-3">
+                                            <input type="text" class="form-control" id="editCoupontName" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontName">名稱</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="editCoupontStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontStartDate">開始日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="editCoupontExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontExpiryDate">到期日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="number" class="form-control" id="editCoupontPrice" min="1" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontPrice">折扣金額</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="editCoupontSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -634,8 +739,11 @@
     <script src="vendor/summernote/summernote-lite.min.js"></script>
     <script src="vendor/summernote/summernote-zh-TW.min.js"></script>
     <script src="vendor/sweetalert/sweetalert.js"></script>
+    <script src="js/bootstrap-table.min.js"></script>
 
     <script>
+        let curEditCouponId;
+
         //假資料-票券列表
         let result = {
             curPage: 1,
@@ -700,8 +808,22 @@
             "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
         ];
 
+
+
         //TODO: ------------------------------------------//onload
         $(function () {
+
+            //優惠券列表 點選列的事件
+            $(document).on('click', '#couponContainer tbody tr', function () {
+                curEditCouponId = $(this).find('td').first().text();
+                fetch_coupon();
+            });
+
+            // 編輯優惠券-確認送出
+            $('#editCoupontSubmit').on('click', fetch_edit_coupon);
+
+            $('#addCoupontSubmit').on('click', fetch_add_coupon);
+
 
             //測試按鈕
             $('#testBtn').on('click', function () {
@@ -786,7 +908,7 @@
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
                         reader.onload = function (e) {
-                            render_img_base64(e.target.result);                            
+                            render_img_base64(e.target.result);
                         }
                     }
                 }
@@ -873,9 +995,7 @@
                 body: JSON.stringify(post),
             })
                 .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    result = data})
+                .then(data => { result = data })
                 .catch(error => console.log(error))
                 .finally(() => render());
         }
@@ -1088,7 +1208,6 @@
             const url = $(e.target).closest('.img-item').find('img').attr('src');
             const imageId = url.substring(url.lastIndexOf('/') + 1);
 
-            console.log(imageId);
             //發請求
             fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
                 .then(response => response.json())
@@ -1139,11 +1258,104 @@
                 }
             }
         }
+
+        /**
+        *  獲得優惠券內容的請求
+        */
+        function fetch_coupon() {
+            const param = new URLSearchParams();
+            param.append('couponId', curEditCouponId);
+
+            //填入資料
+            fetch(`http://localhost:8080/bk/coupon?${param}`)
+                .then(response => response.json())
+                .then(data => render_coupon(data))
+                .catch(error => console.log(error))
+                .finally(() => $('#editCouponModal').modal('show'));
+        }
+
+        /**
+        * 新增優惠券 
+        */
+        function fetch_add_coupon() {
+            const post = {
+                couponId: 0,
+                name: $('#addCoupontName').val(),
+                startDate: $('#addCoupontStartDate').val(),
+                expiryDate: $('#addCoupontExpiryDate').val(),
+                discount: $('#addCoupontPrice').val(),
+            }
+            // 條件判斷
+            if (!isValidCoupon(post)) {
+                return;
+            }
+
+            //填入資料
+            fetch(`http://localhost:8080/bk/addcoupon?`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '新增成功' });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '新增失敗' });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#couponContainer table').bootstrapTable('refresh');
+                    $('#addCouponModal').modal('hide');
+                });
+        }
+
+        /**
+        * 編輯優惠券 
+        */
+        function fetch_edit_coupon() {
+            const post = {
+                couponId: curEditCouponId,
+                name: $('#editCoupontName').val(),
+                startDate: $('#editCoupontStartDate').val(),
+                expiryDate: $('#editCoupontExpiryDate').val(),
+                discount: $('#editCoupontPrice').val(),
+            }
+            // 條件判斷
+            if (!isValidCoupon(post)) {
+                return;
+            }
+
+            //填入資料
+            fetch(`http://localhost:8080/bk/editcoupon?`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '編輯成功' });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '編輯失敗' });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#couponContainer table').bootstrapTable('refresh');
+                    $('#editCouponModal').modal('hide');
+                });
+        }
+
+
         //TODO:  ------------------------------------------//render
 
 
-
-        //TODO: 
         //渲染票券列表的資料
         function render() {
             $('#ticketContainer table tbody').html('');
@@ -1186,31 +1398,25 @@
             $('#orderPagination ul').html('');
 
             if (result.totalPage > 1) {
-                $('#orderPagination ul').append(
-                    `
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span>&laquo;</span>
-                </a>
-              </li>
-              `
-                );
+                $('#orderPagination ul').append(`
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                        <span>&laquo;</span>
+                        </a>
+                    </li>
+                `);
                 for (let i = 0; i < result.totalPage; i++) {
-                    $('#orderPagination ul').append(
-                        `         
+                    $('#orderPagination ul').append(`         
                         <a class="page-link ${i == result.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
-                        `
-                    );
+                    `);
                 }
-                $('#orderPagination ul').append(
-                    `                    
+                $('#orderPagination ul').append(`                    
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                         <span>&raquo;</span>
                         </a>
                     </li>
-                    `
-                );
+                `);
             }
         }
 
@@ -1246,7 +1452,18 @@
             });
         }
 
-        //渲染編輯票券的頁面
+        // 渲染優惠券編輯頁面
+        function render_coupon(data) {
+            $('#editCoupontName').val(data.name);
+            $('#editCoupontStartDate').val(data.startDate);
+            $('#editCoupontExpiryDate').val(data.expiryDate);
+            $('#editCoupontPrice').val(data.discount);
+            //判斷上色
+            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+        }
+
+        // 渲染編輯票券的頁面
         function render_data() {
             $(`#editTicketType option:contains('${fakeData.ticketType}')`).prop("selected", true);
             $('#editTicketExpiryDate').val(fakeData.expiryDate);
@@ -1302,7 +1519,7 @@
             `);
         }
 
-        //判斷輸入格式
+        //判斷票券輸入格式
         function isValidData(post) {
             if (!post.ticketType) {
                 Swal.fire({ icon: 'error', title: '票券類型未輸入' });
@@ -1380,11 +1597,40 @@
             return true;
         }
 
+        //判斷優惠券輸入
+        function isValidCoupon(post) {
+            if (!post.name) {
+                Swal.fire({ icon: 'error', title: '優惠券名稱未輸入' });
+                return false;
+            }
+
+            if (isDateAfterTarget(post.startDate, post.expiryDate)) {
+                Swal.fire({ icon: 'error', title: '日期輸入錯誤' });
+                return false;
+
+            }
+            if (!isDateAfterNow(post.expiryDate)) {
+                Swal.fire({ icon: 'error', title: '優惠券到期日已經過期' });
+                return false;
+            }
+            if (!post.discount) {
+                Swal.fire({ icon: 'error', title: '折扣金額未輸入' });
+                return false;
+            }
+            if (post.discount <= 0) {
+                Swal.fire({ icon: 'error', title: '折扣金額不可小於1' });
+                return false;
+            }
+            return true;
+        }
 
         //TODO: ------------------------------------------//好用的函式
 
         //輸入的日期字串(yyyy-mm-dd) 是否在目前日期以後
         function isDateAfterNow(dateString) {
+            if (!dateString) {
+                return false;
+            }
             const dateParts = dateString.split('-');
             const year = parseInt(dateParts[0]);
             const month = parseInt(dateParts[1]) - 1; // 月份從0開始
@@ -1392,6 +1638,27 @@
             const inputDate = new Date(year, month, day);
             return inputDate.getTime() > new Date().getTime();
         }
+
+        function isDateAfterTarget(dateString, dateString2) {
+            if (!dateString || !dateString2) {
+                return false;
+            }
+
+            const dateParts = dateString.split('-');
+            const year = parseInt(dateParts[0]);
+            const month = parseInt(dateParts[1]) - 1; // 月份從0開始
+            const day = parseInt(dateParts[2]);
+            const inputDate = new Date(year, month, day);
+            //---------
+            const dateParts2 = dateString2.split('-');
+            const year2 = parseInt(dateParts2[0]);
+            const month2 = parseInt(dateParts2[1]) - 1; // 月份從0開始
+            const day2 = parseInt(dateParts2[2]);
+            const inputDate2 = new Date(year2, month2, day2);
+
+            return inputDate.getTime() > inputDate2.getTime();
+        }
+
 
         // 將base64轉成Blob物件
         function convertToBlob(base64) {

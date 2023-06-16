@@ -21,8 +21,7 @@ public class LoginService {
         member.setMemberEmail(email);
         member.setMemberPassword(password);
         member.setMemberAccount(account);
-        memberRepository.save(member);
-        
+        memberRepository.save(member);        
         return true; // 註冊成功
     }
 
@@ -32,14 +31,6 @@ public class LoginService {
             return member; // 登入成功
         }
         return null; // 登入失敗
-    }
-    
-    public Integer getMemberId(String email) {
-    	Member member = memberRepository.findByMemberEmail(email);
-    	if(member != null) {
-    		return member.getMemberId();    		
-    	}
-    	return null;
     }
 
 }

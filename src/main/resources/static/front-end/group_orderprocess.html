@@ -62,6 +62,12 @@
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
 
+    <style>
+        .basic{
+            font-size: 20px;
+        }
+    </style>
+
 
 </head>
 
@@ -198,24 +204,26 @@
 
     <!-- ===== 開始 ===== -->
 
+    <form id="tripOrder">
     <div class="container mt-5 shadow-none p-3 mb-5 bg-light rounded">
-
+        <!-- ====== 訂購資訊 ====== -->
         <div class="row">
             <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5">
                 <h3 class="pt-2"> 訂購資訊 </h3>
                 <hr>
                 <div class="col-10">
                     <ul class="list-group list-group-flush">
-                        <li style="font-size: 20px" class="list-group-item" id="groupDate"> </li>
-                        <li class="list-group-item" id="tripName"></li>
-                        <li class="list-group-item" id="qtyChild"></li>
-                        <li class="list-group-item" id="qtyAdult"></li>
-                        <li class="list-group-item" id="totalAmount"></li>
+                        <li class="list-group-item basic" id="groupDate"> </li>
+                        <li class="list-group-item basic" id="tripName"></li>
+                        <li class="list-group-item basic" id="qtyChild"></li>
+                        <li class="list-group-item basic" id="qtyAdult"></li>
+                        <li class="list-group-item basic" id="totalAmount"></li>
                     </ul>
                 </div>
 
             </div>
 
+            <!-- ====== 訂購人資料 ====== -->
             <div class="row shadow-lg p-3 mb-5 bg-body rounded">
                 <div class="row">
                     <h3>訂購人資料</h3>
@@ -223,25 +231,26 @@
 
                 <hr>
                 <div class="col-auto">
-                    <label for="inputPassword6" class="col-form-label">姓名</label>
-                    <input type="password" id="inputPassword6" class="form-control"
+                    <label for="memberName" class="col-form-label">姓名</label>
+                    <input type="text" id="memberName" class="form-control"
                         aria-describedby="passwordHelpInline">
 
 
                 </div>
                 <div class="col-auto">
-                    <label for="inputPassword6" class="col-form-label">電話</label>
-                    <input type="password" id="inputPassword6" class="form-control"
+                    <label for="memberPhone" class="col-form-label">電話</label>
+                    <input type="text" id="memberPhone" class="form-control"
                         aria-describedby="passwordHelpInline">
 
                 </div>
                 <div class="col-auto">
-                    <label for="inputPassword6" class="col-form-label">郵件</label>
-                    <input type="password" id="inputPassword6" class="form-control"
+                    <label for="memberEmail" class="col-form-label">郵件</label>
+                    <input type="text" id="memberEmail" class="form-control"
                         aria-describedby="passwordHelpInline">
 
                 </div>
 
+                <!-- ====== 付款方式 ====== -->
                 <div class="row mt-5">
                     <h3>付款方式</h3>
                 </div>
@@ -249,30 +258,34 @@
 
                 <div class="row">
                     <div class="col-auto">
-                        <input type="checkbox" class="form-check-input pt-1">
-                        <label for="creditcard1" class="col-form-label">信用卡/簽帳金融卡</label> <i
-                            class="fa-light fa-credit-card"></i>
-                        <input type="password" id="creditcard1" class="form-control"
-                            aria-describedby="passwordHelpInline">
+
+                        <div class="form-check">
+                            <label for="payType" class="col-form-label">信用卡/簽帳金融卡</label>
+                            <input type="text" id="payType" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+
 
                     </div>
                     <div class="col-auto">
-                        <label for="inputPassword6" class="col-form-label">有效日期</label>
-                        <input type="password" id="inputPassword6" class="form-control"
+                        <label for="cardValid" class="col-form-label">有效日期</label>
+                        <input type="text" id="cardValid" class="form-control"
                             aria-describedby="passwordHelpInline">
 
                     </div>
                     <div class="col-1">
-                        <label for="creditcard2" class="col-form-label">末三碼</label>
-                        <input type="password" id="creditcard2" class="form-control"
+                        <label for="scv" class="col-form-label">末三碼</label>
+                        <input type="text" id="scv" class="form-control"
                             aria-describedby="passwordHelpInline">
-
-
                     </div>
+
+                    <br>
+                    <br>
+                    <h6> *卡號用於保留資格 </h6>
                 </div>
 
 
-                <!-- ====== Traveler List ======  -->
+                <!-- ====== 旅客名單 ======  -->
                 <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5 justify-content-center">
 
 
@@ -282,99 +295,39 @@
 
                     <!-- ====== Traveler Detail ======  -->
 
-                    <form id="travelerList">
-
-
-                   <div class="row justify-content-end">
-                       <div class="col-9">
-                           <h5 class="pt-2"> 旅客 1 </h5>
-                       </div>
-                       <div class="col-3">
-                           <button type="button" class="btn btn-light">清空</button>
-                       </div>
-                   </div>
-
-                   <div class="row">
-                        <!-- name -->
-                        <div class="col-2">
-                            <label for="travelerName" class="col-form-label">姓名</label>
-                            <input type="text" id="travelerName" class="form-control">
-                        </div>
-
-                        <!-- age -->
-                        <div class="col-1">
-                            <label for="travelerAge" class="col-form-label">年齡</label>
-                            <input type="number" id="travelerAge" class="form-control"
-                                   aria-describedby="passwordHelpInline">
-                        </div>
-
-                        <!-- gender -->
-                        <div class="col-3">
-                            <label for="travelerGender" class="col-form-label">性別</label>
-                            <br>
-                            <select id="travelerGender" class="form-select" aria-label="Default select example">
-                                <option selected>請選擇</option>
-                                <option value="0">女</option>
-                                <option value="1">男</option>
-                            </select>
-
-                        </div>
-
+                    <div id="travelerList">
+                    <!-- dynamic travelerList -->
 
                     </div>
 
-                   <div class="row">
-                       <!-- phone -->
-                       <div class="col-2">
-                           <label for="travelerPhone" class="col-form-label">電話</label>
-                           <input type="text" id="travelerPhone" class="form-control"
-                                  aria-describedby="passwordHelpInline">
-
-                       </div>
-                       <!-- email -->
-                       <div class="col-auto">
-                           <label for="travelerEmail" class="col-form-label">郵件</label>
-                           <input type="text" id="travelerEmail" class="form-control"
-                                  aria-describedby="passwordHelpInline">
-
-                       </div>
-                       <hr class="mt-5">
-                   </div>
-
-                    <!-- ====== //Traveler Detail ======  -->
+                            <!-- ====== //Traveler Detail ======  -->
 
 
-                    <!-- ====== 特殊需求 ======  -->
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="inputPassword6" class="col-form-label">特殊需求: </label>
-                            <div class="form-group">
-                                <textarea style="height: 200px" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <!-- ====== 特殊需求 ======  -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="remarks" class="col-form-label">特殊需求: </label>
+                                    <div class="form-group">
+                                        <textarea style="height: 200px" class="form-control" id="remarks" rows="3"></textarea>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
+                            <!-- ====== //特殊需求 ======  -->
 
                     </div>
-                    <!-- ====== //特殊需求 ======  -->
-
-                    </form>
                 </div>
-
 
                 <div class="row justify-content-end">
                     <div class="col-2">
-                        <button type="button" id="order_confirmed" class="btn btn-primary btn-lg">確認預定</button>
+                        <button type="submit" id="order_confirmed" class="btn btn-primary btn-lg">確認預定</button>
 
                     </div>
                 </div>
-
                 <!-- ===== 結束 ===== -->
-
-
             </div>
-
         </div>
-
-        <!-- 評論本體 -->
+    </form>
 
 
 
@@ -411,30 +364,108 @@
             // ===== 確認彈窗 =====
             $(document).ready(function () {
 
+                // ====== 訂購資訊區塊 ======
+
+                let qtyChild = parseInt(sessionStorage.getItem('qtyChild'));
+                console.log(qtyChild);
+
+                if (qtyChild >0){
+                    $('#qtyChild').text(`兒童: ${qtyChild} 人`);
+                }
+
+                let qtyAdult = parseInt(sessionStorage.getItem('qtyAdult'));
+                if(qtyAdult >0){
+                    $('#qtyAdult').text(`大人: ${qtyAdult} 人`);
+                }
+
+                let totalQty = (qtyChild + qtyAdult);
+
+                // ====== add travelers column based on qty ======
+                let html ="";
+                for (let i=1; i<=totalQty; i++){
+                    html += `<div class="row justify-content-end">
+                       <div class="col-9">
+                           <h5 class="pt-2"> 旅客 ${i} </h5>
+                       </div>
+                       <div class="col-3">
+                           <button type="button" class="btn btn-light">清空</button>
+                       </div>
+                   </div>
+
+                   <div class="row">
+                        <!-- name -->
+                        <div class="col-2">
+                            <label for="traveler_name" class="col-form-label">姓名</label>
+                            <input type="text" for="traveler_name" name="travelerName" class="form-control">
+                        </div>
+
+                        <!-- age -->
+                        <div class="col-1">
+                            <label for="traveler_age" class="col-form-label">年齡</label>
+                            <input type="number" id="traveler_age" name="travelerAge" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+
+                        <!-- gender -->
+                        <div class="col-2">
+                            <label for="traveler_gender" class="col-form-label">性別</label>
+                            <br>
+                            <select id="traveler_gender" name="travelerGender" class="form-select" aria-label="Default select example">
+                                <option selected>請選擇</option>
+                                <option value="0">女</option>
+                                <option value="1">男</option>
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+                   <div class="row">
+                       <!-- phone -->
+                       <div class="col-2">
+                           <label for="traveler_phone" class="col-form-label">電話</label>
+                           <input type="text" id="traveler_phone" name="travelerPhone" class="form-control"
+                                  aria-describedby="passwordHelpInline">
+
+                       </div>
+                       <!-- email -->
+                       <div class="col-auto">
+                           <label for="traveler_email" class="col-form-label">郵件</label>
+                           <input type="email" id="traveler_email" name="travelerEmail" class="form-control"
+                                  aria-describedby="passwordHelpInline">
+
+                       </div>
+                       <hr class="mt-5">
+                   </div>`;
+                }
+                $('#travelerList').prepend(html);
+
+                // ====== sent data to DB ======
+                $('#order_confirmed').on("click",function (){
+                    alert('ttt');
+                    let formData = $('#tripOrder').serialize();
+                    $.post("http://localhost:8080/order?tourGroupId=1", formData, function (response){
+                        console.log('AJAX request successful');
+                    })
+                })
 
                 $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response){
 
                     $('#tripName').text(`方案 : ${response.tripName}`);
-                    let tripDay = response.tripDay;
-
-                    let date = sessionStorage.getItem('Date');
-                    let startDate = new Date(new Date(date).getTime());
-                    let endDate = startDate.setDate(startDate.getDate()+ tripDay);
-
-
-
-                    $('#groupDate').html(`旅遊團日期: ${startDate} 至 ${endDate}`);
-                    console.log(endDate);
 
                 })
 
                 $.getJSON("http://localhost:8080/tourGroupGet?tripId=1", function (response){
-                    console.log(response.priceAdult);
                     let priceChild = parseInt(response.priceChild);
                     let priceAdult = parseInt(response.priceAdult);
 
+                    $('#groupDate').html(`旅遊團日期: ${response.formattedStartDate} 至 ${response.formattedEndDate}`);
+                    // console.log(endDate);
 
+                    let totalAmount = ( priceChild * qtyChild ) + ( priceAdult * qtyAdult );
 
+                    $('#totalAmount').text(`總金額: ${totalAmount} 元`);
 
                 })
 

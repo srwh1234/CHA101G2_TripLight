@@ -121,10 +121,12 @@ $(function() {
 
 // <!-- 右邊會員資料--帳號安全 -->
 
-
-
-
-
+let theId = 0;
+if(sessionStorage.getItem("test-login")){
+	theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+}else{
+	 theId = null;
+}
 
 
 
@@ -149,7 +151,7 @@ function getData() {
 		memberEmail: document.getElementById("inputEmail").value
 	}
 	console.log('data000=' + data.memberNameLast);
-	axios.post("/member/" + id, data)
+	axios.post("/member/" + theId, data)
 		.then((response) => {
 			console.log(response.data);
 		})
@@ -163,10 +165,9 @@ saveBtn.addEventListener("click", function() {
 	getData();
 })
 
-const id = "2";
 // 從資料庫中獲取並設定使用者資料到 input
 document.addEventListener("DOMContentLoaded", function() {
-	axios.get("/memberdetail/" + id)
+	axios.get("/memberdetail/" + theId)
 		.then(function(response) {
 			let member = response.data;
 			console.log(member);
@@ -188,8 +189,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			}else{
 				console.log('GGGGGGGGGG');
 			}
-
-
 		})
 		.catch(function(error) {
 			console.log(error);

@@ -29,13 +29,17 @@ public class QuestReportServiceImpl implements QuestReportService {
 
     @Override
     public List<QuestReport> showQuestReport(){
-
         return questReportRepository.findAll();
     }
 
     @Override
     public List<QuestReport> showQuestReportById(int memberId) {
         return questReportRepository.findByMemberMemberId(memberId);
+    }
+
+    @Override
+    public void deleteQuestReport(int i) {
+        questReportRepository.deleteById(i);
     }
 
 

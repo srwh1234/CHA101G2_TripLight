@@ -1,6 +1,7 @@
 package com.tw.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import com.tw.member.model.dao.MemberRepository;
 import com.tw.member.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.Data;
 
 @RestController
 public class LoginController {
@@ -21,30 +23,26 @@ public class LoginController {
 	public LoginController(final MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
-
 	@Autowired
 	public LoginService loginService;
 
 	@PostMapping("/login")
-	public boolean login(@RequestParam String email, @RequestParam String password, HttpSession session) {
+	public Integer login(@RequestParam String email, @RequestParam String password, HttpSession session) {
 
 		Member result = loginService.login(email, password);
 		if (result == null) {
 			System.out.println("沒有此帳號");
-			return false;
+			return 0;
 		} else {
 			System.out.println("後端成功");
 			// 設置Session
 			session.setAttribute("member", result);
-			return true;
+			System.out.println("MemberId: " + session.getAttribute("member"));
+			return result.getMemberId();
 		}
 	}
-//	@PostMapping("getId")
-//	public Integer getMemberId(@RequestParam String email) {
-//		if(login === true) {
-//			
-//		}
-//	}
+
+//============================================================
 	@PostMapping("/register")
 	public boolean register(@RequestParam String email, @RequestParam String password, @RequestParam String account) {
 
@@ -58,6 +56,7 @@ public class LoginController {
 			return false;
 		}
 	}
+//============================================================
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session, SessionStatus sessionStatus) {

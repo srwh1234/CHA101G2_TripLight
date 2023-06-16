@@ -36,6 +36,16 @@ spring.servlet.multipart.max-file-size=10MB
 spring.servlet.multipart.max-request-size=50MB
 
 
+#Mail設定 (信箱是我前公司的信箱 請不要拿去跑迴圈QQ) 
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=srwh@ccdigitalcenter.com
+spring.mail.password=splbinrdwbzyequm
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+
+
 
 3. 部屬檔案功能介紹-- 以下不用貼
 

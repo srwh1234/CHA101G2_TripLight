@@ -1,13 +1,11 @@
 package com.tw.trip.model.pojo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Proxy;
-import org.springframework.stereotype.Repository;
+
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -15,7 +13,8 @@ import java.sql.Date;
 @Entity
 @Setter
 @Getter
-@Proxy(lazy = false)
+@NoArgsConstructor
+@AllArgsConstructor
 public class TourGroup implements Serializable {
     public static final long serialVersionUID = 33L;
 
@@ -30,5 +29,9 @@ public class TourGroup implements Serializable {
     private Integer minTravelersNo;
     private Integer maxTravelersNo;
     private Integer status;
+    @Transient
+    private String formattedStartDate;
+    @Transient
+    private String formattedEndDate;
 
 }
