@@ -28,6 +28,7 @@ import com.tw.ticket.model.TicketOrderDetail;
 import com.tw.ticket.model.dao.TicketOrderDetailRepository;
 import com.tw.ticket.model.dao.TicketOrderRepository;
 import com.tw.ticket.service.BkOrderService;
+import com.tw.ticket.thirdparty.mail.MailService;
 
 @Service
 public class BkOrderServiceImpl implements BkOrderService {
@@ -43,6 +44,9 @@ public class BkOrderServiceImpl implements BkOrderService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	private MailService mailService;
 
 	// 回傳會員票券訂單
 	@Override
@@ -126,6 +130,18 @@ public class BkOrderServiceImpl implements BkOrderService {
 		final int ticketSnId = (int) map.get("ticketSnId");
 		final int status = (int) map.get("status");
 
+		// 檢查訂單
+		final TicketOrder order = repository.findById(orderId).orElse(null);
+		if (order == null) {
+			return false;
+		}
+		// 檢查會員
+		final Member member = memberRepository.findById(order.getMemberId()).orElse(null);
+
+		if (member == null) {
+			return false;
+		}
+
 		// 檢查員工
 		final Employee employee = employeeRepository.findById(employeeId).orElse(null);
 
@@ -144,12 +160,34 @@ public class BkOrderServiceImpl implements BkOrderService {
 		// 退款成功
 		if (status == 1) {
 			detail.setRefundStatus(REFUND_FINISH);
+
 		} else {
 			detail.setRefundStatus(REFUND_NONE);
 		}
 		detail.setEmployee(employee);
-
 		ticketOrderDetailRepository.save(detail);
+
+		// 寄信
+		sendRefundOkMail(member, detail, (status == 1));
 		return true;
+	}
+
+	private void sendRefundOkMail(final Member member, final TicketOrderDetail detail, final boolean isOk) {
+		String to = member.getMemberEmail();
+
+		// XXX 測試用 請不要寄給我
+		if (member.getMemberId() == 1) {
+			to = "srwh3577@gmail.com";
+		}
+		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+
+		final String subject = "TripLight退款通知";
+		final String text = String.format("訂單編號%s的商品:\r\n%s\r\n\r\n%s",//
+				detail.getKey().getTicketOrderId(),//
+				ticket.getName(),//
+				isOk ? "退款成功" : "無法退款"//
+		);
+
+		mailService.sendEmail(to, subject, text);
 	}
 }

@@ -154,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
 			if (!MyUtils.isContainNow(coupon.getStartDate(), coupon.getExpiryDate())) {
 				return null;
 			}
-			actualPrice -= coupon.getDiscount();
+			actualPrice = Math.max(1, actualPrice - coupon.getDiscount());
 		}
 
 		// 成立訂單

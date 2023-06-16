@@ -39,7 +39,7 @@ public class CouponController {
 
 	@PostMapping("/bk/addcoupon")
 	public boolean addCoupon(@RequestBody final Coupon coupon) {
-		return false;
+		return couponService.addItem(coupon);
 	}
 
 	@PostMapping("/bk/editcoupon")

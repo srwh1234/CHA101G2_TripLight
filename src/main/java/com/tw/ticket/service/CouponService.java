@@ -16,6 +16,9 @@ public interface CouponService {
 	// 取得指定的優惠券
 	public Coupon getItem(int couponId);
 
+	// 新增優惠券
+	public boolean addItem(Coupon coupon);
+
 	// 編輯優惠券
 	public boolean updateItem(Coupon coupon);
 }
