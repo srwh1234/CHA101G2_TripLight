@@ -29,11 +29,11 @@ public class QuestReport {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Column(name = "qs_content")
-    private String qsContent;
+    @Column(name = "q_content")
+    private String qContent;
 
-    @Column(name = "re_content")
-    private String reContent;
+    @Column(name = "r_content")
+    private String rContent;
 
     @Column(name = "state")
     private int state;
