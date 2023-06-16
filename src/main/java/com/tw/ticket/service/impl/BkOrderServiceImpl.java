@@ -172,6 +172,13 @@ public class BkOrderServiceImpl implements BkOrderService {
 		return true;
 	}
 
+	/**
+	 * 寄出退款審核結果
+	 *
+	 * @param member 會員
+	 * @param detail 訂單明細
+	 * @param isOk 是否退款
+	 */
 	private void sendRefundOkMail(final Member member, final TicketOrderDetail detail, final boolean isOk) {
 		String to = member.getMemberEmail();
 
@@ -182,12 +189,33 @@ public class BkOrderServiceImpl implements BkOrderService {
 		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
 
 		final String subject = "TripLight退款通知";
-		final String text = String.format("訂單編號%s的商品:\r\n%s\r\n\r\n%s",//
-				detail.getKey().getTicketOrderId(),//
-				ticket.getName(),//
-				isOk ? "退款成功" : "無法退款"//
+
+		final String html = """
+				<html><head><style>
+				        table,tr,th,td {
+				            border: 1px solid #09777d;
+				            border-collapse: collapse;
+				            padding: 2rem;
+				            font-size: 1.5rem;
+				        }
+				        table { margin-top: 2rem; }
+				        th {color: lavender;background-color: #26bec9; }
+				        td {color: deeppink; min-width: 25rem; }
+				    </style></head>
+				<body><table>
+				            <tr><th>訂單編號</th><td>%s</td></tr>
+				            <tr><th>商品名稱</th><td>%s</td></tr>
+				            <tr><th>金額</th><td>%d</td></tr>
+				            <tr><th>退貨結果</th><td>%s</td></tr>
+				        </table></body></html>""";
+
+		final String text = String.format(html,		//
+				detail.getKey().getTicketOrderId(),	//
+				ticket.getName(),					//
+				detail.getUnitPrice(),				//
+				isOk ? "退款成功" : "無法退款"			//
 		);
 
-		mailService.sendEmail(to, subject, text);
+		mailService.sendHtmlEmail(to, subject, text);
 	}
 }
