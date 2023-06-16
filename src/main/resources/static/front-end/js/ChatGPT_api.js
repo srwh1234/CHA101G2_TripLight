@@ -48,7 +48,7 @@ $("#storage-planning").on("click", function (e) {
   // 取得 textarea 與 url 資料
   let text = $("textarea").val();
   let url = sessionStorage.getItem("url");
-  let formdata = sessionStorage.getItem("formdata");
+  let formdata = sessionStorage.getItem("formData");
   let locationData = sessionStorage.getItem("locationsData");
 
   console.log("url" + url);
