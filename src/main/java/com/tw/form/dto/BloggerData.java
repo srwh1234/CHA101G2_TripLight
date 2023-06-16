@@ -3,9 +3,10 @@ package com.tw.form.dto;
 import lombok.Data;
 
 @Data
-public class contactData {
+public class BloggerData {
     String name;
-    String email;
     String phone;
+    String email;
+    String portfolioLink;
     String message;
 }

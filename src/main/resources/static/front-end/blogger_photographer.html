@@ -39,12 +39,17 @@
     <!-- //css files -->
 
     <!--jQuery-->
-    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link
+      href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
 
@@ -97,23 +102,63 @@
         <!-- //nav -->
         <div class="member">
           <ul class="member_list">
-            <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+            <li class="member_li">
+              <a href="login.html"
+                ><i class="fa-regular fa-user"></i>管理帳戶</a
+              >
             </li>
-            <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+            <li class="member_li" id="order_li">
+              <a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
               <ul class="order_list">
-                <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
-                <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+                <li class="order_content">
+                  <a href="tickets_order.html"
+                    ><i class="fa-solid fa-ticket"></i>票券訂單</a
+                  >
+                </li>
+                <li class="order_content">
+                  <a href="group_order.html"
+                    ><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a
+                  >
                 </li>
               </ul>
             </li>
-            <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-            <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
-            <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
-            <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
-            <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
-            <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
-            <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
-            <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+            <li class="member_li">
+              <a href="my_favorite.html"
+                ><i class="fa-regular fa-heart"></i>我的收藏</a
+              >
+            </li>
+            <li class="member_li">
+              <a href="comment.html"
+                ><i class="fa-solid fa-pen-to-square"></i>我的評價</a
+              >
+            </li>
+            <li class="member_li">
+              <a href="article_myfavorite.html"
+                ><i class="fa-solid fa-copy"></i>我的文章</a
+              >
+            </li>
+            <li class="member_li">
+              <a href="membership_rating.html"
+                ><i class="fa-regular fa-gem"></i>會員分級</a
+              >
+            </li>
+            <li class="member_li">
+              <a href="coupon.html"
+                ><i class="fa-solid fa-sack-dollar"></i>優惠碼</a
+              >
+            </li>
+            <li class="member_li">
+              <a href="question_form.html"
+                ><i class="fa-regular fa-comment"></i>提出問題</a
+              >
+            </li>
+            <li class="member_li">
+              <a href="https://www.google.com"
+                ><i class="fa-regular fa-comment"></i>查看問題</a
+              >
+            </li>
+            <li class="member_li" id="logout_li">
+              <a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
             </li>
           </ul>
         </div>
@@ -178,8 +223,8 @@
       </div>
 
       <span class="close-icon">
-      <div class="fas fa-times"></div>
-    </span>
+        <div class="fas fa-times"></div>
+      </span>
     </div>
 
     <!-- 登入  -->
@@ -204,8 +249,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="destination"
-                  name="destination"
+                  id="name"
                   placeholder="姓名"
                   required
                 />
@@ -214,8 +258,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="destination"
-                  name="destination"
+                  id="phone"
                   placeholder="電話"
                   required
                 />
@@ -224,8 +267,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="destination"
-                  name="destination"
+                  id="email2"
                   placeholder="信箱"
                   required
                 />
@@ -234,8 +276,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="destination"
-                  name="destination"
+                  id="portfolioLink"
                   placeholder="作品集連結"
                   required
                 />
@@ -244,6 +285,7 @@
               <div class="col-md-12 form-group contact-forms mt-3">
                 <textarea
                   class="form-control"
+                  id="message"
                   placeholder="想對我們說的話"
                   rows="3"
                 ></textarea>
@@ -394,5 +436,61 @@
   </body>
   <!-- login顯示 -->
   <script src="js/Login.js"></script>
-  <!-- login顯示 -->
+
+  <!-- Jquery -->
+  <script src="./js/jquery-3.6.4.min.js"></script>
+
+  <!-- sweetalert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $(".sent-butnn").on("click", function (e) {
+      e.preventDefault();
+
+      // 拿取表單資料
+      const name = $("#name").val();
+      const phone = $("#phone").val();
+      const email = $("#email2").val();
+      const portfolioLink = $("#portfolioLink").val();
+      const message = $("#message").val();
+
+      // 包裝成物件
+      let bloggerData = {
+        name: name,
+        phone: phone,
+        email: email,
+        portfolioLink: portfolioLink,
+        message: message,
+      };
+
+      //ajax
+      $.ajax({
+        type: "POST",
+        url: "/bloggers",
+        data: JSON.stringify(bloggerData),
+        contentType: "application/json",
+        success: function (response) {
+          console.log(response);
+
+          // 送出成功動畫
+          Swal.fire({
+            icon: "success",
+            title: "送出成功",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+          // 清空表單
+          $("#name").val("");
+          $("#phone").val("");
+          $("#email2").val("");
+          $("#portfolioLink").val("");
+          $("#message").val("");
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      });
+    });
+  </script>
 </html>
