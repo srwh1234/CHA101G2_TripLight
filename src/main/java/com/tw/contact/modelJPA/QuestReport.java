@@ -29,11 +29,11 @@ public class QuestReport {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Column(name = "qs_content")
-    private String qsContent;
+    @Column(name = "q_content")
+    private String qContent;
 
-    @Column(name = "re_content")
-    private String reContent;
+    @Column(name = "r_content")
+    private String rContent;
 
     @Column(name = "state")
     private int state;
@@ -50,11 +50,11 @@ public class QuestReport {
     public QuestReport() {
     }
 
-    public QuestReport(Member member, Employee employee, String qsContent, String reContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
+    public QuestReport(Member member, Employee employee, String qContent, String rContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
         this.member = member;
         this.employee = employee;
-        this.qsContent = qsContent;
-        this.reContent = reContent;
+        this.qContent = qContent;
+        this.rContent = rContent;
         this.state = state;
         this.startTime = startTime;
         this.endTime = endTime;
