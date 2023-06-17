@@ -1,7 +1,7 @@
 package com.tw.form.controller;
 
 
-import com.tw.form.dto.ContactData;
+
 import com.tw.form.dto.GroupData;
 import com.tw.form.service.EmailSenderService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GroupController {
 
-    private EmailSenderService emailSenderService;
+    private final EmailSenderService emailSenderService;
 
     public GroupController(EmailSenderService emailSenderService) {
         this.emailSenderService = emailSenderService;

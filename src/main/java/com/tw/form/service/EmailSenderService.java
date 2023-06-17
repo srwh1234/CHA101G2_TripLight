@@ -18,7 +18,6 @@ public class EmailSenderService {
 
 
     // 傳輸mail
-
     public boolean sendEmail(String subject, String message) {
         var mailMessage = new SimpleMailMessage();
         mailMessage.setTo("triplight0411@gmail.com");

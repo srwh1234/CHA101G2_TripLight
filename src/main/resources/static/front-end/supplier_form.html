@@ -215,9 +215,8 @@
               required
             >
               <option value="">請選擇</option>
-              <option value="1">旅遊行程</option>
-              <option value="2">住宿訂房</option>
-              <option value="3">票務訂購</option>
+              <option value="旅遊行程">旅遊行程</option>
+              <option value="票務訂購">票務訂購</option>
             </select>
           </div>
           <div class="form-group mb-3">
@@ -358,5 +357,66 @@
   </body>
   <!-- login顯示 -->
   <script src="/js/Login.js"></script>
-  <!-- login顯示 -->
+
+  <!-- Jquery -->
+  <script src="./js/jquery-3.6.4.min.js"></script>
+
+  <!-- sweetalert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $(".sent-butnn").on("click", function (e) {
+      e.preventDefault();
+
+      // 拿取表單資料
+      const companyName = $("#companyName").val();
+      const contactName = $("#contactName").val();
+      const contactEmail = $("#contactEmail").val();
+      const contactPhone = $("#contactPhone").val();
+      const serviceType = $("#serviceType").val();
+      const message = $("#message").val();
+
+      // 包裝成物件
+      let supplierData = {
+        companyName: companyName,
+        contactName: contactName,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone,
+        serviceType: serviceType,
+        message: message,
+      };
+
+      // 送出成功動畫
+      Swal.fire({
+        icon: "success",
+        title: "送出成功",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      console.log(supplierData);
+
+      // 清空表單
+      $("#companyName").val("");
+      $("#contactName").val("");
+      $("#contactEmail").val("");
+      $("#contactPhone").val("");
+      $("#serviceType").val("");
+      $("#message").val("");
+
+      //ajax
+      $.ajax({
+        type: "POST",
+        url: "/suppliers",
+        data: JSON.stringify(supplierData),
+        contentType: "application/json",
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      });
+    });
+  </script>
 </html>

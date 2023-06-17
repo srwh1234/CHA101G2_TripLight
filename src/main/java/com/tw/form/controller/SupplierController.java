@@ -1,24 +1,24 @@
 package com.tw.form.controller;
 
-
-import com.tw.form.dto.ContactData;
+import com.tw.form.dto.SupplierData;
 import com.tw.form.service.EmailSenderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ContactController {
-
+public class SupplierController {
     private final EmailSenderService emailSenderService;
 
-    public ContactController(EmailSenderService emailSenderService) {
+    @Autowired
+    public SupplierController(EmailSenderService emailSenderService) {
         this.emailSenderService = emailSenderService;
     }
 
-    @PostMapping("/contacts")
-    public Boolean getContact(@RequestBody ContactData contactData){
-        emailSenderService.sendEmail("聯絡我們表單",contactData.toString());
+    @PostMapping("/suppliers")
+    public Boolean getSupplier(@RequestBody SupplierData supplierData){
+        emailSenderService.sendEmail("廠商申請表單",supplierData.toString());
         return true;
     }
 }

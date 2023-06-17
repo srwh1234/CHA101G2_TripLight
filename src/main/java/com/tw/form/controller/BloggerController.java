@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BloggerController {
 
-    private EmailSenderService emailSenderService;
+    private final EmailSenderService emailSenderService;
 
     @Autowired
     public BloggerController(EmailSenderService emailSenderService) {
