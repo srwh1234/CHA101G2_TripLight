@@ -463,6 +463,21 @@
         message: message,
       };
 
+      // 送出成功動畫
+      Swal.fire({
+        icon: "success",
+        title: "送出成功",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      // 清空表單
+      $("#name").val("");
+      $("#phone").val("");
+      $("#email2").val("");
+      $("#portfolioLink").val("");
+      $("#message").val("");
+
       //ajax
       $.ajax({
         type: "POST",
@@ -471,21 +486,6 @@
         contentType: "application/json",
         success: function (response) {
           console.log(response);
-
-          // 送出成功動畫
-          Swal.fire({
-            icon: "success",
-            title: "送出成功",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-
-          // 清空表單
-          $("#name").val("");
-          $("#phone").val("");
-          $("#email2").val("");
-          $("#portfolioLink").val("");
-          $("#message").val("");
         },
         error: function (error) {
           console.error(error);
