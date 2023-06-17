@@ -17,8 +17,8 @@ public class TripMain2 implements CommandLineRunner { // 這個class會在伺服
 
 	@Override
 	public void run(final String... args) {
-		final var trips = tripRepository2.findAll();
-		System.out.println(trips); // 顯示查詢到的資料
+//		final var trips = tripRepository2.findAll();
+//		System.out.println(trips); // 顯示查詢到的資料
 	}
 
 }
