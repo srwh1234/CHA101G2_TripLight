@@ -177,6 +177,16 @@
             />
           </div>
           <div class="form-group mb-3">
+            <label for="companyName mb-2" class="mb-2">公司地址</label>
+            <input
+              type="text"
+              class="form-control"
+              id="companyAddress"
+              name="companyAddress"
+              required
+            />
+          </div>
+          <div class="form-group mb-3">
             <label for="contactName" class="mb-2">聯絡人姓名</label>
             <input
               type="text"
@@ -207,18 +217,146 @@
             />
           </div>
           <div class="form-group mb-3">
-            <label for="serviceType" class="mb-2">服務類型</label>
+            <label for="financial-institutions" class="mb-2">銀行代碼</label>
             <select
               class="form-control"
-              id="serviceType"
-              name="serviceType"
+              id="financial-institutions"
+              name="financial-institutions"
               required
             >
-              <option value="">請選擇</option>
-              <option value="1">旅遊行程</option>
-              <option value="2">住宿訂房</option>
-              <option value="3">票務訂購</option>
+              <option value="">選擇銀行代碼</option>
+              <option value="001 - 中央信託">001 - 中央信託</option>
+              <option value="003 - 交通銀行">003 - 交通銀行</option>
+              <option value="004 - 台灣銀行">004 - 台灣銀行</option>
+              <option value="005 - 土地銀行">005 - 土地銀行</option>
+              <option value="006 - 合庫商銀">006 - 合庫商銀</option>
+              <option value="007 - 第一銀行">007 - 第一銀行</option>
+              <option value="008 - 華南銀行">008 - 華南銀行</option>
+              <option value="009 - 彰化銀行">009 - 彰化銀行</option>
+              <option value="010 - 華僑銀行">010 - 華僑銀行</option>
+              <option value="011 - 上海銀行">011 - 上海銀行</option>
+              <option value="012 - 台北富邦">012 - 台北富邦</option>
+              <option value="013 - 國泰世華">013 - 國泰世華</option>
+              <option value="016 - 高雄銀行">016 - 高雄銀行</option>
+              <option value="017 - 兆豐商銀">017 - 兆豐商銀</option>
+              <option value="018 - 農業金庫">018 - 農業金庫</option>
+              <option value="021 - 花旗銀行">021 - 花旗銀行</option>
+              <option value="024 - 運通銀行">024 - 運通銀行</option>
+              <option value="025 - 首都銀行">025 - 首都銀行</option>
+              <option value="039 - 荷蘭銀行">039 - 荷蘭銀行</option>
+              <option value="040 - 中華開發">040 - 中華開發</option>
+              <option value="050 - 臺灣企銀">050 - 臺灣企銀</option>
+              <option value="051 - 台北商銀">051 - 台北商銀</option>
+              <option value="052 - 新竹商銀">052 - 新竹商銀</option>
+              <option value="053 - 台中商銀">053 - 台中商銀</option>
+              <option value="054 - 京城商銀">054 - 京城商銀</option>
+              <option value="056 - 花蓮企銀">056 - 花蓮企銀</option>
+              <option value="057 - 台東企銀">057 - 台東企銀</option>
+              <option value="075 - 東亞銀行">075 - 東亞銀行</option>
+              <option value="081 - 匯豐銀行">081 - 匯豐銀行</option>
+              <option value="083 - 渣打銀行">083 - 渣打銀行</option>
+              <option value="087 - 標旗銀行">087 - 標旗銀行</option>
+              <option value="101 - 台北一信">101 - 台北一信</option>
+              <option value="102 - 華泰銀行">102 - 華泰銀行</option>
+              <option value="103 - 臺灣新光商銀">103 - 臺灣新光商銀</option>
+              <option value="104 - 台北五信">104 - 台北五信</option>
+              <option value="106 - 台北九信">106 - 台北九信</option>
+              <option value="108 - 陽信銀行">108 - 陽信銀行</option>
+              <option value="114 - 基隆一信">114 - 基隆一信</option>
+              <option value="115 - 基隆二信">115 - 基隆二信</option>
+              <option value="118 - 板信銀行">118 - 板信銀行</option>
+              <option value="119 - 淡水一信">119 - 淡水一信</option>
+              <option value="120 - 淡水信合社">120 - 淡水信合社</option>
+              <option value="124 - 宜蘭信合社">124 - 宜蘭信合社</option>
+              <option value="127 - 桃園信合社">127 - 桃園信合社</option>
+              <option value="130 - 新竹一信">130 - 新竹一信</option>
+              <option value="132 - 新竹三信">132 - 新竹三信</option>
+              <option value="139 - 竹南信合社">139 - 竹南信合社</option>
+              <option value="146 - 台中二信">146 - 台中二信</option>
+              <option value="147 - 三信銀行">147 - 三信銀行</option>
+              <option value="151 - 第七商銀">151 - 第七商銀</option>
+              <option value="158 - 彰化一信">158 - 彰化一信</option>
+              <option value="161 - 彰化五信">161 - 彰化五信</option>
+              <option value="162 - 彰化六信">162 - 彰化六信</option>
+              <option value="163 - 彰化十信">163 - 彰化十信</option>
+              <option value="165 - 鹿港信合社">165 - 鹿港信合社</option>
+              <option value="178 - 嘉義三信">178 - 嘉義三信</option>
+              <option value="179 - 嘉義四信">179 - 嘉義四信</option>
+              <option value="188 - 台南三信">188 - 台南三信</option>
+              <option value="203 - 高雄二信">203 - 高雄二信</option>
+              <option value="204 - 高雄三信">204 - 高雄三信</option>
+              <option value="215 - 花蓮一信">215 - 花蓮一信</option>
+              <option value="216 - 花蓮二信">216 - 花蓮二信</option>
+              <option value="222 - 澎湖一信">222 - 澎湖一信</option>
+              <option value="223 - 澎湖二信">223 - 澎湖二信</option>
+              <option value="224 - 金門信合社">224 - 金門信合社</option>
+              <option value="512 - 雲林漁會">512 - 雲林漁會</option>
+              <option value="515 - 嘉義漁會">515 - 嘉義漁會</option>
+              <option value="517 - 南市區漁會">517 - 南市區漁會</option>
+              <option value="518 - 南縣漁會">518 - 南縣漁會</option>
+              <option value="521 - 永安漁會">521 - 永安漁會</option>
+              <option value="523 - 東港漁會">523 - 東港漁會</option>
+              <option value="524 - 新港漁會">524 - 新港漁會</option>
+              <option value="525 - 澎湖區漁會">525 - 澎湖區漁會</option>
+              <option value="605 - 高雄市農會">605 - 高雄市農會</option>
+              <option value="613 - 名間農會">613 - 名間農會</option>
+              <option value="614 - 永靖農會">614 - 永靖農會</option>
+              <option value="616 - 崙背鄉農會">616 - 崙背鄉農會</option>
+              <option value="617 - 六腳農會">617 - 六腳農會</option>
+              <option value="618 - 善化鎮農會">618 - 善化鎮農會</option>
+              <option value="619 - 鳳山市農會">619 - 鳳山市農會</option>
+              <option value="620 - 新埤農會">620 - 新埤農會</option>
+              <option value="621 - 富里鄉農會">621 - 富里鄉農會</option>
+              <option value="622 - 太麻里農會">622 - 太麻里農會</option>
+              <option value="624 - 澎湖農會">624 - 澎湖農會</option>
+              <option value="625 - 台中市農會">625 - 台中市農會</option>
+              <option value="627 - 連江縣農會">627 - 連江縣農會</option>
+              <option value="700 - 中華郵政">700 - 中華郵政</option>
+              <option value="803 - 聯邦銀行">803 - 聯邦銀行</option>
+              <option value="804 - 中華銀行">804 - 中華銀行</option>
+              <option value="805 - 遠東銀行">805 - 遠東銀行</option>
+              <option value="806 - 復華銀行">806 - 復華銀行</option>
+              <option value="807 - 建華銀行">807 - 建華銀行</option>
+              <option value="808 - 玉山銀行">808 - 玉山銀行</option>
+              <option value="809 - 萬泰銀行">809 - 萬泰銀行</option>
+              <option value="810 - 寶華銀行">810 - 寶華銀行</option>
+              <option value="812 - 台新銀行">812 - 台新銀行</option>
+              <option value="814 - 大眾銀行">814 - 大眾銀行</option>
+              <option value="815 - 日盛銀行">815 - 日盛銀行</option>
+              <option value="816 - 安泰銀行">816 - 安泰銀行</option>
+              <option value="822 - 中國信託">822 - 中國信託</option>
+              <option value="825 - 慶豐銀行">825 - 慶豐銀行</option>
             </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="bankAccount" class="mb-2">銀行帳戶</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bankAccount"
+              name="bankAccount"
+              required
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="supplierAccount" class="mb-2">登入帳戶</label>
+            <input
+              type="email"
+              class="form-control"
+              id="supplierAccount"
+              name="supplierAccount"
+              required
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="supplierPassword" class="mb-2">登入密碼</label>
+            <input
+              type="password"
+              class="form-control"
+              id="supplierPassword"
+              name="supplierPassword"
+              required
+            />
           </div>
           <div class="form-group mb-3">
             <label for="message" class="mb-2">訊息</label>
@@ -358,5 +496,81 @@
   </body>
   <!-- login顯示 -->
   <script src="/js/Login.js"></script>
-  <!-- login顯示 -->
+
+  <!-- Jquery -->
+  <script src="./js/jquery-3.6.4.min.js"></script>
+
+  <!-- sweetalert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $(".sent-butnn").on("click", function (e) {
+      e.preventDefault();
+
+      // 拿取表單資料
+      const companyName = $("#companyName").val();
+      const companyAddress = $("#companyAddress").val();
+      const contactName = $("#contactName").val();
+      const contactEmail = $("#contactEmail").val();
+      const contactPhone = $("#contactPhone").val();
+      const financialInstitutions = $("#financial-institutions").val();
+      const bankAccount = $("#bankAccount").val();
+      const supplierAccount = $("#supplierAccount").val();
+      const supplierPassword = $("#supplierPassword").val();
+      const message = $("#message").val();
+
+      // 包裝成物件
+      let vendor = {
+        vendorName: companyName,
+        vendorAdd: companyAddress,
+        vendorPhone: contactPhone,
+        ceoEmail: contactEmail,
+        ceoName: contactName,
+        ceoPhone: contactPhone,
+        review: 0,
+        bankAccount: financialInstitutions + bankAccount,
+        // applicationTime: 0,
+        contractTerm: "合作條約",
+        loginAccount: supplierAccount,
+        loginPassword: supplierPassword,
+        vendorEmail: contactEmail,
+      };
+
+      // 送出成功動畫
+      Swal.fire({
+        icon: "success",
+        title: "送出成功",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      console.log(vendor);
+
+      // 清空表單
+      $("#companyName").val("");
+      $("#companyAddress").val("");
+      $("#contactName").val("");
+      $("#contactEmail").val("");
+      $("#contactPhone").val("");
+      $("#financial-institutions").val("");
+      $("#bankAccount").val("");
+      $("#supplierAccount").val("");
+      $("#supplierPassword").val("");
+      $("#message").val("");
+
+      //ajax
+      $.ajax({
+        type: "POST",
+        url: "/vendor",
+        data: JSON.stringify(vendor),
+        contentType: "application/json",
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      });
+    });
+  </script>
 </html>

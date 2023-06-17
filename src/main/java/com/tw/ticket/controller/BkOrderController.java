@@ -1,7 +1,10 @@
 package com.tw.ticket.controller;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,15 +33,21 @@ public class BkOrderController {
 	}
 
 	@GetMapping("/orderdetail")
-	public int orderdetail(@RequestParam final int employeeId, @RequestParam final int orderId) {
-		System.out.println(orderId);
-		return 0;
+	public List<OrderDetailResponse> orderdetail(	//
+			@RequestParam final int employeeId, @RequestParam final int orderId) {
+		return bkOrderService.getDetailItems(orderId);
+	}
+
+	@PostMapping("/refund")
+	public boolean refund(@RequestBody final Map<String, Object> map) {
+		return bkOrderService.updateItem(map);
 	}
 
 	// 定義請求物件
 	@Data
 	public static class OrderRequest {
 		private String keyword;
+		private boolean refundChecked;
 		private int employeeId;
 		private int page;
 		private int size;
@@ -62,4 +71,15 @@ public class BkOrderController {
 		private String payType;
 		private int actualPrice;
 	}
+
+	@Data
+	public static class OrderDetailResponse {
+		private int ticketSnId;
+		private String name;
+		private int price;
+		private Date expiryDate;
+		private int refundStatus;
+		private String refundReason;
+	}
+
 }

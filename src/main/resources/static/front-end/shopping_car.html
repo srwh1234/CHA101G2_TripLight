@@ -471,6 +471,7 @@
   <!-- TODO: 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
+  <script src="./js/sweetalert.js"></script>
   <script>
 
     //假資料-購物清單
@@ -574,7 +575,7 @@
         const ticket_cart = result.find((elem) => elem.ticket.ticketId == id);
         $(".modal-body span").text(ticket_cart.ticket.name);
         $('#btnDeleteConfirm').data('ticket-id', id);
-      });    
+      });
     });
 
 
@@ -689,12 +690,14 @@
         .then(response => response.json())
         .then(data => {
           if (data) {
-            window.location.href = 'tickets_order.html';
+            Swal.fire({ icon: 'success', title: '結帳成功' });
+            // window.location.href = 'tickets_order.html';
           } else {
-            fetch_data();
+            Swal.fire({ icon: 'success', title: '結帳失敗' });
           }
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
+        .finally(() => fetch_data());
     }
 
     //TODO:  ------------------------------------------//render

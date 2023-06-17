@@ -19,6 +19,7 @@ public class AiFavoriteController {
         aiService = theaiService;
     }
 
+    // 查詢資料
     @GetMapping("/aiFavorite")
     public ResponseEntity<?> getAiFavorite(HttpSession session) {
         var user = (Member)session.getAttribute("member");
@@ -43,8 +44,6 @@ public class AiFavoriteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
         }
     }
-
-
 
     // 存入資料庫
     @PostMapping("/aiFavorite/{memberId}")
