@@ -742,6 +742,11 @@
     <script src="js/bootstrap-table.min.js"></script>
 
     <script>
+        //檔案上傳限制
+        const SINGLE_FILE_SIZE = 10 * 1024 * 1024; //10MB
+        const TOTAL_FILES_SIZE = 50 * 1024 * 1024; //50MB
+        let curFilesSize;
+
         let curEditCouponId;
 
         //假資料-票券列表
@@ -813,6 +818,8 @@
         //TODO: ------------------------------------------//onload
         $(function () {
 
+            doPageSearch(0);
+
             //優惠券列表 點選列的事件
             $(document).on('click', '#couponContainer tbody tr', function () {
                 curEditCouponId = $(this).find('td').first().text();
@@ -843,10 +850,33 @@
                 //判斷上色
                 $('.form-floating .form-control').each((i, v) => renderTextColor(v));
                 $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+            });           
+
+
+            //增加票券-清空前一次資料
+            $('#addTicketModal').on('show.bs.modal', function (event) {
+                //清空
+                $('#ticketImage').val('');
+                $('#imgPreview').html('');
+                curFilesSize = 0;
+
+                $('#ticketType').val('');
+                $('#ticketSupplier').val('');
+                $('#ticketExpiryDate').val('');
+                $('#ticketName').val('');
+                $('#ticketPrice').val('');
+                $('#ticketCount').val('');
+                $('#ticketRating').val('');
+                $('#ticketRatingCount').val('');
+                $('#ticketCity').val('');
+                $('#ticketAddress').val('');
+                $('#descEditor').summernote('code', '');
+                $('#contentEditor').summernote('code', '');
+                $('#noteEditor').summernote('code', '');
+                //判斷上色
+                $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+                $('.form-floating .form-select').each((i, v) => renderTextColor(v));
             });
-
-
-            doPageSearch(0);
 
             //增加票券數量-參數傳遞
             $('#countTicketModal').on('show.bs.modal', function (event) {
@@ -905,6 +935,15 @@
             $('#ticketImage').on('change', function (e) {
                 if (e.target.files) {
                     for (let file of e.target.files) {
+                        if (file.size >= SINGLE_FILE_SIZE) {
+                            Swal.fire({ icon: 'error', title: '檔案大小不能超過10MB' });
+                            return;
+                        }
+                        curFilesSize += file.size;
+                        if (curFilesSize >= TOTAL_FILES_SIZE) {
+                            Swal.fire({ icon: 'error', title: '全部檔案大小不能超過50MB' });
+                            return;
+                        }
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
                         reader.onload = function (e) {

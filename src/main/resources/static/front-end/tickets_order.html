@@ -807,7 +807,7 @@
       if (typeof e === 'object') {
         orderId = $(e.target).closest('tr').find('.ticket_order_id').text();
       } else {
-        orderId = e;      
+        orderId = e;
       }
 
       fetch(`http://localhost:8080/ticketorderdetails?memberId=${memberId}&&orderId=${orderId}`)
@@ -817,7 +817,7 @@
         .finally(() => {
           $('#orderId').text(orderId);
           $('#detailContainer').removeClass('d-none');
-          render_detail();
+          render_detail(orderId);
         });
     }
 
@@ -892,7 +892,8 @@
     /**
     * 渲染訂單明細
     */
-    function render_detail() {
+    function render_detail(orderId) {
+      const order = result.orders.find(order => order.ticketOrderId == orderId);
 
       $('#detailContainer table tbody').html('');
 
@@ -906,8 +907,8 @@
           <td class="expiry_date">${detail.expiryDate}</td>
         `);
 
-        //退貨中或已退貨 就不顯示序號按鈕
-        if (detail.refundStatus === 0) {
+        //未付款 或 退貨中或已退貨 就不顯示序號按鈕
+        if (detail.refundStatus === 0 && order.payType) {
           $(theTr).append(`
             <td>
               <button class="btn btn-sm btn-primary btn-serial" type="button" data-bs-toggle="modal"
@@ -921,8 +922,11 @@
           $(theTr).append('<td>--</td>');
         }
 
-        //狀態 (0:無退款 1:退款中 2:退款完成)
-        if (detail.refundStatus === 0) {
+        //未付款 或  狀態 (0:無退款 1:退款中 2:退款完成)
+        if (!order.payType) {
+          $(theTr).append('<td>待付款</td>');
+
+        } else if (detail.refundStatus === 0) {
           $(theTr).append(`
             <td>
               <button class="btn btn-sm btn-primary btn-refund" type="button" data-bs-toggle="modal"
@@ -937,13 +941,20 @@
           $(theTr).append('<td class="my-text-lightred">已退貨</td>');
         }
 
-        $(theTr).append(`
-          <td class="text-center">
-            <button class="btn btn-sm btn-primary btn-comment" type="button" data-bs-toggle="modal"
-              data-bs-target="#commentModal" data-bs-whatever="${detail.ticketId}-${detail.ticketSnId}-${detail.name}">
-              <i class="fa fa-thumbs-up me-2"></i>給予評價
-            </button>
-          </td>       
+        //未付款 不可評價
+        if (!order.payType) {
+          $(theTr).append('<td>--</td>');
+        } else {
+          $(theTr).append(`
+             <td class="text-center">
+              <button class="btn btn-sm btn-primary btn-comment" type="button" data-bs-toggle="modal"
+                data-bs-target="#commentModal" data-bs-whatever="${detail.ticketId}-${detail.ticketSnId}-${detail.name}">
+                <i class="fa fa-thumbs-up me-2"></i>給予評價
+              </button>
+             </td> 
+          `);
+        }
+        $(theTr).append(`      
           <td class="text-center">
             <a href="tickets_detail.html?id=${detail.ticketId}" 
               class="btn btn-sm btn-primary btn-mylink" type="button">
