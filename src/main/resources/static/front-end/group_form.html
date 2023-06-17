@@ -181,7 +181,7 @@
             <input
               type="email"
               class="form-control"
-              id="email"
+              id="email2"
               name="email"
               required
             />
@@ -251,6 +251,7 @@
             <div class="accordion-item">
               <input
                 class="form-control select-input collapsed"
+                id="preferred-activity"
                 type="text"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseOne"
@@ -485,8 +486,11 @@
     <!-- 載入axios -->
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
-    <!-- 設定表單 -->
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+      // 設定下拉式多選表單
       $(".select-input").blur(function () {
         activitiesValues = "";
         $("input[name='activity[]']:checked").each(function () {
@@ -494,6 +498,68 @@
         });
         activitiesValues = activitiesValues.slice(0, -1); // 刪掉最後一個逗號，返回字符串中從 0 開始直到倒數第一個字符
         $(this).val(activitiesValues);
+      });
+
+      // 監聽送出按鈕
+      $(".sent-butnn").on("click", function (e) {
+        e.preventDefault();
+
+        // 抓表單資料
+        const name = $("#name").val();
+        const email = $("#email2").val();
+        const phone = $("#phone").val();
+        const groupSize = $("#group-size").val();
+        const tripDuration = $("#trip-duration").val();
+        const preferredDestination = $("#preferred-destination").val();
+        const preferredActivity = $("#preferred-activity").val();
+        const message = $("#message").val();
+
+        // 包成物件送出
+        let groupData = {
+          name: name,
+          email: email,
+          phone: phone,
+          groupSize: groupSize,
+          tripDuration: tripDuration,
+          preferredDestination: preferredDestination,
+          preferredActivity: preferredActivity,
+          message: message,
+        };
+
+        // 送出成功動畫
+        Swal.fire({
+          icon: "success",
+          title: "送出成功",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        console.log(groupData);
+
+        // 清空資料
+        $("#name").val("");
+        $("#email2").val("");
+        $("#phone").val("");
+        $("#group-size").val("");
+        $("#trip-duration").val("");
+        $("#preferred-destination").val("");
+        $("input[name='activity[]']:checked").prop("checked", false);
+        $("#preferred-activity").val("");
+        $("#message").val("");
+
+        // AJAX post
+        $.ajax({
+          type: "POST",
+          url: "/groups",
+          data: JSON.stringify(groupData),
+          contentType: "application/json",
+          success: function (response) {
+            console.log(response);
+          },
+          error: function (error) {
+            console.error(error);
+          },
+        });
       });
     </script>
   </body>
