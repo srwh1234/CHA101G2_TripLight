@@ -77,6 +77,6 @@ public class QuestReportController {
 
     @DeleteMapping("/quest_report/{id}")
     public void deleteQuestReport(@PathVariable int id) {
-        questReportService.deleteQuestReport();
+        questReportService.deleteQuestReport(id);
     }
 }
