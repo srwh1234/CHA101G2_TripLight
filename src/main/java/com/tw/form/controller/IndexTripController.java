@@ -21,7 +21,7 @@ public class IndexTripController {
 
     @GetMapping("/index/trips")
     public List<TripDto> getTrip(){
-        var all = tripService.getHotTrip();   // TODO:要改成獲得熱門行程
-        return all;
+        var hotTrip = tripService.getHotTrip();
+        return hotTrip;
     }
 }

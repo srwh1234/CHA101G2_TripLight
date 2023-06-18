@@ -692,6 +692,7 @@ li > a:only-child:after {
   min-height: 750px;
 }
 .overlay {
+  height: 100vh;
   min-height: 750px;
   background: rgba(0, 0, 0, 0.5);
 }
@@ -1630,6 +1631,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 750px;
     min-height: 750px;
   }
 }
@@ -1640,6 +1642,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 750px;
     min-height: 720px;
   }
   .banner-info {
@@ -1660,6 +1663,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 650px;
     min-height: 650px;
   }
   .banner-info h3 {
@@ -1802,6 +1806,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 620px;
     min-height: 620px;
   }
   h4.tittle {
@@ -1865,6 +1870,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 520px;
     min-height: 520px;
   }
   .about-left h3 {
@@ -1903,6 +1909,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 490px;
     min-height: 490px;
   }
   .timer {
@@ -1972,6 +1979,7 @@ p.duration {
   .banner-top3,
   .overlay,
   .overlay1 {
+    height: 440px;
     min-height: 440px;
   }
   .banner-info a.btn {
