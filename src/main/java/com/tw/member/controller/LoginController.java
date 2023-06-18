@@ -34,7 +34,6 @@ public class LoginController {
 			System.out.println("沒有此帳號");
 			return 0;
 		} else {
-			System.out.println("後端成功");
 			// 設置Session
 			session.setAttribute("member", result);
 			System.out.println("MemberId: " + session.getAttribute("member"));
