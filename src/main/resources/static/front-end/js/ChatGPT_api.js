@@ -179,7 +179,7 @@ function getTickets() {
       for (let i = 0; i < Tickets.length; i++) {
         $(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
-          <a href="packages_detail.html"
+          <a href="tickets_detail.html?id=${Tickets[i].ticketId}"
             ><img src=${Tickets[i].image} alt="" class="card-img"
           /></a>
           <p><span class="fa fa-tags"></span> <span>${Tickets[i].price}起</span></p>
