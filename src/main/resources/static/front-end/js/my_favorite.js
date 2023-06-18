@@ -280,7 +280,7 @@ function getAiFavorite() {
                   >${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊路線連結</a
                 >
               </p>
-              <p class="ai_description"><i class="fa-solid fa-file-lines"></i>行程內容：<br />${aiFavorite[i].planningDescription}</p>
+              <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br />${aiFavorite[i].planningDescription}</p>
               <div class="item_commend_class">
                 <i class="fa-solid fa-heart heart remove_btn"></i>
               </div>
