@@ -267,7 +267,7 @@
           <label><input type="checkbox" />記住我</label>
           <a href="#">忘記密碼</a>
         </div>
-        <button type="submit" class="main-btn">Login</button>
+        <button type="button" class="main-btn">Login</button>
         <div class="register">
           <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
         </div>
@@ -295,7 +295,7 @@
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
         </div>
-        <button type="submit" class="main-btn">註冊</button>
+        <button type="button" class="main-btn">註冊</button>
         <div class="register">
           <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
         </div>
@@ -654,6 +654,7 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script src="./js/sweetalert.js"></script>
+  <script src="./js/ticket_login_check.js"></script>
 
   <script>
     //Google Map
@@ -710,6 +711,8 @@
       ],
     }
 
+
+
     //TODO: ------------------------------------------//onload
 
     $(function () {
@@ -720,16 +723,23 @@
 
       //加入我的最愛的按鈕
       $(document).on('click', '.my-favorite', function () {
+
+        //登入檢查
+        const memberId = getMemberId();
+        if (!memberId) {
+          return;
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get("id");
 
 
         const post = {
-          memberId: 1,
+          memberId: memberId,
           ticketId: id,
           favorite: $(this).find('i').hasClass('on'),
         };
-        fetch('http://localhost:8080/ticketfavorite', {
+        fetch(`${getDomainName()}/ticketfavorite`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -737,15 +747,15 @@
           body: JSON.stringify(post),
         })
           .then(response => response.json())
-          .then(data => {           
+          .then(data => {
 
             switch (data) {
               case 1:
-                 Swal.fire({ icon: 'success', title: '成功加入我的最愛', });
+                Swal.fire({ icon: 'success', title: '成功加入我的最愛', });
                 fetch_data();
                 break;
               case 2:
-                  Swal.fire({ icon: 'success', title: '已從我的最愛移除', });
+                Swal.fire({ icon: 'success', title: '已從我的最愛移除', });
                 fetch_data();
                 break;
               case 3:
@@ -756,7 +766,7 @@
                 break;
             }
           })
-          .catch(error => console.log(error));       
+          .catch(error => console.log(error));
       });
 
       //加入購物車的按鈕
@@ -856,16 +866,22 @@
     * 取得票券資料
     */
     function fetch_data() {
+      //登入檢查
+      let memberId = 0;
+      const item = JSON.parse(sessionStorage.getItem('test-login'));
+      if (item && item.memberId) {
+        memberId=item.memberId;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id") ?? 0;
-      const memberId = 1;
 
       const param = new URLSearchParams();
       param.append('memberId', memberId);
       param.append('ticketId', id);
 
 
-      fetch(`http://localhost:8080/ticketdetail?${param}`)
+      fetch(`${getDomainName()}/ticketdetail?${param}`)
         .then(response => response.json())
         .then(data => ticket = data)
         .catch(error => console.log(error))
@@ -894,7 +910,7 @@
         size: 5,
       }
 
-      fetch('http://localhost:8080/ticketcomments', {
+      fetch(`${getDomainName()}/ticketcomments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -912,15 +928,21 @@
     * 加入購物車 
     */
     function fetch_cart() {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
 
       const post = {
-        memberId: 1,
+        memberId: memberId,
         ticketId: id,
         quantity: parseInt($('#inputQuantity').val()),
       };
-      fetch('http://localhost:8080/addcart', {
+      fetch(`${getDomainName()}/addcart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

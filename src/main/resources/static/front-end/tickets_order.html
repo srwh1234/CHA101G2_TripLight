@@ -250,7 +250,7 @@
           <label><input type="checkbox" />記住我</label>
           <a href="#">忘記密碼</a>
         </div>
-        <button type="submit" class="main-btn">Login</button>
+        <button type="button" class="main-btn">Login</button>
         <div class="register">
           <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
         </div>
@@ -278,7 +278,7 @@
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
         </div>
-        <button type="submit" class="main-btn">註冊</button>
+        <button type="button" class="main-btn">註冊</button>
         <div class="register">
           <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
         </div>
@@ -547,8 +547,8 @@
   <!-- 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
-  <!-- <script src="/js/bootstrap-table.min.js"></script> -->
   <script src="./js/jquery.qrcode.min.js"></script>
+  <script src="./js/ticket_login_check.js"></script>
 
   <script>
     // 假資料-訂單列表
@@ -693,13 +693,19 @@
     * 分頁顯示列表 
     */
     function doPage(curPage) {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+
       const post = {
-        memberId: 1,
+        memberId: memberId,
         page: curPage,
         size: 5,
       };
 
-      fetch(`http://localhost:8080/ticketorders`, {
+      fetch(`${getDomainName()}/ticketorders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -716,13 +722,18 @@
     * 綠界補結帳
     */
     function fetch_order(e) {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return;
+      }
       const post = {
-        memberId: 1,
+        memberId: memberId,
         orderId: parseInt($(e.target).closest('tr').find('.ticket_order_id').text()),
         backUrl: window.location.href,
       };
 
-      fetch('http://localhost:8080/ecpayCheckoutorder', {
+      fetch(`${getDomainName()}/ecpayCheckoutorder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -744,6 +755,12 @@
     * 退貨申請 
     */
     function fetch_refund(e) {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+
       const reason = $('#inputRefund').val().trim();
       if (!reason) {
         $('.error-text').fadeIn(200).fadeOut(10000);
@@ -751,14 +768,14 @@
       }
 
       const post = {
-        memberId: 1,
+        memberId: memberId,
         orderId: parseInt($('#orderId').text()),
         ticketSnId: $(e.target).data('ticket-sn-id'),
         refundReason: reason,
       };
 
 
-      fetch('http://localhost:8080/refundticketorderdetail', {
+      fetch(`${getDomainName()}/refundticketorderdetail`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -775,15 +792,20 @@
     * 票券評價的請求
     */
     function fetch_comment(e) {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
       const post = {
-        memberId: 1,
+        memberId: memberId,
         orderId: parseInt($('#orderId').text()),
         ticketSnId: $(e.target).data('ticket-sn'),
         rating: $('#commentModal .score').text(),
         comment: $('#inputComment').val().trim(),
       };
 
-      fetch('http://localhost:8080/ratingticketorderdetail', {
+      fetch(`${getDomainName()}/ratingticketorderdetail`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -801,7 +823,12 @@
     *  獲得票券明細的請求
     */
     function fetch_detail(e) {
-      const memberId = 1;
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+
       let orderId = $(e.target).closest('tr').find('.ticket_order_id').text();
 
       if (typeof e === 'object') {
@@ -810,7 +837,11 @@
         orderId = e;
       }
 
-      fetch(`http://localhost:8080/ticketorderdetails?memberId=${memberId}&&orderId=${orderId}`)
+      const param = new URLSearchParams();
+      param.append('memberId', memberId);
+      param.append('orderId', orderId);
+
+      fetch(`${getDomainName()}/ticketorderdetails?${param}`)
         .then(response => response.json())
         .then(data => resultDetail = data)
         .catch(error => console.log(error))

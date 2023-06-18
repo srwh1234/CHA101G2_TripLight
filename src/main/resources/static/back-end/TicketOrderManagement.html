@@ -382,7 +382,7 @@
     <!-- 頁面級別的自訂腳本 -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
+    <script src="js/ticket_login_check.js"></script>
     <!-- 使用BootStrap-->
     <script src="vendor/bootstrap/js/bootstrap.bundle-5.2.3.js"></script>
 
@@ -524,7 +524,7 @@
 
 
             //發請求
-            fetch(`http://localhost:8080/bk/refund`, {
+            fetch(`${getDomainName()}/bk/refund`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -557,7 +557,7 @@
 
 
             //發請求
-            fetch(`http://localhost:8080/bk/orderdetail?${params}`)
+            fetch(`${getDomainName()}/bk/orderdetail?${params}`)
                 .then(response => response.json())
                 .then(data => resultDetail = data)
                 .catch(error => console.log(error))
@@ -596,7 +596,7 @@
             oldCondition = post;
 
             //發請求
-            fetch(`http://localhost:8080/bk/orders`, {
+            fetch(`${getDomainName()}/bk/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

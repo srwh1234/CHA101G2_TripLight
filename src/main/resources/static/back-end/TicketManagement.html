@@ -319,7 +319,7 @@
                                        data-sort-class="table-active"
                                        data-search="true"
                                        data-search-align="left"
-                                       data-url="http://localhost:8080/bk/coupons">
+                                       data-url="/bk/coupons">
 
                                     <thead>
                                         <tr>
@@ -740,6 +740,7 @@
     <script src="vendor/summernote/summernote-zh-TW.min.js"></script>
     <script src="vendor/sweetalert/sweetalert.js"></script>
     <script src="js/bootstrap-table.min.js"></script>
+    <script src="js/ticket_login_check.js"></script>
 
     <script>
         //檔案上傳限制
@@ -1026,7 +1027,7 @@
 
             oldCondition = post;
 
-            fetch(`http://localhost:8080/bk/searchtickets`, {
+            fetch(`${getDomainName()}/bk/searchtickets`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1054,7 +1055,7 @@
                 return;
             }
             //發請求
-            fetch(`http://localhost:8080/bk/addticketcount`, {
+            fetch(`${getDomainName()}/bk/addticketcount`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1089,7 +1090,7 @@
                 status: parseInt(param[2]),
             }
 
-            fetch(`http://localhost:8080/bk/enableticket`, {
+            fetch(`${getDomainName()}/bk/enableticket`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1112,7 +1113,7 @@
             const button = $(e.relatedTarget);
             const ticketId = button.data('bs-whatever');
 
-            fetch(`http://localhost:8080/bk/findticket?id=${ticketId}`)
+            fetch(`${getDomainName()}/bk/findticket?id=${ticketId}`)
                 .then(response => response.json())
                 .then(data => fakeData = data)
                 .catch(error => console.log(error))
@@ -1153,7 +1154,7 @@
             }
 
             //發請求
-            fetch(`http://localhost:8080/bk/editticket`, {
+            fetch(`${getDomainName()}/bk/editticket`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1220,7 +1221,7 @@
             }
 
             //發請求
-            fetch(`http://localhost:8080/bk/addticketform`, {
+            fetch(`${getDomainName()}/bk/addticketform`, {
                 method: 'POST',
                 body: formData,
             })
@@ -1248,7 +1249,7 @@
             const imageId = url.substring(url.lastIndexOf('/') + 1);
 
             //發請求
-            fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
+            fetch(`${getDomainName()}/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
                 .then(response => response.json())
                 .then(data => {
 
@@ -1278,7 +1279,7 @@
                         formData.append('image', convertToBlob(e.target.result));
 
                         //發請求
-                        fetch(`http://localhost:8080/bk/addticketimageform`, {
+                        fetch(`${getDomainName()}/bk/addticketimageform`, {
                             method: 'POST',
                             body: formData,
                         })
@@ -1306,7 +1307,7 @@
             param.append('couponId', curEditCouponId);
 
             //填入資料
-            fetch(`http://localhost:8080/bk/coupon?${param}`)
+            fetch(`${getDomainName()}/bk/coupon?${param}`)
                 .then(response => response.json())
                 .then(data => render_coupon(data))
                 .catch(error => console.log(error))
@@ -1330,7 +1331,7 @@
             }
 
             //填入資料
-            fetch(`http://localhost:8080/bk/addcoupon?`, {
+            fetch(`${getDomainName()}/bk/addcoupon?`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1369,7 +1370,7 @@
             }
 
             //填入資料
-            fetch(`http://localhost:8080/bk/editcoupon?`, {
+            fetch(`${getDomainName()}/bk/editcoupon?`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1527,7 +1528,7 @@
         }
 
         //編輯票券-新增圖片
-        function render_img_url(imgUrl) {
+        function render_img_url(imgUrl) { 
             $('#editImgPreview').append(`
                 <div class="col p-3 img-item">
                     <div class="card h-100">
