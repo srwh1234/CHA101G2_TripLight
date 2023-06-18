@@ -152,6 +152,13 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+
+
 		<!--		<dependency>-->
 		<!--			<groupId>tw.idv.rocky</groupId>-->
 		<!--			<artifactId>springboot-exercise</artifactId>-->

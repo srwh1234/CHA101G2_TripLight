@@ -3,6 +3,9 @@ package com.tw.ticket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class MyUtils {
 	/**
 	 * 判斷字串是否為空值或空白或全空格
@@ -71,5 +74,18 @@ public class MyUtils {
 				close(c);
 			}
 		}
+	}
+
+	/**
+	 * json物件的轉換
+	 */
+	public static final Gson GSON = new GsonBuilder().create();
+
+	public static <T> T fromJson(final String json, final Class<T> classOfT) {
+		return GSON.fromJson(json, classOfT);
+	}
+
+	public static String toJson(final Object src) {
+		return GSON.toJson(src);
 	}
 }
