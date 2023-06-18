@@ -3,8 +3,6 @@ package com.tw.ticket.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.tw.member.model.Member;
-
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -34,9 +32,7 @@ public class TicketFavorite implements Serializable {
 	public static class PrimaryKey implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		@ManyToOne
-		@JoinColumn(name = "member_id")
-		private Member member;// 收藏者的會員編號
+		private Integer memberId;// 收藏者的會員編號
 
 		@ManyToOne
 		@JoinColumn(name = "ticket_id")

@@ -31,8 +31,8 @@ public class TicketDetailController {
 
 	// 票券細項
 	@GetMapping("/ticketdetail")
-	public DetailResponse detail(@RequestParam("id") final int id) {
-		return ticketService.getItem(id);
+	public DetailResponse detail(@RequestParam final int memberId, @RequestParam final int ticketId) {
+		return ticketService.getItem(memberId, ticketId);
 	}
 
 	// 票券留言
@@ -76,6 +76,7 @@ public class TicketDetailController {
 		private double longitude;
 		private double rating;
 		private int ratingPerson;
+		private boolean favorite;
 		private List<String> images;
 		private PromotionResponse promotion;// XXX 未完成
 	}
