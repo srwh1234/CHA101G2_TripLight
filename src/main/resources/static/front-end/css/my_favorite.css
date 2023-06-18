@@ -57,8 +57,10 @@
     color: red;
     position: absolute;
     transform: scale(1.6);
-    top: 25px;
-    right: 50px;
+    /*top: 25px;*/
+    /*right: 50px;*/
+    top: 20px;
+    right: 40px;
  
 }
 
@@ -218,4 +220,18 @@
         top: -20px;
         transform: translate(10%, 40px);
     }
+}
+
+
+
+.heart {
+    color: pink;
+    transition: color 0.5s;
+}
+.heart:hover {
+    color: rgb(241, 82, 82);
+}
+
+.aiFavoriteId {
+    display: none;
 }
