@@ -68,10 +68,7 @@ function generateTicket(t_favorite) {
         </div>
     </a>
     <div class="item_commend_class">
-      <button type="button" class="remove_btn" aria-label="Close"
-          style=" border: 1px solid rgb(180, 174, 174)">
-          <span aria-hidden="true">&times;移除收藏</span>
-      </button>
+       <i class="fa-solid fa-heart heart remove_btn"></i>  
     </div>
   </div>
       `;
@@ -135,10 +132,7 @@ function generateGroup(g_favorite) {
       </div>
     </a>
     <div class="item_commend_class">
-      <button type="button" class="remove_btn" aria-label="Close"
-        style=" border: 1px solid rgb(180, 174, 174)">
-        <span aria-hidden="true">&times;移除收藏</span>
-      </button>
+       <i class="fa-solid fa-heart heart remove_btn"></i>  
     </div>
   </div>
           `;
@@ -201,10 +195,7 @@ function generateArticle(a_favorite) {
       </div>
     </a>
       <div class="item_commend_class">
-        <button type="button" class="remove_btn" aria-label="Close"
-            style=" border: 1px solid rgb(180, 174, 174)">
-            <span aria-hidden="true">&times;移除收藏</span>
-        </button>
+        <i class="fa-solid fa-heart heart remove_btn"></i>  
     </div>
   </div>
    `;
