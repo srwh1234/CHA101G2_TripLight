@@ -20,11 +20,14 @@ public class QuestReportServiceImpl implements QuestReportService {
         this.questReportRepository = questReportRepository;
     }
 
+    //處理接收到的會員問題
     @Override
     public void save(QuestReport questReport) {
-        ZoneId zoneId = ZoneId.of("Asia/Shanghai");
-        questReport.setStartTime(LocalDateTime.now(zoneId));
-        questReportRepository.save(questReport);
+
+        if (questReport.getQContent() != "")
+            questReportRepository.save(questReport);
+        else
+            System.out.println("erorr");
     }
 
     @Override

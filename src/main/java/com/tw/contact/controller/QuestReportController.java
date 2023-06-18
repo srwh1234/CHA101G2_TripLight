@@ -1,8 +1,7 @@
 package com.tw.contact.controller;
 
-import com.tw.contact.QuestReportDTO;
+import com.tw.contact.QuestReportRequestDTO;
 import com.tw.contact.modelJPA.QuestReport;
-import com.tw.contact.modelJPA.dao.QuestReportRepository;
 import com.tw.contact.service.QuestReportService;
 import com.tw.member.model.dao.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ public class QuestReportController {
     private final QuestReportService questReportService;
     private final MemberRepository memberRepository;
 
+    //建構子注入
     @Autowired
     QuestReportController(QuestReportService questReportService,
                           MemberRepository memberRepository) {
@@ -25,25 +25,28 @@ public class QuestReportController {
     }
 
 
-    //送出問題
-//    @PostMapping("/createQuestReport")
-//    public void save(@RequestBody QuestReportDTO questReportDTO){
-//        QuestReport questReport = new QuestReport();
-//        questReport.setQContent(questReportDTO.getqContent());
-//        questReport.setMember(memberRepository.findByMemberId(2));
-//        questReportService.save(questReport);
-//    }
+    /*
+     *存到資料庫時間會有所問題 時區?
+     * */
+
+    //從前端接收到會員問題並存入資料庫
+    @PostMapping("/createQuestReport")
+    public void save(@RequestBody QuestReportRequestDTO questReportRequestDTO){
+        System.out.println(questReportRequestDTO.toString());
+        QuestReport questReport = new QuestReport();
+        questReport.setQContent(questReportRequestDTO.getqContent());
+        questReport.setMember(memberRepository.findByMemberId(questReportRequestDTO.getMemberId()));
+        questReport.setStartTime(questReportRequestDTO.getStartTime());
+        questReportService.save(questReport);
+    }
 
 //    @GetMapping("/ShowQuestReport")
-//    public List<QuestReportDTO> showQuestReport(){
+//    public List<> showQuestReport(){
 //        List<QuestReport> questReports = questReportService.showQuestReport();
 //        List<QuestReportDTO> questReportDTOS = new ArrayList<>();
 //        for (QuestReport questReport : questReports) {
 //            QuestReportDTO dto = new QuestReportDTO();
-//            dto.setId(questReport.getId());
 //            dto.setqContent(questReport.getQContent());
-//            dto.setrContent(questReport.getRContent());
-//            dto.setMemberId(questReport.getMember().getMemberId());
 //            questReportDTOS.add(dto);
 //        }
 //        return questReportDTOS;

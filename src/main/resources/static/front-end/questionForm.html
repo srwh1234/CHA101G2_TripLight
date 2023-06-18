@@ -65,6 +65,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         .list-group list-group-flush mt-3 {
             padding: 0px;
@@ -95,6 +96,41 @@
         li.list-group-item>a {
             text-decoration: none;
             color: black;
+        }
+
+        .container-2 {
+            max-width: 500px;
+            margin: 0 auto;
+            padding-top: 50px;
+            margin-top: 10%;
+        }
+
+        .form-container {
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 50px;
+        }
+
+        .form-control {
+            border-radius: 0;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn {
+            border-radius: 100%;
+            width: 40%;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+        h2.text-center {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            height: 300px;
         }
     </style>
 
@@ -149,9 +185,9 @@
                     <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
                     </li>
                     <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
-                    <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+                    <li class="member_li"><a href="questionForm.html"><i class="fa-regular fa-comment"></i>提出問題</a>
                     </li>
-                    <li class="member_li"><a href="read_questionlist.html"><i class="fa-regular fa-comment"></i>查看問題</a>
+                    <li class="member_li"><a href="readQuestionList.html"><i class="fa-regular fa-comment"></i>查看問題</a>
                     </li>
                     <li class="member_li"><a href="index.html"><i class="fa-solid fa-right-from-bracket"></i>登出</a>
                     </li>
@@ -264,37 +300,25 @@
                         <li class="list-group-item"><a href="article_myfavorite.html">我的文章</a></li>
                         <li class="list-group-item"><a href="membership_rating.html">會員分級</a></li>
                         <li class="list-group-item"><a href="coupon.html">優惠碼</a></li>
-                        <li class="list-group-item"><a href="question_form.html">提出問題</a></li>
-                        <li class="list-group-item"><a href="read_questionlist.html">查看問題</a></li>
+                        <li class="list-group-item"><a href="questionForm.html">提出問題</a></li>
+                        <li class="list-group-item"><a href="readQuestionList.html">查看問題</a></li>
 
                     </ul>
                 </div>
             </div>
             <!-- 右邊會員資料 -->
             <div class="col-9">
-                <section class="packages pt-5">
-                    <div class="table-responsive p-3" id="QuestionContainer">
-                        <table class="table" data-toggle="table">
-                            <thead>
-                                <tr>
-                                    <th class="my-th-width-sm" data-field="order_id">訂單編號</th>
-                                    <th class="my-th-width-sm" data-field="member_id">會員編號</th>
-                                    <th class="my-th-width-sm" data-field="employee_id">處理員工編號</th>
-                                    <th class="my-th-width-sm" data-field="q_content">發問問題</th>
-                                    <th class="my-th-width-sm" data-field="r_content">回答問題</th>
-                                    <th class="my-th-width-sm" data-field="start_time">發問時間</th>
-                                    <th class="my-th-width-sm" data-field="end_time">解決時間</th>
-                                    <th class="my-th-width-sm" data-field="state">處理狀態</th>
-                                    <th class="my-th-width-sm" data-field="score">評分</th>
-                                    <th class="my-th-width-sm"></th>
-                                    <th class="my-th-width-sm"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="QuestionTableBody">
-                            </tbody>
-                        </table>
+                <div class="container-2">
+                    <h2 class="text-center">問題回報</h2>
+                    <div class="form-container">
+                        <form class="quest-report">
+                            <textarea class="form-control" id="message" placeholder="請輸入內容" required></textarea>
+                            <button type="submit" class="submit-btn btn-primary mt-3">
+                                送出問題
+                            </button>
+                        </form>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
     </div>
@@ -407,67 +431,41 @@
 
 </body>
 <script>
-    let member = 3;
-    let data = null;
-    let processedData = data || "";
+    //假會員
+    let member = {
+        memberId: 3,
+    }
 
+    document.querySelector('.quest-report').addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        // 獲取textarea的值
+        var qContent = document.getElementById('message').value;
 
-    fetch('/quest_report?member=' + member)
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.getElementById('QuestionTableBody');
-            tableBody.innerHTML = ''; // 清空表格
+        // 清空textarea的值
+        document.getElementById('message').value = '';
 
-            data.forEach((item) => {
-                const row = document.createElement('tr');
-                // 創建每個單元格並添加到行
-                console.log(item)
-                row.innerHTML = `
-        <td>${item.id}</td>
-        <td>${item.member?.memberId || ""}</td>
-        <td>${item.employee?.employeeId || ""}</td>
-        <td>${item.qsContent || ""}</td>
-        <td>${item.reContent || ""}</td>
-        <td>${item.startTime || ""}</td>
-        <td>${item.endTime || ""}</td>
-        <td>${item.state === 0 ? '未解決' : '已解決'}</td>
-        <td>${item.score || ""}</td>
-    `;
-                // 創建查詢按鈕並添加事件監聽器
-                const queryButton = document.createElement('button');
-                queryButton.textContent = '查詢';
-                queryButton.addEventListener('click', () => {
-                    // 在這裡添加查詢按鈕的事件處理函數
-                    console.log('查詢按鈕被點擊，當前行的資料是：', item);
-                });
-                row.appendChild(queryButton);
-
-                // 創建刪除按鈕並添加事件監聽器
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = '刪除';
-                deleteButton.addEventListener('click', () => {
-                    fetch('/quest_report/' + item.id, {
-                        method: 'DELETE',
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            // 刪除成功，從表格中移除該行
-                            row.remove();
-                        })
-                        .catch(error => console.error('Error:', error));
-                });
-                row.appendChild(deleteButton);
-
-                // 將行添加到表格
-                tableBody.appendChild(row);
-            });
-
-
+        // 執行表單的提交動作
+        fetch('/createQuestReport', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                qContent: qContent,
+                memberId: member.memberId,
+            }),
         })
-        .catch(error => console.error('Error:', error));
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    });
 
 
 
