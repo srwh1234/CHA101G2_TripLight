@@ -867,11 +867,8 @@
     */
     function fetch_data() {
       //登入檢查
-      let memberId = 0;
-      const item = JSON.parse(sessionStorage.getItem('test-login'));
-      if (item && item.memberId) {
-        memberId=item.memberId;
-      }
+      let memberId = getMemberId(false);
+      
 
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id") ?? 0;

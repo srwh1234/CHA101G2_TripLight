@@ -3,6 +3,7 @@ package com.tw.ticket.service.impl;
 import static com.tw.ticket.model.Ticket.ENABLED;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.tw.ticket.model.TicketFavorite.PrimaryKey;
 import com.tw.ticket.model.dao.TicketFavoriteRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
+import com.tw.ticket.service.ImageService;
 import com.tw.ticket.service.TicketService;
 
 @Service
@@ -32,7 +34,7 @@ public class TicketServiceImpl implements TicketService {
 	private TicketSnRepository snRepository;
 
 	@Autowired
-	private ImageServiceImpl imageService;
+	private ImageService imageService;
 
 	@Autowired
 	private TicketFavoriteRepository ticketFavoriteRepository;
@@ -64,9 +66,14 @@ public class TicketServiceImpl implements TicketService {
 	public List<DescResponse> getRandomItem() {
 		final List<DescResponse> result = new ArrayList<>();
 
-		repository.findAll().forEach(ticket -> {
+		final List<Ticket> tickets = repository.findAll();
+
+		// 打亂
+		Collections.shuffle(tickets);
+
+		for (final Ticket ticket : tickets) {
 			if (result.size() >= 4) {
-				return;
+				break;
 			}
 			if (ticket.getStatus() == ENABLED) {
 				final DescResponse response = new DescResponse(ticket);
@@ -74,7 +81,7 @@ public class TicketServiceImpl implements TicketService {
 				response.setImage(image);
 				result.add(response);
 			}
-		});
+		}
 		return result;
 	}
 
