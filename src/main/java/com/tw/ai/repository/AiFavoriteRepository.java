@@ -10,4 +10,6 @@ public interface AiFavoriteRepository {
 
     void deleteAiLocations(Integer aiFavoriteId); //
 
+    long count();
+
 }

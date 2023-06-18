@@ -394,7 +394,7 @@
             <div class="counter">
               <span class="fa fa-solid fa-newspaper"></span>
               <div class="timer time4 count-title count-number">0</div>
-              <p class="count-text text-uppercase">旅遊文章</p>
+              <p class="count-text text-uppercase">AI行程收藏</p>
             </div>
           </div>
         </div>
@@ -755,54 +755,65 @@
 
     <script>
       window.addEventListener("load", function () {
-        // 增加動畫
-        $(".time1").animate(
-          // 動畫終點
-          { num: 5683 },
-          {
-            // 持續時間
-            duration: 8000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
-        // 增加動畫
-        $(".time2").animate(
-          // 動畫終點
-          { num: 3566 },
-          {
-            // 持續時間
-            duration: 6000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
-        // 增加動畫
-        $(".time3").animate(
-          // 動畫終點
-          { num: 1688 },
-          {
-            // 持續時間
-            duration: 4000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
-        // 增加動畫
-        $(".time4").animate(
-          // 動畫終點
-          { num: 764 },
-          {
-            // 持續時間
-            duration: 2000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
+        // 獲得資料
+        $.ajax({
+          type: "GET",
+          url: "/counts",
+          success: function (response) {
+            console.log(response);
+            // 增加動畫
+            $(".time1").animate(
+              // 動畫終點
+              { num: response.memberNumber },
+              {
+                // 持續時間
+                duration: 10000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+            // 增加動畫
+            $(".time2").animate(
+              // 動畫終點
+              { num: response.tripNumber },
+              {
+                // 持續時間
+                duration: 10000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+            // 增加動畫
+            $(".time3").animate(
+              // 動畫終點
+              { num: response.ticketNumber },
+              {
+                // 持續時間
+                duration: 10000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+            // 增加動畫
+            $(".time4").animate(
+              // 動畫終點
+              { num: response.aiFavoriteNumber },
+              {
+                // 持續時間
+                duration: 10000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+          },
+          error: function (error) {
+            console.error(error);
+          },
+        });
       });
     </script>
   </body>
