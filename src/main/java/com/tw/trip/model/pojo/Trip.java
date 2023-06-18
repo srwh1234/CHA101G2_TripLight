@@ -38,7 +38,7 @@ public class Trip implements Serializable {
 
     private String city;
 
-    private int totalSales;
+    private int totalSales;  // 總銷售量
 
     private int priceAdult;
 
