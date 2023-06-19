@@ -1,27 +1,15 @@
 package com.tw.vendor.model;
 
-<<<<<<< HEAD
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-=======
 import jakarta.persistence.*;
->>>>>>> 8f8bd6ee5c62606cdb24c7349c98e7b49c85c095
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import java.sql.Timestamp;
 
-  // 標示該類別為實體類別，用於映射資料庫
+@Entity  // 標示該類別為實體類別，用於映射資料庫
 @Getter
 @Setter
-<<<<<<< HEAD
-@ToString
-@Table
-@Entity
-=======
 @DynamicInsert  //這個注解可以讓 Hibernate 在插入新記錄時只生成非空欄位的 SQL 語句，從而避免將 NULL 值插入 application_time 欄位。
->>>>>>> 8f8bd6ee5c62606cdb24c7349c98e7b49c85c095
 public class Vendor {  // 表格名稱
 	
     @Id  // 標示id為主鍵

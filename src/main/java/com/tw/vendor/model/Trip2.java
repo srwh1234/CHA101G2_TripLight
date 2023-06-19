@@ -22,7 +22,6 @@ import lombok.ToString;
 @ToString
 @Table(name = "Trip")
 public class Trip2 {  // 表格名稱
-	
 	@Id  // 標示id為主鍵
 	private int tripId;
 
