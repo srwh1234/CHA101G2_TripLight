@@ -11,7 +11,7 @@ import com.tw.vendor.service.VendorService;
 
 @Service
 public class VendorServiceImpl implements VendorService {
-	
+
 	@Autowired
 	private VendorRepository vendorRepository;
 

@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tw.vendor.dao.TourGroupRepository2;
 import com.tw.vendor.model.TourGroup2;
 import com.tw.vendor.service.TourGroupService2;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class TourGroupServiceImpl2 implements TourGroupService2 {
 	
 	@Autowired

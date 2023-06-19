@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tw.vendor.dao.VendorImageRepository;
 import com.tw.vendor.model.VendorImage;
 import com.tw.vendor.service.VendorImageService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class VendorIamgeServiceImpl implements VendorImageService{
 	
 	@Autowired

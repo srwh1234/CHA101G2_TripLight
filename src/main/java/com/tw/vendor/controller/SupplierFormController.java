@@ -17,19 +17,19 @@ import com.tw.vendor.service.VendorService;
 @RestController("supplierFormController")
 @RequestMapping("/vendor")
 public class SupplierFormController {
-    
-    @Autowired 
+
+    @Autowired
     private VendorService vendorService;
 
     @GetMapping("/supplier")  // 對應前端get,  傳資料給前端
     public List<Vendor> getveVendors() {
         return vendorService.findAll();
     }
-    
+
     @PostMapping("/supplieradd")
     public String processStudent(@RequestBody Vendor vendor){
         vendorService.save(vendor);
         return "成功拿到資料";
     }
-    
+
 }

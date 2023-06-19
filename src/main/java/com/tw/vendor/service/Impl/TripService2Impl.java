@@ -14,7 +14,7 @@ public class TripService2Impl implements TripService2 {
 
 		@Autowired
 		private TripRepository2 tripRepository  ;
-		
+
 
 		@Override
 		public void save(Trip2 trip) {
