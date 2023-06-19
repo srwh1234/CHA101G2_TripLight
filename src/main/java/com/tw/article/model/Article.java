@@ -39,23 +39,5 @@ public class Article implements java.io.Serializable{
 		
 		private Integer articleLikesCount;      //文章好評，備用
 		
-		
-		
-//		public com.Users.model.UsersVO getUsersVO() {
-//			com.Users.model.UsersJDBCDAO userDAO = new com.Users.model.UsersJDBCDAO();
-//			com.Users.model.UsersVO usersVO = userDAO.findByPrimaryKey(userId);
-//			return usersVO;
-//		}
-//		
-//		public com.article_report.model.ArticleReportVO getArticleReportVO() {
-//			com.article_report.model.ArticleReportJDBCDAO articleReportJDBCDAO = new com.article_report.model.ArticleReportJDBCDAO();
-//			com.article_report.model.ArticleReportVO articleReportVO = articleReportJDBCDAO.findByPrimaryKey(artId);
-//			return articleReportVO;
-//			
-//		for join artpic from 多張照片用 
-//		public com.article_pic.model.ArticlePicVO getArtPicVO() { // 有個方法叫getArtPicVO
-//			 com.article_pic.model.ArticlePicService artpicSvc = new com.article_pic.model.ArticlePicService(); //找到Service
-//			 com.article_pic.model.ArticlePicVO artPicVO = artpicSvc.getArtPic(artPic);
-//			 return artPicVO;			
-//		}
+	
 }
