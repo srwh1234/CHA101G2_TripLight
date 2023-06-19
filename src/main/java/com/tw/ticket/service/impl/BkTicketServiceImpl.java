@@ -48,6 +48,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 	private Config config;
 
 	@Autowired
+	private GeoApiContext geoApiContext;
+
+	@Autowired
 	private TicketRepository repository;
 
 	@Autowired
@@ -310,10 +313,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 	// 使用Google Api取得指定地址的經緯度
 	private LatLng getLatLngFromAddress(final String address) {
-		final String apiKey = config.getGoogleApiKey();
-		// final GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build();
-		try (GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build()) {
+		try {
 			final GeocodingResult[] results = GeocodingApi.geocode(geoApiContext, address).await();
+
 			if (results != null && results.length > 0) {
 				return results[0].geometry.location;
 			}

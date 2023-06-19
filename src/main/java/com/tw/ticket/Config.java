@@ -9,6 +9,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import com.google.maps.GeoApiContext;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +28,12 @@ public class Config {
 	@Setter
 	@Getter
 	private boolean isRedisServerStarted;
+
+	// Google Map Api
+	@Bean
+	public GeoApiContext geoApiContext() {
+		return new GeoApiContext.Builder().apiKey(getGoogleApiKey()).build();
+	}
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
