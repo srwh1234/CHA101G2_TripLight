@@ -35,6 +35,6 @@ public class PrimaryKey implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "article_id")
-	private Ticket ticket;// 票券編號
+	private Article article;// 票券編號
 	}
 }

@@ -152,11 +152,11 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-		<!--		<dependency>-->
-		<!--			<groupId>tw.idv.rocky</groupId>-->
-		<!--			<artifactId>springboot-exercise</artifactId>-->
-		<!--			<version>0.0.1-SNAPSHOT</version>-->
-		<!--		</dependency>-->
+		<dependency>
+			<groupId>tw.idv.rocky</groupId>
+			<artifactId>springboot-exercise</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
