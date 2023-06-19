@@ -877,7 +877,7 @@ button.btn1 {
   float: right;
   width: 15%;
 }
-.footer-grid_section_1its_w3 form {
+.footer-grid_section_1 form {
   border: 1px solid #808080;
   width: 100%;
   margin-top: 20px;
@@ -1321,11 +1321,11 @@ a.move-top span:hover {
 /*-- //inner banner --*/
 
 /* tabs */
-.inner-w3pvt-wrap {
+.inner-www-wrap {
   padding-top: 2em;
 }
 
-.inner-w3pvt-wrap h4 {
+.inner-www-wrap h4 {
   font-size: 22px;
   color: #fff;
   font-weight: 600;
@@ -1359,7 +1359,7 @@ a.move-top span:hover {
 .overlay-all {
   background: rgba(0, 0, 0, 0.5);
 }
-.inner-w3pvt-wrap p {
+.inner-www-wrap p {
   font-size: 15px;
   color: #ccc;
 }
@@ -1368,7 +1368,7 @@ a.move-top span:hover {
   display: none;
 }
 
-.tab-main input.w3pvt-sm {
+.tab-main input.www-sm {
   display: none;
 }
 
@@ -1471,14 +1471,14 @@ a.move-top span:hover {
 /*-- //testimonials --*/
 
 /*-- contact --*/
-.adress-w3pvt-info h6 {
+.adress-www-info h6 {
   font-size: 1.2em;
   color: #3d3d3e;
   font-weight: 600;
   letter-spacing: 1px;
   margin: 1em 0;
 }
-.adress-w3pvt-info a {
+.adress-www-info a {
   color: #777;
   letter-spacing: 1px;
 }
@@ -1781,7 +1781,7 @@ p.duration {
   .map iframe {
     height: 300px;
   }
-  .adress-w3pvt-info p {
+  .adress-www-info p {
     font-size: 14px;
   }
   #map {
@@ -1832,7 +1832,7 @@ p.duration {
   .banner_inner {
     min-height: 200px;
   }
-  .adress-w3pvt-info h6 {
+  .adress-www-info h6 {
     font-size: 1.1em;
     margin: 1em 0 0.5em;
   }
@@ -1940,7 +1940,7 @@ p.duration {
     font-size: 15px;
     margin-bottom: 0;
   }
-  .inner-w3pvt-wrap h4 {
+  .inner-www-wrap h4 {
     font-size: 20px;
   }
   .inner-sec-grid {
