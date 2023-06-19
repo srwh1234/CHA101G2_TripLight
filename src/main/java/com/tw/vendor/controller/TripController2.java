@@ -1,22 +1,24 @@
 package com.tw.vendor.controller;
- import java.util.List;
 
- import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.web.bind.annotation.GetMapping;
- import org.springframework.web.bind.annotation.PostMapping;
- import org.springframework.web.bind.annotation.RequestBody;
- import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
- import com.tw.vendor.model.Trip2;
- import com.tw.vendor.service.TripService2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.persistence.Table;
+import com.tw.vendor.model.Trip2;
+import com.tw.vendor.service.TripService2;
 
- @Table(name="Trip")
- @RestController // 標示該類別與前端交互，自動轉Json
+ @CrossOrigin(origins = "*")
+ @RestController("tripController") // 標示該類別與前端交互，自動轉Json
+ @RequestMapping("/trip")
  public class TripController2 {
 
-	 @Autowired // 注入TripRepository實例 (dao)
+	 @Autowired
 	 private TripService2 tripService2;
 	
 	 @GetMapping("/trip2") // 對應前端get, 傳資料給前端
@@ -24,7 +26,7 @@ import jakarta.persistence.Table;
 		 return tripService2.findAll();
 	 }
 	
-	 @PostMapping("/trip2")
+	 @PostMapping("/trip3")
 	 public String processStudent(@RequestBody final Trip2 trip) {
 		 tripService2.save(trip);
 		 System.out.println(trip);

@@ -23,4 +23,5 @@ import lombok.Data;
 	 private byte[] image;
 	
 	 private Timestamp uploadTime;
+	 
  }
