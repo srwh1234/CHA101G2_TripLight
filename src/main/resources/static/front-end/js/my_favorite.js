@@ -68,10 +68,7 @@ function generateTicket(t_favorite) {
         </div>
     </a>
     <div class="item_commend_class">
-      <button type="button" class="remove_btn" aria-label="Close"
-          style=" border: 1px solid rgb(180, 174, 174)">
-          <span aria-hidden="true">&times;移除收藏</span>
-      </button>
+       <i class="fa-solid fa-heart heart remove_btn"></i>  
     </div>
   </div>
       `;
@@ -135,10 +132,7 @@ function generateGroup(g_favorite) {
       </div>
     </a>
     <div class="item_commend_class">
-      <button type="button" class="remove_btn" aria-label="Close"
-        style=" border: 1px solid rgb(180, 174, 174)">
-        <span aria-hidden="true">&times;移除收藏</span>
-      </button>
+       <i class="fa-solid fa-heart heart remove_btn"></i>  
     </div>
   </div>
           `;
@@ -201,10 +195,7 @@ function generateArticle(a_favorite) {
       </div>
     </a>
       <div class="item_commend_class">
-        <button type="button" class="remove_btn" aria-label="Close"
-            style=" border: 1px solid rgb(180, 174, 174)">
-            <span aria-hidden="true">&times;移除收藏</span>
-        </button>
+        <i class="fa-solid fa-heart heart remove_btn"></i>  
     </div>
   </div>
    `;
@@ -261,36 +252,42 @@ function getAiFavorite() {
         for (let i = 0; i < aiFavorite.length; i++) {
           $(".tab-pane").eq(3).find("#group_orderselect")
             .after(`<div class="group_order_item_class">
-          <div class="card-header">
-          <div class="card-top">
-              <h5 class="text-center">
-                  <h5>${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊</h5>
-                  <i class="fa-solid fa-heart heart remove_btn"></i>
-              </h5>
+            <div class="card-header">
+              <div class="card-top">
+                <h5 class="text-center">
+                  <h5>
+                    ${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊
+                  </h5>
+                </h5>
               </div>
-              </div>
-              <div class="card-body card-down">
+            </div>
+            <div class="card-body card-down">
               <p>
-              <i class="fa-solid fa-person"></i>
-              人數：${aiFavorite[i].people}
+                <i class="fa-solid fa-person"></i>
+                人數：${aiFavorite[i].people}
               </p>
               <p>
-              <i class="fa-solid fa-dollar-sign"></i>
-              預算範圍：${aiFavorite[i].budgetRange}
+                <i class="fa-solid fa-dollar-sign"></i>
+                預算範圍：${aiFavorite[i].budgetRange}
               </p>
-            <p>
-              <i class="fa-brands fa-fly"></i>
-              旅遊風格：${aiFavorite[i].preferredStyle}
-           </p>
-           <p>
-            <i class="fa-solid fa-location-dot"></i> 路線連結：<a
-             href="${aiFavorite[i].route}"
-             >${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊路線連結</a
-            >
-            </p>
-            <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br>${aiFavorite[i].planningDescription}</p>
-          </div>
-          <div class = "aiFavoriteId">${aiFavorite[i].aiFavoriteId}</div>
+              <p>
+                <i class="fa-brands fa-fly"></i>
+                旅遊風格：${aiFavorite[i].preferredStyle}
+              </p>
+              <p>
+                <i class="fa-solid fa-location-dot"></i> 路線連結：<a
+                  href="${aiFavorite[i].route}"
+                  >${aiFavorite[i].destination}${aiFavorite[i].travelDays}日遊路線連結</a
+                >
+              </p>
+              <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br />${aiFavorite[i].planningDescription}</p>
+              <div class="item_commend_class">
+                <i class="fa-solid fa-heart heart remove_btn"></i>
+              </div>
+            </div>
+            <div class="aiFavoriteId">
+              ${aiFavorite[i].aiFavoriteId}
+            </div>
           </div>`);
         }
       }

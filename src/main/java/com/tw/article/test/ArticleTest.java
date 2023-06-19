@@ -16,8 +16,8 @@ public class ArticleTest implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        var article = articleRepository.findAll();
-        System.out.println(article); // 顯示查詢到的資料
+//        var article = articleRepository.findAll();
+//        System.out.println(article); // 顯示查詢到的資料
     }
     
     public static void main(String[] args) {

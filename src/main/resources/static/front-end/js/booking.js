@@ -43,7 +43,7 @@ form.addEventListener("submit", async function (event) {
 
   // 傳送表單資料物件
   let formData = {
-    formId: formId,
+    formId: formId, // 每個表單都會有一個ID
     destination: destination,
     travelDays: travelDays,
     people: people,
@@ -53,6 +53,9 @@ form.addEventListener("submit", async function (event) {
     activitiesValues: activitiesValues,
     otherDemands: message,
   };
+  // 存入 sessionStorage
+  sessionStorage.setItem("formData", formData);
+
   // 傳送物件
   axios
     .post("/formData", formData)

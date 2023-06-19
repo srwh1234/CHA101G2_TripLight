@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.tw.ticket.model.TicketImage;
 import com.tw.ticket.model.dao.TicketImageRepository;
+import com.tw.ticket.model.redis.TicketImageRedis;
 import com.tw.ticket.service.ImageService;
 
 @Service
@@ -24,13 +24,17 @@ public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private TicketImageRepository repository;
 
+	@Autowired
+	private TicketImageRedis ticketImgRedis;
+
 	// 找出指定圖片 沒有則回傳預設圖片
+
 	@Override
 	public byte[] findImg(final int id) {
-		final Optional<TicketImage> optional = repository.findById(id);
+		final TicketImage image = ticketImgRedis.findById(id);
 
 		// 沒有指定編號的圖片
-		if (optional.isEmpty()) {
+		if (image == null) {
 			final ClassPathResource resource = new ClassPathResource("images/aa.gif");
 
 			byte[] bytes = null;
@@ -43,8 +47,7 @@ public class ImageServiceImpl implements ImageService {
 			}
 			return bytes;
 		}
-
-		return optional.get().getImage();
+		return image.getImage();
 	}
 
 	// 找出指定票券的所有圖片URL

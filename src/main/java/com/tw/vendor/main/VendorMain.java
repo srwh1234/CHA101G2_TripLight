@@ -15,6 +15,6 @@ public class VendorMain implements CommandLineRunner { 			// 這個class會在�
     @Override
     public void run(String... args){
         var vendors = vendorRepository.findAll();
-        System.out.println(vendors); // 顯示查詢到的資料
+//        System.out.println(vendors); // 顯示查詢到的資料
     }
 }

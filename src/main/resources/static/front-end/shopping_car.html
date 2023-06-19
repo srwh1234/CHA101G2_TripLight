@@ -228,7 +228,7 @@
           <label><input type="checkbox" />記住我</label>
           <a href="#">忘記密碼</a>
         </div>
-        <button type="submit" class="main-btn">Login</button>
+        <button type="button" class="main-btn">Login</button>
         <div class="register">
           <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
         </div>
@@ -256,7 +256,7 @@
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
         </div>
-        <button type="submit" class="main-btn">註冊</button>
+        <button type="button" class="main-btn">註冊</button>
         <div class="register">
           <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
         </div>
@@ -472,6 +472,7 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script src="./js/sweetalert.js"></script>
+  <script src="./js/ticket_login_check.js"></script>
   <script>
 
     //假資料-購物清單
@@ -585,8 +586,13 @@
     * 取得購物車清單
     */
     function fetch_data() {
-      const memberId = 1;
-      fetch(`http://localhost:8080/carts?memberId=${memberId}`)
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+
+      fetch(`${getDomainName()}/carts?memberId=${memberId}`)
         .then(response => response.json())
         .then(data => result = data)
         .catch(error => console.log(error))
@@ -599,13 +605,14 @@
     * 取得優惠券清單
     */
     function fetch_coupon() {
-      const memberId = 1;
-      fetch(`http://localhost:8080/coupons?memberId=${memberId}`)
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+      fetch(`${getDomainName()}/coupons?memberId=${memberId}`)
         .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          coupons = data;
-        })
+        .then(data => coupons = data)
         .catch(error => console.log(error))
         .finally(() => render_coupons());
     }
@@ -614,12 +621,18 @@
     * 數量更新 
     */
     function fetch_change(ticketId, modify) {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+
       const post = {
-        memberId: 1,
+        memberId: memberId,
         ticketId: ticketId,
         modify: modify,
       };
-      fetch(`http://localhost:8080/modifycart`, {
+      fetch(`${getDomainName()}/modifycart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -639,10 +652,15 @@
     *  購物車刪除品項
     */
     function fetch_remove(e) {
-      const memberId = 1;
+     //登入檢查
+     const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
+
       const ticketId = parseInt($(e.target).data('ticket-id'));
 
-      fetch(`http://localhost:8080/removecart?memberId=${memberId}&&ticketId=${ticketId}`)
+      fetch(`${getDomainName()}/removecart?memberId=${memberId}&&ticketId=${ticketId}`)
         .then(response => response.json())
         .then(data => fetch_data())
         .catch(error => console.log(error))
@@ -653,15 +671,19 @@
     * 綠界結帳
     */
     function fetch_order() {
-      const memberId = 1;
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
 
       const post = {
-        memberId: 1,
+        memberId: memberId,
         couponId: parseInt($('#discountSelect').val()),
         backUrl: window.location.href,
       };
 
-      fetch('http://localhost:8080/ecpayCheckout', {
+      fetch(`${getDomainName()}/ecpayCheckout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -683,10 +705,14 @@
     * 測試用結帳
     */
     function fetch_order_test() {
-      const memberId = 1;
+     //登入檢查
+     const memberId = getMemberId();
+      if (!memberId) {
+        return false;
+      }
       const couponId = $('#discountSelect').val();
 
-      fetch(`http://localhost:8080/testCheckout?memberId=${memberId}&&couponId=${couponId}`)
+      fetch(`${getDomainName()}/testCheckout?memberId=${memberId}&&couponId=${couponId}`)
         .then(response => response.json())
         .then(data => {
           if (data) {

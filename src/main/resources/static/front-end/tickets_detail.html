@@ -64,6 +64,25 @@
       background-color: #f5f5f5;
     }
 
+    /* 收藏的愛心*/
+    .my-favorite .on {
+      color: #dc3545;
+    }
+
+    .my-favorite .on:hover {
+      color: #ccc;
+    }
+
+    .my-favorite .off {
+      color: #ccc;
+    }
+
+    .my-favorite .off:hover {
+      color: #dc3545;
+    }
+
+
+
     /* 評價的星星 */
     .my-ratings .on {
       color: #26bec9;
@@ -248,7 +267,7 @@
           <label><input type="checkbox" />記住我</label>
           <a href="#">忘記密碼</a>
         </div>
-        <button type="submit" class="main-btn">Login</button>
+        <button type="button" class="main-btn">Login</button>
         <div class="register">
           <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
         </div>
@@ -276,7 +295,7 @@
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
         </div>
-        <button type="submit" class="main-btn">註冊</button>
+        <button type="button" class="main-btn">註冊</button>
         <div class="register">
           <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
         </div>
@@ -635,6 +654,7 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
   <script src="./js/sweetalert.js"></script>
+  <script src="./js/ticket_login_check.js"></script>
 
   <script>
     //Google Map
@@ -658,6 +678,7 @@
       longitude: '經度',
       rating: 4.5,
       ratingPerson: Math.trunc(Math.random() * 1000),
+      favorite: true,
       images: [
         'https://picsum.photos/800/600/?random=1',
         'https://picsum.photos/800/600/?random=2',
@@ -690,6 +711,8 @@
       ],
     }
 
+
+
     //TODO: ------------------------------------------//onload
 
     $(function () {
@@ -697,6 +720,54 @@
       //去後端拿資料
       fetch_data();
 
+
+      //加入我的最愛的按鈕
+      $(document).on('click', '.my-favorite', function () {
+
+        //登入檢查
+        const memberId = getMemberId();
+        if (!memberId) {
+          return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+
+
+        const post = {
+          memberId: memberId,
+          ticketId: id,
+          favorite: $(this).find('i').hasClass('on'),
+        };
+        fetch(`${getDomainName()}/ticketfavorite`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(post),
+        })
+          .then(response => response.json())
+          .then(data => {
+
+            switch (data) {
+              case 1:
+                Swal.fire({ icon: 'success', title: '成功加入我的最愛', });
+                fetch_data();
+                break;
+              case 2:
+                Swal.fire({ icon: 'success', title: '已從我的最愛移除', });
+                fetch_data();
+                break;
+              case 3:
+                Swal.fire({ icon: 'warning', title: '需要登入', });
+                break;
+              default:
+                Swal.fire({ icon: 'error', title: '發生未知的錯誤', });
+                break;
+            }
+          })
+          .catch(error => console.log(error));
+      });
 
       //加入購物車的按鈕
       $(document).on('click', '#btnAddToCart', fetch_cart);
@@ -795,10 +866,19 @@
     * 取得票券資料
     */
     function fetch_data() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
+      //登入檢查
+      let memberId = getMemberId(false);
+      
 
-      fetch(`http://localhost:8080/ticketdetail?id=${id ?? 0}`)
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id") ?? 0;
+
+      const param = new URLSearchParams();
+      param.append('memberId', memberId);
+      param.append('ticketId', id);
+
+
+      fetch(`${getDomainName()}/ticketdetail?${param}`)
         .then(response => response.json())
         .then(data => ticket = data)
         .catch(error => console.log(error))
@@ -827,7 +907,7 @@
         size: 5,
       }
 
-      fetch('http://localhost:8080/ticketcomments', {
+      fetch(`${getDomainName()}/ticketcomments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -845,15 +925,21 @@
     * 加入購物車 
     */
     function fetch_cart() {
+      //登入檢查
+      const memberId = getMemberId();
+      if (!memberId) {
+        return;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
 
       const post = {
-        memberId: 1,
+        memberId: memberId,
         ticketId: id,
         quantity: parseInt($('#inputQuantity').val()),
       };
-      fetch('http://localhost:8080/addcart', {
+      fetch(`${getDomainName()}/addcart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -921,21 +1007,30 @@
     */
     function render_title() {
       $('#ticketTitle').html(`
-        <div class="h2 my-4">
-              <span>${ticket.name} | ${ticket.ticketType}</span>
-        </div>
-        <div class="my-3">
-          <span class="fa fa-map-marker mx-3"></span>
-          <span>台灣- ${ticket.city}</span>
-        </div>
-        <div class="my-ratings my-text-lightgray">
-          <span class="m-3 on">${ticket.rating}</span>
-          <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
-          <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
-          <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
-          <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
-          <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
-          <span class="m-3">(${ticket.ratingPerson})</span>
+        <div class="d-flex">
+          <div class="col-11">
+            <div class="h2 my-4">
+                  <span>${ticket.name} | ${ticket.ticketType}</span>
+            </div>
+            <div class="my-3">
+              <span class="fa fa-map-marker mx-3"></span>
+              <span>台灣- ${ticket.city}</span>
+            </div>
+            <div class="my-ratings my-text-lightgray">
+              <span class="m-3 on">${ticket.rating}</span>
+              <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+              <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+              <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+              <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+              <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
+              <span class="m-3">(${ticket.ratingPerson})</span>
+            </div>
+          </div>
+          <div class="col-1">
+            <div class="h2 my-text-lightgray my-favorite my-4">
+              <i class="fa fa-heart ${ticket.favorite ? 'on' : 'off'}"></i>
+            </div>
+          </div>
         </div>
         <hr class="my-5">
         <div class="my-5">
@@ -1111,7 +1206,7 @@
     }
 
 
-    
+
   </script>
 </body>
 <!-- login顯示 -->

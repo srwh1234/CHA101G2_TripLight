@@ -17,7 +17,7 @@ public class TripImageMain2 implements CommandLineRunner { // 這個class會在�
 
     @Override
     public void run(String... args){
-        var tripimages = tripImageRepository2.findAll();
-        System.out.println(tripimages); // 顯示查詢到的資料
+//        var tripimages = tripImageRepository2.findAll();
+//        System.out.println(tripimages); // 顯示查詢到的資料
     }
 }

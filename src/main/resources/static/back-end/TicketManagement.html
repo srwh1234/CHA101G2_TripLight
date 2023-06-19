@@ -319,7 +319,7 @@
                                        data-sort-class="table-active"
                                        data-search="true"
                                        data-search-align="left"
-                                       data-url="http://localhost:8080/bk/coupons">
+                                       data-url="/bk/coupons">
 
                                     <thead>
                                         <tr>
@@ -740,8 +740,14 @@
     <script src="vendor/summernote/summernote-zh-TW.min.js"></script>
     <script src="vendor/sweetalert/sweetalert.js"></script>
     <script src="js/bootstrap-table.min.js"></script>
+    <script src="js/ticket_login_check.js"></script>
 
     <script>
+        //檔案上傳限制
+        const SINGLE_FILE_SIZE = 10 * 1024 * 1024; //10MB
+        const TOTAL_FILES_SIZE = 50 * 1024 * 1024; //50MB
+        let curFilesSize;
+
         let curEditCouponId;
 
         //假資料-票券列表
@@ -813,6 +819,8 @@
         //TODO: ------------------------------------------//onload
         $(function () {
 
+            doPageSearch(0);
+
             //優惠券列表 點選列的事件
             $(document).on('click', '#couponContainer tbody tr', function () {
                 curEditCouponId = $(this).find('td').first().text();
@@ -843,10 +851,33 @@
                 //判斷上色
                 $('.form-floating .form-control').each((i, v) => renderTextColor(v));
                 $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+            });           
+
+
+            //增加票券-清空前一次資料
+            $('#addTicketModal').on('show.bs.modal', function (event) {
+                //清空
+                $('#ticketImage').val('');
+                $('#imgPreview').html('');
+                curFilesSize = 0;
+
+                $('#ticketType').val('');
+                $('#ticketSupplier').val('');
+                $('#ticketExpiryDate').val('');
+                $('#ticketName').val('');
+                $('#ticketPrice').val('');
+                $('#ticketCount').val('');
+                $('#ticketRating').val('');
+                $('#ticketRatingCount').val('');
+                $('#ticketCity').val('');
+                $('#ticketAddress').val('');
+                $('#descEditor').summernote('code', '');
+                $('#contentEditor').summernote('code', '');
+                $('#noteEditor').summernote('code', '');
+                //判斷上色
+                $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+                $('.form-floating .form-select').each((i, v) => renderTextColor(v));
             });
-
-
-            doPageSearch(0);
 
             //增加票券數量-參數傳遞
             $('#countTicketModal').on('show.bs.modal', function (event) {
@@ -905,6 +936,15 @@
             $('#ticketImage').on('change', function (e) {
                 if (e.target.files) {
                     for (let file of e.target.files) {
+                        if (file.size >= SINGLE_FILE_SIZE) {
+                            Swal.fire({ icon: 'error', title: '檔案大小不能超過10MB' });
+                            return;
+                        }
+                        curFilesSize += file.size;
+                        if (curFilesSize >= TOTAL_FILES_SIZE) {
+                            Swal.fire({ icon: 'error', title: '全部檔案大小不能超過50MB' });
+                            return;
+                        }
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
                         reader.onload = function (e) {
@@ -987,7 +1027,7 @@
 
             oldCondition = post;
 
-            fetch(`http://localhost:8080/bk/searchtickets`, {
+            fetch(`${getDomainName()}/bk/searchtickets`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1015,7 +1055,7 @@
                 return;
             }
             //發請求
-            fetch(`http://localhost:8080/bk/addticketcount`, {
+            fetch(`${getDomainName()}/bk/addticketcount`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1050,7 +1090,7 @@
                 status: parseInt(param[2]),
             }
 
-            fetch(`http://localhost:8080/bk/enableticket`, {
+            fetch(`${getDomainName()}/bk/enableticket`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1073,7 +1113,7 @@
             const button = $(e.relatedTarget);
             const ticketId = button.data('bs-whatever');
 
-            fetch(`http://localhost:8080/bk/findticket?id=${ticketId}`)
+            fetch(`${getDomainName()}/bk/findticket?id=${ticketId}`)
                 .then(response => response.json())
                 .then(data => fakeData = data)
                 .catch(error => console.log(error))
@@ -1114,7 +1154,7 @@
             }
 
             //發請求
-            fetch(`http://localhost:8080/bk/editticket`, {
+            fetch(`${getDomainName()}/bk/editticket`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1181,7 +1221,7 @@
             }
 
             //發請求
-            fetch(`http://localhost:8080/bk/addticketform`, {
+            fetch(`${getDomainName()}/bk/addticketform`, {
                 method: 'POST',
                 body: formData,
             })
@@ -1209,7 +1249,7 @@
             const imageId = url.substring(url.lastIndexOf('/') + 1);
 
             //發請求
-            fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
+            fetch(`${getDomainName()}/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
                 .then(response => response.json())
                 .then(data => {
 
@@ -1239,7 +1279,7 @@
                         formData.append('image', convertToBlob(e.target.result));
 
                         //發請求
-                        fetch(`http://localhost:8080/bk/addticketimageform`, {
+                        fetch(`${getDomainName()}/bk/addticketimageform`, {
                             method: 'POST',
                             body: formData,
                         })
@@ -1267,7 +1307,7 @@
             param.append('couponId', curEditCouponId);
 
             //填入資料
-            fetch(`http://localhost:8080/bk/coupon?${param}`)
+            fetch(`${getDomainName()}/bk/coupon?${param}`)
                 .then(response => response.json())
                 .then(data => render_coupon(data))
                 .catch(error => console.log(error))
@@ -1291,7 +1331,7 @@
             }
 
             //填入資料
-            fetch(`http://localhost:8080/bk/addcoupon?`, {
+            fetch(`${getDomainName()}/bk/addcoupon?`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1330,7 +1370,7 @@
             }
 
             //填入資料
-            fetch(`http://localhost:8080/bk/editcoupon?`, {
+            fetch(`${getDomainName()}/bk/editcoupon?`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1488,7 +1528,7 @@
         }
 
         //編輯票券-新增圖片
-        function render_img_url(imgUrl) {
+        function render_img_url(imgUrl) { 
             $('#editImgPreview').append(`
                 <div class="col p-3 img-item">
                     <div class="card h-100">

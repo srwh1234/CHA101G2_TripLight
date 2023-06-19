@@ -105,27 +105,32 @@ const dist_data = {
 	]
 }
 
-$("#city").change((e) =>{
-	console.log('RRRRRRRRRRRRRRRRRRRR');
-	dist.innerHTML = ' ';   //清空
+$("#city").change((e) => {
+	$('#dist').empty(); // Clear the dropdown
 	const distarr = dist_data[e.target.value];
 	for (let text of distarr) {
-		dist.insertAdjacentHTML('beforeend', `<option>${text}</option>`);
+		$('#dist').append(`<option>${text}</option>`);
 	}
-})
+});
+
 
 // ============================生日=====================================
 $(function() {
 	$("#inputBD").datepicker();
+
+	$("#saveData").on("click", function() {
+		console.log("btn ok");
+		getData();
+	});
 });
 
 // <!-- 右邊會員資料--帳號安全 -->
-
+//找到會員id
 let theId = 0;
-if(sessionStorage.getItem("test-login")){
+if (sessionStorage.getItem("test-login")) {
 	theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
-}else{
-	 theId = null;
+} else {
+	theId = null;
 }
 
 
@@ -134,43 +139,61 @@ if(sessionStorage.getItem("test-login")){
 
 
 
-// ============================儲存=====================================
 
+// ============================會員資料儲存=====================================
 function getData() {
-
 	const data = {
-		memberNameLast: document.querySelector("#inputLastName").value,
-		memberNameFirst: document.getElementById("inputFirstName").value,
-		memberIdCard: document.getElementById("inputIdNumber").value,
-		memberBirth: document.getElementById("inputBD").value,
-		memberPhone: document.getElementById("inputPhoneNumber").value,
-		memberGender: document.getElementById("inputGender").value,
-		memberCity: document.getElementById("city").value,
-		memberDist: document.getElementById("dist").value,
-		memberAddress: document.getElementById("inputAddress").value,
-		memberEmail: document.getElementById("inputEmail").value
+		memberNameLast: $("#inputLastName").val(),
+		memberNameFirst: $("#inputFirstName").val(),
+		memberIdCard: $("#inputIdNumber").val(),
+		memberBirth: $("#inputBD").datepicker("getDate"),
+		memberPhone: $("#inputPhoneNumber").val(),
+		memberGender: $("#inputGender").val(),
+		memberCity: $("#city").val(),
+		memberDist: $("#dist").val(),
+		memberAddress: $("#inputAddress").val(),
+		memberEmail: $("#inputEmail").val()
 	}
-	console.log('data000=' + data.memberNameLast);
-	axios.post("/member/" + theId, data)
-		.then((response) => {
-			console.log(response.data);
-		})
-		// 失敗則顯示
-		.catch((error) => {
-			console.error(error);
+	// 檢查資料是否有空值
+	const hasEmptyValue = Object.values(data).some(value => value === "");
+	if (hasEmptyValue) {
+		swal({
+			icon: "error",
+			title: "儲存失敗",
+			text: "請輸入完整資料",
+			showConfirmButton: false,
+			timer: 1500,
 		});
+	}
+
+	$.ajax({
+		url: "/member/" + theId,
+		type: "POST",
+		data: JSON.stringify(data),
+		contentType: "application/json",
+		success: function(response) {
+
+		},
+		error: function(error) {
+			console.error(error);
+		}
+	});
+
 }
-saveBtn.addEventListener("click", function() {
+$("#saveData").click(function() {
 	console.log("btn ok")
 	getData();
 })
 
+
 // 從資料庫中獲取並設定使用者資料到 input
-document.addEventListener("DOMContentLoaded", function() {
-	axios.get("/memberdetail/" + theId)
-		.then(function(response) {
-			let member = response.data;
-			console.log(member);
+$(document).ready(function() {
+	$.ajax({
+		url: "/memberdetail/" + theId,
+		method: "GET",
+		dataType: "json",
+		success: function(response) {
+			let member = response;
 
 			$('#inputLastName').val(member.memberNameLast);
 			$('#inputFirstName').val(member.memberNameFirst);
@@ -183,16 +206,157 @@ document.addEventListener("DOMContentLoaded", function() {
 			$('#inputAddress').val(member.memberAddress);
 			$('#inputEmail').val(member.memberEmail);
 
-		
 			if ($('#city').val() !== null) {
-				$('#city').trigger('change'); // 觸發change事件
-			}else{
+				$('#city').trigger('change');
+			} else {
 				console.log('GGGGGGGGGG');
 			}
-		})
-		.catch(function(error) {
+		},
+		error: function(error) {
 			console.log(error);
 			console.log(error.response);
-			// 在錯誤回應時進行處理，例如顯示錯誤訊息等
-		});
+
+		}
+	});
 });
+// ============================會員修改密碼=====================================
+//換新密碼
+function changePwd() {
+	let memberPassword1 = $("#editPassword").val();
+	let memberPassword = $("#confirmPassword").val();
+	if (memberPassword1.length < 8) {
+		swal({
+			icon: "error",
+			title: "密碼不得小於八碼",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		$("#editPassword").val("")
+		$("#confirmPassword").val("")
+	} else if (memberPassword1 !== memberPassword) {
+		swal({
+			icon: "error",
+			title: "新密碼錯誤",
+			text: "請重複確認密碼",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		$("#editPassword").val("")
+		$("#confirmPassword").val("")
+	} else {
+		$.ajax({
+			url: "/changePwd",
+			method: "POST",
+			data: {
+				id: theId,
+				password: memberPassword
+			},
+			success: (response) => {
+				$("#editPassword").val("")
+				$("#confirmPassword").val("")
+				swal({
+					icon: "success",
+					title: "密碼更新成功",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			},
+			error: function(error) {
+				console.log(error);
+				console.log(error.response);
+			}
+		})
+	}
+
+
+}
+//確認舊密碼正確	
+function getOldPwd() {
+	//	let memberPassword = $("#currentPassword").val();
+	//	$.ajax({
+	//		url: "/pwd/" + theId,
+	//		method: "POST",
+	//		data: {
+	//			memberPassword: memberPassword,
+	//		},
+	//		success: (response) => {
+	//			console.log(response)
+	//			if (response === false) {
+	//				swal({
+	//					icon: "error",
+	//					title: "舊密碼錯誤",
+	//					text: "請輸入正確舊密碼",
+	//					showConfirmButton: false,
+	//					timer: 1500,
+	//				});
+	//				// 清空欄位
+	//				$("#currentPassword").val("");
+	//				return;
+	//
+	//			} else {
+	//				console.log("true")
+	//				$("#currentPassword").val("");
+	//			}
+	//		},
+	//		error: (error) => {
+	//			console.log(error)
+	//		}
+	//	})
+	//console.log(theId);
+	let memberPassword = $("#currentPassword").val();
+	console.log(memberPassword);
+	$.ajax({
+		url: "/checkPassword/" + theId,
+		method: "POST",
+		data: {
+			memberId: theId,
+			memberPassword: memberPassword,
+		},
+		// contentType: "application/json",
+		success: function(response) {
+			console.log(response);
+			if (response) {
+				// 密码验证成功
+				console.log("Password is correct");
+				
+			} else {
+				// 密码验证失败
+				console.log("Password is incorrect");
+				swal({
+						icon: "error",
+						title: "舊密碼錯誤",
+						text: "請輸入正確舊密碼",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+					// 清空欄位
+					$("#currentPassword").val("");
+			}
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+}
+
+$("#saveData2").click((e) => {
+	getOldPwd();
+		changePwd();
+
+})
+
+//button for test
+//$("#saveData").prepend(`<button id="testbtn">test</button>`);
+//$("#testbtn").on("click", function() {
+//	// 填充相應值
+//	$("#inputLastName").val("葉");
+//
+//	$("#inputIdNumber").val("a");
+//	$("#inputBD").val("06/17/2022");
+//	$("#inputPhoneNumber").val("a");
+//	$("#inputGender").val("女");
+//	$("#city").val("臺北市");
+//	$("#dist").val("中正區");
+//	$("#inputAddress").val("中正路100號");
+//	$("#inputEmail").val("aaa@gmail.com");
+//});

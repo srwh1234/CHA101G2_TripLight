@@ -58,7 +58,12 @@ public class AiFavoriteRepositoryImpl implements AiFavoriteRepository {
         }
     }
 
-
+    @Override
+    public long count() {
+        String query = "SELECT COUNT(*) FROM AiFavorite a";
+        TypedQuery<Long> typedQuery = entityManager.createQuery(query, Long.class);
+        return typedQuery.getSingleResult();
+    }
 
 
     public List<AiFavorite> findAIFavoriteByMemberId(int memberId) {

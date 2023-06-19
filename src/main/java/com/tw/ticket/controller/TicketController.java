@@ -79,5 +79,6 @@ public class TicketController {
 		private final String city;
 		private final String description;
 		private String image;
+		private boolean favorite;
 	}
 }

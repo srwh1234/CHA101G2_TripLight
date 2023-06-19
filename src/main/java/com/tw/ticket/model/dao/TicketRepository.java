@@ -23,7 +23,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
 	// 前台關鍵字搜尋
 	@Query("SELECT t FROM Ticket t WHERE t.name LIKE %:keyword% AND status=1"//
-			+ " AND t.city IN :cities AND t.ticketType.name IN :types")
+			+ " AND t.city IN :cities AND t.ticketType.name IN :types ORDER BY t.ticketId")
 	public Page<Ticket> searchTicketByKeyword(	//
 			@Param("keyword") String keyword,	// 關鍵字
 			@Param("types") String[] types, 	// 類型

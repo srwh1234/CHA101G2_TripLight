@@ -1,5 +1,6 @@
 package com.tw.member.controller;
 
+import java.io.Console;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ public class LoginMemberController {
 //	}
 	@GetMapping("/memberdetail/{id}")
 	public MemberDetail detail(@PathVariable("id") int id) {
-		System.out.println(id);
 		return memberService.getItem(id);
 	}
 
@@ -70,16 +70,38 @@ public class LoginMemberController {
 		private String memberAddress;
 
 	}
-//	 @GetMapping("/user")
-//	    public User getUser() {
-//	        User user = // 從資料庫或其他來源取得使用者資料
-//	        return user;
-//	    }
-
 	// update
 	@PostMapping("/member/{id}")
 	public Member update(@PathVariable("id") int id, @RequestBody Member data) {
 		return memberService.updateMember(id, data);
+	}
+	//get old password
+//	@PostMapping("/pwd/{id}")
+//	public boolean getOldPwd(@PathVariable("id") int id, @RequestBody String password ) {
+//		boolean oldPwdStatus = memberService.getPwd(id, password);
+//		System.out.println("oldPwdStatus=" + oldPwdStatus);
+//		if(oldPwdStatus) {
+//			System.out.println("vvvvvvvvvvvv");
+//			return true;
+//		}System.out.println("XXXX");
+//		return false;
+//	}
+	
+	
+	
+	  @PostMapping("/checkPassword/{memberId}")
+	    public boolean checkPassword(@PathVariable int memberId, @RequestBody String password) {
+		  System.out.println("vvvvvvvvvvvv");
+	        return memberService.validatePassword(memberId, password);
+	    }
+
+	  
+	  
+	//change password
+	@PostMapping("/changePwd")
+	public void changePwd(@RequestParam int id, @RequestParam String password) {
+		System.out.println("changePwd controller");
+		memberService.changePwd(id, password);
 	}
 
 }
