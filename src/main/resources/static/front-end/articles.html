@@ -114,8 +114,8 @@
 
     /* 下拉選單容器 */
     .dropdown-menu {
-      position:fixed;
-      display:flow-root;
+      position: absolute;
+      display: flow-root;
     }
 
     /* 下拉選單內容 */
@@ -328,12 +328,12 @@
   <section class="packages pt-5 border-bottom">
     <div class="container py-lg-4 py-sm-3">
       <div class="my-3">
-        <div class="h2">文章專區</div>
+        <div class="h2">最新文章</div>
         <!-- 一行4個卡片 -->
         <div class="row row-cols-4 g-2">
           <!-- class 內有my-nav-link 則點選元素 會跳轉到href指定的位置-->
-          <div class="col">
-            <div class="card my-nav-link">
+          <div class="col" id="articleContainer">
+            <div class="card my-nav-link" >
               <a href="article_detail.html">
                 <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
               </a>
@@ -348,7 +348,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col" id="articleContainer">
             <div class="card my-nav-link">
               <a href="article_list.html">
                 <img src="https://picsum.photos/800/600/?random=37" class="card-img-top" alt="...">
@@ -364,7 +364,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col" id="articleContainer">
             <div class="card my-nav-link" href="#article_detail">
               <img src="https://picsum.photos/800/600/?random=38" class="card-img-top" alt="...">
               <div class="card-body">
@@ -378,7 +378,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col" id="articleContainer">
             <div class="card my-nav-link" href="#article_detail">
               <img src="https://picsum.photos/800/600/?random=39" class="card-img-top" alt="...">
               <div class="card-body">
@@ -392,7 +392,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col" id="articleContainer">
             <div class="card my-nav-link" href="#article_detail">
               <img src="https://picsum.photos/800/600/?random=40" class="card-img-top" alt="...">
               <div class="card-body">
@@ -406,7 +406,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col" id="articleContainer">
             <div class="card my-nav-link" href="#article_detail">
               <img src="https://picsum.photos/800/600/?random=41" class="card-img-top" alt="...">
               <div class="card-body">
@@ -890,113 +890,151 @@
   </div>
   <!-- move top -->
 
-</body>
-<!-- login顯示 -->
-<script src="./js/Login.js"></script>
-<!-- login顯示 -->
+  <!-- login顯示 -->
+  <script src="./js/Login.js"></script>
+  <!-- login顯示 -->
 
-<!-- 使用BootStrap-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-<!-- 使用JQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"
-  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <!-- 使用BootStrap-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- 使用JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- 使用Summernote -->
-<script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote/dist/lang/summernote-zh-TW.min.js"></script>
+  <!-- 使用Summernote -->
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/lang/summernote-zh-TW.min.js"></script>
 
-<!-- 使用Bootstrap-table -->
-<script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+  <!-- 使用Bootstrap-table -->
+  <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
 
-<!-- 使用gijgo -->
-<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
-<script src="https://unpkg.com/gijgo@1.9.14/js/messages/messages.zh-tw.js" type="text/javascript"></script>
+  <!-- 使用gijgo -->
+  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+  <script src="https://unpkg.com/gijgo@1.9.14/js/messages/messages.zh-tw.js" type="text/javascript"></script>
 
-<!-- 引入SortableJS的JS文件 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <!-- 引入SortableJS的JS文件 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 
-<!-- 使用daterangepicker 選取日期區間 -->
-<script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <!-- 使用daterangepicker 選取日期區間 -->
+  <script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-<!-- <script type="text/javascript">
+  <!-- <script type="text/javascript">
   ta.store('tablet_google_search_app_open_same_tab', true);
 </script> -->
 
-<!-- QRCode.js 生成二維碼 -->
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+  <!-- QRCode.js 生成二維碼 -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+  
+  <script>
+    
+    window.addEventListener("load", function () {
+      var previewEl = document.getElementById("preview");
+      var fileInputEl = document.getElementById("inputArticleImg");
+      
+      var previewImage = function (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.addEventListener("load", function () {
+          var img = document.createElement("img");
+          img.src = reader.result;
+          img.className = "inputArticleImg";
+          img.style.width = "25%";
+          previewEl.innerHTML = "";
+          previewEl.appendChild(img);
+        });
+      };
 
-<script>
-  function initMap() { }
-
-  $(document).ready(() => {
-    // 載入首頁的內容
-    $("#content").load("home.html");
-    // 設定 只要是.my-nav-link的點擊事件委派
-    $(document).on("click", ".my-nav-link", function () {
-      var page = $(this).attr("href").substring(1) + '.html';
-      // 讀取.my-nav-link的指定頁面
-      $("#content").load(page, () => {
-        // 讀取指定頁面後 初始化Summernote編輯器
-        $('#editor').summernote(
-          {
-            height: 300, // 設定編輯器高度
-            placeholder: '請輸入內容', // 設定編輯器預設文字
-            toolbar: [
-              ['style', ['bold', 'italic', 'underline', 'clear']],
-              ['font', ['strikethrough', 'superscript', 'subscript']],
-              // ['color', ['color']],
-              ['para', ['ul', 'ol']],
-              // ['height', ['height']]
-            ], // 設定編輯器工具列
-            lang: 'zh-TW',
-          }
-        );
+      fileInputEl.addEventListener("change", function () {
+        if (this.files.length > 0) {
+          previewImage(this.files[0]);
+        } else {
+          previewEl.innerHTML = '<label class="form-label">照片預覽</label>';
+        }
       });
-      //導覽列指定當下的選單
-      $(".my-nav-link").removeClass("active");
-      $(this).addClass("active");
-      // 摺疊選單為收合狀態
-      $(".dropdown-menu").collapse('hide');
-      return false;
     });
-  });
+    
+    function redirectToMyFavorite() {
+      window.location.href = "article_myfavorite.html";
+    };
+    
+    function redirectToMyList() {
+      window.location.href = "article_mylist.html";
+    };
+    
+    //假資料
+    let resultfake = [
+    {
+    articleId: 1,
+    memberId: `會員名稱#1`,
+    articleTypeId: 1,
+    articleTitle: 再訪麵屋嵐山,
+    articlePostContent:
+    `雖然每次都要排上好一段的時間，但吃到的時候真的很感動，湯頭香甜濃郁，細直麵條Q彈滑順，吸附滿滿拉麵湯頭，一口吃下去超涮嘴，大大滿足啊!重點是每種湯頭都好喝，不管是特製博多豚骨拉麵，或是辣味味噌、味噌豚骨、蔬菜豚骨，每一款拉麵都有讓人意外的驚喜感!`,
+    articlePostTime: '2023-05-18',
+    articleStatus: 1,
+    articleViews: 256,
+    articleImage: `https://picsum.photos/800/600/?random=1`,
+    articleLikesCount: 128,
+    }
+    ];
 
-  window.addEventListener("load", function () {
-    var previewEl = document.getElementById("preview");
-    var fileInputEl = document.getElementById("inputArticleImg");
-
-    var previewImage = function (file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.addEventListener("load", function () {
-        var img = document.createElement("img");
-        img.src = reader.result;
-        img.className = "inputArticleImg";
-        img.style.width = "25%";
-        previewEl.innerHTML = "";
-        previewEl.appendChild(img);
+    function fetch_data() {
+      fetch(`${getDomainName()}/articleContainer`)
+        .then(response => response.json())
+        .then(data => resultfake = data)
+        .catch(error => console.log(error))
+      .finally(() => {
+        new_article();
       });
     };
 
-    fileInputEl.addEventListener("change", function () {
-      if (this.files.length > 0) {
-        previewImage(this.files[0]);
-      } else {
-        previewEl.innerHTML = '<label class="form-label">照片預覽</label>';
+    function new_article() {
+      $('#articleContainer').html('');
+
+      for (let article of resultfake) {
+        $('#articleContainer').append(`
+          <div class="col mb-3">
+            <div class="card my-nav-link" position-relative">
+              <a href="article_detail.html?id=${article.articleId}">
+                <img src="${article.articleImage}" class="card-img-top" />
+                </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <span>${article.articleTypeId}</span>
+                    <span>${article.articleTitle}</span>
+                    </h5>
+                    <p class="card-text">${article.articlePostContent}</p>
+                    <p class="card-text">
+                      <small class="text-muted">${article.articlePostTime}</small>
+                    </p>
+              <div class="d-flex justify-content-between">
+                  <p>${article.articleViews}</p>
+                  <p>"by" + ${article.memberId}</p>
+              </div>
+            </div>
+          </div>
+        `);
       }
-    });
-  });
+    }
 
-  function redirectToMyFavorite() {
-    window.location.href = "article_myfavorite.html";
-  };
-
-  function redirectToMyList() {
-    window.location.href = "article_mylist.html";
-  };
-
-</script>
+  </script>
+</body>
 
 </html>
+
+<!-- <div class="col" id="articleContainer">
+  <div class="card my-nav-link">
+    <a href="article_detail.html">
+      <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
+    </a>
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">This is a wider card with supporting text.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <div class="d-flex justify-content-between">
+        <p>10 comments</p>
+        <p>by Jay Chen</p>
+      </div>
+    </div>
+  </div>
+</div> -->

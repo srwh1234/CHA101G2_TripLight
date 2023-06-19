@@ -58,7 +58,7 @@ public class ArticleController {
         articleService.deleteArticle(article);
     }
     
-    private ArticleRepository dao;
+ //   private ArticleRepository dao;
 
 //	public void ArticleService() {
 //		dao = new ArticleServiceImpl();
@@ -66,43 +66,57 @@ public class ArticleController {
 
 	// 依照文章編號搜尋
 	public Article getOneArticle(Integer articleId) {
-		return dao.findByPrimaryKey(articleId);
+		//return dao.findByPrimaryKey(articleId);
+		//XXX 
+				return null;
 	}
 
 	// 熱門文章
 	public List<Article> findTopUserAllPost() {
-		return dao.findByTopArticle();
+		//return dao.findByTopArticle();
+		//XXX 
+				return null;
 	}
 
 	// 會員個人已發表文章列表
 		public List<Article> getAllArticleStatus() {
-			return dao.getAllarticleStatus();
+			//XXX 
+//			return dao.getAllarticleStatus();
+			return null;
 		}
 		
 	// 會員個人已發表文章列表 
 	public List<Article> findMyPost(Integer memberId) {
-		return dao.findByMemberId(memberId);
+//		return dao.findByMemberId(memberId);
+		//XXX 
+		return null;
 	}
 
 	// 依照文章類別搜尋
 	public List<Article> findPostType(Integer articleTypeId) {
-		return dao.findByPostType(articleTypeId);
+		//return dao.findByPostType(articleTypeId);
+		//XXX 
+		return null;
 	}
 
 	// 依照關鍵字類別搜尋
 	public List<Article> searchByKeyword(String keyword) {
-		return dao.searchByKeyword(keyword);
+		//return dao.searchByKeyword(keyword);
+		//XXX 
+		return null;
 	}
 
 	// 綜合查詢
 	public List<Article> getAllPowerSearch(Map<String, String[]> map) {
-		return dao.getPowerAll(map);
+		//XXX 
+		//return dao.getPowerAll(map);
+		return null;
 	}
 
 	// 查全部
-	public List<Article> getAll() {
-		return dao.getAll();
-	}
+//	public List<Article> getAll() {
+//		return dao.getAll();
+//	}
 
 	// 新增文章
 	public Article createArticle(Integer memberId, Integer articleTypeId, String articleTitle, String articlePostContent, byte[] image) {
@@ -113,7 +127,8 @@ public class ArticleController {
 		article.setArticleTitle(articleTitle);
 		article.setArticlePostContent(articlePostContent);
 		article.setArticleImage(image);
-		dao.createArticle(article);
+		//XXX 
+		//dao.createArticle(article);
 		return article;
 	}
 
@@ -129,7 +144,8 @@ public class ArticleController {
 		article.setArticleStatus(articleStatus);
 		article.setArticleViews(articleViews);
 		article.setArticleLikesCount(articleLikesCount);
-		dao.updateArticle(article);
+		//XXX 
+		//dao.updateArticle(article);
 		return article;
 	}
 
@@ -144,13 +160,15 @@ public class ArticleController {
 		article.setArticleId(articleId);
 		article.setArticleTypeId(articleTypeId);
 		article.setArticleStatus(articleStatus);
-		dao.updateArticleStatus(article);
-		return dao.findByPrimaryKey(articleId);
+		//XXX 
+		//dao.updateArticleStatus(article);
+		return null;
 	}
 
 	// 觀看次數
 	public void ArticleViews(Integer articleId) {
-		dao.articleViews(articleId);
+		//XXX 
+		//dao.articleViews(articleId);
 	}
 
 	// 刪除文章 
@@ -160,7 +178,9 @@ public class ArticleController {
 
 	// 單一文章找用戶 
 	public Article findPostMan(Integer memberId) {
-		return dao.findPostMan(memberId);
+		//return dao.findPostMan(memberId);
+		//XXX 
+		return null;
 	}
 
 	public ArticleService getArticleService() {

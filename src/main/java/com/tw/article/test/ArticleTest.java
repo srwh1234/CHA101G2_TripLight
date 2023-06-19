@@ -20,8 +20,8 @@ public class ArticleTest implements CommandLineRunner {
 //        System.out.println(article); // 顯示查詢到的資料
     }
     
-    public static void main(String[] args) {
-    	
-    }
+//    public static void main(String[] args) {
+//    	
+//    }
     
 }

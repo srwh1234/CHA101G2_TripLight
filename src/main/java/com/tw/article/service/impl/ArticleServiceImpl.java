@@ -60,7 +60,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void deleteArticle(Article article) {
-        articleRepository.deleteArticle(article);;
+       // articleRepository.deleteArticle(article);;
     }
 
     @Override
