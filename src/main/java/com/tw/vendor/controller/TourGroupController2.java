@@ -14,7 +14,7 @@ import com.tw.vendor.model.TourGroup2;
 import com.tw.vendor.service.TourGroupService2;
 
 @CrossOrigin(origins = "*")
-@RestController("tourGroupController") // 標示該類別與前端交互，自動轉Json
+@RestController // 標示該類別與前端交互，自動轉Json
 @RequestMapping("/tourgroup")
 public class TourGroupController2 {
 
