@@ -17,7 +17,7 @@ public class SessionCheckInterceptor implements HandlerInterceptor {
         Member member = (Member) (session != null ? session.getAttribute("member") : null);
         if (member == null) {
             // 若使用者未登入，則將請求重新導向至登入頁面
-            response.sendRedirect("/front-end/index.html");
+            response.sendRedirect("/front-end/index.html?1");
             return false;
         } else {
             // 若使用者已登入，則允許繼續處理該請求
