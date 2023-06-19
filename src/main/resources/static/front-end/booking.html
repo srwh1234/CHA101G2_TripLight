@@ -1,624 +1,442 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-  <head>
-    <title>TripLight | AI行程規劃</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <!-- 關鍵字設定 -->
-    <meta
-      name="keywords"
-      content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程"
-    />
-    <!-- 網頁介紹 -->
-    <meta
-      name="description"
-      content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等"
-    />
 
-    <script>
-      addEventListener(
-        "load",
-        function () {
-          setTimeout(hideURLbar, 0);
-        },
-        false
-      );
+<head>
+  <title>TripLight | AI行程規劃</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <!-- 關鍵字設定 -->
+  <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+  <!-- 網頁介紹 -->
+  <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
 
-      function hideURLbar() {
-        window.scrollTo(0, 1);
-      }
-    </script>
+  <script>
+    addEventListener(
+      "load",
+      function () {
+        setTimeout(hideURLbar, 0);
+      },
+      false
+    );
 
-    <!-- css files -->
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <!-- bootstrap css -->
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <!-- custom css -->
-    <link href="css/fontawesome-all.css" rel="stylesheet" />
-    <!-- fontawesome css -->
-    <!-- //css files -->
+    function hideURLbar() {
+      window.scrollTo(0, 1);
+    }
+  </script>
 
-    <!--jQuery-->
-<!--    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">-->
-<!--    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
-<!--    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"-->
-<!--            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"-->
-<!--            crossorigin="anonymous"></script>-->
-    <!--會員登入-->
-    <link href="css/login.css" rel="stylesheet" />
+  <!-- css files -->
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- bootstrap css -->
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <!-- custom css -->
+  <link href="css/fontawesome-all.css" rel="stylesheet" />
+  <!-- fontawesome css -->
+  <!-- //css files -->
 
-    <!-- google fonts -->
-    <!-- 載入字體 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
-      rel="stylesheet"
-    />
-    <!-- //google fonts -->
+  <!--jQuery-->
+  <!--    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">-->
+  <!--    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+  <!--    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
+  <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"-->
+  <!--            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"-->
+  <!--            crossorigin="anonymous"></script>-->
+  <!--會員登入-->
+  <link href="css/login.css" rel="stylesheet" />
 
-    <!-- 載入icon -->
-    <link rel="shortcut icon" href="./images/icon.png" />
-    <link rel="bookmark" href="./images/icon.png" />
-  </head>
-  <body>
-    <!-- header -->
-    <header>
-      <div class="container" style="padding-right: 0px">
-        <!-- nav -->
-        <nav class="py-md-4 py-3">
-          <div id="logo">
-            <h1 class="mt-md-0 mt-2">
-              <a href="index.html"
-                ><img src="./images/icon.png" class="icon_triplight" />
-                TripLight
-              </a>
-            </h1>
-          </div>
-          <label for="drop" class="toggle"
-            ><span class="fa fa-bars"></span
-          ></label>
-          <input type="checkbox" id="drop" />
-          <ul class="menu ml-auto mt-1">
-            <li class=""><a href="index.html">首頁</a></li>
-            <li class="active"><a href="booking.html">AI行程規劃</a></li>
-            <li class=""><a href="tickets.html">票券</a></li>
-            <li class=""><a href="packages.html">套裝行程</a></li>
-            <li class=""><a href="articles.html">旅遊文章</a></li>
-            <li class="booking"><a href="" id="login">登入/註冊</a></li>
-            <li class="">
-              <a href="my_favorite.html"
-                ><img src="./images/shoppingCar.svg" alt="" style="width: 2em"
-              /></a>
-            </li>
-          </ul>
-        </nav>
-        <!-- //nav -->
-        <div class="member">
-          <ul class="member_list">
-            <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
-            </li>
-            <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
-              <ul class="order_list">
-                <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
-                <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
-                </li>
-              </ul>
-            </li>
-            <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-            <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
-            <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
-            <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
-            <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
-            <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
-            <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
-            <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
-            </li>
-          </ul>
+  <!-- google fonts -->
+  <!-- 載入字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
+  <!-- //google fonts -->
+
+  <!-- 載入icon -->
+  <link rel="shortcut icon" href="./images/icon.png" />
+  <link rel="bookmark" href="./images/icon.png" />
+</head>
+
+<body>
+  <!-- header -->
+  <header>
+    <div class="container" style="padding-right: 0px">
+      <!-- nav -->
+      <nav class="py-md-4 py-3">
+        <div id="logo">
+          <h1 class="mt-md-0 mt-2">
+            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+              TripLight
+            </a>
+          </h1>
         </div>
+        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu ml-auto mt-1">
+          <li class=""><a href="index.html">首頁</a></li>
+          <li class="active"><a href="booking.html">AI行程規劃</a></li>
+          <li class=""><a href="tickets.html">票券</a></li>
+          <li class=""><a href="packages.html">套裝行程</a></li>
+          <li class=""><a href="articles.html">旅遊文章</a></li>
+          <li class="booking"><a href="" id="login">登入/註冊</a></li>
+          <li class="">
+            <a href="my_favorite.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+          </li>
+        </ul>
+      </nav>
+      <!-- //nav -->
+      <div class="member">
+        <ul class="member_list">
+          <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+          </li>
+          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+            <ul class="order_list">
+              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
+              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+              </li>
+            </ul>
+          </li>
+          <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+          <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
+          <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
+          <li class="member_li"><a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a></li>
+          <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+          </li>
+        </ul>
       </div>
-    </header>
-    <!-- //header -->
-    <!-- 登入 -->
+    </div>
+  </header>
+  <!-- //header -->
+  <!-- 登入 -->
 
-    <div id="login-container">
-      <!---container--->
+  <div id="login-container">
+    <!---container--->
 
-      <div class="main-box login">
-        <h3>登入</h3>
-        <form action="">
-          <div class="input-box">
-            <i class="fas fa-envelope icon2"></i>
-            <input type="email" name="email" id="email" required />
-            <label for="">信箱</label>
-          </div>
-          <div class="input-box">
-            <i class="fas fa-lock icon2"></i>
-            <input type="password" name="password" id="password" required />
-            <label for="">密碼</label>
-          </div>
-          <div class="check">
-            <label><input type="checkbox" />記住我</label>
-            <a href="#">忘記密碼</a>
-          </div>
-          <button type="submit" class="main-btn">Login</button>
-          <div class="register">
-            <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
-          </div>
-        </form>
-      </div>
+    <div class="main-box login">
+      <h3>登入</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" id="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" id="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />記住我</label>
+          <a href="#">忘記密碼</a>
+        </div>
+        <button type="submit" class="main-btn">Login</button>
+        <div class="register">
+          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+        </div>
+      </form>
+    </div>
 
-      <div class="main-box register">
-        <h3>註冊</h3>
-        <form action="">
-          <div class="input-box">
-            <i class="fas fa-user icon2"></i>
-            <input type="email" name="email" required />
-            <label for="">使用者名稱</label>
-          </div>
-          <div class="input-box">
-            <i class="fas fa-envelope icon2"></i>
-            <input type="email" name="email" required />
-            <label for="">信箱</label>
-          </div>
-          <div class="input-box">
-            <i class="fas fa-lock icon2"></i>
-            <input type="password" name="password" required />
-            <label for="">密碼</label>
-          </div>
-          <div class="check">
-            <label><input type="checkbox" />我同意所有條款</label>
-          </div>
-          <button type="submit" class="main-btn">註冊</button>
-          <div class="register">
-            <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
-          </div>
-        </form>
-      </div>
+    <div class="main-box register">
+      <h3>註冊</h3>
+      <form action="">
+        <div class="input-box">
+          <i class="fas fa-user icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">使用者名稱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-envelope icon2"></i>
+          <input type="email" name="email" required />
+          <label for="">信箱</label>
+        </div>
+        <div class="input-box">
+          <i class="fas fa-lock icon2"></i>
+          <input type="password" name="password" required />
+          <label for="">密碼</label>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" />我同意所有條款</label>
+        </div>
+        <button type="submit" class="main-btn">註冊</button>
+        <div class="register">
+          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+        </div>
+      </form>
+    </div>
 
-      <span class="close-icon">
+    <span class="close-icon">
       <div class="fas fa-times"></div>
     </span>
-    </div>
+  </div>
 
-    <!-- 登入  -->
+  <!-- 登入  -->
 
-    <!-- banner -->
-    <section class="banner_inner" id="home">
-      <div class="banner_inner_overlay"></div>
-    </section>
-    <!-- //banner -->
+  <!-- banner -->
+  <section class="banner_inner" id="home">
+    <div class="banner_inner_overlay"></div>
+  </section>
+  <!-- //banner -->
 
-    <!-- Booking -->
-    <section class="contact py-5" style="color: #09777d">
-      <!-- <h2 class="heading text-capitalize text-center mb-lg-5 mb-4">
+  <!-- Booking -->
+  <section class="contact py-5" style="color: #09777d">
+    <!-- <h2 class="heading text-capitalize text-center mb-lg-5 mb-4">
           AI 行程規劃
         </h2> -->
-      <!-- <div class="contact-grids"> -->
-      <div class="col-lg-7 col-md-9 col-sm-12 contact-left-form mx-auto">
-        <form id="myForm">
-          <div class="form-group mb-3">
-            <label for="destination" class="mb-2">*目的地城市或國家：</label>
-            <input
-              type="text"
-              class="form-control"
-              id="destination"
-              name="destination"
-              required
-            />
-          </div>
-          <div class="form-group mb-3">
-            <label for="travelDays" class="mb-2">*旅行天數：</label>
-            <input
-              type="number"
-              id="travelDays"
-              name="travelDays"
-              class="form-control"
-              min="1"
-              max="7"
-              required
-            />
-          </div>
-          <div class="form-group mb-3">
-            <label for="people" class="mb-2">*人數：</label>
-            <input
-              type="number"
-              id="people"
-              name="people"
-              class="form-control"
-              min="1"
-              max="100"
-              required
-            />
-          </div>
-          <div class="form-group mb-3">
-            <label for="budgetRange" class="mb-2">*預算範圍：</label>
-            <select
-              id="budgetRange"
-              class="form-control"
-              name="budgetRange"
-              style="cursor: pointer"
-              required
-            >
-              <option value="0" disabled selected></option>
-              <option value="0-5000">0-5000</option>
-              <option value="5000-10000">5000-10000</option>
-              <option value="10000-20000">10000-20000</option>
-              <option value="20000-50000">20000-50000</option>
-              <option value="50000-100000">50000-100000</option>
-              <option value="100000+">100000+</option>
-            </select>
-          </div>
-          <div class="form-group mb-3">
-            <label for="travelStyle" class="mb-2">偏好旅遊風格：</label>
-            <select
-              id="travelStyle"
-              class="form-control"
-              name="travelStyle"
-              style="cursor: pointer"
-            >
-              <option value="" disabled selected></option>
-              <option value="文化探索">文化探索</option>
-              <option value="冒險體驗">冒險體驗</option>
-              <option value="浪漫之旅">浪漫之旅</option>
-              <option value="美食體驗">美食體驗</option>
-              <option value="度假休閒">度假休閒</option>
-              <option value="家庭旅行">家庭旅行</option>
-            </select>
-          </div>
+    <!-- <div class="contact-grids"> -->
+    <div class="col-lg-7 col-md-9 col-sm-12 contact-left-form mx-auto">
+      <form id="myForm">
+        <div class="form-group mb-3">
+          <label for="destination" class="mb-2">*目的地城市或國家：</label>
+          <input type="text" class="form-control" id="destination" name="destination" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="travelDays" class="mb-2">*旅行天數：</label>
+          <input type="number" id="travelDays" name="travelDays" class="form-control" min="1" max="7" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="people" class="mb-2">*人數：</label>
+          <input type="number" id="people" name="people" class="form-control" min="1" max="100" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="budgetRange" class="mb-2">*預算範圍：</label>
+          <select id="budgetRange" class="form-control" name="budgetRange" style="cursor: pointer" required>
+            <option value="0" disabled selected></option>
+            <option value="0-5000">0-5000</option>
+            <option value="5000-10000">5000-10000</option>
+            <option value="10000-20000">10000-20000</option>
+            <option value="20000-50000">20000-50000</option>
+            <option value="50000-100000">50000-100000</option>
+            <option value="100000+">100000+</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label for="travelStyle" class="mb-2">偏好旅遊風格：</label>
+          <select id="travelStyle" class="form-control" name="travelStyle" style="cursor: pointer">
+            <option value="" disabled selected></option>
+            <option value="文化探索">文化探索</option>
+            <option value="冒險體驗">冒險體驗</option>
+            <option value="浪漫之旅">浪漫之旅</option>
+            <option value="美食體驗">美食體驗</option>
+            <option value="度假休閒">度假休閒</option>
+            <option value="家庭旅行">家庭旅行</option>
+          </select>
+        </div>
 
-          <div class="form-group mb-3">
-            <label class="mb-2">偏好旅遊景點：</label><br />
-            <div class="accordion-item">
-              <input
-                class="form-control select-input collapsed"
-                type="text"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
-                aria-controls="collapseOne"
-                style="border: none; cursor: pointer"
-              />
-              <div
-                id="collapseOne"
-                class="accordion-collapse collapse collapsed"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing1"
-                      name="sightseeing"
-                      value="自然風景"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing1">自然風景</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing2"
-                      name="sightseeing"
-                      value="名勝古蹟"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing2">名勝古蹟</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing3"
-                      name="sightseeing"
-                      value="網美景點"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing3">網美景點</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing4"
-                      name="sightseeing"
-                      value="海灘度假"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing4">海灘度假</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing5"
-                      name="sightseeing"
-                      value="休閒農場"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing5">休閒農場</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing6"
-                      name="sightseeing"
-                      value="當地特色景點"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing6">當地特色景點</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="sightseeing7"
-                      name="sightseeing"
-                      value="樂園主題公園"
-                      class="form-check-input"
-                    />
-                    <label for="sightseeing7">樂園主題公園</label>
-                  </div>
+        <div class="form-group mb-3">
+          <label class="mb-2">偏好旅遊景點：</label><br />
+          <div class="accordion-item">
+            <input class="form-control select-input collapsed" type="text" data-bs-toggle="collapse"
+              data-bs-target="#collapseOne" aria-controls="collapseOne" style="border: none; cursor: pointer" />
+            <div id="collapseOne" class="accordion-collapse collapse collapsed" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing1" name="sightseeing" value="自然風景" class="form-check-input" />
+                  <label for="sightseeing1">自然風景</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing2" name="sightseeing" value="名勝古蹟" class="form-check-input" />
+                  <label for="sightseeing2">名勝古蹟</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing3" name="sightseeing" value="網美景點" class="form-check-input" />
+                  <label for="sightseeing3">網美景點</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing4" name="sightseeing" value="海灘度假" class="form-check-input" />
+                  <label for="sightseeing4">海灘度假</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing5" name="sightseeing" value="休閒農場" class="form-check-input" />
+                  <label for="sightseeing5">休閒農場</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing6" name="sightseeing" value="當地特色景點" class="form-check-input" />
+                  <label for="sightseeing6">當地特色景點</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="sightseeing7" name="sightseeing" value="樂園主題公園" class="form-check-input" />
+                  <label for="sightseeing7">樂園主題公園</label>
                 </div>
               </div>
             </div>
           </div>
-          <!-- TODO:偏好旅遊活動 -->
-          <div class="form-group mb-3">
-            <label class="mb-2">偏好旅遊活動：</label><br />
-            <div class="accordion-item">
-              <input
-                class="form-control select-input2 collapsed"
-                type="text"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseTwo"
-                aria-expanded="true"
-                aria-controls="collapseTwo"
-                style="border: none; cursor: pointer"
-              />
+        </div>
+        <!-- TODO:偏好旅遊活動 -->
+        <div class="form-group mb-3">
+          <label class="mb-2">偏好旅遊活動：</label><br />
+          <div class="accordion-item">
+            <input class="form-control select-input2 collapsed" type="text" data-bs-toggle="collapse"
+              data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"
+              style="border: none; cursor: pointer" />
 
-              <div
-                id="collapseTwo"
-                class="accordion-collapse collapse collapsed"
-                aria-labelledby="headingTwo"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities1"
-                      name="activities"
-                      value="登山健行"
-                      class="form-check-input"
-                    />
-                    <label for="activities1">登山健行</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities2"
-                      name="activities"
-                      value="水上活動"
-                      class="form-check-input"
-                    />
-                    <label for="activities2">水上活動</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities3"
-                      name="activities"
-                      value="空中活動"
-                      class="form-check-input"
-                    />
-                    <label for="activities3">空中活動</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities4"
-                      name="activities"
-                      value="文化體驗"
-                      class="form-check-input"
-                    />
-                    <label for="activities4">文化體驗</label>
-                  </div>
+            <div id="collapseTwo" class="accordion-collapse collapse collapsed" aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="form-check">
+                  <input type="checkbox" id="activities1" name="activities" value="登山健行" class="form-check-input" />
+                  <label for="activities1">登山健行</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="activities2" name="activities" value="水上活動" class="form-check-input" />
+                  <label for="activities2">水上活動</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="activities3" name="activities" value="空中活動" class="form-check-input" />
+                  <label for="activities3">空中活動</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="activities4" name="activities" value="文化體驗" class="form-check-input" />
+                  <label for="activities4">文化體驗</label>
+                </div>
 
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities5"
-                      name="activities"
-                      value="美食品嚐"
-                      class="form-check-input"
-                    />
-                    <label for="activities5">美食品嚐</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities6"
-                      name="activities"
-                      value="購物體驗"
-                      class="form-check-input"
-                    />
-                    <label for="activities6">購物體驗</label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      id="activities7"
-                      name="activities"
-                      value="極限運動"
-                      class="form-check-input"
-                    />
-                    <label for="activities7">極限運動</label>
-                  </div>
+                <div class="form-check">
+                  <input type="checkbox" id="activities5" name="activities" value="美食品嚐" class="form-check-input" />
+                  <label for="activities5">美食品嚐</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="activities6" name="activities" value="購物體驗" class="form-check-input" />
+                  <label for="activities6">購物體驗</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="activities7" name="activities" value="極限運動" class="form-check-input" />
+                  <label for="activities7">極限運動</label>
                 </div>
               </div>
             </div>
           </div>
-          <!-- TODO:偏好旅遊活動 -->
-          <div class="form-group mb-3">
-            <label for="message" class="mb-2">其他需求：</label>
-            <textarea
-              class="form-control"
-              id="message"
-              name="message"
-              maxlength="100"
-              rows="3"
-              style="resize: none"
-              value=""
-            ></textarea>
-          </div>
-          <div class="d-grid gap-2 mt-2">
-            <button
-              class="btn btn-block sent-butnn"
-              style="background-color: #09777d"
-            >
-              開始規劃
-            </button>
-          </div>
-        </form>
-      </div>
-      <!-- </div> -->
-    </section>
-    <!-- //Booking -->
+        </div>
+        <!-- TODO:偏好旅遊活動 -->
+        <div class="form-group mb-3">
+          <label for="message" class="mb-2">其他需求：</label>
+          <textarea class="form-control" id="message" name="message" maxlength="100" rows="3" style="resize: none"
+            value=""></textarea>
+        </div>
+        <div class="d-grid gap-2 mt-2">
+          <button class="btn btn-block sent-butnn" style="background-color: #09777d">
+            開始規劃
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- </div> -->
+  </section>
+  <!-- //Booking -->
 
-    <!--footer -->
-    <footer>
-      <section class="footer footer_w3layouts_section_1its py-5">
-        <div class="container py-lg-4 py-3">
-          <div class="row footer-top">
-            <div class="col-lg-3 col-sm-6 footer-grid_section_1">
-              <div class="footer-title">
-                <h3>地點資訊</h3>
-              </div>
-              <div class="row">
-                <ul class="col-12 links">
-                  <li>
-                    <a
-                      href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
-                      target="_blank"
-                      >地址：桃園市中壢區復興路46號9樓</a
-                    >
-                  </li>
-                  <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
-                  <li>
-                    <a href="triplight0411@gmail.com"
-                      >信箱：triplight0411@gmail.com</a
-                    >
-                  </li>
-                  <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
-                </ul>
-              </div>
+  <!--footer -->
+  <footer>
+    <section class="footer footer_w3layouts_section_1its py-5">
+      <div class="container py-lg-4 py-3">
+        <div class="row footer-top">
+          <div class="col-lg-3 col-sm-6 footer-grid_section_1">
+            <div class="footer-title">
+              <h3>地點資訊</h3>
             </div>
-            <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-              <div class="footer-title">
-                <h3>認識TripLight</h3>
-              </div>
-              <div class="row">
-                <ul class="col-10 links">
-                  <li><a href="about.html" class="scroll">關於我們</a></li>
-                  <li>
-                    <a href="user_terms.html" class="scroll">使用者條款 </a>
-                  </li>
-                  <li>
-                    <a href="privacy_policy.html" class="scroll"
-                      >隱私權保護政策</a
-                    >
-                  </li>
-                  <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
-                </ul>
-              </div>
-            </div>
-            <div
-              class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1"
-            >
-              <div class="footer-title">
-                <h3>成為合作夥伴</h3>
-              </div>
-              <div class="row">
-                <ul class="col-10 links">
-                  <li>
-                    <a href="supplier_form.html" class="scroll">成為供應商</a>
-                  </li>
-                  <li>
-                    <a href="blogger_photographer.html" class="scroll"
-                      >部落客/攝影師合作計畫</a
-                    >
-                  </li>
-                  <li>
-                    <a href="group_form.html" class="scroll">團體客製規劃</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div
-              class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1"
-            >
-              <div class="footer-title">
-                <h3>聯絡我們</h3>
-              </div>
-              <ul class="social_section_1info">
+            <div class="row">
+              <ul class="col-12 links">
                 <li>
-                  <a href="https://www.facebook.com/TibaMe"
-                    ><img src="./images/facebook.svg" alt="facebook"
-                  /></a>
+                  <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓" target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                </li>
+                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                <li>
+                  <a href="mailto:triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
+                </li>
+                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+            <div class="footer-title">
+              <h3>認識TripLight</h3>
+            </div>
+            <div class="row">
+              <ul class="col-10 links">
+                <li><a href="about.html" class="scroll">關於我們</a></li>
+                <li>
+                  <a href="user_terms.html" class="scroll">使用者條款 </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/tibame_wiedu/"
-                    ><img src="./images/instagram.svg" alt="instagram"
-                  /></a>
+                  <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                </li>
+                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+            <div class="footer-title">
+              <h3>成為合作夥伴</h3>
+            </div>
+            <div class="row">
+              <ul class="col-10 links">
+                <li>
+                  <a href="supplier_form.html" class="scroll">成為供應商</a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/"
-                    ><img src="./images/twitter.svg" alt="twitter"
-                  /></a>
+                  <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
                 </li>
-                <li class="youtube">
-                  <a
-                    href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"
-                    ><img src="./images/youtube.svg" alt="youtube"
-                  /></a>
+                <li>
+                  <a href="group_form.html" class="scroll">團體客製規劃</a>
                 </li>
               </ul>
             </div>
           </div>
+          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+            <div class="footer-title">
+              <h3>聯絡我們</h3>
+            </div>
+            <ul class="social_section_1info">
+              <li>
+                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg" alt="facebook" /></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                    alt="instagram" /></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+              </li>
+              <li class="youtube">
+                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
+                    alt="youtube" /></a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </section>
-    </footer>
-    <!-- //footer -->
+      </div>
+    </section>
+  </footer>
+  <!-- //footer -->
 
-    <!-- copyright -->
-    <div class="copyright py-3 text-center">
-      <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
-    </div>
-    <!-- //copyright -->
+  <!-- copyright -->
+  <div class="copyright py-3 text-center">
+    <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+  </div>
+  <!-- //copyright -->
 
-    <!-- move top -->
-    <div class="move-top text-right">
-      <a href="#home" class="move-top">
-        <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
-      </a>
-    </div>
-    <!-- move top -->
+  <!-- move top -->
+  <div class="move-top text-right">
+    <a href="#home" class="move-top">
+      <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- move top -->
 
-    <!-- 載入axios -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+  <!-- 載入axios -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- 載入bootstrap js -->
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <!--載入 jQuery-->
-    <script src="js/jquery-3.6.4.min.js"></script>
+  <!-- 載入bootstrap js -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!--載入 jQuery-->
+  <script src="js/jquery-3.6.4.min.js"></script>
 
-    <!-- 載入booking 處理 -->
-    <script src="js/booking.js"></script>
-  </body>
-  <!-- login顯示 -->
-  <script src="js/Login.js"></script>
-  <!-- login顯示 -->
+  <!-- 載入booking 處理 -->
+  <script src="js/booking.js"></script>
+</body>
+<!-- login顯示 -->
+<script src="js/Login.js"></script>
+<!-- login顯示 -->
+
 </html>

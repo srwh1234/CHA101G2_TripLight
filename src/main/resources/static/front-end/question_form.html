@@ -346,7 +346,7 @@
                                 </li>
                                 <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
                                 <li>
-                                    <a href="triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
+                                    <a href="mailto:triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
                                 </li>
                                 <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
                             </ul>
@@ -431,7 +431,7 @@
 
 </body>
 <script>
-    document.querySelector('.quest-report').addEventListener('submit', function(e) {
+    document.querySelector('.quest-report').addEventListener('submit', function (e) {
         e.preventDefault();
         var content = document.getElementById('message').value;
         console.log(content)
@@ -444,13 +444,13 @@
                 qContent: content,
             }),
         })
-            .then(function(response) {
+            .then(function (response) {
                 return response.json();
             })
-            .then(function(data) {
+            .then(function (data) {
                 console.log(data);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
     });

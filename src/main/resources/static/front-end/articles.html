@@ -333,7 +333,7 @@
         <div class="row row-cols-4 g-2">
           <!-- class 內有my-nav-link 則點選元素 會跳轉到href指定的位置-->
           <div class="col" id="articleContainer">
-            <div class="card my-nav-link" >
+            <div class="card my-nav-link">
               <a href="article_detail.html">
                 <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
               </a>
@@ -808,7 +808,7 @@
                 </li>
                 <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
                 <li>
-                  <a href="triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
+                  <a href="mailto:triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
                 </li>
                 <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
               </ul>
@@ -923,13 +923,13 @@
 
   <!-- QRCode.js 生成二維碼 -->
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-  
+
   <script>
-    
+
     window.addEventListener("load", function () {
       var previewEl = document.getElementById("preview");
       var fileInputEl = document.getElementById("inputArticleImg");
-      
+
       var previewImage = function (file) {
         var reader = new FileReader();
         reader.readAsDataURL(file);
@@ -951,30 +951,30 @@
         }
       });
     });
-    
+
     function redirectToMyFavorite() {
       window.location.href = "article_myfavorite.html";
     };
-    
+
     function redirectToMyList() {
       window.location.href = "article_mylist.html";
     };
-    
+
     //假資料
     let resultfake = [
-    {
-    articleId: 1,
-    memberId: `會員名稱#1`,
-    articleTypeId: 1,
-    articleTitle: 再訪麵屋嵐山,
-    articlePostContent:
-    `雖然每次都要排上好一段的時間，但吃到的時候真的很感動，湯頭香甜濃郁，細直麵條Q彈滑順，吸附滿滿拉麵湯頭，一口吃下去超涮嘴，大大滿足啊!重點是每種湯頭都好喝，不管是特製博多豚骨拉麵，或是辣味味噌、味噌豚骨、蔬菜豚骨，每一款拉麵都有讓人意外的驚喜感!`,
-    articlePostTime: '2023-05-18',
-    articleStatus: 1,
-    articleViews: 256,
-    articleImage: `https://picsum.photos/800/600/?random=1`,
-    articleLikesCount: 128,
-    }
+      {
+        articleId: 1,
+        memberId: `會員名稱#1`,
+        articleTypeId: 1,
+        articleTitle: 再訪麵屋嵐山,
+        articlePostContent:
+          `雖然每次都要排上好一段的時間，但吃到的時候真的很感動，湯頭香甜濃郁，細直麵條Q彈滑順，吸附滿滿拉麵湯頭，一口吃下去超涮嘴，大大滿足啊!重點是每種湯頭都好喝，不管是特製博多豚骨拉麵，或是辣味味噌、味噌豚骨、蔬菜豚骨，每一款拉麵都有讓人意外的驚喜感!`,
+        articlePostTime: '2023-05-18',
+        articleStatus: 1,
+        articleViews: 256,
+        articleImage: `https://picsum.photos/800/600/?random=1`,
+        articleLikesCount: 128,
+      }
     ];
 
     function fetch_data() {
@@ -982,9 +982,9 @@
         .then(response => response.json())
         .then(data => resultfake = data)
         .catch(error => console.log(error))
-      .finally(() => {
-        new_article();
-      });
+        .finally(() => {
+          new_article();
+        });
     };
 
     function new_article() {
