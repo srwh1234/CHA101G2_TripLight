@@ -3,18 +3,19 @@ package com.tw.vendor.controller;
 import com.tw.vendor.model.TripImage2;
 import com.tw.vendor.service.*;
 
-import jakarta.persistence.Table;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Table(name="TripImage")
+@CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/trip")
 public class TripImageController2 {
 
     public static String IMG_URL = "http://localhost:8080/img/trips/";
@@ -22,14 +23,14 @@ public class TripImageController2 {
         @Autowired
         private TripImageService2 tripImageService2;  // 這邊改成呼叫service
 
-        @GetMapping("/TripImage2")
-        public List<TripImage2> getStudent(){
+        @GetMapping("/tripImage2")
+        public List<TripImage2> getTripImage(){
             return tripImageService2.findAll();
         }
 
 
-        @PostMapping("/student")
-        public String processStudent(@RequestBody TripImage2 tripImage2){
+        @PostMapping("/tripImage3")
+        public String processTripImage(@RequestBody TripImage2 tripImage2){
         	tripImageService2.save(tripImage2);
             System.out.println(tripImage2);
             return "成功拿到資料";

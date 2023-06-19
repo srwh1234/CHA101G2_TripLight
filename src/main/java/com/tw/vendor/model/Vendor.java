@@ -2,14 +2,17 @@ package com.tw.vendor.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity  // 標示該類別為實體類別，用於映射資料庫
+  // 標示該類別為實體類別，用於映射資料庫
 @Getter
 @Setter
-@ToString               
+@ToString
+@Table
+@Entity
 public class Vendor {  // 表格名稱
 	
     @Id  // 標示id為主鍵
