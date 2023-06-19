@@ -22,13 +22,14 @@
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
 
+    <!-- 使用Bootstrap-table -->
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
 
     <!-- 使用BootStrap-->
     <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <!-- 使用Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.css" rel="stylesheet">
-
 
     <style>
         .note-color .note-dropdown-menu {
@@ -236,15 +237,15 @@
                         </li>
                     </ul>
                 </nav>
+
                 <!-- TODO: -->
                 <div class="container-fluid mt-3">
                     <ul class="nav nav-tabs mt-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#tabPage1"
-                               data-bs-toggle="tab">票券清單</a>
+                            <a class="nav-link active" aria-current="page" href="#tabPage1" data-bs-toggle="tab">票券清單</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tabPage2" data-bs-toggle="tab">票券類型</a>
+                            <a class="nav-link" href="#tabPage2" data-bs-toggle="tab">優惠券清單</a>
                         </li>
 
 
@@ -308,11 +309,40 @@
                             <div style="height:30vh"></div>
                         </div>
 
-                        <!-- 票券種類 -->
+                        <!-- 優惠券 -->
                         <div class="tab-pane fade" id="tabPage2">
-                            <!-- 稱高度用的 -->
-                            <div style="height:20vh"></div>
-                            <h1 style="margin-left:30vw;">有空我會寫 真心不騙</h1>
+
+                            <div class="table-responsive p-3" id="couponContainer">
+                                <table class="table"
+                                       data-toggle="table"
+                                       data-sortable="true"
+                                       data-sort-class="table-active"
+                                       data-search="true"
+                                       data-search-align="left"
+                                       data-url="/bk/coupons">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="my-th-width-sm" data-field="couponId" data-sortable="true">編號</th>
+                                            <th class="my-th-width" data-field="name" data-sortable="true">名稱</th>
+                                            <th class="my-th-width" data-field="startDate" data-sortable="true">開始日期</th>
+                                            <th class="my-th-width" data-field="expiryDate" data-sortable="true">結束日期</th>
+                                            <th class="my-th-width-sm" data-field="discount" data-sortable="true">折扣金額</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <!-- 內容給JS填 -->
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
+                                        data-bs-target="#addCouponModal">
+                                    新增優惠券
+                                </button>
+                            </div>
                             <!-- 稱高度用的 -->
                             <div style="height:30vh"></div>
                         </div>
@@ -608,6 +638,81 @@
                         </div>
                     </div>
                 </div>
+
+
+                <!-- 新增優惠券的燈箱 -->
+                <div class="modal fade" id="addCouponModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">新增優惠券</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating m-3">
+                                            <input type="text" class="form-control" id="addCoupontName" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontName">名稱</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontStartDate">開始日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontExpiryDate">到期日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="number" class="form-control" id="addCoupontPrice" min="1" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontPrice">折扣金額</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="addCoupontSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 編輯優惠券的燈箱 -->
+                <div class="modal fade" id="editCouponModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">編輯優惠券</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating m-3">
+                                            <input type="text" class="form-control" id="editCoupontName" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontName">名稱</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="editCoupontStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontStartDate">開始日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="editCoupontExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontExpiryDate">到期日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="number" class="form-control" id="editCoupontPrice" min="1" placeholder=".">
+                                            <label class="my-text-lightgray" for="editCoupontPrice">折扣金額</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="editCoupontSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -634,9 +739,18 @@
     <script src="vendor/summernote/summernote-lite.min.js"></script>
     <script src="vendor/summernote/summernote-zh-TW.min.js"></script>
     <script src="vendor/sweetalert/sweetalert.js"></script>
+    <script src="js/bootstrap-table.min.js"></script>
+    <script src="js/ticket_login_check.js"></script>
 
     <script>
-        //假資料
+        //檔案上傳限制
+        const SINGLE_FILE_SIZE = 10 * 1024 * 1024; //10MB
+        const TOTAL_FILES_SIZE = 50 * 1024 * 1024; //50MB
+        let curFilesSize;
+
+        let curEditCouponId;
+
+        //假資料-票券列表
         let result = {
             curPage: 1,
             totalPage: 10,
@@ -670,7 +784,7 @@
                 }
             ]
         };
-        //假資料 以後要從資料庫取得
+        //假資料-票券明細
         let fakeData = {
             ticketId: 0,
             ticketType: '博物館 & 美術館',
@@ -691,162 +805,36 @@
             ratingPerson: Math.trunc(Math.random() * 1000),
             images: [],
         };
+        const locationTypes = [
+            '主題樂園', '景點門票', '水族館 & 動物園', '博物館 & 美術館', '歷史景點'
+        ];
+        const taiwanCities = [
+            "基隆市", "台北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣",
+            "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市",
+            "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
+        ];
 
 
-        // 上次的搜尋條件
-        let oldCondition = {
-            keyword: 'nnn',
-            page: 0,
-            size: 8,
-        };
 
-        //  送出搜尋條件
-        function doPageSearch(curPage) {
-
-            const condition = {
-                keyword: $('#ticketSearchText').val(),
-                page: curPage,
-                size: 8,
-            };
-            if (JSON.stringify(oldCondition) === JSON.stringify(condition)) {
-                return false;
-            }
-            // console.log(condition);
-            oldCondition = condition;
-
-            fetch(`http://localhost:8080/bk/searchtickets`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(condition),
-            })
-                .then(response => response.json())
-                .then(data => result = data)
-                .catch(error => console.log(error))
-                .finally(() => {
-                    render();
-                });
-        }
-
+        //TODO: ------------------------------------------//onload
         $(function () {
+
             doPageSearch(0);
 
-
-            //分頁的按鈕事件
-            $(document).on('click', '#orderPagination a', function (e) {
-                e.preventDefault();
-
-                const page = $(this).attr('aria-label');
-
-                if (page === "Previous") {
-                    doPageSearch(Math.max(result.curPage - 1, 0));
-                } else if (page === "Next") {
-                    doPageSearch(Math.min(result.curPage + 1, result.totalPage - 1));
-                } else if (!isNaN(page)) {
-                    doPageSearch(page);
-                }
+            //優惠券列表 點選列的事件
+            $(document).on('click', '#couponContainer tbody tr', function () {
+                curEditCouponId = $(this).find('td').first().text();
+                fetch_coupon();
             });
 
+            // 編輯優惠券-確認送出
+            $('#editCoupontSubmit').on('click', fetch_edit_coupon);
 
-            //新增票券數量的參數傳遞
-            $('#countTicketModal').on('show.bs.modal', function (event) {
-                const button = $(event.relatedTarget);
-                const ticketId = button.data('bs-whatever');
-                $('#addTicketCountSubmit').data('ticket-id', ticketId);
-            });
-
-            //新增票券數量
-            $('#addTicketCountSubmit').on('click', function () {
-                const post = {
-                    ticketId: parseInt($(this).data('ticket-id')),
-                    addCount: parseInt($('#addTicketCount').val()),
-                }
-
-                if (post.addCount <= 0) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '數字輸入錯誤',
-                        text: '輸入大於0的數字...好嗎!?',
-                    })
-                    return;
-                }
-                //發請求
-                fetch(`http://localhost:8080/bk/addticketcount`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            //變更一下舊的條件 才能強制刷新
-                            oldCondition.page = -1;
-                            doPageSearch(result.curPage);
-                        } else {
-                            doPageSearch(0);
-                        }
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        $('#countTicketModal').modal('hide');
-                    });
-                $('#addTicketCount').val(1);
-            });
-
-
-            //上架下架
-            $(document).on('change', 'input[type="radio"]', function () {
-                const param = $(this).attr('id').split('_');
-                const post = {
-                    ticketId: parseInt(param[1]),
-                    status: parseInt(param[2]),
-                }
-
-                fetch(`http://localhost:8080/bk/enableticket`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data) { //發生錯誤的時候 刷新頁面
-                            doPageSearch(0);
-                        }
-                    })
-                    .catch(error => console.log(error));
-
-            });
-
-            // 編輯票券的參數傳遞
-            $('#editTicketModal').on('show.bs.modal', function (event) {
-                const button = $(event.relatedTarget);
-                const ticketId = button.data('bs-whatever');
-
-                fetch(`http://localhost:8080/bk/findticket?id=${ticketId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        //console.log(data);
-                        fakeData = data;
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        render_data();
-                    });
-
-                $('#editTicketImage').data('ticket-id', ticketId);
-                $('#editTicketSubmit').data('ticket-id', ticketId);
-
-            });
+            $('#addCoupontSubmit').on('click', fetch_add_coupon);
 
 
             //測試按鈕
             $('#testBtn').on('click', function () {
-
                 $('#ticketType').val('主題樂園');
                 $('#ticketSupplier').val('T8Me');
                 $('#ticketExpiryDate').val('2024-12-21');
@@ -860,208 +848,117 @@
                 $('#descEditor').summernote('code', '1<br>1<br>1<br>1<br>1<br>1<br>');
                 $('#contentEditor').summernote('code', '2<br>2<br>2<br>2<br>2<br>2<br>');
                 $('#noteEditor').summernote('code', '3<br>3<br>3<br>3<br>3<br>3<br>');
+                //判斷上色
+                $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+                $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+            });           
 
+
+            //增加票券-清空前一次資料
+            $('#addTicketModal').on('show.bs.modal', function (event) {
+                //清空
+                $('#ticketImage').val('');
+                $('#imgPreview').html('');
+                curFilesSize = 0;
+
+                $('#ticketType').val('');
+                $('#ticketSupplier').val('');
+                $('#ticketExpiryDate').val('');
+                $('#ticketName').val('');
+                $('#ticketPrice').val('');
+                $('#ticketCount').val('');
+                $('#ticketRating').val('');
+                $('#ticketRatingCount').val('');
+                $('#ticketCity').val('');
+                $('#ticketAddress').val('');
+                $('#descEditor').summernote('code', '');
+                $('#contentEditor').summernote('code', '');
+                $('#noteEditor').summernote('code', '');
                 //判斷上色
                 $('.form-floating .form-control').each((i, v) => renderTextColor(v));
                 $('.form-floating .form-select').each((i, v) => renderTextColor(v));
             });
 
-
-
-            // 新增的按鈕
-            $('#ticketSubmit').on('click', function () {
-                const post = {
-                    ticketId: 0,
-                    ticketType: $('#ticketType').val(),
-                    name: $('#ticketName').val(),
-                    price: $('#ticketPrice').val(),
-                    available: $('#ticketCount').val(),
-                    totalSales: 0,
-                    expiryDate: $('#ticketExpiryDate').val(),
-                    description: $.trim($('#descEditor').summernote('code')),
-                    content: $.trim($('#contentEditor').summernote('code')),
-                    note: $.trim($('#noteEditor').summernote('code')),
-                    supplierName: $('#ticketSupplier').val(),
-                    city: $('#ticketCity').val(),
-                    address: $('#ticketAddress').val(),
-                    latitude: 0,
-                    longitude: 0,
-                    rating: $('#ticketRating').val(),
-                    ratingPerson: $('#ticketRatingCount').val(),
-                    images: [],
-                };
-
-                //判斷資料的正確性
-                if (!isValidData(post)) {
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('post', JSON.stringify(post));
-
-                // Add image files to FormData
-                const imageFiles = $('#imgPreview .img-upload').map((i, v) => convertToBlob($(v).attr('src'))).get();
-                for (let i = 0; i < imageFiles.length; i++) {
-                    formData.append('images', imageFiles[i]);
-                }
-
-                if (imageFiles.length <= 0) {
-                    Swal.fire({ icon: 'error', title: '票券至少一張圖片' });
-                    return;
-                }
-
-                //發請求
-                fetch(`http://localhost:8080/bk/addticketform`, {
-                    method: 'POST',
-                    body: formData,
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            Swal.fire({ icon: 'success', title: '新增成功 請至列表選擇上架', });
-                        } else {
-                            Swal.fire({ icon: 'error', title: '新增失敗', });
-                        }
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        $('#addTicketModal').modal('hide');
-                        doPageSearch(0);
-                    });
-
+            //增加票券數量-參數傳遞
+            $('#countTicketModal').on('show.bs.modal', function (event) {
+                const button = $(event.relatedTarget);
+                const ticketId = button.data('bs-whatever');
+                $('#addTicketCountSubmit').data('ticket-id', ticketId);
             });
 
-            // TODO: 編輯的按鈕
-            $('#editTicketSubmit').on('click', function () {
+            // 增加票券數量-確認
+            $('#addTicketCountSubmit').on('click', fetch_count);
 
-                const post = {
-                    ticketId: $('#editTicketSubmit').data('ticket-id'),
-                    ticketType: $('#editTicketType').val(),
-                    name: $('#editTicketName').val(),
-                    price: $('#editTicketPrice').val(),
-                    available: 1,
-                    totalSales: 1,
-                    expiryDate: $('#editTicketExpiryDate').val(),
-                    description: $.trim($('#editDescEditor').summernote('code')),
-                    content: $.trim($('#editContentEditor').summernote('code')),
-                    note: $.trim($('#editNoteEditor').summernote('code')),
-                    supplierName: $('#editTicketSupplier').val(),
-                    city: $('#editTicketCity').val(),
-                    address: $('#editTicketAddress').val(),
-                    latitude: 0,
-                    longitude: 0,
-                    rating: $('#editTicketRating').val(),
-                    ratingPerson: $('#editTicketRatingCount').val(),
-                    images: [],
-                };
-                //判斷資料的正確性
-                if (!isValidData(post)) {
-                    return;
-                }
+            // 新增票券-確認
+            $('#ticketSubmit').on('click', fetch_insert);
 
-                //發請求
-                fetch(`http://localhost:8080/bk/editticket`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(post),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            Swal.fire({ icon: 'success', title: '編輯成功', });
-                        } else {
-                            Swal.fire({ icon: 'error', title: '編輯失敗', });
-                        }
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => {
-                        $('#editTicketModal').modal('hide');
-                        doPageSearch(result.curPage);
-                    });
-            });
+            // 編輯票券-確認
+            $('#editTicketSubmit').on('click', fetch_edit);
 
-            //TODO: 編輯票券-移除指定圖片
-            $(document).on('click', '.cur-img-trash', function () {
-
-                const employeeId = 1;
-                const url = $(this).closest('.img-item').find('img').attr('src');
-                const imageId = url.substring(url.lastIndexOf('/') + 1);
-
-                console.log(imageId);
-                //發請求
-                fetch(`http://localhost:8080/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
-                    .then(response => response.json())
-                    .then(data => {
-
-                        if (data) {
-                            $(this).closest('.img-item').remove();
-                            Swal.fire({ icon: 'success', title: '圖片刪除成功', });
-                        }
-                    })
-                    .catch(error => console.log(error));
-
-            });
+            // 編輯票券-參數傳遞
+            $('#editTicketModal').on('show.bs.modal', fetch_data_edit);
 
             // 編輯票券-新增圖片
-            $('#editTicketImage').on('change', function (e) {
-                const ticketId = $('#editTicketImage').data('ticket-id');
+            $('#editTicketImage').on('change', fetch_add_img);
 
-                if (e.target.files) {
-                    for (let file of e.target.files) {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = function (e) {
+            // 編輯票券-移除指定圖片
+            $(document).on('click', '.cur-img-trash', fetch_remove_img);
 
-
-                            const formData = new FormData();
-                            formData.append('id', ticketId);
-                            formData.append('image', convertToBlob(e.target.result));
-
-                            //發請求
-                            fetch(`http://localhost:8080/bk/addticketimageform`, {
-                                method: 'POST',
-                                body: formData,
-                            })
-                                .then(response => response.text())
-                                .then(data => {
-
-                                    if (data) {
-                                        $('#editImgPreview').append(`
-                                            <div class="col p-3 img-item">
-                                                <div class="card h-100">
-                                                    <div>
-                                                        <img src="${data}" class="img-fluid rounded-start img-upload">
-                                                    </div>
-                                                    <div class="card-body d-flex justify-content-around">                                            
-                                                        <button class="btn btn-primary cur-img-trash"><i class="bi bi-trash"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            `);
-                                        Swal.fire({ icon: 'success', title: '圖片上傳成功', });
-                                    } else {
-                                        Swal.fire({ icon: 'error', title: '圖片上傳失敗', });
-                                    }
-                                })
-                                .catch(error => console.log(error));
-                        }
-                    }
-                }
-            });
-
-
-            //搜尋按鈕的事件
-            $('#btnSearch').on('click', function () {
-                doPageSearch(0);
-            });
+            // 票券列表-上架下架
+            $(document).on('change', 'input[type="radio"]', fetch_enable);
 
             // tab切換到哪一頁
             $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var target = $(e.target).attr("href");
                 console.log("Switched to tab " + target);
             });
+
+            // 票券列表-搜尋
+            $('#btnSearch').on('click', function () {
+                doPageSearch(0);
+            });
+
+            // 票券列表-切換分頁
+            $(document).on('click', '#orderPagination a', function (e) {
+                e.preventDefault();
+
+                const page = $(this).attr('aria-label');
+                if (page === "Previous") {
+                    doPageSearch(Math.max(result.curPage - 1, 0));
+                } else if (page === "Next") {
+                    doPageSearch(Math.min(result.curPage + 1, result.totalPage - 1));
+                } else if (!isNaN(page)) {
+                    doPageSearch(page);
+                }
+            });
+
+            // 新增票券-選擇圖片並預覽
+            $('#ticketImage').on('change', function (e) {
+                if (e.target.files) {
+                    for (let file of e.target.files) {
+                        if (file.size >= SINGLE_FILE_SIZE) {
+                            Swal.fire({ icon: 'error', title: '檔案大小不能超過10MB' });
+                            return;
+                        }
+                        curFilesSize += file.size;
+                        if (curFilesSize >= TOTAL_FILES_SIZE) {
+                            Swal.fire({ icon: 'error', title: '全部檔案大小不能超過50MB' });
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function (e) {
+                            render_img_base64(e.target.result);
+                        }
+                    }
+                }
+            });
+
+            // 新增票券-移除不要的圖片
+            $(document).on('click', '.img-trash', function () {
+                $(this).closest('.img-item').remove();
+            });
+
 
             // 浮動標籤的變色
             $('.form-floating .form-control').on('input', function () {
@@ -1099,87 +996,406 @@
                 }
             });
 
-            // 新增選擇圖片並預覽
-            $('#ticketImage').on('change', function (e) {
-                if (e.target.files) {
-                    for (let file of e.target.files) {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = function (e) {
-                            $('#imgPreview').append(
-                                `
-                                <div class="col p-3 img-item">
-                                    <div class="card h-100">
-                                        <div>
-                                            <img src="${e.target.result}" class="img-fluid rounded-start img-upload">
-                                        </div>
-                                        <div class="card-body d-flex justify-content-around">                                            
-                                            <button class="btn btn-primary img-trash"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                `
-                            );
-                        }
-                    }
-                }
-            });
-
-            // 設定 只要是.img-trash的點擊事件委派
-            $(document).on('click', '.img-trash', function () {
-                $(this).closest('.img-item').remove();
-            });
 
             //渲染頁面           
             render_cities();
             render_types();
         });
 
+        //TODO: ------------------------------------------//fetch
+
+        // 上次的搜尋條件
+        let oldCondition = {
+            keyword: 'nnn',
+            page: 0,
+            size: 8,
+        };
+
+        /**
+        * 分頁顯示列表 
+        */
+        function doPageSearch(curPage) {
+
+            const post = {
+                keyword: $('#ticketSearchText').val(),
+                page: curPage,
+                size: 8,
+            };
+            if (JSON.stringify(oldCondition) === JSON.stringify(post)) {
+                return false;
+            }
+
+            oldCondition = post;
+
+            fetch(`${getDomainName()}/bk/searchtickets`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => { result = data })
+                .catch(error => console.log(error))
+                .finally(() => render());
+        }
 
 
+        /**
+        * 增加數量的請求
+        */
+        function fetch_count(e) {
+            const post = {
+                ticketId: parseInt($(e.target).data('ticket-id')),
+                addCount: parseInt($('#addTicketCount').val()),
+            }
 
-        // 標籤文字上色
-        function renderTextColor(elem) {
-            $(elem).siblings('label').removeClass('my-text-lightgray text-primary');
-            if ($(elem).val()) {
-                $(elem).siblings('label').addClass('text-primary');
-            } else {
-                $(elem).siblings('label').addClass('my-text-lightgray');
+            if (post.addCount <= 0) {
+                Swal.fire({ icon: 'error', title: '數字輸入錯誤', text: '輸入大於0的數字...好嗎!?', })
+                return;
+            }
+            //發請求
+            fetch(`${getDomainName()}/bk/addticketcount`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        //變更一下舊的條件 才能強制刷新
+                        oldCondition.page = -1;
+                        doPageSearch(result.curPage);
+                    } else {
+                        doPageSearch(0);
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#addTicketCount').val(1);
+                    $('#countTicketModal').modal('hide');
+                });
+
+        }
+
+        /**
+        * 上架下架的請求 
+        */
+        function fetch_enable(e) {
+            const param = $(e.target).attr('id').split('_');
+            const post = {
+                ticketId: parseInt(param[1]),
+                status: parseInt(param[2]),
+            }
+
+            fetch(`${getDomainName()}/bk/enableticket`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data) { //發生錯誤的時候 刷新頁面
+                        doPageSearch(0);
+                    }
+                })
+                .catch(error => console.log(error));
+        }
+
+        /**
+        * 取得要編輯的票券的請求
+        */
+        function fetch_data_edit(e) {
+            const button = $(e.relatedTarget);
+            const ticketId = button.data('bs-whatever');
+
+            fetch(`${getDomainName()}/bk/findticket?id=${ticketId}`)
+                .then(response => response.json())
+                .then(data => fakeData = data)
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#editTicketImage').data('ticket-id', ticketId);
+                    $('#editTicketSubmit').data('ticket-id', ticketId);
+                    render_data();
+                });
+        }
+
+        /**
+        * 送出確定編輯的請求
+        */
+        function fetch_edit() {
+            const post = {
+                ticketId: $('#editTicketSubmit').data('ticket-id'),
+                ticketType: $('#editTicketType').val(),
+                name: $('#editTicketName').val(),
+                price: $('#editTicketPrice').val(),
+                available: 1,
+                totalSales: 1,
+                expiryDate: $('#editTicketExpiryDate').val(),
+                description: $.trim($('#editDescEditor').summernote('code')),
+                content: $.trim($('#editContentEditor').summernote('code')),
+                note: $.trim($('#editNoteEditor').summernote('code')),
+                supplierName: $('#editTicketSupplier').val(),
+                city: $('#editTicketCity').val(),
+                address: $('#editTicketAddress').val(),
+                latitude: 0,
+                longitude: 0,
+                rating: $('#editTicketRating').val(),
+                ratingPerson: $('#editTicketRatingCount').val(),
+                images: [],
+            };
+            //判斷資料的正確性
+            if (!isValidData(post)) {
+                return;
+            }
+
+            //發請求
+            fetch(`${getDomainName()}/bk/editticket`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '編輯成功', });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '編輯失敗', });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#editTicketModal').modal('hide');
+                    doPageSearch(result.curPage);
+                });
+        }
+
+        /**
+        * 送出新增票券的請求
+        */
+        function fetch_insert() {
+            const post = {
+                ticketId: 0,
+                ticketType: $('#ticketType').val(),
+                name: $('#ticketName').val(),
+                price: $('#ticketPrice').val(),
+                available: $('#ticketCount').val(),
+                totalSales: 0,
+                expiryDate: $('#ticketExpiryDate').val(),
+                description: $.trim($('#descEditor').summernote('code')),
+                content: $.trim($('#contentEditor').summernote('code')),
+                note: $.trim($('#noteEditor').summernote('code')),
+                supplierName: $('#ticketSupplier').val(),
+                city: $('#ticketCity').val(),
+                address: $('#ticketAddress').val(),
+                latitude: 0,
+                longitude: 0,
+                rating: $('#ticketRating').val(),
+                ratingPerson: $('#ticketRatingCount').val(),
+                images: [],
+            };
+
+            //判斷資料的正確性
+            if (!isValidData(post)) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('post', JSON.stringify(post));
+
+            // Add image files to FormData
+            const imageFiles = $('#imgPreview .img-upload').map((i, v) => convertToBlob($(v).attr('src'))).get();
+            for (let i = 0; i < imageFiles.length; i++) {
+                formData.append('images', imageFiles[i]);
+            }
+
+            if (imageFiles.length <= 0) {
+                Swal.fire({ icon: 'error', title: '票券至少一張圖片' });
+                return;
+            }
+
+            //發請求
+            fetch(`${getDomainName()}/bk/addticketform`, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '新增成功 請至列表選擇上架', });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '新增失敗', });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#addTicketModal').modal('hide');
+                    doPageSearch(0);
+                });
+        }
+
+        /**
+        * 編輯票券-移除圖片的請求
+        */
+        function fetch_remove_img(e) {
+            const employeeId = 1;
+            const url = $(e.target).closest('.img-item').find('img').attr('src');
+            const imageId = url.substring(url.lastIndexOf('/') + 1);
+
+            //發請求
+            fetch(`${getDomainName()}/bk/removeticketimage?employeeId=${employeeId}&&imageId=${imageId}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data) {
+                        $(e.target).closest('.img-item').remove();
+                        Swal.fire({ icon: 'success', title: '圖片刪除成功', });
+                    }
+                })
+                .catch(error => console.log(error));
+        }
+
+        /**
+        * 編輯照片-新增圖片的請求
+        */
+        function fetch_add_img(e) {
+            const ticketId = $('#editTicketImage').data('ticket-id');
+
+            if (e.target.files) {
+                for (let file of e.target.files) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+
+
+                        const formData = new FormData();
+                        formData.append('id', ticketId);
+                        formData.append('image', convertToBlob(e.target.result));
+
+                        //發請求
+                        fetch(`${getDomainName()}/bk/addticketimageform`, {
+                            method: 'POST',
+                            body: formData,
+                        })
+                            .then(response => response.text())
+                            .then(data => {
+
+                                if (data) {
+                                    render_img_url(data);
+                                    Swal.fire({ icon: 'success', title: '圖片上傳成功', });
+                                } else {
+                                    Swal.fire({ icon: 'error', title: '圖片上傳失敗', });
+                                }
+                            })
+                            .catch(error => console.log(error));
+                    }
+                }
             }
         }
 
-        const locationTypes = [
-            '主題樂園', '景點門票', '水族館 & 動物園', '博物館 & 美術館', '歷史景點'
-        ];
-        const taiwanCities = [
-            "基隆市", "台北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣",
-            "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市",
-            "高雄市", "屏東縣", "台東縣", "花蓮縣", "宜蘭縣", "澎湖縣", "金門縣", "連江縣"
-        ];
+        /**
+        *  獲得優惠券內容的請求
+        */
+        function fetch_coupon() {
+            const param = new URLSearchParams();
+            param.append('couponId', curEditCouponId);
 
-
-        // 票券類型
-        function render_types() {
-            $('#ticketType').html('<option selected disabled>--</option>');
-            $('#editTicketType').html('<option selected disabled>--</option>');
-
-            locationTypes.forEach((v, i) => {
-                $('#ticketType').append(`<option value="${v}">${v}</option>`);
-                $('#editTicketType').append(`<option value="${v}">${v}</option>`);
-            });
+            //填入資料
+            fetch(`${getDomainName()}/bk/coupon?${param}`)
+                .then(response => response.json())
+                .then(data => render_coupon(data))
+                .catch(error => console.log(error))
+                .finally(() => $('#editCouponModal').modal('show'));
         }
 
-        // 縣市
-        function render_cities() {
-            $('#ticketCity').html('<option selected disabled>--</option>');
-            $('#editTicketCity').html('<option selected disabled>--</option>');
-            taiwanCities.forEach((v, i) => {
-                $('#ticketCity').append(`<option value="${v}">${v}</option>`);
-                $('#editTicketCity').append(`<option value="${v}">${v}</option>`);
-            });
+        /**
+        * 新增優惠券 
+        */
+        function fetch_add_coupon() {
+            const post = {
+                couponId: 0,
+                name: $('#addCoupontName').val(),
+                startDate: $('#addCoupontStartDate').val(),
+                expiryDate: $('#addCoupontExpiryDate').val(),
+                discount: $('#addCoupontPrice').val(),
+            }
+            // 條件判斷
+            if (!isValidCoupon(post)) {
+                return;
+            }
+
+            //填入資料
+            fetch(`${getDomainName()}/bk/addcoupon?`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '新增成功' });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '新增失敗' });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#couponContainer table').bootstrapTable('refresh');
+                    $('#addCouponModal').modal('hide');
+                });
         }
 
-        //TODO: 
+        /**
+        * 編輯優惠券 
+        */
+        function fetch_edit_coupon() {
+            const post = {
+                couponId: curEditCouponId,
+                name: $('#editCoupontName').val(),
+                startDate: $('#editCoupontStartDate').val(),
+                expiryDate: $('#editCoupontExpiryDate').val(),
+                discount: $('#editCoupontPrice').val(),
+            }
+            // 條件判斷
+            if (!isValidCoupon(post)) {
+                return;
+            }
+
+            //填入資料
+            fetch(`${getDomainName()}/bk/editcoupon?`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({ icon: 'success', title: '編輯成功' });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '編輯失敗' });
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $('#couponContainer table').bootstrapTable('refresh');
+                    $('#editCouponModal').modal('hide');
+                });
+        }
+
+
+        //TODO:  ------------------------------------------//render
+
+
         //渲染票券列表的資料
         function render() {
             $('#ticketContainer table tbody').html('');
@@ -1222,58 +1438,98 @@
             $('#orderPagination ul').html('');
 
             if (result.totalPage > 1) {
-                $('#orderPagination ul').append(
-                    `
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span>&laquo;</span>
-                </a>
-              </li>
-              `
-                );
+                $('#orderPagination ul').append(`
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                        <span>&laquo;</span>
+                        </a>
+                    </li>
+                `);
                 for (let i = 0; i < result.totalPage; i++) {
-                    $('#orderPagination ul').append(
-                        `         
+                    $('#orderPagination ul').append(`         
                         <a class="page-link ${i == result.curPage ? 'active' : ''}" href="#" aria-label="${i}">${i + 1}</a>
-                        `
-                    );
+                    `);
                 }
-                $('#orderPagination ul').append(
-                    `                    
+                $('#orderPagination ul').append(`                    
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                         <span>&raquo;</span>
                         </a>
                     </li>
-                    `
-                );
+                `);
             }
         }
 
-        //渲染編輯票券的頁面
+        // 標籤文字上色
+        function renderTextColor(elem) {
+            $(elem).siblings('label').removeClass('my-text-lightgray text-primary');
+            if ($(elem).val()) {
+                $(elem).siblings('label').addClass('text-primary');
+            } else {
+                $(elem).siblings('label').addClass('my-text-lightgray');
+            }
+        }
+
+
+        // 票券類型
+        function render_types() {
+            $('#ticketType').html('<option selected disabled>--</option>');
+            $('#editTicketType').html('<option selected disabled>--</option>');
+
+            locationTypes.forEach((v, i) => {
+                $('#ticketType').append(`<option value="${v}">${v}</option>`);
+                $('#editTicketType').append(`<option value="${v}">${v}</option>`);
+            });
+        }
+
+        // 縣市
+        function render_cities() {
+            $('#ticketCity').html('<option selected disabled>--</option>');
+            $('#editTicketCity').html('<option selected disabled>--</option>');
+            taiwanCities.forEach((v, i) => {
+                $('#ticketCity').append(`<option value="${v}">${v}</option>`);
+                $('#editTicketCity').append(`<option value="${v}">${v}</option>`);
+            });
+        }
+
+        // 渲染優惠券編輯頁面
+        function render_coupon(data) {
+            $('#editCoupontName').val(data.name);
+            $('#editCoupontStartDate').val(data.startDate);
+            $('#editCoupontExpiryDate').val(data.expiryDate);
+            $('#editCoupontPrice').val(data.discount);
+            //判斷上色
+            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+        }
+
+        // 渲染編輯票券的頁面
         function render_data() {
             $(`#editTicketType option:contains('${fakeData.ticketType}')`).prop("selected", true);
             $('#editTicketExpiryDate').val(fakeData.expiryDate);
             $('#editTicketName').val(fakeData.name);
             $('#editTicketPrice').val(fakeData.price);
             $('#editTicketSupplier').val(fakeData.supplierName);
-
-
             $('#editTicketRating').val(fakeData.rating);
             $('#editTicketRatingCount').val(fakeData.ratingPerson);
-
-
             $(`#editTicketCity option:contains('${fakeData.city}')`).prop("selected", true);
-
             $('#editTicketAddress').val(fakeData.address);
             $('#editDescEditor').summernote('code', fakeData.description);
             $('#editContentEditor').summernote('code', fakeData.content);
             $('#editNoteEditor').summernote('code', fakeData.note);
-
             $('#editImgPreview').html('');
 
             for (let imgUrl of fakeData.images) {
-                $('#editImgPreview').append(`
+                render_img_url(imgUrl);
+            }
+
+            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+        }
+
+        //編輯票券-新增圖片
+        function render_img_url(imgUrl) { 
+            $('#editImgPreview').append(`
                 <div class="col p-3 img-item">
                     <div class="card h-100">
                         <div>
@@ -1284,14 +1540,26 @@
                         </div>
                     </div>
                 </div>
-                `);
-            }
-
-            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
-            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+            `);
         }
 
-        //TODO: 判斷輸入格式
+        //新增票券-新增圖片
+        function render_img_base64(base64String) {
+            $('#imgPreview').append(`
+                <div class="col p-3 img-item">
+                    <div class="card h-100">
+                    <div>
+                        <img src="${base64String}" class="img-fluid rounded-start img-upload">
+                    </div>
+                    <div class="card-body d-flex justify-content-around">                                            
+                        <button class="btn btn-primary img-trash"><i class="bi bi-trash"></i></button>
+                    </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        //判斷票券輸入格式
         function isValidData(post) {
             if (!post.ticketType) {
                 Swal.fire({ icon: 'error', title: '票券類型未輸入' });
@@ -1369,11 +1637,40 @@
             return true;
         }
 
+        //判斷優惠券輸入
+        function isValidCoupon(post) {
+            if (!post.name) {
+                Swal.fire({ icon: 'error', title: '優惠券名稱未輸入' });
+                return false;
+            }
 
-        //TODO: 好用的函式
+            if (isDateAfterTarget(post.startDate, post.expiryDate)) {
+                Swal.fire({ icon: 'error', title: '日期輸入錯誤' });
+                return false;
+
+            }
+            if (!isDateAfterNow(post.expiryDate)) {
+                Swal.fire({ icon: 'error', title: '優惠券到期日已經過期' });
+                return false;
+            }
+            if (!post.discount) {
+                Swal.fire({ icon: 'error', title: '折扣金額未輸入' });
+                return false;
+            }
+            if (post.discount <= 0) {
+                Swal.fire({ icon: 'error', title: '折扣金額不可小於1' });
+                return false;
+            }
+            return true;
+        }
+
+        //TODO: ------------------------------------------//好用的函式
 
         //輸入的日期字串(yyyy-mm-dd) 是否在目前日期以後
         function isDateAfterNow(dateString) {
+            if (!dateString) {
+                return false;
+            }
             const dateParts = dateString.split('-');
             const year = parseInt(dateParts[0]);
             const month = parseInt(dateParts[1]) - 1; // 月份從0開始
@@ -1381,6 +1678,27 @@
             const inputDate = new Date(year, month, day);
             return inputDate.getTime() > new Date().getTime();
         }
+
+        function isDateAfterTarget(dateString, dateString2) {
+            if (!dateString || !dateString2) {
+                return false;
+            }
+
+            const dateParts = dateString.split('-');
+            const year = parseInt(dateParts[0]);
+            const month = parseInt(dateParts[1]) - 1; // 月份從0開始
+            const day = parseInt(dateParts[2]);
+            const inputDate = new Date(year, month, day);
+            //---------
+            const dateParts2 = dateString2.split('-');
+            const year2 = parseInt(dateParts2[0]);
+            const month2 = parseInt(dateParts2[1]) - 1; // 月份從0開始
+            const day2 = parseInt(dateParts2[2]);
+            const inputDate2 = new Date(year2, month2, day2);
+
+            return inputDate.getTime() > inputDate2.getTime();
+        }
+
 
         // 將base64轉成Blob物件
         function convertToBlob(base64) {

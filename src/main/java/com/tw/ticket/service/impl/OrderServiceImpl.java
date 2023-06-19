@@ -6,6 +6,7 @@ import static com.tw.ticket.model.TicketSn.IN_USED;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -34,6 +35,7 @@ import com.tw.ticket.model.dao.CouponRepository;
 import com.tw.ticket.model.dao.TicketCartRepository;
 import com.tw.ticket.model.dao.TicketOrderDetailRepository;
 import com.tw.ticket.model.dao.TicketOrderRepository;
+import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.OrderService;
 import com.tw.ticket.thirdparty.ecpay.payment.integration.AllInOne;
@@ -48,6 +50,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private MemberRepository memberRepository;
+
+	@Autowired
+	private TicketRepository ticketRepository;
 
 	@Autowired
 	private TicketCartRepository ticketCartRepository;
@@ -154,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
 			if (!MyUtils.isContainNow(coupon.getStartDate(), coupon.getExpiryDate())) {
 				return null;
 			}
-			actualPrice -= coupon.getDiscount();
+			actualPrice = Math.max(1, actualPrice - coupon.getDiscount());
 		}
 
 		// 成立訂單
@@ -210,6 +215,23 @@ public class OrderServiceImpl implements OrderService {
 		order.setPayType(payType);
 		// 存檔
 		ticketOrderRepository.save(order);
+
+		// 票券銷售量
+		// 使用test按鈕時這邊的order.getTicketOrderDetails() 會是空的所以要自己讀
+		final List<TicketOrderDetail> details = //
+				ticketOrderDetailRepository.findByKeyTicketOrderId(orderId);
+
+		final HashSet<Ticket> tickets = new HashSet<>();
+		for (final TicketOrderDetail detail : details) {
+			final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+			if (ticket != null) {
+				final int totalSales = ticket.getTotalSales() + 1;
+				ticket.setTotalSales(totalSales);
+				tickets.add(ticket);
+			}
+		}
+		// 更新票券的銷售量
+		ticketRepository.saveAll(tickets);
 		return true;
 	}
 

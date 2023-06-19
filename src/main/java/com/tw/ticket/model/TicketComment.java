@@ -1,5 +1,6 @@
 package com.tw.ticket.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import com.tw.member.model.Member;
@@ -18,7 +19,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketComment {
+public class TicketComment implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int STATUS_HIDE = 0;
 	public static int STATUS_SHOW = 1;

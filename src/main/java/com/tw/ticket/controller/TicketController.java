@@ -24,13 +24,13 @@ public class TicketController {
 
 	// 隨機票券
 	@GetMapping("/rndtickets")
-	public List<RadAndHotResponse> randomTickets() {
+	public List<DescResponse> randomTickets() {
 		return ticketService.getRandomItem();
 	}
 
 	// 熱門票券
 	@GetMapping("/hottickets")
-	public List<RadAndHotResponse> hotTickets() {
+	public List<DescResponse> hotTickets() {
 		return ticketService.getHotItem();
 	}
 
@@ -55,12 +55,12 @@ public class TicketController {
 	public static class SearchResponse {
 		private int curPage;
 		private int totalPage;
-		private ArrayList<RadAndHotResponse> tickets = new ArrayList<>();
+		private ArrayList<DescResponse> tickets = new ArrayList<>();
 	}
 
 	@Data
-	public static class RadAndHotResponse {
-		public RadAndHotResponse(final Ticket ticket) {
+	public static class DescResponse {
+		public DescResponse(final Ticket ticket) {
 			this.ticketId = ticket.getTicketId();
 			this.name = ticket.getName();
 			this.price = ticket.getPrice();
@@ -68,7 +68,6 @@ public class TicketController {
 			this.ratingPerson = ticket.getRatingCount();
 			this.city = ticket.getCity();
 			this.description = ticket.getDescription();
-			this.image = ticket.getImgUrlEx(0);
 		}
 
 		private final long ticketId;
@@ -79,6 +78,7 @@ public class TicketController {
 		private final int ratingPerson;
 		private final String city;
 		private final String description;
-		private final String image;
+		private String image;
+		private boolean favorite;
 	}
 }

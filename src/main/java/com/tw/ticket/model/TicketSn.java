@@ -1,5 +1,7 @@
 package com.tw.ticket.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +16,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketSn {
+public class TicketSn implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int NOT_USED = 0;
 	public static int IN_USED = 1;

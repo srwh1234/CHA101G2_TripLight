@@ -51,30 +51,45 @@ public class ChatGPTService {
 
     // 這個方法會傳回一個 InputStream，該 InputStream 會連線到 ChatGPT API 並傳送 message
     private BufferedReader chatGPT(String message) throws IOException {
-
+        // 使用 Jackson 的 ObjectMapper 和 ObjectNode 類創建一個 JSON 對象
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode rootNode = objectMapper.createObjectNode();
+
+        // 並且設定一些需要的屬性，如模型名稱（model）、消息數組（messages）
         rootNode.put("model", MODEL);
         ArrayNode messagesNode = rootNode.putArray("messages");
         ObjectNode messageNode = messagesNode.addObject();
         messageNode.put("role", "user");
         messageNode.put("content", message);
+
+        // 設定最大 token 數量（max_tokens）以及是否進行流傳輸（stream）
         rootNode.put("max_tokens", 2500);
         rootNode.put("stream", true);
+
+        // 轉換 JSON 對象為字串：使用 ObjectMapper 的 writeValueAsString 方法將上面創建的 JSON 對象轉換成一個 JSON 字串。
         String data = objectMapper.writeValueAsString(rootNode);
 
         // 連線到 ChatGPT API
         java.net.URL url = new URL(URL);
+        // 使用 java.net.URL 和 HttpURLConnection 類創建一個 HTTP 連接到 GPT-3 API 的 URL。
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        // 設定請求方法為 POST，並且添加兩個請求頭部
         connection.setRequestMethod("POST");
+
+        // 內容類型（Content-Type），表示我們將要發送的數據是 JSON 格式的
         connection.setRequestProperty("Content-Type", "application/json");
+
+        // 添加另一個授權（Authorization），表示我們有權訪問這個 API
         connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
         connection.setDoOutput(true);
+
+        // 發送請求：打開連接的輸出流，將 JSON 字串寫入到輸出流，然後刷新輸出流以確保數據被實際發送出去。
         OutputStream out = connection.getOutputStream();
         out.write(data.getBytes());
         out.flush();
 
-        // 取得回傳的 BufferedReader
+        // 開連接的輸入流，並且將它包裝成一個 BufferedReader 物件。最後，返回這個 BufferedReader 物件，讓我們可以在後續的程式中讀取和處理從 API 返回的數據。
         return new BufferedReader(new InputStreamReader(connection.getInputStream()));
     }
 

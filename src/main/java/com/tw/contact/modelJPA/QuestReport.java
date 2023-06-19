@@ -1,5 +1,7 @@
 package com.tw.contact.modelJPA;
 
+import com.tw.employee.model.Employee;
+import com.tw.member.model.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +10,7 @@ import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 @Data //@Getter @Setter @ToString @EqualsAndHashCode @RequiredArgsConstructor
 @Entity
 @Table(name="quest_report")
@@ -19,11 +21,13 @@ public class QuestReport {
     @Column(name="id")
     private int id;
 
-    @Column(name = "member_id")
-    private int memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column(name = "employee_id")
-    private Integer employeeId;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @Column(name = "q_content")
     private String qContent;
@@ -43,10 +47,12 @@ public class QuestReport {
     @Column(name = "score")
     private int score;
 
+    public QuestReport() {
+    }
 
-    public QuestReport(int memberId, int employeeId, String qContent, String rContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
-        this.memberId = memberId;
-        this.employeeId = employeeId;
+    public QuestReport(Member member, Employee employee, String qContent, String rContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
+        this.member = member;
+        this.employee = employee;
         this.qContent = qContent;
         this.rContent = rContent;
         this.state = state;

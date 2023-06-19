@@ -19,8 +19,26 @@ h2.heading {
     width: 90%;
 }
 
+
 .fas {
     position: relative;
-    transform: translate(780px, 0px) scale(1.8);
+    transform: scale(1.8);
     color: rgba(62, 226, 226, 0.728);
+    left: 93%;
+}
+@media screen and (max-width: 767.98px) {
+    .progress {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, 40px);
+        width: 90%;
+    }
+    
+    .fas {
+        position: relative;
+        transform: scale(1.8);
+        color: rgba(62, 226, 226, 0.728);
+        left: 90%;
+    }
 }

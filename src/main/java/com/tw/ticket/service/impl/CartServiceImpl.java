@@ -41,35 +41,44 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private TicketSnRepository snRepository;
 
+	@Autowired
+	private ImageServiceImpl imageService;
+
 	// 票券購物車清單
 	@Override
 	public List<CartResponse> getItems(final int membeId) {
 
 		final List<CartResponse> result = new ArrayList<>();
 
-		ticketCartRepository.findByKeyMemberId(membeId).forEach(cart -> {
-
+		for (final TicketCart cart : ticketCartRepository.findByKeyMemberId(membeId)) {
 			// XXX 這邊好像要查詢很多次...
 			final Ticket ticket = ticketRepository.findById(cart.getTicketId()).orElse(null);
 
-			if (ticket != null) {
-				final CartTicketResponse cartTicketResponse = new CartTicketResponse(ticket);
-				// 可用數量
-				final int available = snRepository.countUsableSn(cart.getTicketId());
-				cartTicketResponse.setAvailable(available);
-
-				if (cart.getQuantity() > available) {
-					cart.setQuantity(available);
-					ticketCartRepository.save(cart);
-				}
-
-				final CartResponse cartResponse = new CartResponse();
-				cartResponse.setQuantity(cart.getQuantity());
-				cartResponse.setTicket(cartTicketResponse);
-
-				result.add(cartResponse);
+			if (ticket == null) {
+				continue;
 			}
-		});
+			final CartTicketResponse cartTicketResponse = new CartTicketResponse(ticket);
+			// 可用數量
+			final int available = snRepository.countUsableSn(cart.getTicketId());
+			cartTicketResponse.setAvailable(available);
+
+			// 圖片
+			final String image = imageService.findImgUrl(ticket.getTicketId());
+			cartTicketResponse.setImage(image);
+
+			if (cart.getQuantity() > available) {
+				cart.setQuantity(available);
+				ticketCartRepository.save(cart);
+			}
+
+			final CartResponse cartResponse = new CartResponse();
+			cartResponse.setQuantity(cart.getQuantity());
+			cartResponse.setTicket(cartTicketResponse);
+
+			result.add(cartResponse);
+
+		}
+
 		return result;
 	}
 

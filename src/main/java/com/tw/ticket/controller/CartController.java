@@ -83,7 +83,6 @@ public class CartController {
 			this.name = ticket.getName();
 			this.price = ticket.getPrice();
 			this.description = ticket.getDescription();
-			this.image = ticket.getImgUrlEx(0);
 		}
 
 		private int ticketId;

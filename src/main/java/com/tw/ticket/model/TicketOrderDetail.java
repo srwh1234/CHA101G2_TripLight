@@ -17,7 +17,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketOrderDetail {
+public class TicketOrderDetail implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int REFUND_NONE = 0;
 	public static int REFUND_REVIEW = 1;

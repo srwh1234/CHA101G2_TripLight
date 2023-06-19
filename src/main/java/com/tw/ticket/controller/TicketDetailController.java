@@ -2,6 +2,7 @@ package com.tw.ticket.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,8 +31,8 @@ public class TicketDetailController {
 
 	// 票券細項
 	@GetMapping("/ticketdetail")
-	public DetailResponse detail(@RequestParam("id") final int id) {
-		return ticketService.getItem(id);
+	public DetailResponse detail(@RequestParam final int memberId, @RequestParam final int ticketId) {
+		return ticketService.getItem(memberId, ticketId);
 	}
 
 	// 票券留言
@@ -58,7 +59,6 @@ public class TicketDetailController {
 			this.longitude = ticket.getLongitude();
 			this.rating = ticket.getRatingSum() / ticket.getRatingCount();
 			this.ratingPerson = ticket.getRatingCount();
-			this.images = ticket.getImgUrlExs();
 		}
 
 		private long ticketId;
@@ -76,7 +76,8 @@ public class TicketDetailController {
 		private double longitude;
 		private double rating;
 		private int ratingPerson;
-		private ArrayList<String> images;
+		private boolean favorite;
+		private List<String> images;
 		private PromotionResponse promotion;// XXX 未完成
 	}
 

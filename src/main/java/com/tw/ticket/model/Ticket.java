@@ -1,20 +1,15 @@
 package com.tw.ticket.model;
 
-import static com.tw.ticket.controller.ImageController.IMG_URL;
-
+import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.data.annotation.Transient;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +19,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ticket {
+public class Ticket implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public static int DISABLED = 0;
 	public static int ENABLED = 1;
@@ -69,37 +66,5 @@ public class Ticket {
 
 	@Transient
 	private String imageSha = "";// 無使用
-
-	// cascade表示存檔時 也一起寫入TicketImage
-	@OneToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.PERSIST*/)
-	@JoinColumn(name = "ticketId")
-	private List<TicketImage> ticketImages = new ArrayList<>();
-
-	// ----------------------------
-
-	// 獲得指定索引的圖片路徑
-	public String getImgUrlEx(final int index) {
-		if (ticketImages.isEmpty()) {
-			return IMG_URL + 0;
-		}
-		if (index >= ticketImages.size()) {
-			return IMG_URL + 0;
-		}
-		final TicketImage img = ticketImages.get(index);
-		return IMG_URL + img.getId();
-	}
-
-	// 獲得指定索引的圖片路徑的陣列
-	public ArrayList<String> getImgUrlExs() {
-		final ArrayList<String> result = new ArrayList<>();
-		if (ticketImages.isEmpty()) {
-			result.add(IMG_URL + 0);
-			return result;
-		}
-		ticketImages.forEach(img -> {
-			result.add(IMG_URL + img.getId());
-		});
-		return result;
-	}
 
 }

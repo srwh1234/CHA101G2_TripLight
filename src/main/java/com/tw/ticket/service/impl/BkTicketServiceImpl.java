@@ -2,6 +2,7 @@ package com.tw.ticket.service.impl;
 
 import static com.tw.ticket.model.Ticket.DISABLED;
 import static com.tw.ticket.model.TicketSn.NOT_USED;
+import static com.tw.ticket.service.impl.ImageServiceImpl.IMG_URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 	@Autowired
 	private BkImageService bkImageService;
 
+	@Autowired
+	private ImageServiceImpl imageService;
+
 	// 後台票券清單 (分頁)
 	@Override
 	public SearchResponse getItems(final SearchRequest request) {
@@ -87,7 +91,6 @@ public class BkTicketServiceImpl implements BkTicketService {
 			ticketResponse.setSupplierName(ticket.getSupplierName());
 			ticketResponse.setAvailable(available);
 			response.getTickets().add(ticketResponse);
-
 		});
 		return response;
 	}
@@ -121,8 +124,10 @@ public class BkTicketServiceImpl implements BkTicketService {
 		dto.setRatingPerson(ticket.getRatingCount());
 
 		// 圖片url
-		if (!ticket.getTicketImages().isEmpty()) {
-			dto.setImages(ticket.getImgUrlExs());
+		final List<String> images = imageService.findImgUrls(ticketId);
+		images.remove(IMG_URL + 0);
+		if (!images.isEmpty()) {
+			dto.setImages(images);
 		}
 
 		return dto;
@@ -306,8 +311,8 @@ public class BkTicketServiceImpl implements BkTicketService {
 	// 使用Google Api取得指定地址的經緯度
 	private LatLng getLatLngFromAddress(final String address) {
 		final String apiKey = config.getGoogleApiKey();
-		final GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build();
-		try {
+		// final GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build();
+		try (GeoApiContext geoApiContext = new GeoApiContext.Builder().apiKey(apiKey).build()) {
 			final GeocodingResult[] results = GeocodingApi.geocode(geoApiContext, address).await();
 			if (results != null && results.length > 0) {
 				return results[0].geometry.location;

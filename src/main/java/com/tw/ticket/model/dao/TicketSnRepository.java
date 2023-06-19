@@ -12,7 +12,7 @@ import com.tw.ticket.model.TicketSn;
 @Repository
 public interface TicketSnRepository extends JpaRepository<TicketSn, Integer> {
 
-	// 關鍵字搜尋 hql
+	// 關鍵字搜尋
 	@Query("SELECT t FROM TicketSn t WHERE t.ticket.ticketId=:id AND t.status=0")
 	public List<TicketSn> searchUsableSn(@Param("id") int ticketId);
 

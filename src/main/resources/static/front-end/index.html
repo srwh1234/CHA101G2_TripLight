@@ -320,7 +320,7 @@
           </li>
           <li>
             <div class="banner-top3">
-              <div class="overlay1">
+              <div class="overlay">
                 <div class="container">
                   <div class="banner-info">
                     <h3 class="text-wh">
@@ -394,7 +394,7 @@
             <div class="counter">
               <span class="fa fa-solid fa-newspaper"></span>
               <div class="timer time4 count-title count-number">0</div>
-              <p class="count-text text-uppercase">旅遊文章</p>
+              <p class="count-text text-uppercase">AI行程收藏</p>
             </div>
           </div>
         </div>
@@ -446,7 +446,7 @@
         <p class="text mt-2 mb-5 text-center">
           探索多樣性豐富的套裝行程，讓您的旅行更輕鬆愉快。從浪漫之旅到刺激的冒險，我們提供各種各樣的行程，滿足不同旅客的需求。無論是短途旅行還是長途旅行，我們都有適合您的選擇。
         </p>
-        <div class="row">
+        <div class="row recommendTrip">
           <div class="col-lg-3 col-sm-6">
             <div class="image-tour position-relative">
               <a href="packages_detail.html"
@@ -570,10 +570,10 @@
         <p class="text mt-2 mb-2 text-center">
           無論您是喜愛自然風光、文化古蹟或是美食之旅，我們都有適合您的票券選擇。
         </p>
-        <div class="row inner-sec-w3layouts-w3pvt-lauinfo">
+        <div class="row recommendTicket inner-sec-w3layouts-w3pvt-lauinfo">
           <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
             <h4 class="destination mb-3">桃園青埔</h4>
-            <div class="image-position position-relative">
+            <div class="image-position position-relative image-ticket">
               <img src="images/xpark.jpg" class="card-img" alt="" />
               <div class="destinations-info">
                 <div class="caption mb-lg-3">
@@ -585,7 +585,7 @@
           </div>
           <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
             <h4 class="destination mb-3">日本東京</h4>
-            <div class="image-position position-relative">
+            <div class="image-position position-relative image-ticket">
               <img src="images/desiny.jpg" class="card-img" alt="" />
               <div class="destinations-info">
                 <div class="caption mb-lg-3">
@@ -597,7 +597,7 @@
           </div>
           <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
             <h4 class="destination mb-3">日本東京</h4>
-            <div class="image-position position-relative">
+            <div class="image-position position-relative image-ticket">
               <img src="images/SHIBUYA_SKY.jpg" class="card-img" alt="" />
               <div class="destinations-info">
                 <div class="caption mb-lg-3">
@@ -609,7 +609,7 @@
           </div>
           <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
             <h4 class="destination mb-3">日本大阪</h4>
-            <div class="image-position position-relative">
+            <div class="image-position position-relative image-ticket">
               <img src="images/Universal_Studio.jpg" class="card-img" alt="" />
               <div class="destinations-info">
                 <div class="caption mb-lg-3">
@@ -755,54 +755,134 @@
 
     <script>
       window.addEventListener("load", function () {
-        // 增加動畫
-        $(".time1").animate(
-          // 動畫終點
-          { num: 5683 },
-          {
-            // 持續時間
-            duration: 8000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
-        // 增加動畫
-        $(".time2").animate(
-          // 動畫終點
-          { num: 3566 },
-          {
-            // 持續時間
-            duration: 6000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
-        // 增加動畫
-        $(".time3").animate(
-          // 動畫終點
-          { num: 1688 },
-          {
-            // 持續時間
-            duration: 4000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
-        // 增加動畫
-        $(".time4").animate(
-          // 動畫終點
-          { num: 764 },
-          {
-            // 持續時間
-            duration: 2000,
-            step: function (now) {
-              $(this).text(Math.floor(now)); // 更新數字
-            },
-          }
-        );
+        // ==============================顯示各項目數量============================================
+        $.ajax({
+          type: "GET",
+          url: "/counts",
+          success: function (response) {
+            console.log(response);
+            // 增加動畫
+            $(".time1").animate(
+              // 動畫終點
+              { num: response.memberNumber + 1000 },
+              {
+                // 持續時間
+                duration: 5000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+            // 增加動畫
+            $(".time2").animate(
+              // 動畫終點
+              { num: response.tripNumber + 1000 },
+              {
+                // 持續時間
+                duration: 5000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+            // 增加動畫
+            $(".time3").animate(
+              // 動畫終點
+              { num: response.ticketNumber + 1000 },
+              {
+                // 持續時間
+                duration: 5000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+            // 增加動畫
+            $(".time4").animate(
+              // 動畫終點
+              { num: response.aiFavoriteNumber + 1000 },
+              {
+                // 持續時間
+                duration: 5000,
+                step: function (now) {
+                  $(this).text(Math.floor(now)); // 更新數字
+                },
+              }
+            );
+          },
+          error: function (error) {
+            console.error(error);
+          },
+        });
+        // ==============================顯示各項目數量============================================
+        // ==============================接收熱門套裝行程==========================================
+        $.ajax({
+          url: "/index/trips",
+          method: "GET",
+          dataType: "json",
+          success: function (packages) {
+            console.log("接收資料");
+            console.log(packages);
+
+            for (let i = 0; i < packages.length; i++) {
+              $(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
+        <div class="image-tour position-relative">
+          <a href="packages_detail.html"
+            ><img src=${packages[i].tripImage} alt="" class="card-img"
+          /></a>
+          <p><span class="fa fa-tags"></span> <span>${packages[i].priceAdult}起</span></p>
+        </div>
+        <div class="package-info">
+          <h6 class="mt-1">
+            <span class="fa fa-map-marker mr-2"></span> ${packages[i].city}
+          </h6>
+          <h5 class="my-2">${packages[i].tripName}</h5>
+          <p class="">${packages[i].tripContent}</p>
+          <ul class="listing mt-3">
+            <li>
+              Duration :
+              <span>${packages[i].tripDay} Days</span>
+            </li>
+          </ul>
+        </div>
+        </div>`);
+            }
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+        // ==============================接收熱門套裝行程==========================================
+        // ==============================接收熱門票券==============================================
+        $.ajax({
+          url: "/index/tickets",
+          method: "GET",
+          dataType: "json",
+          success: function (tickets) {
+            console.log("接收資料");
+            console.log(tickets);
+
+            for (let i = 0; i < tickets.length; i++) {
+              $(".recommendTicket")
+                .append(`<div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
+            <h4 class="destination mb-3">${tickets[i].city}</h4>
+            <div class="image-position position-relative image-ticket">
+              <img src=${tickets[i].image} class="card-img" alt="" />
+              <div class="destinations-info">
+                <div class="caption mb-lg-3">
+                  <h4>${tickets[i].name}</h4>
+                  <a href="tickets_detail.html?id=${tickets[i].ticketId}">立即購買</a>
+                </div>
+              </div>
+            </div>
+          </div>`);
+            }
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+        // ==============================接收熱門票券==============================================
       });
     </script>
   </body>

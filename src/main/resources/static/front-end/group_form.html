@@ -181,7 +181,7 @@
             <input
               type="email"
               class="form-control"
-              id="email"
+              id="email2"
               name="email"
               required
             />
@@ -248,97 +248,108 @@
           </div>
           <div class="form-group mb-3">
             <label class="mb-2">行程偏好：</label><br />
-            <div class="row">
-              <div class="col-sm-3">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activity1"
-                    name="activity[]"
-                    value="文化古蹟"
-                    class="form-check-input"
-                  />
-                  <label for="activities1">文化古蹟</label>
+            <div class="accordion-item">
+              <input
+                class="form-control select-input collapsed"
+                id="preferred-activity"
+                type="text"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-controls="collapseOne"
+                style="border: none; cursor: pointer"
+              />
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse collapsed"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activity1"
+                      name="activity[]"
+                      value="文化古蹟"
+                      class="form-check-input"
+                    />
+                    <label for="activities1">文化古蹟</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activity2"
+                      name="activity[]"
+                      value="美食饕餮"
+                      class="form-check-input"
+                    />
+                    <label for="activities2">美食饕餮</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activity3"
+                      name="activity[]"
+                      value="自然風景"
+                      class="form-check-input"
+                    />
+                    <label for="activities3">自然風景</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activity4"
+                      name="activity[]"
+                      value="水上活動"
+                      class="form-check-input"
+                    />
+                    <label for="activities4">水上活動</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activity5"
+                      name="activity[]"
+                      value="登山健行"
+                      class="form-check-input"
+                    />
+                    <label for="activities5">登山健行</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activities6"
+                      name="activity[]"
+                      value="購物體驗"
+                      class="form-check-input"
+                    />
+                    <label for="activities6">購物體驗</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="activity7"
+                      name="activity[]"
+                      value="夜市文化"
+                      class="form-check-input"
+                    />
+                    <label for="activities7">夜市文化</label>
+                  </div>
                 </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activity2"
-                    name="activity[]"
-                    value="美食饕餮"
-                    class="form-check-input"
-                  />
-                  <label for="activities2">美食饕餮</label>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activity3"
-                    name="activity[]"
-                    value="自然風景"
-                    class="form-check-input"
-                  />
-                  <label for="activities3">自然風景</label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activity4"
-                    name="activity[]"
-                    value="水上活動"
-                    class="form-check-input"
-                  />
-                  <label for="activities4">水上活動</label>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activity5"
-                    name="activity[]"
-                    value="登山健行"
-                    class="form-check-input"
-                  />
-                  <label for="activities5">登山健行</label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activities6"
-                    name="activities"
-                    value="購物體驗"
-                    class="form-check-input"
-                  />
-                  <label for="activities6">購物體驗</label>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    id="activity7"
-                    name="activity[]"
-                    value="夜市文化"
-                    class="form-check-input"
-                  />
-                  <label for="activities7">夜市文化</label>
-                </div>
-              </div>
-              <div class="form-group mb-3">
-                <label for="additional-requests" class="mb-2 mt-2"
-                  >其他需求：</label
-                >
-                <textarea
-                  class="form-control"
-                  id="additional-requests"
-                  name="additional-requests"
-                  rows="3"
-                ></textarea>
               </div>
             </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="message" class="mb-2">其他需求：</label>
+            <textarea
+              class="form-control"
+              id="message"
+              name="message"
+              maxlength="100"
+              rows="3"
+              style="resize: none"
+              value=""
+            ></textarea>
           </div>
           <div class="d-grid gap-2 mt-2">
             <button class="btn btn-block sent-butnn">送出</button>
@@ -467,13 +478,88 @@
     </div>
     <!-- move top -->
 
-    <!-- 載入booking 處理 -->
-    <script src="./js/booking.js"></script>
+    <!-- 載入bootstrap js -->
+    <script src="js/bootstrap.bundle.min.js"></script>
 
     <!--載入 jQuery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- 載入axios -->
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      // 設定下拉式多選表單
+      $(".select-input").blur(function () {
+        activitiesValues = "";
+        $("input[name='activity[]']:checked").each(function () {
+          activitiesValues += $(this).val() + "、";
+        });
+        activitiesValues = activitiesValues.slice(0, -1); // 刪掉最後一個逗號，返回字符串中從 0 開始直到倒數第一個字符
+        $(this).val(activitiesValues);
+      });
+
+      // 監聽送出按鈕
+      $(".sent-butnn").on("click", function (e) {
+        e.preventDefault();
+
+        // 抓表單資料
+        const name = $("#name").val();
+        const email = $("#email2").val();
+        const phone = $("#phone").val();
+        const groupSize = $("#group-size").val();
+        const tripDuration = $("#trip-duration").val();
+        const preferredDestination = $("#preferred-destination").val();
+        const preferredActivity = $("#preferred-activity").val();
+        const message = $("#message").val();
+
+        // 包成物件送出
+        let groupData = {
+          name: name,
+          email: email,
+          phone: phone,
+          groupSize: groupSize,
+          tripDuration: tripDuration,
+          preferredDestination: preferredDestination,
+          preferredActivity: preferredActivity,
+          message: message,
+        };
+
+        // 送出成功動畫
+        Swal.fire({
+          icon: "success",
+          title: "送出成功",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        // 清空資料
+        $("#name").val("");
+        $("#email2").val("");
+        $("#phone").val("");
+        $("#group-size").val("");
+        $("#trip-duration").val("");
+        $("#preferred-destination").val("");
+        $("input[name='activity[]']:checked").prop("checked", false);
+        $("#preferred-activity").val("");
+        $("#message").val("");
+
+        // AJAX post
+        $.ajax({
+          type: "POST",
+          url: "/groups",
+          data: JSON.stringify(groupData),
+          contentType: "application/json",
+          success: function (response) {
+            console.log(response);
+          },
+          error: function (error) {
+            console.error(error);
+          },
+        });
+      });
+    </script>
   </body>
   <!-- login顯示 -->
   <script src="/js/Login.js"></script>

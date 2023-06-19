@@ -304,7 +304,7 @@
           <label><input type="checkbox" />記住我</label>
           <a href="#">忘記密碼</a>
         </div>
-        <button type="submit" class="main-btn">Login</button>
+        <button type="button" class="main-btn">Login</button>
         <div class="register">
           <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
         </div>
@@ -332,7 +332,7 @@
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
         </div>
-        <button type="submit" class="main-btn">註冊</button>
+        <button type="button" class="main-btn">註冊</button>
         <div class="register">
           <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
         </div>
@@ -586,6 +586,8 @@
   <!-- TODO: 這是正文 -->
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/jquery-3.6.4.min.js"></script>
+  <script src="./js/sweetalert.js"></script>
+  <script src="./js/ticket_login_check.js"></script>
   <script>
     //假資料-隨機
     let resultRnd = [
@@ -723,7 +725,7 @@
     */
     function fetch_data() {
       // 取回隨機票券
-      fetch(`http://localhost:8080/rndtickets`)
+      fetch(`${getDomainName()}/rndtickets`)
         .then(response => response.json())
         .then(data => resultRnd = data)
         .catch(error => console.log(error))
@@ -732,7 +734,7 @@
         });
 
       // 取回熱門票券
-      fetch(`http://localhost:8080/hottickets`)
+      fetch(`${getDomainName()}/hottickets`)
         .then(response => response.json())
         .then(data => resultHot = data)
         .catch(error => console.log(error))
@@ -776,7 +778,7 @@
 
       oldCondition = post;
 
-      fetch(`http://localhost:8080/searchtickets`, {
+      fetch(`${getDomainName()}/searchtickets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

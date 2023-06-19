@@ -1,6 +1,6 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.controller.ImageController.IMG_URL;
+import static com.tw.ticket.service.impl.ImageServiceImpl.IMG_URL;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -15,8 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketImage;
-import com.tw.ticket.model.dao.TicketImageRepository;
 import com.tw.ticket.model.dao.TicketRepository;
+import com.tw.ticket.model.redis.TicketImageRedis;
 import com.tw.ticket.service.BkImageService;
 
 @Service
@@ -27,7 +27,7 @@ public class BkImageServiceImpl implements BkImageService {
 	private TicketRepository repository;
 
 	@Autowired
-	private TicketImageRepository ticketImageRepository;
+	private TicketImageRedis ticketImgRedis;
 
 	// 後台新增圖片集合
 	@Override
@@ -47,7 +47,7 @@ public class BkImageServiceImpl implements BkImageService {
 				continue;
 			}
 		}
-		ticketImageRepository.saveAll(ticketImages);
+		ticketImgRedis.saveAll(ticketImages);
 	}
 
 	// 後台票券新增圖片
@@ -69,7 +69,7 @@ public class BkImageServiceImpl implements BkImageService {
 			image.setImage(array);
 			image.setUploadTime(new Timestamp(System.currentTimeMillis()));
 
-			ticketImageRepository.save(image);
+			ticketImgRedis.save(image);
 
 			result = IMG_URL + image.getId();
 		} catch (final IOException e) {
@@ -82,12 +82,12 @@ public class BkImageServiceImpl implements BkImageService {
 	// 後台票券移除圖片
 	@Override
 	public boolean removeImage(final int employeeId, final int imageId) {
-		final TicketImage image = ticketImageRepository.findById(imageId).orElse(null);
+		final TicketImage image = ticketImgRedis.findById(imageId);
 
 		if (image == null) {
 			return false;
 		}
-		ticketImageRepository.delete(image);
+		ticketImgRedis.delete(image);
 		return true;
 	}
 
