@@ -1,14 +1,12 @@
 package com.tw.contact.controller;
 
-import com.tw.contact.QuestReportDTO;
+import com.tw.contact.QuestReportRequestDTO;
 import com.tw.contact.modelJPA.QuestReport;
-import com.tw.contact.modelJPA.dao.QuestReportRepository;
 import com.tw.contact.service.QuestReportService;
 import com.tw.member.model.dao.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,14 +23,18 @@ public class QuestReportController {
     }
 
 
-    //送出問題
-//    @PostMapping("/createQuestReport")
-//    public void save(@RequestBody QuestReportDTO questReportDTO){
-//        QuestReport questReport = new QuestReport();
-//        questReport.setQContent(questReportDTO.getqContent());
-//        questReport.setMember(memberRepository.findByMemberId(2));
-//        questReportService.save(questReport);
-//    }
+    //會員送出問題
+    @PostMapping("/createQuestReport")
+    public void save(@RequestBody QuestReportRequestDTO questReportRequestDTO){
+        QuestReport questReport = new QuestReport();
+        questReport.setMember(memberRepository.findByMemberId(questReportRequestDTO.getMemberId()));
+        questReport.setQContent(questReportRequestDTO.getQContent());
+        questReport.setEndTime(questReportRequestDTO.getStartTime());
+        questReportService.save(questReport);
+        System.out.println();
+        questReportRequestDTO.toString();
+        System.out.println();
+    }
 
 //    @GetMapping("/ShowQuestReport")
 //    public List<QuestReportDTO> showQuestReport(){

@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 
 <head>
-    <title>TripLight | Login</title>
+    <title>TripLight | QuestionForm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <!-- 關鍵字設定 -->
@@ -431,6 +431,8 @@
 
 </body>
 <script>
+    var memberId = sessionStorage.getItem('memberId');
+
     document.querySelector('.quest-report').addEventListener('submit', function (e) {
         e.preventDefault();
         var content = document.getElementById('message').value;
@@ -442,6 +444,7 @@
             },
             body: JSON.stringify({
                 qContent: content,
+                memberId: memberId,
             }),
         })
             .then(function (response) {
@@ -452,7 +455,7 @@
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            })
     });
 
 
