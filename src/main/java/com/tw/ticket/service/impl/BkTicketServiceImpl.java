@@ -24,7 +24,6 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
-import com.tw.ticket.Config;
 import com.tw.ticket.MyUtils;
 import com.tw.ticket.controller.BkTicketController.SearchResponse;
 import com.tw.ticket.controller.BkTicketController.TicketResponse;
@@ -43,9 +42,6 @@ import com.tw.ticket.service.BkTicketService;
 public class BkTicketServiceImpl implements BkTicketService {
 
 	private static final Logger log = LoggerFactory.getLogger(BkImageServiceImpl.class);
-
-	@Autowired
-	private Config config;
 
 	@Autowired
 	private GeoApiContext geoApiContext;
