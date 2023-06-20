@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data //@Getter @Setter @ToString @EqualsAndHashCode @RequiredArgsConstructor
 @Entity
 @Table(name="quest_report")
-public class QuestReport {
+public class QuestionReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class QuestReport {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Column(name = "q_content")
-    private String qContent;
+    @Column(name = "question_content")
+    private String questionContent;
 
-    @Column(name = "r_content")
-    private String rContent;
+    @Column(name = "reply_content")
+    private String replyContent;
 
     @Column(name = "state")
     private int state;
@@ -47,14 +47,15 @@ public class QuestReport {
     @Column(name = "score")
     private int score;
 
-    public QuestReport() {
+    public QuestionReport() {
     }
 
-    public QuestReport(Member member, Employee employee, String qContent, String rContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
+    public QuestionReport(int id, Member member, Employee employee, String questionContent, String replyContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
+        this.id = id;
         this.member = member;
         this.employee = employee;
-        this.qContent = qContent;
-        this.rContent = rContent;
+        this.questionContent = questionContent;
+        this.replyContent = replyContent;
         this.state = state;
         this.startTime = startTime;
         this.endTime = endTime;
