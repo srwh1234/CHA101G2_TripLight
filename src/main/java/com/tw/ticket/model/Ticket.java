@@ -3,8 +3,6 @@ package com.tw.ticket.model;
 import java.io.Serializable;
 import java.sql.Date;
 
-import org.springframework.data.annotation.Transient;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -63,8 +61,5 @@ public class Ticket implements Serializable {
 	private Integer ratingSum;// 累計評價分數
 
 	private Integer ratingCount;// 評價人數
-
-	@Transient
-	private String imageSha = "";// 無使用
 
 }
