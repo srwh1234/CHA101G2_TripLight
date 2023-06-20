@@ -9,7 +9,7 @@ import com.tw.article.model.ArticleImage;
 
 public interface ArticleImageService {
 	
-	String addArticleImage(int articleimage, MultipartFile file);
+	String addArticleImage(int id, MultipartFile file);
 	
 	ArticleImage updateArticleImage(Integer id, ArticleImage articleimage);
 	

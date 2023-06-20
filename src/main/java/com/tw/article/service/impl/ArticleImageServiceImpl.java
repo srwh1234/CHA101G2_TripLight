@@ -19,7 +19,7 @@ import com.tw.article.model.ArticleImage;
 @Service
 public class ArticleImageServiceImpl implements com.tw.article.service.ArticleImageService {
 	
-	public static String IMG_URL = "http://localhost:8080/img/";
+	public static String IMG_URL = "http://localhost:8080/article_image/";
 	
 	@Autowired
 	private ArticleRepository repository;
