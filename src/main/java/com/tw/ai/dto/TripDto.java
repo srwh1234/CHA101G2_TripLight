@@ -1,6 +1,6 @@
 package com.tw.ai.dto;
 
-import com.tw.trip.model.pojo.Trip;
+import com.tw.trip.pojo.Trip;
 
 import lombok.Data;
 

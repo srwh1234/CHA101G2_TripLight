@@ -3,7 +3,7 @@ package com.tw.trip.service;
 
 import com.tw.ai.dto.TripDto;
 
-import com.tw.trip.model.TripImage;
+import com.tw.trip.pojo.TripImage;
 import com.tw.trip.repository.TripRepository;
 import com.tw.trip.repository.TripImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;

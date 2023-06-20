@@ -1,4 +1,4 @@
-package com.tw.trip.model.pojo;
+package com.tw.trip.pojo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,16 +21,26 @@ public class TourGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tourGroupId;
+
     private Integer tripId;
+
     private Integer priceAdult;
+
     private Integer priceChild;
+
     private Date startDate;
+
     private Integer confirmedTravelersNo;
+
     private Integer minTravelersNo;
+
     private Integer maxTravelersNo;
+
     private Integer status;
+
     @Transient
     private String formattedStartDate;
+
     @Transient
     private String formattedEndDate;
 

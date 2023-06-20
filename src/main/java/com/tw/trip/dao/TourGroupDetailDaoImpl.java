@@ -1,8 +1,7 @@
-package com.tw.trip.model.dao;
+package com.tw.trip.dao;
 
 
-import com.tw.trip.model.pojo.TourGroup;
-import com.tw.trip.model.pojo.TourGroupDetail;
+import com.tw.trip.pojo.TourGroupDetail;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;

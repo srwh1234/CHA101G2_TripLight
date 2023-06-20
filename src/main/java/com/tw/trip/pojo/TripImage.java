@@ -1,4 +1,4 @@
-package com.tw.trip.model;
+package com.tw.trip.pojo;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,4 +17,8 @@ public class TripImage{
     private byte[] image;
 
     private Timestamp uploadTime;
+
+    @Transient
+    private String imageBase64;
+
 }

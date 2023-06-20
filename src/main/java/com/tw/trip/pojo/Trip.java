@@ -1,6 +1,5 @@
-package com.tw.trip.model.pojo;
+package com.tw.trip.pojo;
 
-import com.tw.trip.model.TripImage;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +20,6 @@ public class Trip implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int tripId;
 
     private int vendorId;
@@ -55,6 +53,13 @@ public class Trip implements Serializable {
     private Integer status;
 
     private String tripContent;
+
+    @Transient
+    private String imageBase64;
+
+    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "tripId")
+    private List<TripComment> tripComments = new ArrayList<>();
 
     // cascade表示存檔時 也一起寫入AiLocations
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

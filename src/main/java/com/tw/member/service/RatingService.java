@@ -11,7 +11,7 @@ import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
 import com.tw.ticket.model.TicketOrder;
 import com.tw.ticket.model.dao.TicketOrderRepository;
-import com.tw.trip.model.pojo.TripOrder;
+import com.tw.trip.pojo.TripOrder;
 import com.tw.trip.repository.TripOrderRepository;
 
 @Service

@@ -63,7 +63,7 @@
     <link href="css/login.css" rel="stylesheet" />
 
     <style>
-        .basic {
+        .basic{
             font-size: 20px;
         }
     </style>
@@ -205,112 +205,118 @@
     <!-- ===== 開始 ===== -->
 
     <form id="tripOrder">
-        <div class="container mt-5 shadow-none p-3 mb-5 bg-light rounded">
-            <!-- ====== 訂購資訊 ====== -->
-            <div class="row">
-                <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5">
-                    <h3 class="pt-2"> 訂購資訊 </h3>
-                    <hr>
-                    <div class="col-10">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item basic" id="groupDate"> </li>
-                            <li class="list-group-item basic" id="tripName"></li>
-                            <li class="list-group-item basic" id="qtyChild"></li>
-                            <li class="list-group-item basic" id="qtyAdult"></li>
-                            <li class="list-group-item basic" id="totalAmount"></li>
-                        </ul>
-                    </div>
+    <div class="container mt-5 shadow-none p-3 mb-5 bg-light rounded">
+        <!-- ====== 訂購資訊 ====== -->
+        <div class="row">
+            <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5">
+                <h3 class="pt-2"> 訂購資訊 </h3>
+                <hr>
+                <div class="col-10">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item basic" id="groupDate"> </li>
+                        <li class="list-group-item basic" id="tripName"></li>
+                        <li class="list-group-item basic" id="qtyChild"></li>
+                        <li class="list-group-item basic" id="qtyAdult"></li>
+                        <li class="list-group-item basic" id="totalAmount"></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- ====== 訂購人資料 ====== -->
+            <span id="datatest" value="20202020202">
+                <span id="datatestchild" value="60606060606"></span>
+            </span>>
+            <div class="row shadow-lg p-3 mb-5 bg-body rounded">
+                <div class="row">
+                    <h3>訂購人資料</h3>
+                </div>
+
+                <hr>
+                <div class="col-auto">
+                    <label for="memberName" class="col-form-label">姓名</label>
+                    <input type="text" id="memberName" class="form-control"
+                        aria-describedby="passwordHelpInline">
+
+
+                </div>
+                <div class="col-auto">
+                    <label for="memberPhone" class="col-form-label">電話</label>
+                    <input type="text" id="memberPhone" class="form-control"
+                        aria-describedby="passwordHelpInline">
+
+                </div>
+                <div class="col-auto">
+                    <label for="memberEmail" class="col-form-label">郵件</label>
+                    <input type="text" id="memberEmail" class="form-control"
+                        aria-describedby="passwordHelpInline">
 
                 </div>
 
-                <!-- ====== 訂購人資料 ====== -->
-                <div class="row shadow-lg p-3 mb-5 bg-body rounded">
-                    <div class="row">
-                        <h3>訂購人資料</h3>
+                <!-- ====== 付款方式 ====== -->
+                <div class="row mt-5">
+                    <h3>付款方式</h3>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col-auto">
+
+                        <div class="form-check">
+                            <label for="payType" class="col-form-label">信用卡/簽帳金融卡</label>
+                            <input type="text" id="payType" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+
+
+                    </div>
+                    <div class="col-auto">
+                        <label for="cardValid" class="col-form-label">有效日期</label>
+                        <input type="text" id="cardValid" class="form-control"
+                            aria-describedby="passwordHelpInline">
+
+                    </div>
+                    <div class="col-1">
+                        <label for="scv" class="col-form-label">末三碼</label>
+                        <input type="text" id="scv" class="form-control"
+                            aria-describedby="passwordHelpInline">
                     </div>
 
+                    <br>
+                    <br>
+                    <h6> *卡號用於保留資格 </h6>
+                </div>
+
+
+                <!-- ====== 旅客名單 ======  -->
+                <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5 justify-content-center">
+
+
+                    <!-- ====== Traveler List ======  -->
+                    <h3 class="pt-2"> 旅客名單 </h3>
                     <hr>
-                    <div class="col-auto">
-                        <label for="memberName" class="col-form-label">姓名</label>
-                        <input type="text" id="memberName" class="form-control" aria-describedby="passwordHelpInline">
 
+                    <!-- ====== Traveler Detail ======  -->
 
-                    </div>
-                    <div class="col-auto">
-                        <label for="memberPhone" class="col-form-label">電話</label>
-                        <input type="text" id="memberPhone" class="form-control" aria-describedby="passwordHelpInline">
-
-                    </div>
-                    <div class="col-auto">
-                        <label for="memberEmail" class="col-form-label">郵件</label>
-                        <input type="text" id="memberEmail" class="form-control" aria-describedby="passwordHelpInline">
+                    <div id="travelerList">
+                    <!-- dynamic travelerList -->
 
                     </div>
 
-                    <!-- ====== 付款方式 ====== -->
-                    <div class="row mt-5">
-                        <h3>付款方式</h3>
-                    </div>
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-auto">
-
-                            <div class="form-check">
-                                <label for="payType" class="col-form-label">信用卡/簽帳金融卡</label>
-                                <input type="text" id="payType" class="form-control"
-                                    aria-describedby="passwordHelpInline">
-                            </div>
+                            <!-- ====== //Traveler Detail ======  -->
 
 
-                        </div>
-                        <div class="col-auto">
-                            <label for="cardValid" class="col-form-label">有效日期</label>
-                            <input type="text" id="cardValid" class="form-control"
-                                aria-describedby="passwordHelpInline">
-
-                        </div>
-                        <div class="col-1">
-                            <label for="scv" class="col-form-label">末三碼</label>
-                            <input type="text" id="scv" class="form-control" aria-describedby="passwordHelpInline">
-                        </div>
-
-                        <br>
-                        <br>
-                        <h6> *卡號用於保留資格 </h6>
-                    </div>
-
-
-                    <!-- ====== 旅客名單 ======  -->
-                    <div class="row shadow-lg p-3 mb-5 bg-body rounded mt-5 justify-content-center">
-
-
-                        <!-- ====== Traveler List ======  -->
-                        <h3 class="pt-2"> 旅客名單 </h3>
-                        <hr>
-
-                        <!-- ====== Traveler Detail ======  -->
-
-                        <div id="travelerList">
-                            <!-- dynamic travelerList -->
-
-                        </div>
-
-                        <!-- ====== //Traveler Detail ======  -->
-
-
-                        <!-- ====== 特殊需求 ======  -->
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="remarks" class="col-form-label">特殊需求: </label>
-                                <div class="form-group">
-                                    <textarea style="height: 200px" class="form-control" id="remarks"
-                                        rows="3"></textarea>
+                            <!-- ====== 特殊需求 ======  -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="remarks" class="col-form-label">特殊需求: </label>
+                                    <div class="form-group">
+                                        <textarea style="height: 200px" class="form-control" id="remarks" rows="3">djidjidjidj</textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
-                        <!-- ====== //特殊需求 ======  -->
+                            </div>
+                            <!-- ====== //特殊需求 ======  -->
 
                     </div>
                 </div>
@@ -326,263 +332,237 @@
         </div>
     </form>
 
-    <!--footer -->
-    <footer>
-        <section class="footer footer_w3layouts_section_1its py-5">
-            <div class="container py-lg-4 py-3">
-                <div class="row footer-top">
-                    <div class="col-lg-3 col-sm-6 footer-grid_section_1">
-                        <div class="footer-title">
-                            <h3>地點資訊</h3>
-                        </div>
-                        <div class="row">
-                            <ul class="col-12 links">
-                                <li>
-                                    <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
-                                        target="_blank">地址：桃園市中壢區復興路46號9樓</a>
-                                </li>
-                                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
-                                <li>
-                                    <a href="mailto:triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
-                                </li>
-                                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-                        <div class="footer-title">
-                            <h3>認識TripLight</h3>
-                        </div>
-                        <div class="row">
-                            <ul class="col-10 links">
-                                <li><a href="about.html" class="scroll">關於我們</a></li>
-                                <li>
-                                    <a href="user_terms.html" class="scroll">使用者條款 </a>
-                                </li>
-                                <li>
-                                    <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
-                                </li>
-                                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
-                        <div class="footer-title">
-                            <h3>成為合作夥伴</h3>
-                        </div>
-                        <div class="row">
-                            <ul class="col-10 links">
-                                <li>
-                                    <a href="supplier_form.html" class="scroll">成為供應商</a>
-                                </li>
-                                <li>
-                                    <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
-                                </li>
-                                <li>
-                                    <a href="group_form.html" class="scroll">團體客製規劃</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
-                        <div class="footer-title">
-                            <h3>聯絡我們</h3>
-                        </div>
-                        <ul class="social_section_1info">
-                            <li>
-                                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
-                                        alt="facebook" /></a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                                        alt="instagram" /></a>
-                            </li>
-                            <li>
-                                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
-                            </li>
-                            <li class="youtube">
-                                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
-                                        src="./images/youtube.svg" alt="youtube" /></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </footer>
-    <!-- //footer -->
-    <!-- copyright -->
-    <div class="copyright py-3 text-center">
-        <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
-    </div>
-    <!-- //copyright -->
 
 
-    <!-- 套件 -->
+        <!-- 套件 -->
 
-    <!-- boostrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"></script>
-    <!-- 載入jQuery -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <!-- boostrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+        <!-- 載入jQuery -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-    <!-- 載入 Font Awesome -->
-
-
-    <!-- MDB -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
-    <!-- 載入 slick -->
-    <script type="text/javascript" src="slick/slick.min.js"></script>
-
-    <!-- 載入 Full Calendar -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
-
-    <!-- 載入 itinerary_page -->
-    <script type="text/javascript" src="itinerary_page.js"></script>
-
-    <!-- 載入 sweetalert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- 載入 Font Awesome -->
 
 
-    <script>
-        // ===== 確認彈窗 =====
-        $(document).ready(function () {
+        <!-- MDB -->
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
+        <!-- 載入 slick -->
+        <script type="text/javascript" src="slick/slick.min.js"></script>
 
-            // ====== 訂購資訊區塊 ======
+        <!-- 載入 Full Calendar -->
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
 
-            let qtyChild = parseInt(sessionStorage.getItem('qtyChild'));
-            console.log(qtyChild);
+        <!-- 載入 itinerary_page -->
+        <script type="text/javascript" src="itinerary_page.js"></script>
 
-            if (qtyChild > 0) {
-                $('#qtyChild').text(`兒童: ${qtyChild} 人`);
-            }
-
-            let qtyAdult = parseInt(sessionStorage.getItem('qtyAdult'));
-            if (qtyAdult > 0) {
-                $('#qtyAdult').text(`大人: ${qtyAdult} 人`);
-            }
-
-            let totalQty = (qtyChild + qtyAdult);
-
-            // ====== add travelers column based on qty ======
-            let html = "";
-            for (let i = 1; i <= totalQty; i++) {
-                html += `<div class="row justify-content-end">
-                       <div class="col-9">
-                           <h5 class="pt-2"> 旅客 ${i} </h5>
-                       </div>
-                       <div class="col-3">
-                           <button type="button" class="btn btn-light">清空</button>
-                       </div>
-                   </div>
-
-                   <div class="row">
-                        <!-- name -->
-                        <div class="col-2">
-                            <label for="traveler_name" class="col-form-label">姓名</label>
-                            <input type="text" for="traveler_name" name="travelerName" class="form-control">
-                        </div>
-
-                        <!-- age -->
-                        <div class="col-1">
-                            <label for="traveler_age" class="col-form-label">年齡</label>
-                            <input type="number" id="traveler_age" name="travelerAge" class="form-control"
-                                   aria-describedby="passwordHelpInline">
-                        </div>
-
-                        <!-- gender -->
-                        <div class="col-2">
-                            <label for="traveler_gender" class="col-form-label">性別</label>
-                            <br>
-                            <select id="traveler_gender" name="travelerGender" class="form-select" aria-label="Default select example">
-                                <option selected>請選擇</option>
-                                <option value="0">女</option>
-                                <option value="1">男</option>
-                            </select>
-
-                        </div>
+        <!-- 載入 sweetalert -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
-                    </div>
+        <script>
+            // ===== 確認彈窗 =====
+            $(document).ready(function () {
 
-                   <div class="row">
-                       <!-- phone -->
-                       <div class="col-2">
-                           <label for="traveler_phone" class="col-form-label">電話</label>
-                           <input type="text" id="traveler_phone" name="travelerPhone" class="form-control"
-                                  aria-describedby="passwordHelpInline">
+                // ====== 訂購資訊區塊 ======
 
-                       </div>
-                       <!-- email -->
-                       <div class="col-auto">
-                           <label for="traveler_email" class="col-form-label">郵件</label>
-                           <input type="email" id="traveler_email" name="travelerEmail" class="form-control"
-                                  aria-describedby="passwordHelpInline">
+                let qtyChild = parseInt(sessionStorage.getItem('qtyChild'));
+                console.log(qtyChild);
 
-                       </div>
-                       <hr class="mt-5">
-                   </div>`;
-            }
-            $('#travelerList').prepend(html);
+                if (qtyChild >0){
+                    $('#qtyChild').text(`兒童: ${qtyChild} 人`);
+                }
 
-            // ====== sent data to DB ======
-            $('#order_confirmed').on("click", function () {
-                alert('ttt');
-                let formData = $('#tripOrder').serialize();
-                $.post("http://localhost:8080/order?tourGroupId=1", formData, function (response) {
-                    console.log('AJAX request successful');
-                })
-            })
+                let qtyAdult = parseInt(sessionStorage.getItem('qtyAdult'));
+                if(qtyAdult >0){
+                    $('#qtyAdult').text(`大人: ${qtyAdult} 人`);
+                }
 
-            $.getJSON("http://localhost:8080/tripGet?tripId=1", function (response) {
+                let totalQty = (qtyChild + qtyAdult);
+                console.log("qtyChild"+qtyChild);
+                console.log("qtyAdult"+qtyAdult);
 
-                $('#tripName').text(`方案 : ${response.tripName}`);
 
-            })
+                // ====== add travelers column based on qty ======
+                let html ="";
+                for (let i=1; i<=totalQty; i++){
+                    html += `
+                       <div id="traveler${i}" >
+                               <div class="row justify-content-end"">
+                                   <div class="col-9">
+                                       <h5 class="pt-2"> 旅客 ${i} </h5>
+                                   </div>
+                                   <div class="col-3">
+                                       <button type="button" class="btn btn-light">清空</button>
+                                   </div>
+                               </div>
 
-            $.getJSON("http://localhost:8080/tourGroupGet?tripId=1", function (response) {
-                let priceChild = parseInt(response.priceChild);
-                let priceAdult = parseInt(response.priceAdult);
+                               <div class="row">
+                                    <!-- name -->
+                                    <div class="col-2">
+                                        <label for="travelerName" class="col-form-label">姓名</label>
+                                        <input type="text" id="travelerName" value="30000" class="form-control">
+                                    </div>
 
-                $('#groupDate').html(`旅遊團日期: ${response.formattedStartDate} 至 ${response.formattedEndDate}`);
-                // console.log(endDate);
+                                    <!-- age -->
+                                    <div class="col-1">
+                                        <label for="travelerAge" class="col-form-label">年齡</label>
+                                        <input type="text" id="travelerAge" value="30000" class="form-control"
+                                               aria-describedby="passwordHelpInline">
+                                    </div>
 
-                let totalAmount = (priceChild * qtyChild) + (priceAdult * qtyAdult);
+                                    <!-- gender -->
+                                    <div class="col-2">
+                                        <label for="travelerGender" class="col-form-label">性別</label>
+                                        <br>
+                                        <select id="travelerGender" class="form-select" aria-label="Default select example">
+                                            <option disabled>請選擇</option>
+                                            <option value="0">女</option>
+                                            <option value="1">男</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                $('#totalAmount').text(`總金額: ${totalAmount} 元`);
+                               <div class="row">
+                                   <!-- phone -->
+                                   <div class="col-2">
+                                       <label for="travelerPhone" class="col-form-label">電話</label>
+                                       <input type="text" id="travelerPhone" class="form-control"
+                                              aria-describedby="passwordHelpInline">
 
-            })
+                                   </div>
+                                   <!-- email -->
+                                   <div class="col-auto">
+                                       <label for="travelerEmail" class="col-form-label">郵件</label>
+                                       <input type="email" id="travelerEmail" class="form-control"
+                                              aria-describedby="passwordHelpInline">
 
-            // 当点击返回按钮时触发
-            $('#order_confirmed').click(function () {
-                // 弹出警告框
-                alert("感謝您的預定，會於7個工作天內確認給您");
+                                   </div>
+                                   <hr class="mt-5">
+                               </div>
+                    </div>`;
 
-                // 在警告框关闭后返回上一页
-                $(window).on('blur focus', function (e) {
-                    var prevType = $(this).data('prevType');
+                }
 
-                    if (prevType != e.type) {   // 用于检测是否是警告框获得焦点
-                        setTimeout(function () {
-                            history.back();
-                        }, 0);
+                $('#travelerList').prepend(html);
+
+                // console.log('測試');
+                // let data =[];
+                // for(let i=1;i<=totalQty;i++){
+                //     console.log($('#traveler'+i).find('#travelerName').attr('value'));
+                //     console.log($('#traveler'+i).find('#travelerName').val());
+                // }
+
+                // test
+
+                // let data = {
+                //     member_id : // get from session, test later
+                //     tour_group_id // get from session, test later
+                //     order_status : 0
+                //     pay_type: 'credit card'
+                //     remarks:
+                //     tourGroupDetail: [{...}, {...}, {...}]
+                // };
+
+
+
+                // ====== sent data to DB ======
+                $('#order_confirmed').on("click",function (){
+
+                    // ====== collect tourGroupDetail ======
+                    let tourGroupDetail =[];
+                    for(let i=1; i<=totalQty; i++){
+                        console.log('測試');
+                        let travelerName = $('#traveler'+i).find('#travelerName').val();
+                        let travelerAge = $('#traveler'+i).find('#travelerAge').val();
+                        let travelerGender = $('#traveler'+i).find('#travelerGender option:selected').val();
+                        let travelerPhone = $('#traveler'+i).find('#travelerPhone').val();
+                        let travelerEmail = $('#traveler'+i).find('#travelerEmail').val();
+
+                        // console.log($('#traveler'+i).find('#travelerName').attr('value'));
+                        // console.log($('#traveler'+i).find('#travelerName').val());
+
+                        let infor = {
+                            'tourGroupId' : '2',
+                            'travelerName': travelerName,
+                            'travelerPhone': travelerPhone,
+                            'travelerEmail': travelerEmail,
+                            'travelerGender': travelerGender,
+                            'travelerAge': travelerAge
+                        };
+                        tourGroupDetail.push(infor);
                     }
 
-                    $(this).data('prevType', e.type);
+                    console.log(tourGroupDetail);
+                    // ====== //collect tourGroupDetail ======
+
+                    // ====== //collect data of all ======
+                    let data = {
+                        "memberId" : "1",
+                        "tourGroupId" : "2",
+                        "orderStatus" : "0" ,
+                        "payType": "credit card",
+                        "travelersChildren": qtyChild,
+                        "travelersAdult": qtyAdult,
+                        "remarks": $('#remarks').val(),
+                        'tourGroupDetail': tourGroupDetail
+                    };
+
+                    console.log(data);
+
+                    let jsonData = JSON.stringify(data)
+                    $.post("http://localhost:8080/order", jsonData, function (response){
+                        console.log('AJAX request successful');
+                    })
+                })
+
+                // ====== 訂購資訊區塊 ======
+                $('#groupDate').html(`旅遊團日期: ${sessionStorage.getItem('formattedStartDate')} 至 ${sessionStorage.getItem('formattedEndDate')}`);
+                $('#tripName').text(`方案 : ${sessionStorage.getItem('tripName')}`);
+                let tourGroupId = sessionStorage.getItem('tourGroupId');
+
+                $.getJSON(`http://localhost:8080/getTourGroup?tourGroupId=${tourGroupId}`, function (response){
+                    let priceChild = parseInt(response.priceChild);
+                    let priceAdult = parseInt(response.priceAdult);
+
+                    let totalAmount = ( priceChild * qtyChild ) + ( priceAdult * qtyAdult );
+                    $('#totalAmount').text(`總金額: ${totalAmount} 元`);
+
+                })
+
+                // ====== 送出表單 ======
+                $('#order_confirmed').click(function () {
+
+                    alert("感謝您的預定，會於7個工作天內確認給您");
+                    sessionStorage.clear();
+
+
+                    // 在警告框关闭后返回上一页
+                    $(window).on('blur focus', function (e) {
+                        var prevType = $(this).data('prevType');
+
+                        if (prevType != e.type) {   // 用于检测是否是警告框获得焦点
+                            setTimeout(function () {
+                                window.location.href = 'http://localhost:8080/front-end/index.html';
+                            }, 5);
+                        }
+
+                        $(this).data('prevType', e.type);
+                    });
                 });
             });
-        });
 
 
 
 
-    </script>
+        </script>
 
-    <!-- login顯示 -->
-    <script src="js/Login.js"></script>
-    <!-- login顯示 -->
+        <!-- login顯示 -->
+        <script src="js/Login.js"></script>
+        <!-- login顯示 -->
 </body>
 
 </html>

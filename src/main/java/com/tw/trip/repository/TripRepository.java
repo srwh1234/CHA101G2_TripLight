@@ -1,15 +1,13 @@
 package com.tw.trip.repository;
-
-import java.util.List;
-
+import com.tw.trip.pojo.Trip;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tw.trip.model.pojo.Trip;
+import java.util.List;
 
 public interface TripRepository extends JpaRepository<Trip, Integer> {
 	//
-	List<Trip> findByCityContaining(String cityName);
+    List<Trip> findByCityContaining(String cityName);
 
 	List<Trip> findAllByOrderByTotalSalesDesc(Pageable pageable);
 }

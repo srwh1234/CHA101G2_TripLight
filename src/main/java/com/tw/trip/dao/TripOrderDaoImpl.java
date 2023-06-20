@@ -1,6 +1,6 @@
-package com.tw.trip.model.dao;
+package com.tw.trip.dao;
 
-import com.tw.trip.model.pojo.TripOrder;
+import com.tw.trip.pojo.TripOrder;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;

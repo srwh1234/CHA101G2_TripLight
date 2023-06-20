@@ -1,4 +1,4 @@
-package com.tw.trip.model.pojo;
+package com.tw.trip.pojo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,12 +18,9 @@ public class TripFavorite {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name="member_id")
     private Integer memberId;
 
-    @Column(name="trip_id")
     private Integer tripId;
 
-    @Column(name="add_time")
     private Timestamp addTime;
 }
