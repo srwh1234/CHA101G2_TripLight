@@ -96,6 +96,20 @@
             text-decoration: none;
             color: black;
         }
+
+        /*#QuestionTableBody {*/
+        /*    white-space: nowrap;*/
+        /*    overflow: hidden;*/
+        /*    text-overflow: ellipsis;*/
+        /*}*/
+
+        .table td {
+            max-width: 100px; /* 你可以根据需要调整这个值 */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
     </style>
 
 </head>
@@ -278,7 +292,6 @@
                             <thead>
                                 <tr>
                                     <th class="my-th-width-sm" data-field="order_id">訂單編號</th>
-                                    <th class="my-th-width-sm" data-field="member_id">會員編號</th>
                                     <th class="my-th-width-sm" data-field="employee_id">處理員工編號</th>
                                     <th class="my-th-width-sm" data-field="q_content">發問問題</th>
                                     <th class="my-th-width-sm" data-field="r_content">回答問題</th>
@@ -286,7 +299,6 @@
                                     <th class="my-th-width-sm" data-field="end_time">解決時間</th>
                                     <th class="my-th-width-sm" data-field="state">處理狀態</th>
                                     <th class="my-th-width-sm" data-field="score">評分</th>
-                                    <th class="my-th-width-sm"></th>
                                     <th class="my-th-width-sm"></th>
                                 </tr>
                             </thead>
@@ -425,10 +437,9 @@
                 console.log(item)
                 row.innerHTML = `
         <td>${item.id}</td>
-        <td>${item.member?.memberId || ""}</td>
         <td>${item.employee?.employeeId || ""}</td>
-        <td>${item.qsContent || ""}</td>
-        <td>${item.reContent || ""}</td>
+        <td>${item.qcontent || ""}</td>
+        <td>${item.rcontent || ""}</td>
         <td>${item.startTime || ""}</td>
         <td>${item.endTime || ""}</td>
         <td>${item.state === 0 ? '未解決' : '已解決'}</td>

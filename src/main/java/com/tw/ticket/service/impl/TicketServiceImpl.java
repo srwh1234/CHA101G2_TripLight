@@ -77,8 +77,8 @@ public class TicketServiceImpl implements TicketService {
 			}
 			if (ticket.getStatus() == ENABLED) {
 				final DescResponse response = new DescResponse(ticket);
-				final String image = imageService.findImgUrl(ticket.getTicketId());
-				response.setImage(image);
+				final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
+				response.setImage(imageUrl);
 				result.add(response);
 			}
 		}
@@ -96,8 +96,8 @@ public class TicketServiceImpl implements TicketService {
 			}
 			if (ticket.getStatus() == ENABLED) {
 				final DescResponse response = new DescResponse(ticket);
-				final String image = imageService.findImgUrl(ticket.getTicketId());
-				response.setImage(image);
+				final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
+				response.setImage(imageUrl);
 				result.add(response);
 			}
 
@@ -126,10 +126,10 @@ public class TicketServiceImpl implements TicketService {
 		response.setTotalPage(page.getTotalPages());
 
 		page.getContent().forEach(ticket -> {
-			final DescResponse radAndHotResponse = new DescResponse(ticket);
-			final String image = imageService.findImgUrl(ticket.getTicketId());
-			radAndHotResponse.setImage(image);
-			response.getTickets().add(radAndHotResponse);
+			final DescResponse descResponse = new DescResponse(ticket);
+			final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
+			descResponse.setImage(imageUrl);
+			response.getTickets().add(descResponse);
 		});
 
 		return response;
@@ -141,10 +141,10 @@ public class TicketServiceImpl implements TicketService {
 		final List<DescResponse> result = new ArrayList<>();
 
 		repository.findByCityContaining(destination).forEach(ticket -> {
-			final DescResponse radAndHotResponse = new DescResponse(ticket);
-			final String image = imageService.findImgUrl(ticket.getTicketId());
-			radAndHotResponse.setImage(image);
-			result.add(radAndHotResponse);
+			final DescResponse descResponse = new DescResponse(ticket);
+			final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
+			descResponse.setImage(imageUrl);
+			result.add(descResponse);
 		});
 		return result;
 	}
