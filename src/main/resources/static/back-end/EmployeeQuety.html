@@ -202,6 +202,7 @@
                     <th>員工編號</th>
                     <th>員工姓名</th>
                     <th>電話</th>
+                    <th>權限</th>
                     <th>狀態</th>
                     <th>操作</th>
                 </tr>
@@ -237,6 +238,14 @@
                         <input type="text" class="form-control" id="phone">
                     </div>
                     <div class="form-group">
+                        <label for="Access"> 權限</label>   
+                        <select class="form-control" id="Access">
+                            <option value="超級管理員">超級管理員</option>
+                            <option value="訂單管理員">訂單管理員</option>
+                             <option value="網頁管理員">網頁管理員</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="permission"> 狀態</label>   
                         <select class="form-control" id="permission">
                             <option value="1">在職</option>
@@ -267,7 +276,9 @@ $(document).ready(function () {
         var employeeId = $('#employeeId').val();
         var employeeName = $('#employeeName').val();
         var phone = $('#phone').val();
+        var Access = $('#Access').val();
         var status = $('#permission').val();
+        
         
 
         // 關閉修改資料的模態框
@@ -280,6 +291,7 @@ $(document).ready(function () {
             data: JSON.stringify({
                 employeeName: employeeName,
                 employeeTel: phone,
+                employeeAccess:Access,
                 employeeStatus:status
             }),
             contentType: "application/json",
@@ -313,6 +325,7 @@ $(document).ready(function () {
                         employee.employeeId,
                         employee.employeeName,
                         employee.employeeTel,
+                        employee.employeeAccess,
                         employee.employeeStatus==1?'在職':'離職',
                         `<button class="btn btn-primary btn-sm btn-edit">編輯</button>`
 //                                 <button class="btn btn-danger btn-sm btn-delete">停權</button>
