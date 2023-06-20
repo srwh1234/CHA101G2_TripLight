@@ -1,22 +1,22 @@
 package com.tw.article.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tw.article.model.ArticleImage;
 
 public interface ArticleImageService {
 	
-	String addArticleImage(int id, MultipartFile file);
+	public String addArticleImage(int id, MultipartFile file);
 	
-	ArticleImage updateArticleImage(Integer id, ArticleImage articleimage);
+	public ArticleImage updateArticleImage(int articleimageid, ArticleImage articleimage);
 	
 	boolean deleteArticleImage (Integer articleimageId);
 	
-	List<ArticleImage> getAllArticles();
+//	List<ArticleImage> getAllArticles();
 
-	ArticleImage getArticleImage(Integer articleImageId);
+	public static ArticleImage getArticleImage(Integer articleImageId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
