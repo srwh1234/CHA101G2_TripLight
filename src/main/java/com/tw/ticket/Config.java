@@ -3,16 +3,14 @@ package com.tw.ticket;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.google.maps.GeoApiContext;
 
 import lombok.Getter;
 import lombok.Setter;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class Config {
@@ -35,23 +33,14 @@ public class Config {
 		return new GeoApiContext.Builder().apiKey(getGoogleApiKey()).build();
 	}
 
+	// 單純不想在application.properties配置
 	@Bean
-	public RedisConnectionFactory redisConnectionFactory() {
-		final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-		return new LettuceConnectionFactory(config);
-	}
+	public JedisPool jedisPool() {
+		final JedisPoolConfig poolConfig = new JedisPoolConfig();
 
-	@Bean
-	public RedisTemplate<String, Object> redisTemplate() {
-		final RedisTemplate<String, Object> template = new RedisTemplate<>();
-		template.setConnectionFactory(redisConnectionFactory());
-		// 序列化器 先不要
-		// template.setKeySerializer(new StringRedisSerializer());
-		// template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-		// template.setHashKeySerializer(new StringRedisSerializer());
-		// template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-		// template.afterPropertiesSet();
-		return template;
+		poolConfig.setJmxEnabled(false); // 停用 JMX
+		final JedisPool jedisPool = new JedisPool(poolConfig);
+		return jedisPool;
 	}
 
 	// 執行緒池 (搭配@Async)

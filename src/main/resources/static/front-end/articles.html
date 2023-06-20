@@ -928,7 +928,7 @@
 
     window.addEventListener("load", function () {
       var previewEl = document.getElementById("preview");
-      var fileInputEl = document.getElementById("inputArticleImg");
+      var fileInputEl = document.getElementById("inputArticleImage");
 
       var previewImage = function (file) {
         var reader = new FileReader();
@@ -936,7 +936,7 @@
         reader.addEventListener("load", function () {
           var img = document.createElement("img");
           img.src = reader.result;
-          img.className = "inputArticleImg";
+          img.className = "inputArticleImage";
           img.style.width = "25%";
           previewEl.innerHTML = "";
           previewEl.appendChild(img);

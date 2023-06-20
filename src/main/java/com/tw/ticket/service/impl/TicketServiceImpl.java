@@ -113,7 +113,7 @@ public class TicketServiceImpl implements TicketService {
 				request.getSize()		// 查詢的每頁筆數
 		);
 
-		final Page<Ticket> page = repository.searchTicketByKeyword(	//
+		final Page<Ticket> page = repository.searchTicketByKeywords(	//
 				request.getKeyword(),	// 關鍵字
 				request.getTypes(),		// 類型
 				request.getCities(),	// 縣市
@@ -133,6 +133,12 @@ public class TicketServiceImpl implements TicketService {
 		});
 
 		return response;
+	}
+
+	// 全部票券
+	@Override
+	public List<Ticket> getItemsWithoutPromote() {
+		return repository.searchTicketWithoutPromote();
 	}
 
 	// AI 行程，地點搜尋票券

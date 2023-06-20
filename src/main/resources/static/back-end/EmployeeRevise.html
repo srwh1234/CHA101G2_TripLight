@@ -216,11 +216,17 @@
                             <input type="tel" id="employee-phone" name="employeeTel" required>
                         </div>
                         <div class="form-group">
-                            <label for="employee-permission">權限</label>
+                            <label for="employee-permission">狀態</label>
                             <select id="employee-permission" name="employeeStatus" required>
-                                <option value="1">超級管理員</option>
-                                <option value="2">網頁管理員</option>
-                                <option value="3">訂單管理員</option>
+                                <option value="1">在職</option>
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="employee-access">權限</label>
+                            <select id="employee-access" name="employeeAccess" required>
+                                <option >超級管理員</option>
+                                <option >網頁管理員</option>
+                                <option >訂單管理員</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -241,6 +247,7 @@
         var employeePassword = $('#employee-position').val();
         var employeeTel = $('#employee-phone').val();
         var employeeStatus = $('#employee-permission').val();
+        var employeeAccess = $('#employee-access').val();
 
         // 創建包含表單數據的對象
         var formData = {
@@ -249,7 +256,8 @@
             employeeAccount: employeeAccount,
             employeePassword: employeePassword,
             employeeTel: employeeTel,
-            employeeStatus: employeeStatus
+            employeeStatus: employeeStatus,
+            employeeAccess:employeeAccess
         };
 
         // 發送AJAX請求
@@ -269,6 +277,7 @@
                 $('#employee-position').val('');
                 $('#employee-phone').val('');
                 $('#employee-permission').val('');
+                $('#employee-access').val('');
             },
             error: function(xhr, status, error) {
                 // 在這裡處理錯誤響應的邏輯

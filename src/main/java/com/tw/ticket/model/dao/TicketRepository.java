@@ -24,7 +24,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	// 前台關鍵字搜尋
 	@Query("SELECT t FROM Ticket t WHERE t.name LIKE %:keyword% AND status=1"//
 			+ " AND t.city IN :cities AND t.ticketType.name IN :types ORDER BY t.ticketId")
-	public Page<Ticket> searchTicketByKeyword(	//
+	public Page<Ticket> searchTicketByKeywords(	//
 			@Param("keyword") String keyword,	// 關鍵字
 			@Param("types") String[] types, 	// 類型
 			@Param("cities") String[] cities,	// 縣市
@@ -39,4 +39,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
 	// 找出符合編號陣列的票券
 	public List<Ticket> findByTicketIdIn(Collection<Integer> array);
+
+	// 沒有促銷的票券
+	@Query("SELECT t FROM Ticket t WHERE t.ticketId NOT IN (SELECT DISTINCT p.key.ticketId FROM PromotionDetail p)")
+	public List<Ticket> searchTicketWithoutPromote();
+
 }

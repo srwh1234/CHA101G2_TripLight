@@ -1,5 +1,6 @@
 package com.tw.article.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleImage implements java.io.Serializable{
+public class ArticleImage implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id

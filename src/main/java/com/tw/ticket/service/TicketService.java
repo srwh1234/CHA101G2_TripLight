@@ -6,6 +6,7 @@ import com.tw.ticket.controller.TicketController.DescResponse;
 import com.tw.ticket.controller.TicketController.SearchRequest;
 import com.tw.ticket.controller.TicketController.SearchResponse;
 import com.tw.ticket.controller.TicketDetailController.DetailResponse;
+import com.tw.ticket.model.Ticket;
 
 public interface TicketService {
 
@@ -20,6 +21,9 @@ public interface TicketService {
 
 	// 搜尋票券
 	public SearchResponse getSearchItem(SearchRequest request);
+
+	// 全部票券
+	public List<Ticket> getItemsWithoutPromote();
 
 	// 輸入地點取得票券
 	List<DescResponse> getTicket(String destination);
