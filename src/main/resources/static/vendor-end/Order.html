@@ -79,7 +79,11 @@
                     aria-expanded="true" aria-controls="collapseTwo">
                     <span>廠商資料</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="VendorFiles.html">廠商資料</a>
+                    </div>
                 </div>
             </li>
 
@@ -107,7 +111,7 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="NewItinerary.html">新增資料</a>
+                        <a class="collapse-item" href="NewTourGroup.html">新增旅遊團</a>
                         <a class="collapse-item" href="select2.html">編輯資料</a>
                     </div>
                 </div>
@@ -122,7 +126,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="Order.html">訂單管理</a>
-                        <a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a>
+                        <!-- <a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a> -->
                     </div>
                 </div>
             </li>
@@ -206,6 +210,7 @@
                                         <th>特殊需求備註</th>
                                         <th>訂單狀態</th>
                                         <th>會員狀態</th>
+                                        <th>訂單確認</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -224,6 +229,9 @@
                                         <th>需肌肉小鮮肉</th>
                                         <th>1</th>
                                         <th>1</th>
+                                        <th><button type="button" class="btn btn-success">確認</button>
+                                            <button type="button" class="btn btn-danger">取消</button>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <th>0002</th>
@@ -240,6 +248,9 @@
                                         <th>喝酒喝到吐</th>
                                         <th>1</th>
                                         <th>1</th>
+                                        <th><button type="button" class="btn btn-success">確認</button>
+                                            <button type="button" class="btn btn-danger">取消</button>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <th>0003</th>
@@ -256,6 +267,9 @@
                                         <th>小孩不浮潛</th>
                                         <th>2</th>
                                         <th>1</th>
+                                        <th><button type="button" class="btn btn-success">確認</button>
+                                            <button type="button" class="btn btn-danger">取消</button>
+                                        </th>
                                     </tr>
                                     <tr>
                                         <th>0004</th>
@@ -272,6 +286,9 @@
                                         <th>想吃海膽，會跟店家付錢</th>
                                         <th>1</th>
                                         <th>1</th>
+                                        <th><button type="button" class="btn btn-success">啟用</button>
+                                            <button type="button" class="btn btn-danger">取消</button>
+                                        </th>
                                     </tr>
                                 </tbody>
                             </table>

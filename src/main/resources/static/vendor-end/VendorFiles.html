@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TripLight廠商系統</title>
+    <title>廠商資料</title>
 
     <!-- 自訂字型 -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -21,7 +21,18 @@
     <script src="login.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/empolyeeform.css" rel="stylesheet">
+    <style>
+        .vendor-form {
+                margin-bottom: 100%;
+                display: inline-block;
+            }
+        input[type="text"], 
+        textarea {
+            width: 800px;
+            margin-bottom: 10px;
+        } 
+    </style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -111,10 +122,12 @@
                 <div id="collapseCustomerService" class="collapse" aria-labelledby="headingCustomerService"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="QuestionForm.html">問題表單管理</a>
+                        <a class="collapse-item" href="QuestionForm.html">訂單管理</a>
                     </div>
                 </div>
             </li>
+
+
             <!-- 側邊欄切換器（側邊欄） -->
             <!-- <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -158,6 +171,52 @@
                     </ul>
                 </nav>
 
+                <div class="logo">
+                    <h1 class="logo" style="height: 90px" text-align="center">廠商資料</h1>
+                </div>
+                <div class="form-container">
+                    <form id="vendor-form">
+                        <div class="form-files">
+                            <label for="vendor-id">廠商編號</label>
+                            <input type="text" id="vendor-id" name="vendor-id" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="vendor-name">廠商名稱 </label>
+                            <input type="text" id="vendor-name" name="vendor-name" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="vendor-add">廠商地址</label>
+                            <input type="text" id="vendor-add" name="vendor-add" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="vendor-phone">廠商連絡電話</label>
+                            <input type="text" id="vendor-phone" name="vendor-phone" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="vendor-email">廠商電子信箱</label>
+                            <input type="text" id="vendor-email" name="vendor-email" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="ceo-name">負責人姓名</label>
+                            <input type="text" id="ceo-name" name="ceo-name" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="ceo-phone">負責人電話</label>
+                            <input type="text" id="ceo-phone" name="ceo-phone" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="bank-account">銀行帳戶</label>
+                            <input type="text" id="bank-account" name="bank-account" required/>
+                        </div>
+                        <div class="form-files">
+                            <label for="review">審核狀態</label>
+                            <input type="text" id="review" name="review" required/>
+                        </div>
+                    </form>
+                </div>
+
+
+
                 <!-- Bootstrap 核心 JavaScript -->
                 <script src="vendor/jquery/jquery.min.js"></script>
                 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -174,6 +233,17 @@
                 <!-- 頁面級別的自訂腳本 -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
+
+
 </body>
+<!-- <script>
+
+     // ajax form 表單
+     // http://localhost:8080/vendors/1
+
+    var str = '{"vendorName":"澎湖銀海遊艇公司","vendorAdd":"澎湖縣白沙鄉鳥嶼村95之1號","vendorPhone":"06-9916007","ceoEmail":"abc123123@gmail.com","ceoName":"跨海大橋的看到鬼","ceoPhone":"0937-629424","applicationTime":"2023-05-21 20:42:57","review":"1","bankAccount":"台灣銀行004      024 001 106082","contractTerm":"合作條款","loginAccount":"vendor01","loginPassword":"vendor01","vendorEmail":"abc123123@gmail.com","_links":{"self":{"href":"http://localhost:8080/vendors/1"},"vendor":{"href":"http://localhost:8080/vendors/1"}}}';
+    const obj = JSON.parse(str);
+    document.getElementById("vendor-name").value = obj.vendorName;
+ </script> -->
 
 </html>
