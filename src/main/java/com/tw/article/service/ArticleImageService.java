@@ -17,6 +17,6 @@ public interface ArticleImageService {
 	
 	List<ArticleImage> getAllArticles();
 
-	ArticleImage getArticleImageById(Integer articleImageId);
+	ArticleImage getArticleImage(Integer articleImageId);
 	
 }
