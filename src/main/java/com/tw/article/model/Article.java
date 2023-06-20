@@ -35,9 +35,10 @@ public class Article implements java.io.Serializable{
 		
 		private Integer articleViews;			//文章瀏覽次數
 		
-		//private Integer articleLikesCount;    //文章好評，備用
+		//private byte[] articlePicture;		//文章圖片，備用
 		
-		//private byte[] articleImage;			//文章圖片，備用
+		//private Integer articleLikesCount;    //文章好評，不採用
+		
 		
 		
 	
