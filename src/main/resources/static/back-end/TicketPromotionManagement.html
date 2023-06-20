@@ -240,6 +240,14 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="col-12 text-end">
+                            <button type="button" class="btn btn-primary m-3" id="addPromotionBtn">
+                                新增促銷
+                            </button>
+                        </div>
+                        <!-- 稱高度用的 -->
+                        <div style="height:30vh"></div>
+
 
                     </div>
 
@@ -264,7 +272,6 @@
                                                 <th class="my-th-width-sm">票券名稱</th>
                                                 <th class="my-th-width-sm">原價</th>
                                                 <th class="my-th-width-sm">促銷價</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -282,6 +289,72 @@
                     <!-- 稱高度用的 -->
                     <div style="height:30vh"></div>
                 </div>
+
+
+
+                <!-- 新增優惠券的燈箱 -->
+                <div class="modal fade" id="addPromotionModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog  modal-lg  modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">新增促銷</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontStartDate">開始日期</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontExpiryDate">到期日期</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating m-3">
+                                            <input type="text" class="form-control" id="addCoupontName" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontName">名稱</label>
+                                        </div>
+                                        <div class="m-3">
+                                            <select class="form-select" id="editTicketType">
+                                                <option value="1">qq</option>
+                                                <option value="1">qqa</option>
+                                                <option value="1">qqs</option>
+                                                <option value="1">qqd</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- GGGGGGGGGGGGGGGGGG -->
+                                    <div class="col-12">
+
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontStartDate">開始日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="addCoupontExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontExpiryDate">到期日期</label>
+                                        </div>
+                                        <div class="form-floating m-3">
+                                            <input type="number" class="form-control" id="addCoupontPrice" min="1" placeholder=".">
+                                            <label class="my-text-lightgray" for="addCoupontPrice">折扣金額</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="addPromotionSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Bootstrap 核心 JavaScript -->
                 <script src="vendor/jquery/jquery.min.js"></script>
@@ -311,19 +384,34 @@
                     let currentIndex = 0;
                     let resultData;
                     $(function () {
+                        fetch_data();
 
-                        fetch(`${getDomainName()}/promotions`)
-                            .then(response => response.json())
-                            .then(data => {
-                                //給一個索引
-                                let index = 0;
-                                for (let promotion of data._embedded.promotions) {
-                                    promotion['index'] = index++;
-                                }                              
-                                resultData = data;
-                                $('#promotionContainer table').bootstrapTable('load', data._embedded.promotions);
-                            })
-                            .catch(error => console.log(error))
+                        $('#addPromotionBtn').on('click', function () {
+
+
+
+                            fetch(`${getDomainName()}/promotetickets`)
+                                .then(response => response.json())
+                                .then(data => {
+
+                                   
+                                    for (let ticket of data) {
+                                        
+                                        console.log(ticket.ticketId);
+                                    }
+                                })
+                                .catch(error => console.log(error))
+                                .finally(() => $('#addPromotionModal').modal('show'));
+
+
+
+
+
+
+
+
+                        });
+
 
 
 
@@ -337,9 +425,9 @@
                             $('#detailContainer').removeClass('d-none');
                             $('#detailContainer table tbody').html('');
                             for (let detail of promotion.promotionDetails) {
-                                const ticket =detail.ticket;
+                                const ticket = detail.ticket;
                                 const src = ticket._links.ticketType.href;
-                                const ticketId = src.substring(src.lastIndexOf('/') + 1);                              
+                                const ticketId = src.substring(src.lastIndexOf('/') + 1);
 
                                 $('#detailContainer table tbody').append(`
                                     <tr>
@@ -352,6 +440,22 @@
                             }
                         });
                     })
+
+                    //----------------------------------fetch
+                    function fetch_data() {
+                        fetch(`${getDomainName()}/promotions`)
+                            .then(response => response.json())
+                            .then(data => {
+                                //給一個索引
+                                let index = 0;
+                                for (let promotion of data._embedded.promotions) {
+                                    promotion['index'] = index++;
+                                }
+                                resultData = data;
+                                $('#promotionContainer table').bootstrapTable('load', data._embedded.promotions);
+                            })
+                            .catch(error => console.log(error))
+                    }
                     // const t = {
                     //     "_embedded": {
                     //         "promotions":

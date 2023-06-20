@@ -40,6 +40,12 @@ public class TicketController {
 		return ticketService.getSearchItem(request);
 	}
 
+	// 全部票券
+	@GetMapping("promotetickets")
+	public List<Ticket> alltickets() {
+		return ticketService.getItemsWithoutPromote();
+	}
+
 	// 定義請求物件
 	@Data
 	public static class SearchRequest {
