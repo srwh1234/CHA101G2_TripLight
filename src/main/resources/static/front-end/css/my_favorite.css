@@ -81,13 +81,15 @@
 
 }
 
-.price,
-.realPrice {
-    display: inline-block;
-    position: relative;
-    top: -20px;
+/* .price, */
+/* .realPrice { */
+/*     display: inline-block; */
+/*     position: relative; */
+/*     top: -20px; */
+/* } */
+#allPrice{
+    transform: translate(80%, -50px );
 }
-
 /* 沒有評價背景圖 */
 
 .no_comment_div {
