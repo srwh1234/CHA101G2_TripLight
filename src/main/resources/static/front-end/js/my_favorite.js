@@ -55,7 +55,7 @@ function generateTicket() {
 				for (let i = 0; i < t_favorite.length; i++) {
 					$(".tab-pane").eq(0).find("#orderselect")
 						.after(`<div class="ticket_item_class">
-						<a href="${t_favorite.url}" , class="orderurl">                  
+						<a href="http://localhost:8080/front-end/tickets_detail.html?id="+"${t_favorite[i].ticketId}" , class="orderurl">                  
                  <div class="item_img_class">
                   <img src="${t_favorite.imgUrl}" class="item_img">  
                  </div>
