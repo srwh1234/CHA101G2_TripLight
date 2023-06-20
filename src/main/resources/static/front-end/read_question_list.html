@@ -442,7 +442,7 @@
                                 console.log('使用者的評分是：', result.value);
 
                                 // 將評分傳送到後端
-                                fetch('/questionReports/{id}/score', {
+                                fetch('/questionReports/${id}/score', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
