@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登入</title>
+    <style>
+        /* 樣式設定 */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: blue;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        body {
+            background-image: url("img/photo1.jpg");
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: blue;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        body {
+            background-image: url("img/photo1.jpg");
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <img src="img/icon.png" alt="TripLight ICON" style="height: 90px;">
+        TripLight後台登入
+    </h1>
+    <form action="index.html" method="get">
+        <label for="account">帳號</label>
+        <input type="text" id="account" name="account" placeholder="請輸入帳號" required>
+        <label for="password">密碼</label>
+        <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
+        <!-- 驗證條件提示 -->
+        <div class="error" id="account-error"></div>
+        <div class="error" id="password-error"></div>
+
+        <input type="submit" value="登入">
+    </form>
+
+    <script>
+        // 驗證輸入欄位
+        var form = document.querySelector("form");
+        var account = document.getElementById("account");
+        var password = document.getElementById("password");
+        var accountError = document.getElementById("account-error");
+        var passwordError = document.getElementById("password-error");
+
+        form.addEventListener("submit", function (event) {
+            var accountValue = account.value.trim();
+            var passwordValue = password.value.trim();
+
+            // 驗證帳號
+            if (accountValue.length < 1) {
+                accountError.innerHTML = "請輸入帳號";
+                 event.preventDefault();
+                } else {
+                    accountError.innerHTML = "";
+                    }
+
+                    // 驗證密碼
+                    if (passwordValue.length < 6 || passwordValue.length > 20) {
+                        passwordError.innerHTML = "密碼長度必須介於6到20個字元。";
+                        event.preventDefault();
+                    } else if (!passwordValue.match(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/)) {
+                        passwordError.innerHTML = "密碼必須包含英文字母和數字。";
+                        event.preventDefault();
+                    } else {
+                        passwordError.innerHTML = "";
+                    }
+                            });
+
+
+    </script>
+</body>
+
+</html>
