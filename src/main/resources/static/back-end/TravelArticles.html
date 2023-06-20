@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TirpLight後台</title>
+
+    <!-- 自訂字型 -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="botcss/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+        <script src="js/jquery-3.7.0.min.js"></script>
+        <script src="js/login.js"></script>
+    <!-- 自訂樣式 -->
+    <link href="css/TripLight.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top" style="overflow-y: scroll;">
+    <!-- 頁面包裹區域 -->
+    <div id="wrapper">
+
+        <!-- 側邊欄 -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- 側邊欄 - 品牌 -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <img src="img/icon.png" alt="Icon" class="sidebar-brand-icon rotate-n-15"
+                    style="width: 30px; height: 30px;">
+                <div class="sidebar-brand-text mx-3">後台</div>
+            </a>
+
+            <!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+
+            <!-- 導覽項目 -  -->
+            <li class="nav-item active">
+                <a class="nav-link" href="https://triplight.netlify.app/">
+                    <span>TirpLight</span></a>
+            </li>
+            <!-- 導覽項目 - 頁面折疊選單 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <span>員工管理</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="EmployeeQuety.html">查詢資料</a>
+                        <a class="collapse-item" href="EmployeeRevise.html">新增資料</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 導覽項目 - 公用程式折疊選單 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <span>會員管理</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="MemberQuety.html">查詢資料</a>
+                        <a class="collapse-item" href="MemberRevise.html">修改資料</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <!-- 功能頁面 -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <span>廠商管理</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="FirmInert.html">廠商資料</a>
+                        <a class="collapse-item" href="FirmRevise.html">行程管理</a>
+                        <a class="collapse-item" href="FirmReport.html">檢舉廠商</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets"
+                    aria-expanded="true" aria-controls="collapseTickets">
+                    <span>票卷管理</span>
+                </a>
+                <div id="collapseTickets" class="collapse" aria-labelledby="headingTickets"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="TicketManagement.html">票卷資料管理</a>
+                        <a class="collapse-item" href="TicketOrderManagement.html">票卷訂單管理</a>
+                        <a class="collapse-item" href="TicketPromotionManagement.html">票卷促銷管理</a>
+                        <a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWebManagement"
+                    aria-expanded="true" aria-controls="collapseWebManagement">
+                    <span>網頁管理</span>
+                </a>
+                <div id="collapseWebManagement" class="collapse" aria-labelledby="headingWebManagement"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="TravelArticles.html">文章管理</a>
+                        <a class="collapse-item" href="ReportAriocles.html">檢舉管理</a>
+                    </div>
+                </div>
+            </li>
+
+
+         
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
+                    aria-expanded="true" aria-controls="collapseCustomerService">
+                    <span>客服中心</span>
+                </a>
+                <div id="collapseCustomerService" class="collapse" aria-labelledby="headingCustomerService"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="QuestionFormManagement.html">問題表單管理</a>
+                        <a class="collapse-item" href="CustomerServiceChatManagement.html">客服聊天管理</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <!-- 側邊欄切換器（側邊欄） -->
+            <!-- <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div> -->
+        </ul>
+        <!-- 側邊導覽列結束 -->
+
+
+        <!-- 內容包裹區域 -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- 主要內容 -->
+            <div id="content">
+
+                <!-- 上導覽列 -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- 側邊欄開關按鈕 -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- 上導覽列導覽選單 -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
+                                <i class="fas fa-user-circle fa-lg"></i>
+                            </a>
+                            <!-- 下拉選單 - 使用者資訊 -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" id="logoutLink">
+                                    登出
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- <html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>TripLight | Packages</title>
+</head> -->
+
+<body>
+    <div class="container-fluid" style="margin-bottom: 50px;">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+                <h3 class="text-black mb-4">文章管理</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;"><a class="btn btn-primary" role="button"><i class="fa fa-plus"></i> 增加公告頁</a></div>
+        </div>
+        <div id="TableSorterCard" class="card" style="border-style: none;border-radius: 6.5px;">
+            <div class="card-header py-3" style="border-width: 0px;background: rgb(23,25,33);">
+                <div class="row table-topper align-items-center">
+                    <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">
+                        <p class="m-0 fw-bold" style="color: rgb(255,255,255);">全部列表</p>
+                    </div>
+                    <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;"><button class="btn btn-dark btn-sm reset" type="button" style="margin: 2px;">目前檢視</button><button id="zoom_in" class="btn btn-light btn-sm" type="button" zoomclick="ChangeZoomLevel(-10);" style="margin: 2px;"><i class="fa fa-search-plus"></i></button><button id="zoom_out" class="btn btn-light btn-sm" type="button" zoomclick="ChangeZoomLevel(-10);" style="margin: 2px;"><i class="fa fa-search-minus"></i></button></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="border-top-style: none;background: #171921;">
+                        <table id="ipi-table" class="table table-striped table tablesorter">
+                            <thead class="thead-dark" style="background: rgb(33,37,48);border-width: 0px;border-color: rgb(0,0,0);border-bottom-color: #21252F;">
+                                <tr style="border-style: none;border-color: rgba(255,255,255,0);background: #21252f;">
+                                    <th class="text-center">文章類型</th>
+                                    <th class="text-center">發表會員</th>
+                                    <th class="text-center">標題內容</th>
+                                    <th class="text-center filter-false sorter-false">選項</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center" style="border-top-width: 0px;">
+                                <tr style="background: #262a38;">
+                                    <td style="color: rgb(255,255,255);">【問題】</td>
+                                    <td style="color: rgb(255,255,255);">Luis</td>
+                                    <td style="color: rgb(255,255,255);">桃園有哪裡好玩？</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                                <tr style="background: #212430;">
+                                    <td style="color: rgb(255,255,255);">【遊記】<br /></td>
+                                    <td style="color: rgb(255,255,255);">Tina L</td>
+                                    <td style="color: rgb(255,255,255);">帶我的狗玩遍新北的寵物公園</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                                <tr style="background: #262a38;">
+                                    <td style="color: rgb(255,255,255);">【食記】</td>
+                                    <td style="color: rgb(255,255,255);">bigparticipant</td>
+                                    <td style="color: rgb(255,255,255);">榮次郎個人燒肉－好吃</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                                <tr style="background: #262a38;">
+                                    <td style="color: rgb(255,255,255);">【評論】<br /></td>
+                                    <td style="color: rgb(255,255,255);">NewcastleSpook</td>
+                                    <td style="color: rgb(255,255,255);">中正公園的遊樂器材</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                                <tr style="background: #262a38;">
+                                    <td style="color: rgb(255,255,255);">【問題】</td>
+                                    <td style="color: rgb(255,255,255);">Naomi H</td>
+                                    <td style="color: rgb(255,255,255);">這次旅展哪家給的優惠最棒？</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                                <tr style="background: #262a38;">
+                                    <td style="color: rgb(255,255,255);">【遊記】</td>
+                                    <td style="color: rgb(255,255,255);">Michelle</td>
+                                    <td style="color: rgb(255,255,255);">桃園地景藝術節</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                                <tr style="background: #262a38;">
+                                    <td style="color: rgb(255,255,255);">【食記】</td>
+                                    <td style="color: rgb(255,255,255);">Dave</td>
+                                    <td style="color: rgb(255,255,255);">中二火鍋店－嗑肉食鍋</td>
+                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#" style="color: #00bdff;"><i class="far fa-eye"></i></a><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="pagination" style="justify-content: flex-end; margin-right: 25px;">
+        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">上一頁</a>
+        </li>
+        <li class="paginate_button page-item active">
+            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+        </li>
+        <li class="paginate_button page-item ">
+            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">2</a>
+        </li>
+        <li class="paginate_button page-item next disabled" id="dataTable_next">
+            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">下一頁</a>
+        </li>
+    </ul>
+    <nav class="navbar navbar-light navbar-expand-md py-3">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg class="bi bi-bezier" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5v-1zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"></path>
+                        <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5v-1zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z"></path>
+                    </svg></span><span>分析工具</span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div id="navcol-1" class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">最多觀看</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">最多回覆</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">最多留言</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">最多好評</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">最多負評</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">檢舉文章</a></li>
+                    <li class="nav-item"><a class="nav-link " href="#">自行定義</a></li>
+                    <li class="nav-item"><a class="nav-link " href="#">自行定義</a></li>
+                </ul><button class="btn btn-primary" type="button">確認並排序</button>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>
+
+                <!-- Bootstrap 核心 JavaScript -->
+                <script src="vendor/jquery/jquery.min.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- 核心插件 JavaScript -->
+                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <!-- 自訂腳本，適用於所有頁面 -->
+                <script src="js/TripLight-2.min.js"></script>
+
+                <!-- 頁面級別的插件 -->
+                <script src="vendor/chart.js/Chart.min.js"></script>
+
+                <!-- 頁面級別的自訂腳本 -->
+                <script src="js/demo/chart-area-demo.js"></script>
+                <script src="js/demo/chart-pie-demo.js"></script>
+
+
+</body>
+
+</html>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>新增行程</title>
+    <title>TirpLight後台</title>
 
     <!-- 自訂字型 -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -17,11 +17,10 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <script src="jquery-3.7.0.min.js"></script>
-    <script src="login.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/login.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link href="css/empolyeeform.css" rel="stylesheet">
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -34,7 +33,7 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <img src="img/icon.png" alt="Icon" class="sidebar-brand-icon rotate-n-15"
                     style="width: 30px; height: 30px;">
-                <div class="sidebar-brand-text mx-3">TripLight SCM</div>
+                <div class="sidebar-brand-text mx-3">後台</div>
             </a>
 
             <!-- <div class="text-center d-none d-md-inline">
@@ -42,17 +41,21 @@
             </div> -->
 
             <!-- 導覽項目 -  -->
-            <!-- <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="https://triplight.netlify.app/">
                     <span>TirpLight</span></a>
-            </li> -->
+            </li>
             <!-- 導覽項目 - 頁面折疊選單 -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" target="_blank" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <span>廠商資料</span>
+                    <span>員工管理</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="EmployeeQuety.html">查詢資料</a>
+                        <a class="collapse-item" href="EmployeeRevise.html">新增資料</a>
+                    </div>
                 </div>
             </li>
 
@@ -60,13 +63,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <span>行程管理</span>
+                    <span>會員管理</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="NewItinerary.html">新增行程</a>
-                        <a class="collapse-item" href="Select.html">編輯行程</a>
+                        <a class="collapse-item" href="MemberQuety.html">查詢資料</a>
+                        <a class="collapse-item" href="MemberRevise.html">修改資料</a>
                     </div>
                 </div>
             </li>
@@ -76,12 +79,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <span>旅行團管理</span>
+                    <span>廠商管理</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="FirmInert.html">廠商資料</a>
-                        <a class="collapse-item" href="select2.html">編輯資料</a>
+                        <a class="collapse-item" href="FirmRevise.html">行程管理</a>
+                        <a class="collapse-item" href="FirmReport.html">檢舉廠商</a>
                     </div>
                 </div>
             </li>
@@ -89,26 +93,45 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets"
                     aria-expanded="true" aria-controls="collapseTickets">
-                    <span>客戶訂單管理</span>
+                    <span>票卷管理</span>
                 </a>
                 <div id="collapseTickets" class="collapse" aria-labelledby="headingTickets"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Order.html">訂單管理</a>
+                        <a class="collapse-item" href="TicketManagement.html">票卷資料管理</a>
+                        <a class="collapse-item" href="TicketOrderManagement.html">票卷訂單管理</a>
+                        <a class="collapse-item" href="TicketPromotionManagement.html">票卷促銷管理</a>
                         <a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a>
                     </div>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWebManagement"
+                    aria-expanded="true" aria-controls="collapseWebManagement">
+                    <span>網頁管理</span>
+                </a>
+                <div id="collapseWebManagement" class="collapse" aria-labelledby="headingWebManagement"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="TravelArticles.html">文章管理</a>
+                        <a class="collapse-item" href="ReportAriocles.html">檢舉管理</a>
+                    </div>
+                </div>
+            </li>
+
+
+           
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                     aria-expanded="true" aria-controls="collapseCustomerService">
-                    <span>活動問題管理</span>
+                    <span>客服中心</span>
                 </a>
                 <div id="collapseCustomerService" class="collapse" aria-labelledby="headingCustomerService"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Order.html">訂單管理</a>
-                        <a class="collapse-item" href="CustomerServiceChatManagement.html">問題回報</a>
+                        <a class="collapse-item" href="QuestionFormManagement.html">問題表單管理</a>
+                        <a class="collapse-item" href="CustomerServiceChatManagement.html">客服聊天管理</a>
                     </div>
                 </div>
             </li>
@@ -143,7 +166,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">李蒸蚌</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
                                 <i class="fas fa-user-circle fa-lg"></i>
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
@@ -157,97 +180,7 @@
                     </ul>
                 </nav>
 
-                <div class="logo">
-                    <h1 class="logo" style="height: 90px" text-align="center">新增行程</h1>
-                </div>
-                <div class="form-container">
-                    <form id="employee-form">
-                        <div class="form-group">
-                            <label for="trip_name">行程名稱</label>
-                            <input type="text" id="trip_name" name="trip_name" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="trip_description">內容簡介</label>
-                            <textarea
-                                class="form-control"
-                                id="trip_note"
-                                name="trip_note"
-                                rows="3"
-                            ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="trip_date">天數</label>
-                            <input type="text" id="trip_date" name="trip_date" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="pcice">價格</label>
-                            <select id="price-person" name="price-person" required>
-                                <option value="adult">大人</option>
-                            <input type="text" id="price" name="price" required/>
-                            <select id="price-person" name="price-person" required>
-                                <option value="child">小孩</option>
-                            <input type="text" id="price-person" name="price-person" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="travelers">出團人數</label>
-                            <select id="travelers" name="travelers" required>
-                                <option value="max_travelers_no">額滿人數</option>
-                            <input type="text" id="travelers" name="travelers" required/>
-                            <select id="travelers" name="travelers" required>
-                                <option value="min_travelers_no">最少出團人數</option>
-                            <input type="text" id="travelers" name="travelers" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="city">縣市</label>
-                            <select id="city" name="city" required>
-                                <option value="taipei-city">台北市</option>
-                                <option value="new-taipei-city">新北市</option>
-                                <option value="yilan-county">宜蘭縣</option>
-                                <option value="taoyuan-city">桃園市</option>
-                                <option value="hsinchu-county">新竹縣</option>
-                                <option value="miaoli-county">苗栗縣</option>
-                                <option value="taichung-city">台中市</option>
-                                <option value="nantou-county">南投縣</option>
-                                <option value="changhua-county">彰化縣</option>
-                                <option value="yunlin-county">雲林縣</option>
-                                <option value="chiayi-county">嘉義縣</option>
-                                <option value="tainan-city">台南市</option>
-                                <option value="kaohsiung-city">高雄市</option>
-                                <option value="pingtung-county">屏東縣</option>
-                                <option value="taitung-county">台東縣</option>
-                                <option value="hualien-county">花蓮縣</option>
-                                <option value="penghu-county">澎湖縣</option>
-                                <option value="kinmen-county">金門縣</option>
-                                <option value="lienchiang-county">連江縣</option>
-                                <option value="other">其他</option>
-                                <input type="text" name="address" class="input" placeholder=" Enter Your address" required/>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="trip_note">行程內容</label>
-                            <textarea
-                                class="form-control"
-                                id="trip_note"
-                                name="trip_note"
-                                rows="3"
-                            ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="trip_note">特別說明</label>
-                            <textarea
-                                class="form-control"
-                                id="trip_note"
-                                name="trip_note"
-                                rows="3"
-                            ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="新增">
-                        </div>
-                    </form>
-                </div>
-
-
+                <h1>待補充</h1>
 
                 <!-- Bootstrap 核心 JavaScript -->
                 <script src="vendor/jquery/jquery.min.js"></script>
@@ -265,8 +198,6 @@
                 <!-- 頁面級別的自訂腳本 -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
-
-
 </body>
 
 </html>

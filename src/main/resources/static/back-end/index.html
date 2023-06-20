@@ -17,10 +17,11 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <script src="jquery-3.7.0.min.js"></script>
-    <script src="login.js"></script>
+        <script src="js/jquery-3.7.0.min.js"></script>
+        <script src="js/login.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -31,7 +32,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- 側邊欄 - 品牌 -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <img src="icon.png" alt="Icon" class="sidebar-brand-icon rotate-n-15"
+                <img src="img/icon.png" alt="Icon" class="sidebar-brand-icon rotate-n-15"
                     style="width: 30px; height: 30px;">
                 <div class="sidebar-brand-text mx-3">後台</div>
             </a>
@@ -83,8 +84,8 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="FirmInert.html">新增資料</a>
-                        <a class="collapse-item" href="FirmRevise.html">修改資料</a>
+                        <a class="collapse-item" href="FirmInert.html">廠商資料</a>
+                        <a class="collapse-item" href="FirmRevise.html">行程管理</a>
                         <a class="collapse-item" href="FirmReport.html">檢舉廠商</a>
                     </div>
                 </div>
@@ -121,19 +122,7 @@
             </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePermissions"
-                    aria-expanded="true" aria-controls="collapsePermissions">
-                    <span>權限設定</span>
-                </a>
-                <div id="collapsePermissions" class="collapse" aria-labelledby="headingPermissions"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="SetEmployeePermissions.html">設定員工權限</a>
-                        <a class="collapse-item" href="SetFirmPermissions.html">設定廠商權限</a>
-                    </div>
-                </div>
-            </li>
+     
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                     aria-expanded="true" aria-controls="collapseCustomerService">
@@ -190,6 +179,32 @@
                     </ul>
                 </nav>
 
+                <!-- 輪播圖 -->
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="img/image2.jpg" class="d-block w-100" alt="Image 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img/image3.jpg" class="d-block w-100" alt="Image 2">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
 
 
                 <!-- Bootstrap 核心 JavaScript -->
@@ -208,9 +223,6 @@
                 <!-- 頁面級別的自訂腳本 -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
-                <script src="path/to/jquery.min.js"></script>
-
-
 </body>
 
 </html>

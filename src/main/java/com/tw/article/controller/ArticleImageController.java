@@ -37,7 +37,7 @@ public class ArticleImageController {
 		return addArticleImage(articleId, file);
 	}
 
-    @GetMapping("/article_image/images/id")
+    @GetMapping("/article_image/images")
     @ResponseBody
     public byte[] getArticleImage(@PathVariable("id") Integer articleImageId) {
         // 根據文章圖片ID取得相應的圖片資料

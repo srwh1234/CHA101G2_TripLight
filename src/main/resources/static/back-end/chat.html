@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F7F7F7;
+}
+
+.chatbox {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.messages {
+  overflow-y: scroll; /* Change this line */
+  flex-grow: 1;
+}
+
+.message {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.my-message {
+  background-color: #0084FF;
+  color: white;
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.other-message {
+  background-color: #E5E5EA;
+  color: black;
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+
+.input-area {
+  width: 100%;
+  padding: 10px;
+  background-color: #FFF;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-area input {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+}
+
+.input-area button {
+  width: 15%;
+  padding: 10px;
+  background-color: #0084FF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<div class="chatbox">
+  <div class="title">
+    聊天室
+  </div>
+
+  <div class="messages" id="messages">
+    <div class="message my-message">
+      <p>你好，我是用戶的訊息。</p>
+    </div>
+    <div class="message other-message">
+      <p>你好，我是對方的訊息。</p>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="input" placeholder="輸入訊息...">
+    <button id="send">送出</button>
+  </div>
+</div>
+
+<script>
+document.getElementById('send').addEventListener('click', function() {
+  var input = document.getElementById('input');
+  var messages = document.getElementById('messages');
+
+  if(input.value.trim() !== '') {
+    var message = document.createElement('div');
+    message.classList.add('message', 'my-message');
+    message.innerHTML = '<p>' + input.value + '</p>';
+    messages.appendChild(message);
+    input.value = '';
+  }
+});
+</script>
+
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,9 +19,10 @@
         rel="stylesheet">
         <script src="js/jquery-3.7.0.min.js"></script>
         <script src="js/login.js"></script>
+    <script src="EMPQuety.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/empolyee.css">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -121,7 +123,7 @@
             </li>
 
 
-          
+           
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                     aria-expanded="true" aria-controls="collapseCustomerService">
@@ -179,104 +181,111 @@
                         </li>
                     </ul>
                 </nav>
-                <div id="formDiv">
-                    <div>
-                        <h4 class="setemp" style="color: blue;">員工權限設定</h4>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h4 class="m-0 font-weight-bold text-primary">問題表單管理</h4>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">員工編號</th>
-                                <th scope="col">員工名字</th>
-                                <th scope="col">管理權限</th>
-                                <th scope="col">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>問題編號</th>
+                                        <th>問題時間</th>
+                                        <th>問題狀態</th>
+                                        <th>問題主旨</th>
+                                        <th>問題評分</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 
+                                        
+                                        動態加入
+                                    -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
-                <script>
-                    $(document).ready(function () {
-                        // 設定按鈕點擊事件
-                        $('.btn-primary').click(function () {
-                            // 取得所選的員工編號和員工名字
-                            var employeeID = $(this).closest('tr').find('td:eq(0)').text();
-                            var employeeName = $(this).closest('tr').find('td:eq(1)').text();
+            </div>
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">編輯員工資料</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm">
+                                <div class="form-group">
+                                    <label for="employeeId">員工編號:</label>
+                                    <input type="text" class="form-control" id="employeeId">
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeName">員工姓名:</label>
+                                    <input type="text" class="form-control" id="employeeName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="department">部門:</label>
+                                    <input type="text" class="form-control" id="department">
+                                </div>
+                                <div class="form-group">
+                                    <label for="position">職位:</label>
+                                    <input type="text" class="form-control" id="position">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hireDate">入職日期:</label>
+                                    <input type="date" class="form-control" id="hireDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">電話號碼:</label>
+                                    <input type="text" class="form-control" id="phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="permission">權限:</label>
+                                    <select class="form-control" id="permission">
+                                        <option value="超級管理員">超級管理員</option>
+                                        <option value="網頁管理員">網頁管理員</option>
+                                        <option value="訂單管理員">訂單管理員</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                            <button type="button" class="btn btn-primary" id="btnSave">儲存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bootstrap 核心 JavaScript -->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                            // 建立表單內容
-                            var formHTML = `
-                                <h4 class="setemp" style="color: blue;">設定權限 - ${employeeName}</h4>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="employeeID">員工編號</label>
-                                        <input type="text" class="form-control" id="employeeID" value="${employeeID}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employeeName">員工名字</label>
-                                        <input type="text" class="form-control" id="employeeName" value="${employeeName}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newPermission">新的權限</label>
-                                        <select class="form-control" id="newPermission">
-                                            <option value="超級管理員">超級管理員</option>
-                                            <option value="網頁管理員">網頁管理員</option>
-                                            <option value="訂單管理員">訂單管理員</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">儲存</button>
-                                </form>
-                            `;
+            <!-- 核心插件 JavaScript -->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                            // 顯示表單
-                            $('#formDiv').html(formHTML);
-                        });
-                    });
-                </script>
+            <!-- 自訂腳本，適用於所有頁面 -->
+            <script src="js/TripLight-2.min.js"></script>
 
-                <!-- Bootstrap 核心 JavaScript -->
-                <script src="vendor/jquery/jquery.min.js"></script>
-                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- 頁面級別的插件 -->
+            <script src="vendor/chart.js/Chart.min.js"></script>
 
-                <!-- 核心插件 JavaScript -->
-                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-                <!-- 自訂腳本，適用於所有頁面 -->
-                <script src="js/TripLight-2.min.js"></script>
-
-                <!-- 頁面級別的插件 -->
-                <script src="vendor/chart.js/Chart.min.js"></script>
-
-                <!-- 頁面級別的自訂腳本 -->
-                <script src="js/demo/chart-area-demo.js"></script>
-                <script src="js/demo/chart-pie-demo.js"></script>
+            <!-- 頁面級別的自訂腳本 -->
+            <script src="js/demo/chart-area-demo.js"></script>
+            <script src="js/demo/chart-pie-demo.js"></script>
 
 
+            <!--引入datables-->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script src="js/demo/datatables-demo.js"></script>
 </body>
 
 </html>

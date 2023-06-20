@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,7 +21,26 @@
         <script src="js/login.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/empolyee.css">
+    <style>
+        div.dataTables_wrapper div.dataTables_length select {
+            width: auto;
+            display: inline-block;
+        }
+
+        #dataTable_filter {
+            display: none;
+        }
+
+        .btn-primary {
+            transform: translate(500px, 0px);
+        }
+
+        thead tr th {
+            white-space: normal;
+            word-break: break-all;
+            white-space: nowrap
+        }
+    </style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -54,7 +74,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="EmployeeQuety.html">查詢資料</a>
-                        <a class="collapse-item" href="EmployeeRevise.html">新增資料</a>
+                        <a class="collapse-item" href="EmployeeRevise.html">修改資料</a>
                     </div>
                 </div>
             </li>
@@ -114,14 +134,12 @@
                 <div id="collapseWebManagement" class="collapse" aria-labelledby="headingWebManagement"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="TravelArticles.html">文章管理</a>
-                        <a class="collapse-item" href="ReportAriocles.html">檢舉管理</a>
+                        <a class="collapse-item" href="TravelArticles.html">旅遊文章</a>
                     </div>
                 </div>
             </li>
 
 
-          
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                     aria-expanded="true" aria-controls="collapseCustomerService">
@@ -179,85 +197,87 @@
                         </li>
                     </ul>
                 </nav>
-                <div id="formDiv">
-                    <div>
-                        <h4 class="setemp" style="color: blue;">員工權限設定</h4>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">會員資料查詢</h6>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">員工編號</th>
-                                <th scope="col">員工名字</th>
-                                <th scope="col">管理權限</th>
-                                <th scope="col">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card-body">
+                        <div>
+                            <div>會員搜尋</div>
+                            <form>
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">1.會員姓名</label>
+                                    <div class="col-sm-4">
+                                        <input type="email" class="form-control" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <fieldset class="row mb-3">
+                                    <legend class="col-form-label col-sm-2 pt-0">2.會員狀態</legend>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="gridRadios1">
+                                                尚未認證
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios2" value="option2">
+                                            <label class="form-check-label" for="gridRadios2">
+                                                啟用
+                                            </label>
+                                        </div>
+                                        <div class="form-check disabled">
+                                            <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios3" value="option3">
+                                            <label class="form-check-label" for="gridRadios3">
+                                                停權
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <button type="submit" class="btn btn-primary ">搜尋</button>
+                            </form>
+                        </div>
+
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr style="position: sticky">
+                                        <th>會員編號</th>
+                                        <th>姓名</th>
+                                        <th>電話</th>
+                                        <th>電子信箱</th>
+                                        <th>生日</th>
+                                        <th>性別</th>
+                                        <th>地址</th>
+                                        <th>加入時間</th>
+                                        <th>分級</th>
+                                        <th>會員狀態</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>545</th>
+                                        <th>吳彼得</th>
+                                        <th>0912345678</th>
+                                        <th>aaa@gmail.com</th>
+                                        <th>1960/3/3</th>
+                                        <th>男</th>
+                                        <th>桃園市中壢區復興路46號9樓</th>
+                                        <th>2004/4/24</th>
+                                        <th>2</th>
+                                        <th>啟用</th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-
-                <script>
-                    $(document).ready(function () {
-                        // 設定按鈕點擊事件
-                        $('.btn-primary').click(function () {
-                            // 取得所選的員工編號和員工名字
-                            var employeeID = $(this).closest('tr').find('td:eq(0)').text();
-                            var employeeName = $(this).closest('tr').find('td:eq(1)').text();
-
-                            // 建立表單內容
-                            var formHTML = `
-                                <h4 class="setemp" style="color: blue;">設定權限 - ${employeeName}</h4>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="employeeID">員工編號</label>
-                                        <input type="text" class="form-control" id="employeeID" value="${employeeID}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employeeName">員工名字</label>
-                                        <input type="text" class="form-control" id="employeeName" value="${employeeName}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newPermission">新的權限</label>
-                                        <select class="form-control" id="newPermission">
-                                            <option value="超級管理員">超級管理員</option>
-                                            <option value="網頁管理員">網頁管理員</option>
-                                            <option value="訂單管理員">訂單管理員</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">儲存</button>
-                                </form>
-                            `;
-
-                            // 顯示表單
-                            $('#formDiv').html(formHTML);
-                        });
-                    });
-                </script>
 
                 <!-- Bootstrap 核心 JavaScript -->
                 <script src="vendor/jquery/jquery.min.js"></script>
@@ -275,7 +295,9 @@
                 <!-- 頁面級別的自訂腳本 -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
-
+                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+                <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
