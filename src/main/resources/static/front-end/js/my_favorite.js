@@ -25,53 +25,68 @@ camera.addEventListener("click", function () {
 
 //填入假資料
 const dataObj = {};
-const valid = [
-  {
-    url: "http://google.com.tw",
-    imgUrl:
-      "https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
-    title: "票券收藏1",
-    summary:
-      "簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介介簡介簡介簡介介簡介簡介簡介簡介簡介簡介簡介v簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介",
-    realPrice: 400,
-  },
-  {
-    url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
-    imgUrl:
-      "https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
-    title: "票券收藏2",
-    summary: "簡介",
-    realPrice: 1200,
-  },
-];
+//const valid = [
+//	{
+//		url: "http://google.com.tw",
+//		imgUrl:
+//			"https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
+//		title: "票券收藏1",
+//		summary:
+//			"簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介介簡介簡介簡介介簡介簡介簡介簡介簡介簡介簡介v簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介簡介",
+//		realPrice: 400,
+//	},
+//	{
+//		url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
+//		imgUrl:
+//			"https://scitechvista.nat.gov.tw/FileDownload/Article/20230330152155448044257.jpg",
+//		title: "票券收藏2",
+//		summary: "簡介",
+//		realPrice: 1200,
+//	},
+//];
 
 for (let i = 0; i < valid.length; i++) {
   Object.assign(dataObj, valid[i]);
   $(".orderselectclass").append(generateTicket(valid[i]));
 }
-function generateTicket(t_favorite) {
-  return `
-  <div class="ticket_item_class">
-    <a href="${t_favorite.url}", class="orderurl">
-        <div class="item_img_class">
-            <img src="${t_favorite.imgUrl}" , class="item_img">
-        </div>      
-        <div class="item_content">
-            <h1 class="item_title">${t_favorite.title}</h1>
-            <div class="box">
-                <p class="Number"> ${t_favorite.summary}  </p>
-            </div>
-            <div>
-                <p class="price">TWD</p>
-                <p class="realPrice">${t_favorite.realPrice}</p>
-            </div>
-        </div>
-    </a>
-    <div class="item_commend_class">
-       <i class="fa-solid fa-heart heart remove_btn"></i>  
-    </div>
-  </div>
-      `;
+function generateTicket() {
+  $.ajax({
+    url: "/ticketFavoriteDetails/"+ memberId ,
+    method: "GET",
+    dataType: "json",
+    success: function (t_favorite) {
+      console.log("接收資料");
+      console.log(t_favorite);
+      if (!$(".tab-pane").eq(0).find("#orderselect").next().hasClass("ticket_item_class")){
+        for (let i = 0; i < t_favorite.length; i++) {
+          $(".tab-pane").eq(0).find("#orderselect")
+              .after(`<div class="ticket_item_class">
+            
+                 <div class="item_img_class">
+                    
+                 </div>
+                   <div class="item_content">
+                     <h1 class="item_title">${t_favorite.Name}</h1>
+                     <div class="box">
+                         <p class="Number">${t_favorite.Description}</p>
+                     </div>
+                     <div>
+                         <p class="price">TWD</p>
+                         <p class="realPrice">${t_favorite.Price}</p>
+                     </div>
+                 </div>
+               </a>
+               <div class="item_commend_class">
+                  <i class="fa-solid fa-heart heart remove_btn"></i>  
+               </div>
+             </div>
+                `);}
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
 }
 //移除背景圖
 if (Object.keys(dataObj).length !== 0) {
