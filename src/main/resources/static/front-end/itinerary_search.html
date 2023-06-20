@@ -9,7 +9,8 @@
     <!-- lib. -->
 
     <!-- boostrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -53,7 +54,7 @@
 
 <body>
 
-<!-- ====================================== 上層  ====================================== -->
+    <!-- ====================================== 上層  ====================================== -->
     <!-- header -->
     <header>
         <div class="container" style="padding-right: 0px">
@@ -72,7 +73,7 @@
                     <li class=""><a href="index.html">首頁</a></li>
                     <li class=""><a href="booking.html">AI行程規劃</a></li>
                     <li class="active"><a href="tickets.html">票券</a></li>
-                    <li class=""><a href="packages.html">套裝行程</a></li>
+                    <li class=""><a href="itinerary_search.html">套裝行程</a></li>
                     <li class=""><a href="articles.html">旅遊文章</a></li>
                     <li class="booking"><a href="" id="login">登入/註冊</a></li>
                     <li class="">
@@ -196,14 +197,14 @@
     </nav>
     <!-- Navbar -->
 
-<!-- ====================================== //上層  ====================================== -->
+    <!-- ====================================== //上層  ====================================== -->
 
-<!-- ====================================== 內容區  ====================================== -->
+    <!-- ====================================== 內容區  ====================================== -->
 
     <div class="container-fluid mt-5">
         <div class="row justify-content-center">
 
-<!-- ====================== 左側搜尋欄 ============================== -->
+            <!-- ====================== 左側搜尋欄 ============================== -->
             <div class="col-2 mx-3">
 
                 <!-- 篩選目的地 -->
@@ -215,32 +216,38 @@
                     </div>
                     <hr>
 
-<!--                    <div class="item_search">-->
-<!--                        <div class="input-group rounded">-->
-<!--                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"-->
-<!--                                aria-describedby="search-addon" />-->
-<!--                            <span class="input-group-text border-0" id="search-addon">-->
-<!--                                <i class="fas fa-search"></i>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                    <div class="item_search">-->
+                    <!--                        <div class="input-group rounded">-->
+                    <!--                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"-->
+                    <!--                                aria-describedby="search-addon" />-->
+                    <!--                            <span class="input-group-text border-0" id="search-addon">-->
+                    <!--                                <i class="fas fa-search"></i>-->
+                    <!--                            </span>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                     <div class="item_city mt-3" name="sort" value="byDegree">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
-                            <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-fire" viewBox="0 0 16 16">
+                            <path
+                                d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
                         </svg>
                         <label for="">熱門程度</label>
                     </div>
                     <div class="item_city mt-3" name="sort" value="bySuggested">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
-                            <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
+                            <path
+                                d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z" />
                         </svg>
                         <label for="">TripLight 推薦 </label>
                     </div>
 
                     <div class="item_city mt-3" name="sort" value="byPriceLowToHigh">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
-                            <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                            <path
+                                d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
                         </svg>
                         <label for="">價格: 低至高</label>
                     </div>
@@ -255,7 +262,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 選擇縣市
                             </button>
                         </h2>
@@ -265,19 +272,22 @@
 
                                 <!--======================= 北北基宜 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneA" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneA"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         北北基
                                     </button>
                                 </p>
                                 <div class="collapse" id="zoneA">
                                     <div class="card card-body">
                                         <div class="form-check d-flex gap-3">
-                                               <input class="form-check-input" type="checkbox" value="台北市" id="taipei">
-                                               <label for="taipei" class="form-check-label align-self-center">臺北市</label>
+                                            <input class="form-check-input" type="checkbox" value="台北市" id="taipei">
+                                            <label for="taipei" class="form-check-label align-self-center">臺北市</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="新北市" id="newTaipeiCity">
-                                            <label for="newTaipeiCity" class="form-check-label align-self-center">新北市</label>
+                                            <input class="form-check-input" type="checkbox" value="新北市"
+                                                id="newTaipeiCity">
+                                            <label for="newTaipeiCity"
+                                                class="form-check-label align-self-center">新北市</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="基隆市" id="keelung">
@@ -289,7 +299,8 @@
                                 <!--======================= //北北基宜 =======================-->
                                 <!--======================= 桃竹苗 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneB" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneB"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         桃竹苗
                                     </button>
                                 </p>
@@ -301,7 +312,8 @@
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="新竹市" id="hsinchuShi">
-                                            <label for="hsinchuShi" class="form-check-label align-self-center">新竹市</label>
+                                            <label for="hsinchuShi"
+                                                class="form-check-label align-self-center">新竹市</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="新竹縣" id="hsinchu">
@@ -318,7 +330,8 @@
 
                                 <!--======================= 中彰投 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneC" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneC"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         中彰投
                                     </button>
                                 </p>
@@ -344,7 +357,8 @@
 
                                 <!--======================= 雲嘉南 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneD" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneD"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         雲嘉南
                                     </button>
                                 </p>
@@ -356,7 +370,8 @@
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="嘉義市" id="chiayiShi">
-                                            <label for="chiayiShi" class="form-check-label align-self-center">嘉義市</label>
+                                            <label for="chiayiShi"
+                                                class="form-check-label align-self-center">嘉義市</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="嘉義縣" id="chiayi">
@@ -374,7 +389,8 @@
 
                                 <!--======================= 高屏 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneE" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneE"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         高屏
                                     </button>
                                 </p>
@@ -382,7 +398,8 @@
                                     <div class="card card-body">
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="高雄市" id="kaohsiung">
-                                            <label for="kaohsiung" class="form-check-label align-self-center">高雄市</label>
+                                            <label for="kaohsiung"
+                                                class="form-check-label align-self-center">高雄市</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="屏東縣" id="pingtung">
@@ -396,7 +413,8 @@
 
                                 <!--======================= 宜花東 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneF" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneF"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         宜花東
                                     </button>
                                 </p>
@@ -422,7 +440,8 @@
 
                                 <!--======================= 澎金馬 =======================-->
                                 <p>
-                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneG" aria-expanded="false" aria-controls="collapseExample">
+                                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#zoneG"
+                                        aria-expanded="false" aria-controls="collapseExample">
                                         澎金馬
                                     </button>
                                 </p>
@@ -434,11 +453,12 @@
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="連江縣" id="lianjiang">
-                                            <label for="lianjiang" class="form-check-label align-self-center">連江縣</label>
+                                            <label for="lianjiang"
+                                                class="form-check-label align-self-center">連江縣</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
                                             <input class="form-check-input" type="checkbox" value="澎湖縣" id="penghu">
-                                                <label for="penghu" class="form-check-label align-self-center">澎湖縣</label>
+                                            <label for="penghu" class="form-check-label align-self-center">澎湖縣</label>
                                         </div>
 
                                     </div>
@@ -456,7 +476,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 行程時間
                             </button>
                         </h2>
@@ -467,17 +487,17 @@
                                 <div class="form-check d-flex gap-3">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault21">
                                     <label class="form-check-label align-self-center"
-                                           for="flexCheckDefault21">1日來回</label>
+                                        for="flexCheckDefault21">1日來回</label>
                                 </div>
                                 <div class="form-check d-flex gap-3">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault22">
                                     <label class="form-check-label align-self-center"
-                                           for="flexCheckDefault22">2天1夜</label>
+                                        for="flexCheckDefault22">2天1夜</label>
                                 </div>
                                 <div class="form-check d-flex gap-3">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault23">
                                     <label class="form-check-label align-self-center"
-                                           for="flexCheckDefault23">3天含以上</label>
+                                        for="flexCheckDefault23">3天含以上</label>
                                 </div>
                             </div>
                         </div>
@@ -485,17 +505,17 @@
 
 
                     <!-- 區塊3 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    篩選出發日期
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
-                                <div class="accordion-body">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                篩選出發日期
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                            <div class="accordion-body">
 
-                                    <!-- <div class="form-group">
+                                <!-- <div class="form-group">
                                           <label for="startDate">開始:</label>
                                           <input id="startDate" />
                                             </div>
@@ -503,18 +523,18 @@
                                               <label for="endDate">結束:</label>
                                               <input id="endDate" />
                                             </div> -->
-                                    <input type="text" name="daterange" value="" />
-                                </div>
+                                <input type="text" name="daterange" value="" />
                             </div>
                         </div>
+                    </div>
                 </div>
 
 
             </div>
 
-<!-- ====================== // 左側搜尋欄 ============================== -->
+            <!-- ====================== // 左側搜尋欄 ============================== -->
 
-<!-- ====================== 右側搜尋欄 ============================== -->
+            <!-- ====================== 右側搜尋欄 ============================== -->
             <div class="col-7" id="productItems">
                 <!--動態生成-->
             </div>
@@ -538,12 +558,12 @@
             </div>
         </div>
 
-        </div>
     </div>
-<!-- ====================== //右側商品欄位 ============================== -->
+    </div>
+    <!-- ====================== //右側商品欄位 ============================== -->
 
-<!-- ====================================== 內容區  ====================================== -->
-<!-- ====================================== 下層  ====================================== -->
+    <!-- ====================================== 內容區  ====================================== -->
+    <!-- ====================================== 下層  ====================================== -->
 
     <!--footer -->
     <footer>
@@ -645,7 +665,7 @@
     </div>
     <!-- move top -->
 
-<!-- ====================================== /下層  ====================================== -->
+    <!-- ====================================== /下層  ====================================== -->
 
     <!-- ========== lib  ========== -->
 
@@ -654,7 +674,9 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
     <!-- boostrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
 
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
@@ -667,34 +689,34 @@
     <script src="js/Login.js"></script>
     <!-- login顯示 -->
 
-<!-- ====================================== Java Script  ====================================== -->
+    <!-- ====================================== Java Script  ====================================== -->
 
     <script>
-    $(document).ready(function (){
+        $(document).ready(function () {
 
-        let selectedArray = [];
-        $('input[type="checkbox"]').change(function() {
-            if ($(this).is(':checked')) {
-                // var value = $(this).val();
-                // console.log(value);
-                selectedArray.push($(this).val());
-            }else {
+            let selectedArray = [];
+            $('input[type="checkbox"]').change(function () {
+                if ($(this).is(':checked')) {
+                    // var value = $(this).val();
+                    // console.log(value);
+                    selectedArray.push($(this).val());
+                } else {
 
-            }
+                }
 
-            console.log(selectedArray);
-        })
+                console.log(selectedArray);
+            })
 
 
 
-        $.getJSON('http://localhost:8080/tripSearch/getTripList', function(response){
+            $.getJSON('http://localhost:8080/tripSearch/getTripList', function (response) {
 
-            let parentEl = $('#productItems');
+                let parentEl = $('#productItems');
 
-            for(let i=0; i<response.length; i++){
-                let base64Url= 'data:image/gif;base64,' + response[i].imageBase64;
+                for (let i = 0; i < response.length; i++) {
+                    let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
 
-                let newChildEl=`
+                    let newChildEl = `
                  <div class="card mb-3 my-nav-link" href="#">
                     <div class="row g-0 h-100">
                         <div class="col-md-4 h-100">
@@ -712,24 +734,24 @@
                     </div>
                 </div>
                 `;
-                parentEl.append(newChildEl);
-            }
+                    parentEl.append(newChildEl);
+                }
 
-            // ====== set ID in session storage ======
-            $('#productItems').on('click', '.changePage',function (event){
-                let tripId = $(this).attr('tripId');
-                console.log(tripId);
-                sessionStorage.setItem('tripId', `${tripId}`);
-                window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
-            })
+                // ====== set ID in session storage ======
+                $('#productItems').on('click', '.changePage', function (event) {
+                    let tripId = $(this).attr('tripId');
+                    console.log(tripId);
+                    sessionStorage.setItem('tripId', `${tripId}`);
+                    window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
+                })
 
+
+            });
 
         });
 
-    });
-
     </script>
-<!-- ====================================== //Java Script  ====================================== -->
+    <!-- ====================================== //Java Script  ====================================== -->
 
 </body>
 

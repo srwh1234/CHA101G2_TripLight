@@ -79,7 +79,7 @@
                     <li class=""><a href="index.html">首頁</a></li>
                     <li class=""><a href="booking.html">AI行程規劃</a></li>
                     <li class="active"><a href="tickets.html">票券</a></li>
-                    <li class=""><a href="packages.html">套裝行程</a></li>
+                    <li class=""><a href="itinerary_search.html">套裝行程</a></li>
                     <li class=""><a href="articles.html">旅遊文章</a></li>
                     <li class="booking"><a href="" id="login">登入/註冊</a></li>
                     <li class="">
@@ -195,7 +195,7 @@
     <div class="container mt-3">
         <div class="row justify-content-center">
 
-<!-- ======================== 左側會員欄位 ============================================-->
+            <!-- ======================== 左側會員欄位 ============================================-->
             <div class="col-3 mt-5">
 
                 <div class="row">
@@ -214,10 +214,10 @@
                 </div>
 
             </div>
-<!-- ======================== //左側會員欄位 ============================================-->
+            <!-- ======================== //左側會員欄位 ============================================-->
 
 
-<!-- ======================== //右側訂單欄位 ============================================-->
+            <!-- ======================== //右側訂單欄位 ============================================-->
             <div class="col-8">
                 <!-- 商品1 -->
                 <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">
@@ -288,12 +288,12 @@
 
 
             </div>
-<!-- ======================== //右側訂單欄位 ============================================-->
+            <!-- ======================== //右側訂單欄位 ============================================-->
 
         </div>
     </div>
 
-<!-- ======================== 分頁 ============================================-->
+    <!-- ======================== 分頁 ============================================-->
     <div class="d-flex justify-content-center align-items-center my-3">
         <ul class="pagination">
             <li class="page-item">
@@ -311,8 +311,8 @@
             </li>
         </ul>
     </div>
-<!-- ======================== //分頁 ============================================-->
-<!-- ======================== footer ============================================-->
+    <!-- ======================== //分頁 ============================================-->
+    <!-- ======================== footer ============================================-->
 
     <!--footer -->
     <footer>
@@ -327,7 +327,7 @@
                             <ul class="col-12 links">
                                 <li>
                                     <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
-                                       target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                                        target="_blank">地址：桃園市中壢區復興路46號9樓</a>
                                 </li>
                                 <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
                                 <li>
@@ -379,11 +379,11 @@
                         <ul class="social_section_1info">
                             <li>
                                 <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
-                                                                               alt="facebook" /></a>
+                                        alt="facebook" /></a>
                             </li>
                             <li>
                                 <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                                                                                       alt="instagram" /></a>
+                                        alt="instagram" /></a>
                             </li>
                             <li>
                                 <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
@@ -406,8 +406,8 @@
     </div>
     <!-- //copyright -->
 
-<!-- ======================== // footer ============================================-->
-<!-- ======================== Lib ============================================-->
+    <!-- ======================== // footer ============================================-->
+    <!-- ======================== Lib ============================================-->
 
     <!-- boostrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
@@ -436,21 +436,21 @@
     <script src="js/Login.js"></script>
     <!-- login顯示 -->
 
-<!-- ======================== Lib ============================================-->
-<!-- ======================== Java Script ============================================-->
+    <!-- ======================== Lib ============================================-->
+    <!-- ======================== Java Script ============================================-->
     <script>
 
         // ====== 確認預定 ======
-        $('#btn_con').on('click', function (){
+        $('#btn_con').on('click', function () {
 
             // 1. get data from DB
             let modalText = $('#modal-text').val();
 
             // 2. serialize data
-            let data = JSON.stringify({'message': modalText});
+            let data = JSON.stringify({ 'message': modalText });
 
             // 3. post to DB
-            $.post("http://localhost:8080/groupOrder/addTripComments", data, function (response){
+            $.post("http://localhost:8080/groupOrder/addTripComments", data, function (response) {
                 console.log('successfully sent!');
             });
 
@@ -484,7 +484,7 @@
         });
     </script>
 
-<!-- ======================== // Java Script ============================================-->
+    <!-- ======================== // Java Script ============================================-->
 
 
 </body>
