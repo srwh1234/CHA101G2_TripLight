@@ -32,6 +32,7 @@ const login33 = document.querySelectorAll(".main-btn")[0];
 login33.addEventListener("click", function (e) {
   e.preventDefault();
   container.classList.remove("active-popup");
+  container.classList.add("active");
   //================================獲得後端資料=====================================
   let memberEmail = $("#email").val();
   let memberPassword = $("#password").val();
