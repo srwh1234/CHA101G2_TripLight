@@ -22,7 +22,7 @@ public class MyFavoriteService {
 
 	public List<Ticket> getTicket(int memberId) {
 		final List<Ticket> result = new ArrayList<>();
-		List<TicketFavorite> favorites = ticketFavoriteRepository.findByMemberId(memberId);
+		List<TicketFavorite> favorites = ticketFavoriteRepository.findByKeyMemberId(memberId);
 		
 		
 		

@@ -10,5 +10,5 @@ import com.tw.ticket.model.TicketFavorite.PrimaryKey;
 
 @Repository
 public interface TicketFavoriteRepository extends JpaRepository<TicketFavorite, PrimaryKey> {
-	public List<TicketFavorite> findByMemberId(int memberId);
+	public List<TicketFavorite> findByKeyMemberId(int memberId);
 }

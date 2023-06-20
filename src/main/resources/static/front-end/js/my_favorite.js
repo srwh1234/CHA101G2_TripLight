@@ -22,9 +22,15 @@ camera.addEventListener("click", function () {
   input.click();
 });
 // ==========================右邊會員資料--票券訂單 =====================================
-
+//找到會員id
+let memberId = 0;
+if (sessionStorage.getItem("test-login")) {
+	memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+} else {
+	memberId = null;
+}
 //填入假資料
-const dataObj = {};
+//const dataObj = {};
 //const valid = [
 //	{
 //		url: "http://google.com.tw",
@@ -45,10 +51,10 @@ const dataObj = {};
 //	},
 //];
 
-for (let i = 0; i < valid.length; i++) {
-  Object.assign(dataObj, valid[i]);
-  $(".orderselectclass").append(generateTicket(valid[i]));
-}
+//for (let i = 0; i < valid.length; i++) {
+//  Object.assign(dataObj, valid[i]);
+//  $(".orderselectclass").append(generateTicket(valid[i]));
+//}
 function generateTicket() {
   $.ajax({
     url: "/ticketFavoriteDetails/"+ memberId ,
@@ -89,9 +95,9 @@ function generateTicket() {
   });
 }
 //移除背景圖
-if (Object.keys(dataObj).length !== 0) {
-  $(".no_comment_div").first().toggleClass("-out");
-}
+//if (Object.keys(dataObj).length !== 0) {
+//  $(".no_comment_div").first().toggleClass("-out");
+//}
 //移除收藏
 $(document).on("click", ".remove_btn", function (e) {
   $(this).closest(".ticket_item_class").remove();
