@@ -6,12 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.employee.dao.EmployeeRepository;
-import com.tw.employee.model.Access;
 import com.tw.employee.model.Employee;
 import com.tw.employee.service.EmployeeService;
 
@@ -24,7 +23,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    // 新增
+    // 新增頁面用的
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         Employee createdEmployee = employeeService.saveEmployee(employee);
@@ -42,11 +41,28 @@ public class EmployeeController {
         }
     }
 
-    // 獲得最新資料
+    // 查詢的頁面去獲得資料庫中最新資料
     @GetMapping("/latest")
     public ResponseEntity<List<Employee>> getLatestEmployees() {
         List<Employee> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);
+    }
+    
+ // 更新员工资料
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable("id") int id, @RequestBody Employee employee) {
+        Employee existingEmployee = employeeService.getEmployeeById(id);
+        if (existingEmployee != null) {
+            existingEmployee.setEmployeeName(employee.getEmployeeName());
+            existingEmployee.setEmployeeTel(employee.getEmployeeTel());
+            existingEmployee.setEmployeeStatus(employee.getEmployeeStatus());
+        
+
+            Employee updatedEmployee = employeeService.updateEmployee(existingEmployee);
+            return ResponseEntity.ok(updatedEmployee);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // 獲得全部員工

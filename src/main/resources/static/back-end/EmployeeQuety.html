@@ -202,7 +202,7 @@
                     <th>員工編號</th>
                     <th>員工姓名</th>
                     <th>電話</th>
-                    <th>權限</th>
+                    <th>狀態</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -217,7 +217,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <h5 class="modal-title" id="editModalLabel">編輯員工資料</h5> -->
+                <h5 class="modal-title" id="editModalLabel" focolor="blue">編輯員工資料</h5>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> -->
@@ -233,15 +233,14 @@
                         <input type="text" class="form-control" id="employeeName">
                     </div>
                     <div class="form-group">
-                        <label for="phone">電話號碼:</label>
+                        <label for=" employeetel">電話號碼:</label>  
                         <input type="text" class="form-control" id="phone">
                     </div>
                     <div class="form-group">
-                        <label for="permission">權限:</label>
+                        <label for="permission"> 狀態</label>   
                         <select class="form-control" id="permission">
-                            <option value="超級管理員">超級管理員</option>
-                            <option value="網頁管理員">網頁管理員</option>
-                            <option value="訂單管理員">訂單管理員</option>
+                            <option value="1">在職</option>
+                            <option value="0">離職</option>
                         </select>
                     </div>
                 </form>
@@ -254,86 +253,116 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // 載入頁面時，取得最新員工資料並呈現在表格中
-        loadLatestEmployees();
+$(document).ready(function () {
+    // 載入頁面時，取得最新員工資料並呈現在表格中
+    loadLatestEmployees();
 
-        // 初始化資料表格
-        $('#dataTable').DataTable();
+    // 初始化資料表格
+    $('#dataTable').DataTable();
 
-        // 編輯按鈕點擊事件
-        $(document).on('click', '.btn-edit', function () {
-            var row = $(this).closest('tr');
-            var cells = row.find('td');
+    // 確定修改按鈕點擊事件
+    $('#btnSave').click(function () {
+        // 獲取表單中的值
+        var employeeId = $('#employeeId').val();
+        var employeeName = $('#employeeName').val();
+        var phone = $('#phone').val();
+        var status = $('#permission').val();
+        
 
-            // 獲取各個欄位的值
-            var employeeId = $(cells[0]).text();
-            var employeeName = $(cells[1]).text();
-            var phone = $(cells[2]).text();
-            var permission = $(cells[3]).text();
+        // 關閉修改資料的模態框
+        $('#editModal').modal('hide');
 
-            // 將值填充到表單中
-            $('#employeeId').val(employeeId);
-            $('#employeeName').val(employeeName);
-            $('#phone').val(phone);
-            $('#permission').val(permission);
-
-            // 顯示修改資料的模態框
-            $('#editModal').modal('show');
+  
+        $.ajax({
+            url: "/employees/update/" + employeeId,
+            method: "PUT",
+            data: JSON.stringify({
+                employeeName: employeeName,
+                employeeTel: phone,
+                employeeStatus:status
+            }),
+            contentType: "application/json",
+            success: function (response) {
+//                 var table = $('#dataTable').DataTable();
+//                 var row = table.row('#' + employeeId);
+//                 row.data([employeeId, employeeName, phone , permission.value,  `<button class="btn btn-primary btn-sm btn-edit">編輯</button>
+//                     <button class="btn btn-danger btn-sm btn-delete">停權</button>`]).draw();
+					loadLatestEmployees()
+                Swal.fire("操作成功", "", "success");
+            },
+            error: function (error) {
+                console.log(error);
+            }
         });
-
-        // 確定修改按鈕點擊事件
-        $('#btnSave').click(function () {
-            // 獲取表單中的值
-            var employeeId = $('#employeeId').val();
-            var employeeName = $('#employeeName').val();
-            var phone = $('#phone').val();
-            var permission = $('#permission').val();
-
-            // 關閉修改資料的模態框
-            $('#editModal').modal('hide');
-
-            // 更新表格中的資料
-            var table = $('#dataTable').DataTable();
-            var row = table.row('#' + employeeId);
-            row.data([employeeId, employeeName, phone, permission]).draw();
-        });
-
-        // 加載最新的員工資料
-        function loadLatestEmployees() {
-            $.ajax({
-                url: "/employees/latest",
-                method: "GET",
-                success: function (response) {
-                    // 清空表格內容
-                    var table = $('#dataTable').DataTable();
-                    table.clear().draw();
-
-                    // 將最新的員工資料填充到表格中
-                    for (var i = 0; i < response.length; i++) {
-                        var employee = response[i];
-                        var row = [
-                            employee.employeeId,
-                            employee.employeeName,
-                            employee.employeeTel,
-                            employee.employeeStatus,
-                            `<button class="btn btn-primary btn-sm btn-edit">編輯</button>
-                             <button class="btn btn-danger btn-sm btn-delete">停權</button>`
-                        ];
-                        table.row.add(row).node().id = employee.employeeId;
-                    }
-                    table.draw();
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
     });
-</script>
 
+    // 加載最新的員工資料
+    function loadLatestEmployees() {
+        $.ajax({
+            url: "/employees/latest",
+            method: "GET",
+            success: function (response) {
+                var table = $('#dataTable').DataTable();
+                table.clear().draw();
+
+                // 將最新的員工資料填充到表格中
+                for (var i = 0; i < response.length; i++) {
+                    var employee = response[i];
+                    var row = [
+                        employee.employeeId,
+                        employee.employeeName,
+                        employee.employeeTel,
+                        employee.employeeStatus==1?'在職':'離職',
+                        `<button class="btn btn-primary btn-sm btn-edit">編輯</button>`
+//                                 <button class="btn btn-danger btn-sm btn-delete">停權</button>
+                    ];
+                    table.row.add(row).node().id = employee.employeeId;
+                }
+                table.draw();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    // 編輯按鈕點擊事件
+    $(document).on('click', '.btn-edit', function () {
+        var row = $(this).closest('tr');
+        var cells = row.find('td');
+
+        // 獲取各個欄位的值
+        var employeeId = $(cells[0]).text();
+        var employeeName = $(cells[1]).text();
+        var phone = $(cells[2]).text();
+
+        // 將值填充到表單中
+        $('#employeeId').val(employeeId);
+        $('#employeeName').val(employeeName);
+        $('#phone').val(phone);
+
+        // 顯示修改資料的模態框
+        $('#editModal').modal('show');
+    });
+
+//     $(document).on('click', '.btn-delete', function () {
+//         Swal.fire({
+//             text: "確定要停權嗎?",
+//             showCancelButton: true,
+//             confirmButtonText: "確認",
+//             cancelButtonText: "取消",
+//         }).then((result) => {
+//             if (result.isConfirmed) {
+//                 // 在此處理刪除的邏輯
+
+//                 // 顯示刪除成功訊息
+//                 Swal.fire("操作成功", "", "success");
+//             }
+//         });
+//     });
+});
+</script>
 				<script src="vendor/jquery/jquery.min.js"></script>
 				<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
