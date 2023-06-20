@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class QuestionReportController {
@@ -27,7 +28,11 @@ public class QuestionReportController {
         questionReportService.createQuestionReport(questionReportRequestDTO);
         return ResponseEntity.ok().body("{\"message\": \"問題已送出!\"}");
     }
-
+    @PostMapping(value ="/questionReports/{id}/score")
+    public void updateScore(@PathVariable int id, @RequestBody Map<String, Integer> scoreMap){
+        int score = scoreMap.get("score");
+        questionReportService.updateScore(id, score);
+    }
 
     //會員查自己的問題回報紀錄
     @GetMapping(value = "/question_report")
@@ -35,7 +40,7 @@ public class QuestionReportController {
         return questionReportService.showQuestReportById(memberId);
     }
 
-
+    //會員刪除特定id的問題
     @DeleteMapping(value = "/question_report/{id}")
     public void deleteQuestionReport(@PathVariable int id) {
         questionReportService.deleteQuestionReport(id);

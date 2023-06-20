@@ -9,8 +9,7 @@ public interface QuestionReportService {
 
     public void createQuestionReport(QuestionReportRequestDTO questionReportRequestDTO);
     public void save(QuestionReport questReport);
-
     public List<QuestionReport> showQuestReportById(int memberId);
-
     public void deleteQuestionReport(int id);
+    public void updateScore(int id, int score);
 }

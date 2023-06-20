@@ -32,6 +32,7 @@ public class QuestionReportServiceImpl implements QuestionReportService {
         save(questionReport);
 
     }
+
     @Override
     public void save(QuestionReport questReport) {
         questionReportRepository.save(questReport);
@@ -45,5 +46,13 @@ public class QuestionReportServiceImpl implements QuestionReportService {
     @Override
     public void deleteQuestionReport(int id) {
         questionReportRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateScore(int id, int score) {
+        QuestionReport questionReport = questionReportRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid question report Id:" + id));
+        questionReport.setScore(score);
+        questionReportRepository.save(questionReport);
     }
 }

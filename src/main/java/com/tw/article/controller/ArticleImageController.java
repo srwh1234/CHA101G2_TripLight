@@ -22,7 +22,8 @@ import com.tw.article.service.ArticleImageService;
 @Controller
 @RestController("/article_image")
 public class ArticleImageController {
-
+	
+	@Autowired
     private final ArticleImageService articleImageService;
 
     @Autowired
@@ -41,7 +42,7 @@ public class ArticleImageController {
     @ResponseBody
     public byte[] getArticleImage(@PathVariable("id") Integer articleImageId) {
         // 根據文章圖片ID取得相應的圖片資料
-        ArticleImage articleImage = articleImageService.getArticleImageById(articleImageId);
+        ArticleImage articleImage = articleImageService.getArticleImage(articleImageId);
         // 回傳圖片資料
         return articleImage.getImage();
     }

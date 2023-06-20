@@ -54,13 +54,11 @@ public class ArticleImageServiceImpl implements com.tw.article.service.ArticleIm
 			result = IMG_URL  + image.getArticleImageId();
 		} catch (IOException e) {
 //			log.error(e.getLocalizedMessage(), e);
-		
 		}
-
 		return result;
 	}
 
-    public ArticleImage getArticleImageById(Integer id) {
+    public ArticleImage getArticleImage(Integer id) {
         Optional<ArticleImage> optionalArticleImage = articleImageRepository.findById(id);
         return optionalArticleImage.orElse(null);
     }
