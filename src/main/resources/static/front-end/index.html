@@ -400,7 +400,7 @@
         探索多樣性豐富的套裝行程，讓您的旅行更輕鬆愉快。從浪漫之旅到刺激的冒險，我們提供各種各樣的行程，滿足不同旅客的需求。無論是短途旅行還是長途旅行，我們都有適合您的選擇。
       </p>
       <div class="row recommendTrip">
-        <div class="col-lg-3 col-sm-6">
+        <!-- <div class="col-lg-3 col-sm-6">
           <div class="image-tour position-relative">
             <a href="packages_detail.html"><img src="images/p1.jpg" alt="" class="card-img" /></a>
             <p><span class="fa fa-tags"></span> <span>58888起</span></p>
@@ -477,7 +477,7 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="view-package text-center mt-4">
         <a href="packages.html">瀏覽所有套裝行程</a>
@@ -516,7 +516,7 @@
         無論您是喜愛自然風光、文化古蹟或是美食之旅，我們都有適合您的票券選擇。
       </p>
       <div class="row recommendTicket inner-sec-www-lauinfo">
-        <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
+        <!-- <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
           <h4 class="destination mb-3">桃園青埔</h4>
           <div class="image-position position-relative image-ticket">
             <img src="images/xpark.jpg" class="card-img" alt="" />
@@ -563,7 +563,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -751,9 +751,9 @@
           for (let i = 0; i < packages.length; i++) {
             $(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
-          <a href="packages_detail.html"
-            ><img src=${packages[i].tripImage} alt="" class="card-img"
-          /></a>
+          <a href="itinerary_page.html" data-trip-id="${packages[i].tripId}" onclick="storeTripId(event)">
+            <img src="${packages[i].tripImage}" alt="" class="card-img" />
+          </a>
           <p><span class="fa fa-tags"></span> <span>${packages[i].priceAdult}起</span></p>
         </div>
         <div class="package-info">
@@ -808,6 +808,19 @@
       });
       // ==============================接收熱門票券==============================================
     });
+
+    // ==============================設定熱門行程==============================================
+    function storeTripId(event) {
+      // event.preventDefault(); // 防止點擊連結導致頁面跳轉
+
+      const link = event.currentTarget;
+      const tripId = link.dataset.tripId;
+      sessionStorage.setItem('tripId', tripId);
+
+      // 可選步驟：跳轉到目標頁面
+      // window.location.href = link.href;
+    }
+    // ==============================設定熱門行程==============================================
   </script>
 </body>
 

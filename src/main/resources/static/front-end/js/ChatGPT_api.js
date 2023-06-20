@@ -22,9 +22,9 @@ let initialLength = text.length;
 const intervalId = setInterval(() => {
   text = $("#output").val();
   if (text.length !== initialLength) {
-    initialLength = text.length; // 重置初始长度
+    initialLength = text.length; // 重置初始長度
   } else {
-    clearInterval(intervalId); // 停止定时器的执行
+    clearInterval(intervalId); // 停止定時器執行
 
     // 關閉 SSE 連線
     sseSource.close();
