@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,8 +16,8 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        <script src="js/jquery-3.7.0.min.js"></script>
-        <script src="js/login.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/login.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
@@ -142,7 +141,7 @@
             </li>
 
 
-          
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                     aria-expanded="true" aria-controls="collapseCustomerService">
@@ -224,113 +223,156 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <th>澎湖銀海遊艇公司</th>
-                                        <th>澎湖縣白沙鄉鳥嶼村95之1號</th>
-                                        <th>06-9916007</th>
-                                        <th>abc123123@gmail.com</th>
-                                        <th>跨海大橋的看到鬼</th>
-                                        <th>0937-629424</th>
-                                        <th>2023-05-21 20:42:57</th>
-                                        <th>台灣銀行004-024 001 106082</th>
-                                        <th class="power">啟用</th>
-                                        <th><button type="button" class="btn btn-success">啟用</button>
-                                            <button type="button" class="btn btn-danger">停權</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>2</th>
-                                        <th>雄親大家好旅行社</th>
-                                        <th>高雄市三民區博愛路111號</th>
-                                        <th>02 475 2464</th>
-                                        <th>qwe78787@gmail.com</th>
-                                        <th>高雄ㄟ高著屎</th>
-                                        <th>0978-087484</th>
-                                        <th>2023-05-21 20:44:53</th>
-                                        <th>玉山銀行808 </th>
-                                        <th class="power">啟用</th>
-                                        <th><button type="button" class="btn btn-success">啟用</button>
-                                            <button type="button" class="btn btn-danger">停權</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>3</th>
-                                        <th>中路扛霸子旅行社</th>
-                                        <th>台中市西屯區中港 路78號</th>
-                                        <th>04 25201314</th>
-                                        <th>aaa5201314@gmail.com</th>
-                                        <th>台中羅老先生</th>
-                                        <th>0972-837971</th>
-                                        <th>2023-05-21 20:45:38</th>
-                                        <th>中國信託 822 </th>
-                                        <th class="power">停權</th>
-                                        <th><button type="button" class="btn btn-success">啟用</button>
-                                            <button type="button" class="btn btn-danger">停權</button>
-                                        </th>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
 
-                <!-- Bootstrap 核心 JavaScript -->
-                <script src="vendor/jquery/jquery.min.js"></script>
-                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                <!-- 核心插件 JavaScript -->
-                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                <!-- 自訂腳本，適用於所有頁面 -->
-                <script src="js/TripLight-2.min.js"></script>
+    <script src="../front-end/js/sweetalert.js"></script>
 
-                <!-- 頁面級別的插件 -->
-                <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Bootstrap 核心 JavaScript -->
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                <!-- 頁面級別的自訂腳本 -->
-                <script src="js/demo/chart-area-demo.js"></script>
-                <script src="js/demo/chart-pie-demo.js"></script>
-                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-                <script src="js/demo/datatables-demo.js"></script>
-                <script>
-                    //啟用
-                    const btnSuccessList = document.querySelectorAll(".btn-success");
-                    btnSuccessList.forEach(function (btnSuccess) {
-                        btnSuccess.addEventListener("click", function () {
+    <!-- 核心插件 JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                            btnSuccess.closest("tr").querySelector(".power").innerText = "啟用";
-                        });
-                    })
-                    //停權
-                    const btnDangerList = document.querySelectorAll(".btn-danger");
-                    btnDangerList.forEach(function (btnDanger) {
-                        btnDanger.addEventListener("click", function () {
-                            swal({
-                                title: "確定要停權嗎",
-                                icon: "warning",
-                                buttons: {
-                                    Btn: false,
-                                    cancel: {
-                                        text: "取消",
-                                        visible: true
-                                    },
-                                    confirm: {
-                                        text: "確定",
-                                        visible: true
-                                    }
-                                }
-                            }).then((value) => {
-                                if (value) {
-                                    btnDanger.closest("tr").querySelector(".power").innerText = "停權";
-                                }
+    <!-- 自訂腳本，適用於所有頁面 -->
+    <script src="js/TripLight-2.min.js"></script>
+
+    <!-- 頁面級別的插件 -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- 頁面級別的自訂腳本 -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+    <script>
+
+        // 先準備一個函數用於填充表格數據
+        function populateTable(vendors) {
+            for (let vendor of vendors) {
+                let reviewStatus;
+                switch (vendor.review) {
+                    case 0:
+                        reviewStatus = "審核中";
+                        break;
+                    case 1:
+                        reviewStatus = "啟用";
+                        break;
+                    case 2:
+                        reviewStatus = "停權";
+                        break;
+                    default:
+                        reviewStatus = "";
+                        break;
+                }
+
+                $("#dataTable tbody").append(`
+      <tr>
+        <td class="vendorId">${vendor.vendorId}</td>
+        <td>${vendor.vendorName}</td>
+        <td>${vendor.vendorAdd}</td>
+        <td>${vendor.vendorPhone}</td>
+        <td>${vendor.ceoEmail}</td>
+        <td>${vendor.ceoName}</td>
+        <td>${vendor.ceoPhone}</td>
+        <td>${vendor.applicationTime}</td>
+        <td>${vendor.bankAccount}</td>
+        <td class="power">${reviewStatus}</td>
+        <td>
+          <button type="button" class="btn btn-success">啟用</button>
+          <button type="button" class="btn btn-danger">停權</button>
+        </td>
+      </tr>
+    `);
+            }
+        }
+
+        // 先獲取數據，然後填充表格，然後再呼叫依賴文件
+        $.ajax({
+            type: "GET",
+            url: "/vendors",
+            success: function (vendors) {
+                populateTable(vendors); // 調用填充表格的函式
+
+                // 加载 DataTables 相關的依賴文件
+                $.getScript("vendor/datatables/jquery.dataTables.min.js")
+                    .done(function () {
+                        $.getScript("vendor/datatables/dataTables.bootstrap4.min.js")
+                            .done(function () {
+                                // 在所有依赖文件加载完成后执行
+                                $.getScript("js/demo/datatables-demo.js");
+                            })
+                            .fail(function (jqxhr, settings, exception) {
+                                console.error("Failed to load DataTables Bootstrap 4 JS file:", exception);
                             });
-
-                        });
                     })
-                </script>
+                    .fail(function (jqxhr, settings, exception) {
+                        console.error("Failed to load DataTables jQuery plugin:", exception);
+                    });
+            },
+        });
+
+
+
+
+
+
+
+        // 啟用
+        $(document).on("click", ".btn-success", function (e) {
+            $(e.target).closest("tr").find(".power").text("啟用");
+            let vanedorId = $(e.target).closest("tr").find(".vendorId").text();
+            $.ajax({
+                type: "PUT",
+                url: `/vendors1/${vanedorId}`,
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        });
+
+        // 停權
+        $(document).on("click", ".btn-danger", function (e) {
+            Swal.fire({
+                title: '確定要停權嗎',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(e.target).closest("tr").find(".power").text("停權");
+                    let vanedorId = $(e.target).closest("tr").find(".vendorId").text();
+
+                    $.ajax({
+                        type: "PUT",
+                        url: `/vendors2/${vanedorId}`,
+                        success: function (response) {
+                            console.log(response);
+                        }
+                    })
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+
+    </script>
 
 </body>
 
