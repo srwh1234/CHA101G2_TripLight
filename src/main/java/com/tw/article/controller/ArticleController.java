@@ -69,12 +69,13 @@ public class ArticleController {
 	public Article createArticle(@RequestParam("articleTitle") String articleTitle,
             @RequestParam("articleTypeId") int articleTypeId,
             @RequestParam("articlePostContent") String articlePostContent,
-            @RequestParam("articleImage") MultipartFile articleImage) {
+            @RequestParam("articlePicture") MultipartFile articlePicture) {
 		
 		Article article = new Article();
 	    article.setArticleTitle(articleTitle);
 	    article.setArticleTypeId(articleTypeId);
 	    article.setArticlePostContent(articlePostContent);
+	    
 
 		return articleService.save(article);
 	}

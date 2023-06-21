@@ -58,7 +58,7 @@ public class Trip implements Serializable {
     private String imageBase64;
 
     @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "tripId")
+    @JoinColumn(name = "tripId")    // 這是啥? name不對也能接收喔? 好神奇
     private List<TripComment> tripComments = new ArrayList<>();
 
     // cascade表示存檔時 也一起寫入AiLocations
