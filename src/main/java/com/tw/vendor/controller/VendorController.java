@@ -223,6 +223,8 @@ public class VendorController {
                 </html>
                         
                 """;
+
+        // TODO:修正
         String formattedMessage = String.format(htmlContent,vendor.getVendorEmail() ,vendor.getLoginAccount(), vendor.getLoginPassword());
         emailSenderService.sendHTMLEmail(vendor.getVendorEmail(),"TripLight廠商帳號停權通知",formattedMessage);
         return "廠商停權成功";

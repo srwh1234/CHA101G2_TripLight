@@ -30,14 +30,18 @@ public class EmailSenderService {
         return true;
     }
 
-    public boolean sendHTMLEmail(String email, String subject, String html) throws MessagingException {
+    public boolean sendHTMLEmail(String email, String subject, String html)  {
         final MimeMessage message = javaMailSender.createMimeMessage();
         final MimeMessageHelper messageHelper = new MimeMessageHelper(message);
-        messageHelper.setTo(email);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(html, true);
-        javaMailSender.send(message);
-        return true;
+        try {
+            messageHelper.setTo(email);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(html, true);
+            javaMailSender.send(message);
+            return true;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
