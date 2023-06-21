@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,13 +70,13 @@ public class ArticleController {
 	public Article createArticle(@RequestParam("articleTitle") String articleTitle,
             @RequestParam("articleTypeId") int articleTypeId,
             @RequestParam("articlePostContent") String articlePostContent,
-            @RequestParam("articlePicture") MultipartFile articlePicture) {
+            @RequestParam("articlePicture") byte[] articlePicture) {
 		
 		Article article = new Article();
 	    article.setArticleTitle(articleTitle);
 	    article.setArticleTypeId(articleTypeId);
 	    article.setArticlePostContent(articlePostContent);
-	    
+	    article.setArticlePicture(articlePicture);
 
 		return articleService.save(article);
 	}
@@ -96,10 +97,15 @@ public class ArticleController {
 		articleService.deleteArticle(article);
 	}
 
-	public ArticleService getArticleService() {
-		return articleService;
+	public List<Article> getArticleService() {
+		return articleService.getAllArticle();
 	}
-
+	
+	@GetMapping(value = "/article/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
+	public byte[] findPicture (@PathVariable("imgUrl") final int id) {
+		return articleService.findPicture(id);
+	}
+	
 	@Data
 	public static class DataArticle {
 
@@ -110,17 +116,19 @@ public class ArticleController {
 			this.articlePostContent = article.getArticlePostContent();
 			this.articlePostTime = article.getArticlePostTime();
 			this.articleViews = article.getArticleViews();
-			this.articleLikesCount = 100;
+			this.articlePicture = article.getArticlePicture();
+//			this.articleLikesCount = 100;
 		}
 
 		private Integer articleId;
+		private String memberName;
 		private Integer articleTypeId;
 		private String articleTitle;
 		private String articlePostContent;
 		private Timestamp articlePostTime;
 		private Integer articleViews;
-		private Integer articleLikesCount;
-		private String memberName;
+		private byte[] articlePicture;
+//		private Integer articleLikesCount;
 
 	}
 }

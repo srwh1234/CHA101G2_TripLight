@@ -1,16 +1,18 @@
 package com.tw.article.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tw.article.dao.ArticleImageRepository;
 import com.tw.article.dao.ArticleRepository;
 import com.tw.article.model.Article;
 import com.tw.article.service.ArticleService;
-import com.tw.ticket.model.TicketImage;
-
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,6 +25,7 @@ import java.util.Optional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService { 
+	
     private final ArticleRepository articleRepository;
 
     @Autowired
@@ -86,4 +89,26 @@ public class ArticleServiceImpl implements ArticleService {
 		 return articleRepository.findAll();
 	}
     
+	@Override
+	public byte[] findPicture (final int id) {
+
+		// 以下都要放 service
+		final Article article = articleRepository.findById(id).orElse(null);
+		// 沒有指定編號的圖片
+		if (article == null) {
+			final ClassPathResource resource = new ClassPathResource("images/bb.gif");
+
+			byte[] bytes = null;
+			try (final InputStream is = resource.getInputStream();) {
+				bytes = new byte[is.available()];
+				is.read(bytes);
+
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
+			return bytes;
+		}
+		return article.getArticlePicture();
+	}
+	
 }

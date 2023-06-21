@@ -1,8 +1,11 @@
 package com.tw.form.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,13 +21,27 @@ public class EmailSenderService {
 
 
     // 傳輸mail
-    public boolean sendEmail(String email,String subject, String message) {
+    public boolean sendEmail(String email, String subject, String message) {
         var mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
-//        mailMessage.setTo("triplight0411@gmail.com");
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
         javaMailSender.send(mailMessage);
         return true;
     }
+
+    public boolean sendHTMLEmail(String email, String subject, String html)  {
+        final MimeMessage message = javaMailSender.createMimeMessage();
+        final MimeMessageHelper messageHelper = new MimeMessageHelper(message);
+        try {
+            messageHelper.setTo(email);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(html, true);
+            javaMailSender.send(message);
+            return true;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

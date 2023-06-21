@@ -13,9 +13,9 @@ public class ContactData {
 
     @Override
     public String toString() {
-        return  "姓名："+ name +"\n"+
-                "電話："+ phone +"\n"+
-                "信箱："+ email +"\n"+
-                "其他需求："+ message +"\n";
+        return  "姓名："+ name +"<br>"+
+                "電話："+ phone +"<br>"+
+                "信箱："+ email +"<br>"+
+                "其他需求："+ message +"<br>";
     }
 }

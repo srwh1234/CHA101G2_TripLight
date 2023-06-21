@@ -24,7 +24,7 @@ public interface ArticleService {
 	
 	Article save(Article article);
 	
-	
+	public byte[] findPicture(final int id);
 	
     
 //	Article findByPrimaryKey(Integer articleId);

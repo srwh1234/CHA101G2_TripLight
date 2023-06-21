@@ -279,34 +279,32 @@
                 // 修改日期資料格式
                 let inputDate = vendor.applicationTime;
                 let dateTime = new Date(inputDate);
-
                 let year = dateTime.getFullYear();
                 let month = String(dateTime.getMonth() + 1).padStart(2, "0");
                 let day = String(dateTime.getDate()).padStart(2, "0");
                 let hours = String(dateTime.getHours()).padStart(2, "0");
                 let minutes = String(dateTime.getMinutes()).padStart(2, "0");
                 let seconds = String(dateTime.getSeconds()).padStart(2, "0");
-
                 let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
                 $("#dataTable tbody").append(`
-      <tr>
-        <td class="vendorId">${vendor.vendorId}</td>
-        <td>${vendor.vendorName}</td>
-        <td>${vendor.vendorAdd}</td>
-        <td>${vendor.vendorPhone}</td>
-        <td>${vendor.ceoEmail}</td>
-        <td>${vendor.ceoName}</td>
-        <td>${vendor.ceoPhone}</td>
-        <td>${formattedDate}</td>
-        <td>${vendor.bankAccount}</td>
-        <td class="power">${reviewStatus}</td>
-        <td>
-          <button type="button" class="btn btn-success">啟用</button>
-          <button type="button" class="btn btn-danger">停權</button>
-        </td>
-      </tr>
-    `);
+                <tr>
+                    <td class="vendorId">${vendor.vendorId}</td>
+                    <td>${vendor.vendorName}</td>
+                    <td>${vendor.vendorAdd}</td>
+                    <td>${vendor.vendorPhone}</td>
+                    <td>${vendor.ceoEmail}</td>
+                    <td>${vendor.ceoName}</td>
+                    <td>${vendor.ceoPhone}</td>
+                    <td>${formattedDate}</td>
+                    <td>${vendor.bankAccount}</td>
+                    <td class="power">${reviewStatus}</td>
+                    <td>
+                        <button type="button" class="btn btn-success">啟用</button>
+                        <button type="button" class="btn btn-danger">停權</button>
+                    </td>
+                </tr>
+                `);
             }
         }
 
@@ -341,7 +339,7 @@
 
 
 
-        // 啟用
+        // =========================== 啟用 ===========================
         $(document).on("click", ".btn-success", function (e) {
             $(e.target).closest("tr").find(".power").text("啟用");
             let vanedorId = $(e.target).closest("tr").find(".vendorId").text();
@@ -354,7 +352,7 @@
             })
         });
 
-        // 停權
+        // =========================== 停權 ===========================
         $(document).on("click", ".btn-danger", function (e) {
             Swal.fire({
                 title: '確定要停權嗎',
@@ -377,17 +375,7 @@
                 }
             });
         });
-
-
-
-
-
-
-
-
-
     </script>
-
 </body>
 
 </html>
