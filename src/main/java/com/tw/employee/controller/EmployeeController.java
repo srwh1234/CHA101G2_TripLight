@@ -56,6 +56,7 @@ public class EmployeeController {
             existingEmployee.setEmployeeName(employee.getEmployeeName());
             existingEmployee.setEmployeeTel(employee.getEmployeeTel());
             existingEmployee.setEmployeeStatus(employee.getEmployeeStatus());
+            existingEmployee.setEmployeeAccess(employee.getEmployeeAccess());
         
 
             Employee updatedEmployee = employeeService.updateEmployee(existingEmployee);

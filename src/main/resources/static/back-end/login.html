@@ -117,6 +117,9 @@
             background-size: cover;
         }
     </style>
+     <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
 </head>
 
 <body>
@@ -124,67 +127,72 @@
         <img src="img/icon.png" alt="TripLight ICON" style="height: 90px;">
         TripLight後台登入
     </h1>
-    <form id="login-form">
-        <label for="account">帳號</label>
-        <input type="text" id="account" name="account" placeholder="請輸入帳號" required>
-        <label for="password">密碼</label>
-        <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
-        <!-- 驗證條件提示 -->
-        <div class="error" id="account-error"></div>
-        <div class="error" id="password-error"></div>
+  <form id="login-form" action="/BKlogin" method="POST">
+    <label for="account">帳號</label>
+    <input type="text" id="account" name="account" placeholder="請輸入帳號" required>
+    <label for="password">密碼</label>
+    <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
+    <!-- 驗證條件提示 -->
+    <div class="error" id="account-error"></div>
+    <div class="error" id="password-error"></div>
 
-        <input type="submit" value="登入">
-    </form>
+    <input type="submit" value="登入">
+</form>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#login-form").submit(function (event) {
-                event.preventDefault();
+<script>
+    $(document).ready(function () {
+        $("#login-form").submit(function (event) {
+            event.preventDefault();
 
-                var accountValue = $("#account").val().trim();
-                var passwordValue = $("#password").val().trim();
+            var account = $("#account").val().trim();
+            var password = $("#password").val().trim();
 
-                // 驗證帳號
-                if (accountValue.length < 1) {
-                    $("#account-error").html("請輸入帳號");
-                    return;
-                } else {
-                    $("#account-error").html("");
+            // 驗證帳號
+            if (account.length < 1) {
+                $("#account-error").html("請輸入帳號");
+                return;
+            } else {
+                $("#account-error").html("");
+            }
+
+            // 驗證密碼
+            if (password.length < 6 || password.length > 20) {
+                $("#password-error").html("密碼長度必須介於6到20個字元。");
+                return;
+            } else if (!password.match(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/)) {
+                $("#password-error").html("密碼必須包含英文字母和數字。");
+                return;
+            } else {
+                $("#password-error").html("");
+            }
+
+            // 發送登入
+            $.ajax({
+                type: "POST",
+                url: "/BKlogin",
+                data: { account: account, password: password },
+                success: function (data) {
+                	
+                	if(data){
+                		// 登入成功
+                   	 window.location.href = 'http://localhost:8080/back-end/index.html';
+                	}else{
+                		Swal.fire({
+                            icon: 'error',
+                            title: '登入失敗',
+                            text: '查無此員工',
+                            confirmButtonText: '關閉'
+                        });
+                	}
+                },
+                	//登入錯誤
+                error: function (error) {
+                	
                 }
-
-                // 驗證密碼
-                if (passwordValue.length < 6 || passwordValue.length > 20) {
-                    $("#password-error").html("密碼長度必須介於6到20個字元。");
-                    return;
-                } else if (!passwordValue.match(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/)) {
-                    $("#password-error").html("密碼必須包含英文字母和數字。");
-                    return;
-                } else {
-                    $("#password-error").html("");
-                }
-
-                // 發送登入請求
-                $.ajax({
-                    type: "POST",
-                    url: "/BKlogin",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        employeeAccount: accountValue,
-                        employeePassword: passwordValue
-                    }),
-                    success: function () {
-                        // 登入成功到首頁頁面
-                        window.location.href = "http://localhost:8080/back-end/index.html";
-                    },
-                    error: function () {
-                        // 登入失敗
-                        alert("查無此帳號密碼");
-                    }
-                });
             });
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>

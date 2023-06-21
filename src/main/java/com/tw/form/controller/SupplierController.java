@@ -18,7 +18,7 @@ public class SupplierController {
 
     @PostMapping("/suppliers")
     public Boolean getSupplier(@RequestBody SupplierData supplierData){
-        emailSenderService.sendEmail("廠商申請表單",supplierData.toString());
+        emailSenderService.sendEmail("triplight0411@gmail.com","廠商申請表單",supplierData.toString());
         return true;
     }
 }
