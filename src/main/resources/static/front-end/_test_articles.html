@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body div {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <select id="theSelect">
+      <option value="1">遊記</option>
+      <option value="2">食記</option>
+      <option value="3">評論</option>
+    </select>
+    <input type="file" id="theFileInput">
+  </div>
+  <div>
+    <input type="text" id="theText">
+  </div>
+  <div>
+    <textarea placeholder="111" id="theTextarea"></textarea>
+  </div>
+  <div>
+    <button id="theButton">click</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+  <script>
+
+    $('#theButton').on('click', function () {
+
+      const article = {
+        articleId: 0,
+        memberId: 1,
+        articleTypeId: $('#theSelect').val(),
+        articleTitle: $('#theText').val(),
+        articlePostContent: $('#theTextarea').val(),
+        articlePostTime: null,
+        articleStatus: 1,
+        articleViews: 1,
+        articlePicture: null,
+      }
+
+      const formData = new FormData();
+
+      formData.append('image', $('#theFileInput').prop('files')[0]);
+      formData.append('article', JSON.stringify(article));
+
+
+      //發請求
+      fetch(`http://localhost:8080/artiupload`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.text())
+        .then(data => {
+          if (data) {
+            alert('上傳成功');
+          } else {
+            alert('上傳失敗');
+          }
+        })
+        .catch(error => console.log(error));
+
+      console.log(article);
+    })
+
+  </script>
+
+</body>
+</html>

@@ -42,7 +42,7 @@ public class ArticleImageController {
     @ResponseBody
     public byte[] getArticleImage(@PathVariable("id") Integer articleImageId) {
         // 根據文章圖片ID取得相應的圖片資料
-        ArticleImage articleImage = articleImageService.getArticleImage(articleImageId);
+        ArticleImage articleImage = ArticleImageService.getArticleImage(articleImageId);
         // 回傳圖片資料
         return articleImage.getImage();
     }

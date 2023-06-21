@@ -28,4 +28,9 @@ public class ArticleImage implements Serializable{
 	
 	private Timestamp uploadTime;
 
+	public ArticleImage getArticleImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
