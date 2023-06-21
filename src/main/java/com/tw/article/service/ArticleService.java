@@ -3,6 +3,8 @@ package com.tw.article.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tw.article.controller.ArticleController.DataArticle;
 import com.tw.article.model.Article;
 
@@ -25,6 +27,8 @@ public interface ArticleService {
 	Article save(Article article);
 	
 	public byte[] findPicture(final int id);
+	
+	public boolean uploadPicture(MultipartFile file, String json);
 	
     
 //	Article findByPrimaryKey(Integer articleId);

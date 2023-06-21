@@ -106,6 +106,13 @@ public class ArticleController {
 		return articleService.findPicture(id);
 	}
 	
+	@PostMapping("/artiupload")
+	public boolean uploadPicture(//
+	@RequestParam("image") final MultipartFile file, //
+	@RequestParam("article") final String json) {
+		return articleService.uploadPicture(file,json);
+	}
+	
 	@Data
 	public static class DataArticle {
 

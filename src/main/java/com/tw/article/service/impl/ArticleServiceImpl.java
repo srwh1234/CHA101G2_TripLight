@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tw.article.dao.ArticleRepository;
 import com.tw.article.model.Article;
 import com.tw.article.service.ArticleService;
@@ -25,6 +26,8 @@ import java.util.Optional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService { 
+	
+	public static String IMG_URL = "http://localhost:8080/img/";
 	
     private final ArticleRepository articleRepository;
 
@@ -109,6 +112,19 @@ public class ArticleServiceImpl implements ArticleService {
 			return bytes;
 		}
 		return article.getArticlePicture();
+	}
+	
+	public boolean uploadPicture(MultipartFile file, String json) {
+		try {
+			final Article article = new ObjectMapper().readValue(json, Article.class);
+			article.setArticlePostTime(new Timestamp(System.currentTimeMillis()));
+			article.setArticlePicture(file.getBytes());
+
+			articleRepository.save(article);
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 }
