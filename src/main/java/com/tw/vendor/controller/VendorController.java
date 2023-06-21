@@ -27,7 +27,7 @@ public class VendorController {
     public String processVendor(@RequestBody Vendor vendor){
     	System.out.println("Get");
         vendorService.save(vendor);
-        emailSenderService.sendEmail("廠商申請表單",vendor.toString()); // 寄信
+        emailSenderService.sendEmail("triplight0411@gmail.com","廠商申請表單",vendor.toString()); // 寄信
         return "成功拿到資料";
     }
 
@@ -37,6 +37,15 @@ public class VendorController {
         Vendor vendor = vendorService.findById(vendorId);
         vendor.setReview(1);
         vendorService.save(vendor);
+        String message = """
+快來我們網站上架商品吧~~
+http://localhost:8080/vendor-end/login.html
+您的註冊email為：%s
+您的帳號為：%s
+您的密碼為：%s
+""";
+        String formattedMessage = String.format(message,vendor.getVendorEmail() ,vendor.getLoginAccount(), vendor.getLoginPassword());
+        emailSenderService.sendEmail(vendor.getVendorEmail(),"恭喜TripLight廠商帳號啟用成功",formattedMessage);
         return "廠商啟用成功";
     }
     // 更改狀態- 停權
@@ -45,6 +54,7 @@ public class VendorController {
         Vendor vendor = vendorService.findById(vendorId);
         vendor.setReview(2);
         vendorService.save(vendor);
+        emailSenderService.sendEmail(vendor.getVendorEmail(),"恭喜TripLight廠商帳號啟用成功","哈哈笨蛋你被停權了");
         return "廠商停權成功";
     }
 

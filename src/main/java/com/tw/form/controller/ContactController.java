@@ -18,7 +18,7 @@ public class ContactController {
 
     @PostMapping("/contacts")
     public Boolean getContact(@RequestBody ContactData contactData){
-        emailSenderService.sendEmail("聯絡我們表單",contactData.toString());
+        emailSenderService.sendEmail("triplight0411@gmail.com","聯絡我們表單",contactData.toString());
         return true;
     }
 }

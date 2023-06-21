@@ -19,7 +19,7 @@ public class BloggerController {
 
     @PostMapping("/bloggers")
     public Boolean getBlogger(@RequestBody BloggerData bloggerData){
-        emailSenderService.sendEmail("部落客與攝影師合作表單",bloggerData.toString());
+        emailSenderService.sendEmail("triplight0411@gmail.com","部落客與攝影師合作表單",bloggerData.toString());
         return true;
     }
 }
