@@ -20,7 +20,7 @@ public class GroupController {
     @PostMapping("/groups")
     public Boolean getGroup(@RequestBody GroupData groupData){
         System.out.println(groupData);
-        emailSenderService.sendEmail("團體客製表單",groupData.toString());
+        emailSenderService.sendEmail("triplight0411@gmail.com","團體客製表單",groupData.toString());
         return true;
     }
 }

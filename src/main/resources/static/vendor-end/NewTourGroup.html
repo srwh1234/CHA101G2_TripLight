@@ -165,44 +165,40 @@
                 </div>
                 <div class="form-container">
                     <form id="employee-form">
-                        <div class="form-group">
-                            <label for="tour_group_id">旅遊團編號</label>
+                        <div class="form-group mb-3">
+                            <label for="tour_group_id" class="mb-2">旅遊團編號</label>
                             <input type="text" id="tour_group_id" name="tour_group_id" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="trip_id">所屬的行程編號</label>
+                        <div class="form-group mb-3">
+                            <label for="trip_id" class="mb-2">所屬的行程編號</label>
                             <input type="text" id="trip_id" name="trip_id" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="pcice">價格</label>
-                            <select id="price-person" name="price-person" required>
-                                <option value="adult">大人</option>
-                            <input type="text" id="price" name="price" required/>
-                            <select id="price-person" name="price-person" required>
-                                <option value="child">小孩</option>
-                            <input type="text" id="price-person" name="price-person" required/>
+                        <div class="form-group mb-3">
+                            <label for="price_adult" class="mb-2">價格/大人</label>
+                            <input type="text" id="price_adult" name="price_adult" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="start_date">開始日期</label>
+                        <div class="form-group mb-3">
+                            <label for="price_child" class="mb-2">價格/小孩</label>
+                            <input type="text" id="price_child" name="price_child" required/>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="start_date" class="mb-2">開始日期</label>
                             <input type="start_date" id="start_date" name="start_date" required/>
                         </div>
-                        <div class="form-group">
-                            <select id="confirmed_travelers_no" name="confirmed_travelers_no" required>
-                                <option value="confirmed_travelers_no">確認出團人數</option>
-                            <input type="text" id="confirmed_travelers_no" name="confirmed_travelers_no" required/>
-                            <select id="confirmed_travelers_no" name="confirmed_travelers_no" required>
-                                <option value="min_travelers_no">最少出團人數</option>
+                        <div class="form-group mb-3">
+                            <label for="min_travelers_no" class="mb-2">最少出團人數</label>
                             <input type="text" id="min_travelers_no" name="min_travelers_no" required/>
-                            <select id="travelers" name="travelers" required>
-                                <option value="max_travelers_no">額滿人數</option>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="max_travelers_no" class="mb-2">出團額滿人數</label>
                             <input type="text" id="max_travelers_no" name="max_travelers_no" required/>
                         </div>
                         <!-- <div class="form-group">
                             <label for="trip_note">狀態</label>
                             <input type="start_date" id="start_date" name="start_date" required/>
                         </div> -->
-                        <div class="form-group">
-                            <input type="submit" value="新增">
+                        <div class="form-group mb-7">
+                            <input class="sent-butnn" type="submit" value="新增送出"></input>
                         </div>
                     </form>
                 </div>
@@ -226,16 +222,68 @@
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
 
+                <!-- sweetalert2 -->
+                <script src="js/sweetalert.js"></script>
+
 
 </body>
 <script>
+    $(".sent-butnn").on("click", function (e) {
+      e.preventDefault();
 
-     // ajax form 表單
-     // http://localhost:8080/vendors/1
+      // 拿取表單資料
+      const tourGroupId = $("#tour_group_id").val();
+      const tripId = $("#trip_id").val();
+      const priceAdult = $("#price_adult").val();
+      const priceChild = $("#price_child").val();
+      const startDate = $("#start_date").val();
+      const minTravelersNo = $("#min_travelers_no").val();
+      const maxTravelersNo = $("#max_travelers_no").val();
 
-    var str = '{"vendorName":"澎湖銀海遊艇公司","vendorAdd":"澎湖縣白沙鄉鳥嶼村95之1號","vendorPhone":"06-9916007","ceoEmail":"abc123123@gmail.com","ceoName":"跨海大橋的看到鬼","ceoPhone":"0937-629424","applicationTime":"2023-05-21 20:42:57","review":"1","bankAccount":"台灣銀行004      024 001 106082","contractTerm":"合作條款","loginAccount":"vendor01","loginPassword":"vendor01","vendorEmail":"abc123123@gmail.com","_links":{"self":{"href":"http://localhost:8080/vendors/1"},"vendor":{"href":"http://localhost:8080/vendors/1"}}}';
-    const obj = JSON.parse(str);
-    document.getElementById("trip_name").value = obj.vendorName;
+      // 包裝成物件
+      let tourGroup = {
+        tourGroupId: tourGroupId,
+        tripId: tripId,
+        priceAdult: priceAdult,
+        priceChild: priceChild,
+        startDate: startDate,
+        minTravelersNo: minTravelersNo,
+        minTravelersNo: maxTravelersNo,
+      };
+
+       // 送出成功動畫
+       Swal.fire({
+        icon: "success",
+        title: "送出成功",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      console.log(vendor);
+
+      // 清空表單
+      $("#tour_group_id").val();
+      $("#trip_id").val();
+      $("#price_adult").val();
+      $("#price_child").val();
+      $("#start_date").val();
+      $("#min_travelers_no").val();
+      $("#max_travelers_no").val();
+
+      //ajax
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/tourgroup/tourgroupadd",
+        data: JSON.stringify(tourGroup),
+        contentType: "application/json",
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      });    
+    });
  </script>
 
 </html>

@@ -26,7 +26,7 @@ import com.tw.vendor.service.TripService2;
 		 return tripService2.findAll();
 	 }
 
-	 @PostMapping("/trip3")
+	 @PostMapping("/tripadd")
 	 public String processStudent(@RequestBody final Trip2 trip) {
 		 tripService2.save(trip);
 		 System.out.println(trip);

@@ -165,43 +165,41 @@
                 </div>
                 <div class="form-container">
                     <form id="employee-form">
-                        <div class="form-group">
-                            <label for="trip_name">行程名稱</label>
+                        <div class="form-group mb-3" >
+                            <label for="trip_name" class="mb-2">行程名稱</label>
                             <input type="text" id="trip_name" name="trip_name" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="trip_description">內容簡介</label>
+                        <div class="form-group mb-3" >
+                            <label for="trip_content" class="mb-2">內容簡介</label>
                             <textarea
                                 class="form-control"
-                                id="trip_note"
-                                name="trip_note"
+                                id="trip_content"
+                                name="trip_content"
                                 rows="3"
                             ></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="trip_date">天數</label>
+                        <div class="form-group mb-3">
+                            <label for="trip_date" class="mb-2">天數</label>
                             <input type="text" id="trip_date" name="trip_date" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="pcice">價格</label>
-                            <select id="price-person" name="price-person" required>
-                                <option value="adult">大人</option>
-                            <input type="text" id="price" name="price" required/>
-                            <select id="price-person" name="price-person" required>
-                                <option value="child">小孩</option>
-                            <input type="text" id="price-person" name="price-person" required/>
+                        <div class="form-group mb-3">
+                            <label for="price_adult" class="mb-2">價格/大人</label>
+                            <input type="text" id="price_adult" name="price_adult" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="travelers">出團人數</label>
-                            <select id="travelers" name="travelers" required>
-                                <option value="max_travelers_no">額滿人數</option>
-                            <input type="text" id="travelers" name="travelers" required/>
-                            <select id="travelers" name="travelers" required>
-                                <option value="min_travelers_no">最少出團人數</option>
-                            <input type="text" id="travelers" name="travelers" required/>
+                        <div class="form-group mb-3">
+                            <label for="price_child" class="mb-2">價格/小孩</label>
+                            <input type="text" id="price_child" name="price_child" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="city">縣市</label>
+                        <div class="form-group mb-3">
+                            <label for="min_travelers_no" class="mb-2">最少出團人數</label>
+                            <input type="text" id="min_travelers_no" name="min_travelers_no" required/>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="max_travelers_no" class="mb-2">出團額滿人數</label>
+                            <input type="text" id="max_travelers_no" name="max_travelers_no" required/>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="city" class="mb-2">縣市</label>
                             <select id="city" name="city" required>
                                 <option value="taipei-city">台北市</option>
                                 <option value="new-taipei-city">新北市</option>
@@ -223,34 +221,43 @@
                                 <option value="kinmen-county">金門縣</option>
                                 <option value="lienchiang-county">連江縣</option>
                                 <option value="other">其他</option>
-                                <input type="text" name="address" class="input" placeholder=" Enter Your address" required/>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="trip_note">行程內容</label>
-                            <textarea
-                                class="form-control"
-                                id="trip_note"
-                                name="trip_note"
-                                rows="3"
-                            ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="trip_note">特別說明</label>
-                            <textarea
-                                class="form-control"
-                                id="trip_note"
-                                name="trip_note"
-                                rows="3"
-                            ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="trip-image">圖片：</label>
-                            <input type="file" id="trip-image" name="trip-image">
-                            <img id="preview" src="#" alt="預覽圖片" style="max-width: 300px; display: none;">
+                        <div class="form-group mb-3">
+                            <label for="address" class="mb-2">地址</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="address"
+                              name="address"
+                              required
+                            />
                           </div>
+                        <div class="form-group mb-3">
+                            <label for="trip_description" class="mb-2">行程內容</label>
+                            <textarea
+                                class="form-control"
+                                id="trip_description"
+                                name="trip_description"
+                                rows="3"
+                            ></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="trip_note" class="mb-2">特別說明</label>
+                            <textarea
+                                class="form-control"
+                                id="trip_note"
+                                name="trip_note"
+                                rows="3"
+                            ></textarea>
+                        </div>
                         <div class="form-group">
-                            <input type="submit" value="新增">
+                            <label for="trip_image">圖片：</label>
+                            <input type="file" id="trip_image" name="trip_image" onchange="previewImage(event)">
+                            <img id="preview" src="#" alt="預覽圖片" style="max-width: 300px; display: none;">
+                        </div>
+                        <div class="form-group mb-7">
+                            <input class="sent-butnn" type="submit" value="新增送出"></input>
                         </div>
                     </form>
                 </div>
@@ -273,35 +280,119 @@
                 <!-- 頁面級別的自訂腳本 -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
-
+                
+                <!-- sweetalert2 -->
+                <script src="js/sweetalert.js"></script>
 
 </body>
+
 <script>
-
-    const imageInput = document.getElementById('trip-image');
-    const imagePreview = document.getElementById('preview');
     
-    imageInput.addEventListener('change', function() {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.addEventListener('load', function() {
-          imagePreview.src = reader.result;
-          imagePreview.style.display = 'block';
-        });
-        reader.readAsDataURL(file);
-      } else {
-        imagePreview.src = '#';
-        imagePreview.style.display = 'none';
+    function previewImage(event) {
+    var input = event.target;
+    var preview = document.getElementById('preview');
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
       }
-    });
 
-    //  ajax form 表單
-    //  http://localhost:8080/vendors/1
+      reader.readAsDataURL(input.files[0]);
+      }
+    };
 
-    // var str = '{"vendorName":"澎湖銀海遊艇公司","vendorAdd":"澎湖縣白沙鄉鳥嶼村95之1號","vendorPhone":"06-9916007","ceoEmail":"abc123123@gmail.com","ceoName":"跨海大橋的看到鬼","ceoPhone":"0937-629424","applicationTime":"2023-05-21 20:42:57","review":"1","bankAccount":"台灣銀行004      024 001 106082","contractTerm":"合作條款","loginAccount":"vendor01","loginPassword":"vendor01","vendorEmail":"abc123123@gmail.com","_links":{"self":{"href":"http://localhost:8080/vendors/1"},"vendor":{"href":"http://localhost:8080/vendors/1"}}}';
-    // const obj = JSON.parse(str);
-    // document.getElementById("trip_name").value = obj.vendorName;
+    $(".sent-butnn").on("click", function (e) {
+      e.preventDefault();
+
+      // 拿取表單資料
+      const tripName = $("#trip_name").val();
+      const tripContent = $("#trip_content").val();
+      const tripDate = $("#trip_date").val();
+      const priceAdult = $("#price_adult").val();
+      const priceChild = $("#price_child").val();
+      const minTravelersNo = $("#minTravelersNo").val();
+      const maxTravelersNo = $("#maxTravelersNo").val();
+      const city = $("#city").val();
+      const address = $("#address").val();
+      const tripDescription = $("#trip_description").val();
+      const tripNote = $("#trip_note").val();
+      const trip_image = $("#trip_image").val();
+
+      // 包裝成物件
+      let trip = {
+        tripName: tripName,
+        tripContent: tripContent,
+        tripDay: tripDate,
+        priceAdult: priceAdult,
+        priceChild: priceChild,
+        minTravelersNo: minTravelersNo,
+        minTravelersNo: maxTravelersNo,
+        city: city + address,
+        trip_description: tripDescription,
+        trip_note: tripNote,
+      };
+
+      // 包裝成物件
+      let tripImage = {
+        trip_image: trip_image,
+      };
+
+       // 送出成功動畫
+       Swal.fire({
+        icon: "success",
+        title: "送出成功",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      console.log(vendor);
+
+      // 清空表單
+      $("#trip_name").val();
+      $("#trip_content").val();
+      $("#trip_date").val();
+      $("#price_adult").val();
+      $("#price_child").val();
+      $("#minTravelersNo").val();
+      $("#maxTravelersNo").val();
+      $("#city").val();
+      $("#address").val();
+      $("#trip_description").val();
+      $("#trip_note").val();
+      $("#trip_image").val();
+
+      //ajax
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/trip/tripadd",
+        data: JSON.stringify(trip),
+        contentType: "application/json",
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      });
+
+      //ajax
+      $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/trip/tripImageadd",
+      data: JSON.stringify(tripImage),
+      contentType: "application/json",
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.error(error);
+      },
+      });
+
+    });    
  </script>
 
 </html>
