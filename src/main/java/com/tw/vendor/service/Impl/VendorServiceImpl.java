@@ -17,6 +17,7 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public void save(Vendor vendor) {
+		System.out.println("service get");
 		vendorRepository.save(vendor);
 	}
 
