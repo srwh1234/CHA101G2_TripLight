@@ -15,4 +15,6 @@ public interface TicketImageRepository extends JpaRepository<TicketImage, Intege
 	// 找出指定票券編號的圖片編號清單
 	@Query("SELECT t.id FROM TicketImage t WHERE t.ticketId=:id")
 	public List<Integer> findIdsByTicketId(@Param("id") int ticketId);
+	
+	public TicketImage findByTicketId(int ticketId);
 }

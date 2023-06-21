@@ -12,10 +12,9 @@ import com.tw.ticket.model.TicketFavorite.PrimaryKey;
 @Repository
 public interface TicketFavoriteRepository extends JpaRepository<TicketFavorite, PrimaryKey> {
 	public List<TicketFavorite> findByKeyMemberId(int memberId);
-	//刪除
-	// void deleteTicketFavorite(Integer ticketId); 
-	 public void deleteByKeyMemberId(int memberId);
-	//public List<TicketFavorite> deleteByKeyTicketId(int ticketId);
-	//public void deleteByKeyTicket(Ticket ticket);
+
+	// 刪除
+	public void deleteByKeyMemberId(int memberId);
+
 	public void deleteByKeyTicket(PrimaryKey key);
 }

@@ -54,7 +54,7 @@ function generateTicket() {
 						.after(`<div class="ticket_item_class">
 						<a href="http://localhost:8080/front-end/tickets_detail.html?id=${t_favorite[i].ticketId}" class="orderurl">                 
                  <div class="item_img_class">
-                  <img src="${t_favorite.imgUrl}" class="item_img">  
+                  <img src="${t_favorite[i].imgUrl}" class="item_img">  
                  </div>
                    <div class="item_content">
                      <h1 class="item_title">${t_favorite[i].name}</h1>
