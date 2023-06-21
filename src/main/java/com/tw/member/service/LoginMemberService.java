@@ -1,8 +1,5 @@
 package com.tw.member.service;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +21,19 @@ public class LoginMemberService {
 	public List<Member> getAllMembers() {
 		return memberRepository.findAll();
 	}
+
 	public MemberDetail getItem(final int id) {
-		final Member member= memberRepository.findByMemberId(id);
-		
-		if (member== null) {
+		final Member member = memberRepository.findByMemberId(id);
+
+		if (member == null) {
 			return null;
 		}
-		final MemberDetail memberDetail= new MemberDetail(member);
+		final MemberDetail memberDetail = new MemberDetail(member);
 
 		return memberDetail;
 	}
-	// update
 
+	// update
 	public Member updateMember(int id, Member member) {
 		Member existingMember = memberRepository.findByMemberId(id);
 		if (existingMember != null) {
@@ -53,41 +51,48 @@ public class LoginMemberService {
 		}
 		return null;
 	}
-		//get old pwd	
-//	    public boolean getPwd(int id, String password) {
-//	        Member member =  memberRepository.findByMemberId(id);
-//	        System.out.println("id=" + member.getMemberId());
-//	        
-//	        if ( password.equals(member.getMemberPassword())) {
-//	        	System.out.println("get old pwd");
-//	            return true; 
-//	        }
-//	        System.out.println("get none");
-//	        return false; 
-//	    }
 
-	
-	   public boolean validatePassword(int memberId, String password) {
-	        Member member = memberRepository.findByMemberId(memberId);
-	        String storedPassword = member.getMemberPassword();
-	        System.out.println(password.trim().equals(storedPassword));
-	        if (password.trim().equals(storedPassword)) {
-	            System.out.println("get old pwd");
-	            return true;
-	        }
-	        System.out.println("get none");
-	        return false;
-	    }
+	// get old pwd
+	public boolean getPwd(int id, String password) {
+		Member member = memberRepository.findByMemberId(id);
+		if (password.equals(member.getMemberPassword())) {
+			System.out.println("get old pwd");
+			return true;
+		}
+		System.out.println("get none");
+		return false;
+	}
 
-	
-	
-	    // change password
-	    public void changePwd(int id, String password) {
-	    	Member existingMember = memberRepository.findByMemberId(id);
-	    	if(existingMember != null) {
-	    		existingMember.setMemberPassword(password);
-	    		memberRepository.save(existingMember);
-	    		System.out.println("changed pwd successfully");
-	    	}
-	    }
+	// change password
+	public void changePwd(int id, String password) {
+		Member existingMember = memberRepository.findByMemberId(id);
+		if (existingMember != null) {
+			existingMember.setMemberPassword(password);
+			memberRepository.save(existingMember);
+			System.out.println("changed pwd successfully");
+		}
+	}
+
+	// 存圖片
+	public void saveImage(int id, byte[] memberPic) {
+		Member member = memberRepository.findByMemberId(id);
+		member.setMemberPic(memberPic);
+		memberRepository.save(member);
+		System.out.println("save service");
+	}
+
+	public byte[] getPic(int id) {
+		Member member = memberRepository.findByMemberId(id);
+		return member.getMemberPic();
+	}
+//		public MemberDetail getItem(final int id) {
+//			final Member member= memberRepository.findByMemberId(id);
+//			
+//			if (member== null) {
+//				return null;
+//			}
+//			final MemberDetail memberDetail= new MemberDetail(member);
+//
+//			return memberDetail;
+//		}
 }

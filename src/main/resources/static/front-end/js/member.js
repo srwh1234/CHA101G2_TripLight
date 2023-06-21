@@ -12,6 +12,13 @@ let address = document.querySelector('#inputAddress');
 let email = document.querySelector('#inputEmail');
 let saveBtn = document.querySelector('#saveData');
 // <!-- 左邊會員照片+導覽列 -->
+//找到會員id
+let theId = 0;
+if (sessionStorage.getItem("test-login")) {
+	theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+} else {
+	theId = null;
+}
 // ============================上傳大頭照=====================================
 camera.addEventListener('click', function() {
 	const input = document.createElement('input');
@@ -28,12 +35,42 @@ camera.addEventListener('click', function() {
 		if (file) {
 			reader.readAsDataURL(file);
 		}
+		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		$.ajax({
+			url: "/uploadImage/" + theId,
+			method: "POST",
+			data:{
+				memberPic: memberPic,
+			},
+			success: (response) => {
+				console.log("儲存成功")
+			}, error: (error) => {
+				console.log(error);
+			}
+		})
 	});
 	input.click();
 });
-// ============================訂單管理=====================================
+//顯示大頭照
+$(document).ready(function() {
+	$.ajax({
+		url: "/getPic/" + theId,
+		method: "GET",
+		dataType: "text",
+		success: function(response) {
+			let memberPic = response;
+		$('.rounded-circle').attr('src', memberPic);
+			
+		},
+		error: function(error) {
+			console.log(error);
+			console.log(error.response);
+
+		}
+	});
+});
+
 // <!-- 右邊會員資料--基本資料 -->
-// ============================身分證=====================================
 
 // ============================地址=====================================
 const dist_data = {
@@ -125,21 +162,6 @@ $(function() {
 });
 
 // <!-- 右邊會員資料--帳號安全 -->
-//找到會員id
-let theId = 0;
-if (sessionStorage.getItem("test-login")) {
-	theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
-} else {
-	theId = null;
-}
-
-
-
-
-
-
-
-
 // ============================會員資料儲存=====================================
 function getData() {
 	const data = {
@@ -157,7 +179,7 @@ function getData() {
 	// 檢查資料是否有空值
 	const hasEmptyValue = Object.values(data).some(value => value === "");
 	if (hasEmptyValue) {
-		swal({
+		Swal.fire({
 			icon: "error",
 			title: "儲存失敗",
 			text: "請輸入完整資料",
@@ -181,7 +203,6 @@ function getData() {
 
 }
 $("#saveData").click(function() {
-	console.log("btn ok")
 	getData();
 })
 
@@ -225,7 +246,7 @@ function changePwd() {
 	let memberPassword1 = $("#editPassword").val();
 	let memberPassword = $("#confirmPassword").val();
 	if (memberPassword1.length < 8) {
-		swal({
+		Swal.fire({
 			icon: "error",
 			title: "密碼不得小於八碼",
 			showConfirmButton: false,
@@ -234,7 +255,7 @@ function changePwd() {
 		$("#editPassword").val("")
 		$("#confirmPassword").val("")
 	} else if (memberPassword1 !== memberPassword) {
-		swal({
+		Swal.fire({
 			icon: "error",
 			title: "新密碼錯誤",
 			text: "請重複確認密碼",
@@ -254,7 +275,7 @@ function changePwd() {
 			success: (response) => {
 				$("#editPassword").val("")
 				$("#confirmPassword").val("")
-				swal({
+				Swal.fire({
 					icon: "success",
 					title: "密碼更新成功",
 					showConfirmButton: false,
@@ -267,81 +288,43 @@ function changePwd() {
 			}
 		})
 	}
-
-
 }
 //確認舊密碼正確	
 function getOldPwd() {
-	//	let memberPassword = $("#currentPassword").val();
-	//	$.ajax({
-	//		url: "/pwd/" + theId,
-	//		method: "POST",
-	//		data: {
-	//			memberPassword: memberPassword,
-	//		},
-	//		success: (response) => {
-	//			console.log(response)
-	//			if (response === false) {
-	//				swal({
-	//					icon: "error",
-	//					title: "舊密碼錯誤",
-	//					text: "請輸入正確舊密碼",
-	//					showConfirmButton: false,
-	//					timer: 1500,
-	//				});
-	//				// 清空欄位
-	//				$("#currentPassword").val("");
-	//				return;
-	//
-	//			} else {
-	//				console.log("true")
-	//				$("#currentPassword").val("");
-	//			}
-	//		},
-	//		error: (error) => {
-	//			console.log(error)
-	//		}
-	//	})
-	//console.log(theId);
 	let memberPassword = $("#currentPassword").val();
-	console.log(memberPassword);
 	$.ajax({
-		url: "/checkPassword/" + theId,
+		url: "/pwd/" + theId,
 		method: "POST",
 		data: {
-			memberId: theId,
 			memberPassword: memberPassword,
 		},
-		// contentType: "application/json",
-		success: function(response) {
-			console.log(response);
-			if (response) {
-				// 密码验证成功
-				console.log("Password is correct");
-				
+		success: (response) => {
+			if (response === false) {
+				Swal.fire({
+					icon: "error",
+					title: "舊密碼錯誤",
+					text: "請輸入正確舊密碼",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				// 清空欄位
+				$("#currentPassword").val("");
+				return;
+
 			} else {
-				// 密码验证失败
-				console.log("Password is incorrect");
-				swal({
-						icon: "error",
-						title: "舊密碼錯誤",
-						text: "請輸入正確舊密碼",
-						showConfirmButton: false,
-						timer: 1500,
-					});
-					// 清空欄位
-					$("#currentPassword").val("");
+				console.log("true")
+				$("#currentPassword").val("");
 			}
 		},
-		error: function(error) {
-			console.log(error);
+		error: (error) => {
+			console.log(error)
 		}
-	});
+	})
 }
 
 $("#saveData2").click((e) => {
 	getOldPwd();
-		changePwd();
+	changePwd();
 
 })
 
