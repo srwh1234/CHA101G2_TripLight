@@ -291,23 +291,23 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-floating m-3">
-                                            <input type="date" class="form-control" id="addCoupontStartDate" placeholder=".">
-                                            <label class="my-text-lightgray" for="addCoupontStartDate">開始日期</label>
+                                            <input type="date" class="form-control" id="addPromotionStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addPromotionStartDate">開始日期</label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-floating m-3">
-                                            <input type="date" class="form-control" id="addCoupontExpiryDate" placeholder=".">
-                                            <label class="my-text-lightgray" for="addCoupontExpiryDate">到期日期</label>
+                                            <input type="date" class="form-control" id="addPromotionExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="addPromotionExpiryDate">到期日期</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating m-3">
-                                            <input type="text" class="form-control" id="addCoupontName" placeholder=".">
-                                            <label class="my-text-lightgray" for="addCoupontName">名稱</label>
+                                            <input type="text" class="form-control" id="addPromotionName" placeholder=".">
+                                            <label class="my-text-lightgray" for="addPromotionName">名稱</label>
                                         </div>
                                         <div class="m-3">
-                                            <select class="form-select" id="editTicketType">
+                                            <select class="form-select" id="ticketSelect">
                                                 <option value="1">qq</option>
                                                 <option value="1">qqa</option>
                                                 <option value="1">qqs</option>
@@ -317,21 +317,25 @@
                                     </div>
 
 
-                                    <!-- GGGGGGGGGGGGGGGGGG -->
-                                    <div class="col-12">
 
-                                        <div class="form-floating m-3">
-                                            <input type="date" class="form-control" id="addCoupontStartDate" placeholder=".">
-                                            <label class="my-text-lightgray" for="addCoupontStartDate">開始日期</label>
+                                    <div class="col-12" id="selectContainer">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="my-th-width-sm">票券編號</th>
+                                                        <th class="my-th-width">票券名稱</th>
+                                                        <th class="my-th-width-sm">原價</th>
+                                                        <th class="my-th-width-sm">促銷價</th>
+                                                        <th class="my-th-width-sm"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 內容給JS填 -->
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div class="form-floating m-3">
-                                            <input type="date" class="form-control" id="addCoupontExpiryDate" placeholder=".">
-                                            <label class="my-text-lightgray" for="addCoupontExpiryDate">到期日期</label>
-                                        </div>
-                                        <div class="form-floating m-3">
-                                            <input type="number" class="form-control" id="addCoupontPrice" min="1" placeholder=".">
-                                            <label class="my-text-lightgray" for="addCoupontPrice">折扣金額</label>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="m-3 d-flex justify-content-end">
@@ -370,39 +374,127 @@
                 <script>
                     let currentIndex = 0;
                     let resultData;
+
+                    //
+                    let selecterData = [];
+                    let tableData = [];
                     $(function () {
                         fetch_data();
 
+
+                        //確認送出的按鈕
+                        $('#addPromotionSubmit').on('click', function () {
+                            const post = {
+                                promotionId: null,
+                                promotionTitle: $('#addPromotionName').val(),
+                                startDate: $('#addPromotionStartDate').val(),
+                                endDate: $('#addPromotionExpiryDate').val(),
+                                promotionDetails: [
+                                    {
+                                        key: {
+                                            promotionId: 0,
+                                            ticketId: 1,
+                                        },
+
+                                        promotionPrice: 1,
+                                    },
+                                ]
+                            }
+                            if (!post.promotionTitle) {
+                                Swal.fire({ icon: 'error', title: '促銷名稱未輸入' });
+                                return false;
+                            }
+
+                            if (!post.endDate) {
+                                Swal.fire({ icon: 'error', title: '促銷到期日未輸入' });
+                                return false;
+                            }
+                            if (!isDateAfterNow(post.endDate)) {
+                                Swal.fire({ icon: 'error', title: '促銷到期日已經過期' });
+                                return false;
+                            }
+
+                            if (!post.startDate) {
+                                Swal.fire({ icon: 'error', title: '促銷開始日未輸入' });
+                                return false;
+                            }
+
+                            if (isDateAfterTarget(post.startDate, post.endDate)) {
+                                Swal.fire({ icon: 'error', title: '日期輸入錯誤' });
+                                return false;
+                            }
+
+                            if(!post){
+
+                            }
+
+                            fetch(`${getDomainName()}/promotions`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(post),
+                            })
+                                .then(response => response.json())
+                                .then(data => console.log(data))
+                                .catch(error => console.log(error))
+                                .finally(() => {
+
+                                });
+
+                            console.log(post)
+                        });
+                        // 促銷列表物件的取消
+                        $(document).on('click', '.my-btn-cancel', function () {
+                            const ticketId = $(this).closest('tr').find('td').first().text();
+                            const data = tableData.find(e => e.ticketId == ticketId);
+
+                            if (!data) {
+                                return;
+                            }
+                            //從table移除
+                            tableData = tableData.filter(e => e.ticketId != ticketId);
+                            render_table();
+
+                            //放回select
+                            selecterData.push(data);
+                            render_select();
+                        });
+
+                        //下拉選單事件
+                        $('#ticketSelect').on('change', function () {
+                            const ticketId = $(this).val();
+                            const data = selecterData.find(e => e.ticketId == ticketId);
+
+                            if (!data) {
+                                return;
+                            }
+                            //從select移除
+                            selecterData = selecterData.filter(e => e.ticketId != ticketId);
+                            render_select();
+
+                            //放到table
+                            tableData.push(data);
+                            render_table();
+                        });
+
+                        // 新增促銷
                         $('#addPromotionBtn').on('click', function () {
-
-
-
                             fetch(`${getDomainName()}/promotetickets`)
                                 .then(response => response.json())
-                                .then(data => {
-
-                                   
-                                    for (let ticket of data) {
-                                        
-                                        console.log(ticket.ticketId);
-                                    }
-                                })
+                                .then(data => selecterData = data)
                                 .catch(error => console.log(error))
-                                .finally(() => $('#addPromotionModal').modal('show'));
-
-
-
-
-
-
-
-
+                                .finally(() => {
+                                    render_select();
+                                    $('#addPromotionModal').modal('show');
+                                }
+                                );
                         });
 
 
 
 
-                        //優惠券列表 點選列的事件
+                        // 點選列的事件
                         $(document).on('click', '#promotionContainer tbody tr', function () {
                             currentIndex = $(this).find('td').first().text();
 
@@ -442,6 +534,78 @@
                                 $('#promotionContainer table').bootstrapTable('load', data._embedded.promotions);
                             })
                             .catch(error => console.log(error))
+                    }
+
+                    //--------------------------------------render
+
+                    /**
+                     * 渲染下拉式選單
+                    */
+                    function render_select() {
+                        $('#ticketSelect').html('<option value="0" disabled>未選擇</option>');
+                        for (let t of selecterData.sort((a, b) => a.ticketId - b.ticketId)) {
+                            $('#ticketSelect').append(`
+                               <option value="${t.ticketId}">${t.name}</option>
+                            `);
+                        }
+                        $('#ticketSelect').val(0);
+                    }
+
+                    /**
+                     * 渲染表格
+                    */
+                    function render_table() {
+                        $('#selectContainer table tbody').html('');
+                        for (let t of tableData.sort((a, b) => a.ticketId - b.ticketId)) {
+                            $('#selectContainer table tbody').append(`
+                                <tr>
+                                    <td>${t.ticketId}</td>
+                                    <td>${t.name}</td>
+                                    <td>${t.price}</td>
+                                    <td>
+                                        <input class="form-control" type="number" min="1">
+                                    </td>
+                                    <td>                                        
+                                        <button class="btn btn-danger my-btn-cancel">取消</button>                                        
+                                    </td>
+                                 </tr>
+                            `);
+                        }
+                    }
+
+                    //TODO: ------------------------------------------//好用的函式
+
+                    //輸入的日期字串(yyyy-mm-dd) 是否在目前日期以後
+                    function isDateAfterNow(dateString) {
+                        if (!dateString) {
+                            return false;
+                        }
+                        const dateParts = dateString.split('-');
+                        const year = parseInt(dateParts[0]);
+                        const month = parseInt(dateParts[1]) - 1; // 月份從0開始
+                        const day = parseInt(dateParts[2]);
+                        const inputDate = new Date(year, month, day);
+                        return inputDate.getTime() > new Date().getTime();
+                    }
+
+                    function isDateAfterTarget(dateString, dateString2) {
+                        if (!dateString || !dateString2) {
+                            return false;
+                        }
+
+                        const dateParts = dateString.split('-');
+                        const year = parseInt(dateParts[0]);
+                        const month = parseInt(dateParts[1]) - 1; // 月份從0開始
+                        const day = parseInt(dateParts[2]);
+                        const inputDate = new Date(year, month, day);
+                        //---------
+                        const dateParts2 = dateString2.split('-');
+                        const year2 = parseInt(dateParts2[0]);
+                        const month2 = parseInt(dateParts2[1]) - 1; // 月份從0開始
+                        const day2 = parseInt(dateParts2[2]);
+                        const inputDate2 = new Date(year2, month2, day2);
+
+                        return inputDate.getTime() > inputDate2.getTime();
                     }
                     // const t = {
                     //     "_embedded": {

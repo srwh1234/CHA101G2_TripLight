@@ -184,7 +184,7 @@ public class BkOrderServiceImpl implements BkOrderService {
 
 		// XXX 測試用 請不要寄給我
 		if (member.getMemberId() == 1) {
-			to = "srwh3577@gmail.com";
+			to = "fong850403@gmail.com";
 		}
 		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
 
