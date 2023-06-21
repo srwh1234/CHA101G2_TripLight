@@ -26,7 +26,7 @@ public class TourGroupController2 {
 		 return tourGroupService.findAll();
 	 }
 	
-	 @PostMapping("/tourgroup3")
+	 @PostMapping("/tourgroupadd")
 	 public String processTourGroup(@RequestBody final TourGroup2 tourGroup) {
 		 tourGroupService.save(tourGroup);
 		 System.out.println(tourGroup);

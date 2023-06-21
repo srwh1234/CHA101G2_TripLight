@@ -554,106 +554,106 @@
       const supplierPassword = $("#supplierPassword").val();
       const message = $("#message").val();
 
-      // 執行驗證數據
-      // const regex = /^.*$/; // 只允許字母和數字，不包含空格或特殊符號
+      執行驗證數據
+      const regex = /^.*$/; 
 
-      // // 公司名稱驗證
-      // if (!companyName || !regex.test(companyName)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的公司名稱",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 公司名稱驗證
+      if (!companyName || !regex.test(companyName)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的公司名稱",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 公司地址驗證
-      // if (!companyAddress || !regex.test(companyAddress)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的公司地址",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 公司地址驗證
+      if (!companyAddress || !regex.test(companyAddress)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的公司地址",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 聯絡人名字驗證
-      // if (!contactName || !regex.test(contactName)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的聯絡人姓名",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 聯絡人名字驗證
+      if (!contactName || !regex.test(contactName)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的聯絡人姓名",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 公司電話驗證
-      // if (!companyPhone || !/^\d{1,10}$/.test(companyPhone)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的公司電話",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 公司電話驗證
+      if (!companyPhone || !/^\d{1,10}$/.test(companyPhone)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的公司電話",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 聯絡人電話驗證
-      // if (!contactPhone || !/^\d{1,10}$/.test(contactPhone)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的聯絡人電話",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 聯絡人電話驗證
+      if (!contactPhone || !/^\d{1,10}$/.test(contactPhone)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的聯絡人電話",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 聯絡人電子郵件驗證
-      // if (!contactEmail || !isValidEmail(contactEmail)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的電子郵件",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 聯絡人電子郵件驗證
+      if (!contactEmail || !isValidEmail(contactEmail)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的電子郵件",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 驗證電子郵件是否為有效的函數
-      // function isValidEmail(email) {
-      //   // 使用正則進行驗證
-      //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      //   return emailRegex.test(email);
-      // }
+      // 驗證電子郵件是否為有效的函數
+      function isValidEmail(email) {
+        // 使用正則進行驗證
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
 
-      // // 金融機構驗證
-      // const selectedFinancialInstitution = $("#financial-institutions").val();
-      // if (selectedFinancialInstitution === "") {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請選擇金融機構",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 金融機構驗證
+      const selectedFinancialInstitution = $("#financial-institutions").val();
+      if (selectedFinancialInstitution === "") {
+        Swal.fire({
+          icon: "error",
+          title: "請選擇金融機構",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 銀行帳號驗證
-      // if (!bankAccount || !/^[0-9]{10,16}$/.test(bankAccount)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫有效的銀行帳戶，10到16位數字",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 銀行帳號驗證
+      if (!bankAccount || !/^[0-9]{10,16}$/.test(bankAccount)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫有效的銀行帳戶，10到16位數字",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 廠商帳號驗證
-      // if (!supplierAccount || /[\s~`!@#$%^&*()\-+=\[\]{}|\\:;"'<>,.?/]/.test(supplierAccount)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫帳號，不能包含特殊符號和空格",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 廠商帳號驗證
+      if (!supplierAccount || /[\s~`!@#$%^&*()\-+=\[\]{}|\\:;"'<>,.?/]/.test(supplierAccount)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫帳號，不能包含特殊符號和空格",
+        });
+        return; // 停止執行後續操作
+      }
 
-      // // 廠商密號驗證
-      // if (!supplierPassword || !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/.test(supplierPassword)) {
-      //   Swal.fire({
-      //     icon: "error",
-      //     title: "請填寫密碼，需6到15位的英數组合，不能包含特殊符号和空格",
-      //   });
-      //   return; // 停止執行後續操作
-      // }
+      // 廠商密號驗證
+      if (!supplierPassword || !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/.test(supplierPassword)) {
+        Swal.fire({
+          icon: "error",
+          title: "請填寫密碼，需6到15位的英數组合，不能包含特殊符号和空格",
+        });
+        return; // 停止執行後續操作
+      }
 
       // 包裝成物件
       let vendor = {

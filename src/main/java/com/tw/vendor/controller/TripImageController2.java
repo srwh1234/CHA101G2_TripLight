@@ -29,7 +29,7 @@ public class TripImageController2 {
         }
 
 
-        @PostMapping("/tripImage3")
+        @PostMapping("/tripImageadd")
         public String processTripImage(@RequestBody TripImage2 tripImage2){
         	tripImageService2.save(tripImage2);
             System.out.println(tripImage2);
