@@ -17,6 +17,8 @@ public interface TripService2 {
 
     public Trip2 findById(int tripId);
 
+    public byte[] findImg(int id);
+
 //    public void deleteById(int tripId);
 
 }

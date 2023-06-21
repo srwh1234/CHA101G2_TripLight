@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 public class Vendor {  // 表格名稱
 	
     @Id  // 標示id為主鍵
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vendorId; 
     
     private String vendorName;
