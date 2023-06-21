@@ -32,6 +32,7 @@ public class VendorController {
 
     @PostMapping("/vendoradd")
     public String processVendor(@RequestBody Vendor vendor){
+    	System.out.println("Get");
         vendorService.save(vendor);
         emailSenderService.sendEmail("廠商申請表單",vendor.toString()); // 寄信
         return "成功拿到資料";
