@@ -23,11 +23,11 @@ camera.addEventListener("click", function() {
 });
 // ==========================右邊會員資料--票券訂單 =====================================
 //找到會員id
-let id = 0;
+let memberId = 0;
 if (sessionStorage.getItem("test-login")) {
-	id = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+	memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
 } else {
-	id = null;
+	memberId = null;
 }
 //填入假資料
 //const dataObj = {};
@@ -41,21 +41,18 @@ if (sessionStorage.getItem("test-login")) {
 $(window).on("load", function() {
 	$(".tab-pane").eq(0).addClass("show active"); // 顯示
 	generateTicket();
-	console.log("jsjsjsjs");
 });
 function generateTicket() {
 	$.ajax({
-		url: "/tickets/" + id,
+		url: "/tickets/" + memberId,
 		method: "GET",
 		dataType: "json",
 		success: function(t_favorite) {
-			console.log("接收資料");
-			console.log(t_favorite);
 			if (!$(".tab-pane").eq(0).find("#orderselect").next().hasClass("ticket_item_class")) {
 				for (let i = 0; i < t_favorite.length; i++) {
 					$(".tab-pane").eq(0).find("#orderselect")
 						.after(`<div class="ticket_item_class">
-						<a href="http://localhost:8080/front-end/tickets_detail.html?id="+"${t_favorite[i].ticketId}" , class="orderurl">                  
+						<a href="http://localhost:8080/front-end/tickets_detail.html?id=${t_favorite[i].ticketId}" class="orderurl">                 
                  <div class="item_img_class">
                   <img src="${t_favorite.imgUrl}" class="item_img">  
                  </div>
@@ -84,20 +81,34 @@ function generateTicket() {
 	});
 }
 //移除背景圖
-//if (Object.keys(dataObj).length !== 0) {
-//  $(".no_comment_div").first().toggleClass("-out");
-//}
+if ($(".tab-pane").eq(0).find("#orderselect").find(".ticket_item_class")) {
+	$(".no_comment_div").first().addClass("-out");
+} else {
+	$(".no_comment_div").first().removeClass("-out");
+}
+
+
 //移除收藏
 $(document).on("click", ".remove_btn", function(e) {
+	console.log("remove")
 	$(this).closest(".ticket_item_class").remove();
-	var ticketItems = document.querySelectorAll(
-		"#orderselectdiv .ticket_item_class"
-	);
-	if (ticketItems.length !== 0) {
-		$(".no_comment_div").first().toggleClass("-out", true);
-	} else {
-		$(".no_comment_div").first().toggleClass("-out", false);
-	}
+	var ticketItems = document.querySelectorAll(".ticket_item_class");
+	var ticketId = $(this).closest(".ticket_item_class").find(".orderurl").attr("href").split("=")[1];
+
+	// 連接後端刪除=========================================
+	$.ajax({
+		method: "POST",
+		url: "/removeTicket",
+		data: {
+			memberId: memberId,
+			ticketId: ticketId,
+		},
+		success: function(response) {
+		},
+		error: function(error) {
+			console.error(error);
+		},
+	});
 });
 // ==========================右邊會員資料--旅遊團收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
@@ -321,16 +332,16 @@ $(document).on("click", ".remove_btn", function(e) {
 	console.log(aiFavoriteId);
 
 	// 連接後端刪除=========================================
-	$.ajax({
-		type: "DELETE",
-		url: "/aiFavorite/" + aiFavoriteId,
-		success: function(response) {
-			console.log(response);
-		},
-		error: function(error) {
-			console.error(error);
-		},
-	});
+	//	$.ajax({
+	//		type: "DELETE",
+	//		url: "/aiFavorite/" + aiFavoriteId,
+	//		success: function(response) {
+	//			console.log(response);
+	//		},
+	//		error: function(error) {
+	//			console.error(error);
+	//		},
+	//	});
 	// 連接後端刪除=========================================
 
 	if (groupItems.length !== 0) {
