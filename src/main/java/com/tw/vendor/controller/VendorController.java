@@ -23,7 +23,7 @@ public class VendorController {
         return vendorService.findAll();
     }
 
-    @PostMapping("/vendoradd")
+    @PostMapping("/vendors")
     public String processVendor(@RequestBody Vendor vendor){
     	System.out.println("Get");
         vendorService.save(vendor);

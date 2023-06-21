@@ -234,7 +234,7 @@
 
 
 
-
+    <!-- sweetalert -->
     <script src="../front-end/js/sweetalert.js"></script>
 
     <!-- Bootstrap 核心 JavaScript -->
@@ -258,6 +258,8 @@
 
         // 先準備一個函數用於填充表格數據
         function populateTable(vendors) {
+
+            //  修改審核狀態格式
             for (let vendor of vendors) {
                 let reviewStatus;
                 switch (vendor.review) {
@@ -274,6 +276,18 @@
                         reviewStatus = "";
                         break;
                 }
+                // 修改日期資料格式
+                let inputDate = vendor.applicationTime;
+                let dateTime = new Date(inputDate);
+
+                let year = dateTime.getFullYear();
+                let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+                let day = String(dateTime.getDate()).padStart(2, "0");
+                let hours = String(dateTime.getHours()).padStart(2, "0");
+                let minutes = String(dateTime.getMinutes()).padStart(2, "0");
+                let seconds = String(dateTime.getSeconds()).padStart(2, "0");
+
+                let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
                 $("#dataTable tbody").append(`
       <tr>
@@ -284,7 +298,7 @@
         <td>${vendor.ceoEmail}</td>
         <td>${vendor.ceoName}</td>
         <td>${vendor.ceoPhone}</td>
-        <td>${vendor.applicationTime}</td>
+        <td>${formattedDate}</td>
         <td>${vendor.bankAccount}</td>
         <td class="power">${reviewStatus}</td>
         <td>

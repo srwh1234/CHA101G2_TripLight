@@ -3,6 +3,7 @@ package com.tw.trip.service;
 
 import com.tw.ai.dto.TripDto;
 
+import com.tw.trip.pojo.Trip;
 import com.tw.trip.pojo.TripImage;
 import com.tw.trip.repository.TripRepository;
 import com.tw.trip.repository.TripImageRepository;
@@ -48,5 +49,19 @@ public class TripService{
         var tripDtoArrayList = new ArrayList<TripDto>();
         tripRepository.findByCityContaining(destination).forEach(trip -> tripDtoArrayList.add(new TripDto(trip)));
         return tripDtoArrayList;
+    }
+
+
+    // 提供id 獲得trip
+    public Trip findById(int tripId){
+        return tripRepository.findById(tripId).orElse(null);
+    }
+
+    public void save(Trip trip){
+        tripRepository.save(trip);
+    }
+
+    public List<Trip> findAll(){
+        return tripRepository.findAll();
     }
 }
