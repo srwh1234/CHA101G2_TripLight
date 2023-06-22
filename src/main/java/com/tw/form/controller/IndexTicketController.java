@@ -18,7 +18,7 @@ public class IndexTicketController {
     }
 
     @GetMapping("/index/tickets")
-    public List<TicketController.DescResponse> getTicket(){
+    public List<TicketController.DescTicketDto> getTicket(){
         return ticketService.getHotItem();
     }
 }

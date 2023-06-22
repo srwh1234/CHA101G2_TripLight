@@ -22,27 +22,35 @@ public class TicketController {
 	@Autowired
 	private TicketService ticketService;
 
-	// 隨機票券
+	/**
+	 * 前台-票券列表-隨機票券
+	 */
 	@GetMapping("/rndtickets")
-	public List<DescResponse> randomTickets() {
+	public List<DescTicketDto> randomTickets() {
 		return ticketService.getRandomItem();
 	}
 
-	// 熱門票券
+	/**
+	 * 前台-票券列表-熱門票券
+	 */
 	@GetMapping("/hottickets")
-	public List<DescResponse> hotTickets() {
+	public List<DescTicketDto> hotTickets() {
 		return ticketService.getHotItem();
 	}
 
-	// 搜尋票券
+	/**
+	 * 前台-票券列表-搜尋票券
+	 */
 	@PostMapping("/searchtickets")
-	public PageDto searchTickets(@RequestBody final PageReqDto request) {
-		return ticketService.getSearchItem(request);
+	public PageDto searchTickets(@RequestBody final PageReqDto reqDto) {
+		return ticketService.getSearchItem(reqDto);
 	}
 
-	// 全部票券
+	/**
+	 * 後台-設定促銷-未促銷的票券清單
+	 */
 	@GetMapping("promotetickets")
-	public List<Ticket> alltickets() {
+	public List<Ticket> ticketsWithoutPromote() {
 		return ticketService.getItemsWithoutPromote();
 	}
 
@@ -61,12 +69,12 @@ public class TicketController {
 	public static class PageDto {
 		private int curPage;
 		private int totalPage;
-		private ArrayList<DescResponse> tickets = new ArrayList<>();
+		private ArrayList<DescTicketDto> tickets = new ArrayList<>();
 	}
 
 	@Data
-	public static class DescResponse {
-		public DescResponse(final Ticket ticket) {
+	public static class DescTicketDto {
+		public DescTicketDto(final Ticket ticket) {
 			this.ticketId = ticket.getTicketId();
 			this.name = ticket.getName();
 			this.price = ticket.getPrice();

@@ -1,6 +1,7 @@
 package com.tw.ticket.service.impl;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		}
 		final TicketFavorite favorite = new TicketFavorite();
 		favorite.setKey(new PrimaryKey(reqDto.getMemberId(), ticket));
-		favorite.setAddTime(new Timestamp(System.currentTimeMillis()));
+		favorite.setAddTime(Timestamp.from(Instant.now()));
 		ticketFavoriteRepository.save(favorite);
 
 		return FAVORITE_ADD_OK;

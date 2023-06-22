@@ -4,6 +4,7 @@ import static com.tw.ticket.model.TicketOrderDetail.REFUND_NONE;
 import static com.tw.ticket.model.TicketSn.IN_USED;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -291,7 +292,7 @@ public class OrderServiceImpl implements OrderService {
 		final TicketOrder order = new TicketOrder();
 		order.setMemberId(member.getMemberId());
 		order.setCoupon(coupon);
-		order.setPayDate(new Timestamp(System.currentTimeMillis()));
+		order.setPayDate(Timestamp.from(Instant.now()));
 		order.setPayType("");
 		order.setTotalPrice(totalPrice);
 		order.setActualPrice(actualPrice);
