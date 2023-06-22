@@ -27,17 +27,26 @@ public class BkOrderController {
 	@Autowired
 	private BkOrderService bkOrderService;
 
+	/**
+	 * 後台-票券促銷管理-訂單列表查詢
+	 */
 	@PostMapping("/orders")
-	public PageResponse orders(@RequestBody final OrderRequest request) {
+	public PageDto orders(@RequestBody final PageReqDto request) {
 		return bkOrderService.getItems(request);
 	}
 
+	/**
+	 * 後台-票券促銷管理-訂單明細查詢
+	 */
 	@GetMapping("/orderdetail")
-	public List<OrderDetailResponse> orderdetail(	//
+	public List<DetailDto> orderdetail(	//
 			@RequestParam final int employeeId, @RequestParam final int orderId) {
 		return bkOrderService.getDetailItems(orderId);
 	}
 
+	/**
+	 * 後台-票券促銷管理-退貨審核
+	 */
 	@PostMapping("/refund")
 	public boolean refund(@RequestBody final Map<String, Object> map) {
 		return bkOrderService.updateItem(map);
@@ -45,7 +54,7 @@ public class BkOrderController {
 
 	// 定義請求物件
 	@Data
-	public static class OrderRequest {
+	public static class PageReqDto {
 		private String keyword;
 		private boolean refundChecked;
 		private int employeeId;
@@ -55,14 +64,14 @@ public class BkOrderController {
 
 	// 定義回傳物件
 	@Data
-	public static class PageResponse {
+	public static class PageDto {
 		private int curPage;
 		private int totalPage;
-		ArrayList<OrderResponse> orders = new ArrayList<>();
+		ArrayList<OrderDto> orders = new ArrayList<>();
 	}
 
 	@Data
-	public static class OrderResponse {
+	public static class OrderDto {
 		private int ticketOrderId;
 		private int memberId;
 		private String memberName;
@@ -73,7 +82,7 @@ public class BkOrderController {
 	}
 
 	@Data
-	public static class OrderDetailResponse {
+	public static class DetailDto {
 		private int ticketSnId;
 		private String name;
 		private int price;

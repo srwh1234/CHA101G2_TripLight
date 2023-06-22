@@ -18,10 +18,10 @@ import com.tw.employee.dao.EmployeeRepository;
 import com.tw.employee.model.Employee;
 import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
-import com.tw.ticket.controller.BkOrderController.OrderDetailResponse;
-import com.tw.ticket.controller.BkOrderController.OrderRequest;
-import com.tw.ticket.controller.BkOrderController.OrderResponse;
-import com.tw.ticket.controller.BkOrderController.PageResponse;
+import com.tw.ticket.controller.BkOrderController.DetailDto;
+import com.tw.ticket.controller.BkOrderController.OrderDto;
+import com.tw.ticket.controller.BkOrderController.PageDto;
+import com.tw.ticket.controller.BkOrderController.PageReqDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketOrder;
 import com.tw.ticket.model.TicketOrderDetail;
@@ -48,35 +48,31 @@ public class BkOrderServiceImpl implements BkOrderService {
 	@Autowired
 	private MailService mailService;
 
-	// 回傳會員票券訂單
+	/**
+	 * @param reqDto 請求參數
+	 * @return 會員票券訂單分頁
+	 */
 	@Override
-	public PageResponse getItems(final OrderRequest request) {
-		final List<OrderResponse> result = new ArrayList<>();
+	public PageDto getItems(final PageReqDto reqDto) {
+		final List<OrderDto> result = new ArrayList<>();
 
 		final Pageable pageable = PageRequest.of(	//
-				request.getPage(),		// 查詢的頁數，從0起算
-				request.getSize()		// 查詢的每頁筆數
+				reqDto.getPage(),		// 查詢的頁數，從0起算
+				reqDto.getSize()		// 查詢的每頁筆數
 		);
 
 		final Page<TicketOrder> page;
 
 		// 如果只想找有退貨需求的訂單
-		if (request.isRefundChecked()) {
-
-			page = repository.searchOrderByKeywordRefund(//
-					request.getKeyword(),		// 關鍵字
-					pageable					// 分頁
-			);
+		if (reqDto.isRefundChecked()) {
+			page = repository.searchOrderByKeywordRefund(reqDto.getKeyword(), pageable);
 		} else {
-			page = repository.searchOrderByKeyword(//
-					request.getKeyword(),		// 關鍵字
-					pageable					// 分頁
-			);
+			page = repository.searchOrderByKeyword(reqDto.getKeyword(), pageable);
 		}
 
-		final PageResponse response = new PageResponse();
-		response.setCurPage(request.getPage());
-		response.setTotalPage(page.getTotalPages());
+		final PageDto pageDto = new PageDto();
+		pageDto.setCurPage(reqDto.getPage());
+		pageDto.setTotalPage(page.getTotalPages());
 
 		for (final TicketOrder order : page.getContent()) {
 
@@ -85,31 +81,34 @@ public class BkOrderServiceImpl implements BkOrderService {
 			if (member == null) {
 				continue;
 			}
-			final OrderResponse orderResponse = new OrderResponse();
-			orderResponse.setTicketOrderId(order.getTicketOrderId());
-			orderResponse.setMemberId(order.getMemberId());
-			orderResponse.setMemberName(member.getMemberNameLast() + member.getMemberNameFirst());
-			orderResponse.setTicketCount(order.getTicketOrderDetails().size());
-			orderResponse.setPayDate(order.getPayDate());
-			orderResponse.setPayType(order.getPayType());
-			orderResponse.setActualPrice(order.getActualPrice());
+			final OrderDto orderDto = new OrderDto();
+			orderDto.setTicketOrderId(order.getTicketOrderId());
+			orderDto.setMemberId(order.getMemberId());
+			orderDto.setMemberName(member.getMemberNameLast() + member.getMemberNameFirst());
+			orderDto.setTicketCount(order.getTicketOrderDetails().size());
+			orderDto.setPayDate(order.getPayDate());
+			orderDto.setPayType(order.getPayType());
+			orderDto.setActualPrice(order.getActualPrice());
 
-			response.getOrders().add(orderResponse);
+			pageDto.getOrders().add(orderDto);
 		}
 
-		return response;
+		return pageDto;
 	}
 
-	// 回傳會員票券訂單明細
+	/**
+	 * @param orderId 訂單編號
+	 * @return 會員票券訂單明細
+	 */
 	@Override
-	public List<OrderDetailResponse> getDetailItems(final int orderId) {
-		final List<OrderDetailResponse> result = new ArrayList<>();
+	public List<DetailDto> getDetailItems(final int orderId) {
+		final List<DetailDto> result = new ArrayList<>();
 		final List<TicketOrderDetail> details = ticketOrderDetailRepository.findByKeyTicketOrderId(orderId);
 
 		for (final TicketOrderDetail detail : details) {
 			final Ticket ticket = detail.getKey().getTicketSn().getTicket();
 
-			final OrderDetailResponse response = new OrderDetailResponse();
+			final DetailDto response = new DetailDto();
 			response.setTicketSnId(detail.getKey().getTicketSn().getTicketSnId());
 			response.setName(ticket.getName());
 			response.setPrice(detail.getUnitPrice());
@@ -122,7 +121,12 @@ public class BkOrderServiceImpl implements BkOrderService {
 		return result;
 	}
 
-	// 變更票卷訂單明細退貨狀態
+	/**
+	 * 變更票卷訂單明細退貨狀態
+	 *
+	 * @param map 請求參數
+	 * @return
+	 */
 	@Override
 	public boolean updateItem(final Map<String, Object> map) {
 		final int employeeId = (int) map.get("employeeId");
@@ -180,12 +184,12 @@ public class BkOrderServiceImpl implements BkOrderService {
 	 * @param isOk 是否退款
 	 */
 	private void sendRefundOkMail(final Member member, final TicketOrderDetail detail, final boolean isOk) {
-		String to = member.getMemberEmail();
+		final String to = member.getMemberEmail();
 
 		// XXX 測試用 請不要寄給我
-		if (member.getMemberId() == 1) {
-			to = "fong850403@gmail.com";
-		}
+		// if (member.getMemberId() == 1) {
+		// to = "srwh3577@gmail.com";
+		// }
 		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
 
 		final String subject = "TripLight退款通知";
@@ -213,7 +217,7 @@ public class BkOrderServiceImpl implements BkOrderService {
 				detail.getKey().getTicketOrderId(),	//
 				ticket.getName(),					//
 				detail.getUnitPrice(),				//
-				isOk ? "退款成功" : "無法退款"			//
+				isOk ? "退款成功" : "無法退款"		//
 		);
 
 		mailService.sendHtmlEmail(to, subject, text);
