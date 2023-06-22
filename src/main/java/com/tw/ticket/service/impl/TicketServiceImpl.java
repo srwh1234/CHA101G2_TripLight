@@ -1,7 +1,5 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.model.Ticket.ENABLED;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,9 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tw.ticket.controller.TicketController.DescTicketDto;
-import com.tw.ticket.controller.TicketController.PageReqDto;
 import com.tw.ticket.controller.TicketController.PageDto;
-import com.tw.ticket.controller.TicketDetailController.DetailResponse;
+import com.tw.ticket.controller.TicketController.PageReqDto;
+import com.tw.ticket.controller.TicketDetailController.DetailDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketFavorite.PrimaryKey;
 import com.tw.ticket.model.dao.TicketFavoriteRepository;
@@ -35,7 +33,7 @@ public class TicketServiceImpl implements TicketService {
 	private TicketSnRepository snRepository;
 
 	@Autowired
-	private TicketFavoriteRepository ticketFavoriteRepository;
+	private TicketFavoriteRepository favoriteRepository;
 
 	@Autowired
 	private ImageService imageService;
@@ -43,33 +41,41 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private PromotionService promotionService;
 
-	// 取得票券明細
+	/**
+	 * 取得票券明細
+	 *
+	 * @param memberId 會員編號 (取得我的最愛會用到)
+	 * @param ticketId 票券編號
+	 * @return
+	 */
 	@Override
-	public DetailResponse getItem(final int memberId, final int ticketId) {
+	public DetailDto getItem(final int memberId, final int ticketId) {
 		final Ticket ticket = repository.findById(ticketId).orElse(null);
 
 		if (ticket == null) {
 			return null;
 		}
-		final DetailResponse detailResponse = new DetailResponse(ticket);
-		final List<String> images = imageService.findImgUrls(ticket.getTicketId());
-		detailResponse.setImages(images);
+		final DetailDto detailDto = new DetailDto(ticket);
 
-		// 我的最愛
-		final boolean isFavorite = //
-				ticketFavoriteRepository.existsById(new PrimaryKey(memberId, ticket));
-		detailResponse.setFavorite(isFavorite);
+		// 圖片
+		detailDto.setImages(imageService.findImgUrls(ticket.getTicketId()));
 
 		// 可用數量
-		detailResponse.setAvailable(snRepository.countUsableSn(ticketId));
+		detailDto.setAvailable(snRepository.countUsableSn(ticketId));
 
 		// 促銷
-		detailResponse.setPromotion(promotionService.getItem(ticketId));
+		detailDto.setPromotion(promotionService.getItem(ticketId));
 
-		return detailResponse;
+		// 我的最愛
+		detailDto.setFavorite(favoriteRepository.existsById(new PrimaryKey(memberId, ticket)));
+		return detailDto;
 	}
 
-	// 隨機票券
+	/**
+	 * 隨機票券 (隨機選4個)
+	 *
+	 * @return
+	 */
 	@Override
 	public List<DescTicketDto> getRandomItem() {
 		final List<DescTicketDto> result = new ArrayList<>();
@@ -83,37 +89,45 @@ public class TicketServiceImpl implements TicketService {
 			if (result.size() >= 4) {
 				break;
 			}
-			if (ticket.getStatus() == ENABLED) {
-				final DescTicketDto response = new DescTicketDto(ticket);
-				final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
-				response.setImage(imageUrl);
-				result.add(response);
+			if (ticket.getStatus() != Ticket.ENABLED) {
+				continue;
 			}
+			final DescTicketDto descDto = new DescTicketDto(ticket);
+			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
+			result.add(descDto);
 		}
 		return result;
 	}
 
-	// 熱門票券
+	/**
+	 * 熱門票券 (按照銷售量選8個)
+	 *
+	 * @return
+	 */
 	@Override
 	public List<DescTicketDto> getHotItem() {
 		final List<DescTicketDto> result = new ArrayList<>();
 
-		repository.findAllByOrderByTotalSalesDesc().forEach(ticket -> {
+		for (final Ticket ticket : repository.findAllByOrderByTotalSalesDesc()) {
 			if (result.size() >= 8) {
-				return;
+				break;
 			}
-			if (ticket.getStatus() == ENABLED) {
-				final DescTicketDto response = new DescTicketDto(ticket);
-				final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
-				response.setImage(imageUrl);
-				result.add(response);
+			if (ticket.getStatus() != Ticket.ENABLED) {
+				continue;
 			}
-
-		});
+			final DescTicketDto descDto = new DescTicketDto(ticket);
+			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
+			result.add(descDto);
+		}
 		return result;
 	}
 
-	// 搜尋票券
+	/**
+	 * 搜尋票券
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
 	@Override
 	public PageDto getSearchItem(final PageReqDto request) {
 		final Pageable pageable = PageRequest.of(	//
@@ -129,27 +143,34 @@ public class TicketServiceImpl implements TicketService {
 		);
 
 		// 轉成自己定義的物件
-		final PageDto response = new PageDto();
-		response.setCurPage(request.getPage());
-		response.setTotalPage(page.getTotalPages());
+		final PageDto pageDto = new PageDto();
+		pageDto.setCurPage(request.getPage());
+		pageDto.setTotalPage(page.getTotalPages());
 
-		page.getContent().forEach(ticket -> {
-			final DescTicketDto descResponse = new DescTicketDto(ticket);
-			final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
-			descResponse.setImage(imageUrl);
-			response.getTickets().add(descResponse);
-		});
-
-		return response;
+		for (final Ticket ticket : page.getContent()) {
+			final DescTicketDto descDto = new DescTicketDto(ticket);
+			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
+			pageDto.getTickets().add(descDto);
+		}
+		return pageDto;
 	}
 
-	// 全部票券
+	/**
+	 * 未促銷的票券清單
+	 *
+	 * @return
+	 */
 	@Override
 	public List<Ticket> getItemsWithoutPromote() {
 		return repository.searchTicketWithoutPromote();
 	}
 
-	// AI 行程，地點搜尋票券
+	/**
+	 * 輸入地點取得票券 (AI 行程，地點搜尋票券)
+	 *
+	 * @param destination 目的地的名稱
+	 * @return
+	 */
 	@Override
 	public List<DescTicketDto> getTicket(final String destination) {
 		final List<DescTicketDto> result = new ArrayList<>();

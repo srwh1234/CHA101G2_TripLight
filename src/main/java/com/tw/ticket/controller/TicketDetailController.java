@@ -29,22 +29,34 @@ public class TicketDetailController {
 	@Autowired
 	private CommentService commentService;
 
-	// 票券細項
+	/**
+	 * 前台-票券細項頁面-票券內容
+	 */
 	@GetMapping("/ticketdetail")
-	public DetailResponse detail(@RequestParam final int memberId, @RequestParam final int ticketId) {
+	public DetailDto detail(@RequestParam final int memberId, @RequestParam final int ticketId) {
 		return ticketService.getItem(memberId, ticketId);
 	}
 
-	// 票券留言
+	/**
+	 * 前台-票券細項頁面-顯示留言
+	 */
 	@PostMapping("/ticketcomments")
-	public CommentResponse comments(@RequestBody final SearchRequest request) {
-		return commentService.getItems(request);
+	public CommentDto comments(@RequestBody final PageReqDto reqDto) {
+		return commentService.getItems(reqDto);
+	}
+
+	// 定義請求物件
+	@Data
+	public static class PageReqDto {
+		private int ticketId;
+		private int page;
+		private int size;
 	}
 
 	// 定義回傳物件
 	@Data
-	public static class DetailResponse {
-		public DetailResponse(final Ticket ticket) {
+	public static class DetailDto {
+		public DetailDto(final Ticket ticket) {
 			this.ticketId = ticket.getTicketId();
 			this.ticketType = ticket.getTicketType().getName();
 			this.name = ticket.getName();
@@ -89,17 +101,10 @@ public class TicketDetailController {
 	}
 
 	@Data
-	public static class CommentResponse {
+	public static class CommentDto {
 		private int allPage;
 		private int curPage;
 		private ArrayList<TicketComment> comments = new ArrayList<>();
 	}
 
-	// 定義請求物件
-	@Data
-	public static class SearchRequest {
-		private int ticketId;
-		private int page;
-		private int size;
-	}
 }
