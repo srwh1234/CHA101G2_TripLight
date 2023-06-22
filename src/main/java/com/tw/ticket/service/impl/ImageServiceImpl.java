@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,7 @@ import com.tw.ticket.service.ImageService;
 
 @Service
 public class ImageServiceImpl implements ImageService {
-
-	// XXX http://localhost:8080 VsCode測試才要加
-	// 獲得圖片的URL
-	public static String IMG_URL = "http://localhost:8080/img/";
+	private static final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
 
 	@Autowired
 	private TicketImageRepository repository;
@@ -27,8 +26,12 @@ public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private TicketImageRedis ticketImgRedis;
 
-	// 找出指定圖片 沒有則回傳預設圖片
-
+	/**
+	 * 找出指定圖片 沒有則回傳預設圖
+	 *
+	 * @param id 圖票編號
+	 * @return
+	 */
 	@Override
 	public byte[] findImg(final int id) {
 		final TicketImage image = ticketImgRedis.findById(id);
@@ -43,14 +46,19 @@ public class ImageServiceImpl implements ImageService {
 				is.read(bytes);
 
 			} catch (final IOException e) {
-				e.printStackTrace();
+				log.error(e.getLocalizedMessage(), e);
 			}
 			return bytes;
 		}
 		return image.getImage();
 	}
 
-	// 找出指定票券的所有圖片URL
+	/**
+	 * 找出指定票券的所有圖片URL
+	 *
+	 * @param ticketId 票券編號
+	 * @return
+	 */
 	@Override
 	public List<String> findImgUrls(final int ticketId) {
 		final ArrayList<String> result = new ArrayList<>();
@@ -65,7 +73,12 @@ public class ImageServiceImpl implements ImageService {
 		return result;
 	}
 
-	// 找出指定票券的圖片URL
+	/**
+	 * 找出指定票券的圖片URL
+	 *
+	 * @param ticketId 票券編號
+	 * @return
+	 */
 	@Override
 	public String findImgUrl(final int ticketId) {
 		final List<Integer> arrays = repository.findIdsByTicketId(ticketId);

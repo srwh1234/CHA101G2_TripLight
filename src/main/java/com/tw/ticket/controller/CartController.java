@@ -20,50 +20,51 @@ import lombok.Data;
 @RestController
 public class CartController {
 
-	public static int ADD_CART_OK = 1; // 添加成功
-	public static int ADD_CART_SOLDOUT = 2;// 此商品數量不足
-	public static int ADD_CART_DISABLE = 3;// 此商品已下架
-	public static int ADD_CART_ERROR = 4;// 發生未知的錯誤
-
 	@Autowired
 	private CartService cartService;
 
-	// 票券購物車車
+	/**
+	 * 前台-購物車-購物車清單
+	 */
 	@GetMapping("/carts")
-	public List<CartResponse> carts(@RequestParam("memberId") final int memberId) {
+	public List<CartDto> carts(@RequestParam final int memberId) {
 		return cartService.getItems(memberId);
 	}
 
-	// 加入購物車
+	/**
+	 * 前台-票券明細-加入購物車
+	 */
 	@PostMapping("/addcart")
-	public int addCart(@RequestBody final CartRequest request) {
-		return cartService.addItem(request);
+	public int addCart(@RequestBody final AddReqDto reqDto) {
+		return cartService.addItem(reqDto);
 	}
 
-	// 變更購物車數量
+	/**
+	 * 前台-購物車-變更數量
+	 */
 	@PostMapping("/modifycart")
-	public boolean modifyCart(@RequestBody final ModifyRequest request) {
-		return cartService.updateItem(request);
+	public boolean modifyCart(@RequestBody final QuantityReqDto reqDto) {
+		return cartService.updateItem(reqDto);
 	}
 
-	// 移除購物車物件
+	/**
+	 * 前台-購物車-移除
+	 */
 	@GetMapping("/removecart")
-	public boolean removeCart( //
-			@RequestParam("memberId") final int memberId, //
-			@RequestParam("ticketId") final int ticketId) {
+	public boolean removeCart(@RequestParam final int memberId, @RequestParam final int ticketId) {
 		return cartService.removeItem(memberId, ticketId);
 	}
 
 	// 定義請求物件
 	@Data
-	public static class CartRequest {
+	public static class AddReqDto {
 		private int memberId;
 		private int ticketId;
 		private int quantity;
 	}
 
 	@Data
-	public static class ModifyRequest {
+	public static class QuantityReqDto {
 		private int memberId;
 		private int ticketId;
 		private int modify;
@@ -71,14 +72,14 @@ public class CartController {
 
 	// 定義回傳物件
 	@Data
-	public static class CartResponse {
+	public static class CartDto {
 		private int quantity;
-		private CartTicketResponse ticket;
+		private DescTicketDto ticket;
 	}
 
 	@Data
-	public static class CartTicketResponse {
-		public CartTicketResponse(final Ticket ticket) {
+	public static class DescTicketDto {
+		public DescTicketDto(final Ticket ticket) {
 			this.ticketId = ticket.getTicketId();
 			this.name = ticket.getName();
 			this.price = ticket.getPrice();
@@ -91,6 +92,6 @@ public class CartController {
 		private int available;
 		private String description;
 		private String image;
-		private PromotionDto promotion;// XXX 未完成
+		private PromotionDto promotion;
 	}
 }
