@@ -232,8 +232,6 @@
                                 新增促銷
                             </button>
                         </div>
-                        <!-- 稱高度用的 -->
-                        <div style="height:30vh"></div>
 
 
                     </div>
@@ -375,7 +373,7 @@
                     let currentIndex = 0;
                     let resultData;
 
-                    //
+                    //下拉選單與列表
                     let selecterData = [];
                     let tableData = [];
                     $(function () {
@@ -400,6 +398,35 @@
                                     },
                                 ]
                             }
+                            post.promotionDetails = [];
+
+                            for (let t of tableData.sort((a, b) => a.ticketId - b.ticketId)) {
+                                const promotionPrice = $(`#promotionPrice${t.ticketId}`).val();
+                                if (!promotionPrice) {
+                                    Swal.fire({ icon: 'error', title: '促銷價格未輸入' });
+                                    return false;
+                                }
+                                if (promotionPrice <= 0) {
+                                    Swal.fire({ icon: 'error', title: '促銷價格不可小於等於0' });
+                                    return false;
+                                }
+                                if (promotionPrice >= t.price) {
+                                    Swal.fire({ icon: 'error', title: '促銷價格高於原價...?' });
+                                    return false;
+                                }
+
+                                post.promotionDetails.push(
+                                    {
+                                        key: {
+                                            promotionId: 0,
+                                            ticketId: t.ticketId,
+                                        },
+
+                                        promotionPrice: promotionPrice,
+                                    }
+                                );
+                            }
+
                             if (!post.promotionTitle) {
                                 Swal.fire({ icon: 'error', title: '促銷名稱未輸入' });
                                 return false;
@@ -424,8 +451,9 @@
                                 return false;
                             }
 
-                            if(!post){
-
+                            if (!post.promotionDetails || post.promotionDetails.length == 0) {
+                                Swal.fire({ icon: 'error', title: '未選擇促銷商品' });
+                                return false;
                             }
 
                             fetch(`${getDomainName()}/promotions`, {
@@ -436,10 +464,11 @@
                                 body: JSON.stringify(post),
                             })
                                 .then(response => response.json())
-                                .then(data => console.log(data))
-                                .catch(error => console.log(error))
+                                .then(data => Swal.fire({ icon: 'success', title: '新增成功' }))
+                                .catch(error => Swal.fire({ icon: 'error', title: '新增失敗' }))
                                 .finally(() => {
-
+                                    fetch_data();
+                                    $('#addPromotionModal').modal('hide');
                                 });
 
                             console.log(post)
@@ -563,7 +592,7 @@
                                     <td>${t.name}</td>
                                     <td>${t.price}</td>
                                     <td>
-                                        <input class="form-control" type="number" min="1">
+                                        <input class="form-control" type="number" min="1" id="promotionPrice${t.ticketId}">
                                     </td>
                                     <td>                                        
                                         <button class="btn btn-danger my-btn-cancel">取消</button>                                        

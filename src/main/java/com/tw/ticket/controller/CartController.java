@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.ticket.controller.TicketDetailController.PromotionResponse;
+import com.tw.ticket.controller.TicketDetailController.PromotionDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.service.CartService;
 
@@ -91,6 +91,6 @@ public class CartController {
 		private int available;
 		private String description;
 		private String image;
-		private PromotionResponse promotion;// XXX 未完成
+		private PromotionDto promotion;// XXX 未完成
 	}
 }

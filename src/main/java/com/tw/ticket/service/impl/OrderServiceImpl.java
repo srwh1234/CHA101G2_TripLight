@@ -38,6 +38,7 @@ import com.tw.ticket.model.dao.TicketOrderRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.OrderService;
+import com.tw.ticket.service.PromotionService;
 import com.tw.ticket.thirdparty.ecpay.payment.integration.AllInOne;
 import com.tw.ticket.thirdparty.ecpay.payment.integration.domain.AioCheckOutALL;
 
@@ -68,6 +69,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private TicketOrderDetailRepository ticketOrderDetailRepository;
+
+	@Autowired
+	private PromotionService promotionService;
 
 	// 訂單清單
 	@Override
@@ -145,7 +149,11 @@ public class OrderServiceImpl implements OrderService {
 
 			// 計算總價
 			final Ticket ticket = ticketSns.get(0).getTicket();
-			totalPrice += ticket.getPrice() * cart.getQuantity();
+
+			// 促銷
+			final int price = promotionService.getPrice(ticket);
+
+			totalPrice += price * cart.getQuantity();
 		}
 
 		actualPrice = totalPrice;
@@ -184,7 +192,9 @@ public class OrderServiceImpl implements OrderService {
 
 				// 訂單明細清單
 				final TicketOrderDetail detail = new TicketOrderDetail(null, ticketSn);
-				detail.setUnitPrice(ticketSn.getTicket().getPrice());
+				// 促銷
+				final int price = promotionService.getPrice(ticketSn.getTicket());
+				detail.setUnitPrice(price);
 				detail.setRefundStatus(REFUND_NONE);
 				orderDetails.add(detail);
 			}

@@ -22,6 +22,7 @@ import com.tw.ticket.model.dao.TicketFavoriteRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.ImageService;
+import com.tw.ticket.service.PromotionService;
 import com.tw.ticket.service.TicketService;
 
 @Service
@@ -34,10 +35,13 @@ public class TicketServiceImpl implements TicketService {
 	private TicketSnRepository snRepository;
 
 	@Autowired
+	private TicketFavoriteRepository ticketFavoriteRepository;
+
+	@Autowired
 	private ImageService imageService;
 
 	@Autowired
-	private TicketFavoriteRepository ticketFavoriteRepository;
+	private PromotionService promotionService;
 
 	// 取得票券明細
 	@Override
@@ -58,6 +62,10 @@ public class TicketServiceImpl implements TicketService {
 
 		// 可用數量
 		detailResponse.setAvailable(snRepository.countUsableSn(ticketId));
+
+		// 促銷
+		detailResponse.setPromotion(promotionService.getItem(ticketId));
+
 		return detailResponse;
 	}
 

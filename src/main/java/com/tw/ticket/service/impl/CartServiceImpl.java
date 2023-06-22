@@ -25,6 +25,7 @@ import com.tw.ticket.model.dao.TicketCartRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.CartService;
+import com.tw.ticket.service.PromotionService;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -44,6 +45,9 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private ImageServiceImpl imageService;
 
+	@Autowired
+	private PromotionService promotionService;
+
 	// 票券購物車清單
 	@Override
 	public List<CartResponse> getItems(final int membeId) {
@@ -62,9 +66,11 @@ public class CartServiceImpl implements CartService {
 			final int available = snRepository.countUsableSn(cart.getTicketId());
 			cartTicketResponse.setAvailable(available);
 
+			// 促銷
+			cartTicketResponse.setPromotion(promotionService.getItem(cart.getTicketId()));
+
 			// 圖片
-			final String image = imageService.findImgUrl(ticket.getTicketId());
-			cartTicketResponse.setImage(image);
+			cartTicketResponse.setImage(imageService.findImgUrl(ticket.getTicketId()));
 
 			if (cart.getQuantity() > available) {
 				cart.setQuantity(available);

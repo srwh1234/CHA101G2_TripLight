@@ -78,11 +78,11 @@ public class TicketDetailController {
 		private int ratingPerson;
 		private boolean favorite;
 		private List<String> images;
-		private PromotionResponse promotion;// XXX 未完成
+		private PromotionDto promotion;
 	}
 
 	@Data
-	public static class PromotionResponse {
+	public static class PromotionDto {
 		private int price;
 		private Date startDate;
 		private Date endDate;
