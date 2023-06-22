@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 @Service
 public class QuestionReportServiceImpl implements QuestionReportService {
-    private QuestionReportRepository questionReportRepository;
-    private MemberRepository memberRepository;
+    private final QuestionReportRepository questionReportRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
     public QuestionReportServiceImpl(QuestionReportRepository questionReportRepository, MemberRepository memberRepository) {
@@ -54,5 +53,11 @@ public class QuestionReportServiceImpl implements QuestionReportService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid question report Id:" + id));
         questionReport.setScore(score);
         questionReportRepository.save(questionReport);
+    }
+
+    @Override
+    public QuestionReport checkQuestionDetail(int id) {
+        return questionReportRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid question report Id:" + id));
     }
 }
