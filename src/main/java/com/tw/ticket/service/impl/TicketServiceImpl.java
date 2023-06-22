@@ -13,8 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tw.ticket.controller.TicketController.DescResponse;
-import com.tw.ticket.controller.TicketController.SearchRequest;
-import com.tw.ticket.controller.TicketController.SearchResponse;
+import com.tw.ticket.controller.TicketController.PageReqDto;
+import com.tw.ticket.controller.TicketController.PageDto;
 import com.tw.ticket.controller.TicketDetailController.DetailResponse;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketFavorite.PrimaryKey;
@@ -115,7 +115,7 @@ public class TicketServiceImpl implements TicketService {
 
 	// 搜尋票券
 	@Override
-	public SearchResponse getSearchItem(final SearchRequest request) {
+	public PageDto getSearchItem(final PageReqDto request) {
 		final Pageable pageable = PageRequest.of(	//
 				request.getPage(),		// 查詢的頁數，從0起算
 				request.getSize()		// 查詢的每頁筆數
@@ -129,7 +129,7 @@ public class TicketServiceImpl implements TicketService {
 		);
 
 		// 轉成自己定義的物件
-		final SearchResponse response = new SearchResponse();
+		final PageDto response = new PageDto();
 		response.setCurPage(request.getPage());
 		response.setTotalPage(page.getTotalPages());
 

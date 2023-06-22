@@ -31,8 +31,8 @@ public class BkOrderController {
 	 * 後台-票券促銷管理-訂單列表查詢
 	 */
 	@PostMapping("/orders")
-	public PageDto orders(@RequestBody final PageReqDto request) {
-		return bkOrderService.getItems(request);
+	public PageDto orders(@RequestBody final PageReqDto reqDto) {
+		return bkOrderService.getItems(reqDto);
 	}
 
 	/**

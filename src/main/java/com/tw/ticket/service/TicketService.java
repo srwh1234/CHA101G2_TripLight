@@ -3,8 +3,8 @@ package com.tw.ticket.service;
 import java.util.List;
 
 import com.tw.ticket.controller.TicketController.DescResponse;
-import com.tw.ticket.controller.TicketController.SearchRequest;
-import com.tw.ticket.controller.TicketController.SearchResponse;
+import com.tw.ticket.controller.TicketController.PageReqDto;
+import com.tw.ticket.controller.TicketController.PageDto;
 import com.tw.ticket.controller.TicketDetailController.DetailResponse;
 import com.tw.ticket.model.Ticket;
 
@@ -20,7 +20,7 @@ public interface TicketService {
 	public List<DescResponse> getHotItem();
 
 	// 搜尋票券
-	public SearchResponse getSearchItem(SearchRequest request);
+	public PageDto getSearchItem(PageReqDto request);
 
 	// 全部票券
 	public List<Ticket> getItemsWithoutPromote();

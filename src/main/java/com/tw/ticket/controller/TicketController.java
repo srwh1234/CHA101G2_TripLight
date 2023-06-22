@@ -36,7 +36,7 @@ public class TicketController {
 
 	// 搜尋票券
 	@PostMapping("/searchtickets")
-	public SearchResponse searchTickets(@RequestBody final SearchRequest request) {
+	public PageDto searchTickets(@RequestBody final PageReqDto request) {
 		return ticketService.getSearchItem(request);
 	}
 
@@ -48,7 +48,7 @@ public class TicketController {
 
 	// 定義請求物件
 	@Data
-	public static class SearchRequest {
+	public static class PageReqDto {
 		private String keyword;
 		private String[] types;
 		private String[] cities;
@@ -58,7 +58,7 @@ public class TicketController {
 
 	// 定義回傳物件
 	@Data
-	public static class SearchResponse {
+	public static class PageDto {
 		private int curPage;
 		private int totalPage;
 		private ArrayList<DescResponse> tickets = new ArrayList<>();
