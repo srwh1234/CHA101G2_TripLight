@@ -35,8 +35,8 @@ public class LoginMemberService {
 
 	// update
 	public Member updateMember(int id, Member member) {
-		Member existingMember = memberRepository.findByMemberId(id);
-		if (existingMember != null) {
+		Member existingMember = (Member) memberRepository.findByMemberId(id);
+		if (existingMember != null) {			
 			existingMember.setMemberNameLast(member.getMemberNameLast());
 			existingMember.setMemberNameFirst(member.getMemberNameFirst());
 			existingMember.setMemberIdCard(member.getMemberIdCard());

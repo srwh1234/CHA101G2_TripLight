@@ -45,12 +45,22 @@ login33.addEventListener("click", function(e) {
 			password: memberPassword,
 		},
 		success: function(response) {
-			console.log(response);
-			if (!response) {
+			if (response === 0) {
 				Swal.fire({
 					icon: "error",
 					title: "登入失敗",
 					text: "帳號/密碼錯誤",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				// 清空欄位
+				$("#email").val("");
+				$("#password").val("");
+			} else if (response === -1) {
+				Swal.fire({
+					icon: "error",
+					title: "登入失敗",
+					text: "您已被停權，請聯絡客服處理",
 					showConfirmButton: false,
 					timer: 1500,
 				});
@@ -81,6 +91,7 @@ login33.addEventListener("click", function(e) {
 		},
 		error: function(xhr) {
 			console.log(xhr.responseText);
+
 		},
 	});
 });
@@ -228,7 +239,6 @@ $(logout_li).on("click", function(e) {
 		method: "GET",
 		success: function(response) {
 			if (response) {
-				console.log("成功登出");
 				document.querySelector("#login").innerHTML = ` 登入/註冊`;
 				document.querySelector(".member").classList.toggle("-on");
 				sessionStorage.clear();
