@@ -1,30 +1,40 @@
 package com.tw.vendor.controller;
 
-import javax.sound.midi.Soundbank;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.tw.vendor.dao.VendorRepository;
-import com.tw.vendor.service.VendorLoginServicer;
-
+import com.tw.vendor.controller.model.VendorLoginRequest;
+import com.tw.vendor.model.Vendor;
+import com.tw.vendor.service.VendorLoginService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 public class VendorLoginController {
-	private final VendorRepository vendorRepository;
 
-	@Autowired
-	public VendorLoginController(final VendorRepository vendorRepository) {
-		this.vendorRepository = vendorRepository;
+
+	public final VendorLoginService vendorLoginService;
+	
+	@PostMapping("/vendor/login")
+	public Integer vendorlogin(@RequestBody VendorLoginRequest request  , HttpSession httpSession) {
+		Vendor result = vendorLoginService.vendorlogin(request.getVendorEmail(), request.getLoginAccount(), request.getLoginPassword());
+		if(result != null) {
+			System.out.println("查無此帳號");
+			return 0;
+		} else {
+			//設置session
+			httpSession.setAttribute("vendor", result);
+			System.out.println("VendorId" + httpSession.getAttribute("vendor"));
+			System.out.println("登入成功");
+			return 1; 
+		}
+		
 	}
-	@Autowired
-	public VendorLoginServicer vendorLoginService;
-
+	
 //	@PostMapping("/login")
 //	public String login(@RequestParam final String email, @RequestParam final String password, final HttpSession session) {
 //		final Member member = memberRepository.findMemberByMemberEmail(email);
@@ -80,18 +90,18 @@ public class VendorLoginController {
 //        return "redirect:/registration-status";
 //    }
 
-	@PostMapping("/register2")
-	public String register(@RequestParam String email, @RequestParam String password, @RequestParam String account) {
-
-		boolean registerStatus = vendorLoginService.register(email, password, account);
-		if(registerStatus) {
-			System.out.println("success");
-			return "註冊成功";
-		}else {
-			System.out.println("fail");
-			return "redirect:/front-end/supplier_form.html";
-		}
-	}
+//	@PostMapping("/register2")
+//	public String register(@RequestParam String email, @RequestParam String password, @RequestParam String account) {
+//
+//		boolean registerStatus = vendorLoginService.register(email, password, account);
+//		if(registerStatus) {
+//			System.out.println("success");
+//			return "註冊成功";
+//		}else {
+//			System.out.println("fail");
+//			return "redirect:/front-end/supplier_form.html";
+//		}
+//	}
 	@GetMapping("/logout3")
 	public String logout(HttpSession session, SessionStatus sessionStatus) {
 
