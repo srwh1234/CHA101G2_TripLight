@@ -2,7 +2,7 @@ package com.tw.ticket.service.impl;
 
 import static com.tw.ticket.model.Ticket.DISABLED;
 import static com.tw.ticket.model.TicketSn.NOT_USED;
-import static com.tw.ticket.service.impl.ImageServiceImpl.IMG_URL;
+import static com.tw.ticket.service.ImageService.IMG_URL;
 
 import java.util.ArrayList;
 import java.util.List;
