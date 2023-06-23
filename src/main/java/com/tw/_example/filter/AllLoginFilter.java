@@ -25,6 +25,38 @@ public class AllLoginFilter implements Filter {
 	 * 用session存物件比較簡單寫 但是只要瀏覽器一關掉就要重登
 	 * 用cookie版本 好處是可以中途關掉瀏覽器 只要cookie沒有過期都會有效
 	 */
+	/**
+	 * 這是大概的說明:
+	 *
+	 * 會員登入 if (uri.contains("/front-end/") && PROTECT.contains(htmlName))
+	 *
+	 * controller登入後 將Member物件 用"member-login" 塞到session的attribute裡
+	 * EX:
+	 * req.getSession().setAttribute("member-login", member);
+	 *
+	 * 這樣在這邊getAttribute("member-login") 如果有獲得會員物件 就表示已登入
+	 *
+	 *
+	 * -----------------------------------------------------------------------------
+	 *
+	 * 員工登入 if (uri.contains("/back-end/") && !htmlName.equals("login.html"))
+	 *
+	 * controller登入後 將Employee物件 用"employee-login" 塞到session的attribute裡
+	 * EX:
+	 * req.getSession().setAttribute("employee-login", employee);
+	 *
+	 * 這樣在這邊getAttribute("employee-login") 如果有獲得員工物件 就表示已登入
+	 *
+	 * -----------------------------------------------------------------------------
+	 *
+	 * 廠商登入 if (uri.contains("/vendor-end/") && !htmlName.equals("login.html"))
+	 *
+	 * controller登入後 將Vendor物件 用"vendor-login" 塞到session的attribute裡
+	 * EX:
+	 * req.getSession().setAttribute("vendor-login", vendor);
+	 *
+	 * 這樣在這邊getAttribute("vendor-login") 如果有獲得廠商物件 就表示已登入
+	 */
 	private static HashSet<String> PROTECT = new HashSet<>();
 
 	// 前台需要保護的網頁 (後台/廠商則是都要保護)
@@ -53,36 +85,6 @@ public class AllLoginFilter implements Filter {
 		final String uri = req.getRequestURI();
 		final String htmlName = uri.substring(uri.lastIndexOf("/") + 1);
 
-		/**
-		 * 會員登入 if (uri.contains("/front-end/") && PROTECT.contains(htmlName))
-		 *
-		 * controller登入後 將Member物件 用"member-login" 塞到session的attribute裡
-		 * EX:
-		 * req.getSession().setAttribute("member-login", member);
-		 *
-		 * 這樣在這邊getAttribute("member-login") 如果有獲得會員物件 就表示已登入
-		 *
-		 *
-		 * -----------------------------------------------------------------------------
-		 *
-		 * 員工登入 if (uri.contains("/back-end/") && !htmlName.equals("login.html"))
-		 *
-		 * controller登入後 將Employee物件 用"employee-login" 塞到session的attribute裡
-		 * EX:
-		 * req.getSession().setAttribute("employee-login", employee);
-		 *
-		 * 這樣在這邊getAttribute("employee-login") 如果有獲得員工物件 就表示已登入
-		 *
-		 * -----------------------------------------------------------------------------
-		 *
-		 * 廠商登入 if (uri.contains("/vendor-end/") && !htmlName.equals("login.html"))
-		 *
-		 * controller登入後 將Vendor物件 用"vendor-login" 塞到session的attribute裡
-		 * EX:
-		 * req.getSession().setAttribute("vendor-login", vendor);
-		 *
-		 * 這樣在這邊getAttribute("vendor-login") 如果有獲得廠商物件 就表示已登入
-		 */
 		// 會員登入
 		if (uri.contains("/front-end/") && PROTECT.contains(htmlName)) {
 			final Member member = getClassFromSession(req, "member-login", Member.class);
