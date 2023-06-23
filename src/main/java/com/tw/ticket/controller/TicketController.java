@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tw.ticket.controller.TicketDetailController.PromotionDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.service.TicketService;
 
@@ -94,5 +95,6 @@ public class TicketController {
 		private final String description;
 		private String image;
 		private boolean favorite;
+		private PromotionDto promotion;
 	}
 }

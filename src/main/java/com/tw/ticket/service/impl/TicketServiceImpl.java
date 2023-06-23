@@ -94,6 +94,7 @@ public class TicketServiceImpl implements TicketService {
 			}
 			final DescTicketDto descDto = new DescTicketDto(ticket);
 			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
+			descDto.setPromotion(promotionService.getItem(ticket.getTicketId()));
 			result.add(descDto);
 		}
 		return result;
@@ -117,6 +118,7 @@ public class TicketServiceImpl implements TicketService {
 			}
 			final DescTicketDto descDto = new DescTicketDto(ticket);
 			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
+			descDto.setPromotion(promotionService.getItem(ticket.getTicketId()));
 			result.add(descDto);
 		}
 		return result;
@@ -150,6 +152,7 @@ public class TicketServiceImpl implements TicketService {
 		for (final Ticket ticket : page.getContent()) {
 			final DescTicketDto descDto = new DescTicketDto(ticket);
 			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
+			descDto.setPromotion(promotionService.getItem(ticket.getTicketId()));
 			pageDto.getTickets().add(descDto);
 		}
 		return pageDto;
@@ -176,10 +179,10 @@ public class TicketServiceImpl implements TicketService {
 		final List<DescTicketDto> result = new ArrayList<>();
 
 		repository.findByCityContaining(destination).forEach(ticket -> {
-			final DescTicketDto descResponse = new DescTicketDto(ticket);
+			final DescTicketDto descDto = new DescTicketDto(ticket);
 			final String imageUrl = imageService.findImgUrl(ticket.getTicketId());
-			descResponse.setImage(imageUrl);
-			result.add(descResponse);
+			descDto.setImage(imageUrl);
+			result.add(descDto);
 		});
 		return result;
 	}
