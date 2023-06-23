@@ -1,4 +1,3 @@
-let camera = document.getElementById('camera');
 let img = document.querySelector('.card-body img');
 let lastName = document.querySelector('#inputLastName');
 let firstName = document.querySelector('#inputFirstName');
@@ -20,6 +19,7 @@ if (sessionStorage.getItem("test-login")) {
 	theId = null;
 }
 // ============================上傳大頭照=====================================
+let camera = document.getElementById('camera');
 camera.addEventListener('click', function() {
 	const input = document.createElement('input');
 	input.type = 'file';

@@ -2,405 +2,369 @@
 <html lang="zh-Hant">
 
 <head>
-  <title>TripLight</title>
+	<title>TripLight</title>
 
-  <!-- 加上才能使用RWD -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta charset="utf-8" />
+	<!-- 加上才能使用RWD -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta charset="utf-8" />
 
-  <!-- 關鍵字設定 -->
-  <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
-  <!-- 網頁介紹 -->
-  <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+	<!-- 關鍵字設定 -->
+	<meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+	<!-- 網頁介紹 -->
+	<meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
 
-  <script>
-    addEventListener(
-      "load",
-      function () {
-        setTimeout(hideURLbar, 0);
-      },
-      false
-    );
+	<script>
+		addEventListener(
+			"load",
+			function () {
+				setTimeout(hideURLbar, 0);
+			},
+			false
+		);
 
-    function hideURLbar() {
-      window.scrollTo(0, 1);
-    }
-  </script>
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
 
-  <!--會員登入-->
-  <link href="css/login.css" rel="stylesheet" />
+	<!--會員登入-->
+	<link href="css/login.css" rel="stylesheet" />
 
-  <!-- css files -->
-  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-  <!-- bootstrap css -->
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <!-- custom css -->
-  <link href="css/fontawesome-all.css" rel="stylesheet" />
-  <!-- fontawesome css -->
-  <!-- //css files -->
+	<!-- css files -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- bootstrap css -->
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<!-- custom css -->
+	<link href="css/fontawesome-all.css" rel="stylesheet" />
+	<!-- fontawesome css -->
+	<!-- //css files -->
 
-  <link href="css/css_slider.css" type="text/css" rel="stylesheet" media="all" />
+	<link href="css/css_slider.css" type="text/css" rel="stylesheet" media="all" />
 
-  <!--jQuery-->
-  <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+	<!--jQuery-->
+	<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
 
-  <!-- google fonts -->
-  <!-- 載入字體 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
-  <!-- //google fonts -->
+	<!-- google fonts -->
+	<!-- 載入字體 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
+	<!-- //google fonts -->
 
-  <!-- 載入icon -->
-  <link rel="shortcut icon" href="./images/icon.png" />
-  <link rel="bookmark" href="./images/icon.png" />
+	<!-- 載入icon -->
+	<link rel="shortcut icon" href="./images/icon.png" />
+	<link rel="bookmark" href="./images/icon.png" />
 </head>
 
 <body>
-  <!-- header -->
-  <header>
-    <div class="container" style="padding-right: 0">
-      <!-- nav -->
-      <nav class="py-md-4 py-3">
-        <div id="logo">
-          <h1 class="mt-md-0 mt-2">
-            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
-              TripLight
-            </a>
-          </h1>
-        </div>
-        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu ml-auto mt-1">
-          <li class="active"><a href="index.html">首頁</a></li>
-          <li class=""><a href="booking.html">AI行程規劃</a></li>
-          <li class=""><a href="tickets.html">票券</a></li>
-          <li class=""><a href="itinerary_search.html">套裝行程</a></li>
-          <li class=""><a href="articles.html">旅遊文章</a></li>
-          <li class="booking"><a href="" id="login">登入/註冊</a></li>
-          <li class="">
-            <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
-          </li>
-        </ul>
-      </nav>
-      <!-- //nav -->
-      <div class="member">
-        <ul class="member_list">
-          <li class="member_li">
-            <a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
-          </li>
-          <li class="member_li" id="order_li">
-            <a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
-            <ul class="order_list">
-              <li class="order_content">
-                <a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a>
-              </li>
-              <li class="order_content">
-                <a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
-              </li>
-            </ul>
-          </li>
-          <li class="member_li">
-            <a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a>
-          </li>
-          <li class="member_li">
-            <a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a>
-          </li>
-          <li class="member_li">
-            <a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
-          </li>
-          <li class="member_li">
-            <a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
-          </li>
-          <li class="member_li">
-            <a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a>
-          </li>
-          <li class="member_li">
-            <a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
-          </li>
-          <li class="member_li">
-            <a href="read_question_list.html"><i class="fa-regular fa-comment"></i>查看問題</a>
-          </li>
-          <li class="member_li" id="logout_li">
-            <a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </header>
-  <!-- //header -->
+	<!-- header -->
+	<header>
+		<div class="container" style="padding-right: 0">
+			<!-- nav -->
+			<nav class="py-md-4 py-3">
+				<div id="logo">
+					<h1 class="mt-md-0 mt-2">
+						<a href="index.html"><img src="./images/icon.png" class="icon_triplight" /> TripLight </a>
+					</h1>
+				</div>
+				<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+				<input type="checkbox" id="drop" />
+				<ul class="menu ml-auto mt-1">
+					<li class="active"><a href="index.html">首頁</a></li>
+					<li class=""><a href="booking.html">AI行程規劃</a></li>
+					<li class=""><a href="tickets.html">票券</a></li>
+					<li class=""><a href="itinerary_search.html">套裝行程</a></li>
+					<li class=""><a href="articles.html">旅遊文章</a></li>
+					<li class="booking"><a href="" id="login">登入/註冊</a></li>
+					<li class=""><a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt=""
+								style="width: 2em" /></a></li>
+				</ul>
+			</nav>
+			<!-- //nav -->
+			<div class="member">
+				<ul class="member_list">
+					<li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a></li>
+					<li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+						<ul class="order_list">
+							<li class="order_content"><a href="tickets_order.html"><i
+										class="fa-solid fa-ticket"></i>票券訂單</a></li>
+							<li class="order_content"><a href="group_order.html"><i
+										class="fa-solid fa-suitcase"></i>旅遊團訂單</a></li>
+						</ul>
+					</li>
+					<li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+					<li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
+					</li>
+					<li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
+					</li>
+					<li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+					</li>
+					<li class="member_li"><a href="read_question_list.html"><i
+								class="fa-regular fa-comment"></i>查看問題</a></li>
+					<li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<!-- //header -->
 
-  <!-- 登入 -->
+	<!-- 登入 -->
 
-  <div id="login-container">
-    <!---container--->
+	<div id="login-container">
+		<!---container--->
 
-    <div class="main-box login">
-      <h3>登入</h3>
-      <form action="">
-        <div class="input-box">
-          <i class="fas fa-envelope icon2"></i>
-          <input type="email" name="email" id="email" required />
-          <label for="">信箱</label>
-        </div>
-        <div class="input-box">
-          <i class="fas fa-lock icon2"></i>
-          <input type="password" name="password" id="password" required />
-          <label for="">密碼</label>
-        </div>
-        <div class="check">
-          <label><input type="checkbox" />記住我</label>
-          <a href="#">忘記密碼</a>
-        </div>
-        <button type="submit" class="main-btn">Login</button>
-        <div class="register">
-          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
-        </div>
-      </form>
-    </div>
+		<div class="main-box login">
+			<h3>登入</h3>
+			<form action="">
+				<div class="input-box">
+					<i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
+						for="">信箱</label>
+				</div>
+				<div class="input-box">
+					<i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
+					<label for="">密碼</label>
+				</div>
+				<div class="check">
+					<label><input type="checkbox" />記住我</label> <a href="#" id="forgetPwd">忘記密碼</a>
+				</div>
+				<button type="submit" class="main-btn">Login</button>
+				<div class="register">
+					<p>
+						如果沒有帳號?<a href="#" class="register-link">點擊註冊</a>
+					</p>
+				</div>
+			</form>
+		</div>
 
-    <div class="main-box register">
-      <h3>註冊</h3>
-      <form action="">
-        <div class="input-box">
-          <i class="fas fa-user icon2"></i>
-          <input type="email" name="account" id="register_account" required />
-          <label for="">使用者名稱</label>
-        </div>
-        <div class="input-box">
-          <i class="fas fa-envelope icon2"></i>
-          <input type="email" name="email" id="register_email" required />
-          <label for="">信箱</label>
-        </div>
-        <div class="input-box">
-          <i class="fas fa-lock icon2"></i>
-          <input type="password" name="password" id="register_password" required />
-          <label for="">密碼</label>
-        </div>
-        <div class="check">
-          <label><input type="checkbox" />我同意所有條款</label>
-        </div>
-        <button type="submit" class="main-btn">註冊</button>
-        <div class="register">
-          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
-        </div>
-      </form>
-    </div>
+		<div class="main-box register">
+			<h3>註冊</h3>
+			<form action="">
+				<div class="input-box">
+					<i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account"
+						required /> <label for="">使用者名稱</label>
+				</div>
+				<div class="input-box">
+					<i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email"
+						required /> <label for="">信箱</label>
+				</div>
+				<div class="input-box">
+					<i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
+						required /> <label for="">密碼</label>
+				</div>
+				<div class="check">
+					<label><input type="checkbox" />我同意所有條款</label>
+				</div>
+				<button type="submit" class="main-btn">註冊</button>
+				<div class="register">
+					<p>
+						已經有帳號?<a href="#" class="login-link">點擊登入</a>
+					</p>
+				</div>
+			</form>
+		</div>
 
-    <span class="close-icon">
-      <div class="fas fa-times"></div>
-    </span>
-  </div>
+		<span class="close-icon">
+			<div class="fas fa-times"></div>
+		</span>
+	</div>
 
-  <!-- 登入  -->
+	<!-- 登入  -->
 
-  <!-- 聊天室 -->
-  <div id="chat-icon">
-    <a href=""><img src="images/chat-icon.svg" /></a>
-  </div>
-  <!-- 聊天室 -->
+	<!-- 聊天室 -->
+	<div id="chat-icon">
+		<a href=""><img src="images/chat-icon.svg" /></a>
+	</div>
+	<!-- 聊天室 -->
 
-  <!-- banner -->
-  <section class="banner_w3lspvt" id="home">
-    <div class="csslider infinity" id="slider1">
-      <input type="radio" name="slides" checked="checked" id="slides_1" />
-      <input type="radio" name="slides" id="slides_2" />
-      <input type="radio" name="slides" id="slides_3" />
-      <input type="radio" name="slides" id="slides_4" />
-      <ul>
-        <li>
-          <div class="banner-top">
-            <div class="overlay">
-              <div class="container">
-                <div class="banner-info">
-                  <h3 class="text-wh">
-                    AI行程規劃功能 <br />讓您輕鬆打造完美旅程
-                  </h3>
-                  <h4 class="text-wh">
-                    給想要輕鬆安排行程，又不知道從何下手的你
-                  </h4>
-                  <div class="buttons mt-4">
-                    <a href="booking.html" class="btn">現在開始</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="banner-top1">
-            <div class="overlay">
-              <div class="container">
-                <div class="banner-info">
-                  <h3 class="text-wh">
-                    精心設計的行程 <br />您的美好旅程，交給我們
-                  </h3>
-                  <h4 class="text-wh">
-                    我們有專業的團隊來為您打造出最棒的套裝行程
-                  </h4>
-                  <div class="buttons mt-4">
-                    <a href="itinerary_search.html" class="btn">了解更多</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="banner-top2">
-            <div class="overlay">
-              <div class="container">
-                <div class="banner-info">
-                  <h3 class="text-wh">
-                    多種精選票券
-                    <br />限時特惠，絕對讓您物超所值
-                  </h3>
-                  <h4 class="text-wh">
-                    快來選購我們的票券，享受美好的旅行體驗吧！
-                  </h4>
-                  <div class="buttons mt-4">
-                    <a href="tickets.html" class="btn">線上搜尋</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="banner-top3">
-            <div class="overlay">
-              <div class="container">
-                <div class="banner-info">
-                  <h3 class="text-wh">
-                    旅遊文章專欄
-                    <br />每個人的旅行都是獨特的
-                  </h3>
-                  <h4 class="text-wh">
-                    在這裡，我們分享旅遊故事，彼此交流心得
-                  </h4>
-                  <div class="buttons mt-4">
-                    <a href="articles.html" class="btn">開始瀏覽</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="arrows">
-        <label for="slides_1"></label>
-        <label for="slides_2"></label>
-        <label for="slides_3"></label>
-        <label for="slides_4"></label>
-      </div>
-    </div>
-  </section>
-  <!-- //banner -->
+	<!-- banner -->
+	<section class="banner_w3lspvt" id="home">
+		<div class="csslider infinity" id="slider1">
+			<input type="radio" name="slides" checked="checked" id="slides_1" />
+			<input type="radio" name="slides" id="slides_2" /> <input type="radio" name="slides" id="slides_3" /> <input
+				type="radio" name="slides" id="slides_4" />
+			<ul>
+				<li>
+					<div class="banner-top">
+						<div class="overlay">
+							<div class="container">
+								<div class="banner-info">
+									<h3 class="text-wh">
+										AI行程規劃功能 <br />讓您輕鬆打造完美旅程
+									</h3>
+									<h4 class="text-wh">給想要輕鬆安排行程，又不知道從何下手的你</h4>
+									<div class="buttons mt-4">
+										<a href="booking.html" class="btn">現在開始</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="banner-top1">
+						<div class="overlay">
+							<div class="container">
+								<div class="banner-info">
+									<h3 class="text-wh">
+										精心設計的行程 <br />您的美好旅程，交給我們
+									</h3>
+									<h4 class="text-wh">我們有專業的團隊來為您打造出最棒的套裝行程</h4>
+									<div class="buttons mt-4">
+										<a href="itinerary_search.html" class="btn">了解更多</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="banner-top2">
+						<div class="overlay">
+							<div class="container">
+								<div class="banner-info">
+									<h3 class="text-wh">
+										多種精選票券 <br />限時特惠，絕對讓您物超所值
+									</h3>
+									<h4 class="text-wh">快來選購我們的票券，享受美好的旅行體驗吧！</h4>
+									<div class="buttons mt-4">
+										<a href="tickets.html" class="btn">線上搜尋</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="banner-top3">
+						<div class="overlay">
+							<div class="container">
+								<div class="banner-info">
+									<h3 class="text-wh">
+										旅遊文章專欄 <br />每個人的旅行都是獨特的
+									</h3>
+									<h4 class="text-wh">在這裡，我們分享旅遊故事，彼此交流心得</h4>
+									<div class="buttons mt-4">
+										<a href="articles.html" class="btn">開始瀏覽</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="arrows">
+				<label for="slides_1"></label> <label for="slides_2"></label> <label for="slides_3"></label> <label
+					for="slides_4"></label>
+			</div>
+		</div>
+	</section>
+	<!-- //banner -->
 
-  <!-- about -->
-  <section class="about py-5">
-    <div class="container py-lg-5 py-sm-4">
-      <div class="row">
-        <div class="col-lg-6 about-left">
-          <h3 class="mt-lg-3">
-            <strong>讓旅行更輕鬆，讓生活更美好</strong>
-          </h3>
-          <p class="mt-4">
-            為了滿足不同的旅行者，我們提供了多種選擇。如果您正在尋找更加個性化的行程規劃，可以嘗試我們的AI行程規劃功能。只需輸入您的旅行日期、預算和目的地，我們的AI算法便會為您制定一個獨特而完美的行程。
-          </p>
-          <p class="mt-3">
-            如果您需要更加輕鬆的選擇，可以考慮購買我們的套裝行程。我們的套裝行程已經為您精心設計，可以讓您輕鬆享受美好的旅行體驗，而無需擔心任何瑣碎的細節。另外，我們也提供各種各樣的票券，包括景點、活動、表演等等。只需透過我們的網站，便可以輕鬆購買您感興趣的票券，讓您的旅行更加豐富多彩。
-          </p>
-        </div>
-        <div class="col-lg-6 about-right text-lg-right mt-lg-0 mt-5">
-          <img src="images/about.jpg" alt="" class="img-fluid abt-image" />
-        </div>
-      </div>
-      <div class="row mt-5 text-center">
-        <div class="col-lg-3 col-6">
-          <div class="counter">
-            <span class="fa fa-users"></span>
-            <div class="timer time1 count-title count-number">0</div>
-            <p class="count-text text-uppercase">會員人數</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-6">
-          <div class="counter">
-            <span class="fa fa-suitcase"></span>
-            <div class="timer time2 count-title count-number">0</div>
-            <p class="count-text text-uppercase">套裝行程</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-6 mt-lg-0 mt-5">
-          <div class="counter">
-            <span class="fa fa-ticket"></span>
-            <div class="timer time3 count-title count-number">0</div>
-            <p class="count-text text-uppercase">票券</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-6 mt-lg-0 mt-5">
-          <div class="counter">
-            <span class="fa fa-solid fa-newspaper"></span>
-            <div class="timer time4 count-title count-number">0</div>
-            <p class="count-text text-uppercase">AI行程收藏</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- //about -->
+	<!-- about -->
+	<section class="about py-5">
+		<div class="container py-lg-5 py-sm-4">
+			<div class="row">
+				<div class="col-lg-6 about-left">
+					<h3 class="mt-lg-3">
+						<strong>讓旅行更輕鬆，讓生活更美好</strong>
+					</h3>
+					<p class="mt-4">
+						為了滿足不同的旅行者，我們提供了多種選擇。如果您正在尋找更加個性化的行程規劃，可以嘗試我們的AI行程規劃功能。只需輸入您的旅行日期、預算和目的地，我們的AI算法便會為您制定一個獨特而完美的行程。
+					</p>
+					<p class="mt-3">
+						如果您需要更加輕鬆的選擇，可以考慮購買我們的套裝行程。我們的套裝行程已經為您精心設計，可以讓您輕鬆享受美好的旅行體驗，而無需擔心任何瑣碎的細節。另外，我們也提供各種各樣的票券，包括景點、活動、表演等等。只需透過我們的網站，便可以輕鬆購買您感興趣的票券，讓您的旅行更加豐富多彩。
+					</p>
+				</div>
+				<div class="col-lg-6 about-right text-lg-right mt-lg-0 mt-5">
+					<img src="images/about.jpg" alt="" class="img-fluid abt-image" />
+				</div>
+			</div>
+			<div class="row mt-5 text-center">
+				<div class="col-lg-3 col-6">
+					<div class="counter">
+						<span class="fa fa-users"></span>
+						<div class="timer time1 count-title count-number">0</div>
+						<p class="count-text text-uppercase">會員人數</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-6">
+					<div class="counter">
+						<span class="fa fa-suitcase"></span>
+						<div class="timer time2 count-title count-number">0</div>
+						<p class="count-text text-uppercase">套裝行程</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-6 mt-lg-0 mt-5">
+					<div class="counter">
+						<span class="fa fa-ticket"></span>
+						<div class="timer time3 count-title count-number">0</div>
+						<p class="count-text text-uppercase">票券</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-6 mt-lg-0 mt-5">
+					<div class="counter">
+						<span class="fa fa-solid fa-newspaper"></span>
+						<div class="timer time4 count-title count-number">0</div>
+						<p class="count-text text-uppercase">AI行程收藏</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //about -->
 
-  <!-- how to book -->
-  <section class="book py-5">
-    <div class="container py-lg-5 py-sm-3">
-      <h2 class="heading text-capitalize text-center">如何計畫您的旅程</h2>
-      <div class="row mt-5 text-center">
-        <div class="col-lg-4 col-sm-6">
-          <div class="grid-info">
-            <div class="icon">
-              <span class="fa fa-map-signs"></span>
-            </div>
-            <h4>選擇目的地</h4>
-            <p class="mt-3">打造專屬旅程的第一步</p>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mt-sm-0 mt-5">
-          <div class="grid-info">
-            <div class="icon">
-              <span class="fa fa-calendar"></span>
-            </div>
-            <h4>選擇旅遊天數</h4>
-            <p class="mt-3">打造專屬旅程的第二步</p>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mt-lg-0 mt-5">
-          <div class="grid-info">
-            <div class="icon">
-              <span class="fa fa-gift"></span>
-            </div>
-            <h4>享受旅程</h4>
-            <p class="mt-3">好好享受我們為您安排的美好旅程</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- //how to book -->
+	<!-- how to book -->
+	<section class="book py-5">
+		<div class="container py-lg-5 py-sm-3">
+			<h2 class="heading text-capitalize text-center">如何計畫您的旅程</h2>
+			<div class="row mt-5 text-center">
+				<div class="col-lg-4 col-sm-6">
+					<div class="grid-info">
+						<div class="icon">
+							<span class="fa fa-map-signs"></span>
+						</div>
+						<h4>選擇目的地</h4>
+						<p class="mt-3">打造專屬旅程的第一步</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-6 mt-sm-0 mt-5">
+					<div class="grid-info">
+						<div class="icon">
+							<span class="fa fa-calendar"></span>
+						</div>
+						<h4>選擇旅遊天數</h4>
+						<p class="mt-3">打造專屬旅程的第二步</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-6 mt-lg-0 mt-5">
+					<div class="grid-info">
+						<div class="icon">
+							<span class="fa fa-gift"></span>
+						</div>
+						<h4>享受旅程</h4>
+						<p class="mt-3">好好享受我們為您安排的美好旅程</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //how to book -->
 
-  <!-- tour packages -->
-  <section class="packages py-5">
-    <div class="container py-lg-4 py-sm-3">
-      <h3 class="heading text-capitalize text-center">探索我們的套裝行程</h3>
-      <p class="text mt-2 mb-5 text-center">
-        探索多樣性豐富的套裝行程，讓您的旅行更輕鬆愉快。從浪漫之旅到刺激的冒險，我們提供各種各樣的行程，滿足不同旅客的需求。無論是短途旅行還是長途旅行，我們都有適合您的選擇。
-      </p>
-      <div class="row recommendTrip">
-        <!-- <div class="col-lg-3 col-sm-6">
+	<!-- tour packages -->
+	<section class="packages py-5">
+		<div class="container py-lg-4 py-sm-3">
+			<h3 class="heading text-capitalize text-center">探索我們的套裝行程</h3>
+			<p class="text mt-2 mb-5 text-center">
+				探索多樣性豐富的套裝行程，讓您的旅行更輕鬆愉快。從浪漫之旅到刺激的冒險，我們提供各種各樣的行程，滿足不同旅客的需求。無論是短途旅行還是長途旅行，我們都有適合您的選擇。
+			</p>
+			<div class="row recommendTrip">
+				<!-- <div class="col-lg-3 col-sm-6">
           <div class="image-tour position-relative">
             <a href="packages_detail.html"><img src="images/p1.jpg" alt="" class="card-img" /></a>
             <p><span class="fa fa-tags"></span> <span>58888起</span></p>
@@ -478,45 +442,40 @@
             </ul>
           </div>
         </div> -->
-      </div>
-      <div class="view-package text-center mt-4">
-        <a href="itinerary_search.html">瀏覽所有套裝行程</a>
-      </div>
-    </div>
-  </section>
-  <!-- tour packages -->
+			</div>
+			<div class="view-package text-center mt-4">
+				<a href="itinerary_search.html">瀏覽所有套裝行程</a>
+			</div>
+		</div>
+	</section>
+	<!-- tour packages -->
 
-  <!-- text -->
-  <section class="text-content">
-    <div class="overlay-inner py-5">
-      <div class="container py-md-3">
-        <div class="test-info">
-          <h4 class="tittle">體驗AI行程規劃</h4>
-          <p class="mt-3">
-            讓 AI
-            為您量身打造旅遊行程！只需輸入您的旅遊目的地、出發日期和旅遊天數，我們的
-            AI 就會根據您的需求自動規劃出最佳的行程。不僅如此，我們的 AI
-            還能在行程中加入您喜愛的活動和景點，讓您的旅程更加精彩！不需要再煩惱如何安排行程，讓我們的
-            AI 為您提供最完美的旅遊體驗。
-          </p>
-          <div class="text-left mt-4">
-            <a href="booking.html">開始規劃</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- //text -->
+	<!-- text -->
+	<section class="text-content">
+		<div class="overlay-inner py-5">
+			<div class="container py-md-3">
+				<div class="test-info">
+					<h4 class="tittle">體驗AI行程規劃</h4>
+					<p class="mt-3">讓 AI 為您量身打造旅遊行程！只需輸入您的旅遊目的地、出發日期和旅遊天數，我們的 AI
+						就會根據您的需求自動規劃出最佳的行程。不僅如此，我們的 AI
+						還能在行程中加入您喜愛的活動和景點，讓您的旅程更加精彩！不需要再煩惱如何安排行程，讓我們的 AI 為您提供最完美的旅遊體驗。</p>
+					<div class="text-left mt-4">
+						<a href="booking.html">開始規劃</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //text -->
 
-  <!-- destinations -->
-  <section class="destinations py-5" id="destinations">
-    <div class="container py-xl-5 py-lg-3">
-      <h3 class="heading text-capitalize text-center">熱門票券</h3>
-      <p class="text mt-2 mb-2 text-center">
-        無論您是喜愛自然風光、文化古蹟或是美食之旅，我們都有適合您的票券選擇。
-      </p>
-      <div class="row recommendTicket inner-sec-www-lauinfo">
-        <!-- <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
+	<!-- destinations -->
+	<section class="destinations py-5" id="destinations">
+		<div class="container py-xl-5 py-lg-3">
+			<h3 class="heading text-capitalize text-center">熱門票券</h3>
+			<p class="text mt-2 mb-2 text-center">
+				無論您是喜愛自然風光、文化古蹟或是美食之旅，我們都有適合您的票券選擇。</p>
+			<div class="row recommendTicket inner-sec-www-lauinfo">
+				<!-- <div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
           <h4 class="destination mb-3">桃園青埔</h4>
           <div class="image-position position-relative image-ticket">
             <img src="images/xpark.jpg" class="card-img" alt="" />
@@ -564,193 +523,175 @@
             </div>
           </div>
         </div> -->
-      </div>
-    </div>
-  </section>
-  <!-- destinations -->
+			</div>
+		</div>
+	</section>
+	<!-- destinations -->
 
-  <!--footer -->
-  <footer>
-    <section class="footer footer_w3layouts_section_1its py-5">
-      <div class="container py-lg-4 py-3">
-        <div class="row footer-top">
-          <div class="col-lg-3 col-sm-6 footer-grid_section_1">
-            <div class="footer-title">
-              <h3>地點資訊</h3>
-            </div>
-            <div class="row">
-              <ul class="col-12 links">
-                <li>
-                  <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓" target="_blank">地址：桃園市中壢區復興路46號9樓</a>
-                </li>
-                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
-                <li>
-                  <a href="mailto:triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
-                </li>
-                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-            <div class="footer-title">
-              <h3>認識TripLight</h3>
-            </div>
-            <div class="row">
-              <ul class="col-10 links">
-                <li><a href="about.html" class="scroll">關於我們</a></li>
-                <li>
-                  <a href="user_terms.html" class="scroll">使用者條款 </a>
-                </li>
-                <li>
-                  <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
-                </li>
-                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
-            <div class="footer-title">
-              <h3>成為合作夥伴</h3>
-            </div>
-            <div class="row">
-              <ul class="col-10 links">
-                <li>
-                  <a href="supplier_form.html" class="scroll">成為供應商</a>
-                </li>
-                <li>
-                  <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
-                </li>
-                <li>
-                  <a href="group_form.html" class="scroll">團體客製規劃</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
-            <div class="footer-title">
-              <h3>聯絡我們</h3>
-            </div>
-            <ul class="social_section_1info">
-              <li>
-                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg" alt="facebook" /></a>
-              </li>
-              <li>
-                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                    alt="instagram" /></a>
-              </li>
-              <li>
-                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
-              </li>
-              <li class="youtube">
-                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
-                    alt="youtube" /></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  </footer>
-  <!-- //footer -->
+	<!--footer -->
+	<footer>
+		<section class="footer footer_w3layouts_section_1its py-5">
+			<div class="container py-lg-4 py-3">
+				<div class="row footer-top">
+					<div class="col-lg-3 col-sm-6 footer-grid_section_1">
+						<div class="footer-title">
+							<h3>地點資訊</h3>
+						</div>
+						<div class="row">
+							<ul class="col-12 links">
+								<li><a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
+										target="_blank">地址：桃園市中壢區復興路46號9樓</a></li>
+								<li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+								<li><a href="mailto:triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
+								</li>
+								<li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+						<div class="footer-title">
+							<h3>認識TripLight</h3>
+						</div>
+						<div class="row">
+							<ul class="col-10 links">
+								<li><a href="about.html" class="scroll">關於我們</a></li>
+								<li><a href="user_terms.html" class="scroll">使用者條款 </a></li>
+								<li><a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+								</li>
+								<li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+						<div class="footer-title">
+							<h3>成為合作夥伴</h3>
+						</div>
+						<div class="row">
+							<ul class="col-10 links">
+								<li><a href="supplier_form.html" class="scroll">成為供應商</a></li>
+								<li><a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
+								</li>
+								<li><a href="group_form.html" class="scroll">團體客製規劃</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+						<div class="footer-title">
+							<h3>聯絡我們</h3>
+						</div>
+						<ul class="social_section_1info">
+							<li><a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
+										alt="facebook" /></a></li>
+							<li><a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+										alt="instagram" /></a></li>
+							<li><a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a></li>
+							<li class="youtube"><a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
+										src="./images/youtube.svg" alt="youtube" /></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</footer>
+	<!-- //footer -->
 
-  <!-- copyright -->
-  <div class="copyright py-3 text-center">
-    <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
-  </div>
-  <!-- //copyright -->
+	<!-- copyright -->
+	<div class="copyright py-3 text-center">
+		<p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+	</div>
+	<!-- //copyright -->
 
-  <!-- move top -->
-  <div class="move-top text-right">
-    <a href="#home" class="move-top">
-      <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
-    </a>
-  </div>
-  <!-- move top -->
+	<!-- move top -->
+	<div class="move-top text-right">
+		<a href="#home" class="move-top"> <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+		</a>
+	</div>
+	<!-- move top -->
 
-  <!-- 載入sweetalert2 -->
-  <script src="./js/sweetalert.js"></script>
+	<!-- 載入sweetalert2 -->
+	<script src="./js/sweetalert.js"></script>
 
 
-  <!-- login顯示 -->
-  <script src="js/Login.js"></script>
-  <!-- login顯示 -->
-  <!--載入 jQuery-->
-  <script src="js/jquery-3.6.4.min.js"></script>
-  <!--載入 jQuery-->
+	<!-- login顯示 -->
+	<script src="js/Login.js"></script>
+	<!-- login顯示 -->
+	<!--載入 jQuery-->
+	<script src="js/jquery-3.6.4.min.js"></script>
+	<!--載入 jQuery-->
 
-  <script>
-    window.addEventListener("load", function () {
-      // ==============================顯示各項目數量============================================
-      $.ajax({
-        type: "GET",
-        url: "/counts",
-        success: function (response) {
-          console.log(response);
-          // 增加動畫
-          $(".time1").animate(
-            // 動畫終點
-            { num: response.memberNumber + 1000 },
-            {
-              // 持續時間
-              duration: 5000,
-              step: function (now) {
-                $(this).text(Math.floor(now)); // 更新數字
-              },
-            }
-          );
-          // 增加動畫
-          $(".time2").animate(
-            // 動畫終點
-            { num: response.tripNumber + 1000 },
-            {
-              // 持續時間
-              duration: 5000,
-              step: function (now) {
-                $(this).text(Math.floor(now)); // 更新數字
-              },
-            }
-          );
-          // 增加動畫
-          $(".time3").animate(
-            // 動畫終點
-            { num: response.ticketNumber + 1000 },
-            {
-              // 持續時間
-              duration: 5000,
-              step: function (now) {
-                $(this).text(Math.floor(now)); // 更新數字
-              },
-            }
-          );
-          // 增加動畫
-          $(".time4").animate(
-            // 動畫終點
-            { num: response.aiFavoriteNumber + 1000 },
-            {
-              // 持續時間
-              duration: 5000,
-              step: function (now) {
-                $(this).text(Math.floor(now)); // 更新數字
-              },
-            }
-          );
-        },
-        error: function (error) {
-          console.error(error);
-        },
-      });
-      // ==============================顯示各項目數量============================================
-      // ==============================接收熱門套裝行程==========================================
-      $.ajax({
-        url: "/index/trips",
-        method: "GET",
-        dataType: "json",
-        success: function (packages) {
-          console.log("接收資料");
-          console.log(packages);
+	<script>
+		window.addEventListener("load", function () {
+			// ==============================顯示各項目數量============================================
+			$.ajax({
+				type: "GET",
+				url: "/counts",
+				success: function (response) {
+					console.log(response);
+					// 增加動畫
+					$(".time1").animate(
+						// 動畫終點
+						{ num: response.memberNumber + 1000 },
+						{
+							// 持續時間
+							duration: 5000,
+							step: function (now) {
+								$(this).text(Math.floor(now)); // 更新數字
+							},
+						}
+					);
+					// 增加動畫
+					$(".time2").animate(
+						// 動畫終點
+						{ num: response.tripNumber + 1000 },
+						{
+							// 持續時間
+							duration: 5000,
+							step: function (now) {
+								$(this).text(Math.floor(now)); // 更新數字
+							},
+						}
+					);
+					// 增加動畫
+					$(".time3").animate(
+						// 動畫終點
+						{ num: response.ticketNumber + 1000 },
+						{
+							// 持續時間
+							duration: 5000,
+							step: function (now) {
+								$(this).text(Math.floor(now)); // 更新數字
+							},
+						}
+					);
+					// 增加動畫
+					$(".time4").animate(
+						// 動畫終點
+						{ num: response.aiFavoriteNumber + 1000 },
+						{
+							// 持續時間
+							duration: 5000,
+							step: function (now) {
+								$(this).text(Math.floor(now)); // 更新數字
+							},
+						}
+					);
+				},
+				error: function (error) {
+					console.error(error);
+				},
+			});
+			// ==============================顯示各項目數量============================================
+			// ==============================接收熱門套裝行程==========================================
+			$.ajax({
+				url: "/index/trips",
+				method: "GET",
+				dataType: "json",
+				success: function (packages) {
+					console.log("接收資料");
+					console.log(packages);
 
-          for (let i = 0; i < packages.length; i++) {
-            $(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
+					for (let i = 0; i < packages.length; i++) {
+						$(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
           <a href="itinerary_page.html" data-trip-id="${packages[i].tripId}" onclick="storeTripId(event)">
             <img src="${packages[i].tripImage}" alt="" class="card-img" />
@@ -771,25 +712,25 @@
           </ul>
         </div>
         </div>`);
-          }
-        },
-        error: function (error) {
-          console.log(error);
-        },
-      });
-      // ==============================接收熱門套裝行程==========================================
-      // ==============================接收熱門票券==============================================
-      $.ajax({
-        url: "/index/tickets",
-        method: "GET",
-        dataType: "json",
-        success: function (tickets) {
-          console.log("接收資料");
-          console.log(tickets);
+					}
+				},
+				error: function (error) {
+					console.log(error);
+				},
+			});
+			// ==============================接收熱門套裝行程==========================================
+			// ==============================接收熱門票券==============================================
+			$.ajax({
+				url: "/index/tickets",
+				method: "GET",
+				dataType: "json",
+				success: function (tickets) {
+					console.log("接收資料");
+					console.log(tickets);
 
-          for (let i = 0; i < tickets.length; i++) {
-            $(".recommendTicket")
-              .append(`<div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
+					for (let i = 0; i < tickets.length; i++) {
+						$(".recommendTicket")
+							.append(`<div class="col-md-3 col-sm-12 destinations-grids text-center mt-4">
             <h4 class="destination mb-3">${tickets[i].city}</h4>
             <div class="image-position position-relative image-ticket">
               <img src=${tickets[i].image} class="card-img" alt="" />
@@ -801,28 +742,28 @@
               </div>
             </div>
           </div>`);
-          }
-        },
-        error: function (error) {
-          console.log(error);
-        },
-      });
-      // ==============================接收熱門票券==============================================
-    });
+					}
+				},
+				error: function (error) {
+					console.log(error);
+				},
+			});
+			// ==============================接收熱門票券==============================================
+		});
 
+		// ==============================設定熱門行程==============================================
+		function storeTripId(event) {
+			// event.preventDefault(); // 防止點擊連結導致頁面跳轉
+
+			const link = event.currentTarget;
+			const tripId = link.dataset.tripId;
+			sessionStorage.setItem('tripId', tripId);
+
+			// 可選步驟：跳轉到目標頁面
+			// window.location.href = link.href;
+		}
     // ==============================設定熱門行程==============================================
-    function storeTripId(event) {
-      // event.preventDefault(); // 防止點擊連結導致頁面跳轉
-
-      const link = event.currentTarget;
-      const tripId = link.dataset.tripId;
-      sessionStorage.setItem('tripId', tripId);
-
-      // 可選步驟：跳轉到目標頁面
-      // window.location.href = link.href;
-    }
-    // ==============================設定熱門行程==============================================
-  </script>
+	</script>
 </body>
 
 </html>

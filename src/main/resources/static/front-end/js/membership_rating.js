@@ -58,3 +58,54 @@ Promise.all([getTicket(), getTrip()]).then(() => {
 	}
 })
 
+// ============================上傳大頭照=====================================
+let camera = document.getElementById('camera');
+camera.addEventListener('click', function() {
+	const input = document.createElement('input');
+	input.type = 'file';
+
+	input.addEventListener("change", function() {
+		const file = this.files[0];
+		const reader = new FileReader();
+
+		reader.addEventListener("load", function() {
+			sessionStorage.setItem('uploadedPhoto', reader.result);
+			img.src = reader.result;
+		});
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		$.ajax({
+			url: "/uploadImage/" + id,
+			method: "POST",
+			data:{
+				memberPic: memberPic,
+			},
+			success: (response) => {
+				console.log("儲存成功")
+			}, error: (error) => {
+				console.log(error);
+			}
+		})
+	});
+	input.click();
+});
+//顯示大頭照
+$(document).ready(function() {
+	$.ajax({
+		url: "/getPic/" + id,
+		method: "GET",
+		dataType: "text",
+		success: function(response) {
+			let memberPic = response;
+		$('.rounded-circle').attr('src', memberPic);
+			
+		},
+		error: function(error) {
+			console.log(error);
+			console.log(error.response);
+
+		}
+	});
+});

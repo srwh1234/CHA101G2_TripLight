@@ -1,25 +1,62 @@
-let camera = document.getElementById("camera");
 let img = document.querySelector(".card-body img");
-
+//找會員id
+let theId = 0;
+if (sessionStorage.getItem("test-login")) {
+	theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+} else {
+	theId = null;
+}
 // <!-- 左邊會員照片+導覽列 -->
 // ============================上傳大頭照=====================================
-camera.addEventListener("click", function() {
-	const input = document.createElement("input");
-	input.type = "file";
+let camera = document.getElementById('camera');
+camera.addEventListener('click', function() {
+	const input = document.createElement('input');
+	input.type = 'file';
 
 	input.addEventListener("change", function() {
 		const file = this.files[0];
 		const reader = new FileReader();
 
 		reader.addEventListener("load", function() {
-			sessionStorage.setItem("uploadedPhoto", reader.result);
+			sessionStorage.setItem('uploadedPhoto', reader.result);
 			img.src = reader.result;
 		});
 		if (file) {
 			reader.readAsDataURL(file);
 		}
+		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		$.ajax({
+			url: "/uploadImage/" + theId,
+			method: "POST",
+			data:{
+				memberPic: memberPic,
+			},
+			success: (response) => {
+				console.log("儲存成功")
+			}, error: (error) => {
+				console.log(error);
+			}
+		})
 	});
 	input.click();
+});
+//顯示大頭照
+$(document).ready(function() {
+	$.ajax({
+		url: "/getPic/" + theId,
+		method: "GET",
+		dataType: "text",
+		success: function(response) {
+			let memberPic = response;
+		$('.rounded-circle').attr('src', memberPic);
+			
+		},
+		error: function(error) {
+			console.log(error);
+			console.log(error.response);
+
+		}
+	});
 });
 // ==========================右邊會員資料--票券訂單 =====================================
 //找到會員id

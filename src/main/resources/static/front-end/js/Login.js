@@ -2,6 +2,7 @@ const container = document.querySelector(" #login-container ");
 const loginLink = document.querySelector(".login-link");
 const registerLink = document.querySelector(".register-link");
 const loginbtn = document.getElementById("login");
+const forgetPwd = document.querySelector("#forgetPwd")
 //清除登入/註冊屬性
 loginbtn.href = "";
 
@@ -13,6 +14,7 @@ registerLink.addEventListener("click", () => {
 loginLink.addEventListener("click", () => {
 	container.classList.remove("active");
 });
+
 //點擊"登入/註冊" 跳出登入小視窗
 function loginin(e) {
 	e.preventDefault();
@@ -257,3 +259,38 @@ document.addEventListener("DOMContentLoaded", function() {
 		$("#login-container").addClass("active-popup");
 	}
 });
+// 忘記密碼=====================================================
+$("#forgetPwd").on("click", function() {
+	container.classList.remove("active");
+	Swal.fire({
+		title: '忘記密碼',
+		text: '請輸入電子信箱',
+		input: 'email',
+		inputPlaceholder: '請輸入電子信箱',
+		showCancelButton: true,
+		confirmButtonText: '發送驗證信',
+		cancelButton: '取消',
+		closeOnConfirm: false,
+		closeOnCancel: false,
+	}).then(function(result) {
+        if (result.isConfirmed) {
+            let forgetPwdEmail = result.value;
+           $.ajax({
+			url: '/sendMail',  // 指定後端的郵件發送端點
+			method: 'POST',     // 使用POST方法
+			data: {
+				forgetPwdEmail: forgetPwdEmail  // 直接傳遞對象
+			},
+			success: function(response) {
+				console.log('郵件傳送成功!');
+				console.log(response)
+			},
+			error: function(xhr, status, error) {
+				console.log('郵件傳送失敗!');
+				console.log(error);
+			}
+		});
+        }
+    });
+
+})

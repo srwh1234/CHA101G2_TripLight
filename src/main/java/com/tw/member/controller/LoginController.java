@@ -1,7 +1,6 @@
 package com.tw.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +12,6 @@ import com.tw.member.model.dao.MemberRepository;
 import com.tw.member.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.Data;
 
 @RestController
 public class LoginController {
@@ -38,8 +36,8 @@ public class LoginController {
 		}
 		else {
 			// 設置Session
-			session.setAttribute("member", result);
-			System.out.println("MemberId: " + session.getAttribute("member"));
+			Member member = loginService.getMember(email);
+			session.setAttribute("member",member);
 			return result;
 		}
 	}
