@@ -2,6 +2,7 @@ package com.tw.form.controller;
 
 import com.tw.form.dto.BloggerData;
 import com.tw.form.service.EmailSenderService;
+import com.tw.form.util.HTMLFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,8 @@ public class BloggerController {
 
     @PostMapping("/bloggers")
     public Boolean getBlogger(@RequestBody BloggerData bloggerData){
-        emailSenderService.sendEmail("triplight0411@gmail.com","部落客與攝影師合作表單",bloggerData.toString());
+        String htmlFormat = HTMLFormat.getHTMLFormat("TripLight部落客與攝影師合作表單", "blue", bloggerData.toString());
+        emailSenderService.sendHTMLEmail("triplight0411@gmail.com","部落客與攝影師合作表單",htmlFormat);
         return true;
     }
 }
