@@ -25,53 +25,49 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-	// 訂單清單
+	/**
+	 * 前台-票券訂單-訂單列表分頁
+	 */
 	@PostMapping("/ticketorders")
-	public OrderPageResponse ticketOrders(@RequestBody final OrderRequest request) {
-		return orderService.getItems(request);
+	public PageDto ticketOrders(@RequestBody final PageReqDto reqDto) {
+		return orderService.getItem(reqDto);
 	}
 
-	// 結帳(test)
+	/**
+	 * 前台-購物車-快速結帳
+	 */
 	@GetMapping("/testCheckout")
-	public boolean testCheckout(//
-			@RequestParam("memberId") final int memberId,//
-			@RequestParam("couponId") final int couponId) {
+	public boolean testCheckout(@RequestParam final int memberId, @RequestParam final int couponId) {
 		return orderService.testOrder(memberId, couponId);
 	}
 
 	/**
+	 * 前台-購物車-綠界結帳
 	 * 安全碼 : 222
 	 * 一般信用卡測試卡號 : 4311-9522-2222-2222
 	 */
-	// 付款介面新增訂單(綠界)
 	@PostMapping("/ecpayCheckout")
 	@ResponseBody
 	public String ecpayCheckout(@RequestBody final Map<String, Object> map) {
-		return orderService.ecpayCheckoutMake(map);
-	}
-
-	// 付款介面現有訂單(綠界)
-	@PostMapping("/ecpayCheckoutorder")
-	@ResponseBody
-	public String ecpayCheckoutOrder(@RequestBody final Map<String, Object> map) {
-		return orderService.ecpayCheckoutOrder(map);
+		return orderService.ecpayFromCarts(map);
 	}
 
 	/**
-	 * 綠界回傳的參數有這些
-	 * {AlipayID=, AlipayTradeNo=, amount=50, ATMAccBank=, ATMAccNo=, auth_code=777777, card4no=2222,
-	 * card6no=431195, CustomField1=, CustomField2=, CustomField3=, CustomField4=, eci=0, ExecTimes=,
-	 * Frequency=, gwsr=12687927, MerchantID=2000132, MerchantTradeNo=544cb316c0a44e5f99b7, PayFrom=,
-	 * PaymentDate=2023/06/04 20:16:57, PaymentNo=, PaymentType=Credit_CreditCard,
-	 * PaymentTypeChargeFee=5, PeriodAmount=, PeriodType=, process_date=2023/06/04 20:16:57, red_dan=0,
-	 * red_de_amt=0, red_ok_amt=0, red_yet=0, RtnCode=1, RtnMsg=������\, SimulatePaid=0, staed=0,
-	 * stage=0, stast=0, StoreID=, TenpayTradeNo=, TotalSuccessAmount=, TotalSuccessTimes=, TradeAmt=50,
-	 * TradeDate=2023/06/04 20:16:05, TradeNo=2306042016059597, WebATMAccBank=, WebATMAccNo=,
-	 * WebATMBankName=, CheckMacValue=F0E7662E986E40A503D16F81E64827ED8BCECFFF2DE9DE91DE70227E96F067C3}
-	 *
-	 * XXX 需要Https才收的到callback
+	 * 前台-票券訂單-綠界結帳
+	 * 安全碼 : 222
+	 * 一般信用卡測試卡號 : 4311-9522-2222-2222
 	 */
-	// 結帳(綠界)
+	@PostMapping("/ecpayCheckoutorder")
+	@ResponseBody
+	public String ecpayCheckoutOrder(@RequestBody final Map<String, Object> map) {
+		return orderService.ecpayFromOrder(map);
+	}
+
+	/**
+	 * 綠界回傳的結帳結果
+	 * XXX 需要Https才收的到callback
+	 * XXX map內的參數有很多
+	 */
 	@PostMapping("/callback")
 	public ResponseEntity<String> handleCallback(@RequestParam final Map<String, String> map) {
 		final int memberId = Integer.parseInt(map.get("CustomField1"));
@@ -89,7 +85,7 @@ public class OrderController {
 
 	// 定義請求物件
 	@Data
-	public static class OrderRequest {
+	public static class PageReqDto {
 		private int memberId;
 		private int page;
 		private int size;
@@ -97,14 +93,14 @@ public class OrderController {
 
 	// 定義回傳物件
 	@Data
-	public static class OrderPageResponse {
+	public static class PageDto {
 		private int curPage;
 		private int totalPage;
-		private ArrayList<OrderResponse> orders = new ArrayList<>();
+		private ArrayList<OrderDto> orders = new ArrayList<>();
 	}
 
 	@Data
-	public static class OrderResponse {
+	public static class OrderDto {
 		private int ticketOrderId;
 		private int ticketCount;
 		private int couponId;

@@ -22,30 +22,34 @@ public class OrderDetailController {
 	@Autowired
 	private OrderDetailService orderDetailService;
 
-	// 訂單明細清單
+	/**
+	 * 前台-票券訂單明細-獲得明細清單
+	 */
 	@GetMapping("/ticketorderdetails")
-	public List<DetailResponse> ticketOrderDetails(			//
-			@RequestParam("memberId") final int memberId,	//
-			@RequestParam("orderId") final int orderId) {
-
+	public List<DetailDto> ticketOrderDetails(//
+			@RequestParam final int memberId, @RequestParam final int orderId) {
 		return orderDetailService.getItems(memberId, orderId);
 	}
 
-	// 訂單明細中退貨
+	/**
+	 * 前台-票券訂單明細-退貨
+	 */
 	@PostMapping("/refundticketorderdetail")
-	public boolean refundTicketOrderDetail(@RequestBody final DetailRequest request) {
-		return orderDetailService.refundItem(request);
+	public boolean refundTicketOrderDetail(@RequestBody final DetailReqDto reqDto) {
+		return orderDetailService.refundItem(reqDto);
 	}
 
-	// 訂單明細中評價
+	/**
+	 * 前台-票券訂單明細-評價
+	 */
 	@PostMapping("/ratingticketorderdetail")
-	public boolean ratingTicketOrderDetail(@RequestBody final DetailRequest request) {
-		return orderDetailService.ratingItem(request);
+	public boolean ratingTicketOrderDetail(@RequestBody final DetailReqDto reqDto) {
+		return orderDetailService.ratingItem(reqDto);
 	}
 
 	// 定義請求物件
 	@Data
-	public static class DetailRequest {
+	public static class DetailReqDto {
 		private int memberId;
 		private int orderId;
 		private int ticketSnId;
@@ -56,7 +60,7 @@ public class OrderDetailController {
 
 	// 定義回傳物件
 	@Data
-	public static class DetailResponse {
+	public static class DetailDto {
 		private int ticketId;
 		private int ticketSnId;
 		private String serialNumber;

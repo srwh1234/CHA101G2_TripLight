@@ -49,15 +49,15 @@ public class Vendor {  // 表格名稱
 
     @Override
     public String toString() {
-        return  "公司名稱："+ vendorName +"\n"+
-                "公司地址："+ vendorAdd +"\n"+
-                "公司電話："+ vendorPhone +"\n"+
-                "聯絡人姓名："+ ceoName +"\n"+
-                "聯絡人電子郵件："+ ceoEmail +"\n"+
-                "聯絡人電話："+ ceoPhone +"\n"+
-                "公司登入帳號："+ loginAccount +"\n"+
-                "公司登入密碼："+ vendorEmail +"\n"+
-                "公司信箱："+ vendorEmail +"\n";
+        return  "公司名稱："+ vendorName +"<br>"+
+                "公司地址："+ vendorAdd +"<br>"+
+                "公司電話："+ vendorPhone +"<br>"+
+                "聯絡人姓名："+ ceoName +"<br>"+
+                "聯絡人電子郵件："+ ceoEmail +"<br>"+
+                "聯絡人電話："+ ceoPhone +"<br>"+
+                "公司登入帳號："+ loginAccount +"<br>"+
+                "公司登入密碼："+ vendorEmail +"<br>"+
+                "公司信箱："+ vendorEmail +"<br>";
     }
     
 }

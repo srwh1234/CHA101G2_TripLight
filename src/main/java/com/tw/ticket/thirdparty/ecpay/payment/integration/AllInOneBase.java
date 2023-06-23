@@ -1,5 +1,7 @@
 package com.tw.ticket.thirdparty.ecpay.payment.integration;
 
+import java.net.URL;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -29,15 +31,19 @@ public class AllInOneBase {
 	protected static String[] ignorePayment;
 
 	public AllInOneBase() {
-		// try{
+
+		final String confPath = "/payment_conf.xml";
 		Document doc;
 		/* when using web project*/
-		// ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		// String configPath = URLDecoder.decode(classLoader.getResource("/payment_conf.xml").getPath(), "UTF-8");
-		// doc = EcpayFunction.xmlParser(configPath);
+		// final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		// final String configPath = URLDecoder.decode(classLoader.getResource("/payment_conf.xml").getPath(), "UTF-8");
+
+		final URL fileURL = this.getClass().getResource(confPath);
+		doc = EcpayFunction.xmlParser(fileURL.toString());
+
 		/* when using testing code*/
-		final String paymentConfPath = "./src/main/resources/payment_conf.xml";
-		doc = EcpayFunction.xmlParser(paymentConfPath);
+		// final String paymentConfPath = "./src/main/resources/payment_conf.xml";
+		// doc = EcpayFunction.xmlParser(paymentConfPath);
 
 		doc.getDocumentElement().normalize();
 		// OperatingMode
@@ -70,8 +76,6 @@ public class AllInOneBase {
 		if (HashKey == null) {
 			throw new EcpayException(ErrorMessage.MInfo_NOT_SETTING);
 		}
-		// } catch(UnsupportedEncodingException e){
-		// e.printStackTrace();
-		// }
+
 	}
 }

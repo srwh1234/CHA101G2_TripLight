@@ -29,15 +29,18 @@ public class LoginController {
 	@PostMapping("/login")
 	public Integer login(@RequestParam String email, @RequestParam String password, HttpSession session) {
 
-		Member result = loginService.login(email, password);
+		Integer result = loginService.login(email, password);
+		//沒有此帳號
 		if (result == null) {
-			System.out.println("沒有此帳號");
 			return 0;
-		} else {
+		}else if(result == -1) {   //停權
+			return -1;
+		}
+		else {
 			// 設置Session
 			session.setAttribute("member", result);
 			System.out.println("MemberId: " + session.getAttribute("member"));
-			return result.getMemberId();
+			return result;
 		}
 	}
 

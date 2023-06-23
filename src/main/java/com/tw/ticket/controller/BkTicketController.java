@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tw.ticket.controller.TicketController.SearchRequest;
+import com.tw.ticket.controller.TicketController.PageReqDto;
 import com.tw.ticket.service.BkTicketService;
 
 import lombok.Data;
@@ -29,25 +29,33 @@ public class BkTicketController {
 	@Autowired
 	private BkTicketService bkTicketService;
 
-	// 票券清單
+	/**
+	 * 後台-票券資料管理-票券清單分頁
+	 */
 	@PostMapping("/searchtickets")
-	public SearchResponse searchTickets(@RequestBody final SearchRequest request) {
-		return bkTicketService.getItems(request);
+	public PageDto searchTickets(@RequestBody final PageReqDto reqDto) {
+		return bkTicketService.getItems(reqDto);
 	}
 
-	// 上架下架票券
+	/**
+	 * 後台-票券資料管理-上架下架票券
+	 */
 	@PostMapping("/enableticket")
 	public boolean enableTicket(@RequestBody final Map<String, Object> map) {
 		return bkTicketService.enableItems(map);
 	}
 
-	// 增加票券數量
+	/**
+	 * 後台-票券資料管理-增加票券數量
+	 */
 	@PostMapping("/addticketcount")
 	public boolean addTicketCount(@RequestBody final Map<String, Object> map) {
 		return bkTicketService.addItemCount(map);
 	}
 
-	// 新增票券 (使用FormData格式)
+	/**
+	 * 後台-票券資料管理-新增票券
+	 */
 	@PostMapping("/addticketform")
 	public boolean addTicketForm(//
 			@RequestParam("post") final String jsonString,//
@@ -55,13 +63,17 @@ public class BkTicketController {
 		return bkTicketService.addItems(jsonString, files);
 	}
 
-	// 要編輯的票券
+	/**
+	 * 後台-票券資料管理-要編輯的票券資料
+	 */
 	@GetMapping("/findticket")
 	public TikcetDto findTicket(@RequestParam("id") final int ticketId) {
 		return bkTicketService.getItem(ticketId);
 	}
 
-	// 編輯票券
+	/**
+	 * 後台-票券資料管理-編輯票券
+	 */
 	@PostMapping("/editticket")
 	public boolean editTicket(@RequestBody final TikcetDto dto) {
 		return bkTicketService.updateItem(dto);
@@ -93,14 +105,14 @@ public class BkTicketController {
 
 	// 定義回傳物件
 	@Data
-	public static class SearchResponse {
+	public static class PageDto {
 		private int curPage;
 		private int totalPage;
-		private List<TicketResponse> tickets = new ArrayList<>();
+		private List<DescTicketDto> tickets = new ArrayList<>();
 	}
 
 	@Data
-	public static class TicketResponse {
+	public static class DescTicketDto {
 		private int ticketId;
 		private String ticketName;
 		private String ticketType;

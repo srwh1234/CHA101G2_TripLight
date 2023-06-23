@@ -10,7 +10,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	//根據用戶名稱email查詢數據
 	public Member findByMemberEmail(String email);
 
-	public Member findByMemberId(int memberId);	
+	public Member findByMemberId(int memberId);
+
+	public void save(String memberPic);	
 
 
 

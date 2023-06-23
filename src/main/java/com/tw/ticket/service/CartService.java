@@ -2,21 +2,47 @@ package com.tw.ticket.service;
 
 import java.util.List;
 
-import com.tw.ticket.controller.CartController.CartRequest;
-import com.tw.ticket.controller.CartController.CartResponse;
-import com.tw.ticket.controller.CartController.ModifyRequest;
+import com.tw.ticket.controller.CartController.AddReqDto;
+import com.tw.ticket.controller.CartController.CartDto;
+import com.tw.ticket.controller.CartController.QuantityReqDto;
 
 public interface CartService {
 
-	// 票券購物車清單
-	public List<CartResponse> getItems(int membeId);
+	public static int ADD_CART_OK = 1; // 添加成功
+	public static int ADD_CART_SOLDOUT = 2;// 此商品數量不足
+	public static int ADD_CART_DISABLE = 3;// 此商品已下架
+	public static int ADD_CART_ERROR = 4;// 發生未知的錯誤
 
-	// 放入購物車
-	public int addItem(CartRequest request);
+	/**
+	 * 票券購物車清單
+	 *
+	 * @param membeId 會員編號
+	 * @return
+	 */
+	public List<CartDto> getItems(int membeId);
 
-	// 變更數量
-	public boolean updateItem(ModifyRequest request);
+	/**
+	 * 放入購物車
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
+	public int addItem(AddReqDto reqDto);
 
-	// 移除購物車物件
+	/**
+	 * 變更數量
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
+	public boolean updateItem(QuantityReqDto reqDto);
+
+	/**
+	 * 移除購物車品項
+	 *
+	 * @param memberId 會員編號
+	 * @param ticketId 票券編號
+	 * @return
+	 */
 	public boolean removeItem(int memberId, int ticketId);
 }

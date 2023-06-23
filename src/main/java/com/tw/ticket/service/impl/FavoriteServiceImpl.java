@@ -1,18 +1,14 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.controller.FavoriteController.FAVORITE_ADD_OK;
-import static com.tw.ticket.controller.FavoriteController.FAVORITE_DEL_OK;
-import static com.tw.ticket.controller.FavoriteController.FAVORITE_ERROR;
-import static com.tw.ticket.controller.FavoriteController.FAVORITE_LOGIN;
-
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
-import com.tw.ticket.controller.FavoriteController.FavoriteRequest;
+import com.tw.ticket.controller.FavoriteController.FavoriteReqDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketFavorite;
 import com.tw.ticket.model.TicketFavorite.PrimaryKey;
@@ -32,28 +28,33 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Autowired
 	private TicketFavoriteRepository ticketFavoriteRepository;
 
-	// 更新我的最愛的狀態
+	/**
+	 * 更新我的最愛的狀態
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
 	@Override
-	public int updateItem(final FavoriteRequest request) {
-		final Member member = memberRepository.findById(request.getMemberId()).orElse(null);
+	public int updateItem(final FavoriteReqDto reqDto) {
+		final Member member = memberRepository.findById(reqDto.getMemberId()).orElse(null);
 		if (member == null) {
 			return FAVORITE_LOGIN;
 		}
 
-		final Ticket ticket = ticketRepository.findById(request.getTicketId()).orElse(null);
+		final Ticket ticket = ticketRepository.findById(reqDto.getTicketId()).orElse(null);
 
 		if (ticket == null) {
 			return FAVORITE_ERROR;
 		}
 
 		// 如果是已經收藏的 就取消收藏
-		if (request.isFavorite()) {
-			ticketFavoriteRepository.deleteById(new PrimaryKey(request.getMemberId(), ticket));
+		if (reqDto.isFavorite()) {
+			ticketFavoriteRepository.deleteById(new PrimaryKey(reqDto.getMemberId(), ticket));
 			return FAVORITE_DEL_OK;
 		}
 		final TicketFavorite favorite = new TicketFavorite();
-		favorite.setKey(new PrimaryKey(request.getMemberId(), ticket));
-		favorite.setAddTime(new Timestamp(System.currentTimeMillis()));
+		favorite.setKey(new PrimaryKey(reqDto.getMemberId(), ticket));
+		favorite.setAddTime(Timestamp.from(Instant.now()));
 		ticketFavoriteRepository.save(favorite);
 
 		return FAVORITE_ADD_OK;

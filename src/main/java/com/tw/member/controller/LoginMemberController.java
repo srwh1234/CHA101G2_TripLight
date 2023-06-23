@@ -1,6 +1,5 @@
 package com.tw.member.controller;
 
-import java.io.Console;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.member.model.Member;
 import com.tw.member.service.LoginMemberService;
-import com.tw.ticket.controller.TicketDetailController.DetailResponse;
 
 import lombok.Data;
 
@@ -31,8 +29,6 @@ public class LoginMemberController {
 	public MemberDetail detail(@PathVariable("id") int id) {
 		return memberService.getItem(id);
 	}
-
-
 
 	@Data
 	public static class MemberDetail {
@@ -70,38 +66,44 @@ public class LoginMemberController {
 		private String memberAddress;
 
 	}
+
 	// update
 	@PostMapping("/member/{id}")
 	public Member update(@PathVariable("id") int id, @RequestBody Member data) {
 		return memberService.updateMember(id, data);
 	}
-	//get old password
-//	@PostMapping("/pwd/{id}")
-//	public boolean getOldPwd(@PathVariable("id") int id, @RequestBody String password ) {
-//		boolean oldPwdStatus = memberService.getPwd(id, password);
-//		System.out.println("oldPwdStatus=" + oldPwdStatus);
-//		if(oldPwdStatus) {
-//			System.out.println("vvvvvvvvvvvv");
-//			return true;
-//		}System.out.println("XXXX");
-//		return false;
-//	}
-	
-	
-	
-	  @PostMapping("/checkPassword/{memberId}")
-	    public boolean checkPassword(@PathVariable int memberId, @RequestBody String password) {
-		  System.out.println("vvvvvvvvvvvv");
-	        return memberService.validatePassword(memberId, password);
-	    }
 
-	  
-	  
-	//change password
+	// get old password
+	@PostMapping("/pwd/{id}")
+	public boolean getOldPwd(@PathVariable("id") int id, @RequestParam("memberPassword") String password) {
+		boolean oldPwdStatus = memberService.getPwd(id, password);
+		if (oldPwdStatus) {
+			return true;
+		}
+		return false;
+	}
+
+	// change password
 	@PostMapping("/changePwd")
 	public void changePwd(@RequestParam int id, @RequestParam String password) {
 		System.out.println("changePwd controller");
 		memberService.changePwd(id, password);
 	}
+
+	// 存圖片
+	@PostMapping("/uploadImage/{id}")
+	public void uploadImage(@PathVariable("id") int id, @RequestParam byte[] memberPic) {
+		memberService.saveImage(id, memberPic);
+		System.out.println("save controller");
+	}
+	//顯示圖片
+	@GetMapping("/getPic/{id}")
+	public byte[] getPic(@PathVariable("id")int id) {
+		return memberService.getPic(id);
+	}
+//	public MemberDetail detail(@PathVariable("id") int id) {
+//		return memberService.getItem(id);
+//	}
+	
 
 }

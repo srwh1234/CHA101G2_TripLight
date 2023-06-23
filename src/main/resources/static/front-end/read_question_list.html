@@ -391,16 +391,16 @@
 
 </body>
 <script>
-    let member = 3;
+    // let loginData = JSON.parse(sessionStorage.getItem('test-login'));
+    // let memberId = loginData.memberId;
+    let memberId = 3;
     let data = null;
-    let processedData = data || "";
 
-    fetch('/question_report?member=' + member)
+    fetch('/question_report?memberId=' + memberId)
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('QuestionTableBody');
-            tableBody.innerHTML = ''; // 清空表格
-
+            tableBody.innerHTML = '';
             data.forEach((item) => {
                 const row = document.createElement('tr');
                 // 創建每個單元格並添加到行
@@ -414,63 +414,21 @@
                         <td>${item.state === 0 ? '未解決' : '已解決'}</td>
                         <td>${item.score || ""}</td>
                     `;
+
                 // 創建查詢按鈕並添加事件監聽器
                 const queryButton = document.createElement('button');
                 queryButton.textContent = '查詢';
                 queryButton.addEventListener('click', () => {
-                    // 在這裡添加查詢按鈕的事件處理函數
                     console.log('查詢按鈕被點擊，當前行的資料是：', item);
+                    window.location.href = 'check_question.html?id=' + item.id; // 替换为目标网页的 URL
                 });
                 row.appendChild(queryButton);
-
-                //評分按鈕
-                if(item.score === 0 && item.state === 1){
-                    const scoreButton = document.createElement('button');
-                    scoreButton.textContent = '評分';
-                    scoreButton.addEventListener('click', () => {
-                        Swal.fire({
-                            title: '請給予評分',
-                            input: 'range',
-                            inputAttributes: {
-                                min: 1,
-                                max: 10,
-                                step: 1
-                            },
-                            inputValue: 5
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                console.log('使用者的評分是：', result.value);
-
-                                // 將評分傳送到後端
-                                fetch('/questionReports/${id}/score', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({ score: result.value }),
-                                })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        console.log('Success:', data);
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error:', error);
-                                    });
-                            }
-                        });
-                    });
-                    row.appendChild(scoreButton);
-                }
-
-
-
-
 
                 // 創建刪除按鈕並添加事件監聽器
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = '刪除';
+
                 deleteButton.addEventListener('click', () => {
-                    // 使用 SweetAlert2 對話框
                     Swal.fire({
                         title: '確定要刪除這條記錄嗎？',
                         text: "一旦刪除，你將無法恢復這條記錄！",
@@ -497,22 +455,58 @@
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
-                                    Swal.fire(
-                                        '刪除失敗！',
-                                        '',
-                                        'error'
-                                    );
                                 });
                         }
                     });
                 });
                 row.appendChild(deleteButton);
 
-                // 將行添加到表格
+                //建立評分按鈕並且添加事件監聽器
+                if(item.state === 1 && item.score === 0){
+                    const scoreButton = document.createElement('button');
+                    scoreButton.textContent = '評分';
+                    scoreButton.addEventListener('click', () => {
+                        Swal.fire({
+                            title: '請給我們評分',
+                            text: '在 1 到 10 之間給我們評分',
+                            input: 'range',
+                            inputAttributes: {
+                                min: 1,
+                                max: 10,
+                                step: 1
+                            },
+                            inputValue: 5
+                        })
+                            .then((result) => {
+                            if (result.isConfirmed) {
+                                fetch(`/questionReports/${item.id}/score`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({score: result.value})
+                                })
+                                    .then(response => {
+                                        if(response.ok){
+                                            Swal.fire('評分已經成功送出!')
+                                            const scoreCell = row.querySelector('td:nth-child(7)'); // 假設評分是第7個td
+                                            scoreCell.textContent = result.value;
+                                            scoreButton.remove()
+                                        }
+                                        else
+                                            Swal.fire('評分未成功送出,請再嘗試一次')
+                                    })
+                                    .catch(error => Swal.fire('評分未成功送出,請再嘗試一次'))
+                            }
+                        });
+                    })
+                    row.appendChild(scoreButton);
+                }
                 tableBody.appendChild(row);
             });
         })
         .catch(error => console.error('Error:', error));
+
 </script>
 <!-- login顯示 -->
 <script src="js/Login.js"></script>

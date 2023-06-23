@@ -1,11 +1,5 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.controller.CartController.ADD_CART_DISABLE;
-import static com.tw.ticket.controller.CartController.ADD_CART_ERROR;
-import static com.tw.ticket.controller.CartController.ADD_CART_OK;
-import static com.tw.ticket.controller.CartController.ADD_CART_SOLDOUT;
-import static com.tw.ticket.model.Ticket.DISABLED;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
-import com.tw.ticket.controller.CartController.CartRequest;
-import com.tw.ticket.controller.CartController.CartResponse;
-import com.tw.ticket.controller.CartController.CartTicketResponse;
-import com.tw.ticket.controller.CartController.ModifyRequest;
+import com.tw.ticket.controller.CartController.AddReqDto;
+import com.tw.ticket.controller.CartController.CartDto;
+import com.tw.ticket.controller.CartController.DescTicketDto;
+import com.tw.ticket.controller.CartController.QuantityReqDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketCart;
 import com.tw.ticket.model.TicketCart.PrimaryKey;
@@ -25,6 +19,7 @@ import com.tw.ticket.model.dao.TicketCartRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.service.CartService;
+import com.tw.ticket.service.PromotionService;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -44,11 +39,18 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private ImageServiceImpl imageService;
 
-	// 票券購物車清單
-	@Override
-	public List<CartResponse> getItems(final int membeId) {
+	@Autowired
+	private PromotionService promotionService;
 
-		final List<CartResponse> result = new ArrayList<>();
+	/**
+	 * 票券購物車清單
+	 *
+	 * @param membeId 會員編號
+	 * @return
+	 */
+	@Override
+	public List<CartDto> getItems(final int membeId) {
+		final List<CartDto> result = new ArrayList<>();
 
 		for (final TicketCart cart : ticketCartRepository.findByKeyMemberId(membeId)) {
 			// XXX 這邊好像要查詢很多次...
@@ -57,37 +59,42 @@ public class CartServiceImpl implements CartService {
 			if (ticket == null) {
 				continue;
 			}
-			final CartTicketResponse cartTicketResponse = new CartTicketResponse(ticket);
+			final DescTicketDto descDto = new DescTicketDto(ticket);
 			// 可用數量
 			final int available = snRepository.countUsableSn(cart.getTicketId());
-			cartTicketResponse.setAvailable(available);
+			descDto.setAvailable(available);
+
+			// 促銷
+			descDto.setPromotion(promotionService.getItem(cart.getTicketId()));
 
 			// 圖片
-			final String image = imageService.findImgUrl(ticket.getTicketId());
-			cartTicketResponse.setImage(image);
+			descDto.setImage(imageService.findImgUrl(ticket.getTicketId()));
 
 			if (cart.getQuantity() > available) {
 				cart.setQuantity(available);
 				ticketCartRepository.save(cart);
 			}
 
-			final CartResponse cartResponse = new CartResponse();
-			cartResponse.setQuantity(cart.getQuantity());
-			cartResponse.setTicket(cartTicketResponse);
+			final CartDto cartDto = new CartDto();
+			cartDto.setQuantity(cart.getQuantity());
+			cartDto.setTicket(descDto);
 
-			result.add(cartResponse);
-
+			result.add(cartDto);
 		}
-
 		return result;
 	}
 
-	// 放入購物車
+	/**
+	 * 放入購物車
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
 	@Override
-	public int addItem(final CartRequest request) {
-		final int memberId = request.getMemberId();
-		final int ticketId = request.getTicketId();
-		final int quantity = request.getQuantity();
+	public int addItem(final AddReqDto reqDto) {
+		final int memberId = reqDto.getMemberId();
+		final int ticketId = reqDto.getTicketId();
+		final int quantity = reqDto.getQuantity();
 
 		// 確認數量
 		if (quantity <= 0) {
@@ -103,7 +110,7 @@ public class CartServiceImpl implements CartService {
 		}
 
 		// 下架中
-		if (ticket.getStatus() == DISABLED) {
+		if (ticket.getStatus() == Ticket.DISABLED) {
 			return ADD_CART_DISABLE;
 		}
 
@@ -126,12 +133,17 @@ public class CartServiceImpl implements CartService {
 		return ADD_CART_OK;
 	}
 
-	// 變更購物車數量
+	/**
+	 * 變更數量
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
 	@Override
-	public boolean updateItem(final ModifyRequest request) {
-		final int memberId = request.getMemberId();
-		final int ticketId = request.getTicketId();
-		final int modify = request.getModify();
+	public boolean updateItem(final QuantityReqDto reqDto) {
+		final int memberId = reqDto.getMemberId();
+		final int ticketId = reqDto.getTicketId();
+		final int modify = reqDto.getModify();
 
 		// 購物車物件
 		final TicketCart ticketCart = //
@@ -158,7 +170,13 @@ public class CartServiceImpl implements CartService {
 		return isValid;
 	}
 
-	// 移除購物車物件
+	/**
+	 * 移除購物車品項
+	 *
+	 * @param memberId 會員編號
+	 * @param ticketId 票券編號
+	 * @return
+	 */
 	@Override
 	public boolean removeItem(final int memberId, final int ticketId) {
 		ticketCartRepository.deleteById(new PrimaryKey(memberId, ticketId));

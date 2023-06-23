@@ -3,6 +3,7 @@ package com.tw.member.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class Member implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer memberId;
 
-	private String memberAccount ="";
+	private String memberAccount = "";
 //	private String memberAccount;	
 
 	private String memberPassword;
@@ -43,6 +44,7 @@ public class Member implements Serializable {
 	private Integer memberGender;
 
 	@Lob
+	@Column(name = "member_pic", columnDefinition = "BLOB")
 	private byte[] memberPic;
 
 	private String memberIdCard;
@@ -53,7 +55,8 @@ public class Member implements Serializable {
 
 	private String memberAddress;
 
-	private Date memberJoinTime;
+	private java.util.Date memberJoinTime;
 
 	private Integer memberGrade;
+
 }

@@ -22,35 +22,49 @@ public class CouponController {
 	@Autowired
 	private CouponService couponService;
 
+	/**
+	 * 前台-購物車-取得會員可用優惠券清單
+	 */
 	@GetMapping("/coupons")
-	public List<CouponResponse> coupons(@RequestParam final int memberId) {
+	public List<CouponDto> coupons(@RequestParam final int memberId) {
 		return couponService.getItems(memberId);
 	}
 
+	/**
+	 * 後台-票券資料管理-優惠券清單
+	 */
 	@GetMapping("/bk/coupons")
 	public List<Coupon> coupons() {
 		return couponService.getItems();
 	}
 
+	/**
+	 * 後台-票券資料管理-要編輯的優惠券資料
+	 */
 	@GetMapping("/bk/coupon")
 	public Coupon coupon(@RequestParam final int couponId) {
 		return couponService.getItem(couponId);
 	}
 
-	@PostMapping("/bk/addcoupon")
-	public boolean addCoupon(@RequestBody final Coupon coupon) {
-		return couponService.addItem(coupon);
-	}
-
+	/**
+	 * 後台-票券資料管理-編輯優惠券
+	 */
 	@PostMapping("/bk/editcoupon")
 	public boolean editCoupon(@RequestBody final Coupon coupon) {
 		return couponService.updateItem(coupon);
 	}
 
-	// 定義回傳物件
+	/**
+	 * 後台-票券資料管理-新增優惠券
+	 */
+	@PostMapping("/bk/addcoupon")
+	public boolean addCoupon(@RequestBody final Coupon coupon) {
+		return couponService.addItem(coupon);
+	}
 
+	// 定義回傳物件
 	@Data
-	public static class CouponResponse {
+	public static class CouponDto {
 		private int couponId;
 		private String name;
 		private int discount;
