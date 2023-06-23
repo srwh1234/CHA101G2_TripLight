@@ -9,12 +9,12 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter("*.html")
+// XXX 要用的時候請打開
+// @WebFilter("*.html")
 public class CookieFilter implements Filter {
 
 	/*
@@ -38,7 +38,7 @@ public class CookieFilter implements Filter {
 
 		// 這邊..
 		// 正確的做法應該是@WebFilter 或其他設定方式 填入要檢驗的位置
-		if (htmlName.equals("xxxshopping_car.html") || htmlName.equals("xxxtickets_order.html")) {
+		if (htmlName.equals("shopping_car.html") || htmlName.equals("tickets_order.html")) {
 
 			System.out.println("此網頁有先經過 CookieFilter.java");
 			// 這邊可以判斷cookie夾帶的資訊
