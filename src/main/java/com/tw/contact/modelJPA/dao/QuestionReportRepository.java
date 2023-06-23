@@ -11,6 +11,5 @@ import java.util.List;
 
 public interface QuestionReportRepository extends JpaRepository<QuestionReport, Integer> {
     List<QuestionReport> findByMemberMemberId(int memberId);
-
-
+    List<QuestionReport> findByState(int state);
 }

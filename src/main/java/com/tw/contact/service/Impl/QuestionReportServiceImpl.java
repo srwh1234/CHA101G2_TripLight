@@ -4,6 +4,7 @@ import com.tw.contact.QuestionReportRequestDTO;
 import com.tw.contact.modelJPA.QuestionReport;
 import com.tw.contact.modelJPA.dao.QuestionReportRepository;
 import com.tw.contact.service.QuestionReportService;
+import com.tw.employee.dao.EmployeeRepository;
 import com.tw.member.model.dao.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,14 @@ import java.util.List;
 public class QuestionReportServiceImpl implements QuestionReportService {
     private final QuestionReportRepository questionReportRepository;
     private final MemberRepository memberRepository;
+    private final EmployeeRepository employeeRepository;
+
 
     @Autowired
-    public QuestionReportServiceImpl(QuestionReportRepository questionReportRepository, MemberRepository memberRepository) {
+    public QuestionReportServiceImpl(QuestionReportRepository questionReportRepository, MemberRepository memberRepository, EmployeeRepository employeeRepository) {
         this.questionReportRepository = questionReportRepository;
         this.memberRepository = memberRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -29,7 +33,6 @@ public class QuestionReportServiceImpl implements QuestionReportService {
         questionReport.setQuestionContent(questionReportRequestDTO.getQuestionContent());
         questionReport.setStartTime(LocalDateTime.now());
         save(questionReport);
-
     }
 
     @Override
@@ -38,7 +41,7 @@ public class QuestionReportServiceImpl implements QuestionReportService {
     }
 
     @Override
-    public List<QuestionReport> showQuestReportById(int memberId) {
+    public List<QuestionReport> showQuestionReportById(int memberId) {
         return questionReportRepository.findByMemberMemberId(memberId);
     }
 
@@ -60,4 +63,25 @@ public class QuestionReportServiceImpl implements QuestionReportService {
         return questionReportRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid question report Id:" + id));
     }
+
+    /*
+    後臺服務
+     */
+    @Override
+    public List<QuestionReport> showQuestionReportByState(int state) {
+       return questionReportRepository.findByState(0);
+    }
+
+    @Override
+    public void updateQuestionReport(int id, int employeeId, String replyContent) {
+        QuestionReport questionReport;
+        questionReport = questionReportRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid question report Id:" + id));
+        questionReport.setEmployee(employeeRepository.findByEmployeeId(employeeId));
+        questionReport.setReplyContent(replyContent);
+        questionReport.setState(1);
+        questionReport.setEndTime(LocalDateTime.now());
+        save(questionReport);
+    }
+
+
 }
