@@ -12,27 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tw.vendor.dao.TripImageRepository2;
-import com.tw.vendor.dao.TripRepository2;
 import com.tw.vendor.model.Trip2;
 import com.tw.vendor.model.TripImage2;
 import com.tw.vendor.service.TripImageService2;
+import com.tw.vendor.service.TripService2;
+
+import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/trip2")
+@AllArgsConstructor
 public class TripImageController2 {
 
     public static String IMG_URL = "http://localhost:8080/img/trip";
     
 //    public final TripService2 tripService2 = null;
     
-        @Autowired
-        private TripImageService2 tripImageService2; 
-        @Autowired
-        private TripRepository2 tripRepository2;
-        @Autowired
-        private TripImageRepository2 tripImageRepository2; 
+        private final TripImageService2 tripImageService2; 
+        private final TripService2 tripService2;
 
 //        @GetMapping("/tripImage2")
 //        public List<TripImage2> getTripImage(){
@@ -69,16 +67,14 @@ public class TripImageController2 {
     		// 以下都要放 service
     		try {
     			 Trip2 trip2 = new ObjectMapper().readValue(json, Trip2.class);
-    			tripRepository2.save(trip2);
-//    			trip2.setArticlePostTime(new Timestamp(System.currentTimeMillis()));
-//    			trip2.setArticlePicture(file.getBytes());
+    			 tripService2.save(trip2);
     			System.out.println(trip2.getTripId());
 
     			TripImage2 	img2=new TripImage2();
     			img2.setTripId(trip2.getTripId());
     			img2.setImage(file.getBytes());
     			img2.setUploadTime(new Timestamp(System.currentTimeMillis()));
-    			tripImageRepository2.save(img2);
+    			tripImageService2.save(img2);
     			
     		} catch (final IOException e) {
     			e.printStackTrace();

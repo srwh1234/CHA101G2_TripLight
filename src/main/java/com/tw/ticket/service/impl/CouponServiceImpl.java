@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tw.ticket.MyUtils;
-import com.tw.ticket.controller.CouponController.CouponResponse;
+import com.tw.ticket.controller.CouponController.CouponDto;
 import com.tw.ticket.model.Coupon;
 import com.tw.ticket.model.dao.CouponRepository;
 import com.tw.ticket.model.dao.TicketOrderRepository;
@@ -22,10 +22,15 @@ public class CouponServiceImpl implements CouponService {
 	@Autowired
 	private TicketOrderRepository ticketOrderRepository;
 
-	// 取得會員可用優惠券
+	/**
+	 * 取得會員可用優惠券
+	 *
+	 * @param memberId 會員編號
+	 * @return
+	 */
 	@Override
-	public List<CouponResponse> getItems(final int memberId) {
-		final List<CouponResponse> result = new ArrayList<>();
+	public List<CouponDto> getItems(final int memberId) {
+		final List<CouponDto> result = new ArrayList<>();
 
 		for (final Coupon coupon : couponRepository.findAll()) {
 			// 不在期間內
@@ -36,28 +41,42 @@ public class CouponServiceImpl implements CouponService {
 			if (ticketOrderRepository.findByMemberIdAndCoupon(memberId, coupon) != null) {
 				continue;
 			}
-			final CouponResponse response = new CouponResponse();
-			response.setCouponId(coupon.getCouponId());
-			response.setName(coupon.getName());
-			response.setDiscount(coupon.getDiscount());
-			result.add(response);
+			final CouponDto dto = new CouponDto();
+			dto.setCouponId(coupon.getCouponId());
+			dto.setName(coupon.getName());
+			dto.setDiscount(coupon.getDiscount());
+			result.add(dto);
 		}
 		return result;
 	}
 
-	// 取得全部的優惠券
+	/**
+	 * 取得全部的優惠券
+	 *
+	 * @return
+	 */
 	@Override
 	public List<Coupon> getItems() {
 		return couponRepository.findAll();
 	}
 
-	// 取得指定的優惠券
+	/**
+	 * 取得指定的優惠券
+	 *
+	 * @param couponId 優惠券編號
+	 * @return
+	 */
 	@Override
 	public Coupon getItem(final int couponId) {
 		return couponRepository.findById(couponId).orElse(null);
 	}
 
-	// 新增優惠券
+	/**
+	 * 新增優惠券
+	 *
+	 * @param coupon 優惠券
+	 * @return
+	 */
 	@Override
 	public boolean addItem(final Coupon coupon) {
 		// 條件檢查
@@ -68,7 +87,12 @@ public class CouponServiceImpl implements CouponService {
 		return true;
 	}
 
-	// 編輯優惠券
+	/**
+	 * 編輯優惠券
+	 *
+	 * @param coupon 優惠券
+	 * @return
+	 */
 	@Override
 	public boolean updateItem(final Coupon coupon) {
 		// 不存在的資料
@@ -83,7 +107,12 @@ public class CouponServiceImpl implements CouponService {
 		return true;
 	}
 
-	// 檢查優惠券的資料是否正常
+	/**
+	 * 檢查優惠券的資料是否正常
+	 *
+	 * @param coupon 優惠券
+	 * @return
+	 */
 	private boolean isValid(final Coupon coupon) {
 		// 名稱檢查
 		if (MyUtils.isEmpty(coupon.getName())) {
@@ -94,7 +123,7 @@ public class CouponServiceImpl implements CouponService {
 		if (coupon.getStartDate() == null || coupon.getExpiryDate() == null) {
 			return false;
 		}
-		// 到期時間在
+		// 到期時間在開始時間之前
 		if (coupon.getExpiryDate().before(coupon.getStartDate())) {
 			return false;
 		}

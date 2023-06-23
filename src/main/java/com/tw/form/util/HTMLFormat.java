@@ -44,7 +44,6 @@ public class HTMLFormat {
                             border: 1px solid #BDBDBD;
                             border-radius: 10px;
                             background-color: #ECEFF1;
-                            text-align: center;
                         }
                                
                         .button-container {
@@ -84,7 +83,7 @@ public class HTMLFormat {
                 </html>
                         
                 """;
-       return String.format(htmlContent,title ,titleColor, content);
+       return String.format(htmlContent,titleColor ,title, content);
     }
     public static String getHTMLFormat(String title,String titleColor,String content,String ButtonTitle,String ButtonLink){
         String htmlContent = """
@@ -128,7 +127,6 @@ public class HTMLFormat {
                             border: 1px solid #BDBDBD;
                             border-radius: 10px;
                             background-color: #ECEFF1;
-                            text-align: center;
                         }
                                
                         .button-container {

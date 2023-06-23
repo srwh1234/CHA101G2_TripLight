@@ -18,13 +18,13 @@ public class GroupData {
 
     @Override
     public String toString() {
-        return  "姓名："+ name +"\n"+
-                "電話："+ phone +"\n"+
-                "信箱："+ email +"\n"+
-                "團體人數："+ groupSize +"\n"+
-                "行程天數："+ tripDuration +"\n"+
-                "首選目的地："+ preferredDestination +"\n"+
-                "行程偏好："+ preferredActivity +"\n"+
-                "其他需求："+ message +"\n";
+        return  "姓名："+ name +"<br>"+
+                "電話："+ phone +"<br>"+
+                "信箱："+ email +"<br>"+
+                "團體人數："+ groupSize +"<br>"+
+                "行程天數："+ tripDuration +"<br>"+
+                "首選目的地："+ preferredDestination +"<br>"+
+                "行程偏好："+ preferredActivity +"<br>"+
+                "其他需求："+ message +"<br>";
     }
 }

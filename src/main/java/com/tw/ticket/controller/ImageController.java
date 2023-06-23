@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.ticket.service.impl.ImageServiceImpl;
+import com.tw.ticket.service.ImageService;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class ImageController {
 
 	@Autowired
-	private ImageServiceImpl imageService;
+	private ImageService imageService;
 
-	@GetMapping(value = "/img/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
-	public byte[] getPhoto(@PathVariable("imgUrl") final int id) {
+	@GetMapping(value = "/img/{id:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
+	public byte[] getPhoto(@PathVariable final int id) {
 		return imageService.findImg(id);
 	}
 }

@@ -2,7 +2,7 @@ package com.tw.ticket.service.impl;
 
 import static com.tw.ticket.model.Ticket.DISABLED;
 import static com.tw.ticket.model.TicketSn.NOT_USED;
-import static com.tw.ticket.service.impl.ImageServiceImpl.IMG_URL;
+import static com.tw.ticket.service.ImageService.IMG_URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +25,10 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.tw.ticket.MyUtils;
-import com.tw.ticket.controller.BkTicketController.SearchResponse;
-import com.tw.ticket.controller.BkTicketController.TicketResponse;
+import com.tw.ticket.controller.BkTicketController.DescTicketDto;
+import com.tw.ticket.controller.BkTicketController.PageDto;
 import com.tw.ticket.controller.BkTicketController.TikcetDto;
-import com.tw.ticket.controller.TicketController.SearchRequest;
+import com.tw.ticket.controller.TicketController.PageReqDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketSn;
 import com.tw.ticket.model.TicketType;
@@ -37,6 +37,7 @@ import com.tw.ticket.model.dao.TicketSnRepository;
 import com.tw.ticket.model.dao.TicketTypeRepository;
 import com.tw.ticket.service.BkImageService;
 import com.tw.ticket.service.BkTicketService;
+import com.tw.ticket.service.ImageService;
 
 @Service
 public class BkTicketServiceImpl implements BkTicketService {
@@ -59,42 +60,46 @@ public class BkTicketServiceImpl implements BkTicketService {
 	private BkImageService bkImageService;
 
 	@Autowired
-	private ImageServiceImpl imageService;
+	private ImageService imageService;
 
-	// 後台票券清單 (分頁)
+	/**
+	 * @param reqDto 請求參數
+	 * @return 後台票券清單分頁
+	 */
 	@Override
-	public SearchResponse getItems(final SearchRequest request) {
+	public PageDto getItems(final PageReqDto reqDto) {
 		final Pageable pageable = PageRequest.of(	//
-				request.getPage(),		// 查詢的頁數，從0起算
-				request.getSize()		// 查詢的每頁筆數
+				reqDto.getPage(),		// 查詢的頁數，從0起算
+				reqDto.getSize()		// 查詢的每頁筆數
 		);
-		final Page<Ticket> page = repository.searchTicketByKeyword(	//
-				request.getKeyword(),	// 關鍵字
-				pageable				// 分頁物件
-		);
+		final Page<Ticket> page = repository.searchTicketByKeyword(reqDto.getKeyword(), pageable);
+
 		// 轉成自己定義的物件
-		final SearchResponse response = new SearchResponse();
-		response.setCurPage(request.getPage());
-		response.setTotalPage(page.getTotalPages());
+		final PageDto pageDto = new PageDto();
+		pageDto.setCurPage(reqDto.getPage());
+		pageDto.setTotalPage(page.getTotalPages());
 
-		page.getContent().forEach(ticket -> {
-
+		for (final Ticket ticket : page.getContent()) {
 			final int available = snRepository.countUsableSn(ticket.getTicketId());
 
-			final TicketResponse ticketResponse = new TicketResponse();
-			ticketResponse.setTicketId(ticket.getTicketId());
-			ticketResponse.setTicketName(ticket.getName());
-			ticketResponse.setTicketType(ticket.getTicketType().getName());
-			ticketResponse.setTicketStatus(ticket.getStatus());
-			ticketResponse.setTicketCity(ticket.getCity());
-			ticketResponse.setSupplierName(ticket.getSupplierName());
-			ticketResponse.setAvailable(available);
-			response.getTickets().add(ticketResponse);
-		});
-		return response;
+			final DescTicketDto descDto = new DescTicketDto();
+			descDto.setTicketId(ticket.getTicketId());
+			descDto.setTicketName(ticket.getName());
+			descDto.setTicketType(ticket.getTicketType().getName());
+			descDto.setTicketStatus(ticket.getStatus());
+			descDto.setTicketCity(ticket.getCity());
+			descDto.setSupplierName(ticket.getSupplierName());
+			descDto.setAvailable(available);
+
+			pageDto.getTickets().add(descDto);
+		}
+		return pageDto;
 	}
 
-	// 後台取得要編輯的票券
+	/**
+	 * @param ticketId
+	 * @return 後台要編輯的票券資料
+	 */
 	@Override
 	public TikcetDto getItem(final int ticketId) {
 		final Ticket ticket = repository.findById(ticketId).orElse(null);
@@ -132,7 +137,10 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return dto;
 	}
 
-	// 後台上下架票券
+	/**
+	 * @param map 請求參數
+	 * @return 後台上下架票券
+	 */
 	@Override
 	public boolean enableItems(final Map<String, Object> map) {
 		final int ticketId = (int) map.get("ticketId");
@@ -148,7 +156,10 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return true;
 	}
 
-	// 後台增加票券數量
+	/**
+	 * @param map 請求參數
+	 * @return 後台增加票券數量
+	 */
 	@Override
 	public boolean addItemCount(final Map<String, Object> map) {
 		final int ticketId = (int) map.get("ticketId");
@@ -165,60 +176,11 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return createSerialNumber(ticket, addCount).size() > 0;
 	}
 
-	// 後台編輯票券
-	@Override
-	public boolean updateItem(final TikcetDto dto) {
-
-		// 判斷票券類型
-		final TicketType type = ticketTypeRepository.findByName(dto.getTicketType());
-
-		if (type == null) {
-			return false;
-		}
-		// 檢查內容
-		if (!isValidData(dto)) {
-			return false;
-		}
-
-		final Ticket ticket = repository.findById(dto.getTicketId()).orElse(null);
-
-		if (ticket == null) {
-			return false;
-		}
-
-		ticket.setName(dto.getName());
-		ticket.setTicketType(type);
-		ticket.setPrice(dto.getPrice());
-		ticket.setExpiryDate(dto.getExpiryDate());
-		ticket.setDescription(dto.getDescription());
-		ticket.setContent(dto.getContent());
-		ticket.setNote(dto.getNote());
-		ticket.setSupplierName(dto.getSupplierName());
-		ticket.setCity(dto.getCity());
-
-		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
-		ticket.setRatingCount(dto.getRatingPerson());
-
-		// TODO 經緯度
-		if (ticket.getAddress() != dto.getAddress()) {
-
-			final LatLng latLng = getLatLngFromAddress(dto.getAddress());
-			if (latLng == null) {
-				ticket.setLatitude(24.9576355);
-				ticket.setLongitude(121.2250227);
-			} else {
-				ticket.setLatitude(latLng.lat);
-				ticket.setLongitude(latLng.lng);
-			}
-			ticket.setAddress(dto.getAddress());
-		}
-
-		// 更新票券
-		repository.save(ticket);
-		return true;
-	}
-
-	// 後台新增票券(form)
+	/**
+	 * @param jsonString
+	 * @param files
+	 * @return 後台新增票券
+	 */
 	@Override
 	public boolean addItems(final String jsonString, final MultipartFile[] files) {
 		TikcetDto dto = null;
@@ -267,7 +229,7 @@ public class BkTicketServiceImpl implements BkTicketService {
 		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
 		ticket.setRatingCount(dto.getRatingPerson());
 
-		// TODO 經緯度
+		// 經緯度
 		if (!MyUtils.isEmpty(dto.getAddress())) {
 			final LatLng latLng = getLatLngFromAddress(dto.getAddress());
 			if (latLng == null) {
@@ -290,9 +252,70 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return true;
 	}
 
+	/**
+	 * @param dto 請求參數
+	 * @return 後台編輯票券
+	 */
+	@Override
+	public boolean updateItem(final TikcetDto dto) {
+
+		// 判斷票券類型
+		final TicketType type = ticketTypeRepository.findByName(dto.getTicketType());
+
+		if (type == null) {
+			return false;
+		}
+		// 檢查內容
+		if (!isValidData(dto)) {
+			return false;
+		}
+
+		final Ticket ticket = repository.findById(dto.getTicketId()).orElse(null);
+
+		if (ticket == null) {
+			return false;
+		}
+
+		ticket.setName(dto.getName());
+		ticket.setTicketType(type);
+		ticket.setPrice(dto.getPrice());
+		ticket.setExpiryDate(dto.getExpiryDate());
+		ticket.setDescription(dto.getDescription());
+		ticket.setContent(dto.getContent());
+		ticket.setNote(dto.getNote());
+		ticket.setSupplierName(dto.getSupplierName());
+		ticket.setCity(dto.getCity());
+
+		ticket.setRatingSum(dto.getRating() * dto.getRatingPerson());
+		ticket.setRatingCount(dto.getRatingPerson());
+
+		// 經緯度
+		if (ticket.getAddress() != dto.getAddress()) {
+			final LatLng latLng = getLatLngFromAddress(dto.getAddress());
+			if (latLng == null) {
+				ticket.setLatitude(24.9576355);
+				ticket.setLongitude(121.2250227);
+			} else {
+				ticket.setLatitude(latLng.lat);
+				ticket.setLongitude(latLng.lng);
+			}
+			ticket.setAddress(dto.getAddress());
+		}
+
+		// 更新票券
+		repository.save(ticket);
+		return true;
+	}
+
 	// ----------------------------------------------------------------------------------
 
-	// 票券用的隨機序號
+	/**
+	 * 票券用的隨機序號
+	 *
+	 * @param ticket 票券物件
+	 * @param createCount 新增序號數量
+	 * @return
+	 */
 	private List<TicketSn> createSerialNumber(final Ticket ticket, final int createCount) {
 		final List<TicketSn> result = new ArrayList<>();
 		for (int i = 0; i < createCount; i++) {
@@ -307,7 +330,12 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return snRepository.saveAll(result);
 	}
 
-	// 使用Google Api取得指定地址的經緯度
+	/**
+	 * 使用Google Api取得指定地址的經緯度
+	 *
+	 * @param address 地址
+	 * @return
+	 */
 	private LatLng getLatLngFromAddress(final String address) {
 		try {
 			final GeocodingResult[] results = GeocodingApi.geocode(geoApiContext, address).await();
@@ -321,7 +349,12 @@ public class BkTicketServiceImpl implements BkTicketService {
 		return null;
 	}
 
-	// 檢查規格
+	/**
+	 * 檢查規格
+	 *
+	 * @param dto 請求參數
+	 * @return
+	 */
 	private boolean isValidData(final TikcetDto dto) {
 		// 價格
 		if (dto.getPrice() <= 0) {

@@ -1,10 +1,7 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.model.TicketComment.STATUS_SHOW;
-import static com.tw.ticket.model.TicketOrderDetail.REFUND_NONE;
-import static com.tw.ticket.model.TicketOrderDetail.REFUND_REVIEW;
-
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
-import com.tw.ticket.controller.OrderDetailController.DetailRequest;
-import com.tw.ticket.controller.OrderDetailController.DetailResponse;
+import com.tw.ticket.controller.OrderDetailController.DetailDto;
+import com.tw.ticket.controller.OrderDetailController.DetailReqDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketComment;
 import com.tw.ticket.model.TicketOrder;
@@ -32,98 +29,110 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	private MemberRepository memberRepository;
 
 	@Autowired
-	private TicketOrderRepository ticketOrderRepository;
+	private TicketOrderRepository orderRepository;
 
 	@Autowired
-	private TicketOrderDetailRepository ticketOrderDetailRepository;
+	private TicketOrderDetailRepository orderDetailRepository;
 
 	@Autowired
-	private TicketCommentRepository ticketCommentRepository;
+	private TicketCommentRepository commentRepository;
 
-	// 取得訂單明細清單
+	/**
+	 * 取得訂單明細清單
+	 *
+	 * @param memberId 會員編號
+	 * @param orderId 訂單編號
+	 * @return
+	 */
 	@Override
-	public List<DetailResponse> getItems(final int memberId, final int orderId) {
-		final List<DetailResponse> result = new ArrayList<>();
+	public List<DetailDto> getItems(final int memberId, final int orderId) {
+		final List<DetailDto> result = new ArrayList<>();
 
-		final TicketOrder order = ticketOrderRepository.findById(orderId).orElse(null);
+		final TicketOrder order = orderRepository.findById(orderId).orElse(null);
 
 		// 查無資料
 		if (order == null) {
 			return result;
 		}
 		for (final TicketOrderDetail detail : order.getTicketOrderDetails()) {
-			final DetailResponse response = new DetailResponse();
+			final DetailDto detailDto = new DetailDto();
 
 			final TicketSn ticketSn = detail.getKey().getTicketSn();
 			final Ticket ticket = ticketSn.getTicket();
 
-			response.setTicketId(ticket.getTicketId());
-			response.setName(ticket.getName());
-			response.setExpiryDate(ticket.getExpiryDate());
+			detailDto.setTicketId(ticket.getTicketId());
+			detailDto.setName(ticket.getName());
+			detailDto.setExpiryDate(ticket.getExpiryDate());
 
-			response.setTicketSnId(ticketSn.getTicketSnId());
-			response.setSerialNumber(ticketSn.getSerialNumber());
+			detailDto.setTicketSnId(ticketSn.getTicketSnId());
+			detailDto.setSerialNumber(ticketSn.getSerialNumber());
 
-			response.setPrice(detail.getUnitPrice());
-			response.setRefundStatus(detail.getRefundStatus());
+			detailDto.setPrice(detail.getUnitPrice());
+			detailDto.setRefundStatus(detail.getRefundStatus());
 
-			result.add(response);
+			result.add(detailDto);
 		}
 		return result;
 	}
 
-	// 退貨申請
+	/**
+	 * 退貨申請
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
 	@Override
-	public boolean refundItem(final DetailRequest request) {
-		final Member member = memberRepository.findById(request.getMemberId()).orElse(null);
+	public boolean refundItem(final DetailReqDto reqDto) {
+		final Member member = memberRepository.findById(reqDto.getMemberId()).orElse(null);
 		if (member == null) {
 			return false;
 		}
 
-		final TicketOrderDetail detail = ticketOrderDetailRepository.findByKeyId(//
-				request.getOrderId(),		//
-				request.getTicketSnId()		//
-		);
+		final TicketOrderDetail detail = //
+				orderDetailRepository.findByKeyId(reqDto.getOrderId(), reqDto.getTicketSnId());
 
-		if (detail == null || detail.getRefundStatus() != REFUND_NONE) {
+		if (detail == null // 正常的票券才能退
+				|| detail.getRefundStatus() != TicketOrderDetail.REFUND_NONE) {
 			return false;
 		}
+		detail.setRefundStatus(TicketOrderDetail.REFUND_REVIEW);
+		detail.setRefundReason(reqDto.getRefundReason());
 
-		detail.setRefundStatus(REFUND_REVIEW);
-		detail.setRefundReason(request.getRefundReason());
-
-		ticketOrderDetailRepository.save(detail);
+		orderDetailRepository.save(detail);
 		return true;
 	}
 
-	// 評價
+	/**
+	 * 評價
+	 *
+	 * @param reqDto 請求參數
+	 * @return
+	 */
 	@Override
-	public boolean ratingItem(final DetailRequest request) {
-		final Member member = memberRepository.findById(request.getMemberId()).orElse(null);
+	public boolean ratingItem(final DetailReqDto reqDto) {
+		final Member member = memberRepository.findById(reqDto.getMemberId()).orElse(null);
 		if (member == null) {
 			return false;
 		}
 
-		final TicketOrderDetail detail = ticketOrderDetailRepository.findByKeyId(//
-				request.getOrderId(),		//
-				request.getTicketSnId()		//
-		);
+		final TicketOrderDetail detail = //
+				orderDetailRepository.findByKeyId(reqDto.getOrderId(), reqDto.getTicketSnId());
 
 		if (detail == null) {
 			return false;
 		}
-		// 藍色蜘蛛網...
+		// 藏的有點深的票券編號
 		final int ticketId = detail.getKey().getTicketSn().getTicket().getTicketId();
 
 		final TicketComment comment = new TicketComment();
 		comment.setTicketId(ticketId);
 		comment.setMember(member);
-		comment.setComment(request.getComment());
-		comment.setStatus(STATUS_SHOW);
-		comment.setPostTime(new Timestamp(System.currentTimeMillis()));
-		comment.setRating(request.getRating());
+		comment.setComment(reqDto.getComment());
+		comment.setStatus(TicketComment.STATUS_SHOW);
+		comment.setPostTime(Timestamp.from(Instant.now()));
+		comment.setRating(reqDto.getRating());
 
-		ticketCommentRepository.save(comment);
+		commentRepository.save(comment);
 		return true;
 	}
 }

@@ -1,9 +1,10 @@
 package com.tw.ticket.service.impl;
 
-import static com.tw.ticket.service.impl.ImageServiceImpl.IMG_URL;
+import static com.tw.ticket.service.ImageService.IMG_URL;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class BkImageServiceImpl implements BkImageService {
 				final TicketImage image = new TicketImage();
 				image.setTicketId(ticketId);
 				image.setImage(array);
-				image.setUploadTime(new Timestamp(System.currentTimeMillis()));
+				image.setUploadTime(Timestamp.from(Instant.now()));
 				ticketImages.add(image);
 			} catch (final IOException e) {
 				log.error(e.getLocalizedMessage(), e);
@@ -67,7 +68,7 @@ public class BkImageServiceImpl implements BkImageService {
 			final TicketImage image = new TicketImage();
 			image.setTicketId(ticketId);
 			image.setImage(array);
-			image.setUploadTime(new Timestamp(System.currentTimeMillis()));
+			image.setUploadTime(Timestamp.from(Instant.now()));
 
 			ticketImgRedis.save(image);
 

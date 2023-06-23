@@ -4,6 +4,7 @@ package com.tw.form.controller;
 
 import com.tw.form.dto.GroupData;
 import com.tw.form.service.EmailSenderService;
+import com.tw.form.util.HTMLFormat;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,9 @@ public class GroupController {
 
     @PostMapping("/groups")
     public Boolean getGroup(@RequestBody GroupData groupData){
-        System.out.println(groupData);
-        emailSenderService.sendEmail("triplight0411@gmail.com","團體客製表單",groupData.toString());
+        String htmlFormat = HTMLFormat.getHTMLFormat("TripLight團體客製表單", "blue", groupData.toString());
+
+        emailSenderService.sendHTMLEmail("triplight0411@gmail.com","團體客製表單",htmlFormat);
         return true;
     }
 }
