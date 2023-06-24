@@ -82,68 +82,6 @@
   <!--會員登入-->
   <link href="css/login.css" rel="stylesheet" />
 
-  <style>
-    body {
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .forumtopic {
-      border: 1px solid #333;
-      border-collapse: separate;
-      width: 100%;
-    }
-
-    table.forumtopic td.top,
-    table.forumtopic td.pos {
-      text-align: right;
-    }
-
-    .forumtopic tbody tr:nth-child(odd) {
-      background-color: #f2f2f2;
-    }
-
-    .forumtopic tbody tr:nth-child(even) {
-      background-color: #ffffff;
-    }
-
-    .more-link {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    /* 下拉選單容器 */
-    .dropdown-menu {
-      position: absolute;
-      display: flow-root;
-    }
-
-    /* 下拉選單內容 */
-    .dropdown-menu .dropdown-item {
-      display: none;
-      /* 預設隱藏選項 */
-      padding: 8px 16px;
-      background-color: #f9f9f9;
-      color: #333;
-      text-decoration: none;
-    }
-
-    /* 滑鼠懸停在下拉選單容器上方時，顯示下拉選單內容 */
-    .dropdown-menu:hover .dropdown-item {
-      display: block;
-    }
-
-    /* 調整下拉選單內容位置 */
-    .dropdown-menu .dropdown-item:first-child {
-      margin-top: 8px;
-    }
-
-    /* 調整下拉選單內容之間的間距 */
-    .dropdown-menu .dropdown-item+.dropdown-item {
-      margin-top: 4px;
-    }
-  </style>
-
   <!-- header -->
   <header>
     <div class="container" style="padding-right: 0px">
@@ -302,24 +240,24 @@
     <div class="d-flex align-items-between">
       <div class="input-group mb-2" style="margin-top: 30px">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false" class="btn btn-outline-secondary" style="width: 200px;">標題</button>
+          aria-expanded="false" style="width: 200px;">標題</button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">全部</a></li>
-          <li><a class="dropdown-item" href="#">食記</a></li>
           <li><a class="dropdown-item" href="#">遊記</a></li>
+          <li><a class="dropdown-item" href="#">食記</a></li>
+          <li><a class="dropdown-item" href="#">住宿</a></li>
           <li><a class="dropdown-item" href="#">評論</a></li>
           <li><a class="dropdown-item" href="#">問題</a></li>
         </ul>
-        <input type="text" class="form-control" placeholder="關鍵字查詢" aria-label="Text input with dropdown button"
-          class="btn btn-outline-secondary" style="width: 400px;">
+        <input type="text" class="text_search" placeholder="關鍵字查詢" aria-label="Text input with dropdown button"
+          style="width: 400px;">
         <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 150px;"
           onclick="redirectToMyFavorite()">我的收藏</button>
 
         <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 150px;"
           onclick="redirectToMyList()">我的文章</button>
 
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-          class="btn btn-outline-secondary" style="width: 200px;">發表文章</button>
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+          onclick="redirectToCreateArticle()">發表文章</button>
       </div>
     </div>
   </div>
@@ -330,96 +268,24 @@
       <div class="my-3">
         <div class="h2">最新文章</div>
         <!-- 一行4個卡片 -->
-        <div class="row row-cols-4 g-2">
+        <div class="row row-cols-4 g-2" id="articleContainer">
           <!-- class 內有my-nav-link 則點選元素 會跳轉到href指定的位置-->
-          <div class="col" id="articleContainer">
-            <div class="card my-nav-link">
-              <a href="article_detail.html">
-                <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
-              </a>
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                <div class="d-flex justify-content-between">
-                  <p>10 comments</p>
-                  <p>by Jay Chen</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col" id="articleContainer">
-            <div class="card my-nav-link">
-              <a href="article_list.html">
-                <img src="https://picsum.photos/800/600/?random=37" class="card-img-top" alt="...">
-              </a>
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                <div class="d-flex justify-content-between">
-                  <p>15 comments</p>
-                  <p>by Lesllie C</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col" id="articleContainer">
-            <div class="card my-nav-link" href="#article_detail">
-              <img src="https://picsum.photos/800/600/?random=38" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                <div class="d-flex justify-content-between">
-                  <p>32 comments</p>
-                  <p>by Xiang Lo</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col" id="articleContainer">
-            <div class="card my-nav-link" href="#article_detail">
-              <img src="https://picsum.photos/800/600/?random=39" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text.</p>
-                <p class="card-text"><small class="text-muted">Last updated 6 mins ago</small></p>
-                <div class="d-flex justify-content-between">
-                  <p>50 comments</p>
-                  <p>by Rocky Z</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col" id="articleContainer">
-            <div class="card my-nav-link" href="#article_detail">
-              <img src="https://picsum.photos/800/600/?random=40" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text.</p>
-                <p class="card-text"><small class="text-muted">Last updated 6 mins ago</small></p>
-                <div class="d-flex justify-content-between">
-                  <p>52 comments</p>
-                  <p>by Srwh W</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col" id="articleContainer">
-            <div class="card my-nav-link" href="#article_detail">
-              <img src="https://picsum.photos/800/600/?random=41" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text.</p>
-                <p class="card-text"><small class="text-muted">Last updated 6 mins ago</small></p>
-                <div class="d-flex justify-content-between">
-                  <p>54 comments</p>
-                  <p>by Victoria C</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- <div class="col">
+                    <div class="card my-nav-link">
+                        <a href="article_detail.html">
+                            <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a wider card with supporting text.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <div class="d-flex justify-content-between">
+                                <p>10 comments</p>
+                                <p>by Jay Chen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
         </div>
       </div>
       <div class="container align-items-center justify-content-between d-flex">
@@ -434,363 +300,9 @@
   </section>
   <!-- tour packages -->
 
-  <!-- destinations -->
-  <section class="destinations py-5" id="destinations">
-    <div class="container py-xl-5 py-lg-3">
-      <h4 class="heading text-capitalize text-center">
-        點選以下任一主題進入論壇：
-      </h4>
-      <table class="forumtopic" cellpadding="4" cellspacing="0">
-        <tbody>
-          <tr>
-            <td class="tHead">
-              <div>
-                <font style="vertical-align: inherit;">論壇</font>
-              </div>
-            </td>
-            <td class="tHead top">
-              <div>
-                <font style="vertical-align: inherit;">＃ 主題</font>
-              </div>
-            </td>
-            <td class="tHead pos">
-              <div>
-                <font style="vertical-align: inherit;"># 帖子</font>
-              </div>
-            </td>
-          </tr>
-          <tr class="odd">
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="article_list.html">
-                <font style="vertical-align: inherit;">台灣</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">110,936</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">1,349,797</font>
-            </td>
-          </tr>
-          <tr>
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i12337-Antarctic_Adventures.html">
-                <font style="vertical-align: inherit;">離島地區</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">8,202</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">70,729</font>
-            </td>
-          </tr>
-          <tr class="odd">
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i12290-Bargain_Travel.html">
-                <font style="vertical-align: inherit;">日本</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">182,091</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">2,124,564</font>
-            </td>
-          </tr>
-          <tr>
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i12289-Beach_Vacations.html">
-                <font style="vertical-align: inherit;">韓國</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">9,128</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">92,820</font>
-            </td>
-          </tr>
-          <tr class="odd">
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i12407-Business_Travel.html">
-                <font style="vertical-align: inherit;">大陸</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">8,704</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">86,560</font>
-            </td>
-          </tr>
-          <tr>
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i10703-Cruises.html">
-                <font style="vertical-align: inherit;">香港澳門</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">6,336</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">72,893</font>
-            </td>
-          </tr>
-          <tr class="odd">
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i12292-Destination_Weddings.html">
-                <font style="vertical-align: inherit;">印尼</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">4,382</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">18,916</font>
-            </td>
-          </tr>
-          <tr>
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i12291-Ecotourism.html">
-                <font style="vertical-align: inherit;">菲律賓</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">3,196</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">24,953</font>
-            </td>
-          </tr>
-          <tr class="odd">
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i9658-Family_Travel.html">
-                <font style="vertical-align: inherit;">泰國</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">13,717</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">64,740</font>
-            </td>
-          </tr>
-          <tr>
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i32200-Food_and_Travel.html">
-                <font style="vertical-align: inherit;">越南</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">11,659</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">20,412</font>
-            </td>
-          </tr>
-          <tr class="odd">
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i50384-Games.html">
-                <font style="vertical-align: inherit;">新加坡</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">5,169</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">39,266</font>
-            </td>
-          </tr>
-          <tr>
-            <td class="fname" onclick="setPID(34597);">
-              <img class="foldergif" src="https://static.tacdn.com/img/forums/folder.gif" alt="">
-              <a href="/ShowForum-g1-i15987-Golf_Vacations.html">
-                <font style="vertical-align: inherit;">馬來西亞</font>
-              </a>
-            </td>
-            <td class="top">
-              <font style="vertical-align: inherit;">6,357</font>
-            </td>
-            <td class="pos">
-              <font style="vertical-align: inherit;">41,571</font>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-  <!-- destinations -->
+  <!-- destinations Start-->
 
-  <!-- 發表文章按鈕按下去的Modal畫面 -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">發表文章</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- <button class="form-title">文章標題</button> -->
-          <input type="text" id="title-input" placeholder="請在此輸入標題" aria-label="Text input with dropdown button"
-            style="width: 100%;">
-          <div class="form-group mb-3">
-            <label class="form-label"></label>
-            <input type="file" class="form-control" id="inputArticleImg">
-            <div id="preview"></div>
-          </div>
-
-          <!-- 編輯器區域 -->
-          <div id="editor" placeholder="請在此輸入內容" style="display: none;">
-            <p>請在此輸入內容</p>
-          </div>
-          <div class="note-editor note-frame card">
-            <div class="note-dropzone">
-              <div class="note-dropzone-message"></div>
-            </div>
-            <div class="note-toolbar card-header" role="toolbar">
-              <div class="note-btn-group btn-group note-style"><button type="button"
-                  class="note-btn btn btn-light btn-sm note-btn-bold" tabindex="-1" aria-label="粗體 (CTRL+B)"
-                  data-bs-original-title="粗體 (CTRL+B)"><i class="note-icon-bold"></i></button><button type="button"
-                  class="note-btn btn btn-light btn-sm note-btn-italic" tabindex="-1" aria-label="斜體 (CTRL+I)"
-                  data-bs-original-title="斜體 (CTRL+I)"><i class="note-icon-italic"></i></button><button type="button"
-                  class="note-btn btn btn-light btn-sm note-btn-underline" tabindex="-1" aria-label="底線 (CTRL+U)"
-                  data-bs-original-title="底線 (CTRL+U)"><i class="note-icon-underline"></i></button><button type="button"
-                  class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="清除格式 (CTRL+\)"
-                  data-bs-original-title="清除格式 (CTRL+\)"><i class="note-icon-eraser"></i></button>
-              </div>
-              <div class="note-btn-group btn-group note-font"><button type="button"
-                  class="note-btn btn btn-light btn-sm note-btn-strikethrough" tabindex="-1"
-                  aria-label="刪除線 (CTRL+SHIFT+S)" data-bs-original-title="刪除線 (CTRL+SHIFT+S)"><i
-                    class="note-icon-strikethrough"></i></button><button type="button"
-                  class="note-btn btn btn-light btn-sm note-btn-superscript" tabindex="-1" aria-label="上標"
-                  data-bs-original-title="上標"><i class="note-icon-superscript"></i></button><button type="button"
-                  class="note-btn btn btn-light btn-sm note-btn-subscript" tabindex="-1" aria-label="下標"
-                  data-bs-original-title="下標"><i class="note-icon-subscript"></i></button></div>
-              <div class="note-btn-group btn-group note-para"><button type="button"
-                  class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="項目清單 (CTRL+SHIFT+NUM7)"
-                  data-bs-original-title="項目清單 (CTRL+SHIFT+NUM7)"><i
-                    class="note-icon-unorderedlist"></i></button><button type="button"
-                  class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="編號清單 (CTRL+SHIFT+NUM8)"
-                  data-bs-original-title="編號清單 (CTRL+SHIFT+NUM8)"><i class="note-icon-orderedlist"></i></button>
-              </div>
-            </div>
-            <div class="note-editing-area">
-              <div class="note-placeholder" style="display: none;">請輸入內容</div>
-              <div class="note-handle">
-                <div class="note-control-selection">
-                  <div class="note-control-selection-bg"></div>
-                  <div class="note-control-holder note-control-nw"></div>
-                  <div class="note-control-holder note-control-ne"></div>
-                  <div class="note-control-holder note-control-sw"></div>
-                  <div class="note-control-sizing note-control-se"></div>
-                  <div class="note-control-selection-info"></div>
-                </div>
-              </div><textarea class="note-codable" aria-multiline="true"></textarea>
-              <div class="note-editable card-block" contenteditable="true" role="textbox" aria-multiline="true"
-                spellcheck="true" autocorrect="true" placeholder="請在此輸入內容" style="height: 300px;">
-                <!-- <p>請在此輸入內容</p> -->
-              </div>
-            </div><output class="note-status-output" role="status" aria-live="polite"></output>
-            <div class="note-statusbar" role="status">
-              <div class="note-resizebar" aria-label="Resize">
-                <div class="note-icon-bar"></div>
-                <div class="note-icon-bar"></div>
-                <div class="note-icon-bar"></div>
-              </div>
-            </div>
-            <div class="modal note-modal link-dialog" aria-hidden="false" tabindex="-1" role="dialog" aria-label="插入連結">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">插入連結</h4><button type="button" class="close" data-dismiss="modal"
-                      aria-label="Close" aria-hidden="true">×</button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group note-form-group"><label for="note-dialog-link-txt-16848468744231"
-                        class="note-form-label">顯示文字</label><input id="note-dialog-link-txt-16848468744231"
-                        class="note-link-text form-control note-form-control note-input" type="text"></div>
-                    <div class="form-group note-form-group"><label for="note-dialog-link-url-16848468744231"
-                        class="note-form-label">連結網址</label><input id="note-dialog-link-url-16848468744231"
-                        class="note-link-url form-control note-form-control note-input" type="text" value="http://">
-                    </div>
-                    <div class="form-check sn-checkbox-open-in-new-window"><label class="form-check-label"><input
-                          type="checkbox" class="form-check-input" checked="" aria-label="在新視窗開啟" aria-checked="true">
-                        在新視窗開啟</label></div>
-                    <div class="form-check sn-checkbox-use-protocol"><label class="form-check-label"><input
-                          type="checkbox" class="form-check-input" checked="" aria-label="Use default protocol"
-                          aria-checked="true"> Use
-                        default protocol</label></div>
-                  </div>
-                  <div class="modal-footer"><input type="button" href="#"
-                      class="btn btn-primary note-btn note-btn-primary note-link-btn" value="插入連結" disabled="">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="note-popover popover in note-link-popover bottom">
-              <div class="arrow"></div>
-              <div class="popover-content note-children-container"><span><a target="_blank"></a>&nbsp;</span>
-                <div class="note-btn-group btn-group note-link"><button type="button"
-                    class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="編輯連結"
-                    data-bs-original-title="編輯連結"><i class="note-icon-link"></i></button><button type="button"
-                    class="note-btn btn btn-light btn-sm" tabindex="-1" aria-label="取消連結"
-                    data-bs-original-title="取消連結"><i class="note-icon-chain-broken"></i></button></div>
-              </div>
-            </div>
-            <div class="modal note-modal" aria-hidden="false" tabindex="-1" role="dialog" aria-label="插入圖片">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">插入圖片</h4><button type="button" class="close" data-dismiss="modal"
-                      aria-label="Close" aria-hidden="true">×</button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group note-form-group note-group-select-from-files"><label
-                        for="note-dialog-image-file-16848468744231" class="note-form-label">從本機上傳</label><input
-                        id="note-dialog-image-file-16848468744231"
-                        class="note-image-input form-control-file note-form-control note-input" type="file" name="files"
-                        accept="image/*" multiple="multiple"></div>
-                    <div class="form-group note-group-image-url"><label for="note-dialog-image-url-16848468744231"
-                        class="note-form-label">圖片網址</label><input id="note-dialog-image-url-16848468744231"
-                        class="note-image-url form-control note-form-control note-input" type="text"></div>
-                  </div>
-                  <div class="modal-footer"><input type="button" href="#"
-                      class="btn btn-primary note-btn note-btn-primary note-image-btn" value="插入圖片" disabled="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-2 mt-3">
-            <select class="form-select" id="inputZone">
-              <option selected="">請選擇分類</option>
-              <option value="1">食記</option>
-              <option value="2">遊記</option>
-              <option value="3">評論</option>
-              <option value="3">問題</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">送出文章</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- destinations End-->
 
   <!--footer -->
   <footer>
@@ -892,65 +404,41 @@
 
   <!-- login顯示 -->
   <script src="./js/Login.js"></script>
-  <!-- login顯示 -->
 
-  <!-- 使用BootStrap-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- 使用JQuery -->
+  <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-  <!-- 使用Summernote -->
-  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/summernote/dist/lang/summernote-zh-TW.min.js"></script>
-
-  <!-- 使用Bootstrap-table -->
-  <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
-
-  <!-- 使用gijgo -->
-  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
-  <script src="https://unpkg.com/gijgo@1.9.14/js/messages/messages.zh-tw.js" type="text/javascript"></script>
-
-  <!-- 引入SortableJS的JS文件 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-
-  <!-- 使用daterangepicker 選取日期區間 -->
-  <script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-  <!-- <script type="text/javascript">
-  ta.store('tablet_google_search_app_open_same_tab', true);
-</script> -->
-
-  <!-- QRCode.js 生成二維碼 -->
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
   <script>
 
-    window.addEventListener("load", function () {
-      var previewEl = document.getElementById("preview");
-      var fileInputEl = document.getElementById("inputArticleImage");
+    // window.addEventListener("load", function () {
+    //   var previewEl = document.getElementById("preview");
+    //   var fileInputEl = document.getElementById("inputArticleImage");
 
-      var previewImage = function (file) {
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.addEventListener("load", function () {
-          var img = document.createElement("img");
-          img.src = reader.result;
-          img.className = "inputArticleImage";
-          img.style.width = "25%";
-          previewEl.innerHTML = "";
-          previewEl.appendChild(img);
-        });
-      };
+    //   var previewImage = function (file) {
+    //     var reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.addEventListener("load", function () {
+    //       var img = document.createElement("img");
+    //       img.src = reader.result;
+    //       img.className = "inputArticleImage";
+    //       img.style.width = "25%";
+    //       previewEl.innerHTML = "";
+    //       previewEl.appendChild(img);
+    //     });
+    //   };
 
-      fileInputEl.addEventListener("change", function () {
-        if (this.files.length > 0) {
-          previewImage(this.files[0]);
-        } else {
-          previewEl.innerHTML = '<label class="form-label">照片預覽</label>';
-        }
-      });
-    });
+    //   fileInputEl.addEventListener("change", function () {
+    //     if (this.files.length > 0) {
+    //       previewImage(this.files[0]);
+    //     } else {
+    //       previewEl.innerHTML = '<label class="form-label">照片預覽</label>';
+    //     }
+    //   });
+    // });
+
+    function redirectToCreateArticle() {
+      window.location.href = "article_caeate.html";
+    };
 
     function redirectToMyFavorite() {
       window.location.href = "article_myfavorite.html";
@@ -960,81 +448,77 @@
       window.location.href = "article_mylist.html";
     };
 
-    //假資料
-    let resultfake = [
-      {
-        articleId: 1,
-        memberId: `會員名稱#1`,
-        articleTypeId: 1,
-        articleTitle: 再訪麵屋嵐山,
-        articlePostContent:
-          `雖然每次都要排上好一段的時間，但吃到的時候真的很感動，湯頭香甜濃郁，細直麵條Q彈滑順，吸附滿滿拉麵湯頭，一口吃下去超涮嘴，大大滿足啊!重點是每種湯頭都好喝，不管是特製博多豚骨拉麵，或是辣味味噌、味噌豚骨、蔬菜豚骨，每一款拉麵都有讓人意外的驚喜感!`,
-        articlePostTime: '2023-05-18',
-        articleStatus: 1,
-        articleViews: 256,
-        articleImage: `https://picsum.photos/800/600/?random=1`,
-        articleLikesCount: 128,
-      }
-    ];
 
-    function fetch_data() {
-      fetch(`${getDomainName()}/articleContainer`)
+    $(document).ready(function () {
+
+      fetch('http://localhost:8080/article/articles')
         .then(response => response.json())
-        .then(data => resultfake = data)
-        .catch(error => console.log(error))
-        .finally(() => {
-          new_article();
-        });
-    };
+        .then(data => {
+          console.log(data);
+          new_article(data)
+        })
 
-    function new_article() {
-      $('#articleContainer').html('');
+      function new_article(data) {
+        $('#articleContainer').html('');
 
-      for (let article of resultfake) {
-        $('#articleContainer').append(`
-          <div class="col mb-3">
-            <div class="card my-nav-link" position-relative">
-              <a href="article_detail.html?id=${article.articleId}">
-                <img src="${article.articleImage}" class="card-img-top" />
-                </a>
-                </div>
+        for (let article of data) {
+          let articleType;
+          switch (article.articleTypeId) {
+            case 1:
+              articleType = '遊記';
+              break;
+            case 2:
+              articleType = '食記';
+              break;
+            case 3:
+              articleType = '住宿';
+              break;
+            case 4:
+              articleType = '評論';
+              break;
+            case 5:
+              articleType = '問題';
+              break;
+            default:
+              articleType = '未知類型';
+              break;
+          }
+
+          let inputDate = article.articlePostTime;
+          let dateTime = new Date(inputDate);
+          let year = dateTime.getFullYear();
+          let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+          let day = String(dateTime.getDate()).padStart(2, "0");
+          let formattedDate = `${year}-${month}-${day}`;
+
+          $('#articleContainer').append(`
+            <div class="col mb-3">
+                    <div class="card my-nav-link" position-relative">
+                        <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top" />
+                    </div>
                 <div class="card-body">
                   <h5 class="card-title">
-                    <span>${article.articleTypeId}</span>
+                    <span>【${articleType}】</span>
                     <span>${article.articleTitle}</span>
                     </h5>
                     <p class="card-text">${article.articlePostContent}</p>
-                    <p class="card-text">
-                      <small class="text-muted">${article.articlePostTime}</small>
-                    </p>
-              <div class="d-flex justify-content-between">
-                  <p>${article.articleViews}</p>
-                  <p>"by" + ${article.memberId}</p>
-              </div>
+                </div>    
+                <div class="d-flex justify-content-between" style="padding: 0 10px;">
+                  <p>${article.memberName}</p>
+                        <p class="card-text">
+                            <small class="text-muted">${formattedDate}</small>
+                        </p>
+                </div>
             </div>
-          </div>
-        `);
+        </div>
+                `);
+        }
       }
-    }
+    });
+
 
   </script>
+
 </body>
 
 </html>
-
-<!-- <div class="col" id="articleContainer">
-  <div class="card my-nav-link">
-    <a href="article_detail.html">
-      <img src="https://picsum.photos/800/600/?random=36" class="card-img-top" alt="...">
-    </a>
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      <div class="d-flex justify-content-between">
-        <p>10 comments</p>
-        <p>by Jay Chen</p>
-      </div>
-    </div>
-  </div>
-</div> -->
