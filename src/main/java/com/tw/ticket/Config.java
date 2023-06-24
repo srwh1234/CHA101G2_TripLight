@@ -9,11 +9,13 @@ import com.google.maps.GeoApiContext;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-public class Config {
+public class Config implements WebMvcConfigurer {
 
 	@Getter
 	@Value("${ecpay-return-url}")
@@ -32,6 +34,13 @@ public class Config {
 	public GeoApiContext geoApiContext() {
 		return new GeoApiContext.Builder().apiKey(getGoogleApiKey()).build();
 	}
+
+	// 新增：告訴 Spring MVC 在處理非同步請求時使用你配置的 TaskExecutor，以便提供更好的性能和容錯能力。
+	@Override
+	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+		configurer.setTaskExecutor(threadPoolTaskExecutor());
+	}
+
 
 	// 單純不想在application.properties配置
 	@Bean
