@@ -253,7 +253,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="my-th-width-sm">票券編號</th>
+                                                <th class="my-th-width-sm">#</th>
                                                 <th class="my-th-width-sm">票券名稱</th>
                                                 <th class="my-th-width-sm">原價</th>
                                                 <th class="my-th-width-sm">促銷價</th>
@@ -306,10 +306,7 @@
                                         </div>
                                         <div class="m-3">
                                             <select class="form-select" id="ticketSelect">
-                                                <option value="1">qq</option>
-                                                <option value="1">qqa</option>
-                                                <option value="1">qqs</option>
-                                                <option value="1">qqd</option>
+                                                <option value="1">qq</option>                                                
                                             </select>
                                         </div>
                                     </div>
@@ -532,14 +529,17 @@
 
                             $('#detailContainer').removeClass('d-none');
                             $('#detailContainer table tbody').html('');
+
+                            let index=0;
                             for (let detail of promotion.promotionDetails) {
                                 const ticket = detail.ticket;
-                                const src = ticket._links.ticketType.href;
-                                const ticketId = src.substring(src.lastIndexOf('/') + 1);
+                                // const src = ticket._links.ticketType.href;
+                                // const ticketTypeId = src.substring(src.lastIndexOf('/') + 1);
+                              
 
                                 $('#detailContainer table tbody').append(`
                                     <tr>
-                                        <td>${ticketId}</td>
+                                        <td>${++index}</td>
                                         <td>${ticket.name}</td>
                                         <td>${ticket.price}</td>
                                         <td>${detail.promotionPrice}</td>
