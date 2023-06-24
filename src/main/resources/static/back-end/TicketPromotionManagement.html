@@ -277,7 +277,7 @@
 
 
 
-                <!-- 新增優惠券的燈箱 -->
+                <!-- 新增促銷的燈箱 -->
                 <div class="modal fade" id="addPromotionModal" data-bs-backdrop="static" aria-hidden="true">
                     <div class="modal-dialog  modal-lg  modal-dialog-centered">
                         <div class="modal-content">
@@ -287,6 +287,9 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row">
+                                    <div class="col-12">
+                                        <button id="testBtn">一鍵新增資料(測試用)</button>
+                                    </div>
                                     <div class="col-6">
                                         <div class="form-floating m-3">
                                             <input type="date" class="form-control" id="addPromotionStartDate" placeholder=".">
@@ -306,7 +309,7 @@
                                         </div>
                                         <div class="m-3">
                                             <select class="form-select" id="ticketSelect">
-                                                <option value="1">qq</option>                                                
+                                                <option value="1">qq</option>
                                             </select>
                                         </div>
                                     </div>
@@ -376,6 +379,26 @@
                     $(function () {
                         fetch_data();
 
+
+
+                        $('#testBtn').on('click', function () {
+
+                            $('#addPromotionName').val('測試促銷');
+                            $('#addPromotionStartDate').val('2023-03-26');
+                            $('#addPromotionExpiryDate').val('2024-12-31');
+
+                            //判斷上色
+                            $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+                            $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+                        });
+
+                        // 浮動標籤的變色
+                        $('.form-floating .form-control').on('input', function () {
+                            renderTextColor(this);
+                        });
+                        $('.form-floating .form-select').on('change', function () {
+                            renderTextColor(this);
+                        });
 
                         //確認送出的按鈕
                         $('#addPromotionSubmit').on('click', function () {
@@ -530,12 +553,12 @@
                             $('#detailContainer').removeClass('d-none');
                             $('#detailContainer table tbody').html('');
 
-                            let index=0;
+                            let index = 0;
                             for (let detail of promotion.promotionDetails) {
                                 const ticket = detail.ticket;
                                 // const src = ticket._links.ticketType.href;
                                 // const ticketTypeId = src.substring(src.lastIndexOf('/') + 1);
-                              
+
 
                                 $('#detailContainer table tbody').append(`
                                     <tr>
@@ -599,6 +622,16 @@
                                     </td>
                                  </tr>
                             `);
+                        }
+                    }
+
+                    // 標籤文字上色
+                    function renderTextColor(elem) {
+                        $(elem).siblings('label').removeClass('my-text-lightgray text-primary');
+                        if ($(elem).val()) {
+                            $(elem).siblings('label').addClass('text-primary');
+                        } else {
+                            $(elem).siblings('label').addClass('my-text-lightgray');
                         }
                     }
 

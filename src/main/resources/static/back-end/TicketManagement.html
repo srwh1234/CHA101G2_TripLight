@@ -661,6 +661,8 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-12">
+                                        <button id="testCouponBtn">一鍵新增資料(測試用)</button>
+
                                         <div class="form-floating m-3">
                                             <input type="text" class="form-control" id="addCoupontName" placeholder=".">
                                             <label class="my-text-lightgray" for="addCoupontName">名稱</label>
@@ -836,10 +838,10 @@
             $('#previewModal').on('show.bs.modal', function (e) {
                 const button = $(e.relatedTarget);
                 const ticketId = button.data('bs-whatever');
-                $("#previewModal iframe").attr('src',`${getDomainName()}/front-end/tickets_detail.html?id=${ticketId}`);               
+                $("#previewModal iframe").attr('src', `${getDomainName()}/front-end/tickets_detail.html?id=${ticketId}`);
             });
 
-            //優惠券列表 點選列的事件
+            // 優惠券列表 點選列的事件
             $(document).on('click', '#couponContainer tbody tr', function () {
                 curEditCouponId = $(this).find('td').first().text();
                 fetch_coupon();
@@ -848,22 +850,23 @@
             // 編輯優惠券-確認送出
             $('#editCoupontSubmit').on('click', fetch_edit_coupon);
 
+            // 新增優惠券
             $('#addCoupontSubmit').on('click', fetch_add_coupon);
 
 
-            //測試按鈕
+            // 測試按鈕-新增票券
             $('#testBtn').on('click', function () {
                 $('#ticketType').val('主題樂園');
                 $('#ticketSupplier').val('T8Me');
                 $('#ticketExpiryDate').val('2024-12-21');
-                $('#ticketName').val('測試票券');
+                $('#ticketName').val('錢櫃一日遊門票');
                 $('#ticketPrice').val(Math.trunc(Math.random() * 1000));
                 $('#ticketCount').val(10);
                 $('#ticketRating').val(4);
                 $('#ticketRatingCount').val(10);
-                $('#ticketCity').val('連江縣');
-                $('#ticketAddress').val('連江縣南竿鄉4-1號');
-                $('#descEditor').summernote('code', '1<br>1<br>1<br>1<br>1<br>1<br>');
+                $('#ticketCity').val('桃園市');
+                $('#ticketAddress').val('320桃園市中壢區中央東路88號');
+                $('#descEditor').summernote('code', '1<br>summernote的img標籤支援<br>1<br>1<br>1<br><img src="https://lh3.googleusercontent.com/p/AF1QipPApTnmbIVuHHxeLJuBLqEG44LWURipT7npC84=s1360-w1360-h1020"><br>');
                 $('#contentEditor').summernote('code', '2<br>2<br>2<br>2<br>2<br>2<br>');
                 $('#noteEditor').summernote('code', '3<br>3<br>3<br>3<br>3<br>3<br>');
                 //判斷上色
@@ -871,7 +874,16 @@
                 $('.form-floating .form-select').each((i, v) => renderTextColor(v));
             });
 
-
+            // 測試按鈕-新增優惠券
+            $('#testCouponBtn').on('click', function () {
+                $('#addCoupontName').val('測試優惠券');
+                $('#addCoupontStartDate').val('2023-03-26');
+                $('#addCoupontExpiryDate').val('2024-12-31');
+                $('#addCoupontPrice').val(150);
+                //判斷上色
+                $('.form-floating .form-control').each((i, v) => renderTextColor(v));
+                $('.form-floating .form-select').each((i, v) => renderTextColor(v));
+            });
             //增加票券-清空前一次資料
             $('#addTicketModal').on('show.bs.modal', function (event) {
                 //清空
@@ -997,10 +1009,11 @@
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
+                        // ['insert', ['link', 'picture', 'video']],
                         ['view', ['fullscreen', 'codeview']]
                     ], // 設定編輯器工具列
                     lang: 'zh-TW',
+                    disableDragAndDrop: true,
                 }
             );
             // 輸入文字事件處理
