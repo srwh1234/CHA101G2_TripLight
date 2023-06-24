@@ -60,6 +60,7 @@ public class TicketDetailController {
 			this.ticketId = ticket.getTicketId();
 			this.ticketType = ticket.getTicketType().getName();
 			this.name = ticket.getName();
+			this.status = ticket.getStatus();
 			this.price = ticket.getPrice();
 			this.totalSales = ticket.getTotalSales();
 			this.description = ticket.getDescription();
@@ -76,6 +77,7 @@ public class TicketDetailController {
 		private long ticketId;
 		private String ticketType;
 		private String name;
+		private int status;
 		private int price;
 		private int available;
 		private int totalSales;

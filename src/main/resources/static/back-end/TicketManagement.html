@@ -62,6 +62,11 @@
             min-width: 6rem;
         }
 
+        /* 避免表格被過度壓縮 大按鈕*/
+        .my-th-width-lg {
+            min-width: 13rem;
+        }
+
         /* 分頁選單定位*/
         #ticketContainer {
             min-height: 60vh;
@@ -167,7 +172,7 @@
             </li>
 
 
-          
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
                    aria-expanded="true" aria-controls="collapseCustomerService">
@@ -275,7 +280,7 @@
                                             <th class="my-th-width-sm">縣市</th>
                                             <th class="my-th-width">供應商名稱</th>
                                             <th class="my-th-width-sm">可買數量</th>
-                                            <th class="my-th-width">操作</th>
+                                            <th class="my-th-width-lg">操作</th>
                                             <th class="my-th-width">狀態</th>
                                         </tr>
                                     </thead>
@@ -586,7 +591,7 @@
                                     </div>
                                 </div>
 
-                                <!-- TODO:圖片區 -->
+                                <!-- 圖片區 -->
                                 <div class="row justify-content-center m-3">
                                     <div class="col-12 col-lg-6">
                                         <label class="form-label" for="editTicketImage">新增圖片</label>
@@ -622,6 +627,23 @@
                                 <div class="m-3 d-flex justify-content-end">
                                     <button class="btn btn-primary" id="addTicketCountSubmit">確定</button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 預覽的燈箱 -->
+                <div class="modal fade" id="previewModal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">預覽票券</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="height: 90vh;">
+                                <iframe class="w-100 h-100" src="http://localhost:8080/front-end/tickets_detail.html?id=2">
+                                    你的瀏覽器不支援 iframe
+                                </iframe>
                             </div>
                         </div>
                     </div>
@@ -809,6 +831,14 @@
 
             doPageSearch(0);
 
+
+            // 預覽票券-參數傳遞
+            $('#previewModal').on('show.bs.modal', function (e) {
+                const button = $(e.relatedTarget);
+                const ticketId = button.data('bs-whatever');
+                $("#previewModal iframe").attr('src',`${getDomainName()}/front-end/tickets_detail.html?id=${ticketId}`);               
+            });
+
             //優惠券列表 點選列的事件
             $(document).on('click', '#couponContainer tbody tr', function () {
                 curEditCouponId = $(this).find('td').first().text();
@@ -839,7 +869,7 @@
                 //判斷上色
                 $('.form-floating .form-control').each((i, v) => renderTextColor(v));
                 $('.form-floating .form-select').each((i, v) => renderTextColor(v));
-            });           
+            });
 
 
             //增加票券-清空前一次資料
@@ -868,8 +898,8 @@
             });
 
             //增加票券數量-參數傳遞
-            $('#countTicketModal').on('show.bs.modal', function (event) {
-                const button = $(event.relatedTarget);
+            $('#countTicketModal').on('show.bs.modal', function (e) {
+                const button = $(e.relatedTarget);
                 const ticketId = button.data('bs-whatever');
                 $('#addTicketCountSubmit').data('ticket-id', ticketId);
             });
@@ -1403,6 +1433,8 @@
                         data-bs-target="#editTicketModal" data-bs-whatever="${ticket.ticketId}">編輯</button>
                       <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
                         data-bs-target="#countTicketModal" data-bs-whatever="${ticket.ticketId}">新增數量</button>
+                        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
+                        data-bs-target="#previewModal" data-bs-whatever="${ticket.ticketId}">預覽</button>
                     </td>
                     <td>
                         <div class="form-check d-flex">
@@ -1516,7 +1548,7 @@
         }
 
         //編輯票券-新增圖片
-        function render_img_url(imgUrl) { 
+        function render_img_url(imgUrl) {
             $('#editImgPreview').append(`
                 <div class="col p-3 img-item">
                     <div class="card h-100">
