@@ -20,15 +20,15 @@ if (sessionStorage.getItem("test-login")) {
 }
 // ============================上傳大頭照=====================================
 let camera = document.getElementById('camera');
-camera.addEventListener('click', function() {
+camera.addEventListener('click', function () {
 	const input = document.createElement('input');
 	input.type = 'file';
 
-	input.addEventListener("change", function() {
+	input.addEventListener("change", function () {
 		const file = this.files[0];
 		const reader = new FileReader();
 
-		reader.addEventListener("load", function() {
+		reader.addEventListener("load", function () {
 			sessionStorage.setItem('uploadedPhoto', reader.result);
 			img.src = reader.result;
 		});
@@ -39,7 +39,7 @@ camera.addEventListener('click', function() {
 		$.ajax({
 			url: "/uploadImage/" + theId,
 			method: "POST",
-			data:{
+			data: {
 				memberPic: memberPic,
 			},
 			success: (response) => {
@@ -52,17 +52,17 @@ camera.addEventListener('click', function() {
 	input.click();
 });
 //顯示大頭照
-$(document).ready(function() {
+$(document).ready(function () {
 	$.ajax({
 		url: "/getPic/" + theId,
 		method: "GET",
 		dataType: "text",
-		success: function(response) {
+		success: function (response) {
 			let memberPic = response;
-		$('.rounded-circle').attr('src', memberPic);
-			
+			$('.rounded-circle').attr('src', memberPic);
+
 		},
-		error: function(error) {
+		error: function (error) {
 			console.log(error);
 			console.log(error.response);
 
@@ -152,10 +152,10 @@ $("#city").change((e) => {
 
 
 // ============================生日=====================================
-$(function() {
+$(function () {
 	$("#inputBD").datepicker();
 
-	$("#saveData").on("click", function() {
+	$("#saveData").on("click", function () {
 		console.log("btn ok");
 		getData();
 	});
@@ -193,27 +193,27 @@ function getData() {
 		type: "POST",
 		data: JSON.stringify(data),
 		contentType: "application/json",
-		success: function(response) {
+		success: function (response) {
 
 		},
-		error: function(error) {
+		error: function (error) {
 			console.error(error);
 		}
 	});
 
 }
-$("#saveData").click(function() {
+$("#saveData").click(function () {
 	getData();
 })
 
 
 // 從資料庫中獲取並設定使用者資料到 input
-$(document).ready(function() {
+$(document).ready(function () {
 	$.ajax({
 		url: "/memberdetail/" + theId,
 		method: "GET",
 		dataType: "json",
-		success: function(response) {
+		success: function (response) {
 			let member = response;
 
 			$('#inputLastName').val(member.memberNameLast);
@@ -233,7 +233,7 @@ $(document).ready(function() {
 				console.log('GGGGGGGGGG');
 			}
 		},
-		error: function(error) {
+		error: function (error) {
 			console.log(error);
 			console.log(error.response);
 
@@ -282,7 +282,7 @@ function changePwd() {
 					timer: 1500,
 				});
 			},
-			error: function(error) {
+			error: function (error) {
 				console.log(error);
 				console.log(error.response);
 			}

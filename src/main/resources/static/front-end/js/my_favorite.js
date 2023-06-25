@@ -9,15 +9,15 @@ if (sessionStorage.getItem("test-login")) {
 // <!-- 左邊會員照片+導覽列 -->
 // ============================上傳大頭照=====================================
 let camera = document.getElementById('camera');
-camera.addEventListener('click', function() {
+camera.addEventListener('click', function () {
 	const input = document.createElement('input');
 	input.type = 'file';
 
-	input.addEventListener("change", function() {
+	input.addEventListener("change", function () {
 		const file = this.files[0];
 		const reader = new FileReader();
 
-		reader.addEventListener("load", function() {
+		reader.addEventListener("load", function () {
 			sessionStorage.setItem('uploadedPhoto', reader.result);
 			img.src = reader.result;
 		});
@@ -28,7 +28,7 @@ camera.addEventListener('click', function() {
 		$.ajax({
 			url: "/uploadImage/" + theId,
 			method: "POST",
-			data:{
+			data: {
 				memberPic: memberPic,
 			},
 			success: (response) => {
@@ -41,17 +41,17 @@ camera.addEventListener('click', function() {
 	input.click();
 });
 //顯示大頭照
-$(document).ready(function() {
+$(document).ready(function () {
 	$.ajax({
 		url: "/getPic/" + theId,
 		method: "GET",
 		dataType: "text",
-		success: function(response) {
+		success: function (response) {
 			let memberPic = response;
-		$('.rounded-circle').attr('src', memberPic);
-			
+			$('.rounded-circle').attr('src', memberPic);
+
 		},
-		error: function(error) {
+		error: function (error) {
 			console.log(error);
 			console.log(error.response);
 
@@ -66,16 +66,9 @@ if (sessionStorage.getItem("test-login")) {
 } else {
 	memberId = null;
 }
-//填入假資料
-//const dataObj = {};
 
-
-//for (let i = 0; i < valid.length; i++) {
-//  Object.assign(dataObj, valid[i]);
-//  $(".orderselectclass").append(generateTicket(valid[i]));
-//}
 // 設定點擊票券
-$(window).on("load", function() {
+$(window).on("load", function () {
 	$(".tab-pane").eq(0).addClass("show active"); // 顯示
 	generateTicket();
 });
@@ -84,7 +77,7 @@ function generateTicket() {
 		url: "/tickets/" + memberId,
 		method: "GET",
 		dataType: "json",
-		success: function(t_favorite) {
+		success: function (t_favorite) {
 			if (!$(".tab-pane").eq(0).find("#orderselect").next().hasClass("ticket_item_class")) {
 				for (let i = 0; i < t_favorite.length; i++) {
 					$(".tab-pane").eq(0).find("#orderselect")
@@ -96,7 +89,7 @@ function generateTicket() {
                    <div class="item_content">
                      <h1 class="item_title">${t_favorite[i].name}</h1>
                      <div class="box">
-                         <p class="Number">${t_favorite[i].description}</p>
+                         <p class="Number dynamic-text">${t_favorite[i].description}</p>
                      </div>
                      <div id="allPrice">
                          <p class="price">TWD</p>
@@ -112,7 +105,7 @@ function generateTicket() {
 				}
 			}
 		},
-		error: function(error) {
+		error: function (error) {
 			console.log(error);
 		},
 	});
@@ -126,10 +119,9 @@ if ($(".tab-pane").eq(0).find("#orderselect").find(".ticket_item_class")) {
 
 
 //移除收藏
-$(document).on("click", ".remove_btn", function(e) {
-	console.log("remove")
+$(document).on("click", ".remove_btn", function (e) {
 	$(this).closest(".ticket_item_class").remove();
-	var ticketItems = document.querySelectorAll(".ticket_item_class");
+	//	var ticketItems = document.querySelectorAll(".ticket_item_class");
 	var ticketId = $(this).closest(".ticket_item_class").find(".orderurl").attr("href").split("=")[1];
 
 	// 連接後端刪除=========================================
@@ -140,9 +132,9 @@ $(document).on("click", ".remove_btn", function(e) {
 			memberId: memberId,
 			ticketId: ticketId,
 		},
-		success: function(response) {
+		success: function (response) {
 		},
-		error: function(error) {
+		error: function (error) {
 			console.error(error);
 		},
 	});
@@ -151,71 +143,115 @@ $(document).on("click", ".remove_btn", function(e) {
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
 	.eq(1)
-	.on("click", function() {
+	.on("click", function () {
 		$("#group_order .ticket_item_class").remove();
 	});
-const g_dataObj = {};
-const g_valid = [
-	{
-		url: "https://www.kkday.com/zh-tw/product/115643-limited-time-offer-2-4-meals-hsinchu-camping-xiong-glamping-taiwan",
-		imgUrl:
-			"https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
-		title: "旅遊團test",
-		summary:
-			"testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-		realPrice: 5678,
-	},
-];
-//填入假資料
-for (let i = 0; i < g_valid.length; i++) {
-	Object.assign(g_dataObj, g_valid[i]);
-	$("#group_orderselectdiv").append(generateGroup(g_valid[i]));
+//=========================================
+// 設定點擊旅遊團
+$(".nav-item")
+	.eq(1)
+	.on("click", function () {
+		$(".tab-pane").eq(1).addClass("show active");
+		generateGroup();
+	});
+function generateGroup() {
+	$.ajax({
+		url: "/groups/" + memberId,
+		method: "GET",
+		dataType: "json",
+		success: function (g_favorite) {
+			if (!$(".tab-pane").eq(1).find("#group_orderselect").next().hasClass("group_item_class")) {
+				for (let i = 0; i < g_favorite.length; i++) {
+					$(".tab-pane").eq(1).find("#group_orderselect")
+						.after(`<div class="group_item_class">
+				<a href="http://localhost:8080/front-end/tickets_detail.html?id=${g_favorite[i].tripId}" class="orderurl"> 	                
+                 <div class="item_img_class">
+                 	<img src="${g_favorite[i].imgUrl}" class="item_img"> 
+                 </div>
+                   <div class="item_content">
+                     <h1 class="item_title">${g_favorite[i].tripName}</h1>
+                     <div class="box">
+                         <p class="Number dynamic-text">${g_favorite[i].tripDescription}</p>
+                     </div>
+                     <div id="allPrice">
+                         <p class="price">成人 TWD </p>
+                         <p class="realPrice">${g_favorite[i].priceAdult}</p>
+                     </div>
+                     <div id="allPrice">
+                         <p class="price">小孩 TWD </p>
+                         <p class="realPrice">${g_favorite[i].priceChild}</p>
+                     </div>
+                 </div>
+               </a>
+               <div class="item_commend_class">
+                  <i class="fa-solid fa-heart heart remove_btn2"></i>  
+               </div>
+             </div>
+                `
+						);
+					let tripId = g_favorite[i].tripId;
+					console.log(tripId);
+					sessionStorage.setItem("favoriteTrip", tripId)
+				}
+			}
+		},
+		error: function (error) {
+			console.log(error);
+		},
+	});
 }
-function generateGroup(g_favorite) {
-	return `
-  <div class="group_item_class">
-   <a href="${g_favorite.url}" , class="orderurl">
-      <div class="item_img_class">
-          <img src="${g_favorite.imgUrl}" class="item_img">
-      </div>
-        <div class="item_content">
-          <h1 class="item_title">${g_favorite.title}</h1>
-          <div class="box">
-              <p class="Number">${g_favorite.summary}</p>
-          </div>
-          <div>
-              <p class="price">TWD</p>
-              <p class="realPrice">${g_favorite.realPrice}</p>
-          </div>
-      </div>
-    </a>
-    <div class="item_commend_class">
-       <i class="fa-solid fa-heart heart remove_btn"></i>  
-    </div>
-  </div>
-          `;
-
-}
-
 //移除背景圖
-if (Object.keys(g_dataObj).length !== 0) {
-	$(".no_comment_div").eq(1).toggleClass("-out");
+if ($(".tab-pane").eq(1).find("#group_orderselect").find(".group_item_class")) {
+	$(".no_comment_div").eq(1).addClass("-out");
+} else {
+	$(".no_comment_div").eq(1).removeClass("-out");
 }
+
+
 //移除收藏
-$(document).on("click", ".remove_btn", function(e) {
+//沒有tripId
+$(document).on("click", ".remove_btn2", function (e) {
+	console.log("remove")
 	$(this).closest(".group_item_class").remove();
-	var groupItems = document.querySelectorAll(".group_item_class");
-	if (groupItems.length !== 0) {
-		$(".no_comment_div").eq(1).toggleClass("-out", true);
-	} else {
-		$(".no_comment_div").eq(1).toggleClass("-out", false);
-	}
+	//	var groupItems = document.querySelectorAll(".group_item_class");
+	//var tripId = $(this).closest(".group_item_class").find(".orderurl").attr("href").split("=")[1];
+	let tripId = $(this).closest(".group_item_class").data("tripid");
+	console.log(tripId);
+	// 連接後端刪除=========================================
+	$.ajax({
+		method: "POST",
+		url: "/removeTrip",
+		data: {
+			memberId: memberId,
+			tripId: tripId,
+		},
+		success: function (response) {
+		},
+		error: function (error) {
+			console.error(error);
+		},
+	});
 });
+
+// //移除背景圖
+// if (Object.keys(g_dataObj).length !== 0) {
+// 	$(".no_comment_div").eq(1).toggleClass("-out");
+// }
+// //移除收藏
+// $(document).on("click", ".remove_btn", function(e) {
+// 	$(this).closest(".group_item_class").remove();
+// 	var groupItems = document.querySelectorAll(".group_item_class");
+// 	if (groupItems.length !== 0) {
+// 		$(".no_comment_div").eq(1).toggleClass("-out", true);
+// 	} else {
+// 		$(".no_comment_div").eq(1).toggleClass("-out", false);
+// 	}
+// });
 // ==========================右邊會員資料--文章收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
 	.eq(2)
-	.on("click", function() {
+	.on("click", function () {
 		$("#article_order .ticket_item_class").remove();
 	});
 
@@ -265,7 +301,7 @@ if (Object.keys(a_dataObj).length !== 0) {
 	$(".no_comment_div").eq(2).toggleClass("-out");
 }
 // //移除收藏
-$(document).on("click", ".remove_btn", function(e) {
+$(document).on("click", ".remove_btn", function (e) {
 	$(this).closest(".article_item_class").remove();
 
 	var articleItems = document.querySelectorAll(".article_item_class");
@@ -280,13 +316,13 @@ $(document).on("click", ".remove_btn", function(e) {
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
 	.eq(3)
-	.on("click", function() {
+	.on("click", function () {
 		$("#AI_order .ticket_item_class").remove();
 	});
 // 設定點擊AI行程規劃
 $(".nav-item")
 	.eq(3) // 選第四個
-	.on("click", function() {
+	.on("click", function () {
 		$(".tab-pane").eq(3).addClass("show active"); // 顯示
 		// 呼叫這個顯示行程卡片列表
 		getAiFavorite();
@@ -298,7 +334,7 @@ function getAiFavorite() {
 		url: "/aiFavorite",
 		method: "GET",
 		dataType: "json",
-		success: function(aiFavorite) {
+		success: function (aiFavorite) {
 			console.log("接收資料");
 			console.log(aiFavorite);
 			if (
@@ -351,14 +387,14 @@ function getAiFavorite() {
 				}
 			}
 		},
-		error: function(error) {
+		error: function (error) {
 			console.log(error);
 		},
 	});
 }
 
 // 設定刪除按鈕
-$(document).on("click", ".remove_btn", function(e) {
+$(document).on("click", ".remove_btn", function (e) {
 	$(this).closest(".group_order_item_class").remove();
 	var groupItems = document.querySelectorAll(".group_order_item_class");
 
@@ -381,19 +417,12 @@ $(document).on("click", ".remove_btn", function(e) {
 	//	});
 	// 連接後端刪除=========================================
 
-	if (groupItems.length !== 0) {
-		$(".no_comment_div").eq(1).toggleClass("-out", true);
-	} else {
-		$(".no_comment_div").eq(1).toggleClass("-out", false);
-	}
+
 });
 
-if (Object.keys(g_dataObj).length !== 0) {
-	$(".no_comment_div").eq(3).toggleClass("-out");
-}
 
 // 設定卡片展開與關閉
-$(document).on("click", ".group_order_item_class", function() {
+$(document).on("click", ".group_order_item_class", function () {
 	var container = $(this);
 	var content = container.find(".card-body");
 
@@ -430,17 +459,3 @@ if (GOItems.length !== 0) {
 	$(".no_comment_div").eq(3).toggleClass("-out", false);
 }
 // =====================================================================
-//簡介超過超過100個字以"..."取代
-$(function() {
-	var len = 100;
-	$(".Number").each(function(i) {
-		if ($(this).text().length > len) {
-			$(this).attr("title", $(this).text());
-			var text =
-				$(this)
-					.text()
-					.substring(0, len - 1) + "...";
-			$(this).text(text);
-		}
-	});
-});

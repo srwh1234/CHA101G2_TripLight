@@ -31,7 +31,7 @@ closeIcon.addEventListener("click", (e) => {
 // 取得按鈕
 const login33 = document.querySelectorAll(".main-btn")[0];
 //按下login
-login33.addEventListener("click", function(e) {
+login33.addEventListener("click", function (e) {
 	e.preventDefault();
 	container.classList.remove("active-popup");
 	container.classList.add("active");
@@ -46,7 +46,7 @@ login33.addEventListener("click", function(e) {
 			email: memberEmail,
 			password: memberPassword,
 		},
-		success: function(response) {
+		success: function (response) {
 			if (response === 0) {
 				Swal.fire({
 					icon: "error",
@@ -82,16 +82,15 @@ login33.addEventListener("click", function(e) {
 				//資料存入sessionStorage
 				const valid = {
 					email: memberEmail,
-					password: memberPassword,
 					memberId: response,
 				};
 				sessionStorage.setItem("test-login", JSON.stringify(valid));
-				loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
+				loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">Hello</i>`;
 				container.classList.remove("active-popup");
 				loginbtn.removeEventListener("click", loginin);
 			}
 		},
-		error: function(xhr) {
+		error: function (xhr) {
 			console.log(xhr.responseText);
 
 		},
@@ -160,7 +159,7 @@ register_btn.on("click", (e) => {
 			email: memberEmail,
 			password: memberPassword,
 		},
-		success: function(response) {
+		success: function (response) {
 			console.log(response);
 			if (response) {
 				// 儲存成功動畫
@@ -185,21 +184,21 @@ register_btn.on("click", (e) => {
 			}
 		},
 		// 當請求失敗時，將錯誤訊息印出到console中
-		error: function(xhr) {
+		error: function (xhr) {
 			console.log(xhr.responseText);
 		},
 	});
 });
 // 取得註冊按鈕=====================================================
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
 	const valid = JSON.parse(sessionStorage.getItem("test-login"));
 	if (valid) {
 		document.querySelector(
 			"#login"
-		).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
+		).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">Hello</i>`;
 
-		loginbtn.addEventListener("click", function(e) {
+		loginbtn.addEventListener("click", function (e) {
 			if (valid) {
 				e.preventDefault;
 				container.classList.remove("active-popup");
@@ -212,34 +211,34 @@ window.addEventListener("load", function() {
 
 //=======================================================
 // 右上導覽列訂單管理
-$("#order_li").on("mouseover", function() {
+$("#order_li").on("mouseover", function () {
 	$(".order_list").addClass("-on");
 	$(".order_content").addClass("-on");
 });
-$("#order_li").on("mouseout", function() {
+$("#order_li").on("mouseout", function () {
 	$(".order_list").removeClass("-on");
 	$(".order_content").removeClass("-on");
 });
 //=======================================================
 // 左列會員訂單管理
 
-$("#order_li2").on("mouseover", function() {
+$("#order_li2").on("mouseover", function () {
 	$("#order_list2, #order_content1, #order_content2").addClass("-on");
 });
-$("#order_li2").on("mouseout", function() {
+$("#order_li2").on("mouseout", function () {
 	$("#order_list2, #order_content1, #order_content2").removeClass("-on");
 });
 
 //登出
 const logout_li = document.querySelector("#logout_li");
 
-$(logout_li).on("click", function(e) {
+$(logout_li).on("click", function (e) {
 	e.preventDefault();
 
 	$.ajax({
 		url: "/logout",
 		method: "GET",
-		success: function(response) {
+		success: function (response) {
 			if (response) {
 				document.querySelector("#login").innerHTML = ` 登入/註冊`;
 				document.querySelector(".member").classList.toggle("-on");
@@ -247,20 +246,20 @@ $(logout_li).on("click", function(e) {
 				window.location.assign("index.html");
 			}
 		},
-		error: function(xhr) {
+		error: function (xhr) {
 			console.log("失敗");
 		},
 	});
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	const urlParams = new URLSearchParams(window.location.search);
 	if (urlParams.has("1")) {
 		$("#login-container").addClass("active-popup");
 	}
 });
 // 忘記密碼=====================================================
-$("#forgetPwd").on("click", function() {
+$("#forgetPwd").on("click", function () {
 	container.classList.remove("active");
 	Swal.fire({
 		title: '忘記密碼',
@@ -272,25 +271,25 @@ $("#forgetPwd").on("click", function() {
 		cancelButton: '取消',
 		closeOnConfirm: false,
 		closeOnCancel: false,
-	}).then(function(result) {
-        if (result.isConfirmed) {
-            let forgetPwdEmail = result.value;
-           $.ajax({
-			url: '/sendMail',  // 指定後端的郵件發送端點
-			method: 'POST',     // 使用POST方法
-			data: {
-				forgetPwdEmail: forgetPwdEmail  // 直接傳遞對象
-			},
-			success: function(response) {
-				console.log('郵件傳送成功!');
-				console.log(response)
-			},
-			error: function(xhr, status, error) {
-				console.log('郵件傳送失敗!');
-				console.log(error);
-			}
-		});
-        }
-    });
+	}).then(function (result) {
+		if (result.isConfirmed) {
+			let forgetPwdEmail = result.value;
+			$.ajax({
+				url: '/sendMail',  // 指定後端的郵件發送端點
+				method: 'POST',     // 使用POST方法
+				data: {
+					forgetPwdEmail: forgetPwdEmail  // 直接傳遞對象
+				},
+				success: function (response) {
+					console.log('郵件傳送成功!');
+					console.log(response)
+				},
+				error: function (xhr, status, error) {
+					console.log('郵件傳送失敗!');
+					console.log(error);
+				}
+			});
+		}
+	});
 
 })
