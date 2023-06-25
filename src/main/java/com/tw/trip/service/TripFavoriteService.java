@@ -69,7 +69,6 @@ public class TripFavoriteService {
 		
 		final TripFavorite favorite = new TripFavorite();
 		favorite.setKey(new PrimaryKey2(reqDto.getMemberId(), trip));
-		// favorite.setKey(new TripFavorite.PrimaryKey(reqDto.getMemberId(), trip));
 		favorite.setAddTime(Timestamp.from(Instant.now()));
 		System.out.println("加入收藏");
 		tripFavoriteRepository.save(favorite);
@@ -94,6 +93,8 @@ public class TripFavoriteService {
 		}
 		return false; // 資料不存在
 	}
+	
+	
 
 	public DetailDto getAllTripItem(final int memberId, final int tripId) {
 		final Trip trip = tripRepository.findById(tripId).orElse(null);
@@ -102,9 +103,6 @@ public class TripFavoriteService {
 			return null;
 		}
 		final DetailDto detailDto = new DetailDto(trip);
-		// 圖片
-		// detailDto.setImages(imageService.findImgUrls(ticket.getTicketId()));
-
 		// 我的最愛
 		detailDto.setFavorite(tripFavoriteRepository.existsById(new PrimaryKey2(memberId, trip)));
 		return detailDto;

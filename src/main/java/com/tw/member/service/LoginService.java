@@ -50,7 +50,7 @@ public class LoginService {
 	  }
 	  public String getName(int id) {
 		  Member member = memberRepository.findByMemberId(id);
-		  String name = member.getMemberNameLast();
+		  String name = member.getMemberNameFirst();
 		  return name;
 	  }
 	  //連信箱密碼驗證=============================================================

@@ -23,21 +23,14 @@ public class TripFavoriteController {
 	private TripRepository tripRepository;
 
 	/**
-	 * 前台-票券明細-我的最愛狀態切換
+	 * 前台-旅遊團明細-我的最愛狀態切換
 	 */
 	@PostMapping("/tripfavorite")
 	public int tripfavorite(@RequestBody final FavoriteReqDto reqDto) {
 		return tripFavoriteService.updateItem(reqDto);
 	}
 
-	// 定義請求物件
-	@Data
-	public static class FavoriteReqDto {
-		private Integer memberId;
-		private Integer tripId;
-		private boolean favorite;
-	}
-
+//確認是存在DB裡
 //	@GetMapping("/existFavorite/{memberId}")
 //	public boolean existFavorite(@PathVariable Integer memberId, Trip trip) {
 //
@@ -66,6 +59,13 @@ public class TripFavoriteController {
 		private String tripDescription;
 		private int  priceAdult;
 		private String imageBase64;
+		private boolean favorite;
+	}
+	// 定義請求物件
+	@Data
+	public static class FavoriteReqDto {
+		private Integer memberId;
+		private Integer tripId;
 		private boolean favorite;
 	}
 

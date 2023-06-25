@@ -184,29 +184,37 @@ register_btn.on("click", (e) => {
 });
 // 取得註冊按鈕=====================================================
 //找到會員id
-// let Id = 0;
-// if (sessionStorage.getItem("test-login")) {
-// 	Id = JSON.parse(sessionStorage.getItem("test-login")).memberId;
-// } else {
-// 	Id = null;
-// }
-// $.ajax({
-// 	url: "/getName/" + Id,
-// 	method: "GET",
-// 	dataType: "text",
-// 	success: (response) => {
-// 		console.log(response);
-// 	}, error: (error) => {
-// 		console.log(error)
-// 	}
-// })
-
+let Id = 0;
+if (sessionStorage.getItem("test-login")) {
+	Id = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+} else {
+	Id = null;
+}
+//拿會員的名字，更改登入鍵 =>燈泡+名字
 window.addEventListener("load", function () {
 	const valid = JSON.parse(sessionStorage.getItem("test-login"));
 	if (valid) {
-		document.querySelector(
-			"#login"
-		).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">Hello</i>`;
+		$.ajax({
+			url: "/getName/" + Id,
+			method: "GET",
+			dataType: "text",
+			success: (response) => {
+				response = $.trim(response);
+				if (response !== "") {
+					document.querySelector(
+						"#login"
+					).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"> Hi ${response}</i>`;
+				} else {
+					document.querySelector(
+						"#login"
+					).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">會員您好</i>`;
+				}
+
+			}, error: (error) => {
+				console.log(error)
+			}
+		})
+
 
 		loginbtn.addEventListener("click", function (e) {
 			if (valid) {
