@@ -118,27 +118,22 @@ a.nav-link:hover {
 } */
 
 /* 訂單管理開合 */
-#order_list2,
+/* 訂單管理開合 */
+#order_list2 {
+    height: 0;
+    transition: all 1s;
+}
+
+#order_list2.-on {
+    height: 110px;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 1s;
+}
+
 #order_content1,
 #order_content2 {
-    display: none;
-}
-
-#order_list2.-on,
-#order_content1.-on,
-#order_content2.-on {
-    display: block;
-    background-color: rgba(0, 0, 0, 0);
     border: none;
-
-
-}
-
-#order_content1.-on>a,
-#order_content2.-on>a {
-    padding: inherit;
-    width: 100%;
-
+    background-color: rgba(0, 0, 0, 0);
 }
 
 #order_content1.-on {
