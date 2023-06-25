@@ -27,7 +27,7 @@ import lombok.Data;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/front-end/article")
+@RequestMapping("/article")
 public class ArticleController {
 
 	private final ArticleService articleService;
