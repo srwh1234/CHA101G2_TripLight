@@ -14,6 +14,14 @@ import com.tw.ticket.model.dao.TicketFavoriteRepository;
 import com.tw.ticket.model.dao.TicketImageRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.service.ImageService;
+import com.tw.trip.pojo.Trip;
+import com.tw.trip.pojo.TripFavorite;
+import com.tw.trip.pojo.TripFavorite.PrimaryKey2;
+import com.tw.trip.pojo.TripImage;
+import com.tw.trip.repository.TripFavoriteRepository;
+import com.tw.trip.repository.TripRepository;
+import com.tw.trip.service.TripImageService;
+import com.tw.trip.service.TripService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,24 +37,17 @@ public class MyFavoriteService {
 	private TicketImageRepository ticketImageRepository;
 	@Autowired
 	private ImageService imageService;
-	// 拿到圖片URL
-	public static String IMG_URL = "http://localhost:8080/img/";
+	
+	@Autowired 
+	private TripRepository tripRepository;
+	@Autowired
+	private TripFavoriteRepository tripFavoriteRepository;
+	@Autowired
+	private TripService tripService;
+	@Autowired
+	private TripImageService tripImageService;
 
-	// 載入票券
-//	public List<Ticket> getTicket(int memberId) {
-//		final List<Ticket> result = new ArrayList<>();
-//		List<TicketFavorite> favorites = ticketFavoriteRepository.findByKeyMemberId(memberId);
-//		for (TicketFavorite f : favorites) {
-//			final Ticket t = f.getKey().getTicket();
-//			final Ticket detail = new Ticket();
-//			detail.setTicketId(t.getTicketId());
-//			detail.setName(t.getName());
-//			detail.setPrice(t.getPrice());
-//			detail.setDescription(t.getDescription());
-//			result.add(detail);
-//		}
-//		return result;
-//	}
+	//票券=========================================
 	public List<TicketDTO> getTicket(int memberId) {
 		final List<TicketDTO> result = new ArrayList<>();
 		List<TicketFavorite> favorites = ticketFavoriteRepository.findByKeyMemberId(memberId);
@@ -56,29 +57,13 @@ public class MyFavoriteService {
 			detail.setTicketId(t.getTicketId());
 			detail.setName(t.getName());
 			detail.setPrice(t.getPrice());
-			detail.setDescription(t.getDescription());
-			// List<Integer> image =
-			// ticketImageRepository.findIdsByTicketId(t.getTicketId());
-			
-			//TicketImage image = ticketImageRepository.findByTicketId(t.getTicketId());
-			//detail.setImage(image);
-			
-			detail.setImgUrl(imageService.findImgUrl(t.getTicketId()));
-			
+			detail.setDescription(t.getDescription());		
+			detail.setImgUrl(imageService.findImgUrl(t.getTicketId()));			
 			result.add(detail);
 		}
-		System.out.println(result);
 		return result;
 	}
 
-//public String findImgUrl(final int ticketId) {
-//		final List<Integer> arrays = ticketImageRepository.findIdsByTicketId(ticketId);
-//
-//		if (arrays.isEmpty()) {
-//			return IMG_URL + 0;
-//		}
-//		return IMG_URL + arrays.get(0);
-//	}
 	@Data
 	@AllArgsConstructor
 	public class TicketDTO {
@@ -93,39 +78,70 @@ public class MyFavoriteService {
 		public void setImage(TicketImage image) {
 			this.image = image;
 		}
-
 		private Integer ticketId;
 		private String name;
 		private Integer price;
 		private String description;
-		private TicketImage image;
-		
+		private TicketImage image;		
 		private String imgUrl;
 	}
-//	public byte[] getTicketImg(int id){
-//		final TicketImage ticket = ticketImageRepository.findById(id).orElse(null);
-//		// 沒有指定編號的圖片
-//		if (article == null) {
-//			final ClassPathResource resource = new ClassPathResource("images/bb.gif");
-//
-//			byte[] bytes = null;
-//			try (final InputStream is = resource.getInputStream();) {
-//				bytes = new byte[is.available()];
-//				is.read(bytes);
-//
-//			} catch (final IOException e) {
-//				e.printStackTrace();
-//			}
-//			return bytes;
-//		}
-//	}
 
 //	//刪除票券  
 	public boolean removeItem(final int memberId, final int ticketId) {
 		Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
 		ticketFavoriteRepository.deleteById(new PrimaryKey(memberId, ticket));
+		return true;
+	}
+	//旅行團=========================================
+	public List<TripDTO> getTrip(int memberId) {
+		final List<TripDTO> result = new ArrayList<>();
+		List<TripFavorite> favorites = tripFavoriteRepository.findByKeyMemberId(memberId);
+		for (TripFavorite f : favorites) {
+			final Trip t = f.getKey().getTrip();
+			final TripDTO detail = new TripDTO();
+			detail.setTripId(t.getTripId());
+			detail.setTripName(t.getTripName());
+			detail.setPriceAdult(t.getPriceAdult());
+			detail.setPriceChild(t.getPriceChild());
+			detail.setTripDescription(t.getTripDescription());	
+		//	detail.setImageBase64(tripImageService.findImgUrl(t.getTripId());
+			detail.setImgUrl(tripImageService.findImgUrl(t.getTripId()));
+			result.add(detail);
+		}
+		System.out.println(result);
+		return result;
+	}
+
+	@Data
+	@AllArgsConstructor
+	public class TripDTO {
+		public TripDTO() {
+			// TODO Auto-generated constructor stub
+		}
+
+		public TripImage getImageBase64() {
+			return imageBase64;
+		}
+
+		public void setImageBase64(TripImage image) {
+			this.imageBase64 = image;
+		}
+
+		private Integer tripId;
+		private String tripName;
+		private Integer priceAdult;
+		private Integer priceChild;
+		private String tripDescription;
+		private TripImage imageBase64;
+		
+		private String imgUrl;
+	}
+
+//	//刪除
+	public boolean removeTrip(final int memberId, final int tripId) {
+		Trip trip = tripRepository.findById(tripId).orElse(null);
+		tripFavoriteRepository.deleteById(new PrimaryKey2(memberId,trip));
 
 		return true;
 	}
-
 }

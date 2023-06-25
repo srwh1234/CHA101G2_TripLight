@@ -44,4 +44,5 @@ public class TourGroup implements Serializable {
     @Transient
     private String formattedEndDate;
 
+
 }

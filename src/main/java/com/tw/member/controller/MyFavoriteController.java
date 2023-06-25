@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tw.article.model.Article;
 import com.tw.member.service.MyFavoriteService;
 import com.tw.member.service.MyFavoriteService.TicketDTO;
+import com.tw.member.service.MyFavoriteService.TripDTO;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.service.FavoriteService;
 import com.tw.ticket.service.impl.ImageServiceImpl;
@@ -32,45 +33,15 @@ public class MyFavoriteController {
 	private FavoriteService favoriteService;
 	@Autowired
 	private ImageServiceImpl ticketImageServiceImpl;
-
+	
+	//票券=========================================
 	// 載入票券
-//	@GetMapping("/tickets/{id}")
-//	public List<Ticket> ticketFavorites(@PathVariable("id") int id) {
-//		System.out.println("Controller");
-//		return myFavoriteService.getTicket(id);
-//	}
+
 	@GetMapping("/tickets/{id}")
 	public List<TicketDTO> ticketFavorites(@PathVariable("id") int id) {
-		System.out.println("Controller");
 		return myFavoriteService.getTicket(id);
 	}
 
-	//票券圖片
-//	@GetMapping(value = "/img/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
-//	public byte[] getPhoto(@PathVariable("imgUrl") final int id) {
-//		return ticketImageServiceImpl.findImg(id);
-//	}
-//	@GetMapping(value = "/aimg/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
-//	public byte[] articleImg(@PathVariable("imgUrl") final int id) {
-//
-//		// 以下都要放 service
-//		final Article article = articleRepository.findById(id).orElse(null);
-//		// 沒有指定編號的圖片
-//		if (article == null) {
-//			final ClassPathResource resource = new ClassPathResource("images/bb.gif");
-//
-//			byte[] bytes = null;
-//			try (final InputStream is = resource.getInputStream();) {
-//				bytes = new byte[is.available()];
-//				is.read(bytes);
-//
-//			} catch (final IOException e) {
-//				e.printStackTrace();
-//			}
-//			return bytes;
-//		}
-//		return article.getArticlePicture();
-//	}
 
 	// 刪除票券
 	 @PostMapping("/removeTicket")
@@ -79,5 +50,20 @@ public class MyFavoriteController {
 			@RequestParam("ticketId") final int ticketId) {
 		return myFavoriteService.removeItem(memberId, ticketId);
 	}
+	//旅行團=========================================
+		@GetMapping("/groups/{id}")
+		public List<TripDTO> tripFavorites(@PathVariable("id") int id) {
+			System.out.println("Controller");
+			return myFavoriteService.getTrip(id);
+		}
+
+
+		// 刪除票券
+		 @PostMapping("/removeTrip")
+		public boolean removeTrip( 
+				@RequestParam("memberId") final int memberId, 
+				@RequestParam("tripId") final int tripId) {
+			return myFavoriteService.removeTrip(memberId, tripId);
+		}
 	 
 }

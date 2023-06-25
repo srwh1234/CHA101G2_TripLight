@@ -279,3 +279,36 @@ button {
     overflow: auto;
     font-size: 16px;
 }
+
+/* 收藏的愛心*/
+.my-favorite .on {
+    color: #dc3545;
+}
+
+.my-favorite .on:hover {
+    color: #ccc;
+}
+
+.my-favorite {
+    color: #ccc;
+}
+
+.my-favorite :hover {
+    color: #dc3545;
+}
+
+/* .my-favorite .on {
+    color: #dc3545;
+  }
+
+  .my-favorite .on:hover {
+    color: #ccc;
+  }
+
+  .my-favorite .off {
+    color: #ccc;
+  }
+
+  .my-favorite .off:hover {
+    color: #dc3545;
+  } */
