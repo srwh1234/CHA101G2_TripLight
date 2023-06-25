@@ -35,10 +35,12 @@ public class TripComment implements Serializable {
 
     private Integer status;
 
+    @Transient
     private Timestamp postTime;
 
     private Integer editCount;
 
+    @Transient
     private Timestamp lastEditTime;
 
     @ManyToOne

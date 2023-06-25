@@ -199,15 +199,15 @@
 
                 <div class="row">
                     <div class="col-9 shadow-lg p-3 mb-5 bg-body rounded">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center" id="memberPicParent">
                             <div class="col-11 align-self-center">
-                                <img src="https://picsum.photos/64" alt="..." class="rounded-circle" width="180"
-                                    class="img-fluid rounded-start" alt="...">
+<!--                                <img src="https://picsum.photos/64" alt="member pic" class="rounded-circle" width="180"-->
+<!--                                    class="img-fluid rounded-start" id="memberPic">-->
                             </div>
                         </div>
 
                         <div class="row mt-5">
-                            <p mt-8>張大雄 您好~</p>
+                            <p mt-8 id="memberName">張大雄 您好~</p>
                         </div>
                     </div>
                 </div>
@@ -217,31 +217,30 @@
 
 
             <!-- ======================== //右側訂單欄位 ============================================-->
-            <div class="col-8">
+            <div class="col-8" id="tripOrderParent">
                 <!-- 商品1 -->
-                <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">
-                    <div class="row g-0 h-100">
-                        <div class="col-md-4 h-100">
-                            <img src="https://picsum.photos/800/600/?random=42" class="img-fluid rounded-start mt-2"
-                                alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">花蓮五日遊</h5>
-                                <hr>
-                                <p class="card-text">好好玩好好玩好好玩
-                                    鋪哈哈哈哈哈我瘋了
-                                </p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-mdb-ripple-color="dark"
-                                    id="btn_modal">我要評論</button>
-                                <button type="button"
-                                    onclick="window.location.href = 'http://127.0.0.1:5500/%E7%B6%B2%E9%A0%81/%E5%89%8D%E5%8F%B0/group_orderdetail.html'"
-                                    class="btn btn-info">查看詳情</button>
-                            </div>
-                        </div>
-                    </div>
+<!--                <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">-->
+<!--                    <div class="row g-0 h-100">-->
+<!--                        <div class="col-md-4 h-100">-->
+<!--                            <img src="https://picsum.photos/800/600/?random=42" class="img-fluid rounded-start mt-2"-->
+<!--                                alt="...">-->
+<!--                        </div>-->
+<!--                        <div class="col-md-8">-->
+<!--                            <div class="card-body">-->
+<!--                                <h5 class="card-title" id="tripName"></h5>-->
+<!--                                <hr>-->
+<!--                                <p class="card-text" id="tripContent"></p>-->
+
+<!--                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                                <button type="button" class="btn btn-info" data-bs-toggle="modal"-->
+<!--                                    data-bs-target="#exampleModal" data-mdb-ripple-color="dark"-->
+<!--                                    id="btn_modal">我要評論</button>-->
+<!--                                <button type="button"-->
+<!--                                    onclick="window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html'"-->
+<!--                                    class="btn btn-info">查看詳情</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
 
                 <!-- 我要評論 燈箱區 -->
@@ -438,6 +437,68 @@
     <!-- ======================== Lib ============================================-->
     <!-- ======================== Java Script ============================================-->
     <script>
+
+        $.getJSON('http://localhost:8080/groupOrder/getTrips?memberIdString=3', function (response) {
+
+
+            // ====== 左側會員欄位 ======
+
+            // 會員圖片
+            let base64Url = 'data:image/gif;base64,' + response[0].memberPicBase64;
+            console.log(response[0].memberPicBase64);
+
+            let childEl =`<img src="${base64Url}" alt="member pic" class="rounded-circle" width="180"
+                                    class="img-fluid rounded-start" id="memberPic">`;
+            $('#memberPicParent').append(childEl);
+
+            // 會員姓名
+            $('#memberName').html(`${response[0].memberName} 您好~`);
+
+            // ====== 右側訂單列表區 ======
+
+            let tripOrderParent = $('#tripOrderParent');
+            console.log(response);
+            for (let i=0; i<response.length; i++){
+
+                let tripBase64Url = 'data:image/gif;base64,' + response[i].tripPicBase64;
+                let html = `
+
+                 <!-- 商品1 -->
+                <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">
+                    <div class="row g-0 h-100">
+                        <div class="col-md-4 h-100">
+                            <img src="${tripBase64Url}" class="img-fluid rounded-start mt-2"
+                                alt="tripPic">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">${response[i].tripName}</h5>
+                                <hr>
+                                <p class="card-text">${response[i].tripContent}</p>
+
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" data-mdb-ripple-color="dark"
+                                    id="btn_modal">我要評論</button>
+                                <button type="button" class="btn btn-info changePage" tripOrderId="${response[i].tripOrderId}">查看詳情</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                tripOrderParent.append(html);
+
+            }
+
+            // ====== set ID in session storage ======
+            tripOrderParent.on('click', '.changePage', function (event) {
+                let tripOrderId = $(this).attr('tripOrderId');
+                console.log(tripOrderId);
+                sessionStorage.setItem('tripOrderId', `${tripOrderId}`);
+                window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
+            })
+
+
+        });
 
         // ====== 確認預定 ======
         $('#btn_con').on('click', function () {
