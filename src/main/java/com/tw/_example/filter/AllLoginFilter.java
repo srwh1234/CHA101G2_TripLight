@@ -66,7 +66,6 @@ public class AllLoginFilter implements Filter {
 		PROTECT.add("article_mylist.html");
 
 		PROTECT.add("login.html");
-		PROTECT.add("comment.html");
 		PROTECT.add("question_form.html");
 		PROTECT.add("read_question_list.html");
 		PROTECT.add("group_order.html");

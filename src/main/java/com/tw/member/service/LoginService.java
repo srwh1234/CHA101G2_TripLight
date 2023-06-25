@@ -48,6 +48,11 @@ public class LoginService {
 		  Member member = memberRepository.findByMemberEmail(email);
 		  return member;
 	  }
+	  public String getName(int id) {
+		  Member member = memberRepository.findByMemberId(id);
+		  String name = member.getMemberNameLast();
+		  return name;
+	  }
 	  //連信箱密碼驗證=============================================================
 	  @Service
 	  public class MailService {

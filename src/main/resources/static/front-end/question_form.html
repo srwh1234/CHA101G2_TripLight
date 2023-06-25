@@ -165,12 +165,10 @@
                         </ul>
                     </li>
                     <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-                    <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
                     <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
                     </li>
                     <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
-                    </li>
-                    <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
+                    </li>                   
                     <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
                     </li>
                     <li class="member_li"><a href="read_question_list.html"><i
@@ -283,10 +281,8 @@
                             </ul>
                         </li>
                         <li class="list-group-item"><a href="my_favorite.html">我的收藏</a></li>
-                        <li class="list-group-item"><a href="comment.html">我的評價</a></li>
                         <li class="list-group-item"><a href="article_myfavorite.html">我的文章</a></li>
                         <li class="list-group-item"><a href="membership_rating.html">會員分級</a></li>
-                        <li class="list-group-item"><a href="coupon.html">優惠碼</a></li>
                         <li class="list-group-item"><a href="question_form.html">提出問題</a></li>
                         <li class="list-group-item"><a href="read_question_list.html">查看問題</a></li>
                     </ul>
@@ -456,7 +452,57 @@
             });
     });
 
+ // ============================上傳大頭照=====================================
+    let camera = document.getElementById('camera');
+    camera.addEventListener('click', function () {
+    	const input = document.createElement('input');
+    	input.type = 'file';
 
+    	input.addEventListener("change", function () {
+    		const file = this.files[0];
+    		const reader = new FileReader();
+
+    		reader.addEventListener("load", function () {
+    			sessionStorage.setItem('uploadedPhoto', reader.result);
+    			img.src = reader.result;
+    		});
+    		if (file) {
+    			reader.readAsDataURL(file);
+    		}
+    		var memberPic = sessionStorage.getItem('uploadedPhoto');
+    		$.ajax({
+    			url: "/uploadImage/" + theId,
+    			method: "POST",
+    			data: {
+    				memberPic: memberPic,
+    			},
+    			success: (response) => {
+    				console.log("儲存成功")
+    			}, error: (error) => {
+    				console.log(error);
+    			}
+    		})
+    	});
+    	input.click();
+    });
+    //顯示大頭照
+    $(document).ready(function () {
+    	$.ajax({
+    		url: "/getPic/" + theId,
+    		method: "GET",
+    		dataType: "text",
+    		success: function (response) {
+    			let memberPic = response;
+    			$('.rounded-circle').attr('src', memberPic);
+
+    		},
+    		error: function (error) {
+    			console.log(error);
+    			console.log(error.response);
+
+    		}
+    	});
+    });
 </script>
 <!-- login顯示 -->
 <script src="js/Login.js"></script>

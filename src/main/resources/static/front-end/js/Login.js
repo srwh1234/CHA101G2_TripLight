@@ -96,13 +96,6 @@ login33.addEventListener("click", function (e) {
 		},
 	});
 });
-//登入後變成燈泡
-//  if(sessionStorage.getItem("test-login")){	  
-//        loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;"></i>`;
-//        container.classList.remove("active-popup");
-//        loginbtn.removeEventListener("click", loginin);
-//  }
-
 
 //================================註冊=====================================
 // 取得註冊按鈕=====================================================
@@ -190,6 +183,23 @@ register_btn.on("click", (e) => {
 	});
 });
 // 取得註冊按鈕=====================================================
+//找到會員id
+// let Id = 0;
+// if (sessionStorage.getItem("test-login")) {
+// 	Id = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+// } else {
+// 	Id = null;
+// }
+// $.ajax({
+// 	url: "/getName/" + Id,
+// 	method: "GET",
+// 	dataType: "text",
+// 	success: (response) => {
+// 		console.log(response);
+// 	}, error: (error) => {
+// 		console.log(error)
+// 	}
+// })
 
 window.addEventListener("load", function () {
 	const valid = JSON.parse(sessionStorage.getItem("test-login"));
@@ -260,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // 忘記密碼=====================================================
 $("#forgetPwd").on("click", function () {
-	container.classList.remove("active");
+	container.classList.remove("active-popup");
 	Swal.fire({
 		title: '忘記密碼',
 		text: '請輸入電子信箱',
@@ -268,9 +278,7 @@ $("#forgetPwd").on("click", function () {
 		inputPlaceholder: '請輸入電子信箱',
 		showCancelButton: true,
 		confirmButtonText: '發送驗證信',
-		cancelButton: '取消',
-		closeOnConfirm: false,
-		closeOnCancel: false,
+		canclButtonText: '取消',
 	}).then(function (result) {
 		if (result.isConfirmed) {
 			let forgetPwdEmail = result.value;
