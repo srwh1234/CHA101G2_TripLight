@@ -71,6 +71,12 @@
         #ticketContainer {
             min-height: 60vh;
         }
+
+        /* 編輯實新增圖片的按鈕 */
+        #editImgInput *:hover {
+            color: aliceblue;
+            background-color: #4e73df;
+        }
     </style>
 </head>
 
@@ -601,6 +607,7 @@
                                 <!-- 一行5個卡片 -->
                                 <div class="row row-cols-1 row-cols-lg-5 g-2 mb-5" id="editImgPreview">
                                     <!-- 顯示區 -->
+
                                 </div>
 
 
@@ -1550,7 +1557,18 @@
             $('#editDescEditor').summernote('code', fakeData.description);
             $('#editContentEditor').summernote('code', fakeData.content);
             $('#editNoteEditor').summernote('code', fakeData.note);
-            $('#editImgPreview').html('');
+            $('#editImgPreview').html(`
+                <div class="col p-3 img-item" id="editImgInput">
+                    <div class="card h-100">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <h1 class="mt-5">+</h1>
+                        </div>      
+                        <div class="card-body d-flex justify-content-center">   
+                            新增圖片
+                        </div>                  
+                    </div>
+                </div>
+            `);
 
             for (let imgUrl of fakeData.images) {
                 render_img_url(imgUrl);
@@ -1562,7 +1580,7 @@
 
         //編輯票券-新增圖片
         function render_img_url(imgUrl) {
-            $('#editImgPreview').append(`
+            const html = (`
                 <div class="col p-3 img-item">
                     <div class="card h-100">
                         <div>
@@ -1574,6 +1592,7 @@
                     </div>
                 </div>
             `);
+            $(html).insertBefore($('#editImgInput'));
         }
 
         //新增票券-新增圖片
