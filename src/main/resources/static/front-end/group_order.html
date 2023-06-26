@@ -436,109 +436,124 @@
     <!-- ======================== Java Script ============================================-->
     <script>
 
-        $.getJSON('http://localhost:8080/groupOrder/getTrips?memberIdString=3', function (response) {
+        $(document).ready(function () {
+                function getMemberId(){
+
+                    const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
+                    if(!testLogIn || !testLogIn.memberId){
+                        return 0;
+                    }
+                    return testLogIn.memberId;
+                }
+
+                const memberId = getMemberId();
+
+                $.getJSON(`http://localhost:8080/groupOrder/getTrips?memberIdString=${memberId}`, function (response) {
 
 
-            // ====== 左側會員欄位 ======
+                    // ====== 左側會員欄位 ======
 
-            // 會員圖片
-            let base64Url = 'data:image/gif;base64,' + response[0].memberPicBase64;
-            console.log(response[0].memberPicBase64);
+                    // 會員圖片
+                    let base64Url = 'data:image/gif;base64,' + response[0].memberPicBase64;
 
-            let childEl =`<img src="${base64Url}" alt="member pic" class="rounded-circle" width="180"
-                                    class="img-fluid rounded-start" id="memberPic">`;
-            $('#memberPicParent').append(childEl);
+                    let childEl =`<img src="${base64Url}" alt="member pic" class="rounded-circle" width="180"
+                                            class="img-fluid rounded-start" id="memberPic">`;
+                    $('#memberPicParent').append(childEl);
 
-            // 會員姓名
-            $('#memberName').html(`${response[0].memberName} 您好~`);
+                    // 會員姓名
+                    $('#memberName').html(`${response[0].memberName} 您好~`);
 
-            // ====== 右側訂單列表區 ======
+                    // ====== 右側訂單列表區 ======
+                    let tripOrderParent = $('#tripOrderParent');
+                    for (let i=0; i<response.length; i++){
 
-            let tripOrderParent = $('#tripOrderParent');
-            console.log(response);
-            for (let i=0; i<response.length; i++){
+                        let tripBase64Url = 'data:image/gif;base64,' + response[i].tripPicBase64;
+                        let html = `
 
-                let tripBase64Url = 'data:image/gif;base64,' + response[i].tripPicBase64;
-                let html = `
+                         <!-- 商品1 -->
+                        <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">
+                            <div class="row g-0 h-100">
+                                <div class="col-md-4 h-100">
+                                    <img src="${tripBase64Url}" class="img-fluid rounded-start mt-2"
+                                        alt="tripPic">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${response[i].tripName}</h5>
+                                        <hr>
+                                        <p class="card-text">${response[i].tripContent}</p>
 
-                 <!-- 商品1 -->
-                <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">
-                    <div class="row g-0 h-100">
-                        <div class="col-md-4 h-100">
-                            <img src="${tripBase64Url}" class="img-fluid rounded-start mt-2"
-                                alt="tripPic">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">${response[i].tripName}</h5>
-                                <hr>
-                                <p class="card-text">${response[i].tripContent}</p>
-
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-mdb-ripple-color="dark"
-                                    id="btn_modal">我要評論</button>
-                                <button type="button" class="btn btn-info changePage" tripOrderId="${response[i].tripOrderId}">查看詳情</button>
+                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" data-mdb-ripple-color="dark"
+                                            id="btn_modal">我要評論</button>
+                                        <button type="button" class="btn btn-info changePage" tripOrderId="${response[i].tripOrderId}" tripId="${response[i].tripId}" tourGroupId="${response[i].tourGroupId}">查看詳情</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                `;
-                tripOrderParent.append(html);
+                        `;
+                        tripOrderParent.append(html);
 
-            }
+                    }
 
-            // ====== set ID in session storage ======
-            tripOrderParent.on('click', '.changePage', function (event) {
-                let tripOrderId = $(this).attr('tripOrderId');
-                console.log(tripOrderId);
-                sessionStorage.setItem('tripOrderId', `${tripOrderId}`);
-                window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
-            })
+                    // ====== 點擊後換頁並將換頁所需資料存在session ======
+                    tripOrderParent.on('click', '.changePage', function (event) {
+                        let tripOrderId = $(this).attr('tripOrderId');
+                        let tripId = $(this).attr('tripId');
+                        let tourGroupId = $(this).attr('tourGroupId');
 
-
-        });
-
-        // ====== 確認預定 ======
-        $('#btn_con').on('click', function () {
-
-            // 1. get data from DB
-            let modalText = $('#modal-text').val();
-
-            // 2. serialize data
-            let data = JSON.stringify({ 'message': modalText });
-
-            // 3. post to DB
-            $.post("http://localhost:8080/groupOrder/addTripComments", data, function (response) {
-                console.log('successfully sent!');
-            });
-
-        })
-
-        // 燈箱按鈕
-        // 頁面上的按鈕
-        $("#btn_modal").on("click", function () {
-            alert('ttt');
-            $("#lightbox").removeClass("none");
-        });
+                        sessionStorage.setItem('tripOrderId', `${tripOrderId}`);
+                        sessionStorage.setItem('tripId', `${tripId}`);
+                        sessionStorage.setItem('tourGroupId', `${tourGroupId}`);
+                        window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
+                    })
 
 
+                });
 
-        // modal 中的半透明黑色區域
-        $("#lightbox").on("click", function () {
-            $("#lightbox").addClass("none");
-        });
+                // ====== 確認預定 ======
+                $('#btn_con').on('click', function () {
 
-        // 點擊 lightbox 中的白色區域，不會關掉 modal
-        $("#lightbox > article").on("click", function (e) {
-            e.stopPropagation();
-        });
-        $("button#btn_con").on("click", function () {
-            $("#lightbox").removeClass("none");
-        });
+                    // 1. get data from DB
+                    let modalText = $('#modal-text').val();
 
-        // modal 中的半透明黑色區域
-        $("#lightbox").on("click", function () {
-            $("#lightbox").addClass("none");
+                    // 2. serialize data
+                    let data = JSON.stringify({ 'message': modalText });
+
+                    // 3. post to DB
+                    $.post("http://localhost:8080/groupOrder/addTripComments", data, function (response) {
+                        console.log('successfully sent!');
+                    });
+
+                })
+
+                // 燈箱按鈕
+                // 頁面上的按鈕
+                $("#btn_modal").on("click", function () {
+                    alert('ttt');
+                    $("#lightbox").removeClass("none");
+                });
+
+
+
+                // modal 中的半透明黑色區域
+                $("#lightbox").on("click", function () {
+                    $("#lightbox").addClass("none");
+                });
+
+                // 點擊 lightbox 中的白色區域，不會關掉 modal
+                $("#lightbox > article").on("click", function (e) {
+                    e.stopPropagation();
+                });
+                $("button#btn_con").on("click", function () {
+                    $("#lightbox").removeClass("none");
+                });
+
+                // modal 中的半透明黑色區域
+                $("#lightbox").on("click", function () {
+                    $("#lightbox").addClass("none");
+                });
+
         });
     </script>
 

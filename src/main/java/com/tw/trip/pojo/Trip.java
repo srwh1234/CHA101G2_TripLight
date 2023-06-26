@@ -87,4 +87,16 @@ public class Trip implements Serializable {
         });
         return result;
     }
+
+
+//    public Trip(Integer tripId, String tripName,  ){
+//        private int tripId;
+//        private String tripName;
+//        private int tripDay;
+//        private String city;
+//        private String tripContent;
+//
+//
+//
+//    }
 }

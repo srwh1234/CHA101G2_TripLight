@@ -1,12 +1,9 @@
-package com.tw.contact.modelJPA;
+package com.tw.contact.model;
 
 import com.tw.employee.model.Employee;
 import com.tw.member.model.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 

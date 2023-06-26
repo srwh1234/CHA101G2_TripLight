@@ -44,5 +44,14 @@ public class TourGroup implements Serializable {
     @Transient
     private String formattedEndDate;
 
+    @Transient
+    private String tripName;
+
+    public TourGroup(Date startDate){
+        this.startDate=startDate;
+    }
+
+
+
 
 }

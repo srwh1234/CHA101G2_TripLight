@@ -18,7 +18,7 @@ public class GroupOrderObj implements Serializable {
     // ====== for data of group order page ======
 
     public GroupOrderObj(Integer tripId, String tripName, String tripContent, Integer tripOrderId,
-                         Integer memberId, byte[] memberPic, String memberName, byte[] tripPic){
+                         Integer memberId, byte[] memberPic, String memberName, byte[] tripPic, Integer tourGroupId){
 
         this.tripId = tripId;
         this.tripName = tripName;
@@ -28,6 +28,8 @@ public class GroupOrderObj implements Serializable {
         this.memberName=memberName;
         memberPicBase64 = Base64.getEncoder().encodeToString(memberPic);
         tripPicBase64 = Base64.getEncoder().encodeToString(tripPic);
+        this.tourGroupId = tourGroupId;
+
     }
 
     private String tripPicBase64;
@@ -45,5 +47,7 @@ public class GroupOrderObj implements Serializable {
     private String memberName;
 
     private String memberPicBase64;
+
+    private Integer tourGroupId;
 
 }

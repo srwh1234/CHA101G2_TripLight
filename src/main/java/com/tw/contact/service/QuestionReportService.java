@@ -1,7 +1,7 @@
 package com.tw.contact.service;
 
-import com.tw.contact.QuestionReportRequestDTO;
-import com.tw.contact.modelJPA.QuestionReport;
+import com.tw.contact.dto.QuestionReportRequestDTO;
+import com.tw.contact.model.QuestionReport;
 
 import java.util.List;
 
