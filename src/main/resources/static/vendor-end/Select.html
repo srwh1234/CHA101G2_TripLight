@@ -301,7 +301,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">編輯員工資料</h5>
+                            <h5 class="modal-title" id="editModalLabel">編輯旅遊團資料</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -309,39 +309,47 @@
                         <div class="modal-body">
                             <form id="editForm">
                                 <div class="form-group">
-                                    <label for="employeeId">員工編號:</label>
+                                    <label for="employeeId">行程編號:</label>
                                     <input type="text" class="form-control" id="employeeId">
                                 </div>
                                 <div class="form-group">
-                                    <label for="employeeName">員工姓名:</label>
+                                    <label for="employeeName">廠商編號:</label>
                                     <input type="text" class="form-control" id="employeeName">
                                 </div>
                                 <div class="form-group">
-                                    <label for="department">部門:</label>
+                                    <label for="department">行程名稱:</label>
                                     <input type="text" class="form-control" id="department">
                                 </div>
                                 <div class="form-group">
-                                    <label for="position">職位:</label>
+                                    <label for="position">內容簡介:</label>
                                     <input type="text" class="form-control" id="position">
                                 </div>
-                                <div class="form-group">
-                                    <label for="hireDate">入職日期:</label>
+                                <!-- <div class="form-group">
+                                    <label for="hireDate">天數:</label>
                                     <input type="date" class="form-control" id="hireDate">
-                                </div>
+                                </div> -->
                                 <div class="form-group">
-                                    <label for="phone">電話號碼:</label>
+                                    <label for="phone">縣市:</label>
                                     <input type="text" class="form-control" id="phone">
                                 </div>
                                 <div class="form-group">
-                                    <label for="permission">權限:</label>
-                                    <select class="form-control" id="permission">
-                                        <option value="超級管理員">超級管理員</option>
-                                        <option value="網頁管理員">網頁管理員</option>
-                                        <option value="訂單管理員">訂單管理員</option>
-                                    </select>
+                                    <label for="pricr">價格:</label>
+                                    <input type="text" class="form-control" id="price">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberLimit">人數規定:</label>
+                                    <input type="text" class="form-control" id="numberLimit">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tripDescription">行程描述:</label>
+                                    <input type="text" class="form-control" id="tripDescription">
+                                </div>
+                                <div class="form-group">
+                                    <label for="note">特別說明:</label>
+                                    <input type="text" class="form-control" id="note">
                                 </div>
                             </form>
-                        </div>
+                        </div>    
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
                             <button type="button" class="btn btn-primary" id="btnSave">儲存</button>
