@@ -25,71 +25,55 @@ import lombok.Data;
 @RequestMapping("/tripSearch")
 public class TripSearchController {
 
-	@Autowired
-	TripSearchService tripSearchService;
+    @Autowired
+    TripSearchService tripSearchService;
 
-	@GetMapping("/getTripList")
-	public String getTripList() {
-		final List<Trip> tripList = tripSearchService.getTripListWithPic();
-		final String json = new Gson().toJson(tripList);
+    @GetMapping("/getTripList")
+    public String getTripList() {
+        final List<Trip> tripList = tripSearchService.getTripListWithPic();
+        final String json = new Gson().toJson(tripList);
 
-		return json;
-	}
+        return json;
+    }
 
-	@PostMapping("/getTripsBySearch2")
-	public int test(@RequestBody final Dto dto) {
-		for (final String s : dto.getCities()) {
-			System.out.println(s);
-		}
-		return 0;
-	}
+    @PostMapping("/getTripsBySearch")
+    public String getTripsBySearch(final HttpServletRequest request) throws IOException {
+        final BufferedReader reader = request.getReader();
+        final StringBuilder stringBuilder = new StringBuilder();
+        String dataRead;
+        String json = null;
 
-	@Data
-	private static class Dto {
-		private String[] cities;
-	}
+        // ====== 1. retrieved data from request n store in stringBuilder ======
+        while ((dataRead = reader.readLine()) != null) {
+            stringBuilder.append(dataRead);
+        }
 
-	@PostMapping("/getTripsBySearch")
-	public String getTripsBySearch(final HttpServletRequest request) throws IOException {
-		final BufferedReader reader = request.getReader();
-		final StringBuilder stringBuilder = new StringBuilder();
-		String dataRead;
-		String json = null;
+        reader.close();
 
-		// ====== 1. retrieved data from request n store in stringBuilder ======
-		while ((dataRead = reader.readLine()) != null) {
-			stringBuilder.append(dataRead);
-		}
+        // ====== 2. parse to JSON via JSONObject ======
+        JSONObject jsonObject;
 
-		reader.close();
+        try {
+            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
+            // ====== 1. deal with TripOrder ======
 
-		// ====== 2. parse to JSON via JSONObject ======
-		JSONObject jsonObject;
+            // ====== 2. deal with String[] cities ======
+            String cities = jsonObject.getString("cities");
+            String[] stringArray = new Gson().fromJson(cities, String[].class);
+            for(String s: stringArray){
+                System.out.println("test test"+ s);
+            }
 
-		try {
-			jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
-			// ====== 1. deal with TripOrder ======
+            List<Trip> tripList = tripSearchService.getTripBySearch(stringArray);
 
-			// ====== 2. deal with String[] cities ======
-			final String cities = jsonObject.getString("cities");
-			System.out.println("test 2" + cities);
+            json = new Gson().toJson(tripList);
 
-			final ObjectMapper objectMapper = new ObjectMapper();
-			final String[] cityList = objectMapper.readValue(cities, String[].class);
+        } catch (final JSONException e) {
+            e.printStackTrace();
 
-			final List<Trip> tripList = tripSearchService.getTripBySearch(cityList);
-			for (final Trip trip : tripList) {
-				System.out.println(trip.getCity());
-			}
+        }
 
-			json = new Gson().toJson(tripList);
-
-		} catch (final JSONException e) {
-			e.printStackTrace();
-
-		}
-
-		return json;
-	}
+        return json;
+    }
 
 }
