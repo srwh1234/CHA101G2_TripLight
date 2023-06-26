@@ -27,11 +27,11 @@ public class VendorController {
         return vendorService.findAll();
     }
     
-//    @GetMapping("/vendors/info")
-//    public Vendor getVendorInfo(HttpSession httpSession) {
-//        Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
-//        return vendor;
-//    }
+    @GetMapping("/vendors/info")
+    public Vendor getVendorInfo(HttpSession httpSession) {
+        Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
+        return vendor;
+    }
 
     @PostMapping("/vendors")
     public String processVendor(@RequestBody Vendor vendor){

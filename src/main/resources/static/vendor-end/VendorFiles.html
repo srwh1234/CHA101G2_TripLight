@@ -177,36 +177,36 @@
                 <div class="form-container">
                     <form id="vendor-form">
                         <div class="form-files">
-                            <label for="vendor-id">廠商編號</label>
-                            <input type="text" id="vendor-id" name="vendor-id" required/>
+                            <label for="vendorId">廠商編號</label>
+                            <input type="text" id="vendorId" name="vendorId" required/>
                         </div>
                         <div class="form-files">
-                            <label for="vendor-name">廠商名稱 </label>
-                            <input type="text" id="vendor-name" name="vendor-name" required/>
+                            <label for="vendorName">廠商名稱 </label>
+                            <input type="text" id="vendorName" name="vendorName" required/>
                         </div>
                         <div class="form-files">
-                            <label for="vendor-add">廠商地址</label>
-                            <input type="text" id="vendor-add" name="vendor-add" required/>
+                            <label for="vendorAdd">廠商地址</label>
+                            <input type="text" id="vendorAdd" name="vendorAdd" required/>
                         </div>
                         <div class="form-files">
-                            <label for="vendor-phone">廠商連絡電話</label>
-                            <input type="text" id="vendor-phone" name="vendor-phone" required/>
+                            <label for="vendorPhone">廠商連絡電話</label>
+                            <input type="text" id="vendorPhone" name="vendorPhone" required/>
                         </div>
                         <div class="form-files">
-                            <label for="vendor-email">廠商電子信箱</label>
-                            <input type="text" id="vendor-email" name="vendor-email" required/>
+                            <label for="vendorEmail">廠商電子信箱</label>
+                            <input type="text" id="vendorEmail" name="vendorEmail" required/>
                         </div>
                         <div class="form-files">
-                            <label for="ceo-name">負責人姓名</label>
-                            <input type="text" id="ceo-name" name="ceo-name" required/>
+                            <label for="ceoName">負責人姓名</label>
+                            <input type="text" id="ceoName" name="ceoNname" required/>
                         </div>
                         <div class="form-files">
-                            <label for="ceo-phone">負責人電話</label>
-                            <input type="text" id="ceo-phone" name="ceo-phone" required/>
+                            <label for="ceoPhone">負責人電話</label>
+                            <input type="text" id="ceoPhone" name="ceoPhone" required/>
                         </div>
                         <div class="form-files">
-                            <label for="bank-account">銀行帳戶</label>
-                            <input type="text" id="bank-account" name="bank-account" required/>
+                            <label for="bankAccount">銀行帳戶</label>
+                            <input type="text" id="bankAccount" name="bankAccount" required/>
                         </div>
                         <div class="form-files">
                             <label for="review">審核狀態</label>
@@ -245,28 +245,57 @@
     // const obj = JSON.parse(str);
     // document.getElementById("vendor-name").value = obj.vendorName;
 
-    // $(document).ready(function() {
-    //  $.ajax({
-    //     url: '/vendors/info',
-    //     type: 'POST',
-    //     success: function(response) {
-    //     // 将厂商信息填充到页面上的相应元素中
-    //     $('#vendor-id').val(response.vendorId);
-    //     $('#vendor-name').val(response.vendorName);
-    //     $('#vendor-add').val(response.vendorAddress);
-    //     $('#vendor-phone').val(response.vendorPhone);
-    //     // 其他字段类似...
-
-    //      console.log('厂商信息获取成功');
-    //  },
-
-    //  error: function(xhr, status, error) {
-    //         console.log('获取厂商信息失败。错误信息：' + error);
-    //  }
+    // 拿取表單資料
+    const vendorId = $("#vendorId").val();
+    const vendorName = $("#vendorName").val();
+    const vendorAdd = $("#vendorAdd").val();
+    const vendorPhone = $("#vendorPhone").val();
+    const vendorEmail = $("#vendorEmail").val();
+    const ceoName = $("#ceoName").val();
+    const ceoPhone = $("#ceoPhone").val();
+    const bankAccount = $("#bankAccount").val();
+    const review = $("#review").val();
     
-    //  });
+    // 包裝成物件
+    let VendorFiles = {
+        vendorId: vendorId,
+        vendorName: vendorName,
+        vendorAdd: vendorAdd,
+        vendorPhone: vendorPhone,
+        vendorEmail: vendorEmail,
+        ceoName: ceoName,
+        ceoPhone: ceoPhone,
+        // applicationTime: 0,
+        bankAccount: bankAccount,
+        review: review
+    };
 
-    // });
+    $(document).ready(function() {
+     $.ajax({
+        type: 'POST',
+        url: '/vendors/info',
+        success: function(response) {
+        // 將廠商資訊信息填充到頁面上相對應的欄位
+        $('#vendorId').val(response.vendorId);
+        $('#vendorName').val(response.vendorName);
+        $('#vendorAdd').val(response.vendorAddress);
+        $('#vendorPhone').val(response.vendorPhone);
+        $('#vendorEmail').val(response.vendorEmail);
+        $('#ceoName').val(response.ceoName);
+        $('#ceoPhone').val(response.ceoPhone);
+        $('#bankAccount').val(response.bankAccount);
+        $('#review').val(response.review);
+
+         console.log('廠商資訊獲得成功');
+     },
+
+     error: function(xhr, status, error) {
+            console.log('獲取廠商資訊失敗。錯誤：' + error);
+     }
+    
+     });
+
+    });
  </script> 
 
 </html>
