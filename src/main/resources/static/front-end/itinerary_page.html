@@ -650,7 +650,34 @@
             $('#tripContent').text(`${response.tripContent}`);
             $('#tripDescription').html(`${response.tripDescription}`);
             $('#tripNote').html(`${response.tripNote}`);
-
+            
+            
+            //找到會員id
+            let memberId = 0;
+            if (sessionStorage.getItem("test-login")) {
+                memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+            } else {
+                memberId = null;
+            }
+            
+            $.ajax({
+                url: "/existFavorite",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify( {                	
+                	memberId: memberId,
+                	tripId:sessionStorage.getItem('tripId'),
+                	favorite:true,
+                }),
+                success: (response) => {
+                    console.log(response);
+                    if (response) {
+                        $favoriteIcon.addClass("on")
+                    } else { $favoriteIcon.removeClass("on") }
+                }, error: (error) => {
+                    console.log(error);
+                }
+            })
         })
 
         // ====== 日曆區塊 ======
@@ -936,19 +963,19 @@
 
             //先判斷資料庫有沒有資料
 
-            $.ajax({
-                url: "/existFavorite",
-                method: "GET",
-                dataType: "json",
-                success: (response) => {
-                    console.log(response);
-                    if (response) {
-                        $favoriteIcon.addClass("on")
-                    } else { $favoriteIcon.removeClass("on") }
-                }, error: (error) => {
-                    console.log(error);
-                }
-            })
+//             $.ajax({
+//                 url: "/existFavorite",
+//                 method: "GET",
+//                 dataType: "json",
+//                 success: (response) => {
+//                     console.log(response);
+//                     if (response) {
+//                         $favoriteIcon.addClass("on")
+//                     } else { $favoriteIcon.removeClass("on") }
+//                 }, error: (error) => {
+//                     console.log(error);
+//                 }
+//             })
 
             $("#heart").on("click", function () {
                 var requestData = {
