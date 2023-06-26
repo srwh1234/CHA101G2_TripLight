@@ -722,11 +722,23 @@
                 });
 
                 // 發送請求
-                $.post("http://localhost:8080/tripSearch/getTripsBySearch", JSON.stringify(currentChecked), function (response) {
-                    console.log(response);
+//                 $.post("http://localhost:8080/tripSearch/getTripsBySearch", JSON.stringify(currentChecked), function (response) {
+//                     console.log(response);
 
-                    // 渲染頁面
-                },'json');
+//                     // 渲染頁面
+//                 },'json');
+                
+                //姐 我只會用fetch QQ
+                fetch(`http://localhost:8080/tripSearch/getTripsBySearch2`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(currentChecked),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
 
 
 
