@@ -245,28 +245,28 @@
     // const obj = JSON.parse(str);
     // document.getElementById("vendor-name").value = obj.vendorName;
 
-    $(document).ready(function() {
-     $.ajax({
-        url: '/vendors/info',
-        type: 'POST',
-        success: function(response) {
-        // 将厂商信息填充到页面上的相应元素中
-        $('#vendor-id').val(response.vendorId);
-        $('#vendor-name').val(response.vendorName);
-        $('#vendor-add').val(response.vendorAddress);
-        $('#vendor-phone').val(response.vendorPhone);
-        // 其他字段类似...
+    // $(document).ready(function() {
+    //  $.ajax({
+    //     url: '/vendors/info',
+    //     type: 'POST',
+    //     success: function(response) {
+    //     // 将厂商信息填充到页面上的相应元素中
+    //     $('#vendor-id').val(response.vendorId);
+    //     $('#vendor-name').val(response.vendorName);
+    //     $('#vendor-add').val(response.vendorAddress);
+    //     $('#vendor-phone').val(response.vendorPhone);
+    //     // 其他字段类似...
 
-         console.log('厂商信息获取成功');
-     },
+    //      console.log('厂商信息获取成功');
+    //  },
 
-     error: function(xhr, status, error) {
-            console.log('获取厂商信息失败。错误信息：' + error);
-     }
+    //  error: function(xhr, status, error) {
+    //         console.log('获取厂商信息失败。错误信息：' + error);
+    //  }
     
-     });
+    //  });
 
-    });
+    // });
  </script> 
 
 </html>
