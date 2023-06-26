@@ -925,6 +925,7 @@
         } else {
             memberId = null;
         }
+        console.log(memberId);
         //   let sessionTripId = sessionStorage.getItem('tripId');
         var $favoriteIcon = $(".my-favorite").find('i');
 
@@ -935,18 +936,19 @@
 
             //先判斷資料庫有沒有資料
 
-            // $.ajax({
-            //     url: "/existFavorite/" + memberId,
-            //     type: "Get",
-            //     success: (response) => {
-            //         console.log(response);
-            //         if (response) {
-            //             $favoriteIcon.addClass("on")
-            //         } else { $favoriteIcon.removeClass("on") }
-            //     }, error: (error) => {
-            //         console.log(error);
-            //     }
-            // })
+            $.ajax({
+                url: "/existFavorite",
+                method: "GET",
+                dataType: "json",
+                success: (response) => {
+                    console.log(response);
+                    if (response) {
+                        $favoriteIcon.addClass("on")
+                    } else { $favoriteIcon.removeClass("on") }
+                }, error: (error) => {
+                    console.log(error);
+                }
+            })
 
             $("#heart").on("click", function () {
                 var requestData = {

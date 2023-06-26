@@ -171,7 +171,7 @@ function generateGroup() {
                    <div class="item_content">
                      <h1 class="item_title">${g_favorite[i].tripName}</h1>
                      <div class="box">
-                         <p class="Number dynamic-text">${g_favorite[i].tripDescription}</p>
+                         <p class="Number dynamic-text">${g_favorite[i].tripContent}</p>
                      </div>
                      <div id="allPrice">
                          <p class="price">成人 TWD </p>

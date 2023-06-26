@@ -1,12 +1,12 @@
 package com.tw.trip.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.trip.pojo.Trip;
@@ -31,9 +31,12 @@ public class TripFavoriteController {
 	}
 
 //確認是存在DB裡
-//	@GetMapping("/existFavorite/{memberId}")
+	@GetMapping("/existFavorite")
+	public boolean existFavorite(@RequestBody FavoriteReqDto reqDto) {
+		return tripFavoriteService.checkIfExists(reqDto);
+	}
 //	public boolean existFavorite(@PathVariable Integer memberId, Trip trip) {
-//
+//		
 //		boolean favoriteStatus = tripFavoriteService.checkIfExists(memberId, trip);
 //		if (favoriteStatus) {
 //			System.out.println("存在");
@@ -43,6 +46,7 @@ public class TripFavoriteController {
 //			return false;
 //		}
 //	}
+
 
 	@Data
 	public static class DetailDto {
