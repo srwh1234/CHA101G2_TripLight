@@ -1,7 +1,7 @@
 package com.tw.contact.controller;
 
-import com.tw.contact.QuestionReportRequestDTO;
-import com.tw.contact.modelJPA.QuestionReport;
+import com.tw.contact.dto.QuestionReportRequestDTO;
+import com.tw.contact.model.QuestionReport;
 import com.tw.contact.service.QuestionReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +55,8 @@ public class QuestionReportController {
     public QuestionReport showQuestionDetail(@RequestParam int id){
         return questionReportService.checkQuestionDetail(id);
     }
+
+    
     /*
     後臺處理
      */

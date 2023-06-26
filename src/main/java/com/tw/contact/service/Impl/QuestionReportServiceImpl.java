@@ -1,8 +1,8 @@
 package com.tw.contact.service.Impl;
 
-import com.tw.contact.QuestionReportRequestDTO;
-import com.tw.contact.modelJPA.QuestionReport;
-import com.tw.contact.modelJPA.dao.QuestionReportRepository;
+import com.tw.contact.dto.QuestionReportRequestDTO;
+import com.tw.contact.model.QuestionReport;
+import com.tw.contact.model.dao.QuestionReportRepository;
 import com.tw.contact.service.QuestionReportService;
 import com.tw.employee.dao.EmployeeRepository;
 import com.tw.member.model.dao.MemberRepository;
