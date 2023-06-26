@@ -236,14 +236,37 @@
 
 
 </body>
-<!-- <script>
+<script>
 
      // ajax form 表單
      // http://localhost:8080/vendors/1
 
-    var str = '{"vendorName":"澎湖銀海遊艇公司","vendorAdd":"澎湖縣白沙鄉鳥嶼村95之1號","vendorPhone":"06-9916007","ceoEmail":"abc123123@gmail.com","ceoName":"跨海大橋的看到鬼","ceoPhone":"0937-629424","applicationTime":"2023-05-21 20:42:57","review":"1","bankAccount":"台灣銀行004      024 001 106082","contractTerm":"合作條款","loginAccount":"vendor01","loginPassword":"vendor01","vendorEmail":"abc123123@gmail.com","_links":{"self":{"href":"http://localhost:8080/vendors/1"},"vendor":{"href":"http://localhost:8080/vendors/1"}}}';
-    const obj = JSON.parse(str);
-    document.getElementById("vendor-name").value = obj.vendorName;
- </script> -->
+    // var str = '{"vendorName":"澎湖銀海遊艇公司","vendorAdd":"澎湖縣白沙鄉鳥嶼村95之1號","vendorPhone":"06-9916007","ceoEmail":"abc123123@gmail.com","ceoName":"跨海大橋的看到鬼","ceoPhone":"0937-629424","applicationTime":"2023-05-21 20:42:57","review":"1","bankAccount":"台灣銀行004      024 001 106082","contractTerm":"合作條款","loginAccount":"vendor01","loginPassword":"vendor01","vendorEmail":"abc123123@gmail.com","_links":{"self":{"href":"http://localhost:8080/vendors/1"},"vendor":{"href":"http://localhost:8080/vendors/1"}}}';
+    // const obj = JSON.parse(str);
+    // document.getElementById("vendor-name").value = obj.vendorName;
+
+    $(document).ready(function() {
+     $.ajax({
+        url: '/vendors/info',
+        type: 'POST',
+        success: function(response) {
+        // 将厂商信息填充到页面上的相应元素中
+        $('#vendor-id').val(response.vendorId);
+        $('#vendor-name').val(response.vendorName);
+        $('#vendor-add').val(response.vendorAddress);
+        $('#vendor-phone').val(response.vendorPhone);
+        // 其他字段类似...
+
+         console.log('厂商信息获取成功');
+     },
+
+     error: function(xhr, status, error) {
+            console.log('获取厂商信息失败。错误信息：' + error);
+     }
+    
+     });
+
+    });
+ </script> 
 
 </html>
