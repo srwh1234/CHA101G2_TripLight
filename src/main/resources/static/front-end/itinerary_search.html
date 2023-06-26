@@ -394,13 +394,13 @@
                                 <div class="collapse" id="zoneE">
                                     <div class="card card-body">
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="高雄市" id="kaohsiung">
-                                            <label for="kaohsiung"
+                                            <input class="form-check-input" type="checkbox" value="高雄市" id="tripZone15">
+                                            <label for="tripZone15"
                                                 class="form-check-label align-self-center">高雄市</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="屏東縣" id="pingtung">
-                                            <label for="pingtung" class="form-check-label align-self-center">屏東縣</label>
+                                            <input class="form-check-input" type="checkbox" value="屏東縣" id="tripZone16">
+                                            <label for="tripZone16" class="form-check-label align-self-center">屏東縣</label>
                                         </div>
 
                                     </div>
@@ -418,16 +418,16 @@
                                 <div class="collapse" id="zoneF">
                                     <div class="card card-body">
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="宜蘭縣" id="ilan">
-                                            <label for="ilan" class="form-check-label align-self-center">宜蘭縣</label>
+                                            <input class="form-check-input" type="checkbox" value="宜蘭縣" id="tripZone17">
+                                            <label for="tripZone17" class="form-check-label align-self-center">宜蘭縣</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="花蓮縣" id="hualien">
-                                            <label for="hualien" class="form-check-label align-self-center">花蓮縣</label>
+                                            <input class="form-check-input" type="checkbox" value="花蓮縣" id="tripZone18">
+                                            <label for="tripZone18" class="form-check-label align-self-center">花蓮縣</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="臺東縣" id="taitung">
-                                            <label for="taitung" class="form-check-label align-self-center">臺東縣</label>
+                                            <input class="form-check-input" type="checkbox" value="臺東縣" id="tripZone19">
+                                            <label for="tripZone19" class="form-check-label align-self-center">臺東縣</label>
                                         </div>
 
                                     </div>
@@ -445,17 +445,17 @@
                                 <div class="collapse" id="zoneG">
                                     <div class="card card-body">
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="金門縣" id="kinmen">
-                                            <label for="kinmen" class="form-check-label align-self-center">金門縣</label>
+                                            <input class="form-check-input" type="checkbox" value="金門縣" id="tripZone20">
+                                            <label for="tripZone20" class="form-check-label align-self-center">金門縣</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="連江縣" id="lianjiang">
-                                            <label for="lianjiang"
+                                            <input class="form-check-input" type="checkbox" value="連江縣" id="tripZone21">
+                                            <label for="tripZone21"
                                                 class="form-check-label align-self-center">連江縣</label>
                                         </div>
                                         <div class="form-check d-flex gap-3">
-                                            <input class="form-check-input" type="checkbox" value="澎湖縣" id="penghu">
-                                            <label for="penghu" class="form-check-label align-self-center">澎湖縣</label>
+                                            <input class="form-check-input" type="checkbox" value="澎湖縣" id="tripZone22">
+                                            <label for="tripZone22" class="form-check-label align-self-center">澎湖縣</label>
                                         </div>
 
                                     </div>
@@ -708,31 +708,45 @@
 
 
             $(document).on('click', '[id^="tripZone"]', function () {
-
-
+                // 存放當下被點擊的搜尋條件
                 const currentChecked = {
                     // keyword: $('#ticketSearchText').val(),
                     // tripDayType: [],
                     cities: [],
-                    size: 5,
+                    // size: 5,
                 };
+
+                // 當下被點擊的 cities 存入陣列
                 $('[id^="tripZone"]:checked').each((i, v) => {
                     currentChecked.cities.push(v.value);
                 });
 
+                // 發送請求
+//                 $.post("http://localhost:8080/tripSearch/getTripsBySearch", JSON.stringify(currentChecked), function (response) {
+//                     console.log(response);
 
-                console.log(post);
+//                     // 渲染頁面
+//                 },'json');
+                
+                //姐 我只會用fetch QQ
+                fetch(`http://localhost:8080/tripSearch/getTripsBySearch2`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(currentChecked),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
+
 
 
 
 
             });
 
-
-
-            // $('[id^="ticketType"]:checked').each((i, v) => {
-            //     post.types.push(v.value);
-            // });
+            // ====== // 搜尋功能 待完成 ======
 
 
 

@@ -76,18 +76,6 @@ public class TripFavoriteService {
 	}
 
 	// 判斷是不是已經收藏的
-
-	// public boolean checkIfExists(Integer memberId, Trip trip) {
-	// List<TripFavorite> findMember = tripFavoriteRepository.findByKeyMemberId(memberId);
-	// for (TripFavorite favorite : findMember) {
-	// if (favorite.getKey().getTrip().equals(trip)) {
-	// return true; // 資料存在
-	// }
-	// }
-	// return false; // 資料不存在
-	//
-	// }
-	//
 	public boolean checkIfExists(final FavoriteReqDto reqDto) {
 		final Trip trip = tripRepository.findById(reqDto.getTripId()).orElse(null);
 		final boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(), trip));
@@ -95,6 +83,8 @@ public class TripFavoriteService {
 		return isFavorite;
 	}
 
+	
+	
 	public DetailDto getAllTripItem(final int memberId, final int tripId) {
 		final Trip trip = tripRepository.findById(tripId).orElse(null);
 

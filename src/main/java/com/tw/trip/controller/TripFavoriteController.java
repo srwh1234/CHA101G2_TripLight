@@ -33,17 +33,6 @@ public class TripFavoriteController {
 	public boolean existFavorite(@RequestBody final FavoriteReqDto reqDto) {
 		return tripFavoriteService.checkIfExists(reqDto);
 	}
-	// public boolean existFavorite(@PathVariable Integer memberId, Trip trip) {
-	//
-	// boolean favoriteStatus = tripFavoriteService.checkIfExists(memberId, trip);
-	// if (favoriteStatus) {
-	// System.out.println("存在");
-	// return true;
-	// } else {
-	// System.out.println("不存在");
-	// return false;
-	// }
-	// }
 
 	@Data
 	public static class DetailDto {
