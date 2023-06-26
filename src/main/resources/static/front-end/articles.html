@@ -24,6 +24,25 @@
     }
   </script>
 
+  <style>
+    .fixed-size-image {
+      width: 200px;
+      /* 設定圖片寬度為200像素 */
+      height: 150px;
+      /* 設定圖片高度為150像素 */
+      object-fit: cover;
+      /* 使用object-fit屬性調整圖片填滿區塊，可能需要進一步調整該屬性以符合您的需求 */
+    }
+
+    .clamp-lines {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      /* 設定要顯示的行數 */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+
   <!-- css files -->
   <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
   <!-- bootstrap css -->
@@ -464,14 +483,14 @@
           $('#articleContainer').append(`
             <div class="col mb-3">
                     <div class="card my-nav-link" position-relative">
-                        <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top" />
+                        <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image" />
                     </div>
                 <div class="card-body">
                   <h5 class="card-title">
                     <span>【${articleType}】</span>
                     <span>${article.articleTitle}</span>
                     </h5>
-                    <p class="card-text">${article.articlePostContent}</p>
+                    <p class="card-text clamp-lines">${article.articlePostContent}</p>
                 </div>    
                 <div class="d-flex justify-content-between" style="padding: 0 10px;">
                   <p>${article.memberName}</p>

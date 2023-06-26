@@ -5,6 +5,8 @@ import java.util.List;
 import com.tw.form.service.EmailSenderService;
 import com.tw.form.util.HTMLFormat;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,12 @@ public class VendorController {
     public List<Vendor> getveVendors() {
         return vendorService.findAll();
     }
+    
+//    @GetMapping("/vendors/info")
+//    public Vendor getVendorInfo(HttpSession httpSession) {
+//        Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
+//        return vendor;
+//    }
 
     @PostMapping("/vendors")
     public String processVendor(@RequestBody Vendor vendor){

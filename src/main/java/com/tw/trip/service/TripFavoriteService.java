@@ -62,7 +62,8 @@ public class TripFavoriteService {
 		// 如果是已經收藏的 就取消收藏
 		 boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(), trip));
 		if (isFavorite) {
-			tripFavoriteRepository.deleteById(new PrimaryKey2(reqDto.getMemberId(), trip));
+//			tripFavoriteRepository.deleteById(new PrimaryKey2(reqDto.getMemberId(), trip));
+			tripFavoriteRepository.deleteById(new PrimaryKey2(reqDto.getMemberId(),trip));
 			System.out.println("delete");
 			return FAVORITE_DEL_OK;
 		}
@@ -80,19 +81,25 @@ public class TripFavoriteService {
 
 	// 判斷是不是已經收藏的
 
-	public boolean checkIfExists(Integer memberId, Trip trip) {
-		// 使用 memberId 和 tripId 查詢 TripFavorite 物件
-		List<TripFavorite> findMember = tripFavoriteRepository.findByKeyMemberId(memberId);
-		// 檢查是否找到符合條件的 TripFavorite 物件
-		if (!findMember.isEmpty()) {
-			for (TripFavorite favorite : findMember) {
-				if (favorite.getKey().getTrip() != null) {
-					return true; // 資料存在
-				}
-			}
-		}
-		return false; // 資料不存在
+//	public boolean checkIfExists(Integer memberId, Trip trip) {
+//		 List<TripFavorite> findMember = tripFavoriteRepository.findByKeyMemberId(memberId);
+//	        for (TripFavorite favorite : findMember) {
+//	            if (favorite.getKey().getTrip().equals(trip)) {
+//	                return true; // 資料存在
+//	            }
+//	        }
+//	        return false; // 資料不存在
+//	    
+//	}
+//	
+	public boolean checkIfExists(FavoriteReqDto reqDto) {
+		Trip trip = tripRepository.findById(reqDto.getTripId()).orElse(null);
+		boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(),trip));
+		System.out.println(isFavorite);
+		return isFavorite;
 	}
+	
+	
 	
 	
 

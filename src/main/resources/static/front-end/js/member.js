@@ -230,7 +230,6 @@ $(document).ready(function () {
 			if ($('#city').val() !== null) {
 				$('#city').trigger('change');
 			} else {
-				console.log('GGGGGGGGGG');
 			}
 		},
 		error: function (error) {

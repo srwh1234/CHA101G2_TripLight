@@ -103,12 +103,10 @@ public class MyFavoriteService {
 			detail.setTripName(t.getTripName());
 			detail.setPriceAdult(t.getPriceAdult());
 			detail.setPriceChild(t.getPriceChild());
-			detail.setTripDescription(t.getTripDescription());	
-		//	detail.setImageBase64(tripImageService.findImgUrl(t.getTripId());
+			detail.setTripContent(t.getTripContent());	
 			detail.setImgUrl(tripImageService.findImgUrl(t.getTripId()));
 			result.add(detail);
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -131,7 +129,7 @@ public class MyFavoriteService {
 		private String tripName;
 		private Integer priceAdult;
 		private Integer priceChild;
-		private String tripDescription;
+		private String tripContent;
 		private TripImage imageBase64;
 		
 		private String imgUrl;
