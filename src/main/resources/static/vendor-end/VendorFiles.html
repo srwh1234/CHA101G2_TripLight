@@ -246,39 +246,41 @@
     // document.getElementById("vendor-name").value = obj.vendorName;
 
     // 拿取表單資料
-    const vendorId = $("#vendorId").val();
-    const vendorName = $("#vendorName").val();
-    const vendorAdd = $("#vendorAdd").val();
-    const vendorPhone = $("#vendorPhone").val();
-    const vendorEmail = $("#vendorEmail").val();
-    const ceoName = $("#ceoName").val();
-    const ceoPhone = $("#ceoPhone").val();
-    const bankAccount = $("#bankAccount").val();
-    const review = $("#review").val();
+    // const vendorId = $("#vendorId").val();
+    // const vendorName = $("#vendorName").val();
+    // const vendorAdd = $("#vendorAdd").val();
+    // const vendorPhone = $("#vendorPhone").val();
+    // const vendorEmail = $("#vendorEmail").val();
+    // const ceoName = $("#ceoName").val();
+    // const ceoPhone = $("#ceoPhone").val();
+    // const bankAccount = $("#bankAccount").val();
+    // const status = $("#review").val();
     
-    // 包裝成物件
-    let VendorFiles = {
-        vendorId: vendorId,
-        vendorName: vendorName,
-        vendorAdd: vendorAdd,
-        vendorPhone: vendorPhone,
-        vendorEmail: vendorEmail,
-        ceoName: ceoName,
-        ceoPhone: ceoPhone,
-        // applicationTime: 0,
-        bankAccount: bankAccount,
-        review: review
-    };
+    // // 包裝成物件
+    // let VendorFiles = {
+    //     vendorId: vendorId,
+    //     vendorName: vendorName,
+    //     vendorAdd: vendorAdd,
+    //     vendorPhone: vendorPhone,
+    //     vendorEmail: vendorEmail,
+    //     ceoName: ceoName,
+    //     ceoPhone: ceoPhone,
+    //     // applicationTime: 0,
+    //     bankAccount: bankAccount,
+    //     review: review
+    // };
 
     $(document).ready(function() {
      $.ajax({
-        type: 'POST',
-        url: '/vendors/info',
+        type: 'GET',
+        url: 'http://localhost:8080/vendors/info',
+        contentType: 'application/json',
         success: function(response) {
+            console.log("123"+response);
         // 將廠商資訊信息填充到頁面上相對應的欄位
         $('#vendorId').val(response.vendorId);
         $('#vendorName').val(response.vendorName);
-        $('#vendorAdd').val(response.vendorAddress);
+        $('#vendorAdd').val(response.vendorAdd);
         $('#vendorPhone').val(response.vendorPhone);
         $('#vendorEmail').val(response.vendorEmail);
         $('#ceoName').val(response.ceoName);
@@ -289,11 +291,12 @@
          console.log('廠商資訊獲得成功');
      },
 
-     error: function(xhr, status, error) {
+     error: function(error) {
             console.log('獲取廠商資訊失敗。錯誤：' + error);
      }
     
      });
+
 
     });
  </script> 
