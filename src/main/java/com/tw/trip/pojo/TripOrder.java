@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Setter
@@ -43,5 +44,23 @@ public class TripOrder {
     private Integer refundStatus;
 
     private String refundReason;
+
+    @Transient
+    private String formattedPayDate;
+
+
+    public TripOrder(Timestamp payDate, Integer orderStatus, Integer travelersAdult, Integer travelersChildren, String remarks){
+
+        // 創建 SimpleDateFormat 物件並設置日期格式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // 使用 SimpleDateFormat 將 Timestamp 轉換為格式化的日期字符串
+        formattedPayDate = sdf.format(payDate);
+
+        this.orderStatus = orderStatus;
+        this.travelersAdult = travelersAdult;
+        this.travelersChildren = travelersChildren;
+        this.remarks = remarks;
+    }
 
 }

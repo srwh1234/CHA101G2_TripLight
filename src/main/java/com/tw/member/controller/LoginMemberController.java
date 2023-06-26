@@ -20,11 +20,6 @@ public class LoginMemberController {
 	@Autowired
 	private LoginMemberService memberService;
 
-//	@GetMapping("/getMember/{Id}")
-//	public ResponseEntity<Member> getMemberById(@PathVariable int Id, @RequestBody Member data) {
-//		Member member = memberService.getMemberById(Id, data);
-//		return ResponseEntity.ok(member);
-//	}
 	@GetMapping("/memberdetail/{id}")
 	public MemberDetail detail(@PathVariable("id") int id) {
 		return memberService.getItem(id);

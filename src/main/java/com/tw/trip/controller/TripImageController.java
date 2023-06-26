@@ -24,4 +24,5 @@ public class TripImageController {
     public byte[] getPhoto(@PathVariable("imgUrl") final int id) {
         return tripService.findImg(id);
     }
+
 }

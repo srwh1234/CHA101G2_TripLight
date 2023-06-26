@@ -16,6 +16,7 @@ public interface TripFavoriteRepository extends JpaRepository<TripFavorite,Prima
 	// 刪除
 	public void deleteByKeyMemberId(int memberId);
 
+//	public void deleteByKeyTrip(PrimaryKey2 key);
 	public void deleteByKeyTrip(PrimaryKey2 key);
 
 	//public TripFavorite findByKeyMemberId(int memberId);

@@ -45,4 +45,5 @@ public class TripDaoImpl implements TripDao {
         Query<Trip> query = session.createQuery("FROM Trip", Trip.class);
         return query.getResultList(); // get List<Trip>
     }
+
 }

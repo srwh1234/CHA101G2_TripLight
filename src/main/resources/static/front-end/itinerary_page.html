@@ -111,12 +111,10 @@
                         </ul>
                     </li>
                     <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-                    <li class="member_li"><a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a></li>
                     <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
                     </li>
                     <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
                     </li>
-                    <li class="member_li"><a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a></li>
                     <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
                     </li>
                     <li class="member_li"><a href="read_question_list.html"><i
@@ -652,7 +650,34 @@
             $('#tripContent').text(`${response.tripContent}`);
             $('#tripDescription').html(`${response.tripDescription}`);
             $('#tripNote').html(`${response.tripNote}`);
-
+            
+            
+            //找到會員id
+            let memberId = 0;
+            if (sessionStorage.getItem("test-login")) {
+                memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+            } else {
+                memberId = null;
+            }
+            
+            $.ajax({
+                url: "/existFavorite",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify( {                	
+                	memberId: memberId,
+                	tripId:sessionStorage.getItem('tripId'),
+                	favorite:true,
+                }),
+                success: (response) => {
+                    console.log(response);
+                    if (response) {
+                        $favoriteIcon.addClass("on")
+                    } else { $favoriteIcon.removeClass("on") }
+                }, error: (error) => {
+                    console.log(error);
+                }
+            })
         })
 
         // ====== 日曆區塊 ======
@@ -927,6 +952,7 @@
         } else {
             memberId = null;
         }
+        console.log(memberId);
         //   let sessionTripId = sessionStorage.getItem('tripId');
         var $favoriteIcon = $(".my-favorite").find('i');
 
@@ -937,18 +963,19 @@
 
             //先判斷資料庫有沒有資料
 
-            // $.ajax({
-            //     url: "/existFavorite/" + memberId,
-            //     type: "Get",
-            //     success: (response) => {
-            //         console.log(response);
-            //         if (response) {
-            //             $favoriteIcon.addClass("on")
-            //         } else { $favoriteIcon.removeClass("on") }
-            //     }, error: (error) => {
-            //         console.log(error);
-            //     }
-            // })
+//             $.ajax({
+//                 url: "/existFavorite",
+//                 method: "GET",
+//                 dataType: "json",
+//                 success: (response) => {
+//                     console.log(response);
+//                     if (response) {
+//                         $favoriteIcon.addClass("on")
+//                     } else { $favoriteIcon.removeClass("on") }
+//                 }, error: (error) => {
+//                     console.log(error);
+//                 }
+//             })
 
             $("#heart").on("click", function () {
                 var requestData = {

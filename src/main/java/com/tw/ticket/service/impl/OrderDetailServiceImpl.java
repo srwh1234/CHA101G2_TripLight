@@ -20,6 +20,7 @@ import com.tw.ticket.model.TicketSn;
 import com.tw.ticket.model.dao.TicketCommentRepository;
 import com.tw.ticket.model.dao.TicketOrderDetailRepository;
 import com.tw.ticket.model.dao.TicketOrderRepository;
+import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.service.OrderDetailService;
 
 @Service
@@ -36,6 +37,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Autowired
 	private TicketCommentRepository commentRepository;
+
+	@Autowired
+	private TicketRepository repository;
 
 	/**
 	 * 取得訂單明細清單
@@ -121,11 +125,20 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		if (detail == null) {
 			return false;
 		}
-		// 藏的有點深的票券編號
-		final int ticketId = detail.getKey().getTicketSn().getTicket().getTicketId();
+		// 票券的評價要累加
+		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+		int ratingSum = ticket.getRatingSum() + reqDto.getRating();
+		final int ratingCount = ticket.getRatingCount() + 1;
+		final int avg = ratingSum / ratingCount;
+		if (avg > 5 || avg < 1) {
+			ratingSum = ratingCount * 5;
+		}
+		ticket.setRatingSum(ratingSum);
+		ticket.setRatingCount(ratingCount);
+		repository.save(ticket);
 
 		final TicketComment comment = new TicketComment();
-		comment.setTicketId(ticketId);
+		comment.setTicketId(ticket.getTicketId());
 		comment.setMember(member);
 		comment.setComment(reqDto.getComment());
 		comment.setStatus(TicketComment.STATUS_SHOW);
