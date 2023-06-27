@@ -11,11 +11,11 @@ $(document).ready(function () {
     });
 
     // 監聽登出連結的點擊事件
-    $(document).on('click', '#logoutLink', function () {
-        // 執行登出相關操作
-
-        // 跳轉到 login.html 頁面
-        window.location.href = 'login.html';
-    });
+//    $(document).on('click', '#logoutLink', function () {
+//        // 執行登出相關操作
+//
+//        // 跳轉到 login.html 頁面
+//        window.location.href = 'login.html';
+//    });
 });
 

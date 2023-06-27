@@ -18,12 +18,12 @@ public class BKLoginService {
 	public Employee bklogin(String account, String password) {
 		Employee employee = employeeRepository.findByEmployeeAccount(account);
 
-		if (employee != null && employee.getEmployeePassword().equals(password)) {
-			// 帳號和密碼驗證成功
+		if (employee != null && employee.getEmployeePassword().equals(password) && employee.getEmployeeStatus() == 1) {
+			// 帳號、密碼和employeestatus验证成功
 			return employee;
 		}
 
-		// 帳號和密碼驗證失敗
+		// 帳號、密碼或employeestatus验证失败
 		return null;
 	}
 }
