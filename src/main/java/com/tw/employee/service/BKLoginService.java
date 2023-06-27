@@ -19,11 +19,11 @@ public class BKLoginService {
 		Employee employee = employeeRepository.findByEmployeeAccount(account);
 
 		if (employee != null && employee.getEmployeePassword().equals(password) && employee.getEmployeeStatus() == 1) {
-			// 帳號、密碼和employeestatus验证成功
+			// 成功
 			return employee;
 		}
 
-		// 帳號、密碼或employeestatus验证失败
+		// 失败
 		return null;
 	}
 }
