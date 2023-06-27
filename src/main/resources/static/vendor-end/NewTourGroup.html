@@ -22,6 +22,34 @@
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
     <link href="css/empolyeeform.css" rel="stylesheet">
+    <style>
+        div.dataTables_wrapper div.dataTables_length select {
+            width: auto;
+            display: inline-block;
+        }
+
+        #dataTable_filter {
+            position: relative;
+        }
+
+        #dataTable_filter input {
+            position: absolute;
+            transform: translate(45px, -28px);
+            width: 180px;
+        }
+
+        #dataTable_filter label {
+            position: absolute;
+            transform: translate(260px, 5px);
+            /* 调整 label 的位置，使其与输入框对齐 */
+        }
+
+        #dataTable {
+            white-space: normal;
+            word-break: break-all;
+            white-space: nowrap
+        }
+    </style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
