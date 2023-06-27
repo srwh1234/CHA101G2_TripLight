@@ -9,8 +9,8 @@ public class CustomWebMvcConfigurer implements WebMvcConfigurer {
 
 	  @Override
 	    public void addInterceptors(InterceptorRegistry registry) {
-	        registry.addInterceptor(new BKloginIntercetor())
-	        		.addPathPatterns("/back-end/*.html") // 指定攔截的路徑只攔截html
+	        registry.addInterceptor(new BKloginIntercetor()) //註冊要使用的類別
+	        		.addPathPatterns("/back-end/*.html") // 指定攔截的路徑只攔截到back-end的html
 	                .excludePathPatterns("/back-end/login.html"); // 排除登入頁面的路徑
 	    }
 }
