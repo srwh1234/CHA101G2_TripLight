@@ -223,18 +223,18 @@
                 </div>
                 
 <script>
-$("#logoutLink").click(function () {
-	 $.ajax({
-type: "GET",
-	 url: "/BKlogout", 
-	 success: function () {
-window.location.href = "http://localhost:8080/back-end/login.html";
-  },
-error: function () {
+		$("#logoutLink").click(function () {
+	 			$.ajax({
+				type: "GET",
+				url: "/BKlogout", 
+				 success: function () {
+				window.location.href = "http://localhost:8080/back-end/login.html";
+  						},
+				error: function () {
 
-   }
-	});
-	});
+   				}
+				});
+				});
     $(document).ready(function() {
     $('#employee-form').submit(function(e) {
         e.preventDefault(); // 阻止表單默認的提交行為
