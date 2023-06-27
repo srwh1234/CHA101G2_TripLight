@@ -1,8 +1,10 @@
 package com.tw.article.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tw.article.model.Article;
 import com.tw.article.service.ArticleService;
 import com.tw.member.model.Member;
@@ -41,11 +44,23 @@ public class ArticleController {
 	private MemberRepository memberRepository;
 
 	// 定義GET請求處理方法：單一
-	@GetMapping("/{articleId}")
-	public Article getArticle(@PathVariable Integer articleId) {
-		return articleService.findById(articleId);
-	}
+	@GetMapping("/articleId/{id}")
+	public Article getArticle(@PathVariable("id") Integer articleId) {
 
+		System.out.println(articleId);
+		
+		Article article = articleService.findById(articleId);
+		
+		Member member = memberRepository.findById(article.getMemberId()).orElse(null);
+
+		if (member != null) {
+			DataArticle dataArticle = new DataArticle(article);
+			dataArticle.setMemberName(member.getMemberNameFirst() + member.getMemberNameLast());
+			article.setMemberName(dataArticle.getMemberName());
+		}
+		return article;
+	}
+	
 	// 定義GET請求處理方法：全部
 	@GetMapping("/articles")
 	public List<DataArticle> getAllArticles() {
@@ -66,19 +81,21 @@ public class ArticleController {
 	}
 
 	// 定義POST請求處理方法
-	@PostMapping
-	public Article createArticle(@RequestParam("articleTitle") String articleTitle,
-            @RequestParam("articleTypeId") int articleTypeId,
-            @RequestParam("articlePostContent") String articlePostContent,
-            @RequestParam("articlePicture") byte[] articlePicture) {
-		
-		Article article = new Article();
-	    article.setArticleTitle(articleTitle);
-	    article.setArticleTypeId(articleTypeId);
-	    article.setArticlePostContent(articlePostContent);
-	    article.setArticlePicture(articlePicture);
+	@PostMapping("/addarticle")
+	public Article addarticle(@RequestParam("image") MultipartFile file, @RequestParam("article") String jsonString) {
+		Article article = null;
 
-		return articleService.save(article);
+		try {
+			article = new ObjectMapper().readValue(jsonString, Article.class);
+			article.setArticlePicture(file.getBytes());
+			article.setArticlePostTime(new Timestamp(System.currentTimeMillis()));
+			articleService.save(article);
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return article;
 	}
 
 	// 定義PUT請求處理方法
@@ -100,19 +117,19 @@ public class ArticleController {
 	public List<Article> getArticleService() {
 		return articleService.getAllArticle();
 	}
-	
+
 	@GetMapping(value = "/article/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
-	public byte[] findPicture (@PathVariable("imgUrl") final int id) {
+	public byte[] findPicture(@PathVariable("imgUrl") final int id) {
 		return articleService.findPicture(id);
 	}
-	
+
 	@PostMapping("/artiupload")
 	public boolean uploadPicture(//
-	@RequestParam("image") final MultipartFile file, //
-	@RequestParam("article") final String json) {
-		return articleService.uploadPicture(file,json);
+			@RequestParam("image") final MultipartFile file, //
+			@RequestParam("article") final String json) {
+		return articleService.uploadPicture(file, json);
 	}
-	
+
 	@Data
 	public static class DataArticle {
 

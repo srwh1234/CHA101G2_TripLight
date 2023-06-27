@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <title>TripLight | article_detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <!-- 關鍵字設定 -->
+    <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+    <!-- 網頁介紹 -->
+    <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+
+    <script>
+        addEventListener(
+            "load",
+            function () {
+                setTimeout(hideURLbar, 0);
+            },
+            false
+        );
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .PostContent_body {
+            width: 600px;
+            height: 300px;
+            overflow: auto;
+        }
+    </style>
+
+    <!-- css files -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap css -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!-- custom css -->
+    <link href="css/fontawesome-all.css" rel="stylesheet" />
+    <!-- fontawesome css -->
+    <!-- //css files -->
+
+    <!-- google fonts -->
+    <!-- 載入字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
+    <!-- //google fonts -->
+
+    <!-- 載入icon -->
+    <link rel="shortcut icon" href="./images/icon.png" />
+    <link rel="bookmark" href="./images/icon.png" />
+    <!--jQuery-->
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <!--會員登入-->
+    <link href="css/login.css" rel="stylesheet" />
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <!--datatable-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
+
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="container" style="padding-right: 0px">
+            <!-- nav -->
+            <nav class="py-md-4 py-3">
+                <div id="logo">
+                    <h1 class="mt-md-0 mt-2">
+                        <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+                            TripLight
+                        </a>
+                    </h1>
+                </div>
+                <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+                <input type="checkbox" id="drop" />
+                <ul class="menu ml-auto mt-1">
+                    <li class="active"><a href="index.html">首頁</a></li>
+                    <li class=""><a href="booking.html">AI行程規劃</a></li>
+                    <li class=""><a href="tickets.html">票券</a></li>
+                    <li class=""><a href="packages.html">套裝行程</a></li>
+                    <li class=""><a href="articles.html">旅遊文章</a></li>
+                    <li class="booking"><a href="" id="login">登入/註冊</a></li>
+                    <li class="">
+                        <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- //nav -->
+
+            <div class="member">
+                <ul class="member_list">
+                    <li class="member_li">
+                        <a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+                    </li>
+                    <li class="member_li" id="order_li">
+                        <a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+                        <ul class="order_list">
+                            <li class="order_content">
+                                <a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a>
+                            </li>
+                            <li class="order_content">
+                                <a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="member_li">
+                        <a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a>
+                    </li>
+                    <li class="member_li" id="logout_li">
+                        <a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!-- //header -->
+    <!-- 登入 -->
+
+    <div id="login-container">
+        <!---container--->
+
+        <div class="main-box login">
+            <h3>登入</h3>
+            <form action="">
+                <div class="input-box">
+                    <i class="fas fa-envelope icon2"></i>
+                    <input type="email" name="email" id="email" required />
+                    <label for="">信箱</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock icon2"></i>
+                    <input type="password" name="password" id="password" required />
+                    <label for="">密碼</label>
+                </div>
+                <div class="check">
+                    <label><input type="checkbox" />記住我</label>
+                    <a href="#">忘記密碼</a>
+                </div>
+                <button type="submit" class="main-btn">Login</button>
+                <div class="register">
+                    <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="main-box register">
+            <h3>註冊</h3>
+            <form action="">
+                <div class="input-box">
+                    <i class="fas fa-user icon2"></i>
+                    <input type="email" name="email" required />
+                    <label for="">使用者名稱</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-envelope icon2"></i>
+                    <input type="email" name="email" required />
+                    <label for="">信箱</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock icon2"></i>
+                    <input type="password" name="password" required />
+                    <label for="">密碼</label>
+                </div>
+                <div class="check">
+                    <label><input type="checkbox" />我同意所有條款</label>
+                </div>
+                <button type="submit" class="main-btn">註冊</button>
+                <div class="register">
+                    <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+                </div>
+            </form>
+        </div>
+
+        <span class="close-icon">
+            <div class="fas fa-times"></div>
+        </span>
+    </div>
+
+    <!-- 登入  -->
+
+    <!-- banner -->
+    <section class="banner_inner" id="home">
+        <div class="banner_inner_overlay"></div>
+    </section>
+    <!-- //banner -->
+
+    <div class="content-wrapper" style="display: flex; justify-content: center;">
+        <div class="inner-container" id="detailContainer" style="width: 70%">
+
+            <div class="row">
+                <!-- 單一文章照片 -->
+                <div class="blog-image col-md-12" style="margin-top: 20px;">
+                    <img src="https://picsum.photos/600/300/?random=53"
+                        style="border-radius: 1px; backdrop-filter: blur(6px); opacity: 0.8;">
+                </div>
+                <!-- 單一文章內容 -->
+                <div class="blog-info col-md-12">
+                    <div class="box-content" style="margin-bottom: 7px;">
+                        <h2 class="blog-title bolder"
+                            style="display: block; border-left: 8px solid; margin: 0.33em 0 0.30em; padding-left: 1em;">
+                            桃園有哪裡好玩？
+                        </h2>
+                        <div class="article-actions top d-flex">
+                            <div class="profile-picture" style="margin-top: 20px;">
+                                <img src="https://picsum.photos/100/75/?random=54" alt="Profile Picture">
+                            </div>
+                            <span style="font-weight: bold; color: rgb(89, 84, 84); font-size: 20px; margin-left: 2px;"
+                                class="align-self-end"></span> <span
+                                style="font-weight: bold; color: rgb(89, 84, 84); font-size: 18px;"
+                                class="align-self-end">彼得吳
+                            </span>
+                            <span style="color: rgb(89, 84, 84color) ; color : rgb(89, 84, 84); "
+                                class="align-self-end">
+                                <fmt:parseDate value="${articleVO.artTime }" pattern="yyyy-MM-dd'T'HH:mm"
+                                    var="parsedDateTime" type="both" />
+                                <fmt:formatDate pattern="yyyy.MM.dd" value="${ parsedDateTime }" />
+                            </span>
+                            <i class="bi bi-eye-fill align-self-end"
+                                style="font-size: 17px; margin-bottom: 6px; color: rgb(89, 84, 84);">
+                            </i>
+                        </div>
+                        <br>
+                        <section>
+                            <div class="PostContent_body">
+                                <article class="article" id="articlePostContent">
+                                    <div id="content">每次投票全台哪個縣市不好玩，桃園一定是榜上前三名，當本魯的朋友來桃園玩時，也想不到推薦什麼景點</div>
+                                    <div><br></div>
+                                    <div>永安、竹圍漁港已經沒有便宜海產，拉拉山、小烏來只有駕車去才方便活動，本地特色就是到處都有沒看頭的埤塘</div>
+                                    <div><br></div>
+                                    <div>就連PLG、T1兩支在地職籃球隊，主場都爛到拿公關票都沒興趣去看，至於桃園棒球場是西曬、積水與壞燈泡...</div>
+                                </article>
+                            </div>
+                        </section>
+                        <br>
+                        <div style="display: inline-block;">
+                            <form method="post" action="" style="margin-bottom: 0px;" id="formLove">
+                                <input type="hidden" name="artId" value="${articleVO.artId}">
+                                <input type="hidden" name="action" value="colartinsert">
+                                <button class="button1" id="favouritepost" type="submit"
+                                    style="border-radius: 9px;">收藏</button>
+                                &nbsp;
+                            </form>
+                        </div>
+                        <div style="display: inline-block;">
+                            <a href=" ">
+                                <button class="button1" style="border-radius: 9px; color: #628ec0;"
+                                    id="reportbtn">檢舉</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--留言串上方區塊結束 -->
+            <!-- 留言串下方區塊開始 -->
+            <section id="pd_review">
+                <div class="pd-collapse-row">
+
+                    <!-- 	留言串開始 -->
+                    <!-- <c:forEach var="articleReplyVO" items="${articleReplyVOList}">
+                        <c:if test="${ articleReplyVO.replyStatus == 0}"> -->
+                    <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
+                        <div>
+                            <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
+                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="rating-star  ps-2 "
+                                style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
+                                <h6 style="font-weight: bold;">吳彼得</h6>
+
+                                <span style="font-weight: bold; color: lightgray;" class="align-text-end">
+                                    <fmt:parseDate value="${articleMessage.messagePostTime}"
+                                        pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${ parsedDateTime }" />
+                                </span>
+                            </div>
+
+                            <div style="display: inline-block; position: relative;">
+                                <span class="element"
+                                    style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
+                            </div>
+
+                            <!-- <div style="display: inline-block; position: relative;">
+                                        <c:if test="${userId.equals(articleReplyVO.userId)}">
+                                            <a href=" <%=request.getContextPath()%>/article/reply?action=myMsgDelete&artId=${articleVO.artId}&artReplyId=${articleReplyVO.artReplyId}&userId=${sessionScope.usersVO.getUserId()}"
+                                                id="formA">
+                                                <button
+                                                    style="margin-right: 120px; border-radius: 9px; float: right;">刪除
+                                                </button>
+                                            </a>
+                                        </c:if>
+                                    </div> -->
+
+                        </div>
+                    </div>
+                    <!-- </c:if>
+                    </c:forEach> -->
+
+                    <!-- 	留言串結束  開始留言-->
+                    <div class="collapse show">
+                        <div class="pd-collapse-box">
+                            <div class="row align-items-end ">
+                                <!-- 留言按鍵 -->
+                                <div class="text-sm-left p-3">
+                                    <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
+                                        aria-expanded="false" aria-controls="pd_add_review"
+                                        style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
+                                    </a>
+                                </div>
+                                <!-- 會員留言開啟 -->
+                                <div class="col-12 collapse" id="pd_add_review">
+                                    <div class="my-1 p-3 bg-gray-100 border">
+                                        <form method="post" name="msgform" id="replyContentForm">
+                                            <div class="row g-2">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">寫下你的留言</label>
+                                                    <textarea rows="5" class="form-control" name="replyContent">
+                                                    </textarea>
+                                                </div>
+
+                                                <div class="col-sm-6 ">
+                                                    <input type="hidden" name="articleId" value="${article.articleId}">
+                                                    <input type="hidden" name="memberId"
+                                                        value="${sessionScope.article.getMemberId()}">
+                                                    <input type="hidden" name="action" value="insert_reply">
+                                                    <input type="button" id="msgSubmit" value="送出">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- 會員留言結束 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!--留言結束 -->
+                </div>
+            </section>
+            <!-- 留言串下方區塊結束 -->
+        </div>
+    </div>
+
+    <!--footer -->
+    <footer>
+        <section class="footer footer_w3layouts_section_1its py-5">
+            <div class="container py-lg-4 py-3">
+                <div class="row footer-top">
+                    <div class="col-lg-3 col-sm-6 footer-grid_section_1">
+                        <div class="footer-title">
+                            <h3>地點資訊</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-12 links">
+                                <li>
+                                    <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
+                                        target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                                </li>
+                                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                                <li>
+                                    <a href="triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
+                                </li>
+                                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+                        <div class="footer-title">
+                            <h3>認識TripLight</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-10 links">
+                                <li><a href="about.html" class="scroll">關於我們</a></li>
+                                <li>
+                                    <a href="user_terms.html" class="scroll">使用者條款 </a>
+                                </li>
+                                <li>
+                                    <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                                </li>
+                                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+                        <div class="footer-title">
+                            <h3>成為合作夥伴</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-10 links">
+                                <li>
+                                    <a href="supplier_form.html" class="scroll">成為供應商</a>
+                                </li>
+                                <li>
+                                    <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
+                                </li>
+                                <li>
+                                    <a href="group_form.html" class="scroll">團體客製規劃</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+                        <div class="footer-title">
+                            <h3>聯絡我們</h3>
+                        </div>
+                        <ul class="social_section_1info">
+                            <li>
+                                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
+                                        alt="facebook" /></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                                        alt="instagram" /></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+                            </li>
+                            <li class="youtube">
+                                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
+                                        src="./images/youtube.svg" alt="youtube" /></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    <!-- //footer -->
+
+    <!-- copyright -->
+    <div class="copyright py-3 text-center">
+        <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+    </div>
+    <!-- //copyright -->
+
+    <!-- move top -->
+    <div class="move-top text-right">
+        <a href="#home" class="move-top">
+            <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+        </a>
+    </div>
+    <!-- move top -->
+
+    <!-- login顯示 -->
+    <script src="js/Login.js"></script>
+
+    <!--引用jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get("id");
+            console.log(articleId);
+
+            fetch(`http://localhost:8080/article/articleId/${articleId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    new_articledetail(data);
+                });
+
+            function new_articledetail(article) {
+                console.log(article);
+                $('#detailContainer').html('');
+
+                let articleType;
+                switch (article.articleTypeId) {
+                    case 1:
+                        articleType = '遊記';
+                        break;
+                    case 2:
+                        articleType = '食記';
+                        break;
+                    case 3:
+                        articleType = '住宿';
+                        break;
+                    case 4:
+                        articleType = '評論';
+                        break;
+                    case 5:
+                        articleType = '問題';
+                        break;
+                    default:
+                        articleType = '未知類型';
+                        break;
+                }
+
+                let inputDate = article.articlePostTime;
+                let dateTime = new Date(inputDate);
+                let year = dateTime.getFullYear();
+                let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+                let day = String(dateTime.getDate()).padStart(2, "0");
+                let formattedDate = `${year}-${month}-${day}`;
+
+                $('#detailContainer').append(`
+            <div class="row">
+                <div class="blog-image col-md-12" style="margin-top: 20px;">
+                    <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image"
+                        style="border-radius: 12%; backdrop-filter: blur(6px); width: 600px; height: 300px;" />
+                </div>
+                <div class="blog-info col-md-12">
+                    <div class="box-content" style="margin-bottom: 7px;">
+                        <h2 class="blog-title bolder"
+                            style="display: block; border-left: 8px solid; margin: 0.33em 0 0.30em; padding-left: 1em;">
+                            【${articleType}】<br>${article.articleTitle}
+                        </h2>
+                        <div class="article-actions top d-flex">
+                            <div class="profile-picture" style="margin-top: 20px;">
+                                <img src="https://picsum.photos/100/75/?random=54" alt="Profile Picture">
+                            </div>
+                            <span style="font-weight: bold; color: rgb(89, 84, 84); font-size: 20px; margin-left: 2px;"
+                                class="align-self-end">No.${article.memberId}
+                            </span> 
+                            <span
+                                style="font-weight: bold; color: rgb(89, 84, 84); font-size: 18px;"
+                                class="align-self-end">${article.memberName}
+                            </span>
+                            <span style="color: rgb(89, 84, 84color) ; color : rgb(89, 84, 84); "
+                                class="align-self-end">
+                                <p class="text-muted">${formattedDate}</p>
+                            </span>
+                            <i class="bi bi-eye-fill align-self-end"
+                                style="font-size: 17px; margin-bottom: 6px; color: rgb(89, 84, 84);">
+                            </i>
+                        </div>
+                        <br>
+                        <section>
+                            <div class="PostContent_body" style="background-color: rgb(226 235 237) ">
+                                <article class="article" >
+                                    <div id="content" style="font-size: 16px; line-height: 2.5;">
+                                        ${article.articlePostContent}
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+                        <br>
+                        <div style="display: inline-block;">
+                            <form method="post" action="" style="margin-bottom: 0px;" id="formLove">
+                                <input type="hidden" name="artId" value="${article.articleId}">
+                                <button class="button1" id="myfavourite" type="submit"
+                                    style="border-radius: 9px;">收藏
+                                </button>
+                            </form>
+                        </div>
+                        <div style="display: inline-block;">
+                            <a href=" ">
+                                <button class="button1" style="border-radius: 9px; color: #628ec0;"
+                                    id="reportbtn">檢舉
+                                </button>
+                            </a>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+                    `);
+
+            };
+        });
+    </script>
+
+</body>
+
+</html>

@@ -2,6 +2,8 @@ package com.tw.article.model;
 
 import java.sql.Timestamp;
 
+import com.tw.member.model.Member;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,8 +37,17 @@ public class Article implements java.io.Serializable {
 
 	private Integer articleViews;			// 文章瀏覽次數
 
-	private byte[] articlePicture;		// 文章圖片，備用
+	private byte[] articlePicture;			// 文章圖片
+
+	public void setMemberName(String memberName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	}
 
 	// private Integer articleLikesCount; //文章好評，不採用
 
-}
+
