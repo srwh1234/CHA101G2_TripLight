@@ -39,10 +39,7 @@ public class Article implements java.io.Serializable {
 
 	private byte[] articlePicture;			// 文章圖片
 
-	public void setMemberName(String memberName) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 
