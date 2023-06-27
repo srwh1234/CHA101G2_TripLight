@@ -3,6 +3,7 @@ package com.tw.trip.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.tw.member.model.Member;
 import com.tw.trip.dao.TripOrderDao;
 import com.tw.trip.pojo.TourGroup;
 import com.tw.trip.pojo.TourGroupDetail;
@@ -91,7 +92,13 @@ public class TripOrderController {
         return json;
     }
 
-    
+    @GetMapping("/getMemberInfor")
+    public String getMemberInfor(@RequestParam Integer memberId){
+        Member member = tripOrderService.getMemberInfor(memberId);
+
+        String json = new Gson().toJson(member);
+        return json;
+    }
 
 
 
