@@ -210,11 +210,11 @@
                     <hr>
                     <div class="col-10">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item basic" id="groupDate"> </li>
-                            <li class="list-group-item basic" id="tripName"></li>
-                            <li class="list-group-item basic" id="qtyChild"></li>
-                            <li class="list-group-item basic" id="qtyAdult"></li>
-                            <li class="list-group-item basic" id="totalAmount"></li>
+                            <li class="list-group-item basic" id="groupDate">旅遊團日期: </li>
+                            <li class="list-group-item basic" id="tripName">方案: </li>
+                            <li class="list-group-item basic" id="qtyChild">兒童: </li>
+                            <li class="list-group-item basic" id="qtyAdult">大人: </li>
+                            <li class="list-group-item basic" id="totalAmount">總金額: </li>
                         </ul>
                     </div>
 
@@ -222,7 +222,7 @@
 
                 <!-- ====== 訂購人資料 ====== -->
                 <span id="datatest" value="20202020202">
-                    <span id="datatestchild" value="60606060606"></span>
+                    <span id="datatestchild" value=""></span>
                 </span>>
                 <div class="row shadow-lg p-3 mb-5 bg-body rounded">
                     <div class="row">
@@ -305,7 +305,7 @@
                                 <label for="remarks" class="col-form-label">特殊需求: </label>
                                 <div class="form-group">
                                     <textarea style="height: 200px" class="form-control" id="remarks"
-                                        rows="3">djidjidjidj</textarea>
+                                        rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -317,7 +317,7 @@
 
                 <div class="row justify-content-end">
                     <div class="col-2">
-                        <button type="submit" id="order_confirmed" class="btn btn-primary btn-lg">確認預定</button>
+                        <button type="button" id="order_confirmed" class="btn btn-primary btn-lg">確認預定</button>
 
                     </div>
                 </div>
@@ -328,7 +328,7 @@
 
 
 
-    <!-- 套件 -->
+    <!-- ========== lib  ========== -->
 
     <!-- boostrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
@@ -353,33 +353,61 @@
     <script type="text/javascript" src="itinerary_page.js"></script>
 
     <!-- 載入 sweetalert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./js/sweetalert.js"></script>
 
 
+    <!-- ========== Java Script  ========== -->
     <script>
         // ===== 確認彈窗 =====
         $(document).ready(function () {
 
-            // ====== 訂購資訊區塊 ======
+            $('#tripOrder').submit(function(event) {
+                event.preventDefault();
+            });
 
+            // ====== 取得 member Id ======
+            function getMemberId(){
+
+                const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
+                if(!testLogIn || !testLogIn.memberId){
+                    return 0;
+                }
+                return testLogIn.memberId;
+            }
+
+            const memberId = getMemberId();
+            console.log(`測試測試 ${memberId}`);
+
+            function getTourGroupId(){
+
+                const tourGroupIdGet = JSON.parse(sessionStorage.getItem('tourGroupId'));
+                if(tourGroupIdGet!= null){
+                    return tourGroupIdGet;
+                }
+            }
+
+            const tourGroupIdGet = getTourGroupId();
+            console.log(`測試測試 ${tourGroupIdGet}`);
+
+            // ====== 訂購資訊區塊 ======
             let qtyChild = parseInt(sessionStorage.getItem('qtyChild'));
             console.log(qtyChild);
 
             if (qtyChild > 0) {
                 $('#qtyChild').text(`兒童: ${qtyChild} 人`);
+            }else {
+                $('#qtyChild').text(`小孩: 0 人`);
             }
 
             let qtyAdult = parseInt(sessionStorage.getItem('qtyAdult'));
             if (qtyAdult > 0) {
                 $('#qtyAdult').text(`大人: ${qtyAdult} 人`);
+            }else {
+                $('#qtyAdult').text(`大人: 0 人`);
             }
 
             let totalQty = (qtyChild + qtyAdult);
-            console.log("qtyChild" + qtyChild);
-            console.log("qtyAdult" + qtyAdult);
-
-
-            // ====== add travelers column based on qty ======
+            // ====== 根據旅客人數增加欄位 ======
             let html = "";
             for (let i = 1; i <= totalQty; i++) {
                 html += `
@@ -396,24 +424,23 @@
                                <div class="row">
                                     <!-- name -->
                                     <div class="col-2">
-                                        <label for="travelerName" class="col-form-label">姓名</label>
-                                        <input type="text" id="travelerName" value="30000" class="form-control">
+                                        <label for="travelerName${i}" class="col-form-label">姓名</label>
+                                        <input type="text" id="travelerName${i}" value="" class="form-control">
                                     </div>
 
                                     <!-- age -->
                                     <div class="col-1">
-                                        <label for="travelerAge" class="col-form-label">年齡</label>
-                                        <input type="text" id="travelerAge" value="30000" class="form-control"
+                                        <label for="travelerAge${i}" class="col-form-label">年齡</label>
+                                        <input type="text" id="travelerAge${i}" value="" class="form-control"
                                                aria-describedby="passwordHelpInline">
                                     </div>
 
                                     <!-- gender -->
                                     <div class="col-2">
-                                        <label for="travelerGender" class="col-form-label">性別</label>
+                                        <label for="travelerGender${i}" class="col-form-label">性別</label>
                                         <br>
-                                        <select id="travelerGender" class="form-select" aria-label="Default select example">
-                                            <option disabled>請選擇</option>
-                                            <option value="0">女</option>
+                                        <select id="travelerGender${i}" class="form-select" aria-label="Default select example">
+                                            <option value="0" selected>女</option>
                                             <option value="1">男</option>
                                         </select>
                                     </div>
@@ -422,15 +449,15 @@
                                <div class="row">
                                    <!-- phone -->
                                    <div class="col-2">
-                                       <label for="travelerPhone" class="col-form-label">電話</label>
-                                       <input type="text" id="travelerPhone" class="form-control"
+                                       <label for="travelerPhone${i}" class="col-form-label">電話</label>
+                                       <input type="text" id="travelerPhone${i}" class="form-control"
                                               aria-describedby="passwordHelpInline">
 
                                    </div>
                                    <!-- email -->
                                    <div class="col-auto">
-                                       <label for="travelerEmail" class="col-form-label">郵件</label>
-                                       <input type="email" id="travelerEmail" class="form-control"
+                                       <label for="travelerEmail${i}" class="col-form-label">郵件</label>
+                                       <input type="email" id="travelerEmail${i}" class="form-control"
                                               aria-describedby="passwordHelpInline">
 
                                    </div>
@@ -442,51 +469,143 @@
 
             $('#travelerList').prepend(html);
 
-            // console.log('測試');
-            // let data =[];
-            // for(let i=1;i<=totalQty;i++){
-            //     console.log($('#traveler'+i).find('#travelerName').attr('value'));
-            //     console.log($('#traveler'+i).find('#travelerName').val());
-            // }
+            // ====== 輸入驗證區 ======
 
-            // test
+            for (let i = 1; i <= totalQty; i++) {
 
-            // let data = {
-            //     member_id : // get from session, test later
-            //     tour_group_id // get from session, test later
-            //     order_status : 0
-            //     pay_type: 'credit card'
-            //     remarks:
-            //     tourGroupDetail: [{...}, {...}, {...}]
-            // };
+                let travelerName = $('#travelerName' + i);
+                let travelerAge = $('#travelerAge' + i);
+                let travelerPhone = $('#travelerPhone' + i);
+                let travelerEmail = $('#travelerEmail' + i);
 
 
+                // 輸入驗證
+                // ====== 姓名驗證 ======
+                travelerName.on('change', function (){
+                    if (isNaN(travelerName.val()) === false){
+                        travelerName.val('');
+                        Swal.fire('姓名輸入錯誤，請輸入非數字的名稱');
 
-            // ====== sent data to DB ======
-            $('#order_confirmed').on("click", function () {
+                    }else if(travelerName.val().trim() === ''){
+                        travelerName.val('');
+                        Swal.fire('請輸入姓名');
 
+                    }
+
+                });
+
+                // ====== 年齡驗證 ======
+                travelerAge.on('change', function (){
+                    let pattern = /^[1-9]\d*$/;
+                    if (isNaN(travelerAge.val()) === true){
+                        Swal.fire('年齡輸入錯誤，請輸入數字');
+
+                    }else if(pattern.test(travelerAge.val())=== false) {
+                        travelerAge.val('');
+                        Swal.fire('年齡輸入錯誤，請輸入正整數');
+
+                    }else if(travelerAge.val().trim() === ''){
+                        travelerAge.val('');
+                        Swal.fire('請輸入內容');
+
+                    }else if(parseInt(travelerAge.val()) < 0){
+                        travelerAge.val('');
+                        Swal.fire('年齡不能為負數');
+
+                    }else if(parseInt(travelerAge.val()) > 150){
+                        travelerAge.val('');
+                        Swal.fire('年齡過大，不符合旅遊團年齡上限');
+
+                    }
+
+                });
+
+                // ====== 電話驗證 ======
+                travelerPhone.on('change',function (){
+                    let phoneNumberRegex = /^09\d{8}$/;
+                    if(phoneNumberRegex.test(travelerPhone.val())===false){
+                        travelerPhone.val('');
+                        Swal.fire('手機格式不符合，請重新輸入');
+
+                    }else if (isNaN(travelerPhone.val()) === true){
+                        travelerPhone.val('');
+                        Swal.fire('手機輸入錯誤，請輸入正整數');
+
+                    }else if(travelerPhone.val().trim() === ''){
+                        travelerPhone.val('');
+                        Swal.fire('請輸入內容');
+
+                    }else if(parseInt(travelerPhone.val()) < 0){
+                        travelerPhone.val('');
+                        Swal.fire('手機號碼不為負數，請重新輸入');
+
+                    }
+                });
+
+                // ====== 電子郵件驗證 ======
+                travelerEmail.on('change',function (){
+                    let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if(pattern.test(travelerEmail.val())===false){
+                        travelerEmail.val('');
+                        Swal.fire('郵件格式不符合，請重新輸入');
+
+                    }else if(travelerEmail.val().trim() === ''){
+                        travelerEmail.val('');
+                        Swal.fire('請輸入內容');
+
+                    }else if(parseInt(travelerEmail.val()) < 0){
+                        travelerEmail.val('');
+                        Swal.fire('郵件內容不為負數，請重新輸入');
+
+                    }
+                });
+
+            }
+                // ====== //輸入驗證區 ======
+
+                // ====== 綁定我要預約按鈕，將名單傳送至資料庫 ======
+            $('#order_confirmed').on("click", function (event) {
                 // ====== collect tourGroupDetail ======
                 let tourGroupDetail = [];
                 for (let i = 1; i <= totalQty; i++) {
-                    console.log('測試');
-                    let travelerName = $('#traveler' + i).find('#travelerName').val();
-                    let travelerAge = $('#traveler' + i).find('#travelerAge').val();
-                    let travelerGender = $('#traveler' + i).find('#travelerGender option:selected').val();
-                    let travelerPhone = $('#traveler' + i).find('#travelerPhone').val();
-                    let travelerEmail = $('#traveler' + i).find('#travelerEmail').val();
 
-                    // console.log($('#traveler'+i).find('#travelerName').attr('value'));
-                    // console.log($('#traveler'+i).find('#travelerName').val());
+                    let travelerName = $('#travelerName' + i);
+                    let travelerAge = $('#travelerAge' + i);
+                    let travelerGender = $('#travelerGender' + i).find('option:selected');
+                    let travelerPhone = $('#travelerPhone' + i);
+                    let travelerEmail = $('#travelerEmail' + i);
 
-                    let infor = {
-                        'tourGroupId': '2',
-                        'travelerName': travelerName,
-                        'travelerPhone': travelerPhone,
-                        'travelerEmail': travelerEmail,
-                        'travelerGender': travelerGender,
-                        'travelerAge': travelerAge
-                    };
-                    tourGroupDetail.push(infor);
+
+                    if(travelerName.val().trim() === ''){
+                        Swal.fire('請輸入姓名');
+                        return;
+                    }else if(travelerAge.val() === ''){
+                        Swal.fire('請輸入年齡');
+                        return;
+                    }else if(travelerGender.val().trim() === ''){
+                        Swal.fire('請輸入性別');
+                        return;
+                    }else if(travelerPhone.val().trim() === ''){
+                        Swal.fire('請輸入電話');
+                        return;
+                    }else if(travelerEmail.val().trim() === ''){
+                        Swal.fire('請輸入郵件');
+                        return;
+                    }else {
+                        let infor = {
+                            'tourGroupId': tourGroupIdGet,
+                            'travelerName': travelerName.val(),
+                            'travelerPhone': travelerPhone.val(),
+                            'travelerEmail': travelerEmail.val(),
+                            'travelerGender': travelerGender.val(),
+                            'travelerAge': travelerAge.val()
+                        };
+                        tourGroupDetail.push(infor);
+
+
+                    }
+
+
                 }
 
                 console.log(tourGroupDetail);
@@ -494,9 +613,9 @@
 
                 // ====== //collect data of all ======
                 let data = {
-                    "memberId": "1",
-                    "tourGroupId": "2",
-                    "orderStatus": "0",
+                    "memberId": memberId,
+                    "tourGroupId": tourGroupIdGet,
+                    "orderStatus": "1",
                     "payType": "credit card",
                     "travelersChildren": qtyChild,
                     "travelersAdult": qtyAdult,
@@ -504,12 +623,29 @@
                     'tourGroupDetail': tourGroupDetail
                 };
 
-                console.log(data);
-
                 let jsonData = JSON.stringify(data)
                 $.post("http://localhost:8080/order", jsonData, function (response) {
                     console.log('AJAX request successful');
                 })
+
+                // ====== 感謝彈窗 ======
+                Swal.fire({
+                    title: '感謝您的預定，將會於7個工作天內通知您是否有成團',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }).then(function(result){
+                    if (result.isConfirmed) {
+                        window.location.href = 'http://localhost:8080/front-end/index.html';
+                        $('input').val('');
+                        sessionStorage.clear();
+                    }
+                });
+
+
             })
 
             // ====== 訂購資訊區塊 ======
@@ -529,22 +665,8 @@
             // ====== 送出表單 ======
             $('#order_confirmed').click(function () {
 
-                alert("感謝您的預定，會於7個工作天內確認給您");
-                sessionStorage.clear();
 
 
-                // 在警告框关闭后返回上一页
-                $(window).on('blur focus', function (e) {
-                    var prevType = $(this).data('prevType');
-
-                    if (prevType != e.type) {   // 用于检测是否是警告框获得焦点
-                        setTimeout(function () {
-                            window.location.href = 'http://localhost:8080/front-end/index.html';
-                        }, 5);
-                    }
-
-                    $(this).data('prevType', e.type);
-                });
             });
         });
 
