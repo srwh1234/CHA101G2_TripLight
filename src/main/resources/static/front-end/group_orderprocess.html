@@ -121,9 +121,11 @@
                     </li>
                     <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
                     </li>
-                    <li class="member_li"><a href="read_question_list.html"><i class="fa-regular fa-comment"></i>查看問題</a>
+                    <li class="member_li"><a href="read_question_list.html"><i
+                                class="fa-regular fa-comment"></i>查看問題</a>
                     </li>
-                    <li class="member_li" id="logout_li"><a href="index.html"><i class="fa-solid fa-right-from-bracket"></i>登出</a></li>
+                    <li class="member_li" id="logout_li"><a href="index.html"><i
+                                class="fa-solid fa-right-from-bracket"></i>登出</a></li>
                 </ul>
             </div>
         </div>
@@ -149,7 +151,7 @@
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />記住我</label>
-                    <a href="#">忘記密碼</a>
+                    <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
@@ -361,15 +363,15 @@
         // ===== 確認彈窗 =====
         $(document).ready(function () {
 
-            $('#tripOrder').submit(function(event) {
+            $('#tripOrder').submit(function (event) {
                 event.preventDefault();
             });
 
             // ====== 取得 member Id ======
-            function getMemberId(){
+            function getMemberId() {
 
                 const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
-                if(!testLogIn || !testLogIn.memberId){
+                if (!testLogIn || !testLogIn.memberId) {
                     return 0;
                 }
                 return testLogIn.memberId;
@@ -378,10 +380,10 @@
             const memberId = getMemberId();
             console.log(`測試測試 ${memberId}`);
 
-            function getTourGroupId(){
+            function getTourGroupId() {
 
                 const tourGroupIdGet = JSON.parse(sessionStorage.getItem('tourGroupId'));
-                if(tourGroupIdGet!= null){
+                if (tourGroupIdGet != null) {
                     return tourGroupIdGet;
                 }
             }
@@ -395,14 +397,14 @@
 
             if (qtyChild > 0) {
                 $('#qtyChild').text(`兒童: ${qtyChild} 人`);
-            }else {
+            } else {
                 $('#qtyChild').text(`小孩: 0 人`);
             }
 
             let qtyAdult = parseInt(sessionStorage.getItem('qtyAdult'));
             if (qtyAdult > 0) {
                 $('#qtyAdult').text(`大人: ${qtyAdult} 人`);
-            }else {
+            } else {
                 $('#qtyAdult').text(`大人: 0 人`);
             }
 
@@ -481,12 +483,12 @@
 
                 // 輸入驗證
                 // ====== 姓名驗證 ======
-                travelerName.on('change', function (){
-                    if (isNaN(travelerName.val()) === false){
+                travelerName.on('change', function () {
+                    if (isNaN(travelerName.val()) === false) {
                         travelerName.val('');
                         Swal.fire('姓名輸入錯誤，請輸入非數字的名稱');
 
-                    }else if(travelerName.val().trim() === ''){
+                    } else if (travelerName.val().trim() === '') {
                         travelerName.val('');
                         Swal.fire('請輸入姓名');
 
@@ -495,24 +497,24 @@
                 });
 
                 // ====== 年齡驗證 ======
-                travelerAge.on('change', function (){
+                travelerAge.on('change', function () {
                     let pattern = /^[1-9]\d*$/;
-                    if (isNaN(travelerAge.val()) === true){
+                    if (isNaN(travelerAge.val()) === true) {
                         Swal.fire('年齡輸入錯誤，請輸入數字');
 
-                    }else if(pattern.test(travelerAge.val())=== false) {
+                    } else if (pattern.test(travelerAge.val()) === false) {
                         travelerAge.val('');
                         Swal.fire('年齡輸入錯誤，請輸入正整數');
 
-                    }else if(travelerAge.val().trim() === ''){
+                    } else if (travelerAge.val().trim() === '') {
                         travelerAge.val('');
                         Swal.fire('請輸入內容');
 
-                    }else if(parseInt(travelerAge.val()) < 0){
+                    } else if (parseInt(travelerAge.val()) < 0) {
                         travelerAge.val('');
                         Swal.fire('年齡不能為負數');
 
-                    }else if(parseInt(travelerAge.val()) > 150){
+                    } else if (parseInt(travelerAge.val()) > 150) {
                         travelerAge.val('');
                         Swal.fire('年齡過大，不符合旅遊團年齡上限');
 
@@ -521,21 +523,21 @@
                 });
 
                 // ====== 電話驗證 ======
-                travelerPhone.on('change',function (){
+                travelerPhone.on('change', function () {
                     let phoneNumberRegex = /^09\d{8}$/;
-                    if(phoneNumberRegex.test(travelerPhone.val())===false){
+                    if (phoneNumberRegex.test(travelerPhone.val()) === false) {
                         travelerPhone.val('');
                         Swal.fire('手機格式不符合，請重新輸入');
 
-                    }else if (isNaN(travelerPhone.val()) === true){
+                    } else if (isNaN(travelerPhone.val()) === true) {
                         travelerPhone.val('');
                         Swal.fire('手機輸入錯誤，請輸入正整數');
 
-                    }else if(travelerPhone.val().trim() === ''){
+                    } else if (travelerPhone.val().trim() === '') {
                         travelerPhone.val('');
                         Swal.fire('請輸入內容');
 
-                    }else if(parseInt(travelerPhone.val()) < 0){
+                    } else if (parseInt(travelerPhone.val()) < 0) {
                         travelerPhone.val('');
                         Swal.fire('手機號碼不為負數，請重新輸入');
 
@@ -543,17 +545,17 @@
                 });
 
                 // ====== 電子郵件驗證 ======
-                travelerEmail.on('change',function (){
+                travelerEmail.on('change', function () {
                     let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if(pattern.test(travelerEmail.val())===false){
+                    if (pattern.test(travelerEmail.val()) === false) {
                         travelerEmail.val('');
                         Swal.fire('郵件格式不符合，請重新輸入');
 
-                    }else if(travelerEmail.val().trim() === ''){
+                    } else if (travelerEmail.val().trim() === '') {
                         travelerEmail.val('');
                         Swal.fire('請輸入內容');
 
-                    }else if(parseInt(travelerEmail.val()) < 0){
+                    } else if (parseInt(travelerEmail.val()) < 0) {
                         travelerEmail.val('');
                         Swal.fire('郵件內容不為負數，請重新輸入');
 
@@ -561,9 +563,9 @@
                 });
 
             }
-                // ====== //輸入驗證區 ======
+            // ====== //輸入驗證區 ======
 
-                // ====== 綁定我要預約按鈕，將名單傳送至資料庫 ======
+            // ====== 綁定我要預約按鈕，將名單傳送至資料庫 ======
             $('#order_confirmed').on("click", function (event) {
                 // ====== collect tourGroupDetail ======
                 let tourGroupDetail = [];
@@ -576,22 +578,22 @@
                     let travelerEmail = $('#travelerEmail' + i);
 
 
-                    if(travelerName.val().trim() === ''){
+                    if (travelerName.val().trim() === '') {
                         Swal.fire('請輸入姓名');
                         return;
-                    }else if(travelerAge.val() === ''){
+                    } else if (travelerAge.val() === '') {
                         Swal.fire('請輸入年齡');
                         return;
-                    }else if(travelerGender.val().trim() === ''){
+                    } else if (travelerGender.val().trim() === '') {
                         Swal.fire('請輸入性別');
                         return;
-                    }else if(travelerPhone.val().trim() === ''){
+                    } else if (travelerPhone.val().trim() === '') {
                         Swal.fire('請輸入電話');
                         return;
-                    }else if(travelerEmail.val().trim() === ''){
+                    } else if (travelerEmail.val().trim() === '') {
                         Swal.fire('請輸入郵件');
                         return;
-                    }else {
+                    } else {
                         let infor = {
                             'tourGroupId': tourGroupIdGet,
                             'travelerName': travelerName.val(),
@@ -637,7 +639,7 @@
                     hideClass: {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
-                }).then(function(result){
+                }).then(function (result) {
                     if (result.isConfirmed) {
                         window.location.href = 'http://localhost:8080/front-end/index.html';
                         $('input').val('');
