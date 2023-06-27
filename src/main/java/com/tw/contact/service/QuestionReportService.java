@@ -1,6 +1,6 @@
 package com.tw.contact.service;
 
-import com.tw.contact.dto.QuestionReportRequestDTO;
+import com.tw.contact.controller.dto.QuestionReportRequestDTO;
 import com.tw.contact.model.QuestionReport;
 
 import java.util.List;

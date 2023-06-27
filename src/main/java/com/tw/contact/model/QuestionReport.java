@@ -8,7 +8,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 //@NoArgsConstructor
-@Data //@Getter @Setter @ToString @EqualsAndHashCode @RequiredArgsConstructor
+@Data
 @Entity
 @Table(name="quest_report")
 public class QuestionReport {
@@ -44,9 +44,6 @@ public class QuestionReport {
     @Column(name = "score")
     private int score;
 
-    public QuestionReport() {
-    }
-
     public QuestionReport(int id, Member member, Employee employee, String questionContent, String replyContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
         this.id = id;
         this.member = member;
@@ -57,5 +54,9 @@ public class QuestionReport {
         this.startTime = startTime;
         this.endTime = endTime;
         this.score = score;
+    }
+
+    public QuestionReport() {
+
     }
 }

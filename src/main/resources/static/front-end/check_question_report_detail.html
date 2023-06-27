@@ -422,7 +422,7 @@
     let params = new URLSearchParams(window.location.search);
     let id = params.get('id'); // 獲取問題的 ID
 
-    fetch('/check_question_report_detail?id=' + id)
+    fetch('/questionReportFormDetail?id=' + id)
         .then(response => response.json())
         .then(data => {
             let senderMessage = document.querySelector('.message.sender');

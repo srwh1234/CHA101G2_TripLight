@@ -1,4 +1,4 @@
-package com.tw.contact.dto;
+package com.tw.contact.controller.dto;
 
 import lombok.Data;
 
