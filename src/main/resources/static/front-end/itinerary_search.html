@@ -482,19 +482,19 @@
                         <div class="accordion-body p-1 px-5">
 
                             <div class="form-check d-flex gap-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault21">
+                                <input class="form-check-input" type="checkbox" value="" id="tripDayTypes1">
                                 <label class="form-check-label align-self-center"
-                                       for="flexCheckDefault21">1日來回</label>
+                                       for="tripDayTypes1">1日來回</label>
                             </div>
                             <div class="form-check d-flex gap-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault22">
+                                <input class="form-check-input" type="checkbox" value="" id="tripDayTypes2">
                                 <label class="form-check-label align-self-center"
-                                       for="flexCheckDefault22">2天1夜</label>
+                                       for="tripDayTypes2">2天1夜</label>
                             </div>
                             <div class="form-check d-flex gap-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault23">
+                                <input class="form-check-input" type="checkbox" value="" id="tripDayTypes3">
                                 <label class="form-check-label align-self-center"
-                                       for="flexCheckDefault23">3天含以上</label>
+                                       for="tripDayTypes3">3天含以上</label>
                             </div>
                         </div>
                     </div>
@@ -695,26 +695,21 @@
 <script>
     $(document).ready(function () {
 
+        defaultSearch();
         // ====== 搜尋功能 待完成 ======
-
-        // 上次的搜尋條件
-        let oldCondition = {
-            keyword: '',
-            types: [],
-            cities: [],
-            page: 0,
-            size: 5,
-        };
-
-
-        $(document).on('click', '[id^="tripZone"]', function () {
-            // 存放當下被點擊的搜尋條件
+        function doSearch(){
+            // 物件存放當下被點擊的搜尋條件
             const currentChecked = {
-                // keyword: $('#ticketSearchText').val(),
-                // tripDayType: [],
+                keyword: $('#tripSearch').val(),
+                tripDayTypes: [],
                 cities: [],
                 // size: 5,
             };
+
+            // 當下被點擊的 tripType 存入陣列
+            $('[id^="tripDayTypes"]:checked').each((i, v) => {
+                currentChecked.tripDayTypes.push(v.value);
+            });
 
             // 當下被點擊的 cities 存入陣列
             $('[id^="tripZone"]:checked').each((i, v) => {
@@ -722,15 +717,36 @@
             });
 
             // 發送請求
-                $.post("http://localhost:8080/tripSearch/getTripsBySearch", JSON.stringify(currentChecked), function (response) {
-                    console.log(response);
-                    let parentEl = $('#productItems');
-                    parentEl.empty();
+            $.post("http://localhost:8080/tripSearch/getTripsBySearch", JSON.stringify(currentChecked), function (response) {
+                if(response.length === 0){
+                    $('#productItems').empty();
+                    let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
+                    $('#productItems').append(noResult);
 
-                    for (let i = 0; i < response.length; i++) {
-                        let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
+                    setTimeout(function() {
+                        $('#productItems').empty();
+                        let noResult = `<h3> 看看其他方案吧~ </h3>`;
+                        $('#productItems').append(noResult);
+                        defaultSearch();
 
-                        let newChildEl = `
+                    }, 3000);
+
+                }else {
+                    render_search(response);
+                }
+
+                // 渲染頁面
+            },'json');
+
+        }
+        function render_search(response){
+            let parentEl = $('#productItems');
+            parentEl.empty();
+
+            for (let i = 0; i < response.length; i++) {
+                let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
+
+                let newChildEl = `
                              <div class="card mb-3 my-nav-link" href="#">
                                 <div class="row g-0 h-100">
                                     <div class="col-md-4 h-100">
@@ -748,37 +764,37 @@
                                 </div>
                             </div>
                             `;
-                        parentEl.append(newChildEl);
-                    }
+                parentEl.append(newChildEl);
+            }
 
-                    // ====== set ID in session storage ======
-                    $('#productItems').on('click', '.changePage', function (event) {
-                        let tripId = $(this).attr('tripId');
-                        console.log(tripId);
-                        sessionStorage.setItem('tripId', `${tripId}`);
-                        window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
-                    })
+            // ====== set ID in session storage ======
+            $('#productItems').on('click', '.changePage', function (event) {
+                let tripId = $(this).attr('tripId');
+                sessionStorage.setItem('tripId', `${tripId}`);
+                window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
+            })
+        }
 
-                    // 渲染頁面
-
-                },'json');
-
-
-
-
+        // 綁定三個選擇事件
+        // 1. 城市按鈕
+        $(document).on('click', '[id^="tripZone"]', function () {
+            doSearch();
         });
+        // 2.
+        // 3.
 
         // ====== // 搜尋功能 待完成 ======
 
-        $.getJSON('http://localhost:8080/tripSearch/getTripList', function (response) {
+        // ====== 網頁預設搜尋預設畫面 (全部) ======
+        function defaultSearch(){
+            $.getJSON('http://localhost:8080/tripSearch/getTripList', function (response) {
 
-            let parentEl = $('#productItems');
+                let parentEl = $('#productItems');
 
-            for (let i = 0; i < response.length; i++) {
-                let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
-                console.log(response[i]);
+                for (let i = 0; i < response.length; i++) {
+                    let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
 
-                let newChildEl = `
+                    let newChildEl = `
                  <div class="card mb-3 my-nav-link" href="#">
                     <div class="row g-0 h-100">
                         <div class="col-md-4 h-100">
@@ -796,20 +812,20 @@
                     </div>
                 </div>
                 `;
-                parentEl.append(newChildEl);
-            }
+                    parentEl.append(newChildEl);
+                }
 
-            $('#productItems').on('click', '.changePage', function (event) {
-                alert('ttt');
-                let tripId = $(this).attr('tripId');
-                console.log(tripId);
-                sessionStorage.setItem('tripId', `${tripId}`);
-                window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
-            })
+                $('#productItems').on('click', '.changePage', function (event) {
+                    let tripId = $(this).attr('tripId');
+                    sessionStorage.setItem('tripId', `${tripId}`);
+                    window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
+                })
 
 
-        });
+            });
+        }
 
+        // ====== //網頁預設搜尋畫面 (全部) ======
 
     });
 

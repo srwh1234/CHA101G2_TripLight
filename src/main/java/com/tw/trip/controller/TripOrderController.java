@@ -54,6 +54,7 @@ public class TripOrderController {
 
             // ====== 1. deal with TripOrder ======
 
+            System.out.println("會員編號"+jsonObject.getInt("memberId"));
             tripOrderService.addTripOrder(
                     jsonObject.getInt("memberId"),
                     jsonObject.getInt("tourGroupId"),
