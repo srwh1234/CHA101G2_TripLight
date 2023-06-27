@@ -57,7 +57,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
     <!-- <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.bootstrap5.min.css" /> -->
-
+    <!--sweet alert-->>
+    <script src="./js/sweetalert.js"></script>
 </head>
 
 <body>
@@ -397,7 +398,7 @@
                         let formattedDate = `${year}-${month}-${day}`;
 
                         data1.push({
-                            
+
                             'articleId': data[i].articleId,
                             'articleTypeId': articleType,
                             'articleTitle': data[i].articleTitle,
@@ -415,20 +416,23 @@
                         data: data1,
                         columns: [
                             { data: 'articleTypeId', title: "文章類型" },
-                            { data: 'articleTitle', title: "文章標題" ,
-                            render: function (data, type, row) {
-                            return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">`+data+'</a>'
-                            }
+                            {
+                                data: 'articleTitle', title: "文章標題",
+                                render: function (data, type, row) {
+                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
+                                }
                             },
-                            { data: 'memberName', title: "文章作者",
-                            render: function (data, type, row) {
-                            return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">`+data+'</a>'
-                            }
+                            {
+                                data: 'memberName', title: "文章作者",
+                                render: function (data, type, row) {
+                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
+                                }
                             },
-                            { data: 'articlePostTime', title: "發表時間",
-                            render: function (data, type, row) {
-                            return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">`+data+'</a>'
-                            }
+                            {
+                                data: 'articlePostTime', title: "發表時間",
+                                render: function (data, type, row) {
+                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
+                                }
                             },
                             { data: 'articleViews', title: "瀏覽次數" }
                         ]
