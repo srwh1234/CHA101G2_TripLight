@@ -85,14 +85,4 @@ public class LoginMemberService {
 		Member member = memberRepository.findByMemberId(id);
 		return member.getMemberPic();
 	}
-//		public MemberDetail getItem(final int id) {
-//			final Member member= memberRepository.findByMemberId(id);
-//			
-//			if (member== null) {
-//				return null;
-//			}
-//			final MemberDetail memberDetail= new MemberDetail(member);
-//
-//			return memberDetail;
-//		}
 }

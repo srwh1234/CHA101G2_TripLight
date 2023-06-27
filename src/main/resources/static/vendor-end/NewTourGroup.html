@@ -247,8 +247,10 @@
         priceAdult: priceAdult,
         priceChild: priceChild,
         startDate: startDate,
+        confirmedTravelersNo: 0,
         minTravelersNo: minTravelersNo,
         minTravelersNo: maxTravelersNo,
+        status:0,
       };
 
        // 送出成功動畫
@@ -270,19 +272,24 @@
       $("#min_travelers_no").val();
       $("#max_travelers_no").val();
 
+      const tourGroupData = new FormData();
+      tourGroupData.append('tourGroup', JSON.stringify(tourGroup));
+
       //ajax
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: "http://localhost:8080/tourgroup/tourgroupadd",
-        data: JSON.stringify(tourGroup),
-        contentType: "application/json",
-        success: function (response) {
-          console.log(response);
+        data: tourGroupData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          alert('上傳成功');
         },
-        error: function (error) {
-          console.error(error);
+        error: function () {
+          alert('上傳失敗')
         },
-      });    
+      });   
+      console.log(tourGroup); 
     });
  </script>
 

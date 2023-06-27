@@ -23,6 +23,34 @@
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        div.dataTables_wrapper div.dataTables_length select {
+            width: auto;
+            display: inline-block;
+        }
+
+        #dataTable_filter {
+            position: relative;
+        }
+
+        #dataTable_filter input {
+            position: absolute;
+            transform: translate(45px, -28px);
+            width: 180px;
+        }
+
+        #dataTable_filter label {
+            position: absolute;
+            transform: translate(260px, 5px);
+            /* 调整 label 的位置，使其与输入框对齐 */
+        }
+
+        #dataTable {
+            white-space: normal;
+            word-break: break-all;
+            white-space: nowrap
+        }
+    </style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -162,7 +190,7 @@
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h4 class="m-0 font-weight-bold text-primary">行程資料管理</h4>
+                        <h4 class="m-0 font-weight-bold text-primary">旅遊團資料管理</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -189,7 +217,7 @@
                                         <td>1</td>
                                         <td>宿霧宿宿叫<br>薄荷雙島豪華６日遊</td>
                                         <td>
-                                            世界潛點巴里卡薩島大斷層<br>海豚遊蹤<br>鯨鯊共游<br>最美資生堂島<br>阿羅納海灘赫納度假村<br>宿霧拜伊大飯店 
+                                            世界潛點巴里卡薩島大斷層<br>海豚遊蹤、鯨鯊共游、最美資生堂島<br>阿羅納海灘赫納度假村<br>宿霧拜伊大飯店 
                                         </td>
                                         <td>5 Days</td>
                                         <td>菲律賓<br>宿霧、薄荷島</td>
@@ -256,8 +284,8 @@
                                     <input type="text" class="form-control" id="introduction">
                                 </div>
                                 <div class="form-group">
-                                    <label for="date">天數:</label>
-                                    <input type="date" class="form-control" id="date">
+                                    <label for="hireDate">天數:</label>
+                                    <input type="date" class="form-control" id="hireDate">
                                 </div>
                                 <div class="form-group">
                                     <label for="county">縣市:</label>

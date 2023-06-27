@@ -85,20 +85,18 @@ public class LoginMemberController {
 		memberService.changePwd(id, password);
 	}
 
-	// 存圖片
-	@PostMapping("/uploadImage/{id}")
-	public void uploadImage(@PathVariable("id") int id, @RequestParam byte[] memberPic) {
-		memberService.saveImage(id, memberPic);
-		System.out.println("save controller");
-	}
-	//顯示圖片
-	@GetMapping("/getPic/{id}")
-	public byte[] getPic(@PathVariable("id")int id) {
-		return memberService.getPic(id);
-	}
-//	public MemberDetail detail(@PathVariable("id") int id) {
-//		return memberService.getItem(id);
+//	// 存圖片
+//	@PostMapping("/uploadImage/{id}")
+//	public void uploadImage(@PathVariable("id") int id, @RequestParam byte[] memberPic) {
+//		memberService.saveImage(id, memberPic);
+//		System.out.println("save controller");
 //	}
+//	//顯示圖片
+//	@GetMapping("/getPic/{id}")
+//	public byte[] getPic(@PathVariable("id")int id) {
+//		return memberService.getPic(id);
+//	}
+
 	
 
 }

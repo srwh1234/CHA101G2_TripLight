@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import static com.tw.trip.controller.TripImageController.IMG_URL;
@@ -88,15 +89,18 @@ public class Trip implements Serializable {
         return result;
     }
 
+    public Trip(){
 
-//    public Trip(Integer tripId, String tripName,  ){
-//        private int tripId;
-//        private String tripName;
-//        private int tripDay;
-//        private String city;
-//        private String tripContent;
-//
-//
-//
-//    }
+    }
+
+    public Trip(Integer tripId,String tripName, Integer tripDay, String city, String tripContent, byte[] image ){
+
+        this.tripId = tripId;
+        this.tripName = tripName;
+        this.tripDay = tripDay;
+        this.city = city;
+        this.tripContent = tripContent;
+        imageBase64 = Base64.getEncoder().encodeToString(image);
+
+    }
 }

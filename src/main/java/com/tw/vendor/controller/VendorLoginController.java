@@ -1,5 +1,6 @@
 package com.tw.vendor.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 
 @RestController
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 public class VendorLoginController {
 
@@ -21,15 +23,17 @@ public class VendorLoginController {
 	
 	@PostMapping("/vendor/login")
 	public Integer vendorlogin(@RequestBody VendorLoginRequest request  , HttpSession httpSession) {
+		System.out.println(request);
 		Vendor result = vendorLoginService.vendorlogin(request.getVendorEmail(), request.getLoginAccount(), request.getLoginPassword());
-		if(result != null) {
+		if(result == null) {
 			System.out.println("查無此帳號");
 			return 0;
 		} else {
 			//設置session
-			httpSession.setAttribute("vendor", result);
-			System.out.println("VendorId" + httpSession.getAttribute("vendor"));
+			httpSession.getServletContext().setAttribute("vendor", result);
+			System.out.println("VendorId" + httpSession.getServletContext().getAttribute("vendor"));
 			System.out.println("登入成功");
+			 System.out.println(httpSession.getId());
 			return 1; 
 		}
 		

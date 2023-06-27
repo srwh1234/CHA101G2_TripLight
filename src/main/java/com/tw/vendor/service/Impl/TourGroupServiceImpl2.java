@@ -20,7 +20,7 @@ public class TourGroupServiceImpl2 implements TourGroupService2 {
 	public void save(TourGroup2 tourGroup) {
 		tourGroupRepository.save(tourGroup);
 	}
-
+	
 	@Override
 	public List<TourGroup2> findAll() {
 		return tourGroupRepository.findAll();

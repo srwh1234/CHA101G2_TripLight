@@ -637,7 +637,6 @@
     <script>
 
         // ====== calendar initialized n get value  ======
-
         let sessionTripId = sessionStorage.getItem('tripId');
 
         // ====== get trip infor from DB n display in headers ======
@@ -952,12 +951,8 @@
         } else {
             memberId = null;
         }
-        console.log(memberId);
-        //   let sessionTripId = sessionStorage.getItem('tripId');
+
         var $favoriteIcon = $(".my-favorite").find('i');
-
-
-
         //按下收藏
         $(document).ready(function () {
 
@@ -967,16 +962,12 @@
                     tripId: sessionTripId,
                     favorite: $favoriteIcon.hasClass("on")
                 };
-
-                // Send the AJAX request
                 $.ajax({
                     url: "/tripfavorite",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(requestData),
                     success: function (response) {
-                        // Handle the response from the server
-                        console.log(response)
                         switch (response) {
                             case 1:
                                 Swal.fire({ icon: 'success', title: '成功加入我的最愛', });
