@@ -59,5 +59,10 @@ public class Vendor {  // 表格名稱
                 "公司登入密碼："+ vendorEmail +"<br>"+
                 "公司信箱："+ vendorEmail +"<br>";
     }
+
+	public Vendor orElse(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
