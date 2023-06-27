@@ -25,36 +25,39 @@ camera.addEventListener('click', function () {
 			reader.readAsDataURL(file);
 		}
 		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		var formData = new FormData();
+		formData.append('memberPic', file);
+
 		$.ajax({
-			url: "/uploadImage/" + theId,
+			url: "/m_saveImg/" + theId,
 			method: "POST",
-			data: {
-				memberPic: memberPic,
-			},
+			data: formData,
+			processData: false,
+			contentType: false,
 			success: (response) => {
-				console.log("儲存成功")
-			}, error: (error) => {
+				console.log(response);
+				console.log("儲存成功");
+			},
+			error: (error) => {
 				console.log(error);
+				console.log("儲存失敗");
 			}
-		})
+		});
 	});
 	input.click();
 });
 //顯示大頭照
 $(document).ready(function () {
 	$.ajax({
-		url: "/getPic/" + theId,
+		url: "/img/members/" + theId,
 		method: "GET",
-		dataType: "text",
 		success: function (response) {
-			let memberPic = response;
-			$('.rounded-circle').attr('src', memberPic);
-
+			const imgUrl = "http://localhost:8080" + this.url;
+			$('.rounded-circle').attr('src', imgUrl);
+			console.log("圖片載入成功");
 		},
 		error: function (error) {
-			console.log(error);
-			console.log(error.response);
-
+			console.log("圖片載入失敗");
 		}
 	});
 });
@@ -110,13 +113,6 @@ function generateTicket() {
 		},
 	});
 }
-//移除背景圖
-if ($(".tab-pane").eq(0).find("#orderselect").find(".ticket_item_class")) {
-	$(".no_comment_div").first().addClass("-out");
-} else {
-	$(".no_comment_div").first().removeClass("-out");
-}
-
 
 //移除收藏
 $(document).on("click", ".remove_btn", function (e) {
@@ -148,13 +144,11 @@ $(".nav-item")
 	});
 //=========================================
 // 設定點擊旅遊團
-
 $(".nav-item")
 	.eq(1)
 	.on("click", function () {
 		$(".tab-pane").eq(1).addClass("show active");
 		generateGroup();
-
 	});
 function generateGroup() {
 	$.ajax({
@@ -220,14 +214,6 @@ function generateGroup() {
 		},
 	});
 }
-//移除背景圖
-if ($(".tab-pane").eq(1).find("#group_orderselect").find(".group_item_class")) {
-	$(".no_comment_div").eq(1).addClass("-out");
-} else {
-	$(".no_comment_div").eq(1).removeClass("-out");
-}
-
-
 // ==========================右邊會員資料--文章收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
@@ -432,11 +418,5 @@ $(document).on("click", ".group_order_item_class", function () {
 		container.animate({ height: fullHeight }, 500);
 	}
 });
-//背景圖
-var GOItems = document.querySelectorAll(".group_order_item_class");
-if (GOItems.length !== 0) {
-	$(".no_comment_div").eq(3).toggleClass("-out", true);
-} else {
-	$(".no_comment_div").eq(3).toggleClass("-out", false);
-}
+
 // =====================================================================

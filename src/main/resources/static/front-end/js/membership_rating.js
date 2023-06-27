@@ -60,15 +60,15 @@ Promise.all([getTicket(), getTrip()]).then(() => {
 
 // ============================上傳大頭照=====================================
 let camera = document.getElementById('camera');
-camera.addEventListener('click', function() {
+camera.addEventListener('click', function () {
 	const input = document.createElement('input');
 	input.type = 'file';
 
-	input.addEventListener("change", function() {
+	input.addEventListener("change", function () {
 		const file = this.files[0];
 		const reader = new FileReader();
 
-		reader.addEventListener("load", function() {
+		reader.addEventListener("load", function () {
 			sessionStorage.setItem('uploadedPhoto', reader.result);
 			img.src = reader.result;
 		});
@@ -76,36 +76,39 @@ camera.addEventListener('click', function() {
 			reader.readAsDataURL(file);
 		}
 		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		var formData = new FormData();
+		formData.append('memberPic', file);
+
 		$.ajax({
-			url: "/uploadImage/" + id,
+			url: "/m_saveImg/" + id,
 			method: "POST",
-			data:{
-				memberPic: memberPic,
-			},
+			data: formData,
+			processData: false,
+			contentType: false,
 			success: (response) => {
-				console.log("儲存成功")
-			}, error: (error) => {
+				console.log(response);
+				console.log("儲存成功");
+			},
+			error: (error) => {
 				console.log(error);
+				console.log("儲存失敗");
 			}
-		})
+		});
 	});
 	input.click();
 });
 //顯示大頭照
-$(document).ready(function() {
+$(document).ready(function () {
 	$.ajax({
-		url: "/getPic/" + id,
+		url: "/img/members/" + id,
 		method: "GET",
-		dataType: "text",
-		success: function(response) {
-			let memberPic = response;
-		$('.rounded-circle').attr('src', memberPic);
-			
+		success: function (response) {
+			const imgUrl = "http://localhost:8080" + this.url;
+			$('.rounded-circle').attr('src', imgUrl);
+			console.log("圖片載入成功");
 		},
-		error: function(error) {
-			console.log(error);
-			console.log(error.response);
-
+		error: function (error) {
+			console.log("圖片載入失敗");
 		}
 	});
 });
