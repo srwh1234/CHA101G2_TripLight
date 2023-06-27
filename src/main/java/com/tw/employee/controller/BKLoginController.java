@@ -27,8 +27,13 @@ public class BKLoginController {
 	public Boolean BKlogin(@RequestParam String account, @RequestParam String password, HttpSession session) {
 		Employee result = bkLoginService.bklogin(account, password);
 		
+		//先檢查帳號密碼是否為員工表格內有的
 		if(result == null) {
 			System.out.println("查無此員工");	
+			return false;
+			//在檢查員工狀態要是在職、不是就不行登
+		} else if (result.getEmployeeStatus() == 0) {
+			System.out.println("員工狀態不符合");
 			return false;
 		} else {
 			session.setAttribute("employee", result);
@@ -36,19 +41,4 @@ public class BKLoginController {
 			return true;
 		}
 	}	
-				
 }
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-
-

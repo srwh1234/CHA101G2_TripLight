@@ -70,7 +70,6 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="MemberQuety.html">查詢資料</a>
-                        <a class="collapse-item" href="MemberRevise.html">修改資料</a>
                     </div>
                 </div>
             </li>
@@ -170,8 +169,8 @@
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" id="logoutLink">
+                                aria-labelledby="userDropdown" id="logoutLink">
+                                <a class="dropdown-item" href="" >
                                     登出
                                 </a>
                             </div>
@@ -205,6 +204,23 @@
                     </a>
                 </div>
 
+				<script>
+					$("#logoutLink").on("click",function () {
+						console.log("eeeeeeeeeeeeeee")
+   						 $.ajax({
+     					 type: "GET",
+       					 url: "/BKlogout", 
+       					 success: function () {
+       						 console.log("成功");
+            			window.location.href = "http://localhost:8080/back-end/login.html";
+					        },
+        				error: function () {
+        					console.log("失敗");
+     
+    					    }
+    						});
+							});
+			</script>
 
 
                 <!-- Bootstrap 核心 JavaScript -->

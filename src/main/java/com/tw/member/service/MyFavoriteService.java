@@ -103,12 +103,10 @@ public class MyFavoriteService {
 			detail.setTripName(t.getTripName());
 			detail.setPriceAdult(t.getPriceAdult());
 			detail.setPriceChild(t.getPriceChild());
-			detail.setTripDescription(t.getTripDescription());	
-		//	detail.setImageBase64(tripImageService.findImgUrl(t.getTripId());
+			detail.setTripContent(t.getTripContent());	
 			detail.setImgUrl(tripImageService.findImgUrl(t.getTripId()));
 			result.add(detail);
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -119,28 +117,18 @@ public class MyFavoriteService {
 			// TODO Auto-generated constructor stub
 		}
 
-		public TripImage getImageBase64() {
-			return imageBase64;
-		}
-
-		public void setImageBase64(TripImage image) {
-			this.imageBase64 = image;
-		}
-
 		private Integer tripId;
 		private String tripName;
 		private Integer priceAdult;
 		private Integer priceChild;
-		private String tripDescription;
-		private TripImage imageBase64;
-		
+		private String tripContent;
 		private String imgUrl;
 	}
-
+//	tripFavoriteRepository.deleteQuery(reqDto.getMemberId(), reqDto.getTripId());
 //	//刪除
 	public boolean removeTrip(final int memberId, final int tripId) {
 		Trip trip = tripRepository.findById(tripId).orElse(null);
-		tripFavoriteRepository.deleteById(new PrimaryKey2(memberId,trip));
+		tripFavoriteRepository.deleteQuery(memberId, tripId);
 
 		return true;
 	}

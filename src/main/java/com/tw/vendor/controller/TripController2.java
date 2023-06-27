@@ -14,7 +14,7 @@ import com.tw.vendor.model.Trip2;
 import com.tw.vendor.service.TripService2;
 
  @CrossOrigin(origins = "*")
- @RestController("tripController") // 標示該類別與前端交互，自動轉Json
+ @RestController // 標示該類別與前端交互，自動轉Json
  @RequestMapping("/trip")
  public class TripController2 {
 

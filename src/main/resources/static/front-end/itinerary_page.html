@@ -247,7 +247,11 @@
                     <div style="padding: 20px 20px 20px 20px;" class="col-md-12">
                         <h2 id="tripName"></h2>
                         <hr class="hr" />
-                        <span>☆☆☆☆</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <span>location</span>
                         <hr class="hr" />
                         <div id="tripContent">
 
@@ -273,14 +277,14 @@
                     <h3 id="beginPrice"></h3>
                 </div>
                 <div class="row m-5">
-                    <button type="button" class="btn btn-info">選擇方案</button>
+                    <button type="button" class="btn btn-info" id="scrollBtn">選擇方案</button>
                 </div>
             </div>
 
         </div>
 
 
-        <div class="card mb-3">
+        <div class="card mb-3" id="targetSection">
             <div class="row g-0">
                 <div class="col-7">
 
@@ -322,6 +326,23 @@
                             <h5 class="text-secondary" id="minTravelersNo"></h5>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <div class="col-5">
+                            <h5 class="text-secondary"> 旅遊團人數上限: </h5>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="text-secondary" id="maxTravelersNo"></h5>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-5">
+                            <h5 class="text-secondary"> 剩餘名額: </h5>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="text-secondary" id="leftTravelersNo"></h5>
+                        </div>
+                    </div>
                     <!-- 選項人數列 -->
                     <!-- 選項人數列 -->
                     <div class="row d-inline-block">
@@ -340,7 +361,7 @@
                             <div class="input-group input-group">
 
                                 <button class="btn btn-outline-secondary" type="button" id="minus_child">-</button>
-                                <input type="text" class="form-control" id="count_child" value="1">
+                                <input type="text" class="form-control" id="count_child" value="0">
                                 <button class="btn btn-outline-secondary plus" type="button" id="plus_child">+</button>
 
                             </div>
@@ -361,7 +382,7 @@
                             <div class="input-group input-group">
 
                                 <button class="btn btn-outline-secondary" type="button" id="minus_adult">-</button>
-                                <input type="text" class="form-control" id="count_adult" value="1">
+                                <input type="text" class="form-control" id="count_adult" value="0">
                                 <button class="btn btn-outline-secondary plus" type="button" id="plus_adult">+</button>
 
                             </div>
@@ -384,8 +405,7 @@
 
                     <div class="row"></div>
                     <div class="row">
-                        <button onclick="window.location.href='group_orderprocess.html'" type="button"
-                            class="btn btn-primary btn-lg">我要預定</button>
+                        <button type="button" class="btn btn-primary btn-lg" id="orderBtn">我要預定</button>
                     </div>
 
                 </div>
@@ -405,15 +425,15 @@
                     class="scrollspy-example scrollspy-example-collapsible">
                     <section id="example-1-collapsible">
                         <h3>行程介紹</h3>
-                        <pre style="font-size: 20px" id="tripDescription">
-                        </pre>
-                        <img style="weight:80%;  height: 500px;" src="https://picsum.photos/800/600/?random=43"
-                            class="d-block w-100" alt="...">
+                        <div style="font-size: 20px; overflow-wrap: break-word; word-wrap: break-word; " id="tripDescription">
+                        </div>
+<!--                        <img style="weight:80%;  height: 500px;" src="https://picsum.photos/800/600/?random=43"-->
+<!--                            class="d-block w-100" alt="...">-->
                     </section>
                     <section id="example-2-collapsible">
                         <h3>注意事項</h3>
-                        <pre style="font-size: 20px; overflow-wrap: break-word" id="tripNote">
-                        </pre>
+                        <div style="font-size: 20px; overflow-wrap: break-word; word-wrap: break-word; " id="tripNote">
+                        </div>
                     </section>
 
                 </div>
@@ -504,110 +524,112 @@
 
         </div>
         <!-- 評論本體 -->
-        <!-- ========== //outer ========== -->
 
-        <!-- ========== footer ========== -->
-        <footer>
-            <section class="footer footer_w3layouts_section_1its py-5">
-                <div class="container py-lg-4 py-3">
-                    <div class="row footer-top">
-                        <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
-                            <div class="footer-title">
-                                <h3>地點資訊</h3>
-                            </div>
-                            <div class="row">
-                                <ul class="col-12 links">
-                                    <li>
-                                        <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
-                                            target="_blank">地址：桃園市中壢區復興路46號9樓</a>
-                                    </li>
-                                    <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
-                                    <li>
-                                        <a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
-                                    </li>
-                                    <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
-                                </ul>
-                            </div>
+
+    </div>
+
+    <!-- ========== //outer ========== -->
+
+    <!-- ========== footer ========== -->
+    <footer>
+        <section class="footer footer_w3layouts_section_1its py-5">
+            <div class="container py-lg-4 py-3">
+                <div class="row footer-top">
+                    <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+                        <div class="footer-title">
+                            <h3>地點資訊</h3>
                         </div>
-                        <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
-                            <div class="footer-title">
-                                <h3>認識TripLight</h3>
-                            </div>
-                            <div class="row">
-                                <ul class="col-10 links">
-                                    <li><a href="about.html" class="scroll">關於我們</a></li>
-                                    <li>
-                                        <a href="user_terms.html" class="scroll">使用者條款 </a>
-                                    </li>
-                                    <li>
-                                        <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
-                                    </li>
-                                    <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
-                            <div class="footer-title">
-                                <h3>成為合作夥伴</h3>
-                            </div>
-                            <div class="row">
-                                <ul class="col-6 links">
-                                    <li>
-                                        <a href="supplier_form.html" class="scroll">成為供應商</a>
-                                    </li>
-                                    <li>
-                                        <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
-                                    </li>
-                                    <li>
-                                        <a href="group_form.html" class="scroll">團體客製規劃</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
-                            <div class="footer-title">
-                                <h3>聯絡我們</h3>
-                            </div>
-                            <ul class="social_section_1info">
+                        <div class="row">
+                            <ul class="col-12 links">
                                 <li>
-                                    <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
-                                            alt="facebook" /></a>
+                                    <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
+                                       target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                                </li>
+                                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                                <li>
+                                    <a href="mailto:contact@example.com">信箱：triplirht@gmail.com</a>
+                                </li>
+                                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+                        <div class="footer-title">
+                            <h3>認識TripLight</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-10 links">
+                                <li><a href="about.html" class="scroll">關於我們</a></li>
+                                <li>
+                                    <a href="user_terms.html" class="scroll">使用者條款 </a>
                                 </li>
                                 <li>
-                                    <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                                            alt="instagram" /></a>
+                                    <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                                </li>
+                                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+                        <div class="footer-title">
+                            <h3>成為合作夥伴</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-6 links">
+                                <li>
+                                    <a href="supplier_form.html" class="scroll">成為供應商</a>
                                 </li>
                                 <li>
-                                    <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+                                    <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
                                 </li>
-                                <li class="youtube">
-                                    <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
-                                            src="./images/youtube.svg" alt="youtube" /></a>
+                                <li>
+                                    <a href="group_form.html" class="scroll">團體客製規劃</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+                        <div class="footer-title">
+                            <h3>聯絡我們</h3>
+                        </div>
+                        <ul class="social_section_1info">
+                            <li>
+                                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
+                                                                               alt="facebook" /></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                                                                                       alt="instagram" /></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+                            </li>
+                            <li class="youtube">
+                                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
+                                        src="./images/youtube.svg" alt="youtube" /></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </section>
-        </footer>
-        <!-- ========== //footer ========== -->
+            </div>
+        </section>
+    </footer>
+    <!-- ========== //footer ========== -->
 
-        <!--  ========== copyright  ========== -->
-        <div class="copyright py-3 text-center">
-            <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
-        </div>
-        <!-- ==========  //copyright ========== -->
-
-        <!-- ==========  move top ========== -->
-        <div class="move-top text-right">
-            <a href="#home" class="move-top">
-                <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
-            </a>
-        </div>
-        <!-- ==========  //move top ==========  -->
-
-
+    <!--  ========== copyright  ========== -->
+    <div class="copyright py-3 text-center">
+        <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
     </div>
+    <!-- ==========  //copyright ========== -->
+
+    <!-- ==========  move top ========== -->
+    <div class="move-top text-right">
+        <a href="#home" class="move-top">
+            <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+        </a>
+    </div>
+    <!-- ==========  //move top ==========  -->
+
 
 
     <!-- ========== lib  ========== -->
@@ -634,244 +656,469 @@
     <script src="js/Login.js"></script>
     <script src="./js/sweetalert.js"></script>
 
+    <!-- ========== Java Script  ========== -->
     <script>
 
         // ====== calendar initialized n get value  ======
-
         let sessionTripId = sessionStorage.getItem('tripId');
+
+        function getMemberId(){
+
+            const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
+            if(!testLogIn || !testLogIn.memberId){
+                return 0;
+            }
+            return testLogIn.memberId;
+        }
+
+        let memberId = getMemberId();
 
         // ====== get trip infor from DB n display in headers ======
         $.getJSON(`http://localhost:8080/tripPage/getTrip?tripIdString=${sessionTripId}`, function (response) {
-            console.log(response);
-            console.log(response.tripName);
-            console.log(response.tripDescription);
             $('#tripName').text(`${response.tripName}`);
             sessionStorage.setItem('tripName', `${response.tripName}`);
             $('#tripContent').text(`${response.tripContent}`);
             $('#tripDescription').html(`${response.tripDescription}`);
             $('#tripNote').html(`${response.tripNote}`);
 
+
+            //找到會員id
+            // 移動至上方喔
+            // let memberId = 0;
+            // if (sessionStorage.getItem("test-login")) {
+            //     memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+            // } else {
+            //     memberId = null;
+            // }
+
+            //確認資料庫有沒有這筆資料，有了話愛心紅色
+            $.ajax({
+                url: "/existFavorite",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    memberId: memberId,
+                    tripId: sessionStorage.getItem('tripId'),
+                    favorite: true,
+                }),
+                success: (response) => {
+                    console.log(response);
+                    if (response) {
+                        $favoriteIcon.addClass("on")
+                    } else { $favoriteIcon.removeClass("on") }
+                }, error: (error) => {
+                    console.log(error);
+                }
+            })
         })
 
-        // ====== 日曆區塊 ======
-        $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripIdString=${sessionTripId}`, function (response) {
+        // ====== 取得旅遊團資訊 ======
+        $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripIdString=${sessionTripId}`)
+            .done(function (response){
+
+
+                // ====== 預設顯示最新的旅遊團 response[0] ======
+                $('#selectedDate').text(`${response[0].formattedStartDate} 至 ${response[0].formattedEndDate}`);
+                sessionStorage.setItem('formattedStartDate', `${response[0].formattedStartDate}`);
+                sessionStorage.setItem('formattedEndDate', `${response[0].formattedEndDate}`);
+                sessionStorage.setItem('tourGroupId', `${response[0].tourGroupId}`);
+
+                $('#confirmedTravelersNo').text(`${response[0].confirmedTravelersNo} 人`);
+
+                // ====== 詳細資料描述區塊 ======
+                // ====== minTravelersNo ======
+                $('#minTravelersNo').text(`${response[0].minTravelersNo} 人`);
+
+                // ===== maxTravelersNo ======
+                let maxTravelersNo = parseInt(response[0].maxTravelersNo);
+                $('#maxTravelersNo').text(`${maxTravelersNo} 人`);
+
+                // ===== confirmedTravelersNo ======
+                let confirmedTravelersNo = parseInt(response[0].confirmedTravelersNo);
+
+                // ===== leftTravelersNo ======
+                let leftTravelersNo = (maxTravelersNo - confirmedTravelersNo);
+                $('#leftTravelersNo').text(`${leftTravelersNo} 人`);
+
+
+
+                // ====== priceAdult ======
+                $('#priceAdult').text(`${response[0].priceAdult}/每人`);
+                $('#priceAdult').attr('value', response[0].priceAdult);
+
+
+                // ====== priceChild ======
+                $('#priceChild').text(`${response[0].priceChild}/每人`);
+                $('#priceChild').attr('value', response[0].priceChild); // attribute value only workable in this area
+
+                // ====== number & price area ======
+                // 數量欄
+                let count_child = $("#count_child");
+                let count_adult = $("#count_adult");
+
+                let currentQtyChild = parseInt(count_child.val());
+                let currentQtyAdult = parseInt(count_adult.val());
+
+                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+
+
+                // 價格
+                let priceChild = parseInt($('#priceChild').attr('value'));
+                let priceAdult = parseInt($('#priceAdult').attr('value'));
+
+                // 總金額
+                let amount = $('#amount');
+                let amountValue = parseInt($('#amount').val());
+
+                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                amount.html(`${amountValue} 元`);
+
+                // ====== origin price ======
+                $('#beginPrice').html(`${priceChild} 元 起`);
+
+
+
+                // ===== 兒童 =====
+                // 減號按鈕
+                $("#minus_child").on("click", function () {
+                    if (currentQtyChild > 0) {
+                        currentQtyChild--;
+                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                        count_child.val(currentQtyChild);
+
+                        amountValue -= priceChild;
+                        amount.html(`${amountValue} 元`);
+                    }
+                })
+                // 加號按鈕
+                $("#plus_child").on("click", function () {
+                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                        currentQtyChild++;
+                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                        count_child.val(currentQtyChild);
+
+                        amountValue += priceChild;
+                        amount.html(`${amountValue} 元`);
+                    }
+
+                })
+                // ===== 大人 =====
+
+                // 減號按鈕(大人)
+                $("#minus_adult").on("click", function () {
+                    if (currentQtyAdult > 0) {
+                        currentQtyAdult--;
+                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                        count_adult.val(currentQtyAdult);
+
+                        // 金額增減
+                        amountValue -= priceAdult;
+                        amount.html(`${amountValue} 元`);
+                    }
+                })
+
+                // 加號按鈕 (大人)
+                $("#plus_adult").on("click", function () {
+                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                        currentQtyAdult++;
+                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                        count_adult.val(currentQtyAdult);
+                        // 金額增減
+                        amountValue += priceAdult;
+                        amount.html(`${amountValue} 元`);
+
+                    }
+                })
+
+                // 兒童輸入數量欄位
+                count_child.on('change', function (){
+                    if(parseInt(count_child.val()) >= 0 && (count_child.val()!== null) && (count_child.val()!== '')){
+                        currentQtyChild = parseInt(count_child.val());
+                        console.log(`test first ${currentQtyChild}`);
+                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
+                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
+                            alert('超出剩餘名額，請重新輸入');
+                                currentQtyChild = 0;
+                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                count_child.val('0');
+                                amountValue = 0;
+                                amountValue = (priceAdult*currentQtyAdult);
+                                amount.html(`${amountValue} 元`);
+
+
+                        }else{
+                            sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+
+                            amountValue = 0;
+                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                            amount.html(`${amountValue} 元`);
+                        }
+
+
+                    }else{
+                        alert('輸入錯誤，人數須為正整數');
+                        count_child.val('');
+                    }
+
+                });
+
+                // 大人輸入數量欄位
+                count_adult.on('change', function (){
+                    if(parseInt(count_adult.val()) >= 0 && (count_adult.val()!== null) && (count_adult.val()!== '')){
+                        currentQtyAdult = parseInt(count_adult.val());
+                        console.log(`test first ${currentQtyAdult}`);
+                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
+                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
+                            alert('超出旅遊團人數，請重新輸入');
+                            currentQtyAdult = 0;
+                            sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                            count_adult.val('0');
+                            amountValue = 0;
+                            amountValue = (priceChild*currentQtyChild);
+                            amount.html(`${amountValue} 元`);
+
+                        }else{
+                            sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+
+                            amountValue = 0;
+                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                            amount.html(`${amountValue} 元`);
+
+                        }
+
+
+
+                    }else{
+                        alert('輸入錯誤，人數須為正整數');
+                        count_adult.val('');
+
+                    }
+
+                });
+
+                // ====== 日曆點擊後，隨著點擊日期修改內容 ======
+                let calendarEl = document.getElementById('calendar');
+
+                let calendar = new FullCalendar.Calendar(calendarEl, {
+                    selectable: true, // 啟用選擇功能
+                    select: function (info) {
+
+                        for (let i = 0; i < response.length; i++) {
+                            if (info.startStr === `${response[i].formattedStartDate}`) {
+                                // ====== 預設顯示最新的旅遊團 ======
+                                $('#selectedDate').text(`${response[i].formattedStartDate} 至 ${response[i].formattedEndDate}`);
+                                sessionStorage.setItem('formattedStartDate', `${response[i].formattedStartDate}`);
+                                sessionStorage.setItem('formattedEndDate', `${response[i].formattedEndDate}`);
+                                sessionStorage.setItem('tourGroupId', `${response[i].tourGroupId}`);
+
+                                $('#confirmedTravelersNo').text(`${response[i].confirmedTravelersNo} 人`);
+
+                                // ====== minTravelersNo ======
+                                $('#minTravelersNo').text(`${response[i].minTravelersNo} 人`);
+
+                                // ===== maxTravelersNo ======
+                                let maxTravelersNo = parseInt(response[i].maxTravelersNo);
+                                $('#maxTravelersNo').text(`${maxTravelersNo} 人`);
+
+                                // ===== confirmedTravelersNo ======
+                                let confirmedTravelersNo = parseInt(response[i].confirmedTravelersNo);
+
+                                // ===== leftTravelersNo ======
+                                let leftTravelersNo = (maxTravelersNo - confirmedTravelersNo);
+                                $('#leftTravelersNo').text(`${leftTravelersNo} 人`);
+
+                                // ====== priceAdult ======
+                                $('#priceAdult').text(`${response[i].priceAdult}/每人`);
+                                $('#priceAdult').attr('value', response[i].priceAdult);
+
+
+                                // ====== priceChild ======
+                                $('#priceChild').text(`${response[i].priceChild}/每人`);
+                                $('#priceChild').attr('value', response[i].priceChild); // attribute value only workable in this area
+
+                                // ====== number & price area ======
+                                // 數量欄
+                                let count_child = $("#count_child");
+                                let count_adult = $("#count_adult");
+
+                                let currentQtyChild = parseInt(count_child.val());
+                                let currentQtyAdult = parseInt(count_adult.val());
+
+                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+
+
+                                // 價格
+                                let priceChild = parseInt($('#priceChild').attr('value'));
+                                let priceAdult = parseInt($('#priceAdult').attr('value'));
+
+                                // 總金額
+                                let amount = $('#amount');
+                                let amountValue = parseInt($('#amount').val());
+
+                                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                amount.html(`${amountValue} 元`);
+
+                                // ====== origin price ======
+                                $('#beginPrice').html(`${priceChild} 元 起`);
+
+
+                                // ===== 兒童 =====
+                                // 減號按鈕
+                                $("#minus_child").on("click", function () {
+                                    if (currentQtyChild > 0) {
+                                        currentQtyChild--;
+                                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                        count_child.val(currentQtyChild);
+
+                                        amountValue -= priceChild;
+                                        amount.html(`${amountValue} 元`);
+                                    }
+                                })
+                                // 加號按鈕
+                                $("#plus_child").on("click", function () {
+                                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                                        currentQtyChild++;
+                                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                        count_child.val(currentQtyChild);
+
+                                        amountValue += priceChild;
+                                        amount.html(`${amountValue} 元`);
+                                    }
+
+                                })
+                                // ===== 大人 =====
+
+                                // 減號按鈕(大人)
+                                $("#minus_adult").on("click", function () {
+                                    if (currentQtyAdult > 0) {
+                                        currentQtyAdult--;
+                                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                                        count_adult.val(currentQtyAdult);
+
+                                        // 金額增減
+                                        amountValue -= priceAdult;
+                                        amount.html(`${amountValue} 元`);
+                                    }
+                                })
+
+                                // 加號按鈕 (大人)
+                                $("#plus_adult").on("click", function () {
+                                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                                        currentQtyAdult++;
+                                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                                        count_adult.val(currentQtyAdult);
+                                        // 金額增減
+                                        amountValue += priceAdult;
+                                        amount.html(`${amountValue} 元`);
+
+                                    }
+                                })
+
+                                // 兒童輸入數量欄位
+                                count_child.on('change', function (){
+                                    if(parseInt(count_child.val()) >= 0 && (count_child.val()!== null) && (count_child.val()!== '')){
+                                        currentQtyChild = parseInt(count_child.val());
+                                        console.log(`test first ${currentQtyChild}`);
+                                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
+                                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
+                                            alert('超出剩餘名額，請重新輸入');
+                                            currentQtyChild = 0;
+                                            sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                            count_child.val('0');
+                                            amountValue = 0;
+                                            amountValue = (priceAdult*currentQtyAdult);
+                                            amount.html(`${amountValue} 元`);
+
+
+                                        }else{
+                                            sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+
+                                            amountValue = 0;
+                                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                                            amount.html(`${amountValue} 元`);
+                                        }
+
+
+                                    }else{
+                                        alert('輸入錯誤，人數須為正整數');
+                                        count_child.val('');
+                                    }
+
+                                });
+
+                                // 大人輸入數量欄位
+                                count_adult.on('change', function (){
+                                    if(parseInt(count_adult.val()) >= 0 && (count_adult.val()!== null) && (count_adult.val()!== '')){
+                                        currentQtyAdult = parseInt(count_adult.val());
+                                        console.log(`test first ${currentQtyAdult}`);
+                                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
+                                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
+                                            alert('超出旅遊團人數，請重新輸入');
+                                            currentQtyAdult = 0;
+                                            sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                                            count_adult.val('0');
+                                            amountValue = 0;
+                                            amountValue = (priceChild*currentQtyChild);
+                                            amount.html(`${amountValue} 元`);
+
+                                        }else{
+                                            sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+
+                                            amountValue = 0;
+                                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                                            amount.html(`${amountValue} 元`);
+
+                                        }
+
+
+
+                                    }else{
+                                        alert('輸入錯誤，人數須為正整數');
+                                        count_adult.val('');
+
+                                    }
+
+                                });
+                            }
+                        }
+                    }
+                });
+                calendar.render();
+
+                for (let i = 0; i < response.length; i++) {
+                    let date = response[i].formattedStartDate;
+                    let newEvent = {
+                        title: '旅遊團',
+                        start: `${date}`,
+                    }
+                    calendar.addEvent(newEvent);
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown){
 
             // ====== 預設顯示最新的旅遊團 ======
-            $('#selectedDate').text(`${response[0].formattedStartDate} 至 ${response[0].formattedEndDate}`);
-            sessionStorage.setItem('formattedStartDate', `${response[0].formattedStartDate}`);
-            sessionStorage.setItem('formattedEndDate', `${response[0].formattedEndDate}`);
-            sessionStorage.setItem('tourGroupId', `${response[0].tourGroupId}`);
+            $('#selectedDate').text('無旅遊團');
 
-            $('#confirmedTravelersNo').text(`${response[0].confirmedTravelersNo} 人`);
-
-            // ====== minTravelersNo ======
-            $('#minTravelersNo').text(`${response[0].minTravelersNo} 人`);
-
-            // ====== priceAdult ======
-            $('#priceAdult').text(`${response[0].priceAdult}/每人`);
-            $('#priceAdult').attr('value', response[0].priceAdult);
+            $('#confirmedTravelersNo').text(`0 人`);
+            $('#minTravelersNo').text(`0 人`);
 
 
-            // ====== priceChild ======
-            $('#priceChild').text(`${response[0].priceChild}/每人`);
-            $('#priceChild').attr('value', response[0].priceChild); // attribute value only workable in this area
-
-            // ====== number & price area ======
-            // 數量欄
-            let count_child = $("#count_child");
-            let count_adult = $("#count_adult");
-
-            let currentQtyChild = parseInt(count_child.val());
-            let currentQtyAdult = parseInt(count_adult.val());
-
-            sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-            sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-
-
-            // 價格
-            let priceChild = parseInt($('#priceChild').attr('value'));
-            let priceAdult = parseInt($('#priceAdult').attr('value'));
-
-            // 總金額
-            let amount = $('#amount');
-            let amountValue = parseInt($('#amount').val());
-
-            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
-            amount.html(`${amountValue} 元`);
-
-            // ====== origin price ======
-            $('#beginPrice').html(`${priceChild} 元 起`);
-
-
-            // ===== 兒童 =====
-            // 減號按鈕
-            $("#minus_child").on("click", function () {
-                if (currentQtyChild > 1) {
-                    currentQtyChild--;
-                    sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                    count_child.val(currentQtyChild);
-
-                    amountValue -= priceChild;
-                    amount.html(`${amountValue} 元`);
-                }
-            })
-            // 加號按鈕
-            $("#plus_child").on("click", function () {
-                currentQtyChild++;
-                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                count_child.val(currentQtyChild);
-
-                amountValue += priceChild;
-                amount.html(`${amountValue} 元`);
-            })
-            // ===== 大人 =====
-
-            // 減號按鈕(大人)
-            $("#minus_adult").on("click", function () {
-                if (currentQtyAdult > 1) {
-                    currentQtyAdult--;
-                    sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                    count_adult.val(currentQtyAdult);
-
-                    // 金額增減
-                    amountValue -= priceAdult;
-                    amount.html(`${amountValue} 元`);
-                }
-            })
-
-            // 加號按鈕 (大人)
-            $("#plus_adult").on("click", function () {
-                currentQtyAdult++;
-                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                count_adult.val(currentQtyAdult);
-                // 金額增減
-                amountValue += priceAdult;
-                amount.html(`${amountValue} 元`);
-
-            })
+            $('#priceChild').text(`0元 /每人`);
+            $('#priceAdult').text(`0元 /每人`);
+            $('#amount').text('0元');
+            $('#beginPrice').html(`0元 起`);
 
             // ====== 日曆點擊後，隨著點擊日期修改內容 ======
             let calendarEl = document.getElementById('calendar');
 
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 selectable: true, // 啟用選擇功能
-                select: function (info) {
-
-                    for (let i = 0; i < response.length; i++) {
-                        if (info.startStr === `${response[i].formattedStartDate}`) {
-                            // ====== 預設顯示最新的旅遊團 ======
-                            $('#selectedDate').text(`${response[i].formattedStartDate} 至 ${response[i].formattedEndDate}`);
-                            sessionStorage.setItem('formattedStartDate', `${response[i].formattedStartDate}`);
-                            sessionStorage.setItem('formattedEndDate', `${response[i].formattedEndDate}`);
-                            sessionStorage.setItem('tourGroupId', `${response[i].tourGroupId}`);
-
-                            $('#confirmedTravelersNo').text(`${response[i].confirmedTravelersNo} 人`);
-
-                            // ====== minTravelersNo ======
-                            $('#minTravelersNo').text(`${response[i].minTravelersNo} 人`);
-
-                            // ====== priceAdult ======
-                            $('#priceAdult').text(`${response[i].priceAdult}/每人`);
-                            $('#priceAdult').attr('value', response[i].priceAdult);
-
-
-                            // ====== priceChild ======
-                            $('#priceChild').text(`${response[i].priceChild}/每人`);
-                            $('#priceChild').attr('value', response[i].priceChild); // attribute value only workable in this area
-
-                            // ====== number & price area ======
-                            // 數量欄
-                            let count_child = $("#count_child");
-                            let count_adult = $("#count_adult");
-
-                            let currentQtyChild = parseInt(count_child.val());
-                            let currentQtyAdult = parseInt(count_adult.val());
-
-                            sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                            sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-
-
-                            // 價格
-                            let priceChild = parseInt($('#priceChild').attr('value'));
-                            let priceAdult = parseInt($('#priceAdult').attr('value'));
-
-                            // 總金額
-                            let amount = $('#amount');
-                            let amountValue = parseInt($('#amount').val());
-
-                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
-                            amount.html(`${amountValue} 元`);
-
-                            // ====== origin price ======
-                            $('#beginPrice').html(`${priceChild} 元 起`);
-
-
-                            // ===== 兒童 =====
-                            // 減號按鈕
-                            $("#minus_child").on("click", function () {
-                                if (currentQtyChild > 1) {
-                                    currentQtyChild--;
-                                    sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                                    count_child.val(currentQtyChild);
-
-                                    amountValue -= priceChild;
-                                    amount.html(`${amountValue} 元`);
-                                }
-                            })
-                            // 加號按鈕
-                            $("#plus_child").on("click", function () {
-                                currentQtyChild++;
-                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                                count_child.val(currentQtyChild);
-
-                                amountValue += priceChild;
-                                amount.html(`${amountValue} 元`);
-                            })
-                            // ===== 大人 =====
-
-                            // 減號按鈕(大人)
-                            $("#minus_adult").on("click", function () {
-                                if (currentQtyAdult > 1) {
-                                    currentQtyAdult--;
-                                    sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                                    count_adult.val(currentQtyAdult);
-
-                                    // 金額增減
-                                    amountValue -= priceAdult;
-                                    amount.html(`${amountValue} 元`);
-                                }
-                            })
-
-                            // 加號按鈕 (大人)
-                            $("#plus_adult").on("click", function () {
-                                currentQtyAdult++;
-                                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                                count_adult.val(currentQtyAdult);
-                                // 金額增減
-                                amountValue += priceAdult;
-                                amount.html(`${amountValue} 元`);
-
-                            })
-                        }
-                    }
-                }
             });
             calendar.render();
 
-            for (let i = 0; i < response.length; i++) {
-                let date = response[i].formattedStartDate;
-                let newEvent = {
-                    title: '旅遊團',
-                    start: `${date}`,
-                }
-                calendar.addEvent(newEvent);
-            }
-
-
-
-
-
         })
+
 
         // ====== 評論區塊 ======
 
@@ -901,6 +1148,37 @@
 
         });
 
+        // ====== 我要預定按鈕綁定事件 ======
+        $('#orderBtn').on('click', function (){
+            memberId = getMemberId();
+            if(memberId === 0){
+                Swal.fire('請登入會員');
+            }else {
+                if(parseInt($('#count_adult').val()) ===0 && parseInt($('#count_child').val())===0){
+                    Swal.fire('請至少選取一位人數');
+                }else if($('#selectedDate').text() === ''){
+                    Swal.fire('請選擇旅遊團的日期~');
+                }else{
+                    window.location.href='group_orderprocess.html';
+                }
+            }
+
+        });
+
+        // ====== //我要預定按鈕綁定事件 ======
+
+        // ====== 綁定選擇方案按鈕 ======
+
+        $('#scrollBtn').on('click', function() {
+            let targetOffset = $('#targetSection').offset().top;
+
+            $('html, body').animate({
+                scrollTop: targetOffset
+            }, 0);
+        });
+
+        // ====== //綁定選擇方案按鈕 ======
+
         // ====== 標頭圖片區 ======
         $.getJSON(`http://localhost:8080/tripPage/getTripPics?tripIdString=${sessionTripId}`, function (response) {
 
@@ -917,36 +1195,23 @@
             }
         });
 
+        // ====== //標頭圖片區 ======
+
+
+
         // ====== 我的最愛 ======
         //找到會員id
-        let memberId = 0;
-        if (sessionStorage.getItem("test-login")) {
-            memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
-        } else {
-            memberId = null;
-        }
-        //   let sessionTripId = sessionStorage.getItem('tripId');
+        // 移到最上面喔
+        // let memberId = 0;
+        // if (sessionStorage.getItem("test-login")) {
+        //     memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+        // } else {
+        //     memberId = null;
+        // }
+
         var $favoriteIcon = $(".my-favorite").find('i');
-
-
-
         //按下收藏
         $(document).ready(function () {
-
-            //先判斷資料庫有沒有資料
-
-            // $.ajax({
-            //     url: "/existFavorite/" + memberId,
-            //     type: "Get",
-            //     success: (response) => {
-            //         console.log(response);
-            //         if (response) {
-            //             $favoriteIcon.addClass("on")
-            //         } else { $favoriteIcon.removeClass("on") }
-            //     }, error: (error) => {
-            //         console.log(error);
-            //     }
-            // })
 
             $("#heart").on("click", function () {
                 var requestData = {
@@ -954,16 +1219,12 @@
                     tripId: sessionTripId,
                     favorite: $favoriteIcon.hasClass("on")
                 };
-
-                // Send the AJAX request
                 $.ajax({
                     url: "/tripfavorite",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(requestData),
                     success: function (response) {
-                        // Handle the response from the server
-                        console.log(response)
                         switch (response) {
                             case 1:
                                 Swal.fire({ icon: 'success', title: '成功加入我的最愛', });

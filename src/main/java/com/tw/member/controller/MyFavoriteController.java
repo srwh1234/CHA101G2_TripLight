@@ -53,7 +53,6 @@ public class MyFavoriteController {
 	//旅行團=========================================
 		@GetMapping("/groups/{id}")
 		public List<TripDTO> tripFavorites(@PathVariable("id") int id) {
-			System.out.println("Controller");
 			return myFavoriteService.getTrip(id);
 		}
 
@@ -63,7 +62,8 @@ public class MyFavoriteController {
 		public boolean removeTrip( 
 				@RequestParam("memberId") final int memberId, 
 				@RequestParam("tripId") final int tripId) {
+			 System.out.println("ddddddddddddd");
 			return myFavoriteService.removeTrip(memberId, tripId);
 		}
-	 
+
 }

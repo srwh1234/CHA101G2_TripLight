@@ -215,7 +215,7 @@
             </div>
             <div class="check">
                 <label><input type="checkbox" />記住我</label>
-                <a href="#">忘記密碼</a>
+                <a href="#" id="forgetPwd">忘記密碼</a>
             </div>
             <button type="submit" class="main-btn" id="login33">Login</button>
             <div class="register">
@@ -422,7 +422,7 @@
     let params = new URLSearchParams(window.location.search);
     let id = params.get('id'); // 獲取問題的 ID
 
-    fetch('/check_question_report_detail?id=' + id)
+    fetch('/questionReportFormDetail?id=' + id)
         .then(response => response.json())
         .then(data => {
             let senderMessage = document.querySelector('.message.sender');

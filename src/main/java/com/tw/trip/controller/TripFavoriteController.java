@@ -2,11 +2,8 @@ package com.tw.trip.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.trip.pojo.Trip;
@@ -14,6 +11,7 @@ import com.tw.trip.repository.TripRepository;
 import com.tw.trip.service.TripFavoriteService;
 
 import lombok.Data;
+
 @CrossOrigin(origins = "*")
 @RestController
 public class TripFavoriteController {
@@ -30,19 +28,11 @@ public class TripFavoriteController {
 		return tripFavoriteService.updateItem(reqDto);
 	}
 
-//確認是存在DB裡
-//	@GetMapping("/existFavorite/{memberId}")
-//	public boolean existFavorite(@PathVariable Integer memberId, Trip trip) {
-//
-//		boolean favoriteStatus = tripFavoriteService.checkIfExists(memberId, trip);
-//		if (favoriteStatus) {
-//			System.out.println("存在");
-//			return true;
-//		} else {
-//			System.out.println("不存在");
-//			return false;
-//		}
-//	}
+	// 確認是存在DB裡
+	@PostMapping("/existFavorite")
+	public boolean existFavorite(@RequestBody final FavoriteReqDto reqDto) {
+		return tripFavoriteService.checkIfExists(reqDto);
+	}
 
 	@Data
 	public static class DetailDto {
@@ -57,10 +47,11 @@ public class TripFavoriteController {
 		private int tripId;
 		private String tripName;
 		private String tripDescription;
-		private int  priceAdult;
+		private int priceAdult;
 		private String imageBase64;
 		private boolean favorite;
 	}
+
 	// 定義請求物件
 	@Data
 	public static class FavoriteReqDto {
@@ -68,6 +59,5 @@ public class TripFavoriteController {
 		private Integer tripId;
 		private boolean favorite;
 	}
-
 
 }

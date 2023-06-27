@@ -36,40 +36,42 @@ camera.addEventListener('click', function () {
 			reader.readAsDataURL(file);
 		}
 		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		var formData = new FormData();
+		formData.append('memberPic', file);
+
 		$.ajax({
-			url: "/uploadImage/" + theId,
+			url: "/m_saveImg/" + theId,
 			method: "POST",
-			data: {
-				memberPic: memberPic,
-			},
+			data: formData,
+			processData: false,
+			contentType: false,
 			success: (response) => {
-				console.log("儲存成功")
-			}, error: (error) => {
+				console.log(response);
+				console.log("儲存成功");
+			},
+			error: (error) => {
 				console.log(error);
+				console.log("儲存失敗");
 			}
-		})
+		});
 	});
 	input.click();
 });
 //顯示大頭照
 $(document).ready(function () {
 	$.ajax({
-		url: "/getPic/" + theId,
+		url: "/img/members/" + theId,
 		method: "GET",
-		dataType: "text",
 		success: function (response) {
-			let memberPic = response;
-			$('.rounded-circle').attr('src', memberPic);
-
+			const imgUrl = "http://localhost:8080" + this.url;
+			$('.rounded-circle').attr('src', imgUrl);
+			console.log("圖片載入成功");
 		},
 		error: function (error) {
-			console.log(error);
-			console.log(error.response);
-
+			console.log("圖片載入失敗");
 		}
 	});
 });
-
 // <!-- 右邊會員資料--基本資料 -->
 
 // ============================地址=====================================
@@ -230,7 +232,6 @@ $(document).ready(function () {
 			if ($('#city').val() !== null) {
 				$('#city').trigger('change');
 			} else {
-				console.log('GGGGGGGGGG');
 			}
 		},
 		error: function (error) {

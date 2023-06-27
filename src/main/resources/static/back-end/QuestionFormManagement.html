@@ -81,8 +81,7 @@
             <div id="collapseUtilities" class="collapse"
                  aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="MemberQuety.html">查詢資料</a> <a
-                        class="collapse-item" href="MemberRevise.html">修改資料</a>
+                    <a class="collapse-item" href="MemberQuety.html">查詢資料</a>
                 </div>
             </div></li>
 
@@ -177,10 +176,11 @@
                             class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
                         <i class="fas fa-user-circle fa-lg"></i>
                     </a> <!-- 下拉選單 - 使用者資訊 -->
-                        <div
-                                class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" id="logoutLink"> 登出 </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown" id="logoutLink">
+                            <a class="dropdown-item" href="" >
+                                登出
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -229,11 +229,27 @@
                 <script src="vendor/datatables/jquery.dataTables.min.js"></script>
                 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
                 <script src="js/demo/datatables-demo.js"></script>
+        </div>
+    </div>
+</div>
 </body>
 <script>
 
     let employeeId = 3;
-    fetch('/question_from_management')
+    $("#logoutLink").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/BKlogout",
+            success: function () {
+                window.location.href = "http://localhost:8080/back-end/login.html";
+            },
+            error: function () {
+
+            }
+        });
+    });
+    // 渲染畫面
+    fetch('/questionReportForm')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.querySelector('.question-data');
@@ -278,8 +294,8 @@
                                 })
                                     .then((result) => {
                                         if (result.isConfirmed) {
-                                            fetch(`/question_from_management/${item.id}`, {
-                                                method: 'POST',
+                                            fetch(`/questionReportForm/${item.id}`, {
+                                                method: 'Put',
                                                 headers: {
                                                     'Content-Type': 'application/json'
                                                 },

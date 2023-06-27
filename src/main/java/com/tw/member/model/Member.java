@@ -59,4 +59,10 @@ public class Member implements Serializable {
 
 	private Integer memberGrade;
 
+	public Member(String memberNameLast, String memberNameFirst, String memberPhone){
+		this.memberNameLast = memberNameLast;
+		this.memberNameFirst = memberNameFirst;
+		this.memberPhone = memberPhone;
+	}
+
 }

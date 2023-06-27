@@ -50,7 +50,7 @@ public class GroupOrderService {
     public List<GroupOrderObj> getTripsByMemberId(Integer memberIdArg){
 
         String sql = """
-                select t.trip_id, trip_name, trip_content, o.trip_order_id, m.member_id, member_pic, concat(member_name_first, member_name_last) as memberName, tm.image, tm.id from member m
+                select t.trip_id, trip_name, trip_content, o.trip_order_id, m.member_id, member_pic, concat(member_name_last, member_name_first) as memberName, tm.image, tg.tour_group_id from member m
                 join trip_order o on m.member_id = o.member_id
                 join tour_group tg on tg.tour_group_id = o.tour_group_id
                 join trip t on t.trip_id = tg.trip_id
@@ -63,10 +63,9 @@ public class GroupOrderService {
                 where m.member_id = :memberIdArg
                 """;
         // 取得Result List
-
-
         List<Object[]> resultList = session.createNativeQuery(sql, Object[].class)
-                .setParameter("memberIdArg", memberIdArg).getResultList();
+                .setParameter("memberIdArg", memberIdArg)
+                .getResultList();
 
         List<GroupOrderObj> groupOrderObjList = new ArrayList<>();
 
@@ -80,8 +79,9 @@ public class GroupOrderService {
             byte[] memberPic = (byte[]) row[5];
             String memberName = (String) row[6];
             byte[] tripPic = (byte[]) row[7];
+            Integer tourGroupId = (Integer) row[8];
 
-            GroupOrderObj groupOrderObj = new GroupOrderObj(tripId, tripName, tripContent, tripOrderId, memberId, memberPic, memberName, tripPic);
+            GroupOrderObj groupOrderObj = new GroupOrderObj(tripId, tripName, tripContent, tripOrderId, memberId, memberPic, memberName, tripPic,tourGroupId);
             groupOrderObjList.add(groupOrderObj);
         }
 

@@ -140,7 +140,7 @@
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />記住我</label>
-                    <a href="#">忘記密碼</a>
+                    <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
@@ -217,11 +217,11 @@
                 <!--     第一列-->
                 <div class="col-8">
                     <ul class="list-group list-group-flush p-3">
-                        <li class="list-group-item" id="tripOrderId"></li>
-                        <li class="list-group-item" id="memberName"> 會員姓名: 張大雄 </li>
-                        <li class="list-group-item" id="memberPhone"> 連絡電話: 092232322232 </li>
-                        <li class="list-group-item" id="payDate"> 訂購日期: 2023/05/12 </li>
-                        <li class="list-group-item" id="orderStatus"> 訂單狀態: 2023/05/12 </li>
+                        <li class="list-group-item" id="tripOrderId">訂單編號: </li>
+                        <li class="list-group-item" id="memberName">會員姓名: </li>
+                        <li class="list-group-item" id="memberPhone">會員電話: </li>
+                        <li class="list-group-item" id="payDate"> 訂購日期: </li>
+                        <li class="list-group-item" id="orderStatus"> 訂單狀態: </li>
 
                     </ul>
 
@@ -283,10 +283,10 @@
                 <hr>
                 <div class="col-10">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> 旅遊團日期: 2022-07-24 (GMT+8) </li>
-                        <li class="list-group-item"> 方案: 登島＋環繞龜山島＋401高地攻頂</li>
-                        <li class="list-group-item"> 人數: 2 人 </li>
-                        <li class="list-group-item"> 特殊需求: </li>
+                        <li class="list-group-item" id="tourGroupDate"> 旅遊團日期: </li>
+                        <li class="list-group-item" id="tripName"> 方案: </li>
+                        <li class="list-group-item" id="travelerNo">旅客人數: </li>
+                        <li class="list-group-item" id="remarks">特殊需求: </li>
                     </ul>
                 </div>
 
@@ -455,8 +455,41 @@
     <script>
 
         $(document).ready(function () {
-            let tripOrderId = sessionStorage.getItem('tripOrderId');
 
+            // ====== 函式 ======
+            function getMemberId(){
+
+                const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
+                if(!testLogIn || !testLogIn.memberId){
+                    return 0;
+                }
+                return testLogIn.memberId;
+            }
+
+            // ====== 取得資訊 ======
+            const memberId = getMemberId();
+            const tripOrderId = sessionStorage.getItem('tripOrderId');
+            const tripId = sessionStorage.getItem('tripId');
+            const tourGroupId = sessionStorage.getItem('tourGroupId');
+
+
+            // ====== 取得會員資訊 ======
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getMemberInfor?memberIdString=${memberId}`, function (response) {
+                $('#memberName').html(`會員姓名: ${response.memberNameLast+response.memberNameFirst}`);
+                $('#memberPhone').html(`連絡電話: ${response.memberPhone}`);
+
+            });
+
+            // ====== 取得旅遊團日期 與 名稱 ======
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getTourGroupDate?tripIdString=${tripId}&tourGroupIdString=${tourGroupId}`, function (response) {
+                $('#tourGroupDate').html(`旅遊團日期: ${response.formattedStartDate} 至 ${response.formattedEndDate}`);
+                $('#tripName').html(`方案: ${response.tripName}`);
+
+
+            });
+
+
+            // ====== 取得訂單資訊 ======
             $('#tripOrderId').text(`訂單編號: ${tripOrderId}`);
             $.getJSON(`http://localhost:8080/groupOrderDetail/getTripInfor?tripOrderIdString=${tripOrderId}`, function (response) {
 
@@ -470,11 +503,27 @@
 
                 }
 
-                console.log(response);
+                // 人數
+                $('#travelerNo').html(`人數: ${response[0].travelersAdult+response[0].travelersAdult} 人`);
+
+                // 特殊需求
+                if(response[0].remarks === undefined){
+                    $('#remarks').text('特殊需求: 無');
+                }else {
+                    $('#remarks').html(`特殊需求: ${response[0].remarks}`);
+                }
+
+
 
             });
 
+            // ====== 取得參加人員資訊 ======
+            // TO DO
 
+
+
+
+            // ====== 燈箱部分 ======
             $("button#btn_con").on("click", function () {
                 $("#lightbox").removeClass("none");
             });

@@ -25,36 +25,39 @@ camera.addEventListener('click', function () {
 			reader.readAsDataURL(file);
 		}
 		var memberPic = sessionStorage.getItem('uploadedPhoto');
+		var formData = new FormData();
+		formData.append('memberPic', file);
+
 		$.ajax({
-			url: "/uploadImage/" + theId,
+			url: "/m_saveImg/" + theId,
 			method: "POST",
-			data: {
-				memberPic: memberPic,
-			},
+			data: formData,
+			processData: false,
+			contentType: false,
 			success: (response) => {
-				console.log("儲存成功")
-			}, error: (error) => {
+				console.log(response);
+				console.log("儲存成功");
+			},
+			error: (error) => {
 				console.log(error);
+				console.log("儲存失敗");
 			}
-		})
+		});
 	});
 	input.click();
 });
 //顯示大頭照
 $(document).ready(function () {
 	$.ajax({
-		url: "/getPic/" + theId,
+		url: "/img/members/" + theId,
 		method: "GET",
-		dataType: "text",
 		success: function (response) {
-			let memberPic = response;
-			$('.rounded-circle').attr('src', memberPic);
-
+			const imgUrl = "http://localhost:8080" + this.url;
+			$('.rounded-circle').attr('src', imgUrl);
+			console.log("圖片載入成功");
 		},
 		error: function (error) {
-			console.log(error);
-			console.log(error.response);
-
+			console.log("圖片載入失敗");
 		}
 	});
 });
@@ -110,13 +113,6 @@ function generateTicket() {
 		},
 	});
 }
-//移除背景圖
-if ($(".tab-pane").eq(0).find("#orderselect").find(".ticket_item_class")) {
-	$(".no_comment_div").first().addClass("-out");
-} else {
-	$(".no_comment_div").first().removeClass("-out");
-}
-
 
 //移除收藏
 $(document).on("click", ".remove_btn", function (e) {
@@ -164,14 +160,14 @@ function generateGroup() {
 				for (let i = 0; i < g_favorite.length; i++) {
 					$(".tab-pane").eq(1).find("#group_orderselect")
 						.after(`<div class="group_item_class">
-				<a href="http://localhost:8080/front-end/tickets_detail.html?id=${g_favorite[i].tripId}" class="orderurl"> 	                
+				 	                
                  <div class="item_img_class">
                  	<img src="${g_favorite[i].imgUrl}" class="item_img"> 
                  </div>
                    <div class="item_content">
                      <h1 class="item_title">${g_favorite[i].tripName}</h1>
                      <div class="box">
-                         <p class="Number dynamic-text">${g_favorite[i].tripDescription}</p>
+                         <p class="Number dynamic-text">${g_favorite[i].tripContent}</p>
                      </div>
                      <div id="allPrice">
                          <p class="price">成人 TWD </p>
@@ -182,16 +178,34 @@ function generateGroup() {
                          <p class="realPrice">${g_favorite[i].priceChild}</p>
                      </div>
                  </div>
-               </a>
+              
                <div class="item_commend_class">
                   <i class="fa-solid fa-heart heart remove_btn2"></i>  
                </div>
              </div>
-                `
-						);
-					let tripId = g_favorite[i].tripId;
-					console.log(tripId);
-					sessionStorage.setItem("favoriteTrip", tripId)
+                `);
+					//移除收藏
+					$(document).on("click", ".remove_btn2", function (e) {
+						console.log("remove")
+						$(this).closest(".group_item_class").remove();
+						let tripId = g_favorite[i].tripId;
+						console.log(tripId);
+						// 連接後端刪除=========================================
+						$.ajax({
+							method: "POST",
+							url: "/removeTrip",
+							data: {
+								memberId: memberId,
+								tripId: tripId,
+							},
+							success: function (response) {
+								console.log("成功移除")
+							},
+							error: function (error) {
+								console.error(error);
+							},
+						});
+					});
 				}
 			}
 		},
@@ -200,53 +214,6 @@ function generateGroup() {
 		},
 	});
 }
-//移除背景圖
-if ($(".tab-pane").eq(1).find("#group_orderselect").find(".group_item_class")) {
-	$(".no_comment_div").eq(1).addClass("-out");
-} else {
-	$(".no_comment_div").eq(1).removeClass("-out");
-}
-
-
-//移除收藏
-//沒有tripId
-$(document).on("click", ".remove_btn2", function (e) {
-	console.log("remove")
-	$(this).closest(".group_item_class").remove();
-	//	var groupItems = document.querySelectorAll(".group_item_class");
-	//var tripId = $(this).closest(".group_item_class").find(".orderurl").attr("href").split("=")[1];
-	let tripId = $(this).closest(".group_item_class").data("tripid");
-	console.log(tripId);
-	// 連接後端刪除=========================================
-	$.ajax({
-		method: "POST",
-		url: "/removeTrip",
-		data: {
-			memberId: memberId,
-			tripId: tripId,
-		},
-		success: function (response) {
-		},
-		error: function (error) {
-			console.error(error);
-		},
-	});
-});
-
-// //移除背景圖
-// if (Object.keys(g_dataObj).length !== 0) {
-// 	$(".no_comment_div").eq(1).toggleClass("-out");
-// }
-// //移除收藏
-// $(document).on("click", ".remove_btn", function(e) {
-// 	$(this).closest(".group_item_class").remove();
-// 	var groupItems = document.querySelectorAll(".group_item_class");
-// 	if (groupItems.length !== 0) {
-// 		$(".no_comment_div").eq(1).toggleClass("-out", true);
-// 	} else {
-// 		$(".no_comment_div").eq(1).toggleClass("-out", false);
-// 	}
-// });
 // ==========================右邊會員資料--文章收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
@@ -377,7 +344,7 @@ function getAiFavorite() {
               </p>
               <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br />${aiFavorite[i].planningDescription}</p>
               <div class="item_commend_class">
-                <i class="fa-solid fa-heart heart remove_btn"></i>
+                <i class="fa-solid fa-heart heart remove_btn4"></i>
               </div>
             </div>
             <div class="aiFavoriteId">
@@ -394,7 +361,7 @@ function getAiFavorite() {
 }
 
 // 設定刪除按鈕
-$(document).on("click", ".remove_btn", function (e) {
+$(document).on("click", ".remove_btn4", function (e) {
 	$(this).closest(".group_order_item_class").remove();
 	var groupItems = document.querySelectorAll(".group_order_item_class");
 
@@ -405,16 +372,16 @@ $(document).on("click", ".remove_btn", function (e) {
 	console.log(aiFavoriteId);
 
 	// 連接後端刪除=========================================
-	//	$.ajax({
-	//		type: "DELETE",
-	//		url: "/aiFavorite/" + aiFavoriteId,
-	//		success: function(response) {
-	//			console.log(response);
-	//		},
-	//		error: function(error) {
-	//			console.error(error);
-	//		},
-	//	});
+	$.ajax({
+		type: "DELETE",
+		url: "/aiFavorite/" + aiFavoriteId,
+		success: function (response) {
+			console.log(response);
+		},
+		error: function (error) {
+			console.error(error);
+		},
+	});
 	// 連接後端刪除=========================================
 
 
@@ -451,11 +418,5 @@ $(document).on("click", ".group_order_item_class", function () {
 		container.animate({ height: fullHeight }, 500);
 	}
 });
-//背景圖
-var GOItems = document.querySelectorAll(".group_order_item_class");
-if (GOItems.length !== 0) {
-	$(".no_comment_div").eq(3).toggleClass("-out", true);
-} else {
-	$(".no_comment_div").eq(3).toggleClass("-out", false);
-}
+
 // =====================================================================

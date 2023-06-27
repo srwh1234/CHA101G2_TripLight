@@ -1,17 +1,14 @@
-package com.tw.contact.modelJPA;
+package com.tw.contact.model;
 
 import com.tw.employee.model.Employee;
 import com.tw.member.model.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
 //@NoArgsConstructor
-@Data //@Getter @Setter @ToString @EqualsAndHashCode @RequiredArgsConstructor
+@Data
 @Entity
 @Table(name="quest_report")
 public class QuestionReport {
@@ -47,9 +44,6 @@ public class QuestionReport {
     @Column(name = "score")
     private int score;
 
-    public QuestionReport() {
-    }
-
     public QuestionReport(int id, Member member, Employee employee, String questionContent, String replyContent, int state, LocalDateTime startTime, LocalDateTime endTime, int score) {
         this.id = id;
         this.member = member;
@@ -60,5 +54,9 @@ public class QuestionReport {
         this.startTime = startTime;
         this.endTime = endTime;
         this.score = score;
+    }
+
+    public QuestionReport() {
+
     }
 }

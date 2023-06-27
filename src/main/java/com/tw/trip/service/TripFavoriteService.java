@@ -2,7 +2,6 @@ package com.tw.trip.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,19 +53,18 @@ public class TripFavoriteService {
 			return FAVORITE_LOGIN;
 		}
 
-		Trip trip = tripRepository.findById(reqDto.getTripId()).orElse(null);
+		final Trip trip = tripRepository.findById(reqDto.getTripId()).orElse(null);
 
 		if (trip == null) {
 			return FAVORITE_ERROR;
 		}
 		// 如果是已經收藏的 就取消收藏
-		 boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(), trip));
+		final boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(), trip));
 		if (isFavorite) {
-			tripFavoriteRepository.deleteById(new PrimaryKey2(reqDto.getMemberId(), trip));
-			System.out.println("delete");
+			tripFavoriteRepository.deleteQuery(reqDto.getMemberId(), reqDto.getTripId());
 			return FAVORITE_DEL_OK;
 		}
-		
+
 		final TripFavorite favorite = new TripFavorite();
 		favorite.setKey(new PrimaryKey2(reqDto.getMemberId(), trip));
 		favorite.setAddTime(Timestamp.from(Instant.now()));
@@ -77,25 +75,16 @@ public class TripFavoriteService {
 
 	}
 
-
 	// 判斷是不是已經收藏的
-
-	public boolean checkIfExists(Integer memberId, Trip trip) {
-		// 使用 memberId 和 tripId 查詢 TripFavorite 物件
-		List<TripFavorite> findMember = tripFavoriteRepository.findByKeyMemberId(memberId);
-		// 檢查是否找到符合條件的 TripFavorite 物件
-		if (!findMember.isEmpty()) {
-			for (TripFavorite favorite : findMember) {
-				if (favorite.getKey().getTrip() != null) {
-					return true; // 資料存在
-				}
-			}
-		}
-		return false; // 資料不存在
+	public boolean checkIfExists(final FavoriteReqDto reqDto) {
+		final Trip trip = tripRepository.findById(reqDto.getTripId()).orElse(null);
+		final boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(), trip));
+		System.out.println(isFavorite);
+		return isFavorite;
 	}
-	
-	
 
+	
+	
 	public DetailDto getAllTripItem(final int memberId, final int tripId) {
 		final Trip trip = tripRepository.findById(tripId).orElse(null);
 

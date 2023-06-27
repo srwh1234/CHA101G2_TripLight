@@ -17,7 +17,7 @@ public class LoginService {
 	private MemberRepository memberRepository;
 
 	  //註冊=============================================================
-	public boolean register(String email, String password, String account) {
+	public boolean register(String email, String password, String nameFirst) {
         Member existingMember = memberRepository.findByMemberEmail(email);
         if (existingMember != null) {
             return false; // 用戶名已存在
@@ -25,7 +25,8 @@ public class LoginService {
         Member member = new Member();
         member.setMemberEmail(email);
         member.setMemberPassword(password);
-        member.setMemberAccount(account);
+        member.setMemberNameFirst(nameFirst);
+        member.setMemberNameLast("");
         member.setMemberJoinTime(new Date());// 新增註冊時間
         member.setMemberStatus(1);
         member.setMemberGrade(0);
