@@ -176,10 +176,11 @@
                             class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
                         <i class="fas fa-user-circle fa-lg"></i>
                     </a> <!-- 下拉選單 - 使用者資訊 -->
-                        <div
-                                class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" id="logoutLink"> 登出 </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown" id="logoutLink">
+                            <a class="dropdown-item" href="" >
+                                登出
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -228,10 +229,26 @@
                 <script src="vendor/datatables/jquery.dataTables.min.js"></script>
                 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
                 <script src="js/demo/datatables-demo.js"></script>
+        </div>
+    </div>
+</div>
 </body>
 <script>
 
     let employeeId = 3;
+    $("#logoutLink").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/BKlogout",
+            success: function () {
+                window.location.href = "http://localhost:8080/back-end/login.html";
+            },
+            error: function () {
+
+            }
+        });
+    });
+    // 渲染畫面
     fetch('/questionReportForm')
         .then(response => response.json())
         .then(data => {
