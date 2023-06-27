@@ -376,118 +376,122 @@ li.list-group-item>a {
     let memberId = 3;
     let data = null;
 
-    fetch('/question_report?memberId=' + memberId)
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.getElementById('QuestionTableBody');
-            tableBody.innerHTML = '';
-            data.forEach((item) => {
-                const row = document.createElement('tr');
-                // 創建每個單元格並添加到行
-                console.log(item)
-                row.innerHTML = `
-                        <td>${item.id}</td>
-                        <td class="text-overflow">${item.questionContent || ""}</td>
-                        <td class="text-overflow">${item.replyContent || ""}</td>
-                        <td>${item.startTime || ""}</td>
-                        <td>${item.endTime || ""}</td>
-                        <td>${item.state === 0 ? '未解決' : '已解決'}</td>
-                        <td>${item.score || ""}</td>
-                    `;
 
-                // 創建查詢按鈕並添加事件監聽器
-                const queryButton = document.createElement('button');
-                queryButton.textContent = '查詢';
-                queryButton.addEventListener('click', () => {
-                    console.log('查詢按鈕被點擊，當前行的資料是：', item);
-                    window.location.href = 'check_question.html?id=' + item.id; // 替换为目标网页的 URL
-                });
-                row.appendChild(queryButton);
+	fetch(`/questionReportForm/${memberId}`)
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				const tableBody = document.getElementById('QuestionTableBody');
+				tableBody.innerHTML = '';
+				data.forEach((item) => {
+					const row = document.createElement('tr');
+					// 創建每個單元格並添加到行
+					console.log(item)
+					row.innerHTML = `
+							<td>${item.id}</td>
+							<td class="text-overflow">${item.questionContent || ""}</td>
+							<td class="text-overflow">${item.replyContent || ""}</td>
+							<td>${item.startTime || ""}</td>
+							<td>${item.endTime || ""}</td>
+							<td>${item.state === 0 ? '未解決' : '已解決'}</td>
+							<td>${item.score || ""}</td>
+						`;
 
-                // 創建刪除按鈕並添加事件監聽器
-                if(item.state === 0){
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = '刪除';
-                    deleteButton.addEventListener('click', () => {
-                        Swal.fire({
-                            title: '確定要刪除這條記錄嗎？',
-                            text: "一旦刪除，你將無法恢復這條記錄！",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: '確定',
-                            cancelButtonText: '取消'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                fetch('/question_report/' + item.id, {
-                                    method: 'DELETE',
-                                })
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error('Network response was not ok');
-                                        }
-                                        // 刪除成功，從表格中移除該行
-                                        row.remove();
-                                        Swal.fire(
-                                            '刪除成功！',
-                                            '',
-                                            'success'
-                                        );
-                                    })
-                                    .catch(error => {
-                                        console.error('Error:', error);
-                                    });
-                            }
-                        });
-                    });
-                    row.appendChild(deleteButton);
-                }
+					// 創建查詢按鈕並添加事件監聽器
+					const queryButton = document.createElement('button');
+					queryButton.textContent = '查詢';
+					queryButton.addEventListener('click', () => {
+						console.log('查詢按鈕被點擊，當前行的資料是：', item);
+						window.location.href = 'check_question.html?id=' + item.id; // 替换为目标网页的 URL
+					});
+					row.appendChild(queryButton);
+
+					// 創建刪除按鈕並添加事件監聽器
+					if(item.state === 0){
+						const deleteButton = document.createElement('button');
+						deleteButton.textContent = '刪除';
+						deleteButton.addEventListener('click', () => {
+							Swal.fire({
+								title: '確定要刪除這條記錄嗎？',
+								text: "一旦刪除，你將無法恢復這條記錄！",
+								icon: 'warning',
+								showCancelButton: true,
+								confirmButtonText: '確定',
+								cancelButtonText: '取消'
+							}).then((result) => {
+								if (result.isConfirmed) {
+									fetch('/questionReportForm/' + item.id, {
+										method: 'DELETE',
+									})
+										.then(response => {
+											if (!response.ok) {
+												throw new Error('Network response was not ok');
+											}
+											// 刪除成功，從表格中移除該行
+											row.remove();
+											Swal.fire(
+												'刪除成功！',
+												'',
+												'success'
+											);
+										})
+										.catch(error => {
+											console.error('Error:', error);
+										});
+								}
+							});
+						});
+						row.appendChild(deleteButton);
+					}
 
 
-                //建立評分按鈕並且添加事件監聽器
-                if(item.state === 1 && item.score === 0){
-                    const scoreButton = document.createElement('button');
-                    scoreButton.textContent = '評分';
-                    scoreButton.addEventListener('click', () => {
-                        Swal.fire({
-                            title: '請給我們評分',
-                            text: '在 1 到 10 之間給我們評分',
-                            input: 'range',
-                            inputAttributes: {
-                                min: 1,
-                                max: 10,
-                                step: 1
-                            },
-                            inputValue: 5
-                        })
-                            .then((result) => {
-                            if (result.isConfirmed) {
-                                fetch(`/questionReports/${item.id}/score`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({score: result.value})
-                                })
-                                    .then(response => {
-                                        if(response.ok){
-                                            Swal.fire('評分已經成功送出!')
-                                            const scoreCell = row.querySelector('td:nth-child(7)'); // 假設評分是第7個td
-                                            scoreCell.textContent = result.value;
-                                            scoreButton.remove()
-                                        }
-                                        else
-                                            Swal.fire('評分未成功送出,請再嘗試一次')
-                                    })
-                                    .catch(error => Swal.fire('評分未成功送出,請再嘗試一次'))
-                            }
-                        });
-                    })
-                    row.appendChild(scoreButton);
-                }
-                tableBody.appendChild(row);
-            });
-        })
+					//建立評分按鈕並且添加事件監聽器
+					if(item.state === 1 && item.score === 0){
+						const scoreButton = document.createElement('button');
+						scoreButton.textContent = '評分';
+						scoreButton.addEventListener('click', () => {
+							Swal.fire({
+								title: '請給我們評分',
+								text: '在 1 到 10 之間給我們評分',
+								input: 'range',
+								inputAttributes: {
+									min: 1,
+
+									max: 10,
+									step: 1
+								},
+								inputValue: 5
+							})
+								.then((result) => {
+								if (result.isConfirmed) {
+									fetch(`/questionReportForm/${item.id}/score`, {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										body: JSON.stringify({score: result.value})
+									})
+										.then(response => {
+											if(response.ok){
+												Swal.fire('評分已經成功送出!')
+												const scoreCell = row.querySelector('td:nth-child(7)'); // 假設評分是第7個td
+												scoreCell.textContent = result.value;
+												scoreButton.remove()
+											}
+											else
+												Swal.fire('評分未成功送出,請再嘗試一次')
+										})
+										.catch(error => Swal.fire('評分未成功送出,請再嘗試一次'))
+								}
+							});
+						})
+						row.appendChild(scoreButton);
+					}
+					tableBody.appendChild(row);
+				});
+			})
         .catch(error => console.error('Error:', error));
+
  // ============================上傳大頭照=====================================
 	 	 //找到會員id
 	let id = 0;

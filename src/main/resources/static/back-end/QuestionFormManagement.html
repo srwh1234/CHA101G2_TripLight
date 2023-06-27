@@ -232,7 +232,7 @@
 <script>
 
     let employeeId = 3;
-    fetch('/question_from_management')
+    fetch('/questionReportForm')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.querySelector('.question-data');
@@ -277,8 +277,8 @@
                                 })
                                     .then((result) => {
                                         if (result.isConfirmed) {
-                                            fetch(`/question_from_management/${item.id}`, {
-                                                method: 'POST',
+                                            fetch(`/questionReportForm/${item.id}`, {
+                                                method: 'Put',
                                                 headers: {
                                                     'Content-Type': 'application/json'
                                                 },

@@ -1,6 +1,6 @@
 package com.tw.contact.service.Impl;
 
-import com.tw.contact.dto.QuestionReportRequestDTO;
+import com.tw.contact.controller.dto.QuestionReportRequestDTO;
 import com.tw.contact.model.QuestionReport;
 import com.tw.contact.model.dao.QuestionReportRepository;
 import com.tw.contact.service.QuestionReportService;
