@@ -8,10 +8,12 @@ loginbtn.href = "";
 
 //點擊註冊
 registerLink.addEventListener("click", () => {
+	console.log('111');
 	container.classList.add("active");
 });
 //點擊登入
 loginLink.addEventListener("click", () => {
+	console.log('222');
 	container.classList.remove("active");
 });
 
@@ -286,7 +288,7 @@ $("#forgetPwd").on("click", function () {
 		inputPlaceholder: '請輸入電子信箱',
 		showCancelButton: true,
 		confirmButtonText: '發送驗證信',
-		canclButtonText: '取消',
+		//canclButtonText: '取消',
 	}).then(function (result) {
 		if (result.isConfirmed) {
 			let forgetPwdEmail = result.value;
@@ -305,7 +307,8 @@ $("#forgetPwd").on("click", function () {
 					console.log(error);
 				}
 			});
+			
 		}
-	});
+	}).finally(()=>container.classList.add("active-popup"));
 
 })
