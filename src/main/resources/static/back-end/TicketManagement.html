@@ -593,13 +593,14 @@
                                 </div>
                                 <div class="row my-5">
                                     <div class="col-12 col-lg-12 text-center">
-                                        <button class="btn btn-primary" id="editTicketSubmit">確定</button>
+                                        <button class="btn btn-primary" id="editTicketSubmit">確定編輯</button>
                                     </div>
                                 </div>
 
+                                <hr>
                                 <!-- 圖片區 -->
                                 <div class="row justify-content-center m-3">
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12 col-lg-6 d-none">
                                         <label class="form-label" for="editTicketImage">新增圖片</label>
                                         <input type="file" class="form-control" id="editTicketImage" multiple>
                                     </div>
@@ -840,6 +841,12 @@
 
             doPageSearch(0);
 
+            //編輯票券-新增圖片
+            $(document).on('click', '#editImgInput', function () {
+
+                $('#editTicketImage').click();
+                console.log(111);
+            })
 
             // 預覽票券-參數傳遞
             $('#previewModal').on('show.bs.modal', function (e) {

@@ -44,7 +44,7 @@
 					<div class="form-61 form-register">
 						<h4 class="form-head">Sign Up</h4>
 
-						<form action="index.html" method="GET">
+						<form>
 							<div class="">
 								<p class="text-head">Vendor E-mail</p>
 								<input type="text" name="vendor_email" id="vendor_email" class="input" placeholder=" Enter Your E-mail" required />
@@ -67,7 +67,7 @@
                 			<div class="error" id="password-error" style="color: red";></div>
 							<div class="form-group mb-7"></div>
 								<!-- <input class="signinbutton-butnn" type="submit" value="Login" style="color: red"></input> -->
-								<button type="submit" id="submit" class="signinbutton btn" style="color: red">Login</button>
+								<button type="button" id="button" class="signinbutton btn" style="color: red">Login</button>
 							</div>
 						</form>
 					</div>
@@ -83,18 +83,21 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Bootstrap 核心 JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
 </body>	
 	<script>
         // 驗證輸入欄位
         // let form = document.querySelector("form");
-        let mail = document.getElementById("mail");
-		let account = document.getElementById("account");
-        let password = document.getElementById("password");
+        let mail = document.getElementById("vendor_email");
+		let account = document.getElementById("login_account");
+        let password = document.getElementById("login_password");
         let mailError = document.getElementById("mail-error");
 		let accountError = document.getElementById("account-error");
         let passwordError = document.getElementById("password-error");
-		let submit=document.getElementById("submit");
-        submit.addEventListener("click", function (event) {
+		let button=document.getElementById("button");
+        button.addEventListener("click", function (event) {
         let mailValue = mail.value.trim();
 		let accountValue = account.value.trim();
         let passwordValue = password.value.trim();
@@ -142,7 +145,7 @@
             //     passwordError.innerHTML = "";
             // }
 
-			$(".signinbutton-butnn").on("click", function (e) {
+			$(".signinbutton").on("click", function (e) {
       		e.preventDefault();
 
 			// 拿取表單資料
@@ -162,21 +165,17 @@
       		$("#login_account").val();
       		$("#login_password").val();
 
-			const loginData = new FormData();
-			loginData.append('login', JSON.stringify(login));
-
 			//ajax
 		  	$.ajax({
         	  url: 'http://localhost:8080/vendor/login',
         	  type: 'POST',
-        	  data: tripData,
-        	  processData: false,
-        	  contentType: false,
+        	  data: JSON.stringify(login),
+        	  contentType: 'application/json',
         	  success: function(data) {
-				if (data.success) {
+				if (data) {
 					alert('登入成功');
 					// 資料庫驗證成功後跳轉到另一個畫面的 URL
-					document.location.href = "http://localhost:8080/vendor-end/index.html";
+					document.location.href = "index.html";
 				} else {
 						alert('登入失敗，請檢查帳號密碼');
 					}

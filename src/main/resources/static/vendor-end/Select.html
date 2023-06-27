@@ -23,6 +23,34 @@
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        div.dataTables_wrapper div.dataTables_length select {
+            width: auto;
+            display: inline-block;
+        }
+
+        #dataTable_filter {
+            position: relative;
+        }
+
+        #dataTable_filter input {
+            position: absolute;
+            transform: translate(45px, -28px);
+            width: 180px;
+        }
+
+        #dataTable_filter label {
+            position: absolute;
+            transform: translate(260px, 5px);
+            /* 调整 label 的位置，使其与输入框对齐 */
+        }
+
+        #dataTable {
+            white-space: normal;
+            word-break: break-all;
+            white-space: nowrap
+        }
+    </style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -163,13 +191,13 @@
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h4 class="m-0 font-weight-bold text-primary">員工資料管理</h4>
+                        <h4 class="m-0 font-weight-bold text-primary">行程資料管理</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr>
+                                    <tr style="position: sticky">
                                         <th>行程編號</th>
                                         <th>廠商編號</th>
                                         <th>行程名稱</th>
@@ -190,7 +218,7 @@
                                         <td>1</td>
                                         <td>東海龍蝦島之旅</td>
                                         <td>
-                                            巡航無人島<br>玄武岩觀望<br>賞燕鷗<br>上龍蝦島抓龍蝦＆潮池餵魚＆烤野生石蚵<br>無人沙灘玩水<br>午(晚)餐-龍蝦泡麵
+                                            巡航無人島、玄武岩觀望、賞燕鷗<br>上龍蝦島抓龍蝦＆潮池餵魚＆烤野生石蚵<br>無人沙灘玩水<br>午(晚)餐-龍蝦泡麵
                                         </td>
                                         <td>1</td>
                                         <td>澎湖縣白沙鄉</td>
@@ -199,10 +227,10 @@
                                             3-12歲 1800/人<br>
                                             0-3歲 免費
                                         </td>
-                                        <td>6人/<br>50人</td>
+                                        <td>6人/50人</td>
                                         <td>
                                             － 行程資訊 －<br>
-                                            ‧出發時間：上午場 07:00-09:30 開船，結束時間 15:30-16:00
+                                            ‧出發時間：<br>上午場 07:00-09:30 開船，結束時間 15:30-16:00<br>
                                             下午場 13:00-13:30 開船，結束時間 19:30-20:00 
                                             （實際出發時間請以通知時間為主）<br>
                                             ‧報到地址：澎湖縣白沙鄉岐頭村16-5號(岐頭遊客中心銀海遊艇櫃檯)<br>
@@ -225,12 +253,11 @@
                                         <td>1</td>
                                         <td>綠島好Hot 3日遊</td>
                                         <td>
-                                            台東富岡–綠島來回船票、綠島８人座商務車環島(司機兼導遊)。<br>
-                                            綠島高級民宿2晚。<br>
-                                            潛水體驗。<br>
-                                            含民宿活力早餐2次+午餐2次+晚餐1次(自助式吃到飽碳烤BBQ (1天份))。<br>
-                                            綠島免費夜訪梅花鹿&津田氏大頭竹結蟲 (天氣不佳將取消)。<br>
-                                            藍洞秘境探險(教練+裝備)、夜間潮間帶導覽(教練+裝備)。<br>
+                                            台東富岡–綠島來回船票、綠島８人座商務車環島(司機兼導遊)<br>
+                                            綠島高級民宿2晚、潛水體驗<br>
+                                            含民宿活力早餐2次+午餐2次+晚餐1次(自助式吃到飽碳烤BBQ (1天份))<br>
+                                            綠島免費夜訪梅花鹿&津田氏大頭竹結蟲 (天氣不佳將取消)<br>
+                                            藍洞秘境探險(教練+裝備)、夜間潮間帶導覽(教練+裝備)<br>
                                             200萬意外險+20萬醫療險
                                         </td>
                                         <td>3</td>
@@ -239,7 +266,7 @@
                                             7000/人<br>
                                             6-12歲 5500/人
                                         </td>
-                                        <td>4人/<br>8人<td>
+                                        <td>4人/8人</td>
                                         <td>
                                             Day1 : 富岡漁港出走 → 前往綠島 → 高級民宿check in → 自助式吃到飽碳烤BBQ<br>
                                             Day2 : 深入綠島環島 → 浮潛 → 夜探梅花鹿～ <br>
@@ -247,14 +274,13 @@
                                         </td>
                                         <td>
                                             "注意事項 : <br>
-                                             小孩佔床定義：6-12歲<br>
-                                             小孩不佔床定義：6歲以下(不含早餐)<br>
-                                             嬰兒定義：2歲以下<br>
+                                             小孩佔床定義：6-12歲
                                              假日定義：以出發日定義(國定假日前夕和週五、週六出發之日期為假日價)。<br>
                                              本行程為4人成行，即可出發。<br>
                                              藍洞水域活動，本公司提供海底攝相機拍照留念並贈送紀念相片隨身碟。<br>
                                              藍洞探險、夜間潮間帶活動；皆須配合當天氣候與潮汐安排，實際活動時間請以出團前行程說明資料安排為準，部分活動若因天候狀況不能執行；本公司將退單項活動費用或以等值活動替代安排，造成不便敬請見諒。<br>
-                                             海底水域活動皆有一定風險與年齡體質限制，參加本行程前敬請參酌個人身體健康狀況再報名參加，凡10歲以下且身高145CM以下，身心健康，有重大疾病(如：心血管疾病、呼吸道疾病、幽閉恐懼症、肺部、腎臟、糖尿病、氣喘、癲瘋症、心臟病、高或低血壓、孕婦、耳朵等相關疾病等)影響潛水之疾病者，皆不宜參加本行程活動。<br>
+                                             海底水域活動皆有一定風險與年齡體質限制，參加本行程前敬請參酌個人身體健康狀況再報名參加，凡10歲以下且身高145CM以下，身心健康，<br>
+                                             有重大疾病(如：心血管疾病、呼吸道疾病、幽閉恐懼症、肺部、腎臟、糖尿病、氣喘、癲瘋症、心臟病、高或低血壓、孕婦、耳朵等相關疾病等)影響潛水之疾病者，皆不宜參加本行程活動。<br>
                                              綠島地區雙人房指定住宿(2床)房型，須加收房差每晚NT$500元/房。<br>
                                              民宿/車站/機場接駁車將依報名人數派車，車型為(租賃計程車、九座商旅車、中型巴士)。"
                                         </td>
@@ -275,7 +301,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">編輯員工資料</h5>
+                            <h5 class="modal-title" id="editModalLabel">編輯旅遊團資料</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -283,39 +309,47 @@
                         <div class="modal-body">
                             <form id="editForm">
                                 <div class="form-group">
-                                    <label for="employeeId">員工編號:</label>
+                                    <label for="employeeId">行程編號:</label>
                                     <input type="text" class="form-control" id="employeeId">
                                 </div>
                                 <div class="form-group">
-                                    <label for="employeeName">員工姓名:</label>
+                                    <label for="employeeName">廠商編號:</label>
                                     <input type="text" class="form-control" id="employeeName">
                                 </div>
                                 <div class="form-group">
-                                    <label for="department">部門:</label>
+                                    <label for="department">行程名稱:</label>
                                     <input type="text" class="form-control" id="department">
                                 </div>
                                 <div class="form-group">
-                                    <label for="position">職位:</label>
+                                    <label for="position">內容簡介:</label>
                                     <input type="text" class="form-control" id="position">
                                 </div>
-                                <div class="form-group">
-                                    <label for="hireDate">入職日期:</label>
+                                <!-- <div class="form-group">
+                                    <label for="hireDate">天數:</label>
                                     <input type="date" class="form-control" id="hireDate">
-                                </div>
+                                </div> -->
                                 <div class="form-group">
-                                    <label for="phone">電話號碼:</label>
+                                    <label for="phone">縣市:</label>
                                     <input type="text" class="form-control" id="phone">
                                 </div>
                                 <div class="form-group">
-                                    <label for="permission">權限:</label>
-                                    <select class="form-control" id="permission">
-                                        <option value="超級管理員">超級管理員</option>
-                                        <option value="網頁管理員">網頁管理員</option>
-                                        <option value="訂單管理員">訂單管理員</option>
-                                    </select>
+                                    <label for="pricr">價格:</label>
+                                    <input type="text" class="form-control" id="price">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberLimit">人數規定:</label>
+                                    <input type="text" class="form-control" id="numberLimit">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tripDescription">行程描述:</label>
+                                    <input type="text" class="form-control" id="tripDescription">
+                                </div>
+                                <div class="form-group">
+                                    <label for="note">特別說明:</label>
+                                    <input type="text" class="form-control" id="note">
                                 </div>
                             </form>
-                        </div>
+                        </div>    
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
                             <button type="button" class="btn btn-primary" id="btnSave">儲存</button>
@@ -339,9 +373,6 @@
             <!-- 頁面級別的自訂腳本 -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
-
-
-            <!--引入datables-->
             <script src="vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
             <script src="js/demo/datatables-demo.js"></script>

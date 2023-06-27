@@ -113,7 +113,7 @@ register_btn.on("click", (e) => {
 	container.classList.remove("active-popup");
 	let memberEmail = $("#register_email").val();
 	let memberPassword = $("#register_password").val();
-	let memberAccount = $("#register_account").val();
+	let memberNameFirst = $("#register_account").val();
 	if (!validateEmail(memberEmail)) {
 		Swal.fire({
 			icon: "error",
@@ -134,7 +134,7 @@ register_btn.on("click", (e) => {
 		});
 		return;
 	}
-	if (memberAccount.trim() === "") {
+	if (memberNameFirst.trim() === "") {
 		Swal.fire({
 			icon: "error",
 			title: "註冊失敗",
@@ -148,7 +148,7 @@ register_btn.on("click", (e) => {
 		type: "POST",
 		url: "/register",
 		data: {
-			account: memberAccount,
+			account: memberNameFirst,
 			email: memberEmail,
 			password: memberPassword,
 		},

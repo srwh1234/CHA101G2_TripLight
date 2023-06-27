@@ -63,10 +63,9 @@ public class GroupOrderService {
                 where m.member_id = :memberIdArg
                 """;
         // 取得Result List
-
-
         List<Object[]> resultList = session.createNativeQuery(sql, Object[].class)
-                .setParameter("memberIdArg", memberIdArg).getResultList();
+                .setParameter("memberIdArg", memberIdArg)
+                .getResultList();
 
         List<GroupOrderObj> groupOrderObjList = new ArrayList<>();
 

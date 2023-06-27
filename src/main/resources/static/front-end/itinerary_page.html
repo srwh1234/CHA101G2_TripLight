@@ -637,7 +637,6 @@
     <script>
 
         // ====== calendar initialized n get value  ======
-
         let sessionTripId = sessionStorage.getItem('tripId');
 
         // ====== get trip infor from DB n display in headers ======
@@ -650,8 +649,8 @@
             $('#tripContent').text(`${response.tripContent}`);
             $('#tripDescription').html(`${response.tripDescription}`);
             $('#tripNote').html(`${response.tripNote}`);
-            
-            
+
+
             //找到會員id
             let memberId = 0;
             if (sessionStorage.getItem("test-login")) {
@@ -659,15 +658,15 @@
             } else {
                 memberId = null;
             }
-            
+            //確認資料庫有沒有這筆資料，有了話愛心紅色
             $.ajax({
                 url: "/existFavorite",
                 method: "POST",
                 contentType: "application/json",
-                data: JSON.stringify( {                	
-                	memberId: memberId,
-                	tripId:sessionStorage.getItem('tripId'),
-                	favorite:true,
+                data: JSON.stringify({
+                    memberId: memberId,
+                    tripId: sessionStorage.getItem('tripId'),
+                    favorite: true,
                 }),
                 success: (response) => {
                     console.log(response);
@@ -952,30 +951,10 @@
         } else {
             memberId = null;
         }
-        console.log(memberId);
-        //   let sessionTripId = sessionStorage.getItem('tripId');
+
         var $favoriteIcon = $(".my-favorite").find('i');
-
-
-
         //按下收藏
         $(document).ready(function () {
-
-            //先判斷資料庫有沒有資料
-
-//             $.ajax({
-//                 url: "/existFavorite",
-//                 method: "GET",
-//                 dataType: "json",
-//                 success: (response) => {
-//                     console.log(response);
-//                     if (response) {
-//                         $favoriteIcon.addClass("on")
-//                     } else { $favoriteIcon.removeClass("on") }
-//                 }, error: (error) => {
-//                     console.log(error);
-//                 }
-//             })
 
             $("#heart").on("click", function () {
                 var requestData = {
@@ -983,16 +962,12 @@
                     tripId: sessionTripId,
                     favorite: $favoriteIcon.hasClass("on")
                 };
-
-                // Send the AJAX request
                 $.ajax({
                     url: "/tripfavorite",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(requestData),
                     success: function (response) {
-                        // Handle the response from the server
-                        console.log(response)
                         switch (response) {
                             case 1:
                                 Swal.fire({ icon: 'success', title: '成功加入我的最愛', });

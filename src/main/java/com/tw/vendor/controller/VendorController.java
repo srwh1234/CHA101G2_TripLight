@@ -10,14 +10,19 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.tw.vendor.dao.VendorRepository;
 import com.tw.vendor.model.Vendor;
 import com.tw.vendor.service.VendorService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class VendorController {
 
     @Autowired
     private VendorService vendorService;
+    
+    @Autowired
+    private VendorRepository vendorRepository;
 
     @Autowired
     private EmailSenderService emailSenderService; // 寄信用
@@ -29,9 +34,27 @@ public class VendorController {
     
 //    @GetMapping("/vendors/info")
 //    public Vendor getVendorInfo(HttpSession httpSession) {
-//        Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
+//        Vendor vendor = (Vendor) httpSession.getServletContext().getAttribute("vendor");
+//        System.out.println(vendor +httpSession.getId());
 //        return vendor;
 //    }
+    
+    @GetMapping("/vendors/info")
+    public Vendor getVendorInfo(HttpSession httpSession) {
+        Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
+
+        if (vendor == null) {
+            int vendorId = 1; // 假設 Vendor 的 ID 是 1
+            vendor = vendorRepository.findById(vendorId).orElse(null);
+
+            if (vendor != null) {
+                httpSession.setAttribute("vendor", vendor); // 將 Vendor 物件存儲到 HttpSession 中
+            }
+        }
+
+        System.out.println(vendor + " " + httpSession.getId());
+        return vendor;
+    }
 
     @PostMapping("/vendors")
     public String processVendor(@RequestBody Vendor vendor){

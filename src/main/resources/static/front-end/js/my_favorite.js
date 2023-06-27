@@ -148,11 +148,13 @@ $(".nav-item")
 	});
 //=========================================
 // 設定點擊旅遊團
+
 $(".nav-item")
 	.eq(1)
 	.on("click", function () {
 		$(".tab-pane").eq(1).addClass("show active");
 		generateGroup();
+
 	});
 function generateGroup() {
 	$.ajax({
@@ -164,7 +166,7 @@ function generateGroup() {
 				for (let i = 0; i < g_favorite.length; i++) {
 					$(".tab-pane").eq(1).find("#group_orderselect")
 						.after(`<div class="group_item_class">
-				<a href="http://localhost:8080/front-end/tickets_detail.html?id=${g_favorite[i].tripId}" class="orderurl"> 	                
+				 	                
                  <div class="item_img_class">
                  	<img src="${g_favorite[i].imgUrl}" class="item_img"> 
                  </div>
@@ -182,16 +184,34 @@ function generateGroup() {
                          <p class="realPrice">${g_favorite[i].priceChild}</p>
                      </div>
                  </div>
-               </a>
+              
                <div class="item_commend_class">
                   <i class="fa-solid fa-heart heart remove_btn2"></i>  
                </div>
              </div>
-                `
-						);
-					let tripId = g_favorite[i].tripId;
-					console.log(tripId);
-					sessionStorage.setItem("favoriteTrip", tripId)
+                `);
+					//移除收藏
+					$(document).on("click", ".remove_btn2", function (e) {
+						console.log("remove")
+						$(this).closest(".group_item_class").remove();
+						let tripId = g_favorite[i].tripId;
+						console.log(tripId);
+						// 連接後端刪除=========================================
+						$.ajax({
+							method: "POST",
+							url: "/removeTrip",
+							data: {
+								memberId: memberId,
+								tripId: tripId,
+							},
+							success: function (response) {
+								console.log("成功移除")
+							},
+							error: function (error) {
+								console.error(error);
+							},
+						});
+					});
 				}
 			}
 		},
@@ -208,45 +228,6 @@ if ($(".tab-pane").eq(1).find("#group_orderselect").find(".group_item_class")) {
 }
 
 
-//移除收藏
-//沒有tripId
-$(document).on("click", ".remove_btn2", function (e) {
-	console.log("remove")
-	$(this).closest(".group_item_class").remove();
-	//	var groupItems = document.querySelectorAll(".group_item_class");
-	//var tripId = $(this).closest(".group_item_class").find(".orderurl").attr("href").split("=")[1];
-	let tripId = $(this).closest(".group_item_class").data("tripid");
-	console.log(tripId);
-	// 連接後端刪除=========================================
-	$.ajax({
-		method: "POST",
-		url: "/removeTrip",
-		data: {
-			memberId: memberId,
-			tripId: tripId,
-		},
-		success: function (response) {
-		},
-		error: function (error) {
-			console.error(error);
-		},
-	});
-});
-
-// //移除背景圖
-// if (Object.keys(g_dataObj).length !== 0) {
-// 	$(".no_comment_div").eq(1).toggleClass("-out");
-// }
-// //移除收藏
-// $(document).on("click", ".remove_btn", function(e) {
-// 	$(this).closest(".group_item_class").remove();
-// 	var groupItems = document.querySelectorAll(".group_item_class");
-// 	if (groupItems.length !== 0) {
-// 		$(".no_comment_div").eq(1).toggleClass("-out", true);
-// 	} else {
-// 		$(".no_comment_div").eq(1).toggleClass("-out", false);
-// 	}
-// });
 // ==========================右邊會員資料--文章收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
@@ -377,7 +358,7 @@ function getAiFavorite() {
               </p>
               <p class="ai_description"><i class="fa-solid fa-file-lines"></i> 行程內容：<br />${aiFavorite[i].planningDescription}</p>
               <div class="item_commend_class">
-                <i class="fa-solid fa-heart heart remove_btn"></i>
+                <i class="fa-solid fa-heart heart remove_btn4"></i>
               </div>
             </div>
             <div class="aiFavoriteId">
@@ -394,7 +375,7 @@ function getAiFavorite() {
 }
 
 // 設定刪除按鈕
-$(document).on("click", ".remove_btn", function (e) {
+$(document).on("click", ".remove_btn4", function (e) {
 	$(this).closest(".group_order_item_class").remove();
 	var groupItems = document.querySelectorAll(".group_order_item_class");
 
@@ -405,16 +386,16 @@ $(document).on("click", ".remove_btn", function (e) {
 	console.log(aiFavoriteId);
 
 	// 連接後端刪除=========================================
-	//	$.ajax({
-	//		type: "DELETE",
-	//		url: "/aiFavorite/" + aiFavoriteId,
-	//		success: function(response) {
-	//			console.log(response);
-	//		},
-	//		error: function(error) {
-	//			console.error(error);
-	//		},
-	//	});
+	$.ajax({
+		type: "DELETE",
+		url: "/aiFavorite/" + aiFavoriteId,
+		success: function (response) {
+			console.log(response);
+		},
+		error: function (error) {
+			console.error(error);
+		},
+	});
 	// 連接後端刪除=========================================
 
 
