@@ -228,8 +228,8 @@
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" id="logoutLink">
+                                aria-labelledby="userDropdown" id="logoutLink">
+                                <a class="dropdown-item" href="" >
                                     登出
                                 </a>
                             </div>
@@ -763,6 +763,19 @@
     <script src="js/ticket_login_check.js"></script>
 
     <script>
+   //登出用
+    $("#logoutLink").click(function () {
+    	 $.ajax({
+    type: "GET",
+    	 url: "/BKlogout", 
+    	 success: function () {
+    window.location.href = "http://localhost:8080/back-end/login.html";
+      },
+    error: function () {
+       		}
+    	});
+    	});
+    
         //檔案上傳限制
         const SINGLE_FILE_SIZE = 10 * 1024 * 1024; //10MB
         const TOTAL_FILES_SIZE = 50 * 1024 * 1024; //50MB

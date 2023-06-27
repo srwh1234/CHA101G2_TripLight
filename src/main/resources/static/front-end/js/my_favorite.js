@@ -220,66 +220,11 @@ $(".nav-item")
 	.eq(2)
 	.on("click", function () {
 		$("#article_order .ticket_item_class").remove();
+		window.location.assign("/front-end/article_myfavorite.html")
 	});
 
-const a_dataObj = {};
-const a_valid = [
-	{
-		url: "http://google.com.tw",
-		imgUrl:
-			"https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_115643/20230515091041_Tx0bo/jpg",
-		title: "文章文章",
-		summary:
-			"3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
-		realPrice: "2020 / 02 / 02",
-	},
-];
-// 填入假資料
-for (let i = 0; i < a_valid.length; i++) {
-	Object.assign(a_dataObj, a_valid[i]);
-	$("#article_orderselectdiv").append(generateArticle(a_valid[i]));
-}
-function generateArticle(a_favorite) {
-	return `
-  <div class="article_item_class">
-    <a href="${a_favorite.url}" , class="orderurl">
-      <div class="item_img_class">
-          <img src="${a_favorite.imgUrl}"class="item_img">
-      </div>
-      <div class="item_content">
-        <h1 class="item_title">${a_favorite.title}</h1>
-        <div class="box">
-            <p class="Number">${a_favorite.summary} </p>
-        </div>
-        <div>
-            <p class="realPrice">${a_favorite.realPrice}</p>
-        </div>
-      </div>
-    </a>
-      <div class="item_commend_class">
-        <i class="fa-solid fa-heart heart remove_btn"></i>  
-    </div>
-  </div>
-   `;
-}
-//移除背景圖
 
-if (Object.keys(a_dataObj).length !== 0) {
-	$(".no_comment_div").eq(2).toggleClass("-out");
-}
-// //移除收藏
-$(document).on("click", ".remove_btn", function (e) {
-	$(this).closest(".article_item_class").remove();
-
-	var articleItems = document.querySelectorAll(".article_item_class");
-	if (articleItems.length !== 0) {
-		$(".no_comment_div").eq(2).toggleClass("-out", true);
-	} else {
-		$(".no_comment_div").eq(2).toggleClass("-out", false);
-	}
-});
-
-// =================================================================
+// ==========================右邊會員資料--AI收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
 	.eq(3)

@@ -147,7 +147,7 @@
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />記住我</label>
-                    <a href="#">忘記密碼</a>
+                    <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
@@ -247,9 +247,11 @@
                     <div style="padding: 20px 20px 20px 20px;" class="col-md-12">
                         <h2 id="tripName"></h2>
                         <hr class="hr" />
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
-                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path
+                                d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         </svg>
                         <span>location</span>
                         <hr class="hr" />
@@ -425,10 +427,11 @@
                     class="scrollspy-example scrollspy-example-collapsible">
                     <section id="example-1-collapsible">
                         <h3>行程介紹</h3>
-                        <div style="font-size: 20px; overflow-wrap: break-word; word-wrap: break-word; " id="tripDescription">
+                        <div style="font-size: 20px; overflow-wrap: break-word; word-wrap: break-word; "
+                            id="tripDescription">
                         </div>
-<!--                        <img style="weight:80%;  height: 500px;" src="https://picsum.photos/800/600/?random=43"-->
-<!--                            class="d-block w-100" alt="...">-->
+                        <!--                        <img style="weight:80%;  height: 500px;" src="https://picsum.photos/800/600/?random=43"-->
+                        <!--                            class="d-block w-100" alt="...">-->
                     </section>
                     <section id="example-2-collapsible">
                         <h3>注意事項</h3>
@@ -543,7 +546,7 @@
                             <ul class="col-12 links">
                                 <li>
                                     <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
-                                       target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                                        target="_blank">地址：桃園市中壢區復興路46號9樓</a>
                                 </li>
                                 <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
                                 <li>
@@ -595,11 +598,11 @@
                         <ul class="social_section_1info">
                             <li>
                                 <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
-                                                                               alt="facebook" /></a>
+                                        alt="facebook" /></a>
                             </li>
                             <li>
                                 <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                                                                                       alt="instagram" /></a>
+                                        alt="instagram" /></a>
                             </li>
                             <li>
                                 <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
@@ -662,10 +665,10 @@
         // ====== calendar initialized n get value  ======
         let sessionTripId = sessionStorage.getItem('tripId');
 
-        function getMemberId(){
+        function getMemberId() {
 
             const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
-            if(!testLogIn || !testLogIn.memberId){
+            if (!testLogIn || !testLogIn.memberId) {
                 return 0;
             }
             return testLogIn.memberId;
@@ -714,7 +717,7 @@
 
         // ====== 取得旅遊團資訊 ======
         $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripIdString=${sessionTripId}`)
-            .done(function (response){
+            .done(function (response) {
 
 
                 // ====== 預設顯示最新的旅遊團 response[0] ======
@@ -793,7 +796,7 @@
                 })
                 // 加號按鈕
                 $("#plus_child").on("click", function () {
-                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
                         currentQtyChild++;
                         sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
                         count_child.val(currentQtyChild);
@@ -820,7 +823,7 @@
 
                 // 加號按鈕 (大人)
                 $("#plus_adult").on("click", function () {
-                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
                         currentQtyAdult++;
                         sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
                         count_adult.val(currentQtyAdult);
@@ -832,65 +835,65 @@
                 })
 
                 // 兒童輸入數量欄位
-                count_child.on('change', function (){
-                    if(parseInt(count_child.val()) >= 0 && (count_child.val()!== null) && (count_child.val()!== '')){
+                count_child.on('change', function () {
+                    if (parseInt(count_child.val()) >= 0 && (count_child.val() !== null) && (count_child.val() !== '')) {
                         currentQtyChild = parseInt(count_child.val());
                         console.log(`test first ${currentQtyChild}`);
-                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
-                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
-                            alert('超出剩餘名額，請重新輸入');
-                                currentQtyChild = 0;
-                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                                count_child.val('0');
-                                amountValue = 0;
-                                amountValue = (priceAdult*currentQtyAdult);
-                                amount.html(`${amountValue} 元`);
+                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                            Swal.fire('超出剩餘名額，請重新輸入');
+                            currentQtyChild = 0;
+                            sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                            count_child.val('0');
+                            amountValue = 0;
+                            amountValue = (priceAdult * currentQtyAdult);
+                            amount.html(`${amountValue} 元`);
 
 
-                        }else{
+                        } else {
                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
 
                             amountValue = 0;
-                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
                             amount.html(`${amountValue} 元`);
                         }
 
 
-                    }else{
-                        alert('輸入錯誤，人數須為正整數');
+                    } else {
+                        Swal.fire('輸入錯誤，人數須為正整數');
                         count_child.val('');
                     }
 
                 });
 
                 // 大人輸入數量欄位
-                count_adult.on('change', function (){
-                    if(parseInt(count_adult.val()) >= 0 && (count_adult.val()!== null) && (count_adult.val()!== '')){
+                count_adult.on('change', function () {
+                    if (parseInt(count_adult.val()) >= 0 && (count_adult.val() !== null) && (count_adult.val() !== '')) {
                         currentQtyAdult = parseInt(count_adult.val());
                         console.log(`test first ${currentQtyAdult}`);
-                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
-                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
-                            alert('超出旅遊團人數，請重新輸入');
+                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                            Swal.fire('超出旅遊團人數，請重新輸入');
                             currentQtyAdult = 0;
                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
                             count_adult.val('0');
                             amountValue = 0;
-                            amountValue = (priceChild*currentQtyChild);
+                            amountValue = (priceChild * currentQtyChild);
                             amount.html(`${amountValue} 元`);
 
-                        }else{
+                        } else {
                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
 
                             amountValue = 0;
-                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
                             amount.html(`${amountValue} 元`);
 
                         }
 
 
 
-                    }else{
-                        alert('輸入錯誤，人數須為正整數');
+                    } else {
+                        Swal.fire('輸入錯誤，人數須為正整數');
                         count_adult.val('');
 
                     }
@@ -978,7 +981,7 @@
                                 })
                                 // 加號按鈕
                                 $("#plus_child").on("click", function () {
-                                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
                                         currentQtyChild++;
                                         sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
                                         count_child.val(currentQtyChild);
@@ -1005,7 +1008,7 @@
 
                                 // 加號按鈕 (大人)
                                 $("#plus_adult").on("click", function () {
-                                    if ((currentQtyAdult+currentQtyChild) < (leftTravelersNo)){
+                                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
                                         currentQtyAdult++;
                                         sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
                                         count_adult.val(currentQtyAdult);
@@ -1017,65 +1020,65 @@
                                 })
 
                                 // 兒童輸入數量欄位
-                                count_child.on('change', function (){
-                                    if(parseInt(count_child.val()) >= 0 && (count_child.val()!== null) && (count_child.val()!== '')){
+                                count_child.on('change', function () {
+                                    if (parseInt(count_child.val()) >= 0 && (count_child.val() !== null) && (count_child.val() !== '')) {
                                         currentQtyChild = parseInt(count_child.val());
                                         console.log(`test first ${currentQtyChild}`);
-                                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
-                                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
-                                            alert('超出剩餘名額，請重新輸入');
+                                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                                            Swal.fire('超出剩餘名額，請重新輸入');
                                             currentQtyChild = 0;
                                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
                                             count_child.val('0');
                                             amountValue = 0;
-                                            amountValue = (priceAdult*currentQtyAdult);
+                                            amountValue = (priceAdult * currentQtyAdult);
                                             amount.html(`${amountValue} 元`);
 
 
-                                        }else{
+                                        } else {
                                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
 
                                             amountValue = 0;
-                                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
                                             amount.html(`${amountValue} 元`);
                                         }
 
 
-                                    }else{
-                                        alert('輸入錯誤，人數須為正整數');
+                                    } else {
+                                        Swal.fire('輸入錯誤，人數須為正整數');
                                         count_child.val('');
                                     }
 
                                 });
 
                                 // 大人輸入數量欄位
-                                count_adult.on('change', function (){
-                                    if(parseInt(count_adult.val()) >= 0 && (count_adult.val()!== null) && (count_adult.val()!== '')){
+                                count_adult.on('change', function () {
+                                    if (parseInt(count_adult.val()) >= 0 && (count_adult.val() !== null) && (count_adult.val() !== '')) {
                                         currentQtyAdult = parseInt(count_adult.val());
                                         console.log(`test first ${currentQtyAdult}`);
-                                        console.log(`test first ${(currentQtyAdult+currentQtyChild)}`);
-                                        if ((currentQtyAdult+currentQtyChild) > (leftTravelersNo)){
-                                            alert('超出旅遊團人數，請重新輸入');
+                                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                                            Swal.fire('超出旅遊團人數，請重新輸入');
                                             currentQtyAdult = 0;
                                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
                                             count_adult.val('0');
                                             amountValue = 0;
-                                            amountValue = (priceChild*currentQtyChild);
+                                            amountValue = (priceChild * currentQtyChild);
                                             amount.html(`${amountValue} 元`);
 
-                                        }else{
+                                        } else {
                                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
 
                                             amountValue = 0;
-                                            amountValue = (priceChild*currentQtyChild) + (priceAdult*currentQtyAdult);
+                                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
                                             amount.html(`${amountValue} 元`);
 
                                         }
 
 
 
-                                    }else{
-                                        alert('輸入錯誤，人數須為正整數');
+                                    } else {
+                                        Swal.fire('輸入錯誤，人數須為正整數');
                                         count_adult.val('');
 
                                     }
@@ -1095,29 +1098,29 @@
                     }
                     calendar.addEvent(newEvent);
                 }
-            }).fail(function (jqXHR, textStatus, errorThrown){
+            }).fail(function (jqXHR, textStatus, errorThrown) {
 
-            // ====== 預設顯示最新的旅遊團 ======
-            $('#selectedDate').text('無旅遊團');
+                // ====== 預設顯示最新的旅遊團 ======
+                $('#selectedDate').text('無旅遊團');
 
-            $('#confirmedTravelersNo').text(`0 人`);
-            $('#minTravelersNo').text(`0 人`);
+                $('#confirmedTravelersNo').text(`0 人`);
+                $('#minTravelersNo').text(`0 人`);
 
 
-            $('#priceChild').text(`0元 /每人`);
-            $('#priceAdult').text(`0元 /每人`);
-            $('#amount').text('0元');
-            $('#beginPrice').html(`0元 起`);
+                $('#priceChild').text(`0元 /每人`);
+                $('#priceAdult').text(`0元 /每人`);
+                $('#amount').text('0元');
+                $('#beginPrice').html(`0元 起`);
 
-            // ====== 日曆點擊後，隨著點擊日期修改內容 ======
-            let calendarEl = document.getElementById('calendar');
+                // ====== 日曆點擊後，隨著點擊日期修改內容 ======
+                let calendarEl = document.getElementById('calendar');
 
-            let calendar = new FullCalendar.Calendar(calendarEl, {
-                selectable: true, // 啟用選擇功能
-            });
-            calendar.render();
+                let calendar = new FullCalendar.Calendar(calendarEl, {
+                    selectable: true, // 啟用選擇功能
+                });
+                calendar.render();
 
-        })
+            })
 
 
         // ====== 評論區塊 ======
@@ -1149,17 +1152,17 @@
         });
 
         // ====== 我要預定按鈕綁定事件 ======
-        $('#orderBtn').on('click', function (){
+        $('#orderBtn').on('click', function () {
             memberId = getMemberId();
-            if(memberId === 0){
+            if (memberId === 0) {
                 Swal.fire('請登入會員');
-            }else {
-                if(parseInt($('#count_adult').val()) ===0 && parseInt($('#count_child').val())===0){
+            } else {
+                if (parseInt($('#count_adult').val()) === 0 && parseInt($('#count_child').val()) === 0) {
                     Swal.fire('請至少選取一位人數');
-                }else if($('#selectedDate').text() === ''){
+                } else if ($('#selectedDate').text() === '') {
                     Swal.fire('請選擇旅遊團的日期~');
-                }else{
-                    window.location.href='group_orderprocess.html';
+                } else {
+                    window.location.href = 'group_orderprocess.html';
                 }
             }
 
@@ -1169,7 +1172,7 @@
 
         // ====== 綁定選擇方案按鈕 ======
 
-        $('#scrollBtn').on('click', function() {
+        $('#scrollBtn').on('click', function () {
             let targetOffset = $('#targetSection').offset().top;
 
             $('html, body').animate({
