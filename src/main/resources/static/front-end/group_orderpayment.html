@@ -234,7 +234,7 @@
                     </div>
 
                     <div class="row mt-5">
-                        <h4>訂購金額: 1233300 元</h4>
+                        <h4 id="tripAmount">訂購金額: 1233300 元</h4>
                     </div>
 
                     <hr>
@@ -328,22 +328,40 @@
 
             // ====== 取得 member Id ======
             function getMemberId() {
-
-                const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
-                if (!testLogIn || !testLogIn.memberId) {
-                    return 0;
+                const queryString = window.location.search; // 返回 "?name=John&age=25"
+                const urlParams = new URLSearchParams(queryString);
+                if(urlParams.get('memberId')!= null){
+                    return urlParams.get('memberId'); // 返回 "25"
                 }
-                return testLogIn.memberId;
             }
-
             const memberId = getMemberId();
+            console.log(memberId);
 
+            function getTripOrderId() {
+                const queryString = window.location.search; // 返回 "?name=John&age=25"
+                const urlParams = new URLSearchParams(queryString);
+                if(urlParams.get('tripOrderId')!=null){
+                    return urlParams.get('tripOrderId'); // 返回 "25"
+                }
+            }
+            const tripOrderId = getTripOrderId();
+            console.log(tripOrderId);
+
+
+            // ====== 渲染金額 ======
+
+            if(tripOrderId !== 0){
+                $.getJSON(`http://localhost:8080/getOrderAmount?tripOrderId=${tripOrderId}`, function (response) {
+                    $('#tripAmount').text(`訂購金額: ${response} 元`);
+                    console.log(response);
+                });
+
+            }
             // ====== 渲染會員資訊 ======
 
             if(memberId !== 0){
                 $.getJSON(`http://localhost:8080/getMemberInfor?memberId=${memberId}`, function (response) {
                     $('#memberName').val(`${response.memberFullName}`);
-                    console.log(response.memberName);
                     $('#memberPhone').val(`${response.memberPhone}`);
                     $('#memberEmail').val(`${response.memberEmail}`);
 
@@ -351,49 +369,12 @@
 
             }
 
-            // ====== //渲染會員資訊 ======
-
-            function getTourGroupId() {
-
-                const tourGroupIdGet = JSON.parse(sessionStorage.getItem('tourGroupId'));
-                if (tourGroupIdGet != null) {
-                    return tourGroupIdGet;
-                }else{
-                    return 0;
-                }
-            }
-
-            const tourGroupIdGet = getTourGroupId();
-
-            // ====== 訂購資訊區塊 ======
-            let qtyChild = parseInt(sessionStorage.getItem('qtyChild'));
-
-            if (qtyChild > 0) {
-                $('#qtyChild').text(`兒童: ${qtyChild} 人`);
-            } else {
-                $('#qtyChild').text(`小孩: 0 人`);
-            }
-
-            let qtyAdult = parseInt(sessionStorage.getItem('qtyAdult'));
-            if (qtyAdult > 0) {
-                $('#qtyAdult').text(`大人: ${qtyAdult} 人`);
-            } else {
-                $('#qtyAdult').text(`大人: 0 人`);
-            }
-
-
-
-
             // ====== 信用卡驗證區 ======
             $('#payType').on('change',function (){
-                const pattern = /^(?:3[47]\d{13}|(?:4\d|5[1-5]|6(?:011|5[0-9]{2}))\d{14}|(?:2131|1800|35\d{3})\d{11})$/;
+
                 if (isNaN($('#payType').val()) === true) {
                     $('#payType').val('');
                     Swal.fire('卡號輸入錯誤，請輸入數字');
-
-                } else if (pattern.test($('#payType').val()) === false) {
-                    $('#payType').val('');
-                    Swal.fire('卡號輸入錯誤，請輸入正整數');
 
                 } else if ($('#payType').val().trim() === '') {
                     $('#payType').val('');
@@ -462,39 +443,24 @@
                         return;
                     }
 
-
-
-
-
-                console.log(tourGroupDetail);
-                // ====== //collect tourGroupDetail ======
-
-                // ====== //collect data of all ======
+                // ====== 付款後狀態碼改為1 ======
                 let data = {
-                    "memberId": memberId,
-                    "tourGroupId": tourGroupIdGet,
-                    "orderStatus": "1",
-                    "payType": "credit card",
-                    "travelersChildren": qtyChild,
-                    "travelersAdult": qtyAdult,
-                    "remarks": $('#remarks').val(),
-                    'tourGroupDetail': tourGroupDetail
+                    'paymentStatus': "1",
+                    'tripOrderId': tripOrderId
                 };
 
                 let jsonData = JSON.stringify(data)
-                $.post("http://localhost:8080/order", jsonData, function (response) {
+                $.post(`http://localhost:8080/insertPaymentStatus`, jsonData, function (response) {
                     console.log('AJAX request successful');
                 })
 
                 // ====== 感謝彈窗 ======
                 Swal.fire({
-                    title: '付款成功!',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '付款成功',
+                    showConfirmButton: false,
+                    timer: 1500
                 }).then(function (result) {
                     if (result.isConfirmed) {
                         window.location.href = 'http://localhost:8080/front-end/index.html';

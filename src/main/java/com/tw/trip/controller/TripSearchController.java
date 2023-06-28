@@ -36,8 +36,77 @@ public class TripSearchController {
         return json;
     }
 
-    @PostMapping("/getTripsBySearch")
-    public String getTripsBySearch(final HttpServletRequest request) throws IOException {
+    @PostMapping("/getTripsByKeyword")
+    public String getTripsByKeyword(final HttpServletRequest request) throws IOException {
+        final BufferedReader reader = request.getReader();
+        final StringBuilder stringBuilder = new StringBuilder();
+        String dataRead;
+        String json = null;
+
+        // ====== 1. retrieved data from request n store in stringBuilder ======
+        while ((dataRead = reader.readLine()) != null) {
+            stringBuilder.append(dataRead);
+        }
+
+        reader.close();
+
+        JSONObject jsonObject;
+
+        try {
+            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
+
+            String keyword = jsonObject.getString("keyword");
+            System.out.println(keyword);
+
+            List<Trip> tripList = tripSearchService.getTripBySearchKeyword(keyword);
+            json = new Gson().toJson(tripList);
+
+        } catch (final JSONException e) {
+            e.printStackTrace();
+
+        }
+
+        return json;
+    }
+
+
+    @PostMapping("/getTripsByCities")
+    public String getTripsByCities(final HttpServletRequest request) throws IOException {
+        final BufferedReader reader = request.getReader();
+        final StringBuilder stringBuilder = new StringBuilder();
+        String dataRead;
+        String json = null;
+
+        while ((dataRead = reader.readLine()) != null) {
+            stringBuilder.append(dataRead);
+        }
+
+        reader.close();
+
+        JSONObject jsonObject;
+
+        try {
+            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
+
+            String cities = jsonObject.getString("cities");
+            System.out.println(cities);
+
+            String[] citiesArr = new Gson().fromJson(cities, String[].class);
+
+            List<Trip> tripList = tripSearchService.getTripBySearchCity(citiesArr);
+
+            json = new Gson().toJson(tripList);
+
+        } catch (final JSONException e) {
+            e.printStackTrace();
+
+        }
+
+        return json;
+    }
+
+    @PostMapping("/getTripsByTypes")
+    public String getTripsByTypes(final HttpServletRequest request) throws IOException {
         final BufferedReader reader = request.getReader();
         final StringBuilder stringBuilder = new StringBuilder();
         String dataRead;
@@ -58,13 +127,17 @@ public class TripSearchController {
             // ====== 1. deal with TripOrder ======
 
             // ====== 2. deal with String[] cities ======
-            String cities = jsonObject.getString("cities");
-            String[] stringArray = new Gson().fromJson(cities, String[].class);
-            for(String s: stringArray){
-                System.out.println("test test"+ s);
+            String types = jsonObject.getString("tripDayTypes");
+            System.out.println(types);
+
+            String[] typesArr = new Gson().fromJson(types, String[].class);
+            Integer[] intArray = new Integer[typesArr.length];
+
+            for (int i = 0; i < typesArr.length; i++) {
+                intArray[i] = Integer.parseInt(typesArr[i]);
             }
 
-            List<Trip> tripList = tripSearchService.getTripBySearch(stringArray);
+            List<Trip> tripList = tripSearchService.getTripBySearchType(intArray);
 
             json = new Gson().toJson(tripList);
 
@@ -75,5 +148,7 @@ public class TripSearchController {
 
         return json;
     }
+
+
 
 }

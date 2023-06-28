@@ -499,15 +499,15 @@
                             <div class="accordion-body p-1 px-5">
 
                                 <div class="form-check d-flex gap-3">
-                                    <input class="form-check-input" type="checkbox" value="" id="tripDayTypes1">
+                                    <input class="form-check-input" type="checkbox" value="1" id="tripDayTypes1">
                                     <label class="form-check-label align-self-center" for="tripDayTypes1">1日來回</label>
                                 </div>
                                 <div class="form-check d-flex gap-3">
-                                    <input class="form-check-input" type="checkbox" value="" id="tripDayTypes2">
+                                    <input class="form-check-input" type="checkbox" value="2" id="tripDayTypes2">
                                     <label class="form-check-label align-self-center" for="tripDayTypes2">2天1夜</label>
                                 </div>
                                 <div class="form-check d-flex gap-3">
-                                    <input class="form-check-input" type="checkbox" value="" id="tripDayTypes3">
+                                    <input class="form-check-input" type="checkbox" value="3" id="tripDayTypes3">
                                     <label class="form-check-label align-self-center" for="tripDayTypes3">3天含以上</label>
                                 </div>
                             </div>
@@ -709,21 +709,18 @@
     <script>
         $(document).ready(function () {
 
+            $('#tripSearch').on('search', function (event){
+                event.preventDefault();
+            })
+
+
             defaultSearch();
             // ====== 搜尋功能 待完成 ======
-            function doSearch() {
+            function searchByCities() {
                 // 物件存放當下被點擊的搜尋條件
-                const currentChecked = {
-                    keyword: $('#tripSearch').val(),
-                    tripDayTypes: [],
+                let currentChecked = {
                     cities: [],
-                    // size: 5,
                 };
-
-                // 當下被點擊的 tripType 存入陣列
-                $('[id^="tripDayTypes"]:checked').each((i, v) => {
-                    currentChecked.tripDayTypes.push(v.value);
-                });
 
                 // 當下被點擊的 cities 存入陣列
                 $('[id^="tripZone"]:checked').each((i, v) => {
@@ -731,7 +728,7 @@
                 });
 
                 // 發送請求
-                $.post("http://localhost:8080/tripSearch/getTripsBySearch", JSON.stringify(currentChecked), function (response) {
+                $.post("http://localhost:8080/tripSearch/getTripsByCities", JSON.stringify(currentChecked), function (response) {
                     if (response.length === 0) {
                         $('#productItems').empty();
                         let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
@@ -753,6 +750,73 @@
                 }, 'json');
 
             }
+
+            function searchByTypes() {
+                // 物件存放當下被點擊的搜尋條件
+                let currentChecked = {
+                    tripDayTypes: [],
+                };
+
+                // 當下被點擊的 tripType 存入陣列
+                $('[id^="tripDayTypes"]:checked').each((i, v) => {
+                    currentChecked.tripDayTypes.push(v.value);
+                });
+
+                // 發送請求
+                $.post("http://localhost:8080/tripSearch/getTripsByTypes", JSON.stringify(currentChecked), function (response) {
+                    if (response.length === 0) {
+                        $('#productItems').empty();
+                        let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
+                        $('#productItems').append(noResult);
+
+                        setTimeout(function () {
+                            $('#productItems').empty();
+                            let noResult = `<h3> 看看其他方案吧~ </h3>`;
+                            $('#productItems').append(noResult);
+                            defaultSearch();
+
+                        }, 3000);
+
+                    } else {
+                        render_search(response);
+                    }
+
+                    // 渲染頁面
+                }, 'json');
+
+            }
+
+            function searchByKeyword() {
+                // 物件存放當下被點擊的搜尋條件
+                let currentChecked = {
+                    keyword: $('#tripSearch').attr('value'),
+                };
+
+
+                // 發送請求
+                $.post("http://localhost:8080/tripSearch/getTripsByKeyword", JSON.stringify(currentChecked), function (response) {
+                    if (response.length === 0) {
+                        $('#productItems').empty();
+                        let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
+                        $('#productItems').append(noResult);
+
+                        setTimeout(function () {
+                            $('#productItems').empty();
+                            let noResult = `<h3> 看看其他方案吧~ </h3>`;
+                            $('#productItems').append(noResult);
+                            defaultSearch();
+
+                        }, 3000);
+
+                    } else {
+                        render_search(response);
+                    }
+
+                    // 渲染頁面
+                }, 'json');
+
+            }
+
             function render_search(response) {
                 let parentEl = $('#productItems');
                 parentEl.empty();
@@ -792,10 +856,17 @@
             // 綁定三個選擇事件
             // 1. 城市按鈕
             $(document).on('click', '[id^="tripZone"]', function () {
-                doSearch();
+                searchByCities();
             });
-            // 2.
-            // 3.
+            // 2. 類型按鈕
+            $(document).on('click', '[id^="tripDayTypes"]', function () {
+                searchByTypes()
+            });
+            // 3. 關鍵字搜尋
+            $('#tripSearch').on('change', function (){
+                searchByKeyword();
+
+            });
 
             // ====== // 搜尋功能 待完成 ======
 

@@ -28,24 +28,6 @@ public class GroupOrderService {
     TripCommentDao tripCommentDao;
 
 
-    // ====== Group Order 新增評論 ======
-    public void addTripComment(Integer tripId, Integer memberId, Integer rating,
-                                             String comment, Integer status, Integer editCount ){
-
-        TripComment tripComment = new TripComment();
-        tripComment.setTripId(tripId);
-
-        tripComment.setMemberId(memberId);
-        tripComment.setRating(rating);
-        tripComment.setComment(comment);
-        tripComment.setStatus(status);
-        tripComment.setEditCount(editCount);
-        tripCommentDao.insert(tripComment);
-
-        System.out.println("trip comments successfully updated!");
-    }
-
-
     // ====== 取得Group Order 頁面所需的資訊 ======
     public List<GroupOrderObj> getTripsByMemberId(Integer memberIdArg){
 

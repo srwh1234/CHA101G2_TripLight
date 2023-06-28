@@ -37,8 +37,8 @@ public class TripPageController {
     }
 
     @GetMapping("/getTripComments")
-    public String getTripComments(@RequestParam String tripIdString){
-        Integer tripId = Integer.valueOf(tripIdString);
+    public String getTripComments(@RequestParam Integer tripId){
+
         List<TripComment> tripCommentList = tripPageService.getTripCommentsByTripId(tripId);
 
         Gson gson = new Gson();
@@ -60,9 +60,9 @@ public class TripPageController {
     }
 
     @GetMapping("/getTrip")
-    public String getTrip(@RequestParam String tripIdString){
-        Integer tripId = Integer.valueOf(tripIdString);
-        Trip trip = tripDao.findByPrimaryKey(tripId);
+    public String getTrip(@RequestParam Integer tripId){
+
+        Trip trip = tripPageService.getTripByTripId(tripId);
 
         String json = new Gson().toJson(trip);
 

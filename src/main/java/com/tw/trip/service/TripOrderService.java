@@ -81,4 +81,35 @@ public class TripOrderService {
 
     }
 
+    public Integer getTripOrderAmount(Integer tripOrderId){
+        final String HQL = """
+                SELECT totalPrice FROM TripOrder 
+                WHERE tripOrderId= :tripOrderId
+                """;
+        Integer amount = session.createQuery(HQL,Integer.class)
+                .setParameter("tripOrderId", tripOrderId)
+                .uniqueResult();
+
+        return amount;
+
+
+    }
+
+    public void insertPaymentStatus(Integer paymentStatus, Integer tripOrderId){
+        final String HQL = """
+                INSERT INTO TripOrder (paymentStatus)
+                SELECT :paymentStatus
+                FROM TripOrder 
+                WHERE tripOrderId= :tripOrderId
+                """;
+
+        session.createQuery(HQL)
+                .setParameter("tripOrderId", tripOrderId)
+                .setParameter("paymentStatus", paymentStatus)
+                .executeUpdate();
+
+        System.out.println("paymentStatus successfully updated!");
+
+    }
+
 }

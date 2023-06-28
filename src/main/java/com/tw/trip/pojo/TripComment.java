@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Base64;
 
 @Entity
 @Getter
@@ -51,6 +52,15 @@ public class TripComment implements Serializable {
     private String memberPicBase64;
 
     @Transient
-    private String name;
+    private String memberName;
+
+    public TripComment(String memberName, byte[] memberPic, String comment, Timestamp postTime, int rating ){
+        this.memberName = memberName;
+        memberPicBase64 = Base64.getEncoder().encodeToString(memberPic);
+        this.comment = comment;
+        this.postTime = postTime;
+        this.rating = rating;
+    }
+
 
 }
