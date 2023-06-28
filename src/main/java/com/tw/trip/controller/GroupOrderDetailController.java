@@ -3,14 +3,17 @@ package com.tw.trip.controller;
 import com.google.gson.Gson;
 import com.tw.member.model.Member;
 import com.tw.trip.pojo.TourGroup;
+import com.tw.trip.pojo.TourGroupDetail;
 import com.tw.trip.pojo.TripOrder;
 import com.tw.trip.service.GroupOrderDetailService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -57,5 +60,60 @@ public class GroupOrderDetailController {
         return json;
 
     }
+
+    @GetMapping("/getTravelerList")
+    public String getTravelerList(@RequestParam Integer memberId,
+                                  @RequestParam Integer tourGroupId){
+
+        List<TourGroupDetail> tourGroupDetails = groupOrderDetailService.getTravelerList(memberId,tourGroupId);
+
+        String json = new Gson().toJson(tourGroupDetails);
+        return json;
+    }
+
+    @PostMapping("/addTripComments")
+    public void addTripComment(HttpServletRequest request) throws IOException {
+
+        BufferedReader reader = request.getReader();
+        StringBuilder stringBuilder = new StringBuilder();
+        String dataRead;
+
+        // ====== 1. retrieved data from request n store in stringBuilder ======
+        while((dataRead=reader.readLine()) != null){
+            stringBuilder.append(dataRead);
+        }
+
+        reader.close();
+
+        // ====== 2. parse to JSON via JSONObject ======
+        JSONObject jsonObject;
+        try{
+            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
+            groupOrderDetailService.addTripComment(
+                    jsonObject.getInt("tripId"),
+                    jsonObject.getInt("memberId"),
+                    jsonObject.getInt("rating"),
+                    jsonObject.getString("comment"),
+                    jsonObject.getInt("status"),
+                    jsonObject.getInt("edit_count")
+            );
+
+        }catch (JSONException e){
+            e.printStackTrace();
+
+        }
+
+        System.out.println("TripComment successfully inserted!");
+
+    }
+
+    @GetMapping("/getEditCount")
+    public Integer getEditCount(@RequestParam Integer memberId,
+                               @RequestParam Integer tripId){
+
+        Integer editCount = groupOrderDetailService.getTripCommentEditCount(memberId, tripId);
+        return editCount;
+    }
+
 
 }

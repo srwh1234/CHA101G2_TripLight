@@ -3,6 +3,7 @@ package com.tw.trip.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.tw.member.model.Member;
 import com.tw.trip.dao.TripOrderDao;
 import com.tw.trip.pojo.TourGroup;
 import com.tw.trip.pojo.TourGroupDetail;
@@ -50,10 +51,9 @@ public class TripOrderController {
 
         try{
             jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
-            System.out.println("測試測試"+jsonObject.getString("tourGroupDetail"));
-
             // ====== 1. deal with TripOrder ======
 
+            System.out.println("會員編號"+jsonObject.getInt("memberId"));
             tripOrderService.addTripOrder(
                     jsonObject.getInt("memberId"),
                     jsonObject.getInt("tourGroupId"),
@@ -90,9 +90,55 @@ public class TripOrderController {
         return json;
     }
 
-    
+    @GetMapping("/getMemberInfor")
+    public String getMemberInfor(@RequestParam Integer memberId){
+        Member member = tripOrderService.getMemberInfor(memberId);
+
+        String json = new Gson().toJson(member);
+        return json;
+    }
 
 
+    @GetMapping("/getOrderAmount")
+    public String getOrderAmount(@RequestParam Integer tripOrderId){
+
+        Integer amount = tripOrderService.getTripOrderAmount(tripOrderId);
+
+        String json = new Gson().toJson(amount);
+        return json;
+    }
+
+    @PostMapping("/insertPaymentStatus")
+    public void insertPaymentStatus(HttpServletRequest request) throws IOException{
+        BufferedReader reader = request.getReader();
+        StringBuilder stringBuilder = new StringBuilder();
+        String dataRead;
+
+        // ====== 1. retrieved data from request n store in stringBuilder ======
+        while((dataRead=reader.readLine()) != null){
+            stringBuilder.append(dataRead);
+        }
+
+        reader.close();
+
+        // ====== 2. parse to JSON via JSONObject ======
+        JSONObject jsonObject;
+        try{
+            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
+            tripOrderService.insertPaymentStatus(
+                    jsonObject.getInt("paymentStatus"),
+                    jsonObject.getInt("tripOrderId")
+            );
+
+
+        }catch (JSONException e){
+            e.printStackTrace();
+
+        }
+
+        System.out.println("paymentStatus successfully inserted!");
+
+    }
 
 
 }

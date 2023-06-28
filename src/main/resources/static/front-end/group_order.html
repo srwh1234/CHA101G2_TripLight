@@ -58,6 +58,8 @@
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
 
+
+
 </head>
 
 <body>
@@ -136,7 +138,7 @@
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />記住我</label>
-                    <a href="#">忘記密碼</a>
+                    <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
@@ -199,8 +201,6 @@
                     <div class="col-9 shadow-lg p-3 mb-5 bg-body rounded">
                         <div class="row justify-content-center" id="memberPicParent">
                             <div class="col-11 align-self-center">
-<!--                                <img src="https://picsum.photos/64" alt="member pic" class="rounded-circle" width="180"-->
-<!--                                    class="img-fluid rounded-start" id="memberPic">-->
                             </div>
                         </div>
 
@@ -216,71 +216,9 @@
 
             <!-- ======================== //右側訂單欄位 ============================================-->
             <div class="col-8" id="tripOrderParent">
-                <!-- 商品1 -->
-<!--                <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">-->
-<!--                    <div class="row g-0 h-100">-->
-<!--                        <div class="col-md-4 h-100">-->
-<!--                            <img src="https://picsum.photos/800/600/?random=42" class="img-fluid rounded-start mt-2"-->
-<!--                                alt="...">-->
-<!--                        </div>-->
-<!--                        <div class="col-md-8">-->
-<!--                            <div class="card-body">-->
-<!--                                <h5 class="card-title" id="tripName"></h5>-->
-<!--                                <hr>-->
-<!--                                <p class="card-text" id="tripContent"></p>-->
+            </div>
 
-<!--                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
-<!--                                <button type="button" class="btn btn-info" data-bs-toggle="modal"-->
-<!--                                    data-bs-target="#exampleModal" data-mdb-ripple-color="dark"-->
-<!--                                    id="btn_modal">我要評論</button>-->
-<!--                                <button type="button"-->
-<!--                                    onclick="window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html'"-->
-<!--                                    class="btn btn-info">查看詳情</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
 
-                <!-- 我要評論 燈箱區 -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">評論內容</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="recipient-name" class="col-form-label" id="title"></label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modal-text" class="col-form-label">Message:</label>
-                                        <textarea class="form-control" id="modal-text"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="btn_con" class="btn btn-primary"
-                                    data-bs-dismiss="modal">確認評論</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 謝謝評論 -->
-                <div id="lightbox" class="none">
-                    <article>
-                        <h1>謝謝評論唷</h1>
-                    </article>
-                </div>
-                <!-- //謝謝評論 -->
 
 
             </div>
@@ -484,9 +422,7 @@
                                         <p class="card-text">${response[i].tripContent}</p>
 
                                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                        <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-mdb-ripple-color="dark"
-                                            id="btn_modal">我要評論</button>
+
                                         <button type="button" class="btn btn-info changePage" tripOrderId="${response[i].tripOrderId}" tripId="${response[i].tripId}" tourGroupId="${response[i].tourGroupId}">查看詳情</button>
                                     </div>
                                 </div>
@@ -511,47 +447,7 @@
 
                 });
 
-                // ====== 確認預定 ======
-                $('#btn_con').on('click', function () {
 
-                    // 1. get data from DB
-                    let modalText = $('#modal-text').val();
-
-                    // 2. serialize data
-                    let data = JSON.stringify({ 'message': modalText });
-
-                    // 3. post to DB
-                    $.post("http://localhost:8080/groupOrder/addTripComments", data, function (response) {
-                        console.log('successfully sent!');
-                    });
-
-                })
-
-                // 燈箱按鈕
-                // 頁面上的按鈕
-                $("#btn_modal").on("click", function () {
-                    $("#lightbox").removeClass("none");
-                });
-
-
-
-                // modal 中的半透明黑色區域
-                $("#lightbox").on("click", function () {
-                    $("#lightbox").addClass("none");
-                });
-
-                // 點擊 lightbox 中的白色區域，不會關掉 modal
-                $("#lightbox > article").on("click", function (e) {
-                    e.stopPropagation();
-                });
-                $("button#btn_con").on("click", function () {
-                    $("#lightbox").removeClass("none");
-                });
-
-                // modal 中的半透明黑色區域
-                $("#lightbox").on("click", function () {
-                    $("#lightbox").addClass("none");
-                });
 
         });
     </script>

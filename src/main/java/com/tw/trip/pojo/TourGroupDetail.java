@@ -32,4 +32,6 @@ public class TourGroupDetail implements Serializable {
 
     private Integer travelerAge;
 
+    private Integer memberId;
+
 }

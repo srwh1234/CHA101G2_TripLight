@@ -43,6 +43,8 @@ public class TripOrder {
 
     private Integer refundStatus;
 
+    private Integer paymentStatus;
+
     private String refundReason;
 
     @Transient

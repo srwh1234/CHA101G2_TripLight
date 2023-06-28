@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.tw.employee.model.Employee;
@@ -14,5 +15,7 @@ public interface EmployeeRepository  extends JpaRepository<Employee , Integer> {
 	 Employee findByEmployeeName(String employeeName);
 	 Employee findByEmployeeAccount(String employeeAccount);
 	 
+	 @Query("SELECT e.employeeAccess FROM Employee e WHERE e.employeeAccount = :employeeAccount")
+	String findEmployeeAccessByEmployeeAccount(@Param("employeeAccount") String employeeAccount);
 
 }

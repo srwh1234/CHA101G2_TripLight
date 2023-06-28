@@ -103,4 +103,13 @@ public class Trip implements Serializable {
         imageBase64 = Base64.getEncoder().encodeToString(image);
 
     }
+
+    public Trip(String tripName, Integer tripDay, String city, String tripContent, String tripDescription, String tripNote){
+        this.tripName = tripName;
+        this.tripDay = tripDay;
+        this.city = city;
+        this.tripContent = tripContent;
+        this.tripDescription = tripDescription;
+        this.tripNote = tripNote;
+    }
 }

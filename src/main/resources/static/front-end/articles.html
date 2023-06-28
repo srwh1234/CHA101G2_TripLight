@@ -34,9 +34,9 @@
       /* 使用object-fit屬性調整圖片填滿區塊，可能需要進一步調整該屬性以符合您的需求 */
     }
 
-    .clamp-lines {
+    #body {
       display: -webkit-box;
-      -webkit-line-clamp: 5;
+      -webkit-line-clamp: 8;
       /* 設定要顯示的行數 */
       -webkit-box-orient: vertical;
       overflow: hidden;
@@ -100,7 +100,8 @@
     crossorigin="anonymous"></script>
   <!--會員登入-->
   <link href="css/login.css" rel="stylesheet" />
-
+  <!--sweet alert-->>
+  <script src="./js/sweetalert.js"></script>
   <!-- header -->
   <header>
     <div class="container" style="padding-right: 0px">
@@ -201,7 +202,7 @@
         </div>
         <div class="check">
           <label><input type="checkbox" />記住我</label>
-          <a href="#">忘記密碼</a>
+          <a href="#" id="forgetPwd">忘記密碼</a>
         </div>
         <button type="submit" class="main-btn">Login</button>
         <div class="register">
@@ -263,15 +264,16 @@
           <li><a class="dropdown-item" href="#">評論</a></li>
           <li><a class="dropdown-item" href="#">問題</a></li>
         </ul>
-        <input type="text" class="text_search" placeholder="關鍵字查詢" aria-label="Text input with dropdown button"
-          style="width: 400px;">
-        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 150px;"
-          onclick="redirectToMyFavorite()">我的收藏</button>
-
-        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 150px;"
-          onclick="redirectToMyList()">我的文章</button>
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+          onclick="redirectToArticleList()">進入論壇</button>
 
         <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+          onclick="redirectToMyFavorite()">收藏文章</button>
+
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+          onclick="redirectToMyList()">我的文章</button>
+
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 250px;"
           onclick="redirectToCreateArticle()">發表文章</button>
       </div>
     </div>
@@ -425,8 +427,12 @@
 
   <script>
 
+    function redirectToArticleList() {
+      window.location.href = "article_list.html";
+    };
+
     function redirectToCreateArticle() {
-      window.location.href = "article_caeate.html";
+      window.location.href = "article_create.html";
     };
 
     function redirectToMyFavorite() {
@@ -451,6 +457,7 @@
         $('#articleContainer').html('');
 
         for (let article of data) {
+
           let articleType;
           switch (article.articleTypeId) {
             case 1:
@@ -481,30 +488,34 @@
           let formattedDate = `${year}-${month}-${day}`;
 
           $('#articleContainer').append(`
+          <a href="http://localhost:8080/front-end/article_detail.html?id=${article.articleId}">
             <div class="col mb-3">
                     <div class="card my-nav-link" position-relative">
                         <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image" />
                     </div>
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <span>【${articleType}】</span>
-                    <span>${article.articleTitle}</span>
+                <div class="card-body" id="body">
+                    <h5 class="card-title">
+                      <span>【${articleType}】</span>
+                      <span>${article.articleTitle}</span>
                     </h5>
-                    <p class="card-text clamp-lines">${article.articlePostContent}</p>
-                </div>    
-                <div class="d-flex justify-content-between" style="padding: 0 10px;">
-                  <p>${article.memberName}</p>
+                    <p class="card-text" id="clamp-lines">
+                      ${article.articlePostContent}
+                    </p>
+                </div>
+                <br>    
+                  <div class="d-flex justify-content-between" style="padding: 0 10px;">
+                    <p>${article.memberName}</p>
                         <p class="card-text">
                             <small class="text-muted">${formattedDate}</small>
                         </p>
-                </div>
+                  </div>
             </div>
-        </div>
-                `);
+          </a>
+         `);
+
         }
       }
     });
-
 
   </script>
 

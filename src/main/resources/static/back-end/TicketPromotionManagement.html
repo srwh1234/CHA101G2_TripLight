@@ -191,8 +191,8 @@
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" id="logoutLink">
+                                aria-labelledby="userDropdown" id="logoutLink">
+                                <a class="dropdown-item" href="" >
                                     登出
                                 </a>
                             </div>
@@ -369,6 +369,20 @@
 
                 <!-- TODO: -->
                 <script>
+              //登出用
+                $("#logoutLink").click(function () {
+                	 $.ajax({
+                type: "GET",
+                	 url: "/BKlogout", 
+                	 success: function () {
+                window.location.href = "http://localhost:8080/back-end/login.html";
+                  },
+                error: function () {
+                   		}
+                	});
+                	});
+                
+                
                     let currentIndex = 0;
                     let resultData;
 

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,17 +11,23 @@
 
     <title>TirpLight後台</title>
 
+    <!-- datatable -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script> -->
+
+
     <!-- 自訂字型 -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="botcss/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        <script src="js/jquery-3.7.0.min.js"></script>
-        <script src="js/login.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/login.js"></script>
+
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/empolyee.css">
+
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -69,6 +76,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="MemberQuety.html">查詢資料</a>
+                        <a class="collapse-item" href="MemberRevise.html">修改資料</a>
                     </div>
                 </div>
             </li>
@@ -178,84 +186,214 @@
                         </li>
                     </ul>
                 </nav>
-                <div id="formDiv">
-                    <div>
-                        <h4 class="setemp" style="color: blue;">員工權限設定</h4>
-                    </div>
-                    <table class="table">
+                <div class="container">
+                    <table id="myTable" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th scope="col">員工編號</th>
-                                <th scope="col">員工名字</th>
-                                <th scope="col">管理權限</th>
-                                <th scope="col">操作</th>
+                                <th>檢舉會員名稱</th>
+                                <th>被檢舉事由</th>
+                                <th>被檢舉會員名</th>
+                                <th>被檢舉文章/留言</th>
+                                <th>檢舉時間</th>
+                                <th>處理員工編號</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
+                                <td>Tiger Nixon</td>
+                                <td>歧視性言論</td>
+                                <td>Shou Itou</td>
+                                <td>Message_61</td>
+                                <td>2021-04-25</td>
+                                <td>TBM0001</td>
                             </tr>
                             <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
+                                <td>Garrett Winters</td>
+                                <td>仇恨性言論</td>
+                                <td>Fiona Green</td>
+                                <td>Message_63</td>
+                                <td>2021-07-25</td>
+                                <td>TBM0002</td>
                             </tr>
                             <tr>
-                                <td>TripLight0301</td>
-                                <td>陳小明</td>
-                                <td>超級管理員</td>
-                                <td>
-                                    <button class="btn btn-primary" type="button">設定</button>
-                                </td>
+                                <td>Ashton Cox</td>
+                                <td>攻擊性言論</td>
+                                <td>Brenden Wagner</td>
+                                <td>Message_66</td>
+                                <td>2022-01-12</td>
+                                <td>TBM0003</td>
+                            </tr>
+                            <tr>
+                                <td>Cedric Kelly</td>
+                                <td>無意義言論</td>
+                                <td>Jennifer Chang</td>
+                                <td>Message_22</td>
+                                <td>2021-03-29</td>
+                                <td>TBM0001</td>
+                            </tr>
+                            <tr>
+                                <td>Airi Satou</td>
+                                <td>毀謗性言論</td>
+                                <td>Gavin Joyce</td>
+                                <td>Message_33</td>
+                                <td>2022-11-28</td>
+                                <td>TBM0002</td>
+                            </tr>
+                            <tr>
+                                <td>Brielle Williamson</td>
+                                <td>歧視性言論</td>
+                                <td>Angelica Ramos</td>
+                                <td>Message_61</td>
+                                <td>2021-12-02</td>
+                                <td>TBM0003</td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>仇恨性言論</td>
+                                <td>Doris Wilder</td>
+                                <td>Message_59</td>
+                                <td>2021-08-06</td>
+                                <td>TBM0001</td>
+                            </tr>
+                            <tr>
+                                <td>Rhona Davidson</td>
+                                <td>攻擊性言論</td>
+                                <td>Caesar Vance</td>
+                                <td>Message_55</td>
+                                <td>2020-10-14</td>
+                                <td>TBM0002</td>
+                            </tr>
+                            <tr>
+                                <td>Colleen Hurst</td>
+                                <td>無意義言論</td>
+                                <td>Yuri Berry</td>
+                                <td>Message_39</td>
+                                <td>2021-09-15</td>
+                                <td>TBM0003</td>
+                            </tr>
+                            <tr>
+                                <td>Sonya Frost</td>
+                                <td>毀謗性言論</td>
+                                <td>Jenette Caldwell</td>
+                                <td>Message_23</td>
+                                <td>2022-12-13</td>
+                                <td>None</td>
+                            </tr>
+                            <tr>
+                                <td>Jena Gaines</td>
+                                <td>TL廠商投訴</td>
+                                <td>Donna Snider</td>
+                                <td>Article_30</td>
+                                <td>2020-12-19</td>
+                                <td>TBM0003</td>
+                            </tr>
+                            <tr>
+                                <td>Quinn Flynn</td>
+                                <td>非廠商業配</td>
+                                <td>Michael Bruce</td>
+                                <td>Article_22</td>
+                                <td>2023-03-03</td>
+                                <td>TBM0002</td>
+                            </tr>
+                            <tr>
+                                <td>Charde Marshall</td>
+                                <td>與現況有差異</td>
+                                <td>Shad Decker</td>
+                                <td>Article_36</td>
+                                <td>2018-10-16</td>
+                                <td>TBM0001</td>
+                            </tr>
+                            <tr>
+                                <td>Haley Kennedy</td>
+                                <td>不符合分類</td>
+                                <td>Jonas Alexander</td>
+                                <td>Article_43</td>
+                                <td>2021-12-18</td>
+                                <td>TBM0003</td>
+                            </tr>
+                            <tr>
+                                <td>Tatyana Fitzpatrick</td>
+                                <td>提供資訊有誤</td>
+                                <td>Lael Greer</td>
+                                <td>Article_19</td>
+                                <td>2020-03-17</td>
+                                <td>TBM0002</td>
+                            </tr>
+                            <tr>
+                                <td>Michael Silva</td>
+                                <td>TL廠商投訴</td>
+                                <td>Hermione Butler</td>
+                                <td>Article_66</td>
+                                <td>2021-11-27</td>
+                                <td>TBM0001</td>
+                            </tr>
+                            <tr>
+                                <td>Paul Byrd</td>
+                                <td>非廠商業配</td>
+                                <td>Cara Stevens</td>
+                                <td>Article_64</td>
+                                <td>2020-06-09</td>
+                                <td>TBM0003</td>
+                            </tr>
+                            <tr>
+                                <td>Gloria Little</td>
+                                <td>與現況有差異</td>
+                                <td>Jennifer Acosta</td>
+                                <td>Article_59</td>
+                                <td>2019-04-10</td>
+                                <td>TBM0002</td>
+                            </tr>
+                            <tr>
+                                <td>Bradley Greer</td>
+                                <td>不符合分類</td>
+                                <td>Cara Stevens</td>
+                                <td>Article_45</td>
+                                <td>2021-10-13</td>
+                                <td>TBM0001</td>
+                            </tr>
+                            <tr>
+                                <td>Dai Rios</td>
+                                <td>提供資訊有誤</td>
+                                <td>Jennifer Acosta</td>
+                                <td>Article_35</td>
+                                <td>2021-09-26</td>
+                                <td>None</td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>檢舉會員名稱</th>
+                                <th>被檢舉事由</th>
+                                <th>被檢舉會員名</th>
+                                <th>被檢舉文章/留言</th>
+                                <th>檢舉時間</th>
+                                <th>處理員工編號</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
-
                 <script>
-                    $(document).ready(function () {
-                        // 設定按鈕點擊事件
-                        $('.btn-primary').click(function () {
-                            // 取得所選的員工編號和員工名字
-                            var employeeID = $(this).closest('tr').find('td:eq(0)').text();
-                            var employeeName = $(this).closest('tr').find('td:eq(1)').text();
+$("#logoutLink").click(function () {
+	 $.ajax({
+type: "GET",
+	 url: "/BKlogout", 
+	 success: function () {
+window.location.href = "http://localhost:8080/back-end/login.html";
+  },
+error: function () {
+   		}
+	});
+	});
+</script>
 
-                            // 建立表單內容
-                            var formHTML = `
-                                <h4 class="setemp" style="color: blue;">設定權限 - ${employeeName}</h4>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="employeeID">員工編號</label>
-                                        <input type="text" class="form-control" id="employeeID" value="${employeeID}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employeeName">員工名字</label>
-                                        <input type="text" class="form-control" id="employeeName" value="${employeeName}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newPermission">新的權限</label>
-                                        <select class="form-control" id="newPermission">
-                                            <option value="超級管理員">超級管理員</option>
-                                            <option value="網頁管理員">網頁管理員</option>
-                                            <option value="訂單管理員">訂單管理員</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">儲存</button>
-                                </form>
-                            `;
+                <!--引用jQuery-->
+                <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+                <!--引用dataTables.js-->
+                <script type="text/javascript"
+                    src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-                            // 顯示表單
-                            $('#formDiv').html(formHTML);
-                        });
-                    });
+                <script type="text/javascript">
+                    let table = new DataTable('#myTable')
                 </script>
 
                 <!-- Bootstrap 核心 JavaScript -->
@@ -274,7 +412,6 @@
                 <!-- 頁面級別的自訂腳本 -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
-
 
 </body>
 
