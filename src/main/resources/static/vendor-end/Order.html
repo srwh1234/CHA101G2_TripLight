@@ -26,31 +26,14 @@
     <link href="css/bootstrap-table.min.css" rel="stylesheet">
 
     <style>
-        div.dataTables_wrapper div.dataTables_length select {
-            width: auto;
-            display: inline-block;
+        /* 避免表格被過度壓縮 */
+        .my-th-width {
+            min-width: 8rem;
         }
 
-        #dataTable_filter {
-            position: relative;
-        }
-
-        #dataTable_filter input {
-            position: absolute;
-            transform: translate(45px, -28px);
-            width: 180px;
-        }
-
-        #dataTable_filter label {
-            position: absolute;
-            transform: translate(260px, 5px);
-            /* 调整 label 的位置，使其与输入框对齐 */
-        }
-
-        #dataTable {
-            white-space: normal;
-            word-break: break-all;
-            white-space: nowrap
+        /* 避免表格被過度壓縮 小按鈕*/
+        .my-th-width-sm {
+            min-width: 6rem;
         }
     </style>
 </head>
@@ -193,157 +176,31 @@
 
                 <!-- TODO: -->
                 <div class="container-fliud">
+                    <div class="row">
+                        <div class="table-responsive p-3" id="tourContainer">
+                            <table class="table">
+                                <!-- 內容給JS填 -->
 
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
                     <div class="row">
                         <div class="table-responsive p-3" id="orderContainer">
-                            <table class="table"
-                                   data-toggle="table"
-                                   data-sortable="true"
-                                   data-sort-class="table-active"
-                                   data-search="true"
-                                   data-search-align="left">
+                            <table class="table">
+                                <!-- 內容給JS填 -->
 
-                                <thead>
-                                    <tr>
-                                        <th class="my-th-width-sm" data-field="tourGroupId" data-sortable="true">旅遊團編號</th>
-                                        <th class="my-th-width" data-field="tripName" data-sortable="true">行程名稱</th>
-                                        <th class="my-th-width-sm" data-field="confirmedTravelersNo" data-sortable="true">確認出團人數</th>
-                                        <th class="my-th-width-sm" data-field="minTravelersNo" data-sortable="true">最少出團人數</th>
-                                        <th class="my-th-width-sm" data-field="curTravelersNo" data-sortable="true">目前人數</th>
-                                        <th class="my-th-width-sm">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <!-- 內容給JS填 -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>5</td>
-                                    </tr>
-
-                                </tbody>
                             </table>
                         </div>
-
                     </div>
+
                 </div>
 
 
 
 
 
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">訂單資料管理</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr style="position: sticky">
-                                        <th>訂單編號</th>
-                                        <th>行程編號</th>
-                                        <th>訂單姓名</th>
-                                        <th>生日</th>
-                                        <th>旅客人數/大人</th>
-                                        <th>旅客人數/大人</th>
-                                        <th>電話</th>
-                                        <th>訂單成立時間</th>
-                                        <th>付款方式</th>
-                                        <th>付款金額</th>
-                                        <th>出團日期</th>
-                                        <th>特殊需求備註</th>
-                                        <th>訂單狀態</th>
-                                        <th>會員狀態</th>
-                                        <th>訂單確認</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>0001</th>
-                                        <th>1001</th>
-                                        <th>李美珠</th>
-                                        <th>1992/02/29</th>
-                                        <th>5</th>
-                                        <th>0</th>
-                                        <th>0912-345678</th>
-                                        <th>2022/06/25</th>
-                                        <th>匯款</th>
-                                        <th>15,000</th>
-                                        <th>2022/07/19</th>
-                                        <th>需肌肉小鮮肉</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th><button type="button" class="btn btn-success">確認</button>
-                                            <button type="button" class="btn btn-danger">取消</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>0002</th>
-                                        <th>2001</th>
-                                        <th>崔金雄</th>
-                                        <th>1995/03/22</th>
-                                        <th>4</th>
-                                        <th>0</th>
-                                        <th>0978-087444</th>
-                                        <th>2023/03/25</th>
-                                        <th>匯款</th>
-                                        <th>139,600</th>
-                                        <th>2023/11/11</th>
-                                        <th>喝酒喝到吐</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th><button type="button" class="btn btn-success">確認</button>
-                                            <button type="button" class="btn btn-danger">取消</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>0003</th>
-                                        <th>3001</th>
-                                        <th>吳柏毅</th>
-                                        <th>1999/08/01</th>
-                                        <th>4</th>
-                                        <th>2</th>
-                                        <th>0933-551151</th>
-                                        <th>2022/08/13</th>
-                                        <th>匯款</th>
-                                        <th>39,000</th>
-                                        <th>2022/09/22</th>
-                                        <th>小孩不浮潛</th>
-                                        <th>2</th>
-                                        <th>1</th>
-                                        <th><button type="button" class="btn btn-success">確認</button>
-                                            <button type="button" class="btn btn-danger">取消</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>0004</th>
-                                        <th>1001</th>
-                                        <th>李晃興</th>
-                                        <th>2001/11/11</th>
-                                        <th>6</th>
-                                        <th>0</th>
-                                        <th>0972-871654</th>
-                                        <th>2023/04/16</th>
-                                        <th>匯款</th>
-                                        <th>18,000</th>
-                                        <th>2023/07/31</th>
-                                        <th>想吃海膽，會跟店家付錢</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th><button type="button" class="btn btn-success">啟用</button>
-                                            <button type="button" class="btn btn-danger">取消</button>
-                                        </th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Bootstrap 核心 JavaScript -->
                 <script src="vendor/jquery/jquery.min.js"></script>
@@ -370,36 +227,109 @@
 
 
                 <script>
-                    //$('#couponContainer table').bootstrapTable('refresh');
-                    //orderContainer
-                    $(function () {
+
+                    function formatActions(value, row, index) {
+                        var html = `
+                        <button class="btn btn-primary my-btn-ok">確定出團</button>
+                        <button class="btn btn-danger my-btn-notok">取消出團</button>
+                        `;
+                        return html;
+                    }
 
 
-                        fetch('http://localhost:8080/vd/tourOrders')
-                            .then(res => res.json())
-                            .then(data => {
-                                // console.log(data);
 
-                                $('#orderContainer tbody').html('');
+                    $(function () {                        
 
-                              
+                        $('#tourContainer table').bootstrapTable({
+                            sortable: true,
+                            sortClass: 'table-active',
+                            search: true,
+                            searchAlign: 'left',
+                            url: 'http://localhost:8080/vd/tourOrders',
+                            columns: [
+                                { field: 'tourGroupId', title: '旅遊團編號', "sortable": true },
+                                { field: 'tripName', title: '行程名稱', "sortable": true },
+                                { field: 'startDate', title: '出團日期', "sortable": true },
+                                { field: 'confirmedTravelersNo', title: '確認出團人數', "sortable": true },
+                                { field: 'minTravelersNo', title: '最少出團人數', "sortable": true },
+                                { field: 'curTravelersNo', title: '目前人數', "sortable": true },
+                                { field: 'actions', title: '操作', formatter: formatActions }
+                            ]
+                        });
 
-                                for (let e of data) {
-                                    $('#orderContainer tbody').append(`
-                                    <tr>
-                                        <td>${e.tourGroupId}</td>
-                                        <td>${e.tripName}</td>
-                                        <td>${e.confirmedTravelersNo}</td>
-                                        <td>${e.minTravelersNo}</td>
-                                        <td>${e.curTravelersNo}</td>
-                                        <td>--</td>
-                                    </tr>
-                                `);
-                                }
-                                $('#orderContainer table').bootstrapTable('refresh');
+                        // 旅遊團 點選列的事件
+                        $(document).on('click', '#tourContainer tbody tr', function () {                           
+                            const id = $(this).find('td').first().text();
+                            $('#orderContainer table').bootstrapTable('destroy');
 
+                            $('#orderContainer table').bootstrapTable({
+                                sortable: true,
+                                sortClass: 'table-active',
+                                search: true,
+                                searchAlign: 'left',
+                                url: `http://localhost:8080/vd/order/${id}`,
+                                columns: [
+                                    { field: 'tripOrderId', title: '訂單編號', "sortable": true },
+                                    { field: 'memberName', title: '會員名稱', "sortable": true },
+                                    { field: 'orderStatus', title: '訂單狀態', "sortable": true, formatter: formatOrderStatus },
+                                    { field: 'payDate', title: '付款日期', "sortable": true, formatter: formatPayDate },
+                                    { field: 'payType', title: '付款方式', "sortable": true },
+                                    { field: 'totalPrice', title: '付款金額', "sortable": true },
+                                    { field: 'travelersAdult', title: '旅客人數(大人)', "sortable": true },
+                                    { field: 'travelersChildren', title: '旅客人數(小孩)', "sortable": true },
+                                    { field: 'paymentStatus', title: '付款狀態', "sortable": true, formatter: formatPaymentStatus },
+                                ]
                             });
+                        });
+
+                        //按鈕事件
+                        $(document).on('click','.my-btn-ok',function(){
+                            const id = $(this).closest('tr').find('td').first().text();
+                            alert('出團'+id);
+                            return false;
+                        });
+                        $(document).on('click','.my-btn-notok',function(){
+                            const id = $(this).closest('tr').find('td').first().text();
+                            alert('取消'+id);
+                            return false;
+                        });
+
                     });
+
+                    //------------------------------------------------------格式轉換---------------------------------------------
+                    function formatPaymentStatus(value, row, index) {
+                        let html = '--';
+                        if (value === 0) {
+                            html = '未付款';
+                        } else if (value === 1) {
+                            html = '已付款';
+                        }
+                        return html;
+                    }
+
+                    function formatOrderStatus(value, row, index) {
+                        let html = '--';
+                        if (value === 0) {
+                            html = '確認中';
+                        } else if (value === 1) {
+                            html = '未成團';
+                        }
+                        return html;
+                    }
+
+                    function formatPayDate(value, row, index) {
+                        var html = df(value);
+                        return html;
+                    }
+
+                    //日期格式
+                    function df(dateStr) {
+                        const date = new Date(dateStr);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
+                        const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
+                        return `${year}/${month}/${day}`;
+                    }
                 </script>
 
 </body>
