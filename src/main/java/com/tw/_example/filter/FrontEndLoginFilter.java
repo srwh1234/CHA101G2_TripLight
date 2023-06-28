@@ -30,6 +30,7 @@ public class FrontEndLoginFilter implements Filter {
 		PROTECT.add("tickets_order.html");
 		PROTECT.add("my_favorite.html");
 		PROTECT.add("membership_rating.html");
+		PROTECT.add("article_create.html");
 	}
 
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException  {

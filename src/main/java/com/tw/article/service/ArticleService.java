@@ -29,7 +29,6 @@ public interface ArticleService {
 	public byte[] findPicture(final int id);
 	
 	public boolean uploadPicture(MultipartFile file, String json);
-	
     
 //	Article findByPrimaryKey(Integer articleId);
     
