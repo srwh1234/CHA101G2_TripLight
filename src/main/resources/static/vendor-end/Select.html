@@ -204,15 +204,17 @@
                                         <th>內容簡介</th>
                                         <th>天數</th>
                                         <th>縣市</th>
-                                        <th>價格</th>
-                                        <th>人數規定(最少出團人數/額滿)</th>
+                                        <th>價格(大人)</th>
+                                        <th>價格(小孩)</th>
+                                        <th>人數規定(最少出團人數)</th>
+                                        <th>人數規定(最多出團人數)</th>
                                         <th>行程描述</th>
                                         <th>特別說明</th>
                                         <th>行程狀態</th>
                                         <th>編輯</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <!-- <tbody>
                                     <tr>
                                         <td>1001</td>
                                         <td>1</td>
@@ -289,7 +291,7 @@
                                             <button class="btn btn-primary btn-sm btn-edit">編輯</button>
                                         </td>
                                     </tr>
-                                </tbody>
+                                </tbody> -->
                             </table>
                         </div>
                     </div>
@@ -309,44 +311,52 @@
                         <div class="modal-body">
                             <form id="editForm">
                                 <div class="form-group">
-                                    <label for="employeeId">行程編號:</label>
-                                    <input type="text" class="form-control" id="employeeId">
+                                    <label for="tripId">行程編號:</label>
+                                    <input type="text" class="form-control" id="tripId">
                                 </div>
                                 <div class="form-group">
-                                    <label for="employeeName">廠商編號:</label>
-                                    <input type="text" class="form-control" id="employeeName">
+                                    <label for="vendorId">廠商編號:</label>
+                                    <input type="text" class="form-control" id="vendorId">
                                 </div>
                                 <div class="form-group">
-                                    <label for="department">行程名稱:</label>
-                                    <input type="text" class="form-control" id="department">
+                                    <label for="tripName">行程名稱:</label>
+                                    <input type="text" class="form-control" id="tripName">
                                 </div>
                                 <div class="form-group">
-                                    <label for="position">內容簡介:</label>
-                                    <input type="text" class="form-control" id="position">
-                                </div>
-                                <!-- <div class="form-group">
-                                    <label for="hireDate">天數:</label>
-                                    <input type="date" class="form-control" id="hireDate">
-                                </div> -->
-                                <div class="form-group">
-                                    <label for="phone">縣市:</label>
-                                    <input type="text" class="form-control" id="phone">
+                                    <label for="tripContent">內容簡介:</label>
+                                    <input type="text" class="form-control" id="tripContent">
                                 </div>
                                 <div class="form-group">
-                                    <label for="pricr">價格:</label>
-                                    <input type="text" class="form-control" id="price">
+                                    <label for="tripDay">天數:</label>
+                                    <input type="text" class="form-control" id="tripDay">
                                 </div>
                                 <div class="form-group">
-                                    <label for="numberLimit">人數規定:</label>
-                                    <input type="text" class="form-control" id="numberLimit">
+                                    <label for="city">縣市:</label>
+                                    <input type="text" class="form-control" id="city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="priceAdult">價格(大人)</label>
+                                    <input type="text" class="form-control" id="priceAdult">
+                                </div>
+                                <div class="form-group">
+                                    <label for="priceChild">價格(小孩)</label>
+                                    <input type="text" class="form-control" id="priceChild">
+                                </div>
+                                <div class="form-group">
+                                    <label for="minTravelersNo">人數規定(最少出團人數)</label>
+                                    <input type="text" class="form-control" id="minTravelersNo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxTravelersNo">人數規定(最多出團人數)</label>
+                                    <input type="text" class="form-control" id="maxTravelersNo">
                                 </div>
                                 <div class="form-group">
                                     <label for="tripDescription">行程描述:</label>
                                     <input type="text" class="form-control" id="tripDescription">
                                 </div>
                                 <div class="form-group">
-                                    <label for="note">特別說明:</label>
-                                    <input type="text" class="form-control" id="note">
+                                    <label for="tripNote">特別說明:</label>
+                                    <input type="text" class="form-control" id="tripNote">
                                 </div>
                             </form>
                         </div>    
@@ -376,6 +386,93 @@
             <script src="vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
             <script src="js/demo/datatables-demo.js"></script>
+    
 </body>
+<script>
+
+// 獲取表格
+const dataTable = document.getElementById("dataTable");
+
+// 獲取所有行(tr)
+const rows = dataTable.getElementsByTagName("tr");
+
+// 迭代每一行
+for (let i = 1; i < rows.length; i++) {
+const row = rows[i];
+const cells = row.getElementsByTagName("td");
+
+// 在控制台上輸出每一行的資料
+console.log("tripId:", tripId);
+console.log("vendorId:", vendorId);
+console.log("tripName:", tripName);
+console.log("tripContent:", tripContent);
+console.log("tripDay:", tripDay);
+console.log("city:", city);
+console.log("price:", priceAdult + "/" + priceChild);
+console.log("travelerLimits:", minTravelersNo + "/" + maxTravelersNo);
+console.log("tripDescription:", tripDescription);
+console.log("tripNote:", tripNote);
+console.log("status:", status);
+}
+
+  // 包裝成物件
+  let tripfiles = {
+    tripId: tripId,
+    vendorId: vendorId,
+    tripName: tripName,
+    tripContent: tripContent,
+    tripDay: tripDay,
+    price: priceAdult + "/" + priceChild,
+    travelerLimits: minTravelersNo + "/" + maxTravelersNo,
+    city: city,
+    tripDescription: tripDescription,
+    tripNote: tripNote,
+    totalSales:0,
+    status:status,
+  };
+
+// //送出成功動畫
+// Swal.fire({
+//      icon: "success",
+//      title: "送出成功",
+//      showConfirmButton: false,
+//      timer: 1500,
+//    });
+
+  console.log(tripfiles);
+
+  //ajax
+$(document).ready(function() {
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/trip/trip2',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log(response);
+        // 將廠商資訊信息填充到頁面上相對應的欄位
+        $('#tripId').val(response.tripId);
+        $('#vendorId').val(response.vendorId);
+        $('#tripName').val(response.tripName);
+        $('#tripContent').val(response.tripContent);
+        $('#tripDay').val(response.tripDay);
+        $('#city').val(response.city);
+        $('#price').val(response.price);
+        $('#travelerLimits').val(response.travelerLimits);
+        $('#tripDescription').val(response.tripDescription);
+        $('#tripNote').val(response.tripNote);
+        $('#tripStatus').val(response.tripStatus);
+
+        console.log('行程資訊獲得成功');
+    },
+
+    error: function(error) {
+            console.log('獲取廠商資訊失敗。錯誤：' + error);
+    }
+    
+    });
+
+
+    });
+</script>
 
 </html>
