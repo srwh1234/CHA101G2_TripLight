@@ -45,20 +45,26 @@ public class ArticleController {
 
 	// 定義GET請求處理方法：單一
 	@GetMapping("/articleId/{id}")
-	public Article getArticle(@PathVariable("id") Integer articleId) {
+	public DataArticle getArticle(@PathVariable("id") Integer articleId) {
 
 		System.out.println(articleId);
 		
 		Article article = articleService.findById(articleId);
 		
+		if(article==null) {
+			return null;
+		}
+		
+		DataArticle dataArticle = new DataArticle(article);
+		
 		Member member = memberRepository.findById(article.getMemberId()).orElse(null);
 
 		if (member != null) {
-			DataArticle dataArticle = new DataArticle(article);
+			
 			dataArticle.setMemberName(member.getMemberNameFirst() + member.getMemberNameLast());
-			article.setMemberName(dataArticle.getMemberName());
+			
 		}
-		return article;
+		return dataArticle;
 	}
 	
 	// 定義GET請求處理方法：全部

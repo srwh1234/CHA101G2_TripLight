@@ -34,9 +34,9 @@
       /* 使用object-fit屬性調整圖片填滿區塊，可能需要進一步調整該屬性以符合您的需求 */
     }
 
-    .clamp-lines {
+    #body {
       display: -webkit-box;
-      -webkit-line-clamp: 5;
+      -webkit-line-clamp: 8;
       /* 設定要顯示的行數 */
       -webkit-box-orient: vertical;
       overflow: hidden;
@@ -493,21 +493,22 @@
                     <div class="card my-nav-link" position-relative">
                         <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image" />
                     </div>
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <span>【${articleType}】</span>
-                    <span>${article.articleTitle}</span>
+                <div class="card-body" id="body">
+                    <h5 class="card-title">
+                      <span>【${articleType}】</span>
+                      <span>${article.articleTitle}</span>
                     </h5>
-                    <p class="card-text clamp-lines">${article.articlePostContent}</p>
+                    <p class="card-text" id="clamp-lines">
+                      ${article.articlePostContent}
+                    </p>
                 </div>
                 <br>    
-                <div class="d-flex justify-content-between" style="padding: 0 10px;">
-                  <p>${article.memberName}</p>
+                  <div class="d-flex justify-content-between" style="padding: 0 10px;">
+                    <p>${article.memberName}</p>
                         <p class="card-text">
                             <small class="text-muted">${formattedDate}</small>
                         </p>
-                </div>
-              </div>
+                  </div>
             </div>
           </a>
          `);

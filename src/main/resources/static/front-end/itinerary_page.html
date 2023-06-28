@@ -841,7 +841,7 @@
                         console.log(`test first ${currentQtyChild}`);
                         console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
                         if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                            alert('超出剩餘名額，請重新輸入');
+                            Swal.fire('超出剩餘名額，請重新輸入');
                             currentQtyChild = 0;
                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
                             count_child.val('0');
@@ -860,7 +860,7 @@
 
 
                     } else {
-                        alert('輸入錯誤，人數須為正整數');
+                        Swal.fire('輸入錯誤，人數須為正整數');
                         count_child.val('');
                     }
 
@@ -873,7 +873,7 @@
                         console.log(`test first ${currentQtyAdult}`);
                         console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
                         if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                            alert('超出旅遊團人數，請重新輸入');
+                            Swal.fire('超出旅遊團人數，請重新輸入');
                             currentQtyAdult = 0;
                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
                             count_adult.val('0');
@@ -893,7 +893,7 @@
 
 
                     } else {
-                        alert('輸入錯誤，人數須為正整數');
+                        Swal.fire('輸入錯誤，人數須為正整數');
                         count_adult.val('');
 
                     }
@@ -1026,7 +1026,7 @@
                                         console.log(`test first ${currentQtyChild}`);
                                         console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
                                         if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                                            alert('超出剩餘名額，請重新輸入');
+                                            Swal.fire('超出剩餘名額，請重新輸入');
                                             currentQtyChild = 0;
                                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
                                             count_child.val('0');
@@ -1045,7 +1045,7 @@
 
 
                                     } else {
-                                        alert('輸入錯誤，人數須為正整數');
+                                        Swal.fire('輸入錯誤，人數須為正整數');
                                         count_child.val('');
                                     }
 
@@ -1058,7 +1058,7 @@
                                         console.log(`test first ${currentQtyAdult}`);
                                         console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
                                         if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                                            alert('超出旅遊團人數，請重新輸入');
+                                            Swal.fire('超出旅遊團人數，請重新輸入');
                                             currentQtyAdult = 0;
                                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
                                             count_adult.val('0');
@@ -1078,7 +1078,7 @@
 
 
                                     } else {
-                                        alert('輸入錯誤，人數須為正整數');
+                                        Swal.fire('輸入錯誤，人數須為正整數');
                                         count_adult.val('');
 
                                     }

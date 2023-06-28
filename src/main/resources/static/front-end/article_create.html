@@ -240,7 +240,7 @@
 
         <div class="ckeditor">
             <div id="articlePostContent">
-                <textarea name="editor"></textarea>
+                <textarea name="editor" id="editor1"></textarea>
             </div>
         </div>
 
@@ -365,6 +365,9 @@
     <!-- ckeditor -->
     <script>
         CKEDITOR.replace('editor');
+        CKEDITOR.editorConfig = function (config) {
+            config.enterMode = CKEDITOR.ENTER_BR;
+        };
     </script>
 
     <script>
@@ -400,7 +403,7 @@
                 memberId: 1,
                 articleTypeId: $('input[name="articleTypeId"]:checked').val(),
                 articleTitle: $('#articleTitle-input').val(),
-                articlePostContent: $(CKEDITOR.instances.editor).getData(),
+                articlePostContent: CKEDITOR.instances.editor1.getData(),
                 articlePostTime: null,
                 articleStatus: 1,
                 articleViews: 1,
