@@ -107,18 +107,16 @@ public class ArticleController {
 
 	        if (existingArticle != null) {
 	            existingArticle.setArticleTitle(article.getArticleTitle());
+	            existingArticle.setArticleTypeId(article.getArticleTypeId());
 	            existingArticle.setArticlePostContent(article.getArticlePostContent());
 	            existingArticle.setArticlePicture(file.getBytes());
 	            existingArticle.setArticlePostTime(new Timestamp(System.currentTimeMillis()));
 	            articleService.save(existingArticle);
 	            article = existingArticle;
-	        } else {
-	        	//
-	        }
+	        } 
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	    
 	    return article;
 	}
 
