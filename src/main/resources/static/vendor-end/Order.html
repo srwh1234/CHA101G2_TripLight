@@ -15,12 +15,16 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="botcss/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
     <script src="jquery-3.7.0.min.js"></script>
     <script src="login.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
+
+    <!-- 使用Bootstrap-table -->
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
+
     <style>
         div.dataTables_wrapper div.dataTables_length select {
             width: auto;
@@ -60,7 +64,7 @@
             <!-- 側邊欄 - 品牌 -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <img src="img/icon.png" alt="Icon" class="sidebar-brand-icon rotate-n-15"
-                    style="width: 30px; height: 30px;">
+                     style="width: 30px; height: 30px;">
                 <div class="sidebar-brand-text mx-3">TripLight SCM</div>
             </a>
 
@@ -76,11 +80,11 @@
             <!-- 導覽項目 - 頁面折疊選單 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" target="_blank" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                   aria-expanded="true" aria-controls="collapseTwo">
                     <span>廠商資料</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
-                    data-parent="#accordionSidebar">
+                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="VendorFiles.html">廠商資料</a>
                     </div>
@@ -90,11 +94,11 @@
             <!-- 導覽項目 - 公用程式折疊選單 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                   aria-expanded="true" aria-controls="collapseUtilities">
                     <span>行程管理</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="NewItinerary.html">新增行程</a>
                         <a class="collapse-item" href="Select.html">編輯行程</a>
@@ -106,7 +110,7 @@
             <!-- 功能頁面 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                   aria-expanded="true" aria-controls="collapsePages">
                     <span>旅行團管理</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -119,11 +123,11 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets"
-                    aria-expanded="true" aria-controls="collapseTickets">
+                   aria-expanded="true" aria-controls="collapseTickets">
                     <span>客戶訂單管理</span>
                 </a>
                 <div id="collapseTickets" class="collapse" aria-labelledby="headingTickets"
-                    data-parent="#accordionSidebar">
+                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="Order.html">訂單管理</a>
                         <!-- <a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a> -->
@@ -132,11 +136,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
-                    aria-expanded="true" aria-controls="collapseCustomerService">
+                   aria-expanded="true" aria-controls="collapseCustomerService">
                     <span>活動問題管理</span>
                 </a>
                 <div id="collapseCustomerService" class="collapse" aria-labelledby="headingCustomerService"
-                    data-parent="#accordionSidebar">
+                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="QuestionForm.html">問題表單管理</a>
                     </div>
@@ -172,13 +176,13 @@
 
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">李蒸蚌</span>
                                 <i class="fas fa-user-circle fa-lg"></i>
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" id="logoutLink">
                                     登出
                                 </a>
@@ -186,6 +190,51 @@
                         </li>
                     </ul>
                 </nav>
+
+                <!-- TODO: -->
+                <div class="container-fliud">
+
+                    <div class="row">
+                        <div class="table-responsive p-3" id="orderContainer">
+                            <table class="table"
+                                   data-toggle="table"
+                                   data-sortable="true"
+                                   data-sort-class="table-active"
+                                   data-search="true"
+                                   data-search-align="left">
+
+                                <thead>
+                                    <tr>
+                                        <th class="my-th-width-sm" data-field="tourGroupId" data-sortable="true">旅遊團編號</th>
+                                        <th class="my-th-width" data-field="tripName" data-sortable="true">行程名稱</th>
+                                        <th class="my-th-width-sm" data-field="confirmedTravelersNo" data-sortable="true">確認出團人數</th>
+                                        <th class="my-th-width-sm" data-field="minTravelersNo" data-sortable="true">最少出團人數</th>
+                                        <th class="my-th-width-sm" data-field="curTravelersNo" data-sortable="true">目前人數</th>
+                                        <th class="my-th-width-sm">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <!-- 內容給JS填 -->
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>5</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -310,11 +359,48 @@
                 <script src="vendor/chart.js/Chart.min.js"></script>
 
                 <!-- 頁面級別的自訂腳本 -->
-                <script src="js/demo/chart-area-demo.js"></script>
+                <!-- <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
                 <script src="vendor/datatables/jquery.dataTables.min.js"></script>
                 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-                <script src="js/demo/datatables-demo.js"></script>
+                <script src="js/demo/datatables-demo.js"></script> -->
+                <script src="vendor/sweetalert/sweetalert.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle-5.2.3.js"></script>
+                <script src="js/bootstrap-table.min.js"></script>
+
+
+                <script>
+                    //$('#couponContainer table').bootstrapTable('refresh');
+                    //orderContainer
+                    $(function () {
+
+
+                        fetch('http://localhost:8080/vd/tourOrders')
+                            .then(res => res.json())
+                            .then(data => {
+                                // console.log(data);
+
+                                $('#orderContainer tbody').html('');
+
+                              
+
+                                for (let e of data) {
+                                    $('#orderContainer tbody').append(`
+                                    <tr>
+                                        <td>${e.tourGroupId}</td>
+                                        <td>${e.tripName}</td>
+                                        <td>${e.confirmedTravelersNo}</td>
+                                        <td>${e.minTravelersNo}</td>
+                                        <td>${e.curTravelersNo}</td>
+                                        <td>--</td>
+                                    </tr>
+                                `);
+                                }
+                                $('#orderContainer table').bootstrapTable('refresh');
+
+                            });
+                    });
+                </script>
 
 </body>
 
