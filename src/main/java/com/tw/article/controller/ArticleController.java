@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,8 +42,6 @@ public class ArticleController {
 	// 定義GET請求處理方法：單一
 	@GetMapping("/articleId/{id}")
 	public DataArticle getArticle(@PathVariable("id") Integer articleId) {
-
-		System.out.println(articleId);
 		
 		Article article = articleService.findById(articleId);
 		
@@ -60,9 +54,7 @@ public class ArticleController {
 		Member member = memberRepository.findById(article.getMemberId()).orElse(null);
 
 		if (member != null) {
-			
 			dataArticle.setMemberName(member.getMemberNameFirst() + member.getMemberNameLast());
-			
 		}
 		return dataArticle;
 	}
@@ -105,11 +97,29 @@ public class ArticleController {
 	}
 
 	// 定義PUT請求處理方法
-	@PutMapping("/{articleId}")
-	public Article updateArticle(@PathVariable Integer articleId, @RequestBody Article updatedArticle) {
-		Article article = articleService.findById(articleId);
-//                .orElseThrow(() -> new RuntimeException("Article not found with ID: " + articleId));
-		return articleService.save(article);
+	@PostMapping("/updatearticle")
+	public Article updatearticle(@RequestParam("image") MultipartFile file, @RequestParam("article") String jsonString) {
+	    Article article = null;
+
+	    try {
+	        article = new ObjectMapper().readValue(jsonString, Article.class);
+	        Article existingArticle = articleService.findById(article.getArticleId());
+
+	        if (existingArticle != null) {
+	            existingArticle.setArticleTitle(article.getArticleTitle());
+	            existingArticle.setArticlePostContent(article.getArticlePostContent());
+	            existingArticle.setArticlePicture(file.getBytes());
+	            existingArticle.setArticlePostTime(new Timestamp(System.currentTimeMillis()));
+	            articleService.save(existingArticle);
+	            article = existingArticle;
+	        } else {
+	        	//
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return article;
 	}
 
 	// 定義DELETE請求處理方法

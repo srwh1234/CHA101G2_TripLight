@@ -59,7 +59,8 @@
         crossorigin="anonymous"></script>
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <!--CKEditor-->
+    <script src="https://cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
     <!--sweet alert-->>
     <script src="./js/sweetalert.js"></script>
 </head>
@@ -222,16 +223,16 @@
         </div>
 
         <div class="radios">
-            <input type="radio" id="1" name="articleTypeId" value="1" checked style="width: 16px; height: 16px">
-            <label for="travel" style="font-size: 15PX;">遊記</label>
-            <input type="radio" id="2" name="articleTypeId" value="2" style="width: 16px; height: 16px">
-            <label for="food" style="font-size: 15PX;">食記</label>
-            <input type="radio" id="3" name="articleTypeId" value="3" style="width: 16px; height: 16px">
-            <label for="hotel" style="font-size: 15PX;">住宿</label>
-            <input type="radio" id="4" name="articleTypeId" value="4" style="width: 16px; height: 16px">
-            <label for="comment" style="font-size: 15PX;">評論</label>
-            <input type="radio" id="5" name="articleTypeId" value="5" style="width: 16px; height: 16px">
-            <label for="question" style="font-size: 15PX;">問題</label>
+            <input type="radio" id="1" name="travel" value="1" checked style="width: 16px; height: 16px">
+            <label for="1" style="font-size: 15px;">遊記</label>
+            <input type="radio" id="2" name="food" value="2" style="width: 16px; height: 16px">
+            <label for="2" style="font-size: 15px;">食記</label>
+            <input type="radio" id="3" name="hotel" value="3" style="width: 16px; height: 16px">
+            <label for="3" style="font-size: 15px;">住宿</label>
+            <input type="radio" id="4" name="comment" value="4" style="width: 16px; height: 16px">
+            <label for="4" style="font-size: 15px;">評論</label>
+            <input type="radio" id="5" name="question" value="5" style="width: 16px; height: 16px">
+            <label for="5" style="font-size: 15px;">問題</label>
         </div>
 
         <br>
@@ -245,8 +246,8 @@
         </div>
 
         <div class="modal-footer">
-            <input type="hidden" name="action" value="insert">
-            <input type="submit" id="confirm" value="文章送出">
+            <!-- <input type="hidden" name="action" value="insert"> -->
+            <input type="submit" id="confirm" value="文章送出" onclick="redirectToMyList()">
         </div>
 
         <div style="text-align: start;">
@@ -367,6 +368,8 @@
         CKEDITOR.replace('editor');
         CKEDITOR.editorConfig = function (config) {
             config.enterMode = CKEDITOR.ENTER_BR;
+            config.shiftenterMode = CKEDITOR.ENTER_BR;
+            config.removePlugins = 'elementspath';
         };
     </script>
 
@@ -409,7 +412,7 @@
                 articleViews: 1,
                 articlePicture: null,
             }
-
+            
             const formData = new FormData();
 
             formData.append('image', $('#articlePicture').prop('files')[0]);
@@ -437,51 +440,9 @@
             window.location.href = "articles.html";
         };
 
-        // $('input[type="submit"]').on('click', function (e) {
-        //     e.preventDefault(); // 防止表單提交
-
-        //     // 獲取表單數據
-        //     const articleTitle = document.querySelector('#articleTitle-input').value;
-        //     const articleTypeId = document.querySelector('input[name="articleTypeId"]:checked').value;
-        //     const articlePicture = document.querySelector('#articlePicture').files[0];
-        //     const articlePostContent = CKEDITOR.instances.editor.getData(); // 獲取CKEditor中的內容
-
-        //     // 使用FormData將數據和文件一起發送
-        //     const formData = new FormData();
-        //     formData.append('articleTitle', articleTitle);
-        //     formData.append('articleTypeId', articleTypeId);
-        //     formData.append('articlePicture', articlePicture);
-        //     formData.append('articlePostContent', articlePostContent);
-        //     // call = formData;
-
-        //     // 發送Ajax請求
-        //     // const xhr = new XMLHttpRequest();
-        //     // xhr.open('POST','article',true);
-        //     // xhr.send(formData);
-        //     // xhr.addEventListener('load',(res)=>{
-        //     // console.log(res);
-
-
-        //     fetch('http://localhost:8080/article', {
-        //             method: 'POST',
-        //             body: formData
-        //         })
-        //             .then(response => response.json())
-        //             .then(function (response) {
-        //                 if (response.ok) {
-        //                     return response.text();
-        //                 }
-        //                 throw new Error('保存文章時出錯：' + response.statusText);
-        //             })
-        //             .then(function (data) {
-        //                 // 請求成功後的處理
-        //                 alert('文章已成功保存到資料庫！');
-        //             })
-        //             .catch(function (error) {
-        //                 // 請求失敗時的處理
-        //                 alert(error);
-        //             });
-        //     });
+        function redirectToMyFavorite() {
+            window.location.href = "article_myfavorite.html";
+        };
 
     </script>
 
