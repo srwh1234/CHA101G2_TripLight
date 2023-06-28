@@ -256,6 +256,17 @@
 
 </body>
 <script>
+
+    // ============================日期=====================================
+    $(function () {
+        $("#start_date").datepicker();
+
+        $("#start_date").on("click", function () {
+            console.log("btn ok");
+            getData();
+        });
+    });
+    
     $(".sent-butnn").on("click", function (e) {
       e.preventDefault();
 
