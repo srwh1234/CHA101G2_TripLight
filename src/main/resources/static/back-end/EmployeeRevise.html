@@ -26,12 +26,6 @@
 <!-- 自訂樣式 -->
 <link href="css/TripLight.min.css" rel="stylesheet">
 <link href="css/empolyeeform.css" rel="stylesheet">
-
-<style>
-#employee-access {
-	white-space: pre-line;
-}
-</style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -231,152 +225,93 @@
 				</div>
 
 				<script>
-					//獲取管理員秀在畫面上
-					$(document)
-							.ready(
-									function() {
-										var employeeAccess = sessionStorage
-												.getItem("管理員");
-										var employeeaccess2 = JSON
-												.parse(employeeAccess);
+			//獲取管理員秀在畫面上
+			  $(document).ready(function() {
+			        var employeeAccess = sessionStorage.getItem("管理員");
+			        var employeeaccess2 = JSON.parse(employeeAccess);
+			        
+			        $("#employee-access")
+			        .text("員工:"+employeeaccess2.employeeName + "\n" 
+			        	+ "權限:"+employeeaccess2.employeeAccess);
+			        
+			    });
+			
+				$("#logoutLink").click(function () {
+	 			$.ajax({
+				type: "GET",
+				url: "/BKlogout", 
+				 success: function () {
+				window.location.href = "http://localhost:8080/back-end/login.html";
+  						},
+				error: function () {
 
-										$("#employee-access")
-												.text(
-														"員工:"
-																+ employeeaccess2.employeeName
-																+ "\n"
-																+ "權限:"
-																+ employeeaccess2.employeeAccess);
+   				}
+				});
+				});
+				
+				
+    $(document).ready(function() {
+    $('#employee-form').submit(function(e) {
+        e.preventDefault(); // 阻止表單默認的提交行為
 
-									});
+        // 獲取表單數據
+        var employeeId = $('#employee-id').val();
+        var employeeName = $('#employee-name').val();
+        var employeeAccount = $('#employee-department').val();
+        var employeePassword = $('#employee-position').val();
+        var employeeTel = $('#employee-phone').val();
+        var employeeStatus = $('#employee-permission').val();
+        var employeeAccess = $('#employee-access').val();
 
-					$("#logoutLink")
-							.click(
-									function() {
-										$
-												.ajax({
-													type : "GET",
-													url : "/BKlogout",
-													success : function() {
-														window.location.href = "http://localhost:8080/back-end/login.html";
-													},
-													error : function() {
+        // 創建包含表單數據的對象
+        var formData = {
+            employeeId: employeeId,
+            employeeName: employeeName,
+            employeeAccount: employeeAccount,
+            employeePassword: employeePassword,
+            employeeTel: employeeTel,
+            employeeStatus: employeeStatus,
+            employeeAccess:employeeAccess
+        };
 
-													}
-												});
-									});
+        // 發送AJAX請求
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: JSON.stringify(formData),
+            contentType: "application/json",
+            success: function(response) {
+                // 在這裡處理成功響應的邏輯
+                // ...
 
-					$(document)
-							.ready(
-									function() {
-										$('#employee-form')
-												.submit(
-														function(e) {
-															e.preventDefault(); // 阻止表單默認的提交行為
+                // 清空表單數據
+                $('#employee-id').val('');
+                $('#employee-name').val('');
+                $('#employee-department').val('');
+                $('#employee-position').val('');
+                $('#employee-phone').val('');
+                $('#employee-permission').val('');
+                $('#employee-access').val('');
+                
+                Swal.fire({
+                    title: "新增成功",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 500
+                  });
+                
+            },
+            error: function(xhr, status, error) {
+                // 在這裡處理錯誤響應的邏輯
+                // ...
+            }
+        });
+    });
+});
 
-															// 獲取表單數據
-															var employeeId = $(
-																	'#employee-id')
-																	.val();
-															var employeeName = $(
-																	'#employee-name')
-																	.val();
-															var employeeAccount = $(
-																	'#employee-department')
-																	.val();
-															var employeePassword = $(
-																	'#employee-position')
-																	.val();
-															var employeeTel = $(
-																	'#employee-phone')
-																	.val();
-															var employeeStatus = $(
-																	'#employee-permission')
-																	.val();
-															var employeeAccess = $(
-																	'#employee-access')
-																	.val();
-
-															// 創建包含表單數據的對象
-															var formData = {
-																employeeId : employeeId,
-																employeeName : employeeName,
-																employeeAccount : employeeAccount,
-																employeePassword : employeePassword,
-																employeeTel : employeeTel,
-																employeeStatus : employeeStatus,
-																employeeAccess : employeeAccess
-															};
-
-															// 發送AJAX請求
-															$
-																	.ajax({
-																		url : $(
-																				this)
-																				.attr(
-																						'action'),
-																		type : $(
-																				this)
-																				.attr(
-																						'method'),
-																		data : JSON
-																				.stringify(formData),
-																		contentType : "application/json",
-																		success : function(
-																				response) {
-																			// 在這裡處理成功響應的邏輯
-																			// ...
-
-																			// 清空表單數據
-																			$(
-																					'#employee-id')
-																					.val(
-																							'');
-																			$(
-																					'#employee-name')
-																					.val(
-																							'');
-																			$(
-																					'#employee-department')
-																					.val(
-																							'');
-																			$(
-																					'#employee-position')
-																					.val(
-																							'');
-																			$(
-																					'#employee-phone')
-																					.val(
-																							'');
-																			$(
-																					'#employee-permission')
-																					.val(
-																							'');
-																			$(
-																					'#employee-access')
-																					.val(
-																							'');
-
-																			Swal
-																					.fire({
-																						title : "新增成功",
-																						icon : "success",
-																						showConfirmButton : false,
-																						timer : 500
-																					});
-
-																		},
-																		error : function(
-																				xhr,
-																				status,
-																				error) {
-																			// 在這裡處理錯誤響應的邏輯
-																			// ...
-																		}
-																	});
-														});
-									});
-				</script>
+ 
+    
+</script>
 
 
 				<!-- Bootstrap 核心 JavaScript -->
