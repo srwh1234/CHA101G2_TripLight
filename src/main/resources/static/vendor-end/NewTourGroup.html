@@ -193,10 +193,10 @@
                 </div>
                 <div class="form-container">
                     <form id="employee-form">
-                        <div class="form-group mb-3">
+                        <!-- <div class="form-group mb-3">
                             <label for="tour_group_id" class="mb-2">旅遊團編號</label>
                             <input type="text" id="tour_group_id" name="tour_group_id" required/>
-                        </div>
+                        </div> -->
                         <div class="form-group mb-3">
                             <label for="trip_id" class="mb-2">所屬的行程編號</label>
                             <input type="text" id="trip_id" name="trip_id" required/>
@@ -211,7 +211,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="start_date" class="mb-2">開始日期</label>
-                            <input type="start_date" id="start_date" name="start_date" required/>
+                            <input type="date" id="start_date" name="start_date" required/>
                         </div>
                         <div class="form-group mb-3">
                             <label for="min_travelers_no" class="mb-2">最少出團人數</label>
@@ -256,17 +256,6 @@
 
 </body>
 <script>
-
-    // ============================日期=====================================
-    $(function () {
-        $("#start_date").datepicker();
-
-        $("#start_date").on("click", function () {
-            console.log("btn ok");
-            getData();
-        });
-    });
-    
     $(".sent-butnn").on("click", function (e) {
       e.preventDefault();
 
@@ -300,7 +289,7 @@
         timer: 1500,
       });
 
-      console.log(vendor);
+    //   console.log(vendor);
 
       // 清空表單
       $("#tour_group_id").val();
@@ -311,16 +300,16 @@
       $("#min_travelers_no").val();
       $("#max_travelers_no").val();
 
-      const tourGroupData = new FormData();
-      tourGroupData.append('tourGroup', JSON.stringify(tourGroup));
+    //   const tourGroupData = new FormData();
+    //   tourGroupData.append('tourGroup', JSON.stringify(tourGroup));
 
       //ajax
       $.ajax({
         type: 'POST',
         url: "http://localhost:8080/tourgroup/tourgroupadd",
-        data: tourGroupData,
-        processData: false,
-        contentType: false,
+        data: JSON.stringify(tourGroup),
+        // processData: false,
+        contentType: "application/json",
         success: function (data) {
           alert('上傳成功');
         },
