@@ -24,21 +24,25 @@ public class BKLoginController {
 	}
 	
 	@PostMapping("/BKlogin")
-	public Boolean BKlogin(@RequestParam String account, @RequestParam String password, HttpSession session) {
+	public Employee BKlogin(@RequestParam String account, @RequestParam String password, HttpSession session) {
 		Employee result = bkLoginService.bklogin(account, password);
 		
 		//先檢查帳號密碼是否為員工表格內有的
 		if(result == null) {
 			System.out.println("查無此員工");	
-			return false;
-			//在檢查員工狀態要是在職、不是就不行登
+			return null;
+		//在檢查員工狀態要是在職、不是就不行登
 		} else if (result.getEmployeeStatus() == 0) {
 			System.out.println("員工狀態不符合");
-			return false;
+			return null;
+		//都通過就可以成功登入
 		} else {
-			session.setAttribute("employee", result);
-			System.out.println("EmployeeId: " + session.getAttribute("employee"));	
-			return true;
+			String employeeAccess = bkLoginService.findEmployeeAccessByEmployeeAccount(result.getEmployeeAccount());
+            session.setAttribute("employee", result);
+            session.setAttribute("employeeAccess", employeeAccess);
+            System.out.println("EmployeeId: " + session.getAttribute("employee"));
+            return result;
+
 		}
 	}	
 }

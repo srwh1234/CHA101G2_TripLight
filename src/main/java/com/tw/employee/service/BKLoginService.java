@@ -10,20 +10,24 @@ import com.tw.employee.model.Employee;
 public class BKLoginService {
 	private final EmployeeRepository employeeRepository;
 
-	@Autowired
-	public BKLoginService(EmployeeRepository employeeRepository) {
-		this.employeeRepository = employeeRepository;
-	}
+	 @Autowired
+	    public BKLoginService(EmployeeRepository employeeRepository) {
+	        this.employeeRepository = employeeRepository;
+	    }
 
-	public Employee bklogin(String account, String password) {
-		Employee employee = employeeRepository.findByEmployeeAccount(account);
+	 public String findEmployeeAccessByEmployeeAccount(String employeeAccount) {
+	        return employeeRepository.findEmployeeAccessByEmployeeAccount(employeeAccount);
+	    }
 
-		if (employee != null && employee.getEmployeePassword().equals(password) && employee.getEmployeeStatus() == 1) {
-			// 成功
-			return employee;
-		}
+	    public Employee bklogin(String account, String password) {
+	        Employee employee = employeeRepository.findByEmployeeAccount(account);
 
-		// 失败
-		return null;
-	}
+	        if (employee != null && employee.getEmployeePassword().equals(password) && employee.getEmployeeStatus() == 1) {
+	            // 成功
+	            return employee;
+	        }
+
+	        // 失败
+	        return null;
+	    }
 }
