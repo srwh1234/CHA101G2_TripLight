@@ -36,10 +36,11 @@
 
     #body {
       display: -webkit-box;
-      -webkit-line-clamp: 8;
+      -webkit-line-clamp: 6;
       /* 設定要顯示的行數 */
       -webkit-box-orient: vertical;
       overflow: hidden;
+      padding: 30px;
     }
   </style>
 
@@ -433,6 +434,10 @@
 
         for (let article of data) {
 
+          if (article.articleStatus === 1) {
+            continue; // 狀態數字為1，跳過此次迴圈
+          }
+
           let articleType;
           switch (article.articleTypeId) {
             case 1:
@@ -473,6 +478,7 @@
                       <span>【${articleType}】</span>
                       <span>${article.articleTitle}</span>
                     </h5>
+                    <br>
                     <p class="card-text" id="clamp-lines">
                       ${article.articlePostContent}
                     </p>

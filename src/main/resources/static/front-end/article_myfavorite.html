@@ -417,6 +417,11 @@
                 $('#favoriteContainer').html('');
 
                 for (let article of data) {
+
+                    if (article.articleStatus === 1) {
+                        continue; // 狀態數字為1，跳過此次迴圈
+                    }
+
                     let articleType;
                     switch (article.articleTypeId) {
                         case 1:

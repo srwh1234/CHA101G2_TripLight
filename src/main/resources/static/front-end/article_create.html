@@ -206,16 +206,16 @@
         </div>
 
         <div class="radios">
-            <input type="radio" id="1" name="travel" value="1" checked style="width: 16px; height: 16px">
-            <label for="1" style="font-size: 15px;">遊記</label>
-            <input type="radio" id="2" name="food" value="2" style="width: 16px; height: 16px">
-            <label for="2" style="font-size: 15px;">食記</label>
-            <input type="radio" id="3" name="hotel" value="3" style="width: 16px; height: 16px">
-            <label for="3" style="font-size: 15px;">住宿</label>
-            <input type="radio" id="4" name="comment" value="4" style="width: 16px; height: 16px">
-            <label for="4" style="font-size: 15px;">評論</label>
-            <input type="radio" id="5" name="question" value="5" style="width: 16px; height: 16px">
-            <label for="5" style="font-size: 15px;">問題</label>
+            <input type="radio" id="1" name="articleTypeId" value="1" checked style="width: 16px; height: 16px">
+            <label for="travel" style="font-size: 15PX;">遊記</label>
+            <input type="radio" id="2" name="articleTypeId" value="2" style="width: 16px; height: 16px">
+            <label for="food" style="font-size: 15PX;">食記</label>
+            <input type="radio" id="3" name="articleTypeId" value="3" style="width: 16px; height: 16px">
+            <label for="hotel" style="font-size: 15PX;">住宿</label>
+            <input type="radio" id="4" name="articleTypeId" value="4" style="width: 16px; height: 16px">
+            <label for="comment" style="font-size: 15PX;">評論</label>
+            <input type="radio" id="5" name="articleTypeId" value="5" style="width: 16px; height: 16px">
+            <label for="question" style="font-size: 15PX;">問題</label>
         </div>
 
         <br>
@@ -354,6 +354,10 @@
             config.shiftenterMode = CKEDITOR.ENTER_BR;
             config.removePlugins = 'elementspath';
         };
+        ClassicEditor.create(document.querySelector('#editor'), {
+            removePlugins: 'paragraph', // 移除內建的段落樣式插件
+            allowedContent: true, // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
+        });
     </script>
 
     <script>
@@ -391,7 +395,7 @@
                 articleTitle: $('#articleTitle-input').val(),
                 articlePostContent: CKEDITOR.instances.editor1.getData(),
                 articlePostTime: null,
-                articleStatus: 1,
+                articleStatus: 0,
                 articleViews: 1,
                 articlePicture: null,
             }

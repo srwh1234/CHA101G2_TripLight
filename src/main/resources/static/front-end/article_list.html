@@ -229,7 +229,6 @@
         </div>
     </section>
 
-
     <!--footer -->
     <footer>
         <section class="footer footer_w3layouts_section_1its py-5">
@@ -352,6 +351,10 @@
                     for (let i = 0; i < data.length; i++) {
                         let currentArticle = data[i];
                         let articleType;
+
+                        if (currentArticle.articleStatus === 1) {
+                            continue; // 狀態數字為1，跳過此次迴圈
+                        }
 
                         switch (currentArticle.articleTypeId) {
                             case 1:
