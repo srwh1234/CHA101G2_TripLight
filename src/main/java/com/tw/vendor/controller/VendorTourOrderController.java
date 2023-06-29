@@ -95,8 +95,17 @@ public class VendorTourOrderController {
 			dto.setTotalPrice(order.getTotalPrice());
 			dto.setTravelersAdult(order.getTravelersAdult());
 			dto.setTravelersChildren(order.getTravelersChildren());
-			dto.setPaymentStatus(order.getPaymentStatus());
-			dto.setRefundStatus(order.getRefundStatus());
+
+			if (order.getPaymentStatus() == null) {
+				dto.setPaymentStatus(0);
+			} else {
+				dto.setPaymentStatus(order.getPaymentStatus());
+			}
+			if (order.getRefundStatus() == null) {
+				dto.setRefundStatus(0);
+			} else {
+				dto.setRefundStatus(order.getRefundStatus());
+			}
 
 			result.add(dto);
 		}
@@ -165,10 +174,12 @@ public class VendorTourOrderController {
 		if (isOk) {
 			result = """
 					<p>出團請結帳</p>
-					<a href="http://localhost:8080/front-end/group_orderpayment.html">
+					<a href="http://localhost:8080/front-end/group_orderpayment.html?memberId=%d1&tripOrderId=%d">
 					前往結帳
 					</a>
 					""";
+
+			result = String.format(result, member.getMemberId(), order.getTripOrderId());
 		}
 
 		final String text = String.format(html,				//
