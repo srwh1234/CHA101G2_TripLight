@@ -159,11 +159,23 @@ public class VendorTourOrderController {
 				            <tr><th>出團結果</th><td>%s</td></tr>
 				        </table></body></html>""";
 
+		// XXX 要改網域
+		String result = "人數不足無法出團";
+
+		if (isOk) {
+			result = """
+					<p>出團請結帳</p>
+					<a href="http://localhost:8080/front-end/group_orderpayment.html">
+					前往結帳
+					</a>
+					""";
+		}
+
 		final String text = String.format(html,				//
 				order.getTourGroupId(),						//
 				trip.getTripName(),							//
 				order.getTotalPrice(),						//
-				isOk ? "出團請結帳" : "人數不足無法出團"			//
+				result										//
 		);
 
 		mailService.sendHtmlEmail(to, subject, text);
