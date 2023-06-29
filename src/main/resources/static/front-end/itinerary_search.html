@@ -832,7 +832,8 @@
                                             <i class="fa-sharp fa-solid fa-location-dot" style="color: #46dadd;"></i>
                                             <span id="city">${response[i].tripDay}日旅程</span>
                                             <br>
-                                            <button type="button" class="btn btn-light changePage" data-mdb-ripple-color="dark" tripId="${response[i].tripId}">查看詳情</button>
+                                            <button
+                                            type="button" class="btn btn-light changePage" data-mdb-ripple-color="dark" tripId="${response[i].tripId}">查看詳情</button>
                                         </div>
                                     </div>
                                 </div>
@@ -844,8 +845,7 @@
                 // ====== set ID in session storage ======
                 $('#productItems').on('click', '.changePage', function (event) {
                     let tripId = $(this).attr('tripId');
-                    sessionStorage.setItem('tripId', `${tripId}`);
-                    window.location.href = 'http://localhost:8080/front-end/itinerary_page.html';
+                    window.location.href =`http://localhost:8080/front-end/itinerary_page.html?tripId=${tripId}`;
                 })
             }
 
