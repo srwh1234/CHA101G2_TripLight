@@ -32,9 +32,9 @@ public class ArticleFavorite implements Serializable {
 @NoArgsConstructor
 @AllArgsConstructor
 public static class PrimaryKey implements Serializable{
-	public PrimaryKey(int memberId, Article article) {
-		// TODO Auto-generated constructor stub
-	}
+//	public PrimaryKey(int memberId, Article article) {
+//		// TODO Auto-generated constructor stub
+//	}
 
 	private static final long serialVersionUID = 1L;
 	

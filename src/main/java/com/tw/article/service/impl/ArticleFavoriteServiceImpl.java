@@ -11,7 +11,6 @@ import com.tw.member.model.dao.MemberRepository;
 import com.tw.article.controller.ArticleFavoriteController.FavoriteReqDto;
 import com.tw.article.model.Article;
 import com.tw.article.model.ArticleFavorite;
-import com.tw.article.model.ArticleFavorite.PrimaryKey;
 import com.tw.article.dao.ArticleFavoriteRepository;
 import com.tw.article.service.ArticleFavoriteService;
 import com.tw.article.service.ArticleService;
@@ -42,13 +41,13 @@ public class ArticleFavoriteServiceImpl implements ArticleFavoriteService {
 			return FAVORITE_ERROR;
 		}
 		
-		if (favoritereqDto.isFavorite()) {
-			articleFavoriteRepository.deleteById(favoritereqDto.getMemberId());
-			return FAVORITE_DEL_OK;
-		}
+//		if (favoritereqDto.isFavorite()) {
+//			articleFavoriteRepository.deleteById(favoritereqDto.getMemberId());
+//			return FAVORITE_DEL_OK;
+//		}
 		
 		ArticleFavorite favorite = new ArticleFavorite();
-		favorite.setKey(favoritereqDto.getMemberId(),article);
+//		favorite.setKey(favoritereqDto.getMemberId(),article);
 		favorite.setAddTime(Timestamp.from(Instant.now()));
 		articleFavoriteRepository.save(favorite);
 		
