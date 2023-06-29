@@ -309,8 +309,6 @@
     <!-- 載入 Full Calendar -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
 
-    <!-- 載入 itinerary_page -->
-    <script type="text/javascript" src="itinerary_page.js"></script>
 
     <!-- 載入 sweetalert -->
     <script src="./js/sweetalert.js"></script>
@@ -326,7 +324,7 @@
                 event.preventDefault();
             });
 
-            // ====== 取得 member Id ======
+            // ====== 網址列取得 member Id & tripOrderId======
             function getMemberId() {
                 const queryString = window.location.search; // 返回 "?name=John&age=25"
                 const urlParams = new URLSearchParams(queryString);
@@ -445,22 +443,24 @@
 
                 // ====== 付款後狀態碼改為1 ======
                 let data = {
-                    'paymentStatus': "1",
+                    'paymentStatus': '1',
                     'tripOrderId': tripOrderId
                 };
 
                 let jsonData = JSON.stringify(data)
-                $.post(`http://localhost:8080/insertPaymentStatus`, jsonData, function (response) {
+                $.post(`http://localhost:8080/updatePaymentStatus`, jsonData, function (response) {
                     console.log('AJAX request successful');
                 })
 
                 // ====== 感謝彈窗 ======
                 Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: '付款成功',
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: '付款成功唷',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
                 }).then(function (result) {
                     if (result.isConfirmed) {
                         window.location.href = 'http://localhost:8080/front-end/index.html';

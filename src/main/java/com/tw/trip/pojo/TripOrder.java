@@ -50,19 +50,34 @@ public class TripOrder {
     @Transient
     private String formattedPayDate;
 
+    public TripOrder(Timestamp payDate, Integer orderStatus, Integer travelersAdult, Integer travelersChildren, String remarks, Integer paymentStatus){
 
-    public TripOrder(Timestamp payDate, Integer orderStatus, Integer travelersAdult, Integer travelersChildren, String remarks){
+        this.paymentStatus = paymentStatus;
 
-        // 創建 SimpleDateFormat 物件並設置日期格式
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        // ====== 付款碼 0 代表未付款，此時payDay 會是null ======
 
-        // 使用 SimpleDateFormat 將 Timestamp 轉換為格式化的日期字符串
-        formattedPayDate = sdf.format(payDate);
+        if(paymentStatus == 0){
+            this.orderStatus = orderStatus;
+            this.travelersAdult = travelersAdult;
+            this.travelersChildren = travelersChildren;
+            this.remarks = remarks;
 
-        this.orderStatus = orderStatus;
-        this.travelersAdult = travelersAdult;
-        this.travelersChildren = travelersChildren;
-        this.remarks = remarks;
+        }else {
+            // 創建 SimpleDateFormat 物件並設置日期格式
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            // 使用 SimpleDateFormat 將 Timestamp 轉換為格式化的日期字符串
+            formattedPayDate = sdf.format(payDate);
+
+            this.orderStatus = orderStatus;
+            this.travelersAdult = travelersAdult;
+            this.travelersChildren = travelersChildren;
+            this.remarks = remarks;
+        }
+
     }
+
+
+
 
 }

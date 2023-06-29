@@ -2,13 +2,20 @@
 <html lang="zh-Hant">
 
 <head>
-    <title>TripLight | ArticleList</title>
+    <title>TripLight | UpgradeArticle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <!-- 關鍵字設定 -->
     <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
     <!-- 網頁介紹 -->
     <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+
+    <style>
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
 
     <script>
         addEventListener(
@@ -52,11 +59,10 @@
         crossorigin="anonymous"></script>
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
-    <!--datatable-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
-    <!-- <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.bootstrap5.min.css" /> -->
+    <script>
+        var CKEDITOR_BASEPATH = '/ckeditor/';
+    </script>
+    <!-- <script src="all_my_scripts.js"></script> -->
     <!--sweet alert-->
     <script src="./js/sweetalert.js"></script>
 </head>
@@ -89,29 +95,46 @@
                 </ul>
             </nav>
             <!-- //nav -->
+
             <div class="member">
                 <ul class="member_list">
-                    <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+                    <li class="member_li">
+                        <a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
                     </li>
-                    <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+                    <li class="member_li" id="order_li">
+                        <a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
                         <ul class="order_list">
-                            <li class="order_content"><a href="tickets_order.html"><i
-                                        class="fa-solid fa-ticket"></i>票券訂單</a></li>
-                            <li class="order_content"><a href="group_order.html"><i
-                                        class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+                            <li class="order_content">
+                                <a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a>
+                            </li>
+                            <li class="order_content">
+                                <a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-                    <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a>
+                    <li class="member_li">
+                        <a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a>
                     </li>
-                    <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
+                    <li class="member_li">
+                        <a href="comment.html"><i class="fa-solid fa-pen-to-square"></i>我的評價</a>
                     </li>
-                    <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+                    <li class="member_li">
+                        <a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
                     </li>
-                    <li class="member_li"><a href="read_question_list.html"><i
-                                class="fa-regular fa-comment"></i>查看問題</a></li>
-                    <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+                    <li class="member_li">
+                        <a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="coupon.html"><i class="fa-solid fa-sack-dollar"></i>優惠碼</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+                    </li>
+                    <li class="member_li">
+                        <a href="https://www.google.com"><i class="fa-regular fa-comment"></i>查看問題</a>
+                    </li>
+                    <li class="member_li" id="logout_li">
+                        <a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
                     </li>
                 </ul>
             </div>
@@ -179,7 +202,6 @@
             <div class="fas fa-times"></div>
         </span>
     </div>
-
     <!-- 登入  -->
 
     <!-- banner -->
@@ -188,45 +210,52 @@
     </section>
     <!-- //banner -->
 
-    <section class="listcontainer">
-        <div class="row my-3">
-            <div class="col"></div>
+    <section class="container" id="upgradeContainer">
+
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">修改文章</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                onclick="redirectToMyList()"></button>
         </div>
-        <h2 class="heading text-capitalize text-center">討論區</h2>
-        <div class="container py-lg-4 py-sm-3" id="listcontainer">
-            <div class="row my-3">
-                <div class="col"></div>
+
+        <div class="articleTitle">
+            <input type="text" id="articleTitle-input" placeholder="請在此輸入標題"
+                aria-label="Text input with dropdown button" style="width: 100%;">
+        </div>
+
+        <div class="radios">
+            <input type="radio" id="1" name="articleTypeId" value="1" checked style="width: 16px; height: 16px">
+            <label for="travel" style="font-size: 15PX;">遊記</label>
+            <input type="radio" id="2" name="articleTypeId" value="2" style="width: 16px; height: 16px">
+            <label for="food" style="font-size: 15PX;">食記</label>
+            <input type="radio" id="3" name="articleTypeId" value="3" style="width: 16px; height: 16px">
+            <label for="hotel" style="font-size: 15PX;">住宿</label>
+            <input type="radio" id="4" name="articleTypeId" value="4" style="width: 16px; height: 16px">
+            <label for="comment" style="font-size: 15PX;">評論</label>
+            <input type="radio" id="5" name="articleTypeId" value="5" style="width: 16px; height: 16px">
+            <label for="question" style="font-size: 15PX;">問題</label>
+        </div>
+
+        <br>
+        <input id="articlePicture" type="file" class="upl form-control" multiple="multiple;">
+        <br>
+
+        <div class="ckeditor">
+            <div id="articlePostContent">
+                <textarea name="editor" id="editor1"></textarea>
             </div>
-            <table id="myTable" class="display" style="width:100%">
-                <!-- <thead>
-                    <tr>
-                        <th>文章類型</th>
-                        <th>文章標題</th>
-                        <th>文章作者</th>
-                        <th>編輯時間</th>
-                        <th>瀏覽次數</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>食記</td>
-                        <td>再訪麵屋嵐山</td>
-                        <td>彼得吳</td>
-                        <td>2023-05-26</td>
-                        <td>256</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>文章類型</th>
-                        <th>文章標題</th>
-                        <th>文章作者</th>
-                        <th>編輯時間</th>
-                        <th>瀏覽次數</th>
-                    </tr>
-                </tfoot> -->
-            </table>
         </div>
+
+        <div class="modal-footer">
+            <!-- <input type="submit" id="confirm" value="文章送出"> -->
+            <button id="confirm">文章送出</button>
+        </div>
+
+        <div style="text-align: start;">
+            <img class="preview" style="max-width: 250px; max-height: 300px;">
+            <div class="size"></div>
+        </div>
+
     </section>
 
     <!--footer -->
@@ -332,98 +361,185 @@
     <!-- login顯示 -->
     <script src="js/Login.js"></script>
 
-    <!--引用jQuery-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-    <!--引用dataTables.js-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> -->
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
     <script>
 
+        function redirectToMyList() {
+            window.location.href = "article_mylist.html";
+        };
+
+        function redirectToArticle() {
+            window.location.href = "articles.html";
+        };
+
+        let call = [];
+        $(function () {
+            //讀取附加圖片大小與預覽用
+            function format_float(num, pos) {
+                var size = Math.pow(10, pos);
+                return Math.round(num * size) / size;
+            }
+            function preview(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('.preview').attr('src', e.target.result);
+                        var KB = format_float(e.total / 1024, 2);
+                        $('.size').text("檔案大小：" + KB + " KB");
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("body").on("change", ".upl", function () {
+                preview(this);
+            })
+        });
+
         $(document).ready(function () {
-            fetch('http://localhost:8080/article/articles')
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get("id");
+            console.log(articleId);
+
+            fetch(`http://localhost:8080/article/articleId/${articleId}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-
-                    let data1 = [];
-                    for (let i = 0; i < data.length; i++) {
-                        let currentArticle = data[i];
-                        let articleType;
-
-                        if (currentArticle.articleStatus === 1) {
-                            continue; // 狀態數字為1，跳過此次迴圈
-                        }
-
-                        switch (currentArticle.articleTypeId) {
-                            case 1:
-                                articleType = '遊記';
-                                break;
-                            case 2:
-                                articleType = '食記';
-                                break;
-                            case 3:
-                                articleType = '住宿';
-                                break;
-                            case 4:
-                                articleType = '評論';
-                                break;
-                            case 5:
-                                articleType = '問題';
-                                break;
-                            default:
-                                articleType = '未知類型';
-                                break;
-                        }
-                        let inputDate = currentArticle.articlePostTime;
-                        let dateTime = new Date(inputDate);
-                        let year = dateTime.getFullYear();
-                        let month = String(dateTime.getMonth() + 1).padStart(2, "0");
-                        let day = String(dateTime.getDate()).padStart(2, "0");
-                        let formattedDate = `${year}-${month}-${day}`;
-
-                        data1.push({
-
-                            'articleId': data[i].articleId,
-                            'articleTypeId': articleType,
-                            'articleTitle': data[i].articleTitle,
-                            'memberName': data[i].memberName,
-                            'articlePostTime': formattedDate,
-                            'articleViews': data[i].articleViews,
-
-                        })
-                    }
-                    console.log(data1);
-                    $('#myTable').DataTable({
-                        lengthMenu: [[5, 10, 15, -1], [5, 10, 15, "全部"]],
-                        info: false,
-                        autoWidth: false,
-                        data: data1,
-                        columns: [
-                            { data: 'articleTypeId', title: "文章類型" },
-                            {
-                                data: 'articleTitle', title: "文章標題",
-                                render: function (data, type, row) {
-                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
-                                }
-                            },
-                            {
-                                data: 'memberName', title: "文章作者",
-                                render: function (data, type, row) {
-                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
-                                }
-                            },
-                            {
-                                data: 'articlePostTime', title: "發表時間",
-                                render: function (data, type, row) {
-                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
-                                }
-                            },
-                            { data: 'articleViews', title: "瀏覽次數" }
-                        ]
-                    })
+                    new_articledetail(data);
                 });
+
+            function new_articledetail(article) {
+                console.log(article);
+                $('#upgradeContainer').html('');
+
+                let articleType;
+                switch (article.articleTypeId) {
+                    case 1:
+                        articleType = '遊記';
+                        break;
+                    case 2:
+                        articleType = '食記';
+                        break;
+                    case 3:
+                        articleType = '住宿';
+                        break;
+                    case 4:
+                        articleType = '評論';
+                        break;
+                    case 5:
+                        articleType = '問題';
+                        break;
+                    default:
+                        articleType = '未知類型';
+                        break;
+                }
+
+                let inputDate = article.articlePostTime;
+                let dateTime = new Date(inputDate);
+                let year = dateTime.getFullYear();
+                let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+                let day = String(dateTime.getDate()).padStart(2, "0");
+                let formattedDate = `${year}-${month}-${day}`;
+
+                $('#upgradeContainer').append(`
+                <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">修改文章</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="redirectToArticle()"></button>
+            </div>
+            
+            <div class="articleTitle">
+        <input type="text" id="articleTitle-input" value="${article.articleTitle}"
+        aria-label="Text input with dropdown button" style="width: 100%;">
+    </div>
+    
+        <div class="radios">
+            <input type="radio" id="1" name="articleTypeId" value="1" style="width: 16px; height: 16px">
+            <label for="travel" style="font-size: 15PX;">遊記</label>
+            <input type="radio" id="2" name="articleTypeId" value="2" style="width: 16px; height: 16px">
+            <label for="food" style="font-size: 15PX;">食記</label>
+            <input type="radio" id="3" name="articleTypeId" value="3" style="width: 16px; height: 16px">
+            <label for="hotel" style="font-size: 15PX;">住宿</label>
+            <input type="radio" id="4" name="articleTypeId" value="4" style="width: 16px; height: 16px">
+            <label for="comment" style="font-size: 15PX;">評論</label>
+            <input type="radio" id="5" name="articleTypeId" value="5" style="width: 16px; height: 16px">
+            <label for="question" style="font-size: 15PX;">問題</label>
+        </div>
+        
+    <div class="blog-image col-md-12" style="margin-top: 20px;">文章原始圖片：
+        <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image"
+        style="border-radius: 12%; backdrop-filter: blur(6px); width: 400px; height: 200px;" />
+    </div>
+        
+        <br>
+        <input id="articlePicture" type="file" class="upl form-control" multiple="multiple;">
+        <br>
+        
+        <div class="ckeditor">
+            <div id="PostContent" >
+                <textarea name="editor1" id="ckeditor" style="width: 600px; height: 250px; overflow: auto;">
+                ${article.articlePostContent}
+                </textarea>
+            </div>
+        </div>
+                
+                <div class="modal-footer">
+                    <button id="confirm">文章送出</button>
+        </div>
+        
+        <div style="text-align: start;">
+        <img class="preview" style="max-width: 250px; max-height: 300px;">
+        <div class="size"></div>
+    </div>
+    `)
+            }
+
+            $(document).on('click','#confirm', function (e) {
+                e.preventDefault(); // 防止表單提交
+                const urlParams = new URLSearchParams(window.location.search);
+                const articleId = urlParams.get("id");
+                console.log(articleId);
+
+                const article = {
+                    articleId: articleId,
+                    memberId: 1,
+                    articleTypeId: $('input[name="articleTypeId"]:checked').val(),
+                    articleTitle: $('#articleTitle-input').val(),
+                    articlePostContent: $('#ckeditor').val(),
+                    articlePostTime: null,
+                    articleStatus: 1,
+                    articleViews: document.articleViews,
+                    articlePicture: null,
+                }
+
+                const formData = new FormData();
+
+                formData.append('image', $('#articlePicture').prop('files')[0]);
+                formData.append('article', JSON.stringify(article));
+
+                console.log(article);
+
+                //發請求
+                fetch(`http://localhost:8080/article/updatearticle`, {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data) {
+                          //  alert('上傳成功');
+                          Swal.fire( { icon: 'success', title: '上傳成功' } )
+                          .then(()=>window.location.href = 'article_mylist.html');
+                          
+                        } else {
+                            alert('上傳失敗');
+                        }
+                    })
+                    .catch(error => console.log(error));
+                console.log(article);
+            })
         });
     </script>
 

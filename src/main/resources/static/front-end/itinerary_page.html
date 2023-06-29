@@ -464,29 +464,8 @@
 
                     <!-- 旅客評價第二區 -->
                     <div class="row">
-                        <div id="ratingQty" class="col-4 p-3 ">
-                            45 則評價
-                        </div>
 
                         <!-- 此欄空白 -->
-                        <div class="col">
-
-                        </div>
-                        <!-- 此欄空白 -->
-
-                        <!-- 排序按鈕 -->
-                        <div class="col-md-3 mt-2">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info dropdown-toggle" data-mdb-toggle="dropdown"
-                                    aria-expanded="false">
-                                    最高到最低分
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">最低到最高分</a></li>
-                                    <li><a class="dropdown-item" href="#">最新日期</a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <!-- 排序按鈕 -->
                         <!-- 旅客評價第二區 -->
                         <!-- 評論本體 -->
@@ -635,9 +614,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
 
-    <!-- itinerary_page -->
-    <script type="text/javascript" src="itinerary_page.js"></script>
-
     <!-- login -->
     <script src="js/Login.js"></script>
     <script src="./js/sweetalert.js"></script>
@@ -645,8 +621,17 @@
     <!-- ========== Java Script  ========== -->
     <script>
 
-        // ====== calendar initialized n get value  ======
-        let sessionTripId = sessionStorage.getItem('tripId');
+        let sessionTripId;
+        // ====== 網址列取得 tripId & tripOrderId======
+
+        function getTripId() {
+            const queryString = window.location.search; // 返回 "?name=John&age=25"
+            const urlParams = new URLSearchParams(queryString);
+            if(urlParams.get('tripId')!=null){
+                return urlParams.get('tripId'); // 返回 "25"
+            }
+        }
+        sessionTripId = getTripId();
 
         function getMemberId() {
 
@@ -703,6 +688,7 @@
         $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripIdString=${sessionTripId}`)
             .done(function (response) {
 
+                console.log(response[0].tourGroupId);
 
                 // ====== 預設顯示最新的旅遊團 response[0] ======
                 $('#selectedDate').text(`${response[0].formattedStartDate} 至 ${response[0].formattedEndDate}`);
@@ -884,7 +870,7 @@
 
                 });
 
-                // ====== 日曆點擊後，隨著點擊日期修改內容 ======
+                // ====== 日曆點擊後，隨著點擊日期修改旅遊團內容 ======
                 let calendarEl = document.getElementById('calendar');
 
                 let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -1269,15 +1255,15 @@
         // ====== //綁定選擇方案按鈕 ======
 
         // ====== 標頭圖片區 ======
-        $.getJSON(`http://localhost:8080/tripPage/getTripPics?tripIdString=${sessionTripId}`, function (response) {
+        $.getJSON(`http://localhost:8080/tripPage/getTripPics?tripId=${sessionTripId}`, function (response) {
 
             let parentEl = $('#tripPics');
             for (let i = 0; i < response.length; i++) {
-                let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
-                console.log(base64Url);
+                let imageUrl = 'http://localhost:8080/img/trips/' + response[i];
+                console.log(imageUrl);
                 let newChildEl = `
                 <div class="carousel-item active">
-                    <img style="weight:80%;  height: 500px;" src="${base64Url}" class="d-block w-100" alt="tripPics">
+                    <img style="weight:80%;  height: 500px;" src="${imageUrl}" class="d-block w-100" alt="tripPics">
                 </div>
             `;
                 parentEl.append(newChildEl);

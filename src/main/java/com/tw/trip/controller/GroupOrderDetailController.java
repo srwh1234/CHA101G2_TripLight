@@ -24,9 +24,8 @@ public class GroupOrderDetailController {
     GroupOrderDetailService groupOrderDetailService;
 
     @GetMapping("/getTripInfor")
-    public String getTripInfor(@RequestParam String tripOrderIdString){
+    public String getTripInfor(@RequestParam Integer tripOrderId){
 
-        Integer tripOrderId = Integer.valueOf(tripOrderIdString);
         List<TripOrder> tripOrderList = groupOrderDetailService.getOrderInfor(tripOrderId);
 
         String json = new Gson().toJson(tripOrderList);
@@ -36,9 +35,8 @@ public class GroupOrderDetailController {
     }
 
     @GetMapping("/getMemberInfor")
-    public String getMemberInfor(@RequestParam String memberIdString){
+    public String getMemberInfor(@RequestParam Integer memberId){
 
-        Integer memberId = Integer.valueOf(memberIdString);
         Member member = groupOrderDetailService.getMemberInfor(memberId);
 
         String json = new Gson().toJson(member);
@@ -48,11 +46,9 @@ public class GroupOrderDetailController {
     }
 
     @GetMapping("/getTourGroupDate")
-    public String getTourGroupDate(@RequestParam String tripIdString,
-                                   @RequestParam String tourGroupIdString){
+    public String getTourGroupDate(@RequestParam Integer tripId,
+                                   @RequestParam Integer tourGroupId){
 
-        Integer tripId = Integer.valueOf(tripIdString);
-        Integer tourGroupId = Integer.valueOf(tourGroupIdString);
         TourGroup tourGroup = groupOrderDetailService.getTourGroupDate(tripId,tourGroupId);
 
         String json = new Gson().toJson(tourGroup);

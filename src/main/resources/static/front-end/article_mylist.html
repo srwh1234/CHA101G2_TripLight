@@ -369,6 +369,11 @@
                 $('#mylistContainer').html('');
 
                 for (let article of data) {
+
+                    if (article.articleStatus === 1) {
+                        continue; // 狀態數字為1，跳過此次迴圈
+                    }
+
                     let articleType;
                     switch (article.articleTypeId) {
                         case 1:
@@ -399,7 +404,7 @@
                     let formattedDate = `${year}-${month}-${day}`;
 
                     $('#mylistContainer').append(`
-                    <tr style="background: #262a38;">
+                    <tr id="row" style="background: #262a38;">
                             <td style="color: rgb(255,255,255);">【${articleType}】</td>
                             <td style="color: rgb(255,255,255);">${article.memberName}</td>
                             <td style="color: rgb(255,255,255);">${article.articleTitle}</td>
@@ -411,15 +416,40 @@
                                 <a class="btn btnMaterial btn-flat success semicircle" role="button" href="http://localhost:8080/front-end/article_upgrade.html?id=${article.articleId}" style="color: rgb(0,197,179);">
                                     <i class="fas fa-pen">
                                     </i>
-                                </a>
-                                <a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#">
+                                    </a>
+                                <a class="btn btnMaterial btn-flat accent checkboxHover" id="delete" data-id="${article.articleId}" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal">
                                     <i class="fas fa-trash btnNoBorders" style="color: #DC3545;">
                                     </i>
                                 </a>
-                            </td>
+                                </td>
                     </tr>
                     `);
                 }
+            }
+        });
+        function hideRow(e) {
+        };
+
+        $(document).on('click', '#delete', function (e) {          
+            e.preventDefault(); // 防止表單提交
+            var result = confirm("確定要刪除文章嗎？");
+            if (result) {
+                const id = $(this).data('id');
+                //發請求
+                fetch(`http://localhost:8080/article/deletearticle/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            alert('刪除成功');
+                            var row = document.getElementById("row");
+                            row.style.display = "none";
+                            let articleStatus = 1;
+                        } else {
+                            alert('刪除失敗');
+                        }
+                    })
+                    .catch(error => console.log(error));
+                console.log(article);
             }
         });
     </script>

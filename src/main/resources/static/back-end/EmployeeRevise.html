@@ -180,10 +180,6 @@
 
 				<div class="form-container">
 					<form id="employee-form" action="/employees" method="POST">
-						<!--                         <div class="form-group"> -->
-						<!--                             <label for="employee-id">員工編號</label> -->
-						<!--                             <input type="text" id="employee-id" name="employeeId" required> -->
-						<!--                         </div> -->
 						<div class="form-group">
 							<label for="employee-name">員工姓名</label> <input type="text"
 								id="employee-name" name="employeeName" required>
@@ -207,15 +203,15 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="employee-access">權限</label> <select
-								id="employee-access" name="employeeAccess" required>
-								<option>超級管理員</option>
-								<option>員工管理員</option>
-								<option>會員管理員</option>
-								<option>廠商管理員</option>
-								<option>票卷管理員</option>
-								<option>網頁管理員</option>
-								<option>客服管理員</option>
+							<label for="employee-access">權限</label> 
+							<select	id="employee-access" name="employeeAccess" required>
+								<option value="超級管理員">超級管理員</option>
+								<option value="員工管理員">員工管理員</option>
+								<option value="會員管理員">會員管理員</option>
+								<option value="廠商管理員">廠商管理員</option>
+								<option value="票卷管理員">票卷管理員</option>
+								<option value="網頁管理員">網頁管理員</option>
+								<option value="客服管理員">客服管理員</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -224,90 +220,77 @@
 					</form>
 				</div>
 
-				<script>
-			//獲取管理員秀在畫面上
-			  $(document).ready(function() {
-			        var employeeAccess = sessionStorage.getItem("管理員");
-			        var employeeaccess2 = JSON.parse(employeeAccess);
-			        
-			        $("#employee-access")
-			        .text("員工:"+employeeaccess2.employeeName + "\n" 
-			        	+ "權限:"+employeeaccess2.employeeAccess);
-			        
-			    });
-			
-				$("#logoutLink").click(function () {
-	 			$.ajax({
-				type: "GET",
-				url: "/BKlogout", 
-				 success: function () {
-				window.location.href = "http://localhost:8080/back-end/login.html";
-  						},
-				error: function () {
+				<script>	
+				$(document).ready(function() {
+				    // 獲取管理員秀在畫面上
+				    let employeeAccess = sessionStorage.getItem("管理員");
+				    let employeeaccess2 = JSON.parse(employeeAccess);
+				    $("#employee-access").text("員工:" + employeeaccess2.employeeName +
+				    	"\n" + "權限:" + employeeaccess2.employeeAccess);
 
-   				}
-				});
-				});
+				    // 提交表單
+				    $('#employee-form').submit(function(e) {
+				        e.preventDefault(); // 阻止表單默認的提交行為
+
+				        // 獲取表單數據
+				        var employeeName = $('#employee-name').val();
+				        var employeeAccount = $('#employee-department').val();
+				        var employeePassword = $('#employee-position').val();
+				        var employeeTel = $('#employee-phone').val();
+				        var employeeStatus = $('#employee-permission').val();
+				        
+				        //獲取下拉選單的值
+				        var employeeAccess = $("select[id='employee-access'] :selected").text();
+				        
+				        
+				       
+				        // 創建包含表單數據的對象
+				        var formData = {
+				            employeeName: employeeName,
+				            employeeAccount: employeeAccount,
+				            employeePassword: employeePassword,
+				            employeeTel: employeeTel,
+				            employeeStatus: employeeStatus,
+				            employeeAccess: employeeAccess
+				        };
+
 				
-				
-    $(document).ready(function() {
-    $('#employee-form').submit(function(e) {
-        e.preventDefault(); // 阻止表單默認的提交行為
+				        // 發送AJAX請求
+				        $.ajax({
+				            url: $(this).attr('action'),
+				            type: $(this).attr('method'),
+				            data: JSON.stringify(formData),
+				            contentType: "application/json",
+				            success: function(response) {
+				                // 清空表單數據
+				                $('#employee-name').val('');
+				                $('#employee-department').val('');
+				                $('#employee-position').val('');
+				                $('#employee-phone').val('');
+				                $('#employee-permission').val('');
+				                $('#employee-access').val('');
 
-        // 獲取表單數據
-        var employeeId = $('#employee-id').val();
-        var employeeName = $('#employee-name').val();
-        var employeeAccount = $('#employee-department').val();
-        var employeePassword = $('#employee-position').val();
-        var employeeTel = $('#employee-phone').val();
-        var employeeStatus = $('#employee-permission').val();
-        var employeeAccess = $('#employee-access').val();
+				                Swal.fire({
+				                    title: "新增成功",
+				                    icon: "success",
+				                    showConfirmButton: false,
+				                    timer: 500
+				                });
+				            },
+				        });
+				    });
 
-        // 創建包含表單數據的對象
-        var formData = {
-            employeeId: employeeId,
-            employeeName: employeeName,
-            employeeAccount: employeeAccount,
-            employeePassword: employeePassword,
-            employeeTel: employeeTel,
-            employeeStatus: employeeStatus,
-            employeeAccess:employeeAccess
-        };
-
-        // 發送AJAX請求
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-            success: function(response) {
-                // 在這裡處理成功響應的邏輯
-                // ...
-
-                // 清空表單數據
-                $('#employee-id').val('');
-                $('#employee-name').val('');
-                $('#employee-department').val('');
-                $('#employee-position').val('');
-                $('#employee-phone').val('');
-                $('#employee-permission').val('');
-                $('#employee-access').val('');
-                
-                Swal.fire({
-                    title: "新增成功",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 500
-                  });
-                
-            },
-            error: function(xhr, status, error) {
-                // 在這裡處理錯誤響應的邏輯
-                // ...
-            }
-        });
-    });
-});
+				    $("#logoutLink").click(function() {
+				        $.ajax({
+				            type: "GET",
+				            url: "/BKlogout",
+				            success: function() {
+				                window.location.href = "http://localhost:8080/back-end/login.html";
+				            },
+				            error: function() {}
+				        });
+				    });
+				});
 
  
     

@@ -98,18 +98,25 @@ public class ArticleController {
 
 	// 定義PUT請求處理方法
 	@PostMapping("/updatearticle")
-	public Article updatearticle(@RequestParam("image") MultipartFile file, @RequestParam("article") String jsonString) {
+	public Article updatearticle(
+			@RequestParam(value="image",required = false) MultipartFile file,
+			@RequestParam("article") String jsonString) {
 	    Article article = null;
 
 	    try {
 	        article = new ObjectMapper().readValue(jsonString, Article.class);
+	        
 	        Article existingArticle = articleService.findById(article.getArticleId());
 
 	        if (existingArticle != null) {
 	            existingArticle.setArticleTitle(article.getArticleTitle());
 	            existingArticle.setArticleTypeId(article.getArticleTypeId());
 	            existingArticle.setArticlePostContent(article.getArticlePostContent());
-	            existingArticle.setArticlePicture(file.getBytes());
+	            
+	            if(file!=null) {
+	            	 existingArticle.setArticlePicture(file.getBytes());
+	            }
+	           
 	            existingArticle.setArticlePostTime(new Timestamp(System.currentTimeMillis()));
 	            articleService.save(existingArticle);
 	            article = existingArticle;
@@ -121,11 +128,15 @@ public class ArticleController {
 	}
 
 	// 定義DELETE請求處理方法
-	@DeleteMapping("/{articleId}")
-	public void deleteArticle(@PathVariable Integer articleId) {
-		Article article = articleService.findById(articleId);
-//                .orElseThrow(() -> new RuntimeException("Article not found with ID: " + articleId));
-		articleService.deleteArticle(article);
+	@GetMapping("/deletearticle/{id}")
+	public boolean deletearticle(@PathVariable Integer id) {	
+		
+		Article article = articleService.findById(id);
+//              .orElseThrow(() -> new RuntimeException("Article not found with ID: " + articleId));
+//		articleService.deleteArticle(article);
+		article.setArticleStatus(1);
+		articleService.save(article);
+		return true;
 	}
 
 	public List<Article> getArticleService() {
@@ -153,6 +164,7 @@ public class ArticleController {
 			this.articleTitle = article.getArticleTitle();
 			this.articlePostContent = article.getArticlePostContent();
 			this.articlePostTime = article.getArticlePostTime();
+			this.articleStatus = article.getArticleStatus();
 			this.articleViews = article.getArticleViews();
 			this.articlePicture = article.getArticlePicture();
 //			this.articleLikesCount = 100;
@@ -164,9 +176,9 @@ public class ArticleController {
 		private String articleTitle;
 		private String articlePostContent;
 		private Timestamp articlePostTime;
+		private Integer articleStatus;
 		private Integer articleViews;
 		private byte[] articlePicture;
 //		private Integer articleLikesCount;
-
 	}
 }

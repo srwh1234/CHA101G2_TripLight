@@ -25,23 +25,39 @@ public class TripSearchService {
         TripDao tripDao;
 
         public List<Trip> getTripListWithPic(){
-            List<Trip> tripList = tripDao.getAll();
-            List<Trip> tripListSent = new ArrayList<>();
+            final String SQL = """
+                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
+                    join (
+                    		SELECT trip_id, MIN(id) AS min_image_id
+                    		FROM trip_image
+                    		GROUP BY trip_id
+                    )sub ON t.trip_id = sub.trip_id
+                    join trip_image tm on tm.id = sub.min_image_id
+                    """;
 
-            for(int i=0; i<tripList.size(); i++){
-                Trip trip = tripList.get(i);
-                byte[] buffer = trip.getTripImage().get(0).getImage();
-                String tripPicBase64 = Base64.getEncoder().encodeToString(buffer);
-                trip.setImageBase64(tripPicBase64);
-                tripListSent.add(trip);
+            List<Object[]> resultList = session.createNativeQuery(SQL,Object[].class)
+                    .list();
+
+            List<Trip> tripList = new ArrayList<>();
+
+            for(Object[] row : resultList){
+                Integer tripId = (Integer) row[0];
+                String tripName = (String) row[1];
+                Integer tripDay = (Integer) row[2];
+                String city = (String) row[3];
+                String tripContent = (String) row[4];
+                Integer id = (Integer) row[5];
+
+                Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, id);
+                tripList.add(trip);
             }
 
-            return tripListSent;
+            return tripList;
         }
 
         public List<Trip> getTripBySearchCity(String[] cities){
             final String SQL = """
-                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.image FROM trip t
+                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
                     join (
                     		SELECT trip_id, MIN(id) AS min_image_id
                     		FROM trip_image
@@ -63,9 +79,9 @@ public class TripSearchService {
                 Integer tripDay = (Integer) row[2];
                 String city = (String) row[3];
                 String tripContent = (String) row[4];
-                byte[] image = (byte[]) row[5];
+                Integer id = (Integer) row[5];
 
-                Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, image);
+                Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, id);
                 tripList.add(trip);
             }
 
@@ -74,7 +90,7 @@ public class TripSearchService {
 
         public List<Trip> getTripBySearchKeyword(String keyword){
         final String SQL = """
-                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.image FROM trip t
+                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
                     join (
                     		SELECT trip_id, MIN(id) AS min_image_id
                     		FROM trip_image
@@ -96,18 +112,18 @@ public class TripSearchService {
             Integer tripDay = (Integer) row[2];
             String city = (String) row[3];
             String tripContent = (String) row[4];
-            byte[] image = (byte[]) row[5];
+            Integer id = (Integer) row[5];
 
-            Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, image);
+            Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, id);
             tripList.add(trip);
         }
 
         return tripList;
     }
 
-        public List<Trip> getTripBySearchType(Integer[] types){
+         public List<Trip> getTripBySearchType(Integer[] types){
         final String SQL = """
-                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.image FROM trip t
+                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
                     join (
                     		SELECT trip_id, MIN(id) AS min_image_id
                     		FROM trip_image
@@ -129,16 +145,46 @@ public class TripSearchService {
             Integer tripDay = (Integer) row[2];
             String city = (String) row[3];
             String tripContent = (String) row[4];
-            byte[] image = (byte[]) row[5];
+            Integer id = (Integer) row[5];
 
-            Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, image);
+            Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, id);
             tripList.add(trip);
         }
 
         return tripList;
     }
 
+        public List<Trip> getTripOrderByPrice(){
+        final String SQL = """
+                    SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
+                    join (
+                    		SELECT trip_id, MIN(id) AS min_image_id
+                    		FROM trip_image
+                    		GROUP BY trip_id
+                    )sub ON t.trip_id = sub.trip_id
+                    join trip_image tm on tm.id = sub.min_image_id
+                    ORDER BY price_adult
+                    """;
 
+        List<Object[]> resultList = session.createNativeQuery(SQL,Object[].class)
+                .list();
+
+        List<Trip> tripList = new ArrayList<>();
+
+        for(Object[] row : resultList){
+            Integer tripId = (Integer) row[0];
+            String tripName = (String) row[1];
+            Integer tripDay = (Integer) row[2];
+            String city = (String) row[3];
+            String tripContent = (String) row[4];
+            Integer id = (Integer) row[5];
+
+            Trip trip = new Trip(tripId, tripName, tripDay, city, tripContent, id);
+            tripList.add(trip);
+        }
+
+        return tripList;
+    }
 
 
 

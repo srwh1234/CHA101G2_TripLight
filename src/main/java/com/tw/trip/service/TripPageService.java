@@ -99,19 +99,18 @@ public class TripPageService {
     }
 
     // ====== tripPage 圖片 ======
-    public List<TripImage> getTripPicsById(Integer tripId){
+    public List<Integer> getTripPicsById(Integer tripId){
 
-        List<TripImage> tripImageListSent = new ArrayList<>();
-        List<TripImage> tripImageList = tripDao.findByPrimaryKey(tripId).getTripImage();
+        final String HQL = """
+                    SELECT id FROM TripImage
+                    WHERE tripId = :tripId
+                    """;
 
-        // ? 為何不能共用 List
-        for(TripImage tripImage : tripImageList){
-            final byte[] buffer = tripImage.getImage();
-            String tripPicBase64 = Base64.getEncoder().encodeToString(buffer);
-            tripImage.setImageBase64(tripPicBase64);
-            tripImageListSent.add(tripImage);
-        }
-        return tripImageListSent;
+        List<Integer> idForUrl = session.createQuery(HQL, Integer.class)
+                .setParameter("tripId", tripId)
+                .getResultList();
+
+        return idForUrl;
     }
 
     public Trip getTripByTripId(Integer tripId){

@@ -14,6 +14,9 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 @Transactional
 @Service
 public class TripOrderService {
@@ -95,12 +98,11 @@ public class TripOrderService {
 
     }
 
-    public void insertPaymentStatus(Integer paymentStatus, Integer tripOrderId){
+    public void updatePaymentStatus(Integer paymentStatus, Integer tripOrderId){
         final String HQL = """
-                INSERT INTO TripOrder (paymentStatus)
-                SELECT :paymentStatus
-                FROM TripOrder 
-                WHERE tripOrderId= :tripOrderId
+                UPDATE TripOrder 
+                SET paymentStatus = :paymentStatus, payDate=CURRENT_TIMESTAMP 
+                WHERE tripOrderId = :tripOrderId
                 """;
 
         session.createQuery(HQL)
