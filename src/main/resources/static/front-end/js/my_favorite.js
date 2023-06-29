@@ -160,7 +160,7 @@ function generateGroup() {
 				for (let i = 0; i < g_favorite.length; i++) {
 					$(".tab-pane").eq(1).find("#group_orderselect")
 						.after(`<div class="group_item_class">
-				 	                
+						<a href="http://localhost:8080/front-end/itinerary_page.html?tripId=${g_favorite[i].tripId}" class="orderurl">	                
                  <div class="item_img_class">
                  	<img src="${g_favorite[i].imgUrl}" class="item_img"> 
                  </div>
@@ -178,7 +178,7 @@ function generateGroup() {
                          <p class="realPrice">${g_favorite[i].priceChild}</p>
                      </div>
                  </div>
-              
+				 </a>
                <div class="item_commend_class">
                   <i class="fa-solid fa-heart heart remove_btn2"></i>  
                </div>
