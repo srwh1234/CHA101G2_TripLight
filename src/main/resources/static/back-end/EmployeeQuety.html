@@ -238,8 +238,12 @@
 											<label for="Access"> 權限</label> <select class="form-control"
 												id="Access">
 												<option value="超級管理員">超級管理員</option>
+												<option value="員工管理員">員工管理員</option>
+												<option value="會員管理員">會員管理員</option>
+												<option value="廠商管理員">廠商管理員</option>
 												<option value="票卷管理員">票卷管理員</option>
 												<option value="網頁管理員">網頁管理員</option>
+												<option value="客服管理員">客服管理員</option>												
 											</select>
 										</div>
 										<div class="form-group">
@@ -360,7 +364,6 @@ $(document).ready(function () {
         });
     }
 
-    // 編輯按鈕點擊事件
     $(document).on('click', '.btn-edit', function () {
         var row = $(this).closest('tr');
         var cells = row.find('td');
@@ -369,11 +372,15 @@ $(document).ready(function () {
         var employeeId = $(cells[0]).text();
         var employeeName = $(cells[1]).text();
         var phone = $(cells[2]).text();
+        var access = $(cells[3]).text();
+        var status = $(cells[4]).text() === '在職' ? '1' : '0';
 
         // 將值填充到表單中
         $('#employeeId').val(employeeId);
         $('#employeeName').val(employeeName);
         $('#phone').val(phone);
+        $('#Access').val(access);
+        $('#permission').val(status);
 
         // 顯示修改資料的模態框
         $('#editModal').modal('show');

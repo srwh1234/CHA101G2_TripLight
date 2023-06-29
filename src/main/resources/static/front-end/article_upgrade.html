@@ -529,7 +529,10 @@
                     .then(response => response.text())
                     .then(data => {
                         if (data) {
-                            alert('上傳成功');
+                          //  alert('上傳成功');
+                          Swal.fire( { icon: 'success', title: '上傳成功' } )
+                          .then(()=>window.location.href = 'article_mylist.html');
+                          
                         } else {
                             alert('上傳失敗');
                         }

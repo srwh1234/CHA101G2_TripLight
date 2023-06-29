@@ -155,7 +155,7 @@ public class BkOrderServiceImpl implements BkOrderService {
 
 		// 檢查票券狀態
 		final TicketOrderDetail detail = ticketOrderDetailRepository //
-				.findByKeyTicketOrderIdAndKeyTicketSnTicketSnId(orderId, ticketSnId);
+																	.findByKeyTicketOrderIdAndKeyTicketSnTicketSnId(orderId, ticketSnId);
 
 		if (detail == null || detail.getRefundStatus() != REFUND_REVIEW) {
 			return false;

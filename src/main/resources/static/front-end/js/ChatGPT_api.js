@@ -83,6 +83,12 @@ $("#storage-planning").on("click", function (e) {
     // 當請求失敗時，將錯誤訊息印出到console中
     error: function (xhr) {
       console.log(xhr.responseText);
+      Swal.fire({
+        icon: "error",
+        title: "儲存失敗",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   });
 });
