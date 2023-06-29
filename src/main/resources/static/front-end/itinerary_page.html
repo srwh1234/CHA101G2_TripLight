@@ -670,7 +670,7 @@
                 contentType: "application/json",
                 data: JSON.stringify({
                     memberId: memberId,
-                    tripId: sessionStorage.getItem('tripId'),
+                    tripId: sessionTripId,
                     favorite: true,
                 }),
                 success: (response) => {

@@ -60,6 +60,9 @@ public class TripOrderService {
         tripOrder.setTravelersAdult(qtyAdult);
         tripOrder.setRemarks(remarks);
 
+        tripOrder.setRefundStatus(0);
+        tripOrder.setPaymentStatus(0);
+
         tripOrderDao.insert(tripOrder);
         System.out.println("TripOrder successfully inserted!");
 
