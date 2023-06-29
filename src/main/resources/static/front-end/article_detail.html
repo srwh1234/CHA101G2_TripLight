@@ -89,10 +89,10 @@
                 <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
                 <input type="checkbox" id="drop" />
                 <ul class="menu ml-auto mt-1">
-                    <li class="active"><a href="index.html">首頁</a></li>
+                    <li class=""><a href="index.html">首頁</a></li>
                     <li class=""><a href="booking.html">AI行程規劃</a></li>
                     <li class=""><a href="tickets.html">票券</a></li>
-                    <li class=""><a href="packages.html">套裝行程</a></li>
+                    <li class=""><a href="itinerary_search.html">套裝行程</a></li>
                     <li class=""><a href="articles.html">旅遊文章</a></li>
                     <li class="booking"><a href="" id="login">登入/註冊</a></li>
                     <li class="">
@@ -129,9 +129,9 @@
             </div>
         </div>
     </header>
-    <!-- //header -->
-    <!-- 登入 -->
+    <!-- header -->
 
+    <!-- 登入 -->
     <div id="login-container">
         <!---container--->
 
@@ -199,10 +199,8 @@
         <div class="banner_inner_overlay"></div>
     </section>
     <!-- //banner -->
-
     <div class="content-wrapper" style="display: flex; justify-content: center;">
         <div class="inner-container" id="detailContainer" style="width: 70%">
-
             <div class="row">
                 <!-- 單一文章照片 -->
                 <div class="blog-image col-md-12" style="margin-top: 20px;">
@@ -214,7 +212,7 @@
                     <div class="box-content" style="margin-bottom: 7px;">
                         <h2 class="blog-title bolder"
                             style="display: block; border-left: 8px solid; margin: 0.33em 0 0.30em; padding-left: 1em;">
-                            
+
                         </h2>
                         <div class="article-actions top d-flex">
                             <div class="profile-picture" style="margin-top: 20px;">
@@ -268,12 +266,9 @@
             </div>
             <!--留言串上方區塊結束 -->
             <!-- 留言串下方區塊開始 -->
-            <section id="pd_review">
+            <section id="messageContainer">
                 <div class="pd-collapse-row">
-
                     <!-- 	留言串開始 -->
-                    <!-- <c:forEach var="articleReplyVO" items="${articleReplyVOList}">
-                        <c:if test="${ articleReplyVO.replyStatus == 0}"> -->
                     <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
                         <div>
                             <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
@@ -284,35 +279,18 @@
                             <div class="rating-star  ps-2 "
                                 style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
                                 <h6 style="font-weight: bold;">吳彼得</h6>
-
                                 <span style="font-weight: bold; color: lightgray;" class="align-text-end">
                                     <fmt:parseDate value="${articleMessage.messagePostTime}"
                                         pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                                     <fmt:formatDate pattern="yyyy-MM-dd" value="${ parsedDateTime }" />
                                 </span>
                             </div>
-
                             <div style="display: inline-block; position: relative;">
                                 <span class="element"
                                     style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
                             </div>
-
-                            <!-- <div style="display: inline-block; position: relative;">
-                                        <c:if test="${userId.equals(articleReplyVO.userId)}">
-                                            <a href=" <%=request.getContextPath()%>/article/reply?action=myMsgDelete&artId=${articleVO.artId}&artReplyId=${articleReplyVO.artReplyId}&userId=${sessionScope.usersVO.getUserId()}"
-                                                id="formA">
-                                                <button
-                                                    style="margin-right: 120px; border-radius: 9px; float: right;">刪除
-                                                </button>
-                                            </a>
-                                        </c:if>
-                                    </div> -->
-
                         </div>
                     </div>
-                    <!-- </c:if>
-                    </c:forEach> -->
-
                     <!-- 	留言串結束  開始留言-->
                     <div class="collapse show">
                         <div class="pd-collapse-box">
@@ -334,7 +312,6 @@
                                                     <textarea rows="5" class="form-control" name="replyContent">
                                                     </textarea>
                                                 </div>
-
                                                 <div class="col-sm-6 ">
                                                     <input type="hidden" name="articleId" value="${article.articleId}">
                                                     <input type="hidden" name="memberId"
@@ -356,6 +333,16 @@
             <!-- 留言串下方區塊結束 -->
         </div>
     </div>
+    <!-- <div style="display: inline-block; position: relative;">
+                <c:if test="${userId.equals(articleReplyVO.userId)}">
+                    <a href=" <%=request.getContextPath()%>/article/reply?action=myMsgDelete&artId=${articleVO.artId}&artReplyId=${articleReplyVO.artReplyId}&userId=${sessionScope.usersVO.getUserId()}"
+                        id="formA">
+                        <button
+                            style="margin-right: 120px; border-radius: 9px; float: right;">刪除
+                        </button>
+                    </a>
+                </c:if>
+            </div> -->
 
     <!--footer -->
     <footer>
@@ -572,6 +559,95 @@
             </div>
                 `);
             };
+        });
+
+        $(document).ready(function () {
+
+            fetch('http://localhost:8080/articleMessage/articleMessages')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    new_message(data)
+                })
+
+            function new_message(data) {
+                $('#messageContainer').html('');
+
+                for (let article of data) {
+
+                    if (articleMessage.messageStatus === 1) {
+                        continue; // 狀態數字為1，跳過此次迴圈
+                    }
+
+                    let inputDate = article.articlePostTime;
+                    let dateTime = new Date(inputDate);
+                    let year = dateTime.getFullYear();
+                    let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+                    let day = String(dateTime.getDate()).padStart(2, "0");
+                    let formattedDate = `${year}-${month}-${day}`;
+
+                    $('#messageContainer').append(`
+
+                <div class="pd-collapse-row">
+                    <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
+                        <div>
+                            <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
+                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="rating-star  ps-2 "
+                                style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
+                                <h6 style="font-weight: bold;">${articleMessage.memberName}</h6>
+                                <span style="font-weight: bold; color: lightgray;" class="align-text-end">
+                                    <fmt:parseDate value="${articleMessage.messagePostTime}"
+                                        pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${formatDate}" />
+                                </span>
+                            </div>
+                            <div style="display: inline-block; position: relative;">
+                                <span class="element"
+                                    style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse show">
+                        <div class="pd-collapse-box">
+                            <div class="row align-items-end ">
+                                <div class="text-sm-left p-3">
+                                    <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
+                                        aria-expanded="false" aria-controls="pd_add_review"
+                                        style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
+                                    </a>
+                                </div>
+                                <div class="col-12 collapse" id="pd_add_review">
+                                    <div class="my-1 p-3 bg-gray-100 border">
+                                        <form method="post" name="msgform" id="replyContentForm">
+                                            <div class="row g-2">
+                                                <div class="col-sm-12">
+                                                    <label class="form-label">寫下你的留言</label>
+                                                    <textarea rows="5" class="form-control" name="replyContent">
+                                                        ${articleMessage.messagePostContent}
+                                                    </textarea>
+                                                </div>
+                                                <div class="col-sm-6 ">
+                                                    <input type="hidden" name="articleId" value="${article.articleId}">
+                                                    <input type="hidden" name="memberId"
+                                                        value="${sessionScope.article.getMemberId()}">
+                                                    <input type="hidden" name="action" value="insert_reply">
+                                                    <input type="button" id="msgSubmit" value="送出">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `)
+                }
+            }
         });
 
     </script>

@@ -1,8 +1,9 @@
 package com.tw.article.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import com.tw.member.model.Member;
-import com.tw.ticket.model.Ticket;
 import com.tw.article.model.ArticleFavorite;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
@@ -17,16 +18,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleFavorite {
+public class ArticleFavorite implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private PrimaryKey key; // 複合主鍵的關係
+	
+	private Timestamp addTime;// 加入日期
 
 @Embeddable
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrimaryKey implements Serializable{
+public static class PrimaryKey implements Serializable{
+	public PrimaryKey(int memberId, Article article) {
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
@@ -35,6 +44,6 @@ public class PrimaryKey implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "article_id")
-	private Article article;// 票券編號
+	private Article article;// 文章編號
 	}
 }
