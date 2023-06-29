@@ -174,7 +174,7 @@
                     </ul>
                 </nav>
 
-                <!-- TODO: -->
+               
                 <div class="container-fliud">
                     <div class="row">
                         <div class="table-responsive p-3" id="tourContainer">
@@ -197,7 +197,8 @@
                 </div>
 
 
-
+                <!-- 稱高度用的 -->
+                <div style="height:30vh"></div>
 
 
 
@@ -228,24 +229,14 @@
 
                 <script>
 
-                    function formatActions(value, row, index) {
-                        var html = `
-                        <button class="btn btn-primary my-btn-ok">確定出團</button>
-                        <button class="btn btn-danger my-btn-notok">取消出團</button>
-                        `;
-                        return html;
-                    }
-
-
-
-                    $(function () {                        
+                    $(function () {
 
                         $('#tourContainer table').bootstrapTable({
                             sortable: true,
                             sortClass: 'table-active',
                             search: true,
                             searchAlign: 'left',
-                            url: 'http://localhost:8080/vd/tourOrders',
+                            url: '/vd/tourOrders',
                             columns: [
                                 { field: 'tourGroupId', title: '旅遊團編號', "sortable": true },
                                 { field: 'tripName', title: '行程名稱', "sortable": true },
@@ -253,12 +244,12 @@
                                 { field: 'confirmedTravelersNo', title: '確認出團人數', "sortable": true },
                                 { field: 'minTravelersNo', title: '最少出團人數', "sortable": true },
                                 { field: 'curTravelersNo', title: '目前人數', "sortable": true },
-                                { field: 'actions', title: '操作', formatter: formatActions }
+                                { field: 'status', title: '操作', formatter: formatActions }
                             ]
                         });
 
                         // 旅遊團 點選列的事件
-                        $(document).on('click', '#tourContainer tbody tr', function () {                           
+                        $(document).on('click', '#tourContainer tbody tr', function () {
                             const id = $(this).find('td').first().text();
                             $('#orderContainer table').bootstrapTable('destroy');
 
@@ -267,7 +258,7 @@
                                 sortClass: 'table-active',
                                 search: true,
                                 searchAlign: 'left',
-                                url: `http://localhost:8080/vd/order/${id}`,
+                                url: `/vd/order/${id}`,
                                 columns: [
                                     { field: 'tripOrderId', title: '訂單編號', "sortable": true },
                                     { field: 'memberName', title: '會員名稱', "sortable": true },
@@ -278,25 +269,58 @@
                                     { field: 'travelersAdult', title: '旅客人數(大人)', "sortable": true },
                                     { field: 'travelersChildren', title: '旅客人數(小孩)', "sortable": true },
                                     { field: 'paymentStatus', title: '付款狀態', "sortable": true, formatter: formatPaymentStatus },
+                                    // { field: 'refundStatus', title: '退款狀態', "sortable": true, formatter: formatRefundStatus },
                                 ]
                             });
                         });
 
                         //按鈕事件
-                        $(document).on('click','.my-btn-ok',function(){
+                        $(document).on('click', '.my-btn-ok', function () {
+                            //出團
                             const id = $(this).closest('tr').find('td').first().text();
-                            alert('出團'+id);
-                            return false;
-                        });
-                        $(document).on('click','.my-btn-notok',function(){
-                            const id = $(this).closest('tr').find('td').first().text();
-                            alert('取消'+id);
+                            fetch(`/vd/orderCheck/${id}/0`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    $('#tourContainer table').bootstrapTable('refresh');
+                                    $('#orderContainer table').bootstrapTable('refresh');
+                                })
+                                .finally(() => Swal.fire({ icon: 'success', title: '已變更' }));
                             return false;
                         });
 
+                        $(document).on('click', '.my-btn-notok', function () {
+                            //不出團
+                            const id = $(this).closest('tr').find('td').first().text();
+                            fetch(`/vd/orderCheck/${id}/2`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    $('#tourContainer table').bootstrapTable('refresh');
+                                    $('#orderContainer table').bootstrapTable('refresh');
+                                })
+                                .finally(() => Swal.fire({ icon: 'success', title: '已變更' }));
+                            return false;
+                        });
+
+                        $(document).on('click', '.my-btn-refund', function () {
+                            const id = $(this).closest('tr').find('td').first().text();
+                            alert('退款' + id);
+                            return false;
+                        });
                     });
 
                     //------------------------------------------------------格式轉換---------------------------------------------
+
+                    function formatRefundStatus(value, row, index) {
+                        //0:無退款 1:退款中 2:退款完成
+                        let html = '--';
+                        if (value === 2) {
+                            html = '退款完成';
+                        } else if (value === 1) {
+                            html = '<button class="btn btn-primary my-btn-refund">退款審核</button>';
+                        }
+                        return html;
+                    }
+
                     function formatPaymentStatus(value, row, index) {
                         let html = '--';
                         if (value === 0) {
@@ -310,20 +334,35 @@
                     function formatOrderStatus(value, row, index) {
                         let html = '--';
                         if (value === 0) {
-                            html = '確認中';
-                        } else if (value === 1) {
-                            html = '未成團';
+                            html = '已成團';
+                        } else if (value === 2) {
+                            html = '不成團';
+                        } else {
+                            html = '未決定';
                         }
                         return html;
                     }
 
                     function formatPayDate(value, row, index) {
-                        var html = df(value);
+                        return df(value);
+                    }
+
+                    function formatActions(value, row, index) {
+                        let html = '--';
+                        if (value === 1) {
+                            html = `
+                            <button class="btn btn-primary my-btn-ok">確定出團</button>
+                            <button class="btn btn-danger my-btn-notok">取消出團</button>
+                            `;
+                        }
                         return html;
                     }
 
                     //日期格式
                     function df(dateStr) {
+                        if (!dateStr) {
+                            return '--';
+                        }
                         const date = new Date(dateStr);
                         const year = date.getFullYear();
                         const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
