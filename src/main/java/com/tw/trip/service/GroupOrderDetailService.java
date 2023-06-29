@@ -31,7 +31,7 @@ public class GroupOrderDetailService {
 
     public List<TripOrder> getOrderInfor(Integer tripOrderId){
         final String HQL = """
-                SELECT new com.tw.trip.pojo.TripOrder(payDate, orderStatus, travelersAdult, travelersChildren, remarks) FROM TripOrder
+                SELECT new com.tw.trip.pojo.TripOrder(payDate, orderStatus, travelersAdult, travelersChildren, remarks,paymentStatus) FROM TripOrder
                 WHERE tripOrderId = :tripOrderId
                 """;
         List<TripOrder> resultList = session.createQuery(HQL,TripOrder.class)
@@ -64,7 +64,6 @@ public class GroupOrderDetailService {
         TourGroup tourGroup = session.createQuery(HQL, TourGroup.class)
                 .setParameter("tourGroupId", tourGroupId)
                 .uniqueResult();
-
 
         // get tripDay from trip
         Trip trip = tripDao.findByPrimaryKey(tripId);

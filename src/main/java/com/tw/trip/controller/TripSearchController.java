@@ -150,5 +150,12 @@ public class TripSearchController {
     }
 
 
+    @GetMapping("/getTripListOrderByPrice")
+    public String getTripListOrderByPrice() {
+        final List<Trip> tripList = tripSearchService.getTripOrderByPrice();
+        final String json = new Gson().toJson(tripList);
+
+        return json;
+    }
 
 }

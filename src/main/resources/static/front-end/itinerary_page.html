@@ -635,9 +635,6 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
 
-    <!-- itinerary_page -->
-    <script type="text/javascript" src="itinerary_page.js"></script>
-
     <!-- login -->
     <script src="js/Login.js"></script>
     <script src="./js/sweetalert.js"></script>
@@ -645,8 +642,17 @@
     <!-- ========== Java Script  ========== -->
     <script>
 
-        // ====== calendar initialized n get value  ======
-        let sessionTripId = sessionStorage.getItem('tripId');
+        let sessionTripId;
+        // ====== 網址列取得 tripId & tripOrderId======
+
+        function getTripId() {
+            const queryString = window.location.search; // 返回 "?name=John&age=25"
+            const urlParams = new URLSearchParams(queryString);
+            if(urlParams.get('tripId')!=null){
+                return urlParams.get('tripId'); // 返回 "25"
+            }
+        }
+        sessionTripId = getTripId();
 
         function getMemberId() {
 
@@ -1269,15 +1275,15 @@
         // ====== //綁定選擇方案按鈕 ======
 
         // ====== 標頭圖片區 ======
-        $.getJSON(`http://localhost:8080/tripPage/getTripPics?tripIdString=${sessionTripId}`, function (response) {
+        $.getJSON(`http://localhost:8080/tripPage/getTripPics?tripId=${sessionTripId}`, function (response) {
 
             let parentEl = $('#tripPics');
             for (let i = 0; i < response.length; i++) {
-                let base64Url = 'data:image/gif;base64,' + response[i].imageBase64;
-                console.log(base64Url);
+                let imageUrl = 'http://localhost:8080/img/trips/' + response[i];
+                console.log(imageUrl);
                 let newChildEl = `
                 <div class="carousel-item active">
-                    <img style="weight:80%;  height: 500px;" src="${base64Url}" class="d-block w-100" alt="tripPics">
+                    <img style="weight:80%;  height: 500px;" src="${imageUrl}" class="d-block w-100" alt="tripPics">
                 </div>
             `;
                 parentEl.append(newChildEl);

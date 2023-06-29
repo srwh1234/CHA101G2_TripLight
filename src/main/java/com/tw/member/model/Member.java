@@ -2,6 +2,7 @@ package com.tw.member.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Base64;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -66,6 +67,14 @@ public class Member implements Serializable {
 		this.memberEmail = memberEmail;
 	}
 
+	public Member(String memberNameLast, String memberNameFirst, byte[] memberPicArg){
+		this.memberFullName = memberNameLast + memberNameFirst;
+		memberPicBase64 = Base64.getEncoder().encodeToString(memberPicArg);
+	}
+
 	@Transient
 	private String memberFullName;
+
+	@Transient
+	private String memberPicBase64;
 }

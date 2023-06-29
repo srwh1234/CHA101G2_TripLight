@@ -48,10 +48,9 @@ public class TripPageController {
     }
 
     @GetMapping ("/getTripPics")
-    public String getTripPics(@RequestParam String tripIdString){
+    public String getTripPics(@RequestParam Integer tripId){
 
-        Integer tripId = Integer.valueOf(tripIdString);
-        List<TripImage> tripImageList = tripPageService.getTripPicsById(tripId);
+        List<Integer> tripImageList = tripPageService.getTripPicsById(tripId);
 
         Gson gson = new Gson();
         String json = gson.toJson(tripImageList);

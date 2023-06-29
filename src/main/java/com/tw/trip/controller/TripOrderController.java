@@ -108,8 +108,8 @@ public class TripOrderController {
         return json;
     }
 
-    @PostMapping("/insertPaymentStatus")
-    public void insertPaymentStatus(HttpServletRequest request) throws IOException{
+    @PostMapping("/updatePaymentStatus")
+    public void updatePaymentStatus(HttpServletRequest request) throws IOException{
         BufferedReader reader = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
         String dataRead;
@@ -125,7 +125,7 @@ public class TripOrderController {
         JSONObject jsonObject;
         try{
             jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
-            tripOrderService.insertPaymentStatus(
+            tripOrderService.updatePaymentStatus(
                     jsonObject.getInt("paymentStatus"),
                     jsonObject.getInt("tripOrderId")
             );
@@ -135,8 +135,6 @@ public class TripOrderController {
             e.printStackTrace();
 
         }
-
-        System.out.println("paymentStatus successfully inserted!");
 
     }
 
