@@ -389,9 +389,10 @@
 <script>
 	document.querySelector('.question-report').addEventListener('submit', function (e) {
 		e.preventDefault();
-		// var memberId = JSON.parse(sessionStorage.getItem("test-login")).memberId;;
 		var questionContent = document.getElementById('message').value;
-		var memberId = 3
+		let loginData = JSON.parse(sessionStorage.getItem('test-login'));
+		let memberId = loginData.memberId;
+		// var memberId = 3
 
 		fetch('/questionReportForm', {
 			method: 'POST',
