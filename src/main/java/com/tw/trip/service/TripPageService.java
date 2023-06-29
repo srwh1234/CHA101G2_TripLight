@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -70,37 +71,59 @@ public class TripPageService {
 
     // ====== 評論區 ======
     public List<TripComment> getTripCommentsByTripId(Integer tripId){
+            final String SQL = """
+                    SELECT concat(member_name_last, member_name_first) as memberName, member_pic, comment, post_time, rating from member m
+                    join trip_comment tm on tm.member_id = m.member_id
+                    Where trip_id = :tripId
+                    ORDER BY post_time desc 
+                    """;
+            List<Object[]> resultList = session.createNativeQuery(SQL, Object[].class)
+                    .setParameter("tripId", tripId)
+                    .getResultList();
 
-        List<TripComment> tripComments = tripDao.findByPrimaryKey(tripId).getTripComments();
-        List<TripComment> tripCommentsSent = new ArrayList<>();
+            List<TripComment> tripComments = new ArrayList<>();
 
-        for (TripComment tripComment : tripComments){
-            final String name = (tripComment.getMember().getMemberNameLast()) + (tripComment.getMember().getMemberNameFirst());
-            final byte[] buffer = tripComment.getMember().getMemberPic();
+            for(Object[] row : resultList){
+                String memberName = (String) row[0];
+                byte[] memberPic = (byte[]) row[1];
+                String comment = (String) row[2];
+                Timestamp postTime = (Timestamp) row[3];
+                byte rating = (byte) row[4];
 
-            String memberPicBase64 = Base64.getEncoder().encodeToString(buffer);
-            tripComment.setMemberPicBase64(memberPicBase64);
-            tripComment.setName(name);
-            tripCommentsSent.add(tripComment);
-        }
 
-        return tripCommentsSent;
+                TripComment tripComment = new TripComment(memberName, memberPic, comment, postTime, rating);
+                tripComments.add(tripComment);
+
+            }
+            return tripComments;
     }
 
     // ====== tripPage 圖片 ======
-    public List<TripImage> getTripPicsById(Integer tripId){
+    public List<Integer> getTripPicsById(Integer tripId){
 
-        List<TripImage> tripImageListSent = new ArrayList<>();
-        List<TripImage> tripImageList = tripDao.findByPrimaryKey(tripId).getTripImage();
+        final String HQL = """
+                    SELECT id FROM TripImage
+                    WHERE tripId = :tripId
+                    """;
 
-        // ? 為何不能共用 List
-        for(TripImage tripImage : tripImageList){
-            final byte[] buffer = tripImage.getImage();
-            String tripPicBase64 = Base64.getEncoder().encodeToString(buffer);
-            tripImage.setImageBase64(tripPicBase64);
-            tripImageListSent.add(tripImage);
-        }
-        return tripImageListSent;
+        List<Integer> idForUrl = session.createQuery(HQL, Integer.class)
+                .setParameter("tripId", tripId)
+                .getResultList();
+
+        return idForUrl;
+    }
+
+    public Trip getTripByTripId(Integer tripId){
+        final String HQL = """
+                SELECT new com.tw.trip.pojo.Trip(tripName, tripDay, city, tripContent, tripDescription, tripNote) FROM Trip
+                WHERE tripId= :tripId
+                """;
+        Trip trip = session.createQuery(HQL,Trip.class)
+                .setParameter("tripId", tripId)
+                .uniqueResult();
+
+        return trip;
+
     }
 
 

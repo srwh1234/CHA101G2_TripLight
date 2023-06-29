@@ -61,6 +61,27 @@
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
 
+    <style>
+        .star{
+            color: grey;
+        }
+
+        .star:hover,
+        .star.active {
+            color: yellow;
+        }
+
+        .btnCustom{
+            background-color: #38d8fc;
+            border: none;
+        }
+        .btnCustom:hover{
+            background-color: #00bdff;
+            border: none;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -107,7 +128,7 @@
                         </ul>
                     </li>
                     <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-                    <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a>
+                    <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a>
                     </li>
                     <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
                     </li>
@@ -140,7 +161,7 @@
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />記住我</label>
-                    <a href="#">忘記密碼</a>
+                    <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
@@ -209,11 +230,9 @@
             <div class="row shadow-lg p-3 mb-5 bg-body rounded">
                 <div class="row">
                     <div class="col-3 ml-5">
-                        <button type="button" class="btn btn-info">已出發</button>
+<!--                        <button type="button" class="btn btn-info">已出發</button>-->
                     </div>
                 </div>
-
-                <hr>
                 <!--     第一列-->
                 <div class="col-8">
                     <ul class="list-group list-group-flush p-3">
@@ -226,56 +245,55 @@
                     </ul>
 
                 </div>
-                <div class="col-4">
-                    <button style=" background-color: #38d8fc; border: none;"
-                        onclick="window.location.href='http://127.0.0.1:5500/%E7%B6%B2%E9%A0%81/%E5%89%8D%E5%8F%B0/itinerary_page.html'"
-                        type="button" class="btn btn-secondary btn-rounded btn-lg mt-3">行程詳情</button>
+                <div class="col-4" id="btn_parent">
+                    <button type="button" id="tripPage" class="btn btnCustom btnCustom:hover btn-secondary btn-rounded btn-lg mt-3">行程詳情</button>
                     <br>
-                    <button type="button" class="btn btn-secondary btn-rounded btn-lg mt-3">我要評論</button>
+                    <button type="button" class="btn btnCustom btnCustom:hover btn-secondary btn-rounded btn-lg mt-3" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-mdb-ripple-color="white"
+                            id="btn_modal">我要評論</button>
                     <br>
-                    <button type="button" class="btn btn-secondary btn-rounded btn-lg mt-3">聯繫客服</button>
+
 
                 </div>
             </div>
 
             <!-- 我要評論 燈箱區 -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">評論內容</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                <div class="mb-5">
+                                    <i class="fa-solid fa-star fa-xl star" value="1"></i>
+                                    <i class="fa-solid fa-star fa-xl star" value="2"></i>
+                                    <i class="fa-solid fa-star fa-xl star" value="3"></i>
+                                    <i class="fa-solid fa-star fa-xl star" value="4"></i>
+                                    <i class="fa-solid fa-star fa-xl star" value="5"></i>
+
                                 </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Message:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                <div class="mb-5">
+                                    <label for="modal-text" class="col-form-label">請留下您的寶貴意見:</label>
+                                    <textarea class="form-control" id="modal-text"></textarea>
                                 </div>
                             </form>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" id="btn_con" class="btn btn-primary"
-                                data-bs-dismiss="modal">確認評論</button>
-
+                                    data-bs-dismiss="modal">確認評論</button>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <!-- 謝謝評論 -->
-            <div id="lightbox" class="none">
-                <article>
-                    <h1>謝謝評論唷</h1>
-                </article>
-            </div>
-            <!-- 謝謝評論 -->
 
             <!--  第二列  -->
             <div class="row shadow-lg p-3 mb-5 bg-body rounded">
@@ -301,29 +319,15 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">姓名</th>
+                            <th scope="col">年齡</th>
+                            <th scope="col">性別</th>
+                            <th scope="col">電話</th>
+                            <th scope="col">郵件</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                    <tbody id="travelerList">
+
                     </tbody>
                 </table>
             </div>
@@ -446,10 +450,10 @@
     <!-- 載入 Full Calendar -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
 
-    <!-- 載入 itinerary_page -->
-    <script type="text/javascript" src="itinerary_page.js"></script>
 
-    <!-- ======================== //Lib ============================================-->
+    <!-- 載入 sweetalert -->
+    <script src="./js/sweetalert.js"></script>
+
     <!-- ======================== Java Script ============================================-->
 
     <script>
@@ -466,22 +470,62 @@
                 return testLogIn.memberId;
             }
 
-            // ====== 取得資訊 ======
+            // ====== 取得session 資訊 ======
             const memberId = getMemberId();
             const tripOrderId = sessionStorage.getItem('tripOrderId');
             const tripId = sessionStorage.getItem('tripId');
             const tourGroupId = sessionStorage.getItem('tourGroupId');
 
+            $('#tripPage').on('click', function (){
+                sessionStorage.setItem('tripId', tripId);
+                window.location.href=`http://localhost:8080/front-end/itinerary_page.html`;
+            });
+
+            // ====== 取得旅遊團人員資訊 ======
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getTravelerList?memberId=${memberId}&tourGroupId=${tourGroupId}&`, function (response) {
+
+                let parentEl = $('#travelerList');
+
+                for(let i=0; i<response.length ; i++){
+
+                    if(response[i].travelerGender === 1){
+                        let childEl = `
+                            <tr>
+                                    <th scope="row">${i+1}</th>
+                                    <td>${response[i].travelerName}</td>
+                                    <td>${response[i].travelerAge}</td>
+                                    <td>男</td>
+                                    <td>${response[i].travelerPhone}</td>
+                                    <td>${response[i].travelerEmail}</td>
+                            </tr>`;
+                        parentEl.append(childEl);
+                    }else {
+
+                        let childEl = `
+                            <tr>
+                                    <th scope="row">${i+1}</th>
+                                    <td>${response[i].travelerName}</td>
+                                    <td>${response[i].travelerAge}</td>
+                                    <td>女</td>
+                                    <td>${response[i].travelerPhone}</td>
+                                    <td>${response[i].travelerEmail}</td>
+                            </tr>
+                                 `;
+                        parentEl.append(childEl);
+                      }
+                }
+            });
+
 
             // ====== 取得會員資訊 ======
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getMemberInfor?memberIdString=${memberId}`, function (response) {
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getMemberInfor?memberId=${memberId}`, function (response) {
                 $('#memberName').html(`會員姓名: ${response.memberNameLast+response.memberNameFirst}`);
                 $('#memberPhone').html(`連絡電話: ${response.memberPhone}`);
 
             });
 
             // ====== 取得旅遊團日期 與 名稱 ======
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getTourGroupDate?tripIdString=${tripId}&tourGroupIdString=${tourGroupId}`, function (response) {
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getTourGroupDate?tripId=${tripId}&tourGroupId=${tourGroupId}`, function (response) {
                 $('#tourGroupDate').html(`旅遊團日期: ${response.formattedStartDate} 至 ${response.formattedEndDate}`);
                 $('#tripName').html(`方案: ${response.tripName}`);
 
@@ -489,16 +533,35 @@
             });
 
 
-            // ====== 取得訂單資訊 ======
+
+                // ====== 取得訂單資訊 ======
             $('#tripOrderId').text(`訂單編號: ${tripOrderId}`);
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getTripInfor?tripOrderIdString=${tripOrderId}`, function (response) {
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getTripInfor?tripOrderId=${tripOrderId}`, function (response) {
 
-                $('#payDate').text(`付款日期 : ${response[0].formattedPayDate}`);
+                // paymentStatus 為0 則未付款並且付款日期內不會有資料
+                if(response[0].paymentStatus === 0){
+                    $('#payDate').text(`付款日期 : 尚未付款`);
 
-                if(response[0].orderStatus == 1){
+                }else {
+                    $('#payDate').text(`付款日期 : ${response[0].formattedPayDate}`);
+                }
+
+                if(response[0].orderStatus == 0 && response[0].paymentStatus == 0){
+
+                    let childBtn = `
+                    <button onclick="location.href=http://localhost:8080/front-end/group_orderpayment.html?memberId=${memberId}&tripOrderId=${tripOrderId}">
+                     type="button" class="btn btn-secondary btn-rounded btn-lg mt-3">我要付款</button>
+                    `;
+
+                    $('#btn_parent').append()
+                }
+
+                // 判斷是否成團
+                if(response[0].orderStatus == 0){
                     $('#orderStatus').text('訂單狀態 : 成團');
 
-                }else if(response[0].orderStatus == 0){
+
+                }else if(response[0].orderStatus == 1){
                     $('#orderStatus').text('訂單狀態 : 未成團');
 
                 }
@@ -513,27 +576,85 @@
                     $('#remarks').html(`特殊需求: ${response[0].remarks}`);
                 }
 
+            });
 
+            // ====== 評論功能 ======
+
+            // ====== 取得評論次數，若已經評論過，則disable 評論按鈕 ======
+            let editCount;
+
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getEditCount?memberId=${memberId}&tripId=${tripId}`, function (response) {
+                editCount=response;
+
+                if(editCount === 1){
+                    $('#btn_modal').text('評論完成');
+                    $('#btn_modal').attr('data-bs-target','#');
+                    $('#btn_modal').on('click', function (){
+                        Swal.fire('您已經評論過了唷');
+                    });
+                }
+            });
+
+            // 星星功能
+            $('.star').click(function() {
+                // 移除所有星星的 'active' 类
+                $('.star').removeClass('active');
+
+                // 将点击的星星和它之前的所有星星添加 'active' 类
+                $(this).prevAll('.star').addBack().addClass('active');
 
             });
 
-            // ====== 取得參加人員資訊 ======
-            // TO DO
+
+            // ====== 將評論送進資料庫，確認星星與評論是否為空值 ======
+            $('#btn_con').on('click', function () {
+
+                // 將選取的.star.active 選取的最後一個星星數值存入
+                let rating = $('.star.active').last().attr('value');
+                let comment = $('#modal-text').val();
+
+                if(rating === undefined){
+                    Swal.fire('請選擇評分星星');
+
+                }else if(comment === ''){
+                    Swal.fire('請輸入評論喔');
+
+                }else {
+
+                    let data = {
+                        'tripId': tripId,
+                        'memberId': memberId,
+                        'rating': rating,
+                        'comment': comment,
+                        'status': '1',
+                        'edit_count': '1'
+                    }
+
+                    let datajson = JSON.stringify(data);
+
+                    // ====== 將評論內容送至資料庫後，disable 評論按鈕的功能 ======
+                    $.post("http://localhost:8080/groupOrderDetail/addTripComments", datajson, function (response) {
+                        $('#btn_modal').text('評論完成');
+                        $('#btn_modal').attr('data-bs-target','#');
+                        $('#btn_modal').on('click', function (){
+                            Swal.fire('您已經評論過了唷');
+                        });
+
+                    });
+
+                    Swal.fire('謝謝您的評論唷');
+
+                }
+
+
+            })
 
 
 
 
-            // ====== 燈箱部分 ======
-            $("button#btn_con").on("click", function () {
-                $("#lightbox").removeClass("none");
-            });
+            // ====== //評論功能 ======
 
-            // modal 中的半透明黑色區域
-            $("#lightbox").on("click", function () {
-                $("#lightbox").addClass("none");
-            });
         });
-
 
 
     </script>

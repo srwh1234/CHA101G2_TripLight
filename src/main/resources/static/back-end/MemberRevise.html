@@ -179,11 +179,13 @@ thead tr th, tbody tr td {
 								class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
 								<i class="fas fa-user-circle fa-lg"></i>
 						</a> <!-- 下拉選單 - 使用者資訊 -->
-							<div
-								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#" id="logoutLink"> 登出 </a>
-							</div></li>
+							<<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown" id="logoutLink">
+                                <a class="dropdown-item" href="" >
+                                    登出
+                                </a>
+                            </div>
+                          </li>
 					</ul>
 				</nav>
 
@@ -265,6 +267,17 @@ thead tr th, tbody tr td {
 					</div>
 </body>
 <script>
+$("#logoutLink").click(function () {
+	 $.ajax({
+type: "GET",
+	 url: "/BKlogout", 
+	 success: function () {
+window.location.href = "http://localhost:8080/back-end/login.html";
+  },
+error: function () {
+   		}
+	});
+	});
     $(document).ready(() => {
         getMember().then((members) => {
             var table = $('#dataTable').DataTable();

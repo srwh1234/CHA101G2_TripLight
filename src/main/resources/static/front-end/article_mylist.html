@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <title>TripLight | MyArticleList</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <!-- 關鍵字設定 -->
+    <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+    <!-- 網頁介紹 -->
+    <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+
+    <script>
+        addEventListener(
+            "load",
+            function () {
+                setTimeout(hideURLbar, 0);
+            },
+            false
+        );
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+
+
+    <!-- css files -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap css -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!-- custom css -->
+    <link href="css/fontawesome-all.css" rel="stylesheet" />
+    <!-- fontawesome css -->
+    <!-- //css files -->
+
+    <!-- google fonts -->
+    <!-- 載入字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet" />
+    <!-- //google fonts -->
+
+    <!-- 載入icon -->
+    <link rel="shortcut icon" href="./images/icon.png" />
+    <link rel="bookmark" href="./images/icon.png" />
+    <!--jQuery-->
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <!--會員登入-->
+    <link href="css/login.css" rel="stylesheet" />
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <!--datatable-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
+    <!--sweet alert-->
+    <script src="./js/sweetalert.js"></script>
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="container" style="padding-right: 0px">
+            <!-- nav -->
+            <nav class="py-md-4 py-3">
+                <div id="logo">
+                    <h1 class="mt-md-0 mt-2">
+                        <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+                            TripLight
+                        </a>
+                    </h1>
+                </div>
+                <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+                <input type="checkbox" id="drop" />
+                <ul class="menu ml-auto mt-1">
+                    <li class="active"><a href="index.html">首頁</a></li>
+                    <li class=""><a href="booking.html">AI行程規劃</a></li>
+                    <li class=""><a href="tickets.html">票券</a></li>
+                    <li class=""><a href="packages.html">套裝行程</a></li>
+                    <li class=""><a href="articles.html">旅遊文章</a></li>
+                    <li class="booking"><a href="" id="login">登入/註冊</a></li>
+                    <li class="">
+                        <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- //nav -->
+            <div class="member">
+                <ul class="member_list">
+                    <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+                    </li>
+                    <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+                        <ul class="order_list">
+                            <li class="order_content"><a href="tickets_order.html"><i
+                                        class="fa-solid fa-ticket"></i>票券訂單</a></li>
+                            <li class="order_content"><a href="group_order.html"><i
+                                        class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+                    <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a>
+                    </li>
+                    <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
+                    </li>
+                    <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+                    </li>
+                    <li class="member_li"><a href="read_question_list.html"><i
+                                class="fa-regular fa-comment"></i>查看問題</a></li>
+                    <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!-- //header -->
+    <!-- 登入 -->
+
+    <div id="login-container">
+        <!---container--->
+
+        <div class="main-box login">
+            <h3>登入</h3>
+            <form action="">
+                <div class="input-box">
+                    <i class="fas fa-envelope icon2"></i>
+                    <input type="email" name="email" id="email" required />
+                    <label for="">信箱</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock icon2"></i>
+                    <input type="password" name="password" id="password" required />
+                    <label for="">密碼</label>
+                </div>
+                <div class="check">
+                    <label><input type="checkbox" />記住我</label>
+                    <a href="#">忘記密碼</a>
+                </div>
+                <button type="submit" class="main-btn">Login</button>
+                <div class="register">
+                    <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="main-box register">
+            <h3>註冊</h3>
+            <form action="">
+                <div class="input-box">
+                    <i class="fas fa-user icon2"></i>
+                    <input type="email" name="email" required />
+                    <label for="">使用者名稱</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-envelope icon2"></i>
+                    <input type="email" name="email" required />
+                    <label for="">信箱</label>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock icon2"></i>
+                    <input type="password" name="password" required />
+                    <label for="">密碼</label>
+                </div>
+                <div class="check">
+                    <label><input type="checkbox" />我同意所有條款</label>
+                </div>
+                <button type="submit" class="main-btn">註冊</button>
+                <div class="register">
+                    <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+                </div>
+            </form>
+        </div>
+
+        <span class="close-icon">
+            <div class="fas fa-times"></div>
+        </span>
+    </div>
+
+    <!-- 登入  -->
+
+    <!-- banner -->
+    <section class="banner_inner" id="home">
+        <div class="banner_inner_overlay"></div>
+    </section>
+    <!-- //banner -->
+
+    <section class="container-fluid" style="margin-bottom: 100px; width:90%">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+                <h3 class="text-black mb-4">我的文章</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
+                <a class="btn btn-primary" role="button" onclick="redirectToCreateArticle()"></i> 發表文章</a>
+            </div>
+        </div>
+        <div id="TableSorterCard" class="card" style="border-style: none;border-radius: 6.5px;">
+            <div class="card-header py-3" style="border-width: 0px;background: rgb(23,25,33);">
+                <div class="row table-topper align-items-center">
+                    <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">
+                        <p class="m-0 fw-bold" style="color: rgb(255,255,255);">全部列表</p>
+                    </div>
+                    <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;"><button
+                            class="btn btn-dark btn-sm reset" type="button" style="margin: 2px;">目前檢視</button><button
+                            id="zoom_in" class="btn btn-light btn-sm" type="button" zoomclick="ChangeZoomLevel(-10);"
+                            style="margin: 2px;"><i class="fa fa-search-plus"></i></button><button id="zoom_out"
+                            class="btn btn-light btn-sm" type="button" zoomclick="ChangeZoomLevel(-10);"
+                            style="margin: 2px;"><i class="fa fa-search-minus"></i></button></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <!-- <div class="table-responsive" style="border-top-style: none;background: #171921;"> -->
+                    <table id="mylist-table" class="table table-striped table tablesorter">
+                        <thead class="thead-dark" style="background: rgb(202, 206, 216);">
+                            <tr style="border-style: none;">
+                                <th class="text-center">文章類型</th>
+                                <th class="text-center">發表會員</th>
+                                <th class="text-center">標題內容</th>
+                                <th class="text-center filter-false sorter-false">操作選項</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mylistContainer" class="text-center" style="border-top-width: 0px;">
+                            <!-- <tr style="background: #262a38;">
+                                <td style="color: rgb(255,255,255);">【問題】</td>
+                                <td style="color: rgb(255,255,255);">Luis</td>
+                                <td style="color: rgb(255,255,255);">桃園有哪裡好玩？</td>
+                                <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a
+                                        class="btn btnMaterial btn-flat primary semicircle" role="button" href="#"
+                                        style="color: #00bdff;"><i class="far fa-eye"></i></a><a
+                                        class="btn btnMaterial btn-flat success semicircle" role="button" href="#"
+                                        style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a
+                                        class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button"
+                                        style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal"
+                                        href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--footer -->
+    <footer>
+        <section class="footer footer_w3layouts_section_1its py-5">
+            <div class="container py-lg-4 py-3">
+                <div class="row footer-top">
+                    <div class="col-lg-3 col-sm-6 footer-grid_section_1">
+                        <div class="footer-title">
+                            <h3>地點資訊</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-12 links">
+                                <li>
+                                    <a href="https://www.google.com/maps?q=桃園市中壢區復興路46號9樓"
+                                        target="_blank">地址：桃園市中壢區復興路46號9樓</a>
+                                </li>
+                                <li><a href="tel:02-1234-5678">電話：02-1234-5678</a></li>
+                                <li>
+                                    <a href="triplight0411@gmail.com">信箱：triplight0411@gmail.com</a>
+                                </li>
+                                <li><a href="tel:02-1234-5678">傳真：02-1234-5678</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+                        <div class="footer-title">
+                            <h3>認識TripLight</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-10 links">
+                                <li><a href="about.html" class="scroll">關於我們</a></li>
+                                <li>
+                                    <a href="user_terms.html" class="scroll">使用者條款 </a>
+                                </li>
+                                <li>
+                                    <a href="privacy_policy.html" class="scroll">隱私權保護政策</a>
+                                </li>
+                                <li><a href="faq.html" class="scroll"> 常見問題與幫助</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+                        <div class="footer-title">
+                            <h3>成為合作夥伴</h3>
+                        </div>
+                        <div class="row">
+                            <ul class="col-10 links">
+                                <li>
+                                    <a href="supplier_form.html" class="scroll">成為供應商</a>
+                                </li>
+                                <li>
+                                    <a href="blogger_photographer.html" class="scroll">部落客/攝影師合作計畫</a>
+                                </li>
+                                <li>
+                                    <a href="group_form.html" class="scroll">團體客製規劃</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1">
+                        <div class="footer-title">
+                            <h3>聯絡我們</h3>
+                        </div>
+                        <ul class="social_section_1info">
+                            <li>
+                                <a href="https://www.facebook.com/TibaMe"><img src="./images/facebook.svg"
+                                        alt="facebook" /></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
+                                        alt="instagram" /></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
+                            </li>
+                            <li class="youtube">
+                                <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img
+                                        src="./images/youtube.svg" alt="youtube" /></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    <!-- //footer -->
+
+    <!-- copyright -->
+    <div class="copyright py-3 text-center">
+        <p>COPYRIGHT © 2023 TripLight All rights reserved.</p>
+    </div>
+    <!-- //copyright -->
+
+    <!-- move top -->
+    <div class="move-top text-right">
+        <a href="#home" class="move-top">
+            <span class="fa fa-angle-up mb-3" aria-hidden="true"></span>
+        </a>
+    </div>
+    <!-- move top -->
+
+    <!-- login顯示 -->
+    <script src="js/Login.js"></script>
+
+    <!--引用jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <script>
+        function redirectToCreateArticle() {
+            window.location.href = "article_create.html";
+        };
+
+        $(document).ready(function () {
+
+            fetch('http://localhost:8080/article/articles')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    new_articlelist(data)
+                })
+
+            function new_articlelist(data) {
+                $('#mylistContainer').html('');
+
+                for (let article of data) {
+
+                    if (article.articleStatus === 1) {
+                        continue; // 狀態數字為1，跳過此次迴圈
+                    }
+
+                    let articleType;
+                    switch (article.articleTypeId) {
+                        case 1:
+                            articleType = '遊記';
+                            break;
+                        case 2:
+                            articleType = '食記';
+                            break;
+                        case 3:
+                            articleType = '住宿';
+                            break;
+                        case 4:
+                            articleType = '評論';
+                            break;
+                        case 5:
+                            articleType = '問題';
+                            break;
+                        default:
+                            articleType = '未知類型';
+                            break;
+                    }
+
+                    let inputDate = article.articlePostTime;
+                    let dateTime = new Date(inputDate);
+                    let year = dateTime.getFullYear();
+                    let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+                    let day = String(dateTime.getDate()).padStart(2, "0");
+                    let formattedDate = `${year}-${month}-${day}`;
+
+                    $('#mylistContainer').append(`
+                    <tr id="row" style="background: #262a38;">
+                            <td style="color: rgb(255,255,255);">【${articleType}】</td>
+                            <td style="color: rgb(255,255,255);">${article.memberName}</td>
+                            <td style="color: rgb(255,255,255);">${article.articleTitle}</td>
+                            <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
+                                <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="http://localhost:8080/front-end/article_detail.html?id=${article.articleId}" style="color: #00bdff;">
+                                    <i class="far fa-eye">
+                                    </i>
+                                </a>
+                                <a class="btn btnMaterial btn-flat success semicircle" role="button" href="http://localhost:8080/front-end/article_upgrade.html?id=${article.articleId}" style="color: rgb(0,197,179);">
+                                    <i class="fas fa-pen">
+                                    </i>
+                                    </a>
+                                <a class="btn btnMaterial btn-flat accent checkboxHover" id="delete" data-id="${article.articleId}" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal">
+                                    <i class="fas fa-trash btnNoBorders" style="color: #DC3545;">
+                                    </i>
+                                </a>
+                                </td>
+                    </tr>
+                    `);
+                }
+            }
+        });
+        function hideRow(e) {
+        };
+
+        $(document).on('click', '#delete', function (e) {          
+            e.preventDefault(); // 防止表單提交
+            var result = confirm("確定要刪除文章嗎？");
+            if (result) {
+                const id = $(this).data('id');
+                //發請求
+                fetch(`http://localhost:8080/article/deletearticle/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            alert('刪除成功');
+                            var row = document.getElementById("row");
+                            row.style.display = "none";
+                            let articleStatus = 1;
+                        } else {
+                            alert('刪除失敗');
+                        }
+                    })
+                    .catch(error => console.log(error));
+                console.log(article);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

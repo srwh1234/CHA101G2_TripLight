@@ -15,6 +15,10 @@ public class BKLoginService {
 		this.employeeRepository = employeeRepository;
 	}
 
+	public String findEmployeeAccessByEmployeeAccount(String employeeAccount) {
+		return employeeRepository.findEmployeeAccessByEmployeeAccount(employeeAccount);
+	}
+
 	public Employee bklogin(String account, String password) {
 		Employee employee = employeeRepository.findByEmployeeAccount(account);
 

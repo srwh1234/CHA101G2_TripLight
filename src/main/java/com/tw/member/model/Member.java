@@ -2,13 +2,9 @@ package com.tw.member.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Base64;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,4 +61,20 @@ public class Member implements Serializable {
 		this.memberPhone = memberPhone;
 	}
 
+	public Member(String memberNameLast, String memberNameFirst, String memberPhone, String memberEmail){
+		this.memberFullName = memberNameLast + memberNameFirst;
+		this.memberPhone = memberPhone;
+		this.memberEmail = memberEmail;
+	}
+
+	public Member(String memberNameLast, String memberNameFirst, byte[] memberPicArg){
+		this.memberFullName = memberNameLast + memberNameFirst;
+		memberPicBase64 = Base64.getEncoder().encodeToString(memberPicArg);
+	}
+
+	@Transient
+	private String memberFullName;
+
+	@Transient
+	private String memberPicBase64;
 }

@@ -172,14 +172,17 @@
                 url: "/BKlogin",
                 data: { account: account, password: password },
                 success: function (data) {
+// 				console.log(data);
                 	
                 	if(data){
                 		// 登入成功
+                		sessionStorage.setItem("管理員" , JSON.stringify(data));
+                		
                    	 window.location.href = 'http://localhost:8080/back-end/index.html';
                 	}else{
                 		Swal.fire({
                             icon: 'error',
-                            title: '查無此員工、狀態不符登入失敗',
+                            title: '查無員工、狀態不符、登入失敗',
                             confirmButtonText: '關閉'
                         });
                 	}
