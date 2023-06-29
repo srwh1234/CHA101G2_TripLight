@@ -688,6 +688,7 @@
         $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripIdString=${sessionTripId}`)
             .done(function (response) {
 
+                console.log(response[0].tourGroupId);
 
                 // ====== 預設顯示最新的旅遊團 response[0] ======
                 $('#selectedDate').text(`${response[0].formattedStartDate} 至 ${response[0].formattedEndDate}`);
@@ -869,7 +870,7 @@
 
                 });
 
-                // ====== 日曆點擊後，隨著點擊日期修改內容 ======
+                // ====== 日曆點擊後，隨著點擊日期修改旅遊團內容 ======
                 let calendarEl = document.getElementById('calendar');
 
                 let calendar = new FullCalendar.Calendar(calendarEl, {
