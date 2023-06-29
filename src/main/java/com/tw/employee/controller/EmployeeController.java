@@ -22,10 +22,10 @@ public class EmployeeController {
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-
-    // 新增頁面用的
+    
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        System.out.println("employeeAccess: " + employee.getEmployeeAccess()); 
         Employee createdEmployee = employeeService.saveEmployee(employee);
         return ResponseEntity.ok(createdEmployee);
     }
