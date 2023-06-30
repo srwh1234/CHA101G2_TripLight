@@ -81,6 +81,12 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.75</version>
+		</dependency>
+
 		<!--	webFlux		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
