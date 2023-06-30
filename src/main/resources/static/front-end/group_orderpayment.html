@@ -333,7 +333,7 @@
                 }
             }
             const memberId = getMemberId();
-            sessionStorage.setItem('memberId', memberId);
+
 
             function getTripOrderId() {
                 const queryString = window.location.search; // 返回 "?name=John&age=25"
@@ -343,7 +343,6 @@
                 }
             }
             const tripOrderId = getTripOrderId();
-            console.log(tripOrderId);
 
 
             // ====== 渲染金額 ======
@@ -357,11 +356,14 @@
             }
             // ====== 渲染會員資訊 ======
 
+            let email;
+
             if(memberId !== 0){
                 $.getJSON(`http://localhost:8080/getMemberInfor?memberId=${memberId}`, function (response) {
                     $('#memberName').val(`${response.memberFullName}`);
                     $('#memberPhone').val(`${response.memberPhone}`);
                     $('#memberEmail').val(`${response.memberEmail}`);
+                    email = response.memberEmail;
 
                 });
 
@@ -467,6 +469,14 @@
 
                         $('input').val('');
                         sessionStorage.clear();
+
+                        let testLogin = {
+                            'email': email,
+                            'memberId': memberId
+                        }
+
+                        let json = JSON.stringify(testLogin);
+                        sessionStorage.setItem('test-login', json);
                     }
                 });
 
