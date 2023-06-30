@@ -180,7 +180,7 @@ function getData() {
 	}
 	// 檢查資料是否有空值
 	const hasEmptyValue = Object.values(data).some(value => value === "");
-	if (hasEmptyValue) {
+	if (hasEmptyValue || $('#inputLastName').val().trim() === "" || $('#inputFirstName').val().trim() === "" || $('#inputIdNumber').val().trim() === "" || $("#inputPhoneNumber").val().trim() === "" || $("#inputAddress").val().trim() === "") {
 		Swal.fire({
 			icon: "error",
 			title: "儲存失敗",
