@@ -526,15 +526,15 @@
             <div class="d-flex justify-content-center align-items-center my-3">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                        <a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=1" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=3">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+                        <a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=3" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -682,8 +682,19 @@
     <script>
         $(document).ready(function () {
 
-            defaultSearch();
-            // ====== 搜尋功能 待完成 ======
+            // ===== 網址列取得 分頁index ======
+            function getIndex() {
+                const queryString = window.location.search; // 返回 "?name=John&age=25"
+                const urlParams = new URLSearchParams(queryString);
+                if(urlParams.get('index')!=null){
+                    return urlParams.get('index'); // 返回 "25"
+                }
+            }
+            let index = getIndex();
+
+
+            defaultSearch(index);
+            // ====== 搜尋功能 ======
             function searchByCities() {
                 // 物件存放當下被點擊的搜尋條件
                 let currentChecked = {
@@ -697,6 +708,8 @@
 
                 // 發送請求
                 $.post("http://localhost:8080/tripSearch/getTripsByCities", JSON.stringify(currentChecked), function (response) {
+
+                    let index2 = getIndex();
                     if (response.length === 0) {
                         $('#productItems').empty();
                         let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
@@ -706,7 +719,7 @@
                             $('#productItems').empty();
                             let noResult = `<h3> 看看其他方案吧~ </h3>`;
                             $('#productItems').append(noResult);
-                            defaultSearch();
+                            defaultSearch(index2);
 
                         }, 3000);
 
@@ -733,15 +746,16 @@
                 // 發送請求
                 $.post("http://localhost:8080/tripSearch/getTripsByTypes", JSON.stringify(currentChecked), function (response) {
                     if (response.length === 0) {
+                        let index2 = getIndex();
                         $('#productItems').empty();
                         let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
                         $('#productItems').append(noResult);
 
-                        setTimeout(function () {
+                        setTimeout(function (index) {
                             $('#productItems').empty();
                             let noResult = `<h3> 看看其他方案吧~ </h3>`;
                             $('#productItems').append(noResult);
-                            defaultSearch();
+                            defaultSearch(index2);
 
                         }, 3000);
 
@@ -764,6 +778,7 @@
                 // 發送請求
                 $.post("http://localhost:8080/tripSearch/getTripsByKeyword", JSON.stringify(currentChecked), function (response) {
                     if (response.length === 0) {
+                        let index2 = getIndex();
                         $('#productItems').empty();
                         let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
                         $('#productItems').append(noResult);
@@ -772,7 +787,7 @@
                             $('#productItems').empty();
                             let noResult = `<h3> 看看其他方案吧~ </h3>`;
                             $('#productItems').append(noResult);
-                            defaultSearch();
+                            defaultSearch(index2);
 
                         }, 3000);
 
@@ -786,24 +801,10 @@
             }
 
             function searchByPrice() {
+                let index2 = getIndex();
+                $.getJSON(`http://localhost:8080/tripSearch/getTripListOrderByPrice?index=${index2}`, function (response) {
 
-                $.getJSON("http://localhost:8080/tripSearch/getTripListOrderByPrice", function (response) {
-                    if (response.length === 0) {
-                        $('#productItems').empty();
-                        let noResult = `<h3> 嗚嗚，無符合的行程 </h3>`;
-                        $('#productItems').append(noResult);
-
-                        setTimeout(function () {
-                            $('#productItems').empty();
-                            let noResult = `<h3> 看看其他方案吧~ </h3>`;
-                            $('#productItems').append(noResult);
-                            defaultSearch();
-
-                        }, 3000);
-
-                    } else {
-                        render_search(response);
-                    }
+                    render_search(response);
 
                     // 渲染頁面
                 }, 'json');
@@ -874,7 +875,7 @@
 
 
             // 4. 價格: 低至高
-            $('#orderByPrice').on('click', function (){
+            $('#orderByPrice').on('click', function (index){
                 searchByPrice();
             })
 
@@ -883,7 +884,7 @@
 
             // ====== 網頁預設搜尋預設畫面 (全部) ======
             function defaultSearch() {
-                $.getJSON('http://localhost:8080/tripSearch/getTripList', function (response) {
+                $.getJSON(`http://localhost:8080/tripSearch/getTripList?index=${index}`, function (response) {
 
                     let parentEl = $('#productItems');
 

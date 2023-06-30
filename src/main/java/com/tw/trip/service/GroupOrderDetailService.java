@@ -104,14 +104,13 @@ public class GroupOrderDetailService {
 
     }
 
-    public Integer getTripCommentEditCount(Integer memberId, Integer tripId){
+    public Integer getTripCommentEditCount(Integer tripOrderId){
         final String HQL = """
                 SELECT editCount FROM TripComment
-                WHERE memberId = :memberId AND tripId = :tripId
+                WHERE tripOrderId= :tripOrderId
                 """;
        Integer editCount = session.createQuery(HQL, Integer.class)
-                .setParameter("memberId", memberId)
-                .setParameter("tripId", tripId)
+                .setParameter("tripOrderId", tripOrderId)
                 .uniqueResult();
 
        if(editCount != null){
@@ -124,7 +123,7 @@ public class GroupOrderDetailService {
 
     // ====== Group Order 新增評論 ======
     public void addTripComment(Integer tripId, Integer memberId, Integer rating,
-                               String comment, Integer status, Integer editCount ){
+                               String comment, Integer status, Integer editCount, Integer tripOrderId){
 
         TripComment tripComment = new TripComment();
         tripComment.setTripId(tripId);
@@ -134,6 +133,7 @@ public class GroupOrderDetailService {
         tripComment.setComment(comment);
         tripComment.setStatus(status);
         tripComment.setEditCount(editCount);
+        tripComment.setTripOrderId(tripOrderId);
         tripCommentDao.insert(tripComment);
 
         System.out.println("trip comments successfully updated!");

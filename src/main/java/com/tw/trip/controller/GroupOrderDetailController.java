@@ -91,7 +91,8 @@ public class GroupOrderDetailController {
                     jsonObject.getInt("rating"),
                     jsonObject.getString("comment"),
                     jsonObject.getInt("status"),
-                    jsonObject.getInt("edit_count")
+                    jsonObject.getInt("edit_count"),
+                    jsonObject.getInt("tripOrderId")
             );
 
         }catch (JSONException e){
@@ -104,10 +105,9 @@ public class GroupOrderDetailController {
     }
 
     @GetMapping("/getEditCount")
-    public Integer getEditCount(@RequestParam Integer memberId,
-                               @RequestParam Integer tripId){
+    public Integer getEditCount(@RequestParam Integer tripOrderId){
 
-        Integer editCount = groupOrderDetailService.getTripCommentEditCount(memberId, tripId);
+        Integer editCount = groupOrderDetailService.getTripCommentEditCount(tripOrderId);
         return editCount;
     }
 
