@@ -1,4 +1,4 @@
-package com.tw._example.filter;
+package com.tw.member;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -26,7 +26,6 @@ public class FrontEndLoginFilter implements Filter {
 		PROTECT.add("question_form.html");
 		PROTECT.add("read_question_list.html");
 		PROTECT.add("group_order.html");
-		PROTECT.add("shopping_car.html");
 		PROTECT.add("tickets_order.html");
 		PROTECT.add("my_favorite.html");
 		PROTECT.add("membership_rating.html");
