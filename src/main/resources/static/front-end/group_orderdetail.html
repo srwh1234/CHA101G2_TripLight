@@ -481,6 +481,7 @@
                 window.location.href=`http://localhost:8080/front-end/itinerary_page.html`;
             });
 
+            let paymentStatus;
             // ====== 取得旅遊團人員資訊 ======
             $.getJSON(`http://localhost:8080/groupOrderDetail/getTravelerList?memberId=${memberId}&tourGroupId=${tourGroupId}&`, function (response) {
 
@@ -537,6 +538,7 @@
                 // ====== 取得訂單資訊 ======
             $('#tripOrderId').text(`訂單編號: ${tripOrderId}`);
             $.getJSON(`http://localhost:8080/groupOrderDetail/getTripInfor?tripOrderId=${tripOrderId}`, function (response) {
+                paymentStatus = response[0].paymentStatus;
 
                 // paymentStatus 為0 則未付款並且付款日期內不會有資料
                 if(response[0].paymentStatus === 0){
@@ -583,10 +585,10 @@
             // ====== 取得評論次數，若已經評論過，則disable 評論按鈕 ======
             let editCount;
 
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getEditCount?memberId=${memberId}&tripId=${tripId}`, function (response) {
+            $.getJSON(`http://localhost:8080/groupOrderDetail/getEditCount?tripOrderId=${tripOrderId}`, function (response) {
                 editCount=response;
 
-                if(editCount === 1){
+                if(editCount === 1 ){
                     $('#btn_modal').text('評論完成');
                     $('#btn_modal').attr('data-bs-target','#');
                     $('#btn_modal').on('click', function (){
@@ -627,7 +629,8 @@
                         'rating': rating,
                         'comment': comment,
                         'status': '1',
-                        'edit_count': '1'
+                        'edit_count': '1',
+                        'tripOrderId': tripOrderId
                     }
 
                     let datajson = JSON.stringify(data);

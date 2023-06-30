@@ -360,9 +360,8 @@
 <script>
 	let loginData = JSON.parse(sessionStorage.getItem('test-login'));
 	let memberId = loginData.memberId;
-	// let memberId = 3;
+	// let memberId = 2;
 	let data = null;
-
 
 	fetch(`/questionReportForm/${memberId}`)
 		.then(response => response.json())
@@ -389,7 +388,7 @@
 				queryButton.textContent = '查詢';
 				queryButton.addEventListener('click', () => {
 					console.log('查詢按鈕被點擊，當前行的資料是：', item);
-					window.location.href = 'check_question.html?id=' + item.id; // 替换为目标网页的 URL
+					window.location.href = 'check_question_report_detail.html?id=' + item.id; // 替换为目标网页的 URL
 				});
 				row.appendChild(queryButton);
 
@@ -451,7 +450,7 @@
 						})
 							.then((result) => {
 								if (result.isConfirmed) {
-									fetch(`/questionReportForm/${item.id}/score`, {
+									fetch(`/questionReportForm/score/${item.id}`, {
 										method: 'POST',
 										headers: {
 											'Content-Type': 'application/json'

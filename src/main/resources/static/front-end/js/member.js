@@ -206,6 +206,12 @@ function getData() {
 }
 $("#saveData").click(function () {
 	getData();
+	Swal.fire({
+		icon: "success",
+		title: "資料儲存成功",
+		showConfirmButton: false,
+		timer: 1500,
+	});
 })
 
 

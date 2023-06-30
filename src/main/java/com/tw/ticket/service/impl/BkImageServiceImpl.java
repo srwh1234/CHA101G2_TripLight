@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.model.TicketImage;
 import com.tw.ticket.model.dao.TicketRepository;
-import com.tw.ticket.model.redis.TicketImageRedis;
+import com.tw.ticket.redis.TicketImageRedis;
 import com.tw.ticket.service.BkImageService;
 
 @Service

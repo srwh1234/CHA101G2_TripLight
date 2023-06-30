@@ -39,9 +39,6 @@ public class Article implements java.io.Serializable {
 
 	private byte[] articlePicture;			// 文章圖片
 
-	
-
-	
 
 	}
 

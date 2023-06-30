@@ -14,6 +14,7 @@ import com.tw.ticket.controller.TicketDetailController.PromotionDto;
 import com.tw.ticket.model.Ticket;
 import com.tw.ticket.service.CartService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
 @CrossOrigin(origins = "*")
@@ -27,15 +28,16 @@ public class CartController {
 	 * 前台-購物車-購物車清單
 	 */
 	@GetMapping("/carts")
-	public List<CartDto> carts(@RequestParam final int memberId) {
-		return cartService.getItems(memberId);
+	public List<CartDto> carts(@RequestParam final int memberId, final HttpSession session) {
+		return cartService.getItems(memberId, session.getId());
 	}
 
 	/**
 	 * 前台-票券明細-加入購物車
 	 */
 	@PostMapping("/addcart")
-	public int addCart(@RequestBody final AddReqDto reqDto) {
+	public int addCart(@RequestBody final AddReqDto reqDto, final HttpSession session) {
+		reqDto.setSessionId(session.getId());
 		return cartService.addItem(reqDto);
 	}
 
@@ -43,7 +45,8 @@ public class CartController {
 	 * 前台-購物車-變更數量
 	 */
 	@PostMapping("/modifycart")
-	public boolean modifyCart(@RequestBody final QuantityReqDto reqDto) {
+	public boolean modifyCart(@RequestBody final QuantityReqDto reqDto, final HttpSession session) {
+		reqDto.setSessionId(session.getId());
 		return cartService.updateItem(reqDto);
 	}
 
@@ -51,8 +54,9 @@ public class CartController {
 	 * 前台-購物車-移除
 	 */
 	@GetMapping("/removecart")
-	public boolean removeCart(@RequestParam final int memberId, @RequestParam final int ticketId) {
-		return cartService.removeItem(memberId, ticketId);
+	public boolean removeCart(@RequestParam final int memberId, //
+			@RequestParam final int ticketId, final HttpSession session) {
+		return cartService.removeItem(memberId, ticketId, session.getId());
 	}
 
 	// 定義請求物件
@@ -61,6 +65,7 @@ public class CartController {
 		private int memberId;
 		private int ticketId;
 		private int quantity;
+		private String sessionId;
 	}
 
 	@Data
@@ -68,6 +73,7 @@ public class CartController {
 		private int memberId;
 		private int ticketId;
 		private int modify;
+		private String sessionId;
 	}
 
 	// 定義回傳物件

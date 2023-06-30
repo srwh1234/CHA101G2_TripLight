@@ -399,14 +399,23 @@
 
                 });
 
+
+                // ====== 渲染訂單列表區 ======
                 $.getJSON(`http://localhost:8080/groupOrder/getTrips?memberId=${memberId}`, function (response) {
 
-                    // ====== 右側訂單列表區 ======
                     let tripOrderParent = $('#tripOrderParent');
-                    for (let i=0; i<response.length; i++){
 
-                        let imageUrl = 'http://localhost:8080/img/trips/' + response[i].id;
-                        let html = `
+                    if(response.length == 0 ){
+                        let childEl = `<h3> 目前尚無訂單~ 去逛逛吧 </h3>`;
+                        tripOrderParent.append(childEl);
+
+                    }else {
+                        // ====== 右側訂單列表區 ======
+
+                        for (let i=0; i<response.length; i++){
+
+                            let imageUrl = 'http://localhost:8080/img/trips/' + response[i].id;
+                            let html = `
 
                          <!-- 商品1 -->
                         <div class="card mb-3 my-nav-link shadow p-3 mb-5 bg-body rounded" href="#itinerary_detail">
@@ -428,24 +437,27 @@
                                 </div>
                             </div>
                         `;
-                        tripOrderParent.append(html);
+                            tripOrderParent.append(html);
 
+                        }
+
+                        // ====== 點擊後換頁並將換頁所需資料存在session ======
+                        tripOrderParent.on('click', '.changePage', function (event) {
+                            let tripOrderId = $(this).attr('tripOrderId');
+                            let tripId = $(this).attr('tripId');
+                            let tourGroupId = $(this).attr('tourGroupId');
+
+                            sessionStorage.setItem('tripOrderId', `${tripOrderId}`);
+                            sessionStorage.setItem('tripId', `${tripId}`);
+                            sessionStorage.setItem('tourGroupId', `${tourGroupId}`);
+                            window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
+                        })
                     }
 
-                    // ====== 點擊後換頁並將換頁所需資料存在session ======
-                    tripOrderParent.on('click', '.changePage', function (event) {
-                        let tripOrderId = $(this).attr('tripOrderId');
-                        let tripId = $(this).attr('tripId');
-                        let tourGroupId = $(this).attr('tourGroupId');
-
-                        sessionStorage.setItem('tripOrderId', `${tripOrderId}`);
-                        sessionStorage.setItem('tripId', `${tripId}`);
-                        sessionStorage.setItem('tourGroupId', `${tourGroupId}`);
-                        window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
-                    })
 
 
                 });
+            // ====== //渲染訂單列表區 ======
 
 
 

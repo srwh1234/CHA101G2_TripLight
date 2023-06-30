@@ -13,7 +13,7 @@ function getMemberId(show = true) {
     const item = JSON.parse(sessionStorage.getItem('test-login'));
     if (!item || !item.memberId) {
         if (show) {
-            $('#login-container').addClass('active-popup');
+            Swal.fire({ icon: 'info', title: '請登入會員', });
         }
         return 0;
     }
