@@ -242,7 +242,7 @@
           <li class=""><a href="index.html">首頁</a></li>
           <li class=""><a href="booking.html">AI行程規劃</a></li>
           <li class="active"><a href="tickets.html">票券</a></li>
-          <li class=""><a href="itinerary_search.html">套裝行程</a></li>
+          <li class=""><a href="itinerary_search.html?index=1">套裝行程</a></li>
           <li class=""><a href="articles.html">旅遊文章</a></li>
           <li class="booking"><a href="" id="login">登入/註冊</a></li>
           <li class="">
@@ -421,7 +421,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                   選擇類型
                 </button>
               </h2>
@@ -437,7 +437,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingTwo">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
+                  aria-expanded="true" aria-controls="collapseTwo">
                   選擇縣市
                 </button>
               </h2>
@@ -538,14 +538,14 @@
               </li>
               <li>
                 <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                       alt="instagram" /></a>
+                    alt="instagram" /></a>
               </li>
               <li>
                 <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
               </li>
               <li class="youtube">
                 <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
-                       alt="youtube" /></a>
+                    alt="youtube" /></a>
               </li>
             </ul>
           </div>
@@ -870,7 +870,7 @@
         //促銷的判斷
         let priceHtml = `<div class="my-ticket-price h4 fw-bold text-dark ms-auto">${ticket.price} 元</div>`;
         if (ticket.promotion) {
-          priceHtml =`
+          priceHtml = `
             <div class="my-mark ms-auto">${ticket.promotion.startDate}~${ticket.promotion.endDate}</div>
             <div class="my-ticket-price h4 fw-bold text-danger ms-auto">${ticket.promotion.price} 元</div>
           `;
