@@ -106,12 +106,14 @@ public class TicketCartsRedisImpl implements TicketCartsRedis {
 	@Override
 	public int addItem(final AddReqDto reqDto) {
 		if (!config.isRedisServerStarted()) {
-			return CartService.ADD_CART_ERROR;
+			return CartService.ADD_CART_LOGIN;
 		}
 		try (Jedis jedis = jedisPool.getResource()) {
 			// Hash
 			final String key = REDIS_KEY + reqDto.getSessionId();
 			jedis.hincrBy(key, String.valueOf(reqDto.getTicketId()), reqDto.getQuantity());
+			// 存活1周
+			jedis.expire(key, 7 * 86400L);
 		}
 		return CartService.ADD_CART_OK;
 	}
@@ -131,6 +133,8 @@ public class TicketCartsRedisImpl implements TicketCartsRedis {
 			// Hash
 			final String key = REDIS_KEY + reqDto.getSessionId();
 			jedis.hincrBy(key, String.valueOf(reqDto.getTicketId()), reqDto.getModify());
+			// 存活1周
+			jedis.expire(key, 7 * 86400L);
 		}
 		return true;
 	}

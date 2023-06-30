@@ -957,13 +957,34 @@
           Swal.fire({ icon: 'warning', title: '與伺服器失去聯繫', });
           break;
         case 1:
-          Swal.fire({ icon: 'success', title: '加入購物車成功', });
+          //Swal.fire({ icon: 'success', title: '加入購物車成功', });
+
+          Swal.fire({
+            icon: 'success', title: '加入購物車成功',
+            showCancelButton: true,
+            confirmButtonText: '繼續購物',
+            cancelButtonText: '查看購物車',
+            confirmButtonColor: 'deepPink',// 修改按鈕色碼
+            cancelButtonColor: '#26bec9',
+          })
+            .then(res => {
+              if (res.isConfirmed) {
+                //繼續購物
+                window.location.href = 'tickets.html';
+              } else if (res.dismiss === 'cancel') {
+                //查看購物車
+                window.location.href = 'shopping_car.html';
+              }
+            })
           break;
         case 2:
           Swal.fire({ icon: 'warning', title: '此商品數量不足', });
           break;
         case 3:
           Swal.fire({ icon: 'warning', title: '此商品已下架', });
+          break;
+        case 5:
+          Swal.fire({ icon: 'info', title: '請登入會員', });
           break;
         default:
           Swal.fire({ icon: 'warning', title: '發生未知的錯誤', });

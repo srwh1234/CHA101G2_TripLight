@@ -211,7 +211,7 @@
                                         <th>行程描述</th>
                                         <th>特別說明</th>
                                         <th>行程狀態</th>
-                                        <th>編輯</th>
+                                        <!-- <th>編輯</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody"></tbody>
@@ -312,8 +312,8 @@
     
     </body>
     <script>
-var editButton = $('<button></button>').text('編輯');
-$(document).ready(function() {
+
+    $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/trip/info',
@@ -321,16 +321,16 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 var tableBody = $('#tableBody');
-                tableBody.empty(); // 清空表格内容，确保每次刷新都是最新数据
+                tableBody.empty(); // 清空表格内容，確保每次都是新數據
 
-                // 迭代每个行程数据
+                // 迭代每個行程數據
                 for (let i = 0; i < response.length; i++) {
                     const rowData = response[i];
 
-                    // 创建行
+                    // 創建行
                     var row = $('<tr></tr>');
 
-                    // 创建单元格，并填充数据
+                    // 創建表單，並給予填充數據
                     row.append('<td>' + rowData.tripId + '</td>');
                     row.append('<td>' + rowData.vendorId + '</td>');
                     row.append('<td>' + rowData.tripName + '</td>');
@@ -345,21 +345,39 @@ $(document).ready(function() {
                     row.append('<td>' + rowData.tripNote + '</td>');
                     row.append('<td>' + rowData.status + '</td>');
                     row.append('<td></td>').append(editButton);
-
-                    // 将行添加到表格中
+            
+                    // 創建編輯按鈕元素
+                    var editButton = $('<button></button>').text('編輯');
+                
+                    // 添加編輯按鈕得處理
+                    editButton.click(function() {
+                        $('#tripId').val(rowData.tripId);
+                        $('#vendorId').val(rowData.vendorId);
+                        $('#tripName').val(rowData.tripName);
+                        $('#tripContent').val(rowData.tripContent);
+                        $('#tripDay').val(rowData.tripDay);
+                        $('#city').val(rowData.city);
+                        $('#priceAdult').val(rowData.priceAdult);
+                        $('#priceChild').val(rowData.priceChild);
+                        $('#minTravelersNo').val(rowData.minTravelersNo);
+                        $('#maxTravelersNo').val(rowData.maxTravelersNo);
+                        $('#tripDescription').val(rowData.tripDescription);
+                        $('#tripNote').val(rowData.tripNote);
+                    });
+                
+                    // 將行列加到表格中
                     tableBody.append(row);
                 }
+                    
+                console.log('行程資訊獲得成功');    
 
-                console.log('行程資訊獲得成功');
             },
 
             error: function(error) {
                 console.log('獲取廠商行程資訊失敗。錯誤：' + error);
-                $('#errorDiv').html('獲取廠商行程資訊失敗。錯誤：' + error);
             }
         });
     });
-
     </script>
 
 </html>

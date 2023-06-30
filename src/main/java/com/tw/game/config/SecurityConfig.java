@@ -22,6 +22,8 @@ public class SecurityConfig{
 //        auth.authenticationProvider(authenticationProvider);
 //    }
 
+
+
     // 設定使用者權限(暫存使用者)
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
@@ -35,6 +37,7 @@ public class SecurityConfig{
     }
 
 
+
     // 設定Security Filter chain(設定HttpSecurity)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,8 +45,17 @@ public class SecurityConfig{
                 .requestMatchers("/game-end/manage.html").hasRole("MANAGER")
 //                .requestMatchers(HttpMethod.PUT,"/users/**").hasRole("MANAGER")
                 .requestMatchers(HttpMethod.DELETE,"/users").hasRole("MANAGER")
-                .requestMatchers(HttpMethod.GET,"/users/all").hasRole("MANAGER")
+                .requestMatchers(HttpMethod.GET,"/all").hasRole("MANAGER")
                 .anyRequest().permitAll();
+
+        http
+                // ...其他配置...
+                .logout()
+                .logoutUrl("/custom-logout") // 自定义注销 URL
+                .logoutSuccessUrl("/logout-success") // 注销成功后的跳转 URL
+                .invalidateHttpSession(true) // 是否使 HttpSession 失效，默认为 true
+                .deleteCookies("JSESSIONID") // 注销后要删除的 Cookies，可以指定多个
+                .permitAll(); // 允许所有用户访问注销 URL
         // 配置認證方式
         http.httpBasic(Customizer.withDefaults());
 

@@ -12,6 +12,7 @@ public interface CartService {
 	public static int ADD_CART_SOLDOUT = 2;// 此商品數量不足
 	public static int ADD_CART_DISABLE = 3;// 此商品已下架
 	public static int ADD_CART_ERROR = 4;// 發生未知的錯誤
+	public static int ADD_CART_LOGIN = 5;// 請登入會員
 
 	/**
 	 * 票券購物車清單
