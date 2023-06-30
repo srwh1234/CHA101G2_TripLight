@@ -231,9 +231,9 @@
         let [userId, money] = message.split(",");
 
         $.ajax({
-            url: "/users/" + userId,
+            url: "/users/" + parseInt(userId),
             method: "PUT",
-            data: { money: money },
+            data: { money: parseInt(money) },
             success: function (response) {
                 if (response) {
                     Swal.fire({

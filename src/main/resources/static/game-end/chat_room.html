@@ -173,7 +173,7 @@
       sessionStorage.setItem("user", userString);  // 將使用者資訊存入sessionStorage
       // 傳送訊息
       $.ajax({
-        url: "/content",
+        url: "/games/content",
         method: "POST",
         data: { content: content },
         success: function (response) {
@@ -208,7 +208,7 @@
     }
   }
 
-  const sseSource = new EventSource(`/sse`);
+  const sseSource = new EventSource(`/games/sse`);
   sseSource.addEventListener("message", function (event) {
     console.log(event);
 

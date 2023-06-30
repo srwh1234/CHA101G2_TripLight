@@ -209,7 +209,16 @@ Note: The probability of winning is 5%.`;
 
     let canClick = true;
     function clickLuck() {
-        if (canClick) {
+        if (user.money < 50) {
+            Swal.fire({
+                title: "You don't have enough money",
+                timer: 1500,
+                showConfirmButton: false,
+                background: 'rgba(255, 255, 255, .7)'
+            });
+        }
+
+        if (canClick && user.money >= 50) {
             // 減少資金
             user.money -= 50;
             // 更新狀態
@@ -245,7 +254,7 @@ Note: The probability of winning is 5%.`;
                             background: 'rgba(255, 255, 255, .7)',
                             backdrop: `
     rgba(0, 0, 123, 0.1)
-    url("/img/nyan-cat.gif")
+    url("/game-end/img/nyan-cat.gif")
     center / cover
   `
                         }).then(() => {
@@ -261,7 +270,7 @@ Note: The probability of winning is 5%.`;
                 updatePrizepoolTOZero()
             }
             canClick = false;
-            setTimeout(function() {
+            setTimeout(function () {
                 canClick = true;
             }, 1000); // 這裡的200表示限制為每0.2秒內只能點擊一次
         }

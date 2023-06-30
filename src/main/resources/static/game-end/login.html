@@ -119,7 +119,7 @@
     }
 
     $.ajax({
-      url: "/login",
+      url: "/games/login",
       method: "POST",
       data: JSON.stringify(user),
       contentType: "application/json",
@@ -168,7 +168,7 @@
       password: $("#password").val()
     }
     $.ajax({
-      url: "/register",
+      url: "/games/register",
       method: "POST",
       data: JSON.stringify(user),
       contentType: "application/json",
