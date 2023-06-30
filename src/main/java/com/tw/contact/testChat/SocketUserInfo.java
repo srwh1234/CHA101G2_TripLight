@@ -3,16 +3,12 @@
 //import jakarta.websocket.Session;
 //
 //public class SocketUserInfo {
-//    //用户sessionId
 //    private String sessionId;
 //
-//    //用户session
 //    private Session session;
 //
-//    //目标用户sessionid
 //    private String targetSessionId;
 //
-//    //用户角色
 //    private String userRole;
 //
 //    public String getUserRole() {
