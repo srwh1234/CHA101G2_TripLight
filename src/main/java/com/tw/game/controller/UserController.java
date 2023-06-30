@@ -34,8 +34,13 @@ public class UserController {
 
     // Get all users
     @GetMapping("/all")
-    public List<User> getAllUsers(){
-        return userService.findAllUser();
+    public List<User> getAllUsers(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if (user.getEmail().equals("?") && user.getPassword().equals("!")) {
+            return userService.findAllUser();
+        } else {
+            return null;
+        }
     }
 
     // Get all users sorted by score
@@ -93,12 +98,18 @@ public class UserController {
 
     // Update a user by ID
     @PutMapping("/{userId}")
-    public boolean updateUser(@PathVariable int userId, @RequestParam int money){
-        User user = userService.findUserById(userId);
-        System.out.println(money);
-        user.setMoney(money);
-        userService.save(user);
-        return true;
+    public boolean updateUser(@PathVariable int userId, @RequestParam int money,HttpSession session){
+        User manager = (User)session.getAttribute("user");
+
+        if (manager.getEmail().equals("?") && manager.getPassword().equals("!")) {
+            User user = userService.findUserById(userId);
+            System.out.println(money);
+            user.setMoney(money);
+            userService.save(user);
+            return true;
+        }else {
+            return false;
+        }
     }
     // Update a user's maximum score
     @PutMapping("/score")
@@ -127,10 +138,13 @@ public class UserController {
     }
     // Delete a user by ID
     @DeleteMapping("/{userId}")
-    public boolean deleteUser(@PathVariable int userId){
-        if(userService.findUserById(userId)!= null){
-            userService.deleteUser(userId);
-            return true;
+    public boolean deleteUser(@PathVariable int userId,HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if (user.getEmail().equals("?") && user.getPassword().equals("!")) {
+            if(userService.findUserById(userId)!= null){
+                userService.deleteUser(userId);
+                return true;
+            }
         }
         return false;
     }
