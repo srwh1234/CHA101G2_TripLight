@@ -188,21 +188,20 @@ function getData() {
 			showConfirmButton: false,
 			timer: 1500,
 		});
+	} else {
+		$.ajax({
+			url: "/member/" + theId,
+			type: "POST",
+			data: JSON.stringify(data),
+			contentType: "application/json",
+			success: function (response) {
+
+			},
+			error: function (error) {
+				console.error(error);
+			}
+		});
 	}
-
-	$.ajax({
-		url: "/member/" + theId,
-		type: "POST",
-		data: JSON.stringify(data),
-		contentType: "application/json",
-		success: function (response) {
-
-		},
-		error: function (error) {
-			console.error(error);
-		}
-	});
-
 }
 $("#saveData").click(function () {
 	getData();
