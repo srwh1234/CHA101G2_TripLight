@@ -174,7 +174,7 @@ public class VendorTourOrderController {
 		if (isOk) {
 			result = """
 					<p>出團請結帳</p>
-					<a href="http://localhost:8080/front-end/group_orderpayment.html?memberId=%d1&tripOrderId=%d">
+					<a href="http://localhost:8080/front-end/group_orderpayment.html?memberId=%d&tripOrderId=%d">
 					前往結帳
 					</a>
 					""";
