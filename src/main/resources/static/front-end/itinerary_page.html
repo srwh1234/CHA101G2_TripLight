@@ -681,396 +681,450 @@
                 }, error: (error) => {
                     console.log(error);
                 }
-            })
-        })
+            });
+        });
 
         // ====== 取得旅遊團資訊 ======
-        $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripIdString=${sessionTripId}`)
+        $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripId=${sessionTripId}`)
             .done(function (response) {
 
-                console.log(response[0].tourGroupId);
+                // ====== 沒有tourGroupId的情況 ======
+                if (response.length == 0){
+                    // ====== 預設無旅遊團 ======
+                    $('#selectedDate').text('無旅遊團');
 
-                // ====== 預設顯示最新的旅遊團 response[0] ======
-                $('#selectedDate').text(`${response[0].formattedStartDate} 至 ${response[0].formattedEndDate}`);
-                sessionStorage.setItem('formattedStartDate', `${response[0].formattedStartDate}`);
-                sessionStorage.setItem('formattedEndDate', `${response[0].formattedEndDate}`);
-                sessionStorage.setItem('tourGroupId', `${response[0].tourGroupId}`);
-
-                $('#confirmedTravelersNo').text(`${response[0].confirmedTravelersNo} 人`);
-
-                // ====== 詳細資料描述區塊 ======
-                // ====== minTravelersNo ======
-                $('#minTravelersNo').text(`${response[0].minTravelersNo} 人`);
-
-                // ===== maxTravelersNo ======
-                let maxTravelersNo = parseInt(response[0].maxTravelersNo);
-                $('#maxTravelersNo').text(`${maxTravelersNo} 人`);
-
-                // ===== confirmedTravelersNo ======
-                let confirmedTravelersNo = parseInt(response[0].confirmedTravelersNo);
-
-                // ===== leftTravelersNo ======
-                let leftTravelersNo = (maxTravelersNo - confirmedTravelersNo);
-                $('#leftTravelersNo').text(`${leftTravelersNo} 人`);
+                    $('#confirmedTravelersNo').text(`0 人`);
+                    $('#minTravelersNo').text(`0 人`);
 
 
+                    $('#priceChild').text(`0元 /每人`);
+                    $('#priceAdult').text(`0元 /每人`);
+                    $('#amount').text('0元');
+                    $('#beginPrice').html(`0元 起`);
 
-                // ====== priceAdult ======
-                $('#priceAdult').text(`${response[0].priceAdult}/每人`);
-                $('#priceAdult').attr('value', response[0].priceAdult);
+                    // ====== 日曆點擊後，隨著點擊日期修改內容 ======
+                    let calendarEl = document.getElementById('calendar');
 
+                    let calendar = new FullCalendar.Calendar(calendarEl, {
+                        selectable: true, // 啟用選擇功能
+                    });
+                    calendar.render();
 
-                // ====== priceChild ======
-                $('#priceChild').text(`${response[0].priceChild}/每人`);
-                $('#priceChild').attr('value', response[0].priceChild); // attribute value only workable in this area
+                    $('#orderBtn').on('click', function () {
+                        Swal.fire('目前沒有旅遊團');
 
-                // ====== number & price area ======
-                // 數量欄
-                let count_child = $("#count_child");
-                let count_adult = $("#count_adult");
+                    });
 
-                let currentQtyChild = parseInt(count_child.val());
-                let currentQtyAdult = parseInt(count_adult.val());
+                }else {
+                    // ====== 有tourGroupId的情況 ======
+                    // ====== 預設顯示最新的旅遊團 response[0] ======
+                    $('#selectedDate').text(`${response[0].formattedStartDate} 至 ${response[0].formattedEndDate}`);
+                    sessionStorage.setItem('formattedStartDate', `${response[0].formattedStartDate}`);
+                    sessionStorage.setItem('formattedEndDate', `${response[0].formattedEndDate}`);
+                    sessionStorage.setItem('tourGroupId', `${response[0].tourGroupId}`);
 
-                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                    $('#confirmedTravelersNo').text(`${response[0].confirmedTravelersNo} 人`);
 
+                    // ====== 詳細資料描述區塊 ======
+                    // ====== minTravelersNo ======
+                    $('#minTravelersNo').text(`${response[0].minTravelersNo} 人`);
 
-                // 價格
-                let priceChild = parseInt($('#priceChild').attr('value'));
-                let priceAdult = parseInt($('#priceAdult').attr('value'));
+                    // ===== maxTravelersNo ======
+                    let maxTravelersNo = parseInt(response[0].maxTravelersNo);
+                    $('#maxTravelersNo').text(`${maxTravelersNo} 人`);
 
-                // 總金額
-                let amount = $('#amount');
-                let amountValue = parseInt($('#amount').val());
+                    // ===== confirmedTravelersNo ======
+                    let confirmedTravelersNo = parseInt(response[0].confirmedTravelersNo);
 
-                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
-                amount.html(`${amountValue} 元`);
-
-                // ====== origin price ======
-                $('#beginPrice').html(`${priceChild} 元 起`);
+                    // ===== leftTravelersNo ======
+                    let leftTravelersNo = (maxTravelersNo - confirmedTravelersNo);
+                    $('#leftTravelersNo').text(`${leftTravelersNo} 人`);
 
 
 
-                // ===== 兒童 =====
-                // 減號按鈕
-                $("#minus_child").on("click", function () {
-                    if (currentQtyChild > 0) {
-                        currentQtyChild--;
-                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                        count_child.val(currentQtyChild);
+                    // ====== priceAdult ======
+                    $('#priceAdult').text(`${response[0].priceAdult}/每人`);
+                    $('#priceAdult').attr('value', response[0].priceAdult);
 
-                        amountValue -= priceChild;
-                        amount.html(`${amountValue} 元`);
-                    }
-                })
-                // 加號按鈕
-                $("#plus_child").on("click", function () {
-                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
-                        currentQtyChild++;
-                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                        count_child.val(currentQtyChild);
 
-                        amountValue += priceChild;
-                        amount.html(`${amountValue} 元`);
-                    }
+                    // ====== priceChild ======
+                    $('#priceChild').text(`${response[0].priceChild}/每人`);
+                    $('#priceChild').attr('value', response[0].priceChild); // attribute value only workable in this area
 
-                })
-                // ===== 大人 =====
+                    // ====== number & price area ======
+                    // 數量欄
+                    let count_child = $("#count_child");
+                    let count_adult = $("#count_adult");
 
-                // 減號按鈕(大人)
-                $("#minus_adult").on("click", function () {
-                    if (currentQtyAdult > 0) {
-                        currentQtyAdult--;
-                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                        count_adult.val(currentQtyAdult);
+                    let currentQtyChild = parseInt(count_child.val());
+                    let currentQtyAdult = parseInt(count_adult.val());
 
-                        // 金額增減
-                        amountValue -= priceAdult;
-                        amount.html(`${amountValue} 元`);
-                    }
-                })
+                    sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                    sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
 
-                // 加號按鈕 (大人)
-                $("#plus_adult").on("click", function () {
-                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
-                        currentQtyAdult++;
-                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                        count_adult.val(currentQtyAdult);
-                        // 金額增減
-                        amountValue += priceAdult;
-                        amount.html(`${amountValue} 元`);
 
-                    }
-                })
+                    // 價格
+                    let priceChild = parseInt($('#priceChild').attr('value'));
+                    let priceAdult = parseInt($('#priceAdult').attr('value'));
 
-                // 兒童輸入數量欄位
-                count_child.on('change', function () {
-                    if (parseInt(count_child.val()) >= 0 && (count_child.val() !== null) && (count_child.val() !== '')) {
-                        currentQtyChild = parseInt(count_child.val());
-                        console.log(`test first ${currentQtyChild}`);
-                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
-                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                            Swal.fire('超出剩餘名額，請重新輸入');
-                            currentQtyChild = 0;
+                    // 總金額
+                    let amount = $('#amount');
+                    let amountValue = parseInt($('#amount').val());
+
+                    amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                    amount.html(`${amountValue} 元`);
+
+                    // ====== origin price ======
+                    $('#beginPrice').html(`${priceChild} 元 起`);
+
+
+
+                    // ===== 兒童 =====
+                    // 減號按鈕
+                    $("#minus_child").on("click", function () {
+                        if (currentQtyChild > 0) {
+                            currentQtyChild--;
                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                            count_child.val('0');
-                            amountValue = 0;
-                            amountValue = (priceAdult * currentQtyAdult);
+                            count_child.val(currentQtyChild);
+
+                            amountValue -= priceChild;
                             amount.html(`${amountValue} 元`);
-
-
-                        } else {
+                        }
+                    });
+                    // 加號按鈕
+                    $("#plus_child").on("click", function () {
+                        if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
+                            currentQtyChild++;
                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                            count_child.val(currentQtyChild);
 
-                            amountValue = 0;
-                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                            amountValue += priceChild;
                             amount.html(`${amountValue} 元`);
                         }
 
+                    });
+                    // ===== 大人 =====
 
-                    } else {
-                        Swal.fire('輸入錯誤，人數須為正整數');
-                        count_child.val('');
-                    }
-
-                });
-
-                // 大人輸入數量欄位
-                count_adult.on('change', function () {
-                    if (parseInt(count_adult.val()) >= 0 && (count_adult.val() !== null) && (count_adult.val() !== '')) {
-                        currentQtyAdult = parseInt(count_adult.val());
-                        console.log(`test first ${currentQtyAdult}`);
-                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
-                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                            Swal.fire('超出旅遊團人數，請重新輸入');
-                            currentQtyAdult = 0;
+                    // 減號按鈕(大人)
+                    $("#minus_adult").on("click", function () {
+                        if (currentQtyAdult > 0) {
+                            currentQtyAdult--;
                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                            count_adult.val('0');
-                            amountValue = 0;
-                            amountValue = (priceChild * currentQtyChild);
+                            count_adult.val(currentQtyAdult);
+
+                            // 金額增減
+                            amountValue -= priceAdult;
                             amount.html(`${amountValue} 元`);
+                        }
+                    });
 
-                        } else {
+                    // 加號按鈕 (大人)
+                    $("#plus_adult").on("click", function () {
+                        if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
+                            currentQtyAdult++;
                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-
-                            amountValue = 0;
-                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                            count_adult.val(currentQtyAdult);
+                            // 金額增減
+                            amountValue += priceAdult;
                             amount.html(`${amountValue} 元`);
 
                         }
+                    });
 
-
-
-                    } else {
-                        Swal.fire('輸入錯誤，人數須為正整數');
-                        count_adult.val('');
-
-                    }
-
-                });
-
-                // ====== 日曆點擊後，隨著點擊日期修改旅遊團內容 ======
-                let calendarEl = document.getElementById('calendar');
-
-                let calendar = new FullCalendar.Calendar(calendarEl, {
-                    selectable: true, // 啟用選擇功能
-                    select: function (info) {
-
-                        for (let i = 0; i < response.length; i++) {
-                            if (info.startStr === `${response[i].formattedStartDate}`) {
-                                // ====== 預設顯示最新的旅遊團 ======
-                                $('#selectedDate').text(`${response[i].formattedStartDate} 至 ${response[i].formattedEndDate}`);
-                                sessionStorage.setItem('formattedStartDate', `${response[i].formattedStartDate}`);
-                                sessionStorage.setItem('formattedEndDate', `${response[i].formattedEndDate}`);
-                                sessionStorage.setItem('tourGroupId', `${response[i].tourGroupId}`);
-
-                                $('#confirmedTravelersNo').text(`${response[i].confirmedTravelersNo} 人`);
-
-                                // ====== minTravelersNo ======
-                                $('#minTravelersNo').text(`${response[i].minTravelersNo} 人`);
-
-                                // ===== maxTravelersNo ======
-                                let maxTravelersNo = parseInt(response[i].maxTravelersNo);
-                                $('#maxTravelersNo').text(`${maxTravelersNo} 人`);
-
-                                // ===== confirmedTravelersNo ======
-                                let confirmedTravelersNo = parseInt(response[i].confirmedTravelersNo);
-
-                                // ===== leftTravelersNo ======
-                                let leftTravelersNo = (maxTravelersNo - confirmedTravelersNo);
-                                $('#leftTravelersNo').text(`${leftTravelersNo} 人`);
-
-                                // ====== priceAdult ======
-                                $('#priceAdult').text(`${response[i].priceAdult}/每人`);
-                                $('#priceAdult').attr('value', response[i].priceAdult);
-
-
-                                // ====== priceChild ======
-                                $('#priceChild').text(`${response[i].priceChild}/每人`);
-                                $('#priceChild').attr('value', response[i].priceChild); // attribute value only workable in this area
-
-                                // ====== number & price area ======
-                                // 數量欄
-                                let count_child = $("#count_child");
-                                let count_adult = $("#count_adult");
-
-                                let currentQtyChild = parseInt(count_child.val());
-                                let currentQtyAdult = parseInt(count_adult.val());
-
+                    // ====== 兒童輸入數量欄位 ======
+                    count_child.on('change', function () {
+                        if (parseInt(count_child.val()) >= 0 && (count_child.val() !== null) && (count_child.val() !== '')) {
+                            currentQtyChild = parseInt(count_child.val());
+                            console.log(`test first ${currentQtyChild}`);
+                            console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                            if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                                Swal.fire('超出剩餘名額，請重新輸入');
+                                currentQtyChild = 0;
                                 sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                count_child.val('0');
+                                amountValue = 0;
+                                amountValue = (priceAdult * currentQtyAdult);
+                                amount.html(`${amountValue} 元`);
+
+
+                            } else {
+                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+
+                                amountValue = 0;
+                                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                amount.html(`${amountValue} 元`);
+                            }
+
+
+                        } else {
+                            Swal.fire('輸入錯誤，人數須為正整數');
+                            count_child.val('');
+                        }
+
+                    });
+
+                    // ====== //兒童輸入數量欄位 ======
+
+                    // ====== 大人輸入數量欄位 ======
+                    count_adult.on('change', function () {
+                        if (parseInt(count_adult.val()) >= 0 && (count_adult.val() !== null) && (count_adult.val() !== '')) {
+                            currentQtyAdult = parseInt(count_adult.val());
+                            console.log(`test first ${currentQtyAdult}`);
+                            console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                            if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                                Swal.fire('超出旅遊團人數，請重新輸入');
+                                currentQtyAdult = 0;
+                                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                                count_adult.val('0');
+                                amountValue = 0;
+                                amountValue = (priceChild * currentQtyChild);
+                                amount.html(`${amountValue} 元`);
+
+                            } else {
                                 sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
 
-
-                                // 價格
-                                let priceChild = parseInt($('#priceChild').attr('value'));
-                                let priceAdult = parseInt($('#priceAdult').attr('value'));
-
-                                // 總金額
-                                let amount = $('#amount');
-                                let amountValue = parseInt($('#amount').val());
-
+                                amountValue = 0;
                                 amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
                                 amount.html(`${amountValue} 元`);
 
-                                // ====== origin price ======
-                                $('#beginPrice').html(`${priceChild} 元 起`);
+                            }
 
 
-                                // ===== 兒童 =====
-                                // 減號按鈕
-                                $("#minus_child").on("click", function () {
-                                    if (currentQtyChild > 0) {
-                                        currentQtyChild--;
-                                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                                        count_child.val(currentQtyChild);
 
-                                        amountValue -= priceChild;
-                                        amount.html(`${amountValue} 元`);
-                                    }
-                                })
-                                // 加號按鈕
-                                $("#plus_child").on("click", function () {
-                                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
-                                        currentQtyChild++;
-                                        sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                                        count_child.val(currentQtyChild);
+                        } else {
+                            Swal.fire('輸入錯誤，人數須為正整數');
+                            count_adult.val('');
 
-                                        amountValue += priceChild;
-                                        amount.html(`${amountValue} 元`);
-                                    }
+                        }
 
-                                })
-                                // ===== 大人 =====
+                    });
+                    // ====== //大人輸入數量欄位 ======
 
-                                // 減號按鈕(大人)
-                                $("#minus_adult").on("click", function () {
-                                    if (currentQtyAdult > 0) {
-                                        currentQtyAdult--;
-                                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                                        count_adult.val(currentQtyAdult);
+                    // ====== 日曆點擊後，隨著點擊日期修改旅遊團內容 ======
+                    let calendarEl = document.getElementById('calendar');
 
-                                        // 金額增減
-                                        amountValue -= priceAdult;
-                                        amount.html(`${amountValue} 元`);
-                                    }
-                                })
+                    let calendar = new FullCalendar.Calendar(calendarEl, {
+                        selectable: true, // 啟用選擇功能
+                        select: function (info) {
 
-                                // 加號按鈕 (大人)
-                                $("#plus_adult").on("click", function () {
-                                    if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
-                                        currentQtyAdult++;
-                                        sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                                        count_adult.val(currentQtyAdult);
-                                        // 金額增減
-                                        amountValue += priceAdult;
-                                        amount.html(`${amountValue} 元`);
+                            for (let i = 0; i < response.length; i++) {
+                                if (info.startStr === `${response[i].formattedStartDate}`) {
+                                    // ====== 預設顯示最新的旅遊團 ======
+                                    $('#selectedDate').text(`${response[i].formattedStartDate} 至 ${response[i].formattedEndDate}`);
+                                    sessionStorage.setItem('formattedStartDate', `${response[i].formattedStartDate}`);
+                                    sessionStorage.setItem('formattedEndDate', `${response[i].formattedEndDate}`);
+                                    sessionStorage.setItem('tourGroupId', `${response[i].tourGroupId}`);
 
-                                    }
-                                })
+                                    $('#confirmedTravelersNo').text(`${response[i].confirmedTravelersNo} 人`);
 
-                                // 兒童輸入數量欄位
-                                count_child.on('change', function () {
-                                    if (parseInt(count_child.val()) >= 0 && (count_child.val() !== null) && (count_child.val() !== '')) {
-                                        currentQtyChild = parseInt(count_child.val());
-                                        console.log(`test first ${currentQtyChild}`);
-                                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
-                                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                                            Swal.fire('超出剩餘名額，請重新輸入');
-                                            currentQtyChild = 0;
+                                    // ====== minTravelersNo ======
+                                    $('#minTravelersNo').text(`${response[i].minTravelersNo} 人`);
+
+                                    // ===== maxTravelersNo ======
+                                    let maxTravelersNo = parseInt(response[i].maxTravelersNo);
+                                    $('#maxTravelersNo').text(`${maxTravelersNo} 人`);
+
+                                    // ===== confirmedTravelersNo ======
+                                    let confirmedTravelersNo = parseInt(response[i].confirmedTravelersNo);
+
+                                    // ===== leftTravelersNo ======
+                                    let leftTravelersNo = (maxTravelersNo - confirmedTravelersNo);
+                                    $('#leftTravelersNo').text(`${leftTravelersNo} 人`);
+
+                                    // ====== priceAdult ======
+                                    $('#priceAdult').text(`${response[i].priceAdult}/每人`);
+                                    $('#priceAdult').attr('value', response[i].priceAdult);
+
+
+                                    // ====== priceChild ======
+                                    $('#priceChild').text(`${response[i].priceChild}/每人`);
+                                    $('#priceChild').attr('value', response[i].priceChild); // attribute value only workable in this area
+
+                                    // ====== number & price area ======
+                                    // 數量欄
+                                    let count_child = $("#count_child");
+                                    let count_adult = $("#count_adult");
+
+                                    let currentQtyChild = parseInt(count_child.val());
+                                    let currentQtyAdult = parseInt(count_adult.val());
+
+                                    sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                    sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+
+
+                                    // 價格
+                                    let priceChild = parseInt($('#priceChild').attr('value'));
+                                    let priceAdult = parseInt($('#priceAdult').attr('value'));
+
+                                    // 總金額
+                                    let amount = $('#amount');
+                                    let amountValue = parseInt($('#amount').val());
+
+                                    amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                    amount.html(`${amountValue} 元`);
+
+                                    // ====== origin price ======
+                                    $('#beginPrice').html(`${priceChild} 元 起`);
+
+
+                                    // ===== 兒童 =====
+                                    // 減號按鈕
+                                    $("#minus_child").on("click", function () {
+                                        if (currentQtyChild > 0) {
+                                            currentQtyChild--;
                                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
-                                            count_child.val('0');
-                                            amountValue = 0;
-                                            amountValue = (priceAdult * currentQtyAdult);
+                                            count_child.val(currentQtyChild);
+
+                                            amountValue -= priceChild;
                                             amount.html(`${amountValue} 元`);
-
-
-                                        } else {
+                                        }
+                                    });
+                                    // 加號按鈕
+                                    $("#plus_child").on("click", function () {
+                                        if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
+                                            currentQtyChild++;
                                             sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                            count_child.val(currentQtyChild);
 
-                                            amountValue = 0;
-                                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                            amountValue += priceChild;
                                             amount.html(`${amountValue} 元`);
                                         }
 
+                                    });
+                                    // ===== 大人 =====
 
-                                    } else {
-                                        Swal.fire('輸入錯誤，人數須為正整數');
-                                        count_child.val('');
-                                    }
-
-                                });
-
-                                // 大人輸入數量欄位
-                                count_adult.on('change', function () {
-                                    if (parseInt(count_adult.val()) >= 0 && (count_adult.val() !== null) && (count_adult.val() !== '')) {
-                                        currentQtyAdult = parseInt(count_adult.val());
-                                        console.log(`test first ${currentQtyAdult}`);
-                                        console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
-                                        if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
-                                            Swal.fire('超出旅遊團人數，請重新輸入');
-                                            currentQtyAdult = 0;
+                                    // 減號按鈕(大人)
+                                    $("#minus_adult").on("click", function () {
+                                        if (currentQtyAdult > 0) {
+                                            currentQtyAdult--;
                                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-                                            count_adult.val('0');
-                                            amountValue = 0;
-                                            amountValue = (priceChild * currentQtyChild);
+                                            count_adult.val(currentQtyAdult);
+
+                                            // 金額增減
+                                            amountValue -= priceAdult;
                                             amount.html(`${amountValue} 元`);
+                                        }
+                                    });
 
-                                        } else {
+                                    // 加號按鈕 (大人)
+                                    $("#plus_adult").on("click", function () {
+                                        if ((currentQtyAdult + currentQtyChild) < (leftTravelersNo)) {
+                                            currentQtyAdult++;
                                             sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
-
-                                            amountValue = 0;
-                                            amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                            count_adult.val(currentQtyAdult);
+                                            // 金額增減
+                                            amountValue += priceAdult;
                                             amount.html(`${amountValue} 元`);
 
                                         }
+                                    });
+
+                                    // 兒童輸入數量欄位
+                                    count_child.on('change', function () {
+                                        if (parseInt(count_child.val()) >= 0 && (count_child.val() !== null) && (count_child.val() !== '')) {
+                                            currentQtyChild = parseInt(count_child.val());
+                                            console.log(`test first ${currentQtyChild}`);
+                                            console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                                            if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                                                Swal.fire('超出剩餘名額，請重新輸入');
+                                                currentQtyChild = 0;
+                                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+                                                count_child.val('0');
+                                                amountValue = 0;
+                                                amountValue = (priceAdult * currentQtyAdult);
+                                                amount.html(`${amountValue} 元`);
+
+
+                                            } else {
+                                                sessionStorage.setItem('qtyChild', `${currentQtyChild}`);
+
+                                                amountValue = 0;
+                                                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                                amount.html(`${amountValue} 元`);
+                                            }
+
+
+                                        } else {
+                                            Swal.fire('輸入錯誤，人數須為正整數');
+                                            count_child.val('');
+                                        }
+
+                                    });
+
+                                    // 大人輸入數量欄位
+                                    count_adult.on('change', function () {
+                                        if (parseInt(count_adult.val()) >= 0 && (count_adult.val() !== null) && (count_adult.val() !== '')) {
+                                            currentQtyAdult = parseInt(count_adult.val());
+                                            console.log(`test first ${currentQtyAdult}`);
+                                            console.log(`test first ${(currentQtyAdult + currentQtyChild)}`);
+                                            if ((currentQtyAdult + currentQtyChild) > (leftTravelersNo)) {
+                                                Swal.fire('超出旅遊團人數，請重新輸入');
+                                                currentQtyAdult = 0;
+                                                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+                                                count_adult.val('0');
+                                                amountValue = 0;
+                                                amountValue = (priceChild * currentQtyChild);
+                                                amount.html(`${amountValue} 元`);
+
+                                            } else {
+                                                sessionStorage.setItem('qtyAdult', `${currentQtyAdult}`);
+
+                                                amountValue = 0;
+                                                amountValue = (priceChild * currentQtyChild) + (priceAdult * currentQtyAdult);
+                                                amount.html(`${amountValue} 元`);
+
+                                            }
 
 
 
-                                    } else {
-                                        Swal.fire('輸入錯誤，人數須為正整數');
-                                        count_adult.val('');
+                                        } else {
+                                            Swal.fire('輸入錯誤，人數須為正整數');
+                                            count_adult.val('');
 
-                                    }
+                                        }
 
-                                });
+                                    });
+                                }
+                            }
+
+                        }
+                    });
+                    calendar.render();
+
+                    // ====== 日曆點擊後，隨著點擊日期修改旅遊團內容 ======
+
+                    // ====== 加入旅遊團 ======
+                    for (let i = 0; i < response.length; i++) {
+                        let date = response[i].formattedStartDate;
+                        let newEvent = {
+                            title: '旅遊團',
+                            start: `${date}`,
+                        }
+                        calendar.addEvent(newEvent);
+                    }
+                    // ====== //加入旅遊團 ======
+                    // ====== 我要預定按鈕綁定事件 ======
+                    $('#orderBtn').on('click', function () {
+                        memberId = getMemberId();
+                        if (memberId === 0) {
+                            Swal.fire('請登入會員');
+                        } else {
+                            if (parseInt($('#count_adult').val()) === 0 && parseInt($('#count_child').val()) === 0) {
+                                Swal.fire('請至少選取一位人數');
+                            } else if ($('#selectedDate').text() === '') {
+                                Swal.fire('請選擇旅遊團的日期~');
+                            } else {
+                                window.location.href = 'group_orderprocess.html';
                             }
                         }
-                    }
-                });
-                calendar.render();
 
-                for (let i = 0; i < response.length; i++) {
-                    let date = response[i].formattedStartDate;
-                    let newEvent = {
-                        title: '旅遊團',
-                        start: `${date}`,
-                    }
-                    calendar.addEvent(newEvent);
+                    });
+                    // ====== //我要預定按鈕綁定事件 ======
                 }
+
             }).fail(function (jqXHR, textStatus, errorThrown) {
 
-                // ====== 預設顯示最新的旅遊團 ======
+                // ====== 預設無旅遊團 ======
                 $('#selectedDate').text('無旅遊團');
 
                 $('#confirmedTravelersNo').text(`0 人`);
@@ -1090,21 +1144,31 @@
                 });
                 calendar.render();
 
-            })
+            });
 
 
         // ====== 評論區塊 ======
 
         $.getJSON(`http://localhost:8080/tripPage/getTripComments?tripId=${sessionTripId}`, function (response) {
 
+
             let parentEl = $('#commentParent');
 
-            for (let i = 0; i < response.length; i++) {
-                let base64Url = 'data:image/gif;base64,' + response[i].memberPicBase64;
+            // ====== 沒有評論的情況 ======
+            if (response.length ==0){
 
-                switch (response[i].rating){
-                    case 1:
-                        let newChildEl1 = `<li class="list-group-item">
+                let childHtml = `<h4 style="color: grey"> 目前沒有評論喔 </h4> <i class="fa-light fa-comment-smile"></i>`;
+                parentEl.append(childHtml);
+
+            }else {
+                // ====== 有評論的情況 ======
+                // ====== 渲染評論頁面 ======
+                for (let i = 0; i < response.length; i++) {
+                    let base64Url = 'data:image/gif;base64,' + response[i].memberPicBase64;
+
+                    switch (response[i].rating){
+                        case 1:
+                            let newChildEl1 = `<li class="list-group-item">
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <img src="${base64Url}" alt="memberPics" class="rounded-circle" width="60">
@@ -1118,10 +1182,10 @@
                             </div>
                         </li>`;
 
-                        parentEl.append(newChildEl1);
-                        break;
-                    case 2:
-                        let newChildEl2 = `<li class="list-group-item">
+                            parentEl.append(newChildEl1);
+                            break;
+                        case 2:
+                            let newChildEl2 = `<li class="list-group-item">
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <img src="${base64Url}" alt="memberPics" class="rounded-circle" width="60">
@@ -1136,10 +1200,10 @@
                             </div>
                         </li>`;
 
-                        parentEl.append(newChildEl2);
-                        break;
-                    case 3:
-                        let newChildEl3 = `<li class="list-group-item">
+                            parentEl.append(newChildEl2);
+                            break;
+                        case 3:
+                            let newChildEl3 = `<li class="list-group-item">
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <img src="${base64Url}" alt="memberPics" class="rounded-circle" width="60">
@@ -1155,10 +1219,10 @@
                             </div>
                         </li>`;
 
-                        parentEl.append(newChildEl3);
-                        break;
-                    case 4:
-                        let newChildEl4 = `<li class="list-group-item">
+                            parentEl.append(newChildEl3);
+                            break;
+                        case 4:
+                            let newChildEl4 = `<li class="list-group-item">
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <img src="${base64Url}" alt="memberPics" class="rounded-circle" width="60">
@@ -1175,10 +1239,10 @@
                             </div>
                         </li>`;
 
-                        parentEl.append(newChildEl4);
-                        break;
-                    case 5:
-                        let newChildEl5 = `<li class="list-group-item">
+                            parentEl.append(newChildEl4);
+                            break;
+                        case 5:
+                            let newChildEl5 = `<li class="list-group-item">
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <img src="${base64Url}" alt="memberPics" class="rounded-circle" width="60">
@@ -1196,10 +1260,10 @@
                             </div>
                         </li>`;
 
-                        parentEl.append(newChildEl5);
-                        break;
-                    default:
-                        let newChildEl6 = `<li class="list-group-item">
+                            parentEl.append(newChildEl5);
+                            break;
+                        default:
+                            let newChildEl6 = `<li class="list-group-item">
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <img src="${base64Url}" alt="memberPics" class="rounded-circle" width="60">
@@ -1212,35 +1276,23 @@
                             </div>
                         </li>`;
 
-                        parentEl.append(newChildEl6);
-                        break;
+                            parentEl.append(newChildEl6);
+                            break;
+
+
+                    }
 
 
                 }
 
-
+                // ====== //渲染評論頁面 ======
             }
+
+
 
         });
 
-        // ====== 我要預定按鈕綁定事件 ======
-        $('#orderBtn').on('click', function () {
-            memberId = getMemberId();
-            if (memberId === 0) {
-                Swal.fire('請登入會員');
-            } else {
-                if (parseInt($('#count_adult').val()) === 0 && parseInt($('#count_child').val()) === 0) {
-                    Swal.fire('請至少選取一位人數');
-                } else if ($('#selectedDate').text() === '') {
-                    Swal.fire('請選擇旅遊團的日期~');
-                } else {
-                    window.location.href = 'group_orderprocess.html';
-                }
-            }
 
-        });
-
-        // ====== //我要預定按鈕綁定事件 ======
 
         // ====== 綁定選擇方案按鈕 ======
 
