@@ -16,10 +16,11 @@ public interface CartService {
 	/**
 	 * 票券購物車清單
 	 *
-	 * @param membeId 會員編號
+	 * @param memberId 會員編號
+	 * @param sessionId 給非會員使用
 	 * @return
 	 */
-	public List<CartDto> getItems(int membeId);
+	public List<CartDto> getItems(int memberId, String sessionId);
 
 	/**
 	 * 放入購物車
@@ -42,7 +43,8 @@ public interface CartService {
 	 *
 	 * @param memberId 會員編號
 	 * @param ticketId 票券編號
+	 * @param sessionId 給非會員使用
 	 * @return
 	 */
-	public boolean removeItem(int memberId, int ticketId);
+	public boolean removeItem(int memberId, int ticketId, String sessionId);
 }

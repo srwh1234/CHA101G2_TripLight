@@ -232,7 +232,7 @@
             </ul>
           </li>
           <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-          <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
           <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
           <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
           <li class="member_li"><a href="read_question_list.html"><i class="fa-regular fa-comment"></i>查看問題</a></li>
@@ -925,10 +925,10 @@
     */
     function fetch_cart() {
       //登入檢查
-      const memberId = getMemberId();
-      if (!memberId) {
-        return;
-      }
+      const memberId = getMemberId(false);
+      // if (!memberId) {
+      //   return;
+      // }
 
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");

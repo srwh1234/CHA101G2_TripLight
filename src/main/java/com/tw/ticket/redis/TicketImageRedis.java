@@ -1,4 +1,4 @@
-package com.tw.ticket.model.redis;
+package com.tw.ticket.redis;
 
 import java.util.List;
 

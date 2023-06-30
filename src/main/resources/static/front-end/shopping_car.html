@@ -275,10 +275,10 @@
 
   <div class="container-fluid">
 
-    <div class="position-fixed">
-      <a href="tickets_order.html" class="btn btn-primary rounded-circle" style="width: 7rem; height: 7rem; "
-        width="170" height="170" type="button" id="btnOrder">我的訂單</a>
-    </div>
+<!--     <div class="position-fixed"> -->
+<!--       <a href="tickets_order.html" class="btn btn-primary rounded-circle" style="width: 7rem; height: 7rem; " -->
+<!--         width="170" height="170" type="button" id="btnOrder">我的訂單</a> -->
+<!--     </div> -->
 
     <!-- TODO: 這是本體 -->
     <div class="container">
@@ -585,10 +585,7 @@
     */
     function fetch_data() {
       //登入檢查
-      const memberId = getMemberId();
-      if (!memberId) {
-        return false;
-      }
+      const memberId = getMemberId(false);
 
       fetch(`${getDomainName()}/carts?memberId=${memberId}`)
         .then(response => response.json())
@@ -604,10 +601,8 @@
     */
     function fetch_coupon() {
       //登入檢查
-      const memberId = getMemberId();
-      if (!memberId) {
-        return false;
-      }
+      const memberId = getMemberId(false);
+     
       fetch(`${getDomainName()}/coupons?memberId=${memberId}`)
         .then(response => response.json())
         .then(data => coupons = data)
@@ -620,10 +615,8 @@
     */
     function fetch_change(ticketId, modify) {
       //登入檢查
-      const memberId = getMemberId();
-      if (!memberId) {
-        return false;
-      }
+      const memberId = getMemberId(false);
+     
 
       const post = {
         memberId: memberId,
@@ -651,10 +644,8 @@
     */
     function fetch_remove(e) {
       //登入檢查
-      const memberId = getMemberId();
-      if (!memberId) {
-        return false;
-      }
+      const memberId = getMemberId(false);
+      
 
       const ticketId = parseInt($(e.target).data('ticket-id'));
 
