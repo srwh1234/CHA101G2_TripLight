@@ -567,27 +567,28 @@
                 .then(response => response.json())
                 .then(data1 => {
                     console.log(data1);
-                    new_message(data1)
+                    new_message(data1);
                 })
-                .catch(error => console.log(error))
+                
 
             function new_message(data1) {
 
                 $('#messageContainer').html('');
 
                 for (let articleMessage of data1) {
-
+                    console.log("articleMessage="+articleMessage);
+                    console.log("data1="+data1);
                     if (articleMessage.messageStatus === 1) {
                         continue; // 狀態數字為1，跳過此次迴圈
                     }
-                    console.log(data1);
                     let inputDate = articleMessage.messagePostTime;
                     let dateTime = new Date(inputDate);
                     let year = dateTime.getFullYear();
                     let month = String(dateTime.getMonth() + 1).padStart(2, "0");
                     let day = String(dateTime.getDate()).padStart(2, "0");
                     let formattedDate = `${year}-${month}-${day}`;
-
+                    console.log("articleMessage="+articleMessage);
+                    console.log("data1="+data1);
                     $('#messageContainer').append(`
 
   <div class="pd-collapse-row">
@@ -604,7 +605,7 @@
           </span>
         </div>
         <div style="display: inline-block; position: relative;">
-          <span class="element" style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;"> ${formattedDate}</span>
+          <span class="posttime" style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;"> ${formattedDate}</span>
         </div>
         <div style="display: inline-block; position: relative;">
             <button style="margin-left: 20px; border-radius: 9px; float: right;">刪除</button>
@@ -616,7 +617,8 @@
       <div class="pd-collapse-box">
         <div class="row align-items-end">
           <div class="text-sm-left p-3">
-            <a class="me-4" data-bs-toggle="collapse" ">
+            <a class="me-4" data-bs-toggle="collapse" role="button"
+                style="font-weight: bold; font-size: 1.3em; color: #625855;">
                 留言
             </a>
           </div>
