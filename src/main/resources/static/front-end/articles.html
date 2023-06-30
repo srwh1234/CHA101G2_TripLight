@@ -64,22 +64,8 @@
   <link rel="shortcut icon" href="./images/icon.png" />
   <link rel="bookmark" href="./images/icon.png" />
 
-  <!-- 使用BootStrap-->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
-
-  <!-- 使用BootStrap-->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"> -->
-
-  <!-- 使用Bootstrap-table -->
-  <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css"> -->
-
   <!-- 使用Summernote -->
   <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.css" rel="stylesheet">
-
-  <!-- 使用Bootstrap-icon -->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" -->
-  <!-- integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous"> -->
 
   <!-- 使用gijgo -->
   <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css">
@@ -124,7 +110,7 @@
           <li class=""><a href="index.html">首頁</a></li>
           <li class=""><a href="booking.html">AI行程規劃</a></li>
           <li class=""><a href="tickets.html">票券</a></li>
-          <li class=""><a href="itinerary_search.html">套裝行程</a></li>
+          <li class=""><a href="itinerary_search.html?index=1">套裝行程</a></li>
           <li class=""><a href="articles.html">旅遊文章</a></li>
           <li class="booking"><a href="" id="login">登入/註冊</a></li>
           <li class="">
@@ -158,7 +144,7 @@
       </div>
     </div>
   </header>
-  <!-- //header -->
+  <!-- header -->
 
   <!-- 登入  -->
   <div id="login-container">
@@ -168,22 +154,21 @@
       <h3>登入</h3>
       <form action="">
         <div class="input-box">
-          <i class="fas fa-envelope icon2"></i>
-          <input type="email" name="email" id="email" required />
-          <label for="">信箱</label>
+          <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
+            for="">信箱</label>
         </div>
         <div class="input-box">
-          <i class="fas fa-lock icon2"></i>
-          <input type="password" name="password" id="password" required />
+          <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
           <label for="">密碼</label>
         </div>
         <div class="check">
-          <label><input type="checkbox" />記住我</label>
-          <a href="#" id="forgetPwd">忘記密碼</a>
+          <label><input type="checkbox" />記住我</label> <a href="#" id="forgetPwd">忘記密碼</a>
         </div>
         <button type="submit" class="main-btn">Login</button>
         <div class="register">
-          <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+          <p>
+            如果沒有帳號?<a href="#" class="register-link">點擊註冊</a>
+          </p>
         </div>
       </form>
     </div>
@@ -192,18 +177,15 @@
       <h3>註冊</h3>
       <form action="">
         <div class="input-box">
-          <i class="fas fa-user icon2"></i>
-          <input type="email" name="email" required />
-          <label for="">使用者名稱</label>
+          <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account" required /> <label
+            for="">使用者名稱</label>
         </div>
         <div class="input-box">
-          <i class="fas fa-envelope icon2"></i>
-          <input type="email" name="email" required />
-          <label for="">信箱</label>
+          <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email" required /> <label
+            for="">信箱</label>
         </div>
         <div class="input-box">
-          <i class="fas fa-lock icon2"></i>
-          <input type="password" name="password" required />
+          <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password" required />
           <label for="">密碼</label>
         </div>
         <div class="check">
@@ -211,7 +193,9 @@
         </div>
         <button type="submit" class="main-btn">註冊</button>
         <div class="register">
-          <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+          <p>
+            已經有帳號?<a href="#" class="login-link">點擊登入</a>
+          </p>
         </div>
       </form>
     </div>
@@ -233,7 +217,7 @@
     <div class="d-flex align-items-between">
       <div class="input-group mb-2" style="margin-top: 30px">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false" style="width: 200px;">標題</button>
+          aria-expanded="false" style="width: 250px;">標題</button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="#">遊記</a></li>
           <li><a class="dropdown-item" href="#">食記</a></li>
@@ -241,16 +225,16 @@
           <li><a class="dropdown-item" href="#">評論</a></li>
           <li><a class="dropdown-item" href="#">問題</a></li>
         </ul>
-        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 250px;"
           onclick="redirectToArticleList()">進入論壇</button>
 
-        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
-          onclick="redirectToMyFavorite()">收藏文章</button>
+        <!-- <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+          onclick="redirectToMyFavorite()">收藏文章</button> -->
 
-        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 200px;"
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 250px;"
           onclick="redirectToMyList()">我的文章</button>
 
-        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 300px;"
+        <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 350px;"
           onclick="redirectToCreateArticle()">發表文章</button>
       </div>
     </div>
@@ -286,8 +270,8 @@
         <div class="more-link">
           <a href="article_list.html">更多文章</a>
         </div>
-        <div class="report">
-          <a href="進入檢舉頁面">我要檢舉</a>
+        <div class="question">
+          <a href="chat.html">我想發問</a>
         </div>
       </div>
     </div>
@@ -412,9 +396,9 @@
       window.location.href = "article_create.html";
     };
 
-    function redirectToMyFavorite() {
-      window.location.href = "article_myfavorite.html";
-    };
+    // function redirectToMyFavorite() {
+    //   window.location.href = "article_myfavorite.html";
+    // };
 
     function redirectToMyList() {
       window.location.href = "article_mylist.html";
@@ -432,7 +416,8 @@
       function new_article(data) {
         $('#articleContainer').html('');
 
-        for (let article of data) {
+        for (let i = 0; i <= Math.min(data.length, 8); i++) {
+          let article = data[i];
 
           if (article.articleStatus === 1) {
             continue; // 狀態數字為1，跳過此次迴圈
@@ -497,7 +482,6 @@
         }
       }
     });
-
   </script>
 
 </body>

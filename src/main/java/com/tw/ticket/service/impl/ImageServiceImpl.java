@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.tw.ticket.MyUtils;
 import com.tw.ticket.model.TicketImage;
 import com.tw.ticket.model.dao.TicketImageRepository;
-import com.tw.ticket.model.redis.TicketImageRedis;
+import com.tw.ticket.redis.TicketImageRedis;
 import com.tw.ticket.service.ImageService;
 
 @Service

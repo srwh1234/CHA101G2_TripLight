@@ -27,13 +27,15 @@ public class TripPageController {
     TripDao tripDao;
 
     @GetMapping("/getTourGroup")
-    public String getTourGroup(@RequestParam String tripIdString){
-        Integer tripId = Integer.valueOf(tripIdString);
+    public String getTourGroup(@RequestParam Integer tripId){
+
         List<TourGroup> tourGroupList = tripPageService.getTourGroupWithDates(tripId);
 
-        String json = new Gson().toJson(tourGroupList);
+            String json = new Gson().toJson(tourGroupList);
+            return json;
 
-        return json;
+
+
     }
 
     @GetMapping("/getTripComments")

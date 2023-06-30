@@ -19,10 +19,12 @@
         rel="stylesheet">
     <script src="jquery-3.7.0.min.js"></script>
     <script src="login.js"></script>
-    <script src="EMPQuety.js"></script>
+    <!-- <script src="EMPQuety.js"></script> -->
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- 使用Bootstrap-table -->
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
+
     <style>
         div.dataTables_wrapper div.dataTables_length select {
             width: auto;
@@ -204,17 +206,21 @@
                                         <th>內容簡介</th>
                                         <th>天數</th>
                                         <th>縣市</th>
-                                        <th>價格(大人)</th>
-                                        <th>價格(小孩)</th>
-                                        <th>人數規定(最少出團人數)</th>
-                                        <th>人數規定(最多出團人數)</th>
+                                        <th>價格_大人</th>
+                                        <th>價格_小孩</th>
+                                        <th>人數_最少出團人數</th>
+                                        <th>人數_額滿人數</th>
                                         <th>行程描述</th>
                                         <th>特別說明</th>
                                         <th>行程狀態</th>
                                         <th>編輯</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tableBody"></tbody>
+                                <tbody id="tableBody">
+                                    <td>
+                                        <button class="btn btn-primary btn-sm btn-edit">編輯</button>
+                                    </td>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -258,19 +264,19 @@
                                     <input type="text" class="form-control" id="city">
                                 </div>
                                 <div class="form-group">
-                                    <label for="priceAdult">價格(大人)</label>
+                                    <label for="priceAdult">價格_大人</label>
                                     <input type="text" class="form-control" id="priceAdult">
                                 </div>
                                 <div class="form-group">
-                                    <label for="priceChild">價格(小孩)</label>
+                                    <label for="priceChild">價格_小孩</label>
                                     <input type="text" class="form-control" id="priceChild">
                                 </div>
                                 <div class="form-group">
-                                    <label for="minTravelersNo">人數規定(最少出團人數)</label>
+                                    <label for="minTravelersNo">人數_最少出團人數</label>
                                     <input type="text" class="form-control" id="minTravelersNo">
                                 </div>
                                 <div class="form-group">
-                                    <label for="maxTravelersNo">人數規定(最多出團人數)</label>
+                                    <label for="maxTravelersNo">人數_額滿人數</label>
                                     <input type="text" class="form-control" id="maxTravelersNo">
                                 </div>
                                 <div class="form-group">
@@ -304,16 +310,20 @@
             <script src="vendor/chart.js/Chart.min.js"></script>
 
             <!-- 頁面級別的自訂腳本 -->
-            <script src="js/demo/chart-area-demo.js"></script>
+            <!-- <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
             <script src="vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-            <script src="js/demo/datatables-demo.js"></script>
+            <script src="js/demo/datatables-demo.js"></script> -->
+            <script src="vendor/sweetalert/sweetalert.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle-5.2.3.js"></script>
+            <script src="js/bootstrap-table.min.js"></script>
+
     
     </body>
     <script>
-var editButton = $('<button></button>').text('編輯');
-$(document).ready(function() {
+
+    $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/trip/info',
@@ -321,45 +331,44 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 var tableBody = $('#tableBody');
-                tableBody.empty(); // 清空表格内容，确保每次刷新都是最新数据
+                tableBody.empty(); // 清空表格内容，確保每次都是新數據
 
-                // 迭代每个行程数据
+                // 迭代每個行程數據
                 for (let i = 0; i < response.length; i++) {
                     const rowData = response[i];
 
-                    // 创建行
+                    // 創建行
                     var row = $('<tr></tr>');
 
-                    // 创建单元格，并填充数据
+                    // 創建表單，並給予填充數據
                     row.append('<td>' + rowData.tripId + '</td>');
                     row.append('<td>' + rowData.vendorId + '</td>');
                     row.append('<td>' + rowData.tripName + '</td>');
-                    row.append('<td>' + rowData.tripContent + '</td>');
+                    row.append('<td>' + rowData.tripContent.replace(/\n/g, '<br>')  + '</td>');
                     row.append('<td>' + rowData.tripDay + '</td>');
                     row.append('<td>' + rowData.city + '</td>');
                     row.append('<td>' + rowData.priceAdult + '</td>');
                     row.append('<td>' + rowData.priceChild + '</td>');
                     row.append('<td>' + rowData.minTravelersNo + '</td>');
                     row.append('<td>' + rowData.maxTravelersNo + '</td>');
-                    row.append('<td>' + rowData.tripDescription + '</td>');
-                    row.append('<td>' + rowData.tripNote + '</td>');
+                    row.append('<td>' + rowData.tripDescription.replace(/\n/g, '<br>') + '</td>');
+                    row.append('<td>' + rowData.tripNote.replace(/\n/g, '<br>') + '</td>');
                     row.append('<td>' + rowData.status + '</td>');
-                    row.append('<td></td>').append(editButton);
+                    row.append('<td><button class="btn btn-primary btn-sm btn-edit">編輯</button></td>');
 
-                    // 将行添加到表格中
+                    // 將行列加到表格中
                     tableBody.append(row);
                 }
+                    
+                console.log('行程資訊獲得成功');    
 
-                console.log('行程資訊獲得成功');
             },
 
-            error: function(error) {
-                console.log('獲取廠商行程資訊失敗。錯誤：' + error);
-                $('#errorDiv').html('獲取廠商行程資訊失敗。錯誤：' + error);
+                error: function(error) {
+                  console.log('獲取廠商行程資訊失敗。錯誤：' + error);
             }
         });
     });
-
     </script>
 
 </html>

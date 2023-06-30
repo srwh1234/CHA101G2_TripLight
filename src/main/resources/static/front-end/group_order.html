@@ -81,7 +81,7 @@
                     <li class=""><a href="index.html">首頁</a></li>
                     <li class=""><a href="booking.html">AI行程規劃</a></li>
                     <li class="active"><a href="tickets.html">票券</a></li>
-                    <li class=""><a href="itinerary_search.html">套裝行程</a></li>
+                    <li class=""><a href="itinerary_search.html?index=1">套裝行程</a></li>
                     <li class=""><a href="articles.html">旅遊文章</a></li>
                     <li class="booking"><a href="" id="login">登入/註冊</a></li>
                     <li class="">
@@ -111,9 +111,11 @@
                     </li>
                     <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
                     </li>
-                    <li class="member_li"><a href="read_question_list.html"><i class="fa-regular fa-comment"></i>查看問題</a>
+                    <li class="member_li"><a href="read_question_list.html"><i
+                                class="fa-regular fa-comment"></i>查看問題</a>
                     </li>
-                    <li class="member_li" id="logout_li"><a href="index.html"><i class="fa-solid fa-right-from-bracket"></i>登出</a></li>
+                    <li class="member_li" id="logout_li"><a href="index.html"><i
+                                class="fa-solid fa-right-from-bracket"></i>登出</a></li>
                 </ul>
             </div>
         </div>
@@ -127,22 +129,21 @@
             <h3>登入</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-envelope icon2"></i>
-                    <input type="email" name="email" id="email" required />
-                    <label for="">信箱</label>
+                    <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
+                        for="">信箱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-lock icon2"></i>
-                    <input type="password" name="password" id="password" required />
+                    <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
                     <label for="">密碼</label>
                 </div>
                 <div class="check">
-                    <label><input type="checkbox" />記住我</label>
-                    <a href="#" id="forgetPwd">忘記密碼</a>
+                    <label><input type="checkbox" />記住我</label> <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
-                    <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+                    <p>
+                        如果沒有帳號?<a href="#" class="register-link">點擊註冊</a>
+                    </p>
                 </div>
             </form>
         </div>
@@ -151,26 +152,25 @@
             <h3>註冊</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-user icon2"></i>
-                    <input type="email" name="email" required />
-                    <label for="">使用者名稱</label>
+                    <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account"
+                        required /> <label for="">使用者名稱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-envelope icon2"></i>
-                    <input type="email" name="email" required />
-                    <label for="">信箱</label>
+                    <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email"
+                        required /> <label for="">信箱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-lock icon2"></i>
-                    <input type="password" name="password" required />
-                    <label for="">密碼</label>
+                    <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
+                        required /> <label for="">密碼</label>
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />我同意所有條款</label>
                 </div>
                 <button type="submit" class="main-btn">註冊</button>
                 <div class="register">
-                    <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+                    <p>
+                        已經有帳號?<a href="#" class="login-link">點擊登入</a>
+                    </p>
                 </div>
             </form>
         </div>
@@ -221,10 +221,10 @@
 
 
 
-            </div>
-            <!-- ======================== //右側訂單欄位 ============================================-->
-
         </div>
+        <!-- ======================== //右側訂單欄位 ============================================-->
+
+    </div>
     </div>
 
     <!-- ======================== 分頁 ============================================-->
@@ -373,37 +373,46 @@
     <script>
 
         $(document).ready(function () {
-                function getMemberId(){
+            function getMemberId() {
 
-                    const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
-                    if(!testLogIn || !testLogIn.memberId){
-                        return 0;
-                    }
-                    return testLogIn.memberId;
+                const testLogIn = JSON.parse(sessionStorage.getItem('test-login'));
+                if (!testLogIn || !testLogIn.memberId) {
+                    return 0;
                 }
+                return testLogIn.memberId;
+            }
 
-                const memberId = getMemberId();
+            const memberId = getMemberId();
 
-                // ====== 取得會員資訊並渲染 ======
+            // ====== 取得會員資訊並渲染 ======
 
-                $.getJSON(`http://localhost:8080/groupOrder/getMember?memberId=${memberId}`, function (response) {
-                    // 會員圖片
-                    let base64Url = 'data:image/gif;base64,' + response.memberPicBase64;
+            $.getJSON(`http://localhost:8080/groupOrder/getMember?memberId=${memberId}`, function (response) {
+                // 會員圖片
+                let base64Url = 'data:image/gif;base64,' + response.memberPicBase64;
 
-                    let childEl =`<img src="${base64Url}" alt="member pic" class="rounded-circle" width="180"
+                let childEl = `<img src="${base64Url}" alt="member pic" class="rounded-circle" width="180"
                                             class="img-fluid rounded-start" id="memberPic">`;
-                    $('#memberPicParent').append(childEl);
+                $('#memberPicParent').append(childEl);
 
-                    // 會員姓名
-                    $('#memberName').html(`${response.memberFullName} 您好~`);
+                // 會員姓名
+                $('#memberName').html(`${response.memberFullName} 您好~`);
 
-                });
+            });
 
-                $.getJSON(`http://localhost:8080/groupOrder/getTrips?memberId=${memberId}`, function (response) {
 
+            // ====== 渲染訂單列表區 ======
+            $.getJSON(`http://localhost:8080/groupOrder/getTrips?memberId=${memberId}`, function (response) {
+
+                let tripOrderParent = $('#tripOrderParent');
+
+                if (response.length == 0) {
+                    let childEl = `<h3> 目前尚無訂單~ 去逛逛吧 </h3>`;
+                    tripOrderParent.append(childEl);
+
+                } else {
                     // ====== 右側訂單列表區 ======
-                    let tripOrderParent = $('#tripOrderParent');
-                    for (let i=0; i<response.length; i++){
+
+                    for (let i = 0; i < response.length; i++) {
 
                         let imageUrl = 'http://localhost:8080/img/trips/' + response[i].id;
                         let html = `
@@ -443,9 +452,12 @@
                         sessionStorage.setItem('tourGroupId', `${tourGroupId}`);
                         window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
                     })
+                }
 
 
-                });
+
+            });
+            // ====== //渲染訂單列表區 ======
 
 
 

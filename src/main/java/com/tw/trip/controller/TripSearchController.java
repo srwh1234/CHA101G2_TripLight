@@ -7,11 +7,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -29,8 +25,8 @@ public class TripSearchController {
     TripSearchService tripSearchService;
 
     @GetMapping("/getTripList")
-    public String getTripList() {
-        final List<Trip> tripList = tripSearchService.getTripListWithPic();
+    public String getTripList(@RequestParam Integer index) {
+        final List<Trip> tripList = tripSearchService.getTripListWithPic(index);
         final String json = new Gson().toJson(tripList);
 
         return json;
@@ -56,7 +52,6 @@ public class TripSearchController {
             jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
 
             String keyword = jsonObject.getString("keyword");
-            System.out.println(keyword);
 
             List<Trip> tripList = tripSearchService.getTripBySearchKeyword(keyword);
             json = new Gson().toJson(tripList);
@@ -151,8 +146,8 @@ public class TripSearchController {
 
 
     @GetMapping("/getTripListOrderByPrice")
-    public String getTripListOrderByPrice() {
-        final List<Trip> tripList = tripSearchService.getTripOrderByPrice();
+    public String getTripListOrderByPrice(@RequestParam Integer index) {
+        final List<Trip> tripList = tripSearchService.getTripOrderByPrice(index);
         final String json = new Gson().toJson(tripList);
 
         return json;

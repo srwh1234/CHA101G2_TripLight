@@ -1,6 +1,6 @@
 package com.tw.vendor.dto;
 
-import com.tw.trip.pojo.Trip;
+import com.tw.vendor.model.Trip2;
 import lombok.Data;
 
 @Data
@@ -22,7 +22,7 @@ public class TripManagementDto {
 
 
 
-    public TripManagementDto(final Trip trip) {
+    public TripManagementDto(final Trip2 trip) {
         this.vendorId = trip.getVendorId();
         this.tripId = trip.getTripId();
         this.tripName = trip.getTripName();

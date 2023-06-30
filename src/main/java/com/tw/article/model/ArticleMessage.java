@@ -25,7 +25,7 @@ public class ArticleMessage implements java.io.Serializable{
 	
 	private Integer memberId;				//留言者會員編號
 	
-	private String messagePostContent;		//留言內容
+	private String messagePostcontent;		//留言內容
 	
 	private Timestamp messagePostTime;		//發表時間
 	

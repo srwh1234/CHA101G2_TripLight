@@ -87,7 +87,7 @@
                     <li class=""><a href="index.html">首頁</a></li>
                     <li class=""><a href="booking.html">AI行程規劃</a></li>
                     <li class="active"><a href="tickets.html">票券</a></li>
-                    <li class=""><a href="itinerary_search.html">套裝行程</a></li>
+                    <li class=""><a href="itinerary_search.html?index=1">套裝行程</a></li>
                     <li class=""><a href="articles.html">旅遊文章</a></li>
                     <li class="booking"><a href="" id="login">登入/註冊</a></li>
                     <li class="">
@@ -136,22 +136,21 @@
             <h3>登入</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-envelope icon2"></i>
-                    <input type="email" name="email" id="email" required />
-                    <label for="">信箱</label>
+                    <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
+                        for="">信箱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-lock icon2"></i>
-                    <input type="password" name="password" id="password" required />
+                    <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
                     <label for="">密碼</label>
                 </div>
                 <div class="check">
-                    <label><input type="checkbox" />記住我</label>
-                    <a href="#" id="forgetPwd">忘記密碼</a>
+                    <label><input type="checkbox" />記住我</label> <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
-                    <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+                    <p>
+                        如果沒有帳號?<a href="#" class="register-link">點擊註冊</a>
+                    </p>
                 </div>
             </form>
         </div>
@@ -160,26 +159,25 @@
             <h3>註冊</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-user icon2"></i>
-                    <input type="email" name="email" required />
-                    <label for="">使用者名稱</label>
+                    <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account"
+                        required /> <label for="">使用者名稱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-envelope icon2"></i>
-                    <input type="email" name="email" required />
-                    <label for="">信箱</label>
+                    <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email"
+                        required /> <label for="">信箱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-lock icon2"></i>
-                    <input type="password" name="password" required />
-                    <label for="">密碼</label>
+                    <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
+                        required /> <label for="">密碼</label>
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />我同意所有條款</label>
                 </div>
                 <button type="submit" class="main-btn">註冊</button>
                 <div class="register">
-                    <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+                    <p>
+                        已經有帳號?<a href="#" class="login-link">點擊登入</a>
+                    </p>
                 </div>
             </form>
         </div>
@@ -230,18 +228,21 @@
                     <hr>
                     <div class="col-auto">
                         <label for="memberName" class="col-form-label">姓名</label>
-                        <input disabled type="text" id="memberName" class="form-control" aria-describedby="passwordHelpInline">
+                        <input disabled type="text" id="memberName" class="form-control"
+                            aria-describedby="passwordHelpInline">
 
 
                     </div>
                     <div class="col-auto">
                         <label for="memberPhone" class="col-form-label">電話</label>
-                        <input disabled type="text" id="memberPhone" class="form-control" aria-describedby="passwordHelpInline">
+                        <input disabled type="text" id="memberPhone" class="form-control"
+                            aria-describedby="passwordHelpInline">
 
                     </div>
                     <div class="col-auto">
                         <label for="memberEmail" class="col-form-label">郵件</label>
-                        <input disabled type="text" id="memberEmail" class="form-control" aria-describedby="passwordHelpInline">
+                        <input disabled type="text" id="memberEmail" class="form-control"
+                            aria-describedby="passwordHelpInline">
 
                     </div>
 
@@ -275,7 +276,7 @@
 
                         <br>
                         <br>
-                        <h6>  *卡號用於保留資格 </h6>
+                        <h6> *卡號用於保留資格 </h6>
                     </div>
 
 
@@ -372,7 +373,7 @@
 
             // ====== 渲染會員資訊 ======
 
-            if(memberId !== 0){
+            if (memberId !== 0) {
                 $.getJSON(`http://localhost:8080/getMemberInfor?memberId=${memberId}`, function (response) {
                     $('#memberName').val(`${response.memberFullName}`);
                     console.log(response.memberName);
@@ -390,7 +391,7 @@
                 const tourGroupIdGet = JSON.parse(sessionStorage.getItem('tourGroupId'));
                 if (tourGroupIdGet != null) {
                     return tourGroupIdGet;
-                }else{
+                } else {
                     return 0;
                 }
             }
@@ -478,7 +479,7 @@
 
 
             // ====== 信用卡驗證區 ======
-            $('#payType').on('change',function (){
+            $('#payType').on('change', function () {
                 // const pattern = /^(?:3[47]\d{13}|(?:4\d|5[1-5]|6(?:011|5[0-9]{2}))\d{14}|(?:2131|1800|35\d{3})\d{11})$/;
                 if (isNaN($('#payType').val()) === true) {
                     $('#payType').val('');
@@ -663,13 +664,13 @@
                     } else if (travelerEmail.val().trim() === '') {
                         Swal.fire('請輸入郵件');
                         return;
-                    } else if($('#payType').val().trim() === ''){
+                    } else if ($('#payType').val().trim() === '') {
                         Swal.fire('請輸入信用卡號');
                         return;
-                    }else if($('#cardValid').val().trim() === ''){
+                    } else if ($('#cardValid').val().trim() === '') {
                         Swal.fire('請輸入有效日期');
                         return;
-                    }else if($('#scv').val().trim() === ''){
+                    } else if ($('#scv').val().trim() === '') {
                         Swal.fire('請輸入驗證碼');
                         return;
                     }
@@ -724,7 +725,8 @@
                     if (result.isConfirmed) {
                         window.location.href = 'http://localhost:8080/front-end/index.html';
                         $('input').val('');
-                        sessionStorage.clear();
+
+
                     }
                 });
 

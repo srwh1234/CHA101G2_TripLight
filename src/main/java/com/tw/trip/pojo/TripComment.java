@@ -54,6 +54,8 @@ public class TripComment implements Serializable {
     @Transient
     private String memberName;
 
+    private Integer tripOrderId;
+
     public TripComment(String memberName, byte[] memberPic, String comment, Timestamp postTime, int rating ){
         this.memberName = memberName;
         memberPicBase64 = Base64.getEncoder().encodeToString(memberPic);

@@ -24,7 +24,7 @@ public class TripSearchService {
         @Autowired
         TripDao tripDao;
 
-        public List<Trip> getTripListWithPic(){
+        public List<Trip> getTripListWithPic(Integer index){
             final String SQL = """
                     SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
                     join (
@@ -35,12 +35,14 @@ public class TripSearchService {
                     join trip_image tm on tm.id = sub.min_image_id
                     """;
 
-            List<Object[]> resultList = session.createNativeQuery(SQL,Object[].class)
-                    .list();
+            List<Object[]> resultList1 = session.createNativeQuery(SQL,Object[].class)
+                    .setFirstResult((index - 1) * 5)
+                    .setMaxResults(5)
+                    .getResultList();
 
             List<Trip> tripList = new ArrayList<>();
 
-            for(Object[] row : resultList){
+            for(Object[] row : resultList1){
                 Integer tripId = (Integer) row[0];
                 String tripName = (String) row[1];
                 Integer tripDay = (Integer) row[2];
@@ -53,6 +55,7 @@ public class TripSearchService {
             }
 
             return tripList;
+
         }
 
         public List<Trip> getTripBySearchCity(String[] cities){
@@ -154,7 +157,7 @@ public class TripSearchService {
         return tripList;
     }
 
-        public List<Trip> getTripOrderByPrice(){
+        public List<Trip> getTripOrderByPrice(Integer index){
         final String SQL = """
                     SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t
                     join (
@@ -167,7 +170,9 @@ public class TripSearchService {
                     """;
 
         List<Object[]> resultList = session.createNativeQuery(SQL,Object[].class)
-                .list();
+                .setFirstResult((index - 1) * 5)
+                .setMaxResults(5)
+                .getResultList();
 
         List<Trip> tripList = new ArrayList<>();
 

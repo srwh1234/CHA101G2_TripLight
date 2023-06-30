@@ -47,6 +47,7 @@ public class TripOrder {
 
     private String refundReason;
 
+
     @Transient
     private String formattedPayDate;
 

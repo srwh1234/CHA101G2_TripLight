@@ -30,8 +30,8 @@ public class VendorLoginController {
 			return 0;
 		} else {
 			//設置session
-			httpSession.getServletContext().setAttribute("vendor", result);
-			System.out.println("VendorId" + httpSession.getServletContext().getAttribute("vendor"));
+			httpSession.setAttribute("vendor", result);
+			System.out.println("VendorId" + httpSession.getAttribute("vendor"));
 			System.out.println("登入成功");
 			 System.out.println(httpSession.getId());
 			return 1; 
