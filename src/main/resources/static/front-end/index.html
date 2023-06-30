@@ -219,7 +219,7 @@
 									</h3>
 									<h4 class="text-wh">我們有專業的團隊來為您打造出最棒的套裝行程</h4>
 									<div class="buttons mt-4">
-										<a href="itinerary_search.html" class="btn">了解更多</a>
+										<a href="itinerary_search.html?index=1" class="btn">了解更多</a>
 									</div>
 								</div>
 							</div>
@@ -696,7 +696,7 @@
 					for (let i = 0; i < packages.length; i++) {
 						$(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
-          <a href="itinerary_page.html" data-trip-id="${packages[i].tripId}" onclick="storeTripId(event)">
+          <a href="itinerary_page.html?tripId=${packages[i].tripId}" data-trip-id="${packages[i].tripId}" onclick="storeTripId(event)">
             <img src="${packages[i].tripImage}" alt="" class="card-img" />
           </a>
           <p><span class="fa fa-tags"></span> <span>${packages[i].priceAdult}起</span></p>

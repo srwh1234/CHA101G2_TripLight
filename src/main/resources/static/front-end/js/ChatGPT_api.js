@@ -144,7 +144,7 @@ function getPackages() {
       for (let i = 0; i < packages.length; i++) {
         $(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
-          <a href="packages_detail.html"
+          <a href="itinerary_page.html?tripId=${packages[i].tripId}"
             ><img src=${packages[i].tripImage} alt="" class="card-img"
           /></a>
           <p><span class="fa fa-tags"></span> <span>${packages[i].priceAdult}起</span></p>
