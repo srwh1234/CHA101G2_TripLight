@@ -174,7 +174,7 @@
           <li class=""><a href="index.html">首頁</a></li>
           <li class=""><a href="booking.html">AI行程規劃</a></li>
           <li class=""><a href="tickets.html">票券</a></li>
-          <li class=""><a href="itinerary_search.html">套裝行程</a></li>
+          <li class=""><a href="itinerary_search.html?index=1">套裝行程</a></li>
           <li class=""><a href="articles.html">旅遊文章</a></li>
           <li class="booking"><a href="" id="login">登入/註冊</a></li>
           <li class="active">
@@ -275,10 +275,10 @@
 
   <div class="container-fluid">
 
-<!--     <div class="position-fixed"> -->
-<!--       <a href="tickets_order.html" class="btn btn-primary rounded-circle" style="width: 7rem; height: 7rem; " -->
-<!--         width="170" height="170" type="button" id="btnOrder">我的訂單</a> -->
-<!--     </div> -->
+    <!--     <div class="position-fixed"> -->
+    <!--       <a href="tickets_order.html" class="btn btn-primary rounded-circle" style="width: 7rem; height: 7rem; " -->
+    <!--         width="170" height="170" type="button" id="btnOrder">我的訂單</a> -->
+    <!--     </div> -->
 
     <!-- TODO: 這是本體 -->
     <div class="container">
@@ -602,7 +602,7 @@
     function fetch_coupon() {
       //登入檢查
       const memberId = getMemberId(false);
-     
+
       fetch(`${getDomainName()}/coupons?memberId=${memberId}`)
         .then(response => response.json())
         .then(data => coupons = data)
@@ -616,7 +616,7 @@
     function fetch_change(ticketId, modify) {
       //登入檢查
       const memberId = getMemberId(false);
-     
+
 
       const post = {
         memberId: memberId,
@@ -645,7 +645,7 @@
     function fetch_remove(e) {
       //登入檢查
       const memberId = getMemberId(false);
-      
+
 
       const ticketId = parseInt($(e.target).data('ticket-id'));
 
