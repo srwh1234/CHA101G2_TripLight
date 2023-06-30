@@ -196,59 +196,17 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr>
-                                        <th>行程編號</th>
-                                        <th>廠商編號</th>
-                                        <th>行程名稱</th>
-                                        <th>內容簡介</th>
-                                        <th>天數</th>
-                                        <th>縣市</th>
-                                        <th>價格</th>
-                                        <th>人數規定(最少出團人數/額滿)</th>
-                                        <th>行程描述</th>
-                                        <th>特別說明</th>
-                                        <th>行程狀態</th>
+                                    <tr >
+                                        <th>旅遊團編號</th>
+                                        <th>所屬的行程編號</th>
+                                        <th>旅遊團價格_大人</th>
+                                        <th>旅遊團價格_小孩</th>
+                                        <th>開始日期</th>
+                                        <th>最少出團人數</th>
+                                        <th>額滿人數</th>
                                         <th>編輯</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2001</td>
-                                        <td>1</td>
-                                        <td>宿霧宿宿叫<br>薄荷雙島豪華６日遊</td>
-                                        <td>
-                                            世界潛點巴里卡薩島大斷層<br>海豚遊蹤、鯨鯊共游、最美資生堂島<br>阿羅納海灘赫納度假村<br>宿霧拜伊大飯店 
-                                        </td>
-                                        <td>5 Days</td>
-                                        <td>菲律賓<br>宿霧、薄荷島</td>
-                                        <td>$34,900 /人(有床位)<br>
-                                            3-12歲 $30,900 /人(有床位)<br>
-                                            3歲以下 $21,000/人(無床位)
-                                            </td>
-                                        <td>6人/15人</td>
-                                        <td>行程資訊 －
-                                            <br>
-                                            ‧D1-桃園國際機場／宿霧－SM百貨商場-碼頭搭乘交通船前往薄荷島－蜜蜂農場特色海景晚餐<br>
-                                            ‧D2-薄荷島海豚遊蹤－巴里卡薩島大斷層浮潛－大小處女島<br>
-                                            ‧D3-薄荷島賞鯨鯊－羅伯河漂流竹筏叢林體驗－探訪世界最小眼鏡猴－巧克力山－搭乘交通船返回宿霧<br>
-                                            ‧D4-宿霧－資生堂島－娜魯蘇安島<br>
-                                            ‧D5-宿霧市區觀光／桃園國際機場<br>
-                                        </td>
-
-                                        <td>‧1.6人以上成行，10人以上派台灣領隊。<br>
-                                            ‧2.如無台灣領隊隨團，當地有華語導遊全程服務。<br>
-                                            ‧3.全程飯店皆採2人一室，指定單人房另補單人房差價。<br>
-                                            ‧4.宿霧海島飯店一經確認後，需全額付費，如遇取消，飯店費用百分百全額沒收，如訂金不足酒店全額款項，旅客取消仍需支付費用，敬請注意。<br>
-                                            ‧5.出海當天，若遇氣候風浪不佳，導遊會經得旅客同意調整行程，但若停留期間都無法安排出海，則改退費。<br>
-                                            ‧6.旅客從台灣購買免稅品入竟菲律賓如未拆封海關可能會課進口稅，敬請旅客注意。<br>
-                                            ‧7.本行程順序、班機時間及住宿飯店之確認以說明會資料為主。<br>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm btn-edit">編輯</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -268,44 +226,32 @@
                         <div class="modal-body">
                             <form id="editForm">
                                 <div class="form-group">
-                                    <label for="tripId">行程編號:</label>
+                                    <label for="tourGroupId">旅遊團編號:</label>
+                                    <input type="text" class="form-control" id="tourGroupId">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tripId">所屬的行程編號:</label>
                                     <input type="text" class="form-control" id="tripId">
                                 </div>
                                 <div class="form-group">
-                                    <label for="vendorId">廠商編號:</label>
-                                    <input type="text" class="form-control" id="vendorId">
+                                    <label for="priceAdult">旅遊團價格_大人:</label>
+                                    <input type="text" class="form-control" id="priceAdult">
                                 </div>
                                 <div class="form-group">
-                                    <label for="tripName">行程名稱:</label>
-                                    <input type="text" class="form-control" id="tripName">
+                                    <label for="priceChild">旅遊團價格_小孩:</label>
+                                    <input type="text" class="form-control" id="priceChild">
                                 </div>
                                 <div class="form-group">
-                                    <label for="introduction">內容簡介:</label>
-                                    <input type="text" class="form-control" id="introduction">
+                                    <label for="startDate">開始日期:</label>
+                                    <input type="date" class="form-control" id="startDate">
                                 </div>
                                 <div class="form-group">
-                                    <label for="hireDate">天數:</label>
-                                    <input type="date" class="form-control" id="hireDate">
+                                    <label for="minTravelersNo">最少出團人數:</label>
+                                    <input type="text" class="form-control" id="minTravelersNo">
                                 </div>
                                 <div class="form-group">
-                                    <label for="county">縣市:</label>
-                                    <input type="text" class="form-control" id="county">
-                                </div>
-                                <div class="form-group">
-                                    <label for="pricr">價格:</label>
-                                    <input type="text" class="form-control" id="price">
-                                </div>
-                                <div class="form-group">
-                                    <label for="numberLimit">人數規定:</label>
-                                    <input type="text" class="form-control" id="numberLimit">
-                                </div>
-                                <div class="form-group">
-                                    <label for="tripDescription">行程描述:</label>
-                                    <input type="text" class="form-control" id="tripDescription">
-                                </div>
-                                <div class="form-group">
-                                    <label for="note">特別說明:</label>
-                                    <input type="text" class="form-control" id="note">
+                                    <label for="maxTravelersNo">額滿人數:</label>
+                                    <input type="text" class="form-control" id="maxTravelersNo">
                                 </div>
                             </form>
                         </div>
@@ -340,7 +286,46 @@
             <script src="js/demo/datatables-demo.js"></script>
 </body>
 <script>
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/tourgroup/info',
+            contentType: 'application/json',
+            success: function(response) {
+                console.log(response);
+                var tableBody = $('#tableBody');
+                tableBody.empty(); // 清空表格内容，確保每次都是新數據
 
+                // 迭代每個行程數據
+                for (let i = 0; i < response.length; i++) {
+                    const rowData = response[i];
+
+                    // 創建行
+                    var row = $('<tr></tr>');
+
+                    // 創建表單，並給予填充數據
+                    row.append('<td>' + rowData.tourGroupId + '</td>');
+                    row.append('<td>' + rowData.tripId + '</td>');
+                    row.append('<td>' + rowData.priceAdult + '</td>');
+                    row.append('<td>' + rowData.priceChild + '</td>');
+                    row.append('<td>' + rowData.startDate + '</td>');
+                    row.append('<td>' + rowData.minTravelersNo + '</td>');
+                    row.append('<td>' + rowData.maxTravelersNo + '</td>');
+                    row.append('<td><button class="btn btn-primary btn-sm btn-edit">編輯</button></td>');
+
+                    // 將行列加到表格中
+                    tableBody.append(row);
+                }
+                    
+                console.log('行程資訊獲得成功');    
+
+            },
+
+                error: function(error) {
+                console.log('獲取廠商行程資訊失敗。錯誤：' + error);
+            }
+        });
+    });
 </script>
 
 </html>

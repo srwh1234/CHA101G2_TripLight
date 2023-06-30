@@ -204,17 +204,21 @@
                                         <th>內容簡介</th>
                                         <th>天數</th>
                                         <th>縣市</th>
-                                        <th>價格(大人)</th>
-                                        <th>價格(小孩)</th>
-                                        <th>人數規定(最少出團人數)</th>
-                                        <th>人數規定(最多出團人數)</th>
+                                        <th>價格_大人</th>
+                                        <th>價格_小孩</th>
+                                        <th>人數_最少出團人數</th>
+                                        <th>人數_額滿人數</th>
                                         <th>行程描述</th>
                                         <th>特別說明</th>
                                         <th>行程狀態</th>
-                                        <!-- <th>編輯</th> -->
+                                        <th>編輯</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tableBody"></tbody>
+                                <tbody id="tableBody">
+                                    <td>
+                                        <button class="btn btn-primary btn-sm btn-edit">編輯</button>
+                                    </td>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -258,19 +262,19 @@
                                     <input type="text" class="form-control" id="city">
                                 </div>
                                 <div class="form-group">
-                                    <label for="priceAdult">價格(大人)</label>
+                                    <label for="priceAdult">價格_大人</label>
                                     <input type="text" class="form-control" id="priceAdult">
                                 </div>
                                 <div class="form-group">
-                                    <label for="priceChild">價格(小孩)</label>
+                                    <label for="priceChild">價格_小孩</label>
                                     <input type="text" class="form-control" id="priceChild">
                                 </div>
                                 <div class="form-group">
-                                    <label for="minTravelersNo">人數規定(最少出團人數)</label>
+                                    <label for="minTravelersNo">人數_最少出團人數</label>
                                     <input type="text" class="form-control" id="minTravelersNo">
                                 </div>
                                 <div class="form-group">
-                                    <label for="maxTravelersNo">人數規定(最多出團人數)</label>
+                                    <label for="maxTravelersNo">人數_額滿人數</label>
                                     <input type="text" class="form-control" id="maxTravelersNo">
                                 </div>
                                 <div class="form-group">
@@ -334,37 +338,18 @@
                     row.append('<td>' + rowData.tripId + '</td>');
                     row.append('<td>' + rowData.vendorId + '</td>');
                     row.append('<td>' + rowData.tripName + '</td>');
-                    row.append('<td>' + rowData.tripContent + '</td>');
+                    row.append('<td>' + rowData.tripContent.replace(/\n/g, '<br>')  + '</td>');
                     row.append('<td>' + rowData.tripDay + '</td>');
                     row.append('<td>' + rowData.city + '</td>');
                     row.append('<td>' + rowData.priceAdult + '</td>');
                     row.append('<td>' + rowData.priceChild + '</td>');
                     row.append('<td>' + rowData.minTravelersNo + '</td>');
                     row.append('<td>' + rowData.maxTravelersNo + '</td>');
-                    row.append('<td>' + rowData.tripDescription + '</td>');
-                    row.append('<td>' + rowData.tripNote + '</td>');
+                    row.append('<td>' + rowData.tripDescription.replace(/\n/g, '<br>') + '</td>');
+                    row.append('<td>' + rowData.tripNote.replace(/\n/g, '<br>') + '</td>');
                     row.append('<td>' + rowData.status + '</td>');
-                    row.append('<td></td>').append(editButton);
-            
-                    // 創建編輯按鈕元素
-                    var editButton = $('<button></button>').text('編輯');
-                
-                    // 添加編輯按鈕得處理
-                    editButton.click(function() {
-                        $('#tripId').val(rowData.tripId);
-                        $('#vendorId').val(rowData.vendorId);
-                        $('#tripName').val(rowData.tripName);
-                        $('#tripContent').val(rowData.tripContent);
-                        $('#tripDay').val(rowData.tripDay);
-                        $('#city').val(rowData.city);
-                        $('#priceAdult').val(rowData.priceAdult);
-                        $('#priceChild').val(rowData.priceChild);
-                        $('#minTravelersNo').val(rowData.minTravelersNo);
-                        $('#maxTravelersNo').val(rowData.maxTravelersNo);
-                        $('#tripDescription').val(rowData.tripDescription);
-                        $('#tripNote').val(rowData.tripNote);
-                    });
-                
+                    row.append('<td><button class="btn btn-primary btn-sm btn-edit">編輯</button></td>');
+
                     // 將行列加到表格中
                     tableBody.append(row);
                 }
@@ -373,8 +358,8 @@
 
             },
 
-            error: function(error) {
-                console.log('獲取廠商行程資訊失敗。錯誤：' + error);
+                error: function(error) {
+                  console.log('獲取廠商行程資訊失敗。錯誤：' + error);
             }
         });
     });
