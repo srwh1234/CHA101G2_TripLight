@@ -36,6 +36,12 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 
+		<!--  spring security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<!--	開發者模式，自動渲染網頁，專案上限後須刪掉	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
