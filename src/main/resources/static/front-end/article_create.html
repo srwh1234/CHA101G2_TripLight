@@ -410,9 +410,11 @@
                 .then(response => response.text())
                 .then(data => {
                     if (data) {
-                        alert('上傳成功');
+                        // alert('上傳成功');
+                        Swal.fire( { icon: 'success', title: '成功發表' } )
+                          .then(()=>window.location.href = 'article_mylist.html');
                     } else {
-                        alert('上傳失敗');
+                        alert('發文失敗');
                     }
                 })
                 .catch(error => console.log(error));

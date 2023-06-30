@@ -403,21 +403,16 @@
     <script>
         $(document).ready(function () {
 
-            fetch('http://localhost:8080/article/articles')
+            fetch('http://localhost:8080/articlefavorite/articlefavorite')
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    new_mylist(data)
+                    new_favorite(data)
                 })
 
-            function new_mylist(data) {
+            function new_favorite(data) {
+                console.log(article);
                 $('#favoriteContainer').html('');
-
-                for (let article of data) {
-
-                    if (article.articleStatus === 1) {
-                        continue; // 狀態數字為1，跳過此次迴圈
-                    }
 
                     let articleType;
                     switch (article.articleTypeId) {
@@ -467,7 +462,7 @@
                     `);
                 }
             }
-        });
+        );
     </script>
 
 </body>

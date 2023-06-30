@@ -227,7 +227,7 @@
                                 class="align-self-end">
                                 <fmt:parseDate value="${articleVO.artTime }" pattern="yyyy-MM-dd'T'HH:mm"
                                     var="parsedDateTime" type="both" />
-                                <fmt:formatDate pattern="yyyy.MM.dd" value="${ parsedDateTime }" />
+                                <fmt:formatDate pattern="yyyy.MM.dd" value="${ parsedDateTime }">
                             </span>
                             <i class="bi bi-eye-fill align-self-end"
                                 style="font-size: 17px; margin-bottom: 6px; color: rgb(89, 84, 84);">
@@ -266,13 +266,13 @@
             </div>
             <!--留言串上方區塊結束 -->
             <!-- 留言串下方區塊開始 -->
-            <section id="messageContainer">
+            <div class="inner-container" id="messageContainer">
                 <div class="pd-collapse-row">
                     <!-- 	留言串開始 -->
                     <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
                         <div>
                             <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
-                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf" />
+                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf">
                             </div>
                         </div>
                         <div class="col">
@@ -280,56 +280,55 @@
                                 style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
                                 <h6 style="font-weight: bold;">吳彼得</h6>
                                 <span style="font-weight: bold; color: lightgray;" class="align-text-end">
-                                    <fmt:parseDate value="${articleMessage.messagePostTime}"
-                                        pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${ parsedDateTime }" />
+                                    <div value="${articleMessage.messagePostTime}" var="parsedDateTime" type="both">
+                                    </div>
                                 </span>
                             </div>
                             <div style="display: inline-block; position: relative;">
-                                <span class="element"
+                                <span class="postcontent"
                                     style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
                             </div>
                         </div>
                     </div>
                     <!-- 	留言串結束  開始留言-->
                     <div class="collapse show">
-                        <div class="pd-collapse-box">
-                            <div class="row align-items-end ">
-                                <!-- 留言按鍵 -->
-                                <div class="text-sm-left p-3">
-                                    <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
-                                        aria-expanded="false" aria-controls="pd_add_review"
-                                        style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
-                                    </a>
-                                </div>
-                                <!-- 會員留言開啟 -->
-                                <div class="col-12 collapse" id="pd_add_review">
-                                    <div class="my-1 p-3 bg-gray-100 border">
-                                        <form method="post" name="msgform" id="replyContentForm">
-                                            <div class="row g-2">
-                                                <div class="col-sm-12">
-                                                    <label class="form-label">寫下你的留言</label>
-                                                    <textarea rows="5" class="form-control" name="replyContent">
-                                                    </textarea>
-                                                </div>
-                                                <div class="col-sm-6 ">
-                                                    <input type="hidden" name="articleId" value="${article.articleId}">
-                                                    <input type="hidden" name="memberId"
-                                                        value="${sessionScope.article.getMemberId()}">
-                                                    <input type="hidden" name="action" value="insert_reply">
-                                                    <input type="button" id="msgSubmit" value="送出">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- 會員留言結束 -->
+                        <!-- <div class="pd-collapse-box"> -->
+                        <div class="row align-items-end ">
+                            <!-- 留言按鍵 -->
+                            <div class="text-sm-left p-3">
+                                <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
+                                    aria-expanded="false" aria-controls="pd_add_review"
+                                    style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
+                                </a>
                             </div>
+                            <!-- 會員留言開啟 -->
+                            <div class="col-12 collapse" id="pd_add_review">
+                                <div class="my-1 p-3 bg-gray-100 border">
+                                    <form method="post" name="msgform" id="replyContentForm">
+                                        <div class="row g-2">
+                                            <div class="col-sm-12">
+                                                <label class="form-label">寫下你的留言</label>
+                                                <textarea rows="5" class="form-control" name="replyContent">
+                                                    </textarea>
+                                            </div>
+                                            <div class="col-sm-6 ">
+                                                <input type="hidden" name="articleId" value="${article.articleId}">
+                                                <input type="hidden" name="memberId"
+                                                    value="${sessionScope.article.getMemberId()}">
+                                                <input type="hidden" name="action" value="insert_reply">
+                                                <input type="button" id="msgSubmit" value="送出">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- 會員留言結束 -->
                         </div>
+                        <!-- </div> -->
                     </div>
                     <!--留言結束 -->
                 </div>
-            </section>
+            </div>
             <!-- 留言串下方區塊結束 -->
         </div>
     </div>
@@ -451,20 +450,22 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
     <script>
+
+        function redirectToArticleList() {
+            window.location.href = "article_list.html";
+        };
+
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get("id");
-            console.log(articleId);
 
             fetch(`http://localhost:8080/article/articleId/${articleId}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     new_articledetail(data);
                 });
 
             function new_articledetail(article) {
-                console.log(article);
                 $('#detailContainer').html('');
 
                 let articleType;
@@ -538,12 +539,9 @@
                         </section>
                         <br>
                         <div style="display: inline-block;">
-                            <form method="post" action="" style="margin-bottom: 0px;" id="formLove">
-                                <input type="hidden" name="artId" value="${article.articleId}">
-                                <button class="button1" id="myfavourite" type="submit"
-                                    style="border-radius: 9px;">收藏
+                                <button class="button1" id=".my-favorite" type="submit"
+                                    style="border-radius: 9px;" onclick="redirectToArticleList()">返回
                                 </button>
-                            </form>
                         </div>
                         <div style="display: inline-block;">
                             <a href="http://localhost:8080/front-end/article_upgrade.html?id=${article.articleId}">
@@ -560,26 +558,32 @@
                 `);
             };
         });
-
+    </script>
+    <script>
         $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get("id");
+            console.log(articleId);
 
-            fetch('http://localhost:8080/articleMessage/articleMessages')
+            fetch(`http://localhost:8080/articleMessage/messages/${articleId}`)
                 .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    new_message(data)
+                .then(data1 => {
+                    console.log(data1);
+                    new_message(data1)
                 })
+                .catch(error => console.log(error))
 
-            function new_message(data) {
+            function new_message(data1) {
+
                 $('#messageContainer').html('');
 
-                for (let article of data) {
+                for (let articleMessage of data1) {
 
                     if (articleMessage.messageStatus === 1) {
                         continue; // 狀態數字為1，跳過此次迴圈
                     }
-
-                    let inputDate = article.articlePostTime;
+                    console.log(data1);
+                    let inputDate = articleMessage.messagePostTime;
                     let dateTime = new Date(inputDate);
                     let year = dateTime.getFullYear();
                     let month = String(dateTime.getMonth() + 1).padStart(2, "0");
@@ -588,65 +592,59 @@
 
                     $('#messageContainer').append(`
 
-                <div class="pd-collapse-row">
-                    <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
-                        <div>
-                            <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
-                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf" />
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="rating-star  ps-2 "
-                                style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
-                                <h6 style="font-weight: bold;">${articleMessage.memberName}</h6>
-                                <span style="font-weight: bold; color: lightgray;" class="align-text-end">
-                                    <fmt:parseDate value="${articleMessage.messagePostTime}"
-                                        pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${formatDate}" />
-                                </span>
-                            </div>
-                            <div style="display: inline-block; position: relative;">
-                                <span class="element"
-                                    style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="collapse show">
-                        <div class="pd-collapse-box">
-                            <div class="row align-items-end ">
-                                <div class="text-sm-left p-3">
-                                    <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
-                                        aria-expanded="false" aria-controls="pd_add_review"
-                                        style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
-                                    </a>
-                                </div>
-                                <div class="col-12 collapse" id="pd_add_review">
-                                    <div class="my-1 p-3 bg-gray-100 border">
-                                        <form method="post" name="msgform" id="replyContentForm">
-                                            <div class="row g-2">
-                                                <div class="col-sm-12">
-                                                    <label class="form-label">寫下你的留言</label>
-                                                    <textarea rows="5" class="form-control" name="replyContent">
-                                                        ${articleMessage.messagePostContent}
-                                                    </textarea>
-                                                </div>
-                                                <div class="col-sm-6 ">
-                                                    <input type="hidden" name="articleId" value="${article.articleId}">
-                                                    <input type="hidden" name="memberId"
-                                                        value="${sessionScope.article.getMemberId()}">
-                                                    <input type="hidden" name="action" value="insert_reply">
-                                                    <input type="button" id="msgSubmit" value="送出">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="pd-collapse-row">
+    <div class="d-flex border-top p-2 mt-1" style="background: white; border-radius: 3px;">
+      <div>
+        <div class="avatar avatar-lg" id="Pinf" style="display: inline-block;">
+          <img src="https://picsum.photos/25/15/?random=54" id="imgPinf">
+        </div>
+      </div>
+      <div class="col">
+        <div class="rating-star ps-2" style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
+          <h6 style="font-weight: bold;"> ${articleMessage.memberName}</h6>
+          <span style="font-weight: bold; color: lightgray;" class="align-text-end">
+          </span>
+        </div>
+        <div style="display: inline-block; position: relative;">
+          <span class="element" style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;"> ${formattedDate}</span>
+        </div>
+        <div style="display: inline-block; position: relative;">
+            <button style="margin-left: 20px; border-radius: 9px; float: right;">刪除</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse show">
+      <div class="pd-collapse-box">
+        <div class="row align-items-end">
+          <div class="text-sm-left p-3">
+            <a class="me-4" data-bs-toggle="collapse" ">
+                留言
+            </a>
+          </div>
+          <div class="col-12 collapse" id="pd_add_review">
+            <div class="my-1 p-3 bg-gray-100 border">
+              <form method="post" action="/article/reply" name="msgform" id="replyContentForm">
+                <div class="row g-2">
+                  <div class="col-sm-12">
+                    <label class="form-label">寫下你的留言</label>
+                    <textarea rows="5" class="form-control" name="replyContent">${articleMessage.messagePostcontent}</textarea>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="hidden" name="artId" value="${articleMessage.articleId}">
+                    <input type="hidden" name="action" value="insert_reply">
+                    <input type="button" id="msgSubmit" value="送出">
+                  </div>
                 </div>
-                `)
-                }
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+                    `);
+                };
             }
         });
 
