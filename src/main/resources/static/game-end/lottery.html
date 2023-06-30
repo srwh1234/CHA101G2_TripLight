@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>TripLight | Game | Lottery</title>
+
+    <!-- 加上才能使用RWD -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+
+    <!-- 關鍵字設定 -->
+    <meta name="keywords" content="旅遊, 行程規劃, 票券, AI, ChatGPT, Google map, 客製化行程, 套裝行程" />
+    <!-- 網頁介紹 -->
+    <meta name="description" content="我們提供旅遊行程規劃服務，以及販售套裝行程 票券 等等" />
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- 載入icon -->
+    <link rel="shortcut icon" href="./img/icon.png" />
+    <link rel="bookmark" href="./img/icon.png" />
+
+    <style>
+        textarea {
+            font-size: 16px;
+            color: #fff;
+            background: rgba(0, 0, 0, .1);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            height: 30vh;
+            resize: none;
+        }
+
+        .tableContainer {
+            height: 90vh;
+            width: 90vw;
+            overflow: auto;
+        }
+
+        .login-box {
+            width: 50vw;
+        }
+
+        @media screen and (max-width: 800px) {
+            .login-box {
+                width: 90vw;
+            }
+        }
+
+
+        #output {
+            border: none;
+        }
+
+        /* 獎池數字 */
+        .count-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            /* background-color: #f5f5f5; */
+            font-family: 'Comic Sans MS', cursive;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        h2 {
+            margin: 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- music -->
+    <audio src="./music/background.mp3" id="backgroundMusic" autoplay loop>
+        Your browser does not support the audio element.
+    </audio>
+    <audio src="./music/winlottery.mp3" id="winlottery">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="your-element-id" class="background-image">
+        <!-- animated -->
+        <div id="large-header">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+        <!-- animated -->
+        <div class="login-box tableContainer">
+            <h2 id="title">Current Prize Pool</h2>
+            <div class="count-number">0</div>
+            <button class="chinese_btn">中文</button>
+            <form>
+                <textarea name="myText" id="output" readonly></textarea>
+                <a href="#" class="btn" onclick="clickLuck()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Try Your Luck
+                </a>
+                <br>
+                <a href="member_center.html" class="btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    GO back to member center
+                </a>
+
+
+            </form>
+        </div>
+    </div>
+</body>
+
+<!-- ============================================== jquery ============================================== -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- ============================================== sweetAlert ============================================== -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ============================================== animated ============================================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+<!-- self made -->
+<script src="./js/animated.js"></script>
+<script src="./js/common.js"></script>
+<script>
+
+    //獲取音樂
+    let winlotteryAudio = document.getElementById("winlottery");
+    let backgroundMusicAudio = document.getElementById("backgroundMusic");
+
+
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    // let prizepool = 0;
+    //  防止圖片閃爍
+    $(document).ready(function () {
+        var backgroundImage = new Image();
+        backgroundImage.src = "./img/backgroundimg.jpg";
+
+        $(backgroundImage).on("load", function () {
+            $("#your-element-id").css("filter", "none");
+            $("#your-element-id").css("opacity", "1");
+        });
+
+        // 歡迎光臨
+
+        let message = `Welcome to the lottery draw system!
+Game rules:
+Each time you click the button, it costs $50 to participate in a lottery draw.
+For every $50 spent, the jackpot increases by $100.
+The player who hits the jackpot will receive the entire jackpot amount, and the jackpot will reset to zero.
+Note: The jackpot is shared among all players, and everyone has a chance to win!
+Note: The probability of winning is 5%.`;
+
+        let index = 0;
+
+        function displayCharacters() {
+            if (index < message.length) {
+                let substring = message.substring(0, index + 1);
+                document.getElementById("output").innerHTML = substring;
+                index++;
+                setTimeout(displayCharacters, 5); // 0.2秒後再次呼叫函數
+            }
+        }
+        displayCharacters();
+
+        // 監聽翻譯按鈕
+        $(".chinese_btn").on("click", changeLangurage);
+        // 中文翻譯
+        function changeLangurage() {
+            message = `歡迎來到樂透抽獎系統！
+遊戲規則：
+每次點擊按鈕，花費50$ 可進行一次抽獎
+每花費50$，總獎池會增加100$
+抽中頭獎的玩家，可獲得獎池所有金額，同時獎池也會歸0
+注意：該獎池為所有玩家共同爭奪
+備註：中獎機率為5%
+`;
+            index = 0;
+            displayCharacters();
+        }
+        // 初始化獎池
+        $.ajax({
+            type: "GET",
+            url: "/prizePools",
+            success: function (response) {
+                $(this).text(Math.floor(0))
+
+                // 增加動畫
+                $(".count-number").animate(
+
+                    // 動畫終點
+                    { num: response },
+                    {
+                        // 持續時間
+                        duration: 5000,
+                        step: function (now) {
+                            $(this).text(Math.floor(now)); // 更新數字
+                        },
+                    }
+                );
+            }
+        });
+
+
+    });
+
+
+    let canClick = true;
+    function clickLuck() {
+        if (canClick) {
+            // 減少資金
+            user.money -= 50;
+            // 更新狀態
+            let userString = JSON.stringify(user);
+            sessionStorage.setItem("user", userString);  // 將使用者資訊存入sessionStorage
+            //
+            // 玩家錢減少
+            updateUser();
+            // 獎池增加
+            updatePrizepool();
+
+
+            // 設計中獎機率
+            let randomNumber = Math.floor(Math.random() * 20);  // 隨機數
+            console.log(randomNumber);
+            if (randomNumber === 12) {
+                winlotteryAudio.play();
+                backgroundMusicAudio.pause();
+                $.ajax({
+                    type: "GET",
+                    url: "/prizePools",
+                    success: function (response) {
+                        // 該玩家獲得獎池所有金額
+                        user.money += response;
+                        // 更新狀態
+                        let userString = JSON.stringify(user);
+                        sessionStorage.setItem("user", userString);  // 將使用者資訊存入sessionStorage
+                        // updateUser(userString);
+                        Swal.fire({
+                            title: `恭喜中獎拉!!!!!!!
+獲得總獎金${response} !!!!!!`,
+                            timer: 30000,
+                            background: 'rgba(255, 255, 255, .7)',
+                            backdrop: `
+    rgba(0, 0, 123, 0.1)
+    url("/img/nyan-cat.gif")
+    center / cover
+  `
+                        }).then(() => {
+                            // 在確認按鈕點擊後執行的程式碼
+                            winlotteryAudio.pause(); // 暫停音樂
+                            backgroundMusicAudio.play();
+                            winlotteryAudio.currentTime = 0; // 將音樂時間歸零
+                        });
+
+                    }
+                });
+
+                updatePrizepoolTOZero()
+            }
+            canClick = false;
+            setTimeout(function() {
+                canClick = true;
+            }, 1000); // 這裡的200表示限制為每0.2秒內只能點擊一次
+        }
+
+        function updatePrizepool() {
+            $.ajax({
+                type: "GET",
+                url: "/prizePools/update",
+                success: function (response) {
+                    console.log(response);
+                    $(this).text(Math.floor(0))
+                    // 增加動畫
+                    $(".count-number").animate(
+
+                        // 動畫終點
+                        { num: response },
+                        {
+                            // 持續時間
+                            duration: 400,
+                            step: function (now) {
+                                $(this).text(Math.floor(now)); // 更新數字
+                            },
+                        }
+                    );
+                }
+            });
+        }
+
+        function updatePrizepoolTOZero() {
+            $.ajax({
+                type: "GET",
+                url: "/prizePools/zero",
+                success: function (response) {
+                    console.log(response);
+                    $(this).text(Math.floor(0))
+                    // 增加動畫
+                    $(".count-number").animate(
+
+                        // 動畫終點
+                        { num: response },
+                        {
+                            // 持續時間
+                            duration: 1000,
+                            step: function (now) {
+                                $(this).text(Math.floor(now)); // 更新數字
+                            },
+                        }
+                    );
+                }
+            });
+        }
+
+        function updateUser() {
+            $.ajax({
+                url: "/users/money-50",
+                method: "PUT",
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+
+    }
+</script>
+
+</html>
