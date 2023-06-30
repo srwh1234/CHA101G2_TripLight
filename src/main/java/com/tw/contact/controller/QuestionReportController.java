@@ -31,7 +31,7 @@ public class QuestionReportController {
         return ResponseEntity.ok().body("{\"message\": \"問題已送出!\"}");
     }
     //接收會員的評分
-    @PostMapping(value ="/questionReportForm/{id}/score")
+    @PostMapping(value ="/questionReportForm/score/{id}")
     public ResponseEntity<String> updateScore(@PathVariable int id, @RequestBody Map<String, Integer> scoreMap){
         questionReportService.updateScore(id, scoreMap.get("score"));
         return ResponseEntity.ok().body("{\"message\": \"評分已送出!\"}");
@@ -65,8 +65,8 @@ public class QuestionReportController {
 
     @PutMapping("/questionReportForm/{id}")
     public ResponseEntity<String> handleQuestionReport(@PathVariable int id, @RequestBody Map<String, Object> payload) {
-        String replyContent = payload.get("replyContent").toString(); // 转换为字符串
-        int employeeId = Integer.parseInt(payload.get("employeeId").toString()); // 转换为整数
+        String replyContent = payload.get("replyContent").toString();
+        int employeeId = Integer.parseInt(payload.get("employeeId").toString());
         questionReportService.updateQuestionReport(id, employeeId, replyContent);
         return ResponseEntity.ok().body("{\"message\": \"已處理問題!\"}");
     }

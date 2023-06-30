@@ -1132,8 +1132,10 @@
                         //變更一下舊的條件 才能強制刷新
                         oldCondition.page = -1;
                         doPageSearch(result.curPage);
+                        Swal.fire({ icon: 'success', title: '新增成功' });
                     } else {
                         doPageSearch(0);
+                        Swal.fire({ icon: 'error', title: '新增失敗' });
                     }
                 })
                 .catch(error => console.log(error))
@@ -1165,6 +1167,8 @@
                 .then(data => {
                     if (!data) { //發生錯誤的時候 刷新頁面
                         doPageSearch(0);
+                    }else{
+                        Swal.fire({ icon: 'success', title: '變更成功' });
                     }
                 })
                 .catch(error => console.log(error));

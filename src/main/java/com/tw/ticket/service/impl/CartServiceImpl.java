@@ -18,6 +18,7 @@ import com.tw.ticket.model.TicketCart.PrimaryKey;
 import com.tw.ticket.model.dao.TicketCartRepository;
 import com.tw.ticket.model.dao.TicketRepository;
 import com.tw.ticket.model.dao.TicketSnRepository;
+import com.tw.ticket.redis.TicketCartsRedis;
 import com.tw.ticket.service.CartService;
 import com.tw.ticket.service.PromotionService;
 
@@ -42,18 +43,28 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private PromotionService promotionService;
 
+	@Autowired
+	private TicketCartsRedis ticketCartsRedis;
+
 	/**
 	 * 票券購物車清單
 	 *
 	 * @param membeId 會員編號
+	 * @param sessionId 給非會員使用
 	 * @return
 	 */
 	@Override
-	public List<CartDto> getItems(final int membeId) {
+	public List<CartDto> getItems(final int memberId, final String sessionId) {
+
+		if (memberId == 0) {
+			return ticketCartsRedis.getItems(sessionId);
+		}
+		ticketCartsRedis.convertItems(memberId, sessionId);
+
 		final List<CartDto> result = new ArrayList<>();
 
-		for (final TicketCart cart : ticketCartRepository.findByKeyMemberId(membeId)) {
-			// XXX 這邊好像要查詢很多次...
+		for (final TicketCart cart : ticketCartRepository.findByKeyMemberId(memberId)) {
+			// 這邊好像要查詢很多次...
 			final Ticket ticket = ticketRepository.findById(cart.getTicketId()).orElse(null);
 
 			if (ticket == null) {
@@ -104,11 +115,10 @@ public class CartServiceImpl implements CartService {
 		final Member member = memberRepository.findById(memberId).orElse(null);
 		final Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
 
-		// 確認會員和票券
-		if (member == null || ticket == null) {
+		// 確認票券
+		if (ticket == null) {
 			return ADD_CART_ERROR;
 		}
-
 		// 下架中
 		if (ticket.getStatus() == Ticket.DISABLED) {
 			return ADD_CART_DISABLE;
@@ -119,6 +129,10 @@ public class CartServiceImpl implements CartService {
 			return ADD_CART_SOLDOUT;
 		}
 
+		// 確認會員
+		if (member == null) {
+			return ticketCartsRedis.addItem(reqDto);
+		}
 		// 購物車物件
 		TicketCart ticketCart = ticketCartRepository.findByKeyMemberIdAndKeyTicketId(memberId, ticketId);
 
@@ -145,6 +159,9 @@ public class CartServiceImpl implements CartService {
 		final int ticketId = reqDto.getTicketId();
 		final int modify = reqDto.getModify();
 
+		if (memberId == 0) {
+			return ticketCartsRedis.updateItem(reqDto);
+		}
 		// 購物車物件
 		final TicketCart ticketCart = //
 				ticketCartRepository.findByKeyMemberIdAndKeyTicketId(memberId, ticketId);
@@ -175,11 +192,16 @@ public class CartServiceImpl implements CartService {
 	 *
 	 * @param memberId 會員編號
 	 * @param ticketId 票券編號
+	 * @param sessionId 給非會員使用
 	 * @return
 	 */
 	@Override
-	public boolean removeItem(final int memberId, final int ticketId) {
-		ticketCartRepository.deleteById(new PrimaryKey(memberId, ticketId));
+	public boolean removeItem(final int memberId, final int ticketId, final String sessionId) {
+		if (memberId == 0) {
+			ticketCartsRedis.removeItem(sessionId, ticketId);
+		} else {
+			ticketCartRepository.deleteById(new PrimaryKey(memberId, ticketId));
+		}
 		return true;
 	}
 }

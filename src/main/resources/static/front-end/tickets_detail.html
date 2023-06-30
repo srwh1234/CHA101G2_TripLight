@@ -232,7 +232,7 @@
             </ul>
           </li>
           <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-          <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
+          <li class="member_li"><a href="article_myfavorite.html"><i class="fa-solid fa-copy"></i>我的文章</a></li>
           <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a></li>
           <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a></li>
           <li class="member_li"><a href="read_question_list.html"><i class="fa-regular fa-comment"></i>查看問題</a></li>
@@ -925,10 +925,10 @@
     */
     function fetch_cart() {
       //登入檢查
-      const memberId = getMemberId();
-      if (!memberId) {
-        return;
-      }
+      const memberId = getMemberId(false);
+      // if (!memberId) {
+      //   return;
+      // }
 
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
@@ -957,13 +957,34 @@
           Swal.fire({ icon: 'warning', title: '與伺服器失去聯繫', });
           break;
         case 1:
-          Swal.fire({ icon: 'success', title: '加入購物車成功', });
+          //Swal.fire({ icon: 'success', title: '加入購物車成功', });
+
+          Swal.fire({
+            icon: 'success', title: '加入購物車成功',
+            showCancelButton: true,
+            confirmButtonText: '繼續購物',
+            cancelButtonText: '查看購物車',
+            confirmButtonColor: 'deepPink',// 修改按鈕色碼
+            cancelButtonColor: '#26bec9',
+          })
+            .then(res => {
+              if (res.isConfirmed) {
+                //繼續購物
+                window.location.href = 'tickets.html';
+              } else if (res.dismiss === 'cancel') {
+                //查看購物車
+                window.location.href = 'shopping_car.html';
+              }
+            })
           break;
         case 2:
           Swal.fire({ icon: 'warning', title: '此商品數量不足', });
           break;
         case 3:
           Swal.fire({ icon: 'warning', title: '此商品已下架', });
+          break;
+        case 5:
+          Swal.fire({ icon: 'info', title: '請登入會員', });
           break;
         default:
           Swal.fire({ icon: 'warning', title: '發生未知的錯誤', });
