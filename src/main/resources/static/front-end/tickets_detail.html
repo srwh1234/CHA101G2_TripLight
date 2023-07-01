@@ -29,8 +29,8 @@
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+          integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+          crossorigin="anonymous"></script>
   <!--會員登入-->
   <link href="css/login.css" rel="stylesheet" />
 
@@ -253,7 +253,7 @@
       <form action="">
         <div class="input-box">
           <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
-            for="">信箱</label>
+                 for="">信箱</label>
         </div>
         <div class="input-box">
           <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
@@ -276,11 +276,11 @@
       <form action="">
         <div class="input-box">
           <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account" required /> <label
-            for="">使用者名稱</label>
+                 for="">使用者名稱</label>
         </div>
         <div class="input-box">
           <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email" required /> <label
-            for="">信箱</label>
+                 for="">信箱</label>
         </div>
         <div class="input-box">
           <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password" required />
@@ -370,6 +370,7 @@
 
         <div class="my-5" id="ticketMap">
           <h3>體驗地點</h3>
+          <div class="my-3 my-text-content" id="adderss"></div>
           <div class="my-3" id="map" style="width: 100%; height: 500px;"></div>
         </div>
 
@@ -513,7 +514,7 @@
             </p>
             <div class="test-img text-center mt-4">
               <img src="images/te1.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                style="max-width: 150px; width: 100%" />
+                   style="max-width: 150px; width: 100%" />
             </div>
             <h3 class="mt-md-4 mt-3">張小姐</h3>
           </div>
@@ -525,7 +526,7 @@
             </p>
             <div class="test-img text-center mt-4">
               <img src="images/te2.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                style="max-width: 150px; width: 100%" />
+                   style="max-width: 150px; width: 100%" />
             </div>
             <h3 class="mt-md-4 mt-3">陳先生</h3>
           </div>
@@ -537,7 +538,7 @@
             </p>
             <div class="test-img text-center mt-4">
               <img src="images/te3.jpg" class="img-thumbnail img-fluid" alt="user-image"
-                style="max-width: 150px; width: 100%" />
+                   style="max-width: 150px; width: 100%" />
             </div>
             <h3 class="mt-md-4 mt-3">王先生</h3>
           </div>
@@ -614,14 +615,14 @@
               </li>
               <li>
                 <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                    alt="instagram" /></a>
+                       alt="instagram" /></a>
               </li>
               <li>
                 <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
               </li>
               <li class="youtube">
                 <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
-                    alt="youtube" /></a>
+                       alt="youtube" /></a>
               </li>
             </ul>
           </div>
@@ -670,6 +671,7 @@
       note: '注意事項<br>第2行<br>第3行<br>第4行<br>第5行',
       supplierName: '供應商名稱',
       city: '縣市名',
+      address: '',
       latitude: '緯度',
       longitude: '經度',
       rating: 4.5,
@@ -883,6 +885,9 @@
           render_title();
           render_price();
 
+          //地址
+          $('#adderss').text(ticket.address);
+          //地圖
           const newLatLng = new google.maps.LatLng(ticket.latitude, ticket.longitude);
           marker.setPosition(newLatLng);
           map.panTo(newLatLng);
