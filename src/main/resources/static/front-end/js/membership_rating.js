@@ -49,14 +49,47 @@ Promise.all([getTicket(), getTrip()]).then(() => {
 	progressBarElement.setAttribute('aria-valuenow', progressWidth);
 	//會員名稱
 	const rate_name = document.querySelector("#rate_name")
+	let memberGrade = 0;
 	if (totalOrder < 10) {
 		rate_name.innerText = '一般會員';
 	} else if (totalOrder >= 10 && totalOrder < 20) {
 		rate_name.innerText = '白金會員';
+		memberGrade = 1;
+		$.ajax({
+			url: "/updateRating",
+			method: "POST",
+			data: {
+				id: id,
+				memberGrade: memberGrade
+			},
+			success: (e) => {
+				console.log(e)
+			},
+			error: (error) => {
+				console.log(error);
+			}
+		})
 	} else {
 		rate_name.innerText = '鑽石會員';
+		memberGrade = 2;
+		$.ajax({
+			url: "/updateRating",
+			method: "POST",
+			data: {
+				id: id,
+				memberGrade: memberGrade
+			},
+			success: (e) => {
+				console.log(e)
+			},
+			error: (error) => {
+				console.log(error);
+			}
+		})
 	}
 })
+
+// ============================存會員分級回資料庫=====================================
 
 // ============================上傳大頭照=====================================
 let camera = document.getElementById('camera');
