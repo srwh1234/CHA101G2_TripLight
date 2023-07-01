@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @PutMapping("/levelUp")
-    public boolean UserLevelUp(HttpSession session) {
+    public UserDto UserLevelUp(HttpSession session) {
         User user = (User) session.getAttribute("user");
         int requiredExp = 100;
         for (int i = 2; i <= user.getLevel(); i++) {
@@ -89,9 +89,9 @@ public class UserController {
         if(user.getMoney() > 0){
             user.setLevel(user.getLevel()+1);
             userService.save(user);
-            return true;
+            return new UserDto(user);
         }
-        return false;
+        return null;
     }
 
 
