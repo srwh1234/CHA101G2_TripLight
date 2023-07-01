@@ -30,7 +30,12 @@ public class BkImageServiceImpl implements BkImageService {
 	@Autowired
 	private TicketImageRedis ticketImgRedis;
 
-	// 後台新增圖片集合
+	/**
+	 * 新增多張圖片
+	 *
+	 * @param ticketId
+	 * @param files
+	 */
 	@Override
 	public void addImages(final int ticketId, final MultipartFile[] files) {
 		final List<TicketImage> ticketImages = new ArrayList<>();
@@ -51,7 +56,13 @@ public class BkImageServiceImpl implements BkImageService {
 		ticketImgRedis.saveAll(ticketImages);
 	}
 
-	// 後台票券新增圖片
+	/**
+	 * 新增圖片
+	 *
+	 * @param ticketId
+	 * @param file
+	 * @return
+	 */
 	@Override
 	public String addImage(final int ticketId, final MultipartFile file) {
 		String result = null;
@@ -80,9 +91,14 @@ public class BkImageServiceImpl implements BkImageService {
 		return result;
 	}
 
-	// 後台票券移除圖片
+	/**
+	 * 移除圖片
+	 * 
+	 * @param imageId
+	 * @return
+	 */
 	@Override
-	public boolean removeImage(final int employeeId, final int imageId) {
+	public boolean removeImage(final int imageId) {
 		final TicketImage image = ticketImgRedis.findById(imageId);
 
 		if (image == null) {
