@@ -25,10 +25,8 @@ public class ChatRoomService {
 
     @Value("${API_KEY}")
     private String API_KEY; // 你的 API 密鑰
-    // 設定 Service 基本參數
-    private String output;
 
-    // 创建 Flux 以发送数据
+    // 創建 Flux 以發送數據
     private FluxSink<String> outputSink;
     private Flux<String> outputFlux = Flux.create(sink -> outputSink = sink);
 
@@ -87,9 +85,6 @@ public class ChatRoomService {
 
         // 設定連線是否可以向伺服器寫入資料
         connection.setDoOutput(true);
-
-        // 清空資料
-        output = "";
 
         // 回傳連線
         return connection;
@@ -184,7 +179,6 @@ public class ChatRoomService {
             content = content.replace("\n", "\\n");
             content = content.replace(" ", "\\s");
             // 将数据存入变量
-            this.output += content;
             System.out.print(content);
             if (outputSink != null) {
                 outputSink.next(content); // 将新内容推送到 Flux

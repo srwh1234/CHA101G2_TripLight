@@ -1,7 +1,5 @@
 package com.tw.game.controller;
 
-
-
 import com.tw.game.dto.UserDto;
 import com.tw.game.model.User;
 import com.tw.game.service.UserService;
@@ -86,6 +84,7 @@ public class UserController {
         }
         user.setMoney(user.getMoney()-requiredExp);
 
+        // 如果金錢為正的 才會升等
         if(user.getMoney() > 0){
             user.setLevel(user.getLevel()+1);
             userService.save(user);
@@ -124,17 +123,6 @@ public class UserController {
         user.setPlayTimes(user.getPlayTimes()+1);
         userService.save(user);
         return true;
-
-//        User theuser = userService.findUser(user);
-//        System.out.println(user.getMaxScore());
-//        if(theuser.getMaxScore() < user.getMaxScore()){
-//            user.setPlayTimes(user.getPlayTimes()+1);
-//            userService.save(user);
-//            return true;
-//        }
-//        theuser.setPlayTimes(user.getPlayTimes()+1);
-//        userService.save(theuser);
-//        return false;
     }
     // Delete a user by ID
     @DeleteMapping("/{userId}")

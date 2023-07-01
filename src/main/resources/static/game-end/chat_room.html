@@ -215,9 +215,7 @@
     if (event.data !== null) {
       let processedData = event.data.replace(/\\n/g, '\n');
       processedData = processedData.replace("\\s", " ");
-      // let value = event.data.replace(/\\n/g, "\n");
       document.getElementById("output").innerHTML += processedData;
-      // console.log(value)
     }
   });
 
