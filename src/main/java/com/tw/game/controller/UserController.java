@@ -24,9 +24,9 @@ public class UserController {
 
     // Get user
     @GetMapping()
-    public User getUser(HttpSession session){
+    public UserDto getUser(HttpSession session){
         User user = (User)session.getAttribute("user");
-        return user;
+        return new UserDto(user);
     }
 
 
@@ -114,7 +114,6 @@ public class UserController {
     @PutMapping("/score")
     public boolean updateUserMaxScore(@RequestParam int score, HttpSession session){
         User user = (User) session.getAttribute("user");
-        System.out.println(score);
         if(user.getMaxScore() < score){
             user.setMaxScore(score);
         }

@@ -153,7 +153,7 @@ function keyListener() {
 // 游戏开始(){
 function start() {
   // 判斷還有沒有錢
-  if (user.money < 100) {
+  if (user.money < 50) {
     Swal.fire({
       title: "You don't have enough money",
       timer: 1500,
