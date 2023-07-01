@@ -281,20 +281,6 @@ ChatGPTチャットルーム：ここではChatGPTを使用することができ
 
                 function levelUp() {
                     user.level++;
-                    let userString = JSON.stringify(user);
-                    sessionStorage.setItem("user", userString); // 將使用者資訊存入sessionStorage
-
-                    message = `歡迎 ${user.userName}！
-等級：${user.level}
-金錢：${user.money}
-最高分數：${user.maxScore}
-ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的等級下降2級。
-排行榜：您可以在這裡查看排行榜。
-賭場：賭場會場，在這裡您可以賺錢。每個房間都有自己的入場費和相應的隨機獎勵。
-貪吃蛇：貪吃蛇小遊戲。每次遊玩需要花費50元，每得到一點分數可獲得20元。隨著等級的提高，速度會減慢，相對變得更容易。
-升級：每次點擊花費100美元，將您的EXP增加100，當EXP量條填滿即可升級，等級到達10級可獲得緩速技能`;
-                    index = 0;
-                    displayCharacters();
 
                     $.ajax({
                         url: "/users/levelUp",
@@ -307,6 +293,20 @@ ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的�
                                     showConfirmButton: false,
                                     background: "rgba(255, 255, 255, .7)"
                                 });
+                                let userString = JSON.stringify(response);
+                                sessionStorage.setItem("user", userString); // 將使用者資訊存入sessionStorage
+
+                                message = `歡迎 ${response.userName}！
+等級：${response.level}
+金錢：${response.money}
+最高分數：${response.maxScore}
+ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的等級下降2級。
+排行榜：您可以在這裡查看排行榜。
+賭場：賭場會場，在這裡您可以賺錢。每個房間都有自己的入場費和相應的隨機獎勵。
+貪吃蛇：貪吃蛇小遊戲。每次遊玩需要花費50元，每得到一點分數可獲得20元。隨著等級的提高，速度會減慢，相對變得更容易。
+升級：每次點擊花費100美元，將您的EXP增加100，當EXP量條填滿即可升級，等級到達10級可獲得緩速技能`;
+                                index = 0;
+                                displayCharacters();
                             } else {
                                 Swal.fire({
                                     title: `請不要搞小動作！等級不會提升，並且會有罰款`,
