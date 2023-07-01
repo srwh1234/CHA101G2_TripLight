@@ -6,7 +6,7 @@ public interface ImageService {
 
 	// XXX http://localhost:8080 VsCode測試才要加
 
-	public static String IMG_URL = "http://localhost:8080/img/";// 圖片的URL
+	public static String IMG_URL = "/img/";// 圖片的URL
 
 	/**
 	 * 找出指定圖片 沒有則回傳預設圖

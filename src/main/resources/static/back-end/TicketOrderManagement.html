@@ -23,11 +23,10 @@
     <link href="css/TripLight.min.css" rel="stylesheet">
 
     <style>
-    
+        #employee-access {
+            white-space: pre-line;
+        }
 
-		#employee-access {
-	white-space: pre-line;
-	}
         /* 避免表格被過度壓縮 */
         .my-th-width {
             min-width: 8rem;
@@ -79,7 +78,7 @@
 
             <!-- 導覽項目 -  -->
             <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8080/front-end/index.html">
+                <a class="nav-link" href="/front-end/index.html">
                     <span>TirpLight</span></a>
             </li>
             <!-- 導覽項目 - 頁面折疊選單 -->
@@ -203,13 +202,13 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small"
-								id="employee-access"></span> <i class="fas fa-user-circle fa-lg"></i>
+                                      class="mr-2 d-none d-lg-inline text-gray-600 small"
+                                      id="employee-access"></span> <i class="fas fa-user-circle fa-lg"></i>
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown" id="logoutLink">
-                                <a class="dropdown-item" href="" >
+                                 aria-labelledby="userDropdown" id="logoutLink">
+                                <a class="dropdown-item" href="">
                                     登出
                                 </a>
                             </div>
@@ -381,65 +380,65 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle-5.2.3.js"></script>
 
     <script>
-    var employeeAccess = sessionStorage.getItem("管理員");
-    var employeeaccess2 = JSON.parse(employeeAccess);
-    	        
-      $("#employee-access")
-    	   .text("員工:"+employeeaccess2.employeeName +	 "\n" 
-    	+ "權限:"+employeeaccess2.employeeAccess);
+        var employeeAccess = sessionStorage.getItem("管理員");
+        var employeeaccess2 = JSON.parse(employeeAccess);
 
-    // 根據帳限顯示導覽
-      if (employeeaccess2.employeeAccess === "超級管理員") {
-    	  
-      } else if (employeeaccess2.employeeAccess === "員工管理員") {
-          $("#member-management").hide();
-          $("#firm-management").hide();
-          $("#ticket-management").hide();
-          $("#web-management").hide();
-          $("#customer-service").hide();
-      } else if (employeeaccess2.employeeAccess === "會員管理員") {
-          $("#employee-management").hide();
-          $("#firm-management").hide();
-          $("#ticket-management").hide();
-          $("#web-management").hide();
-          $("#customer-service").hide();
-      } else if (employeeaccess2.employeeAccess === "廠商管理員") {
-          $("#employee-management").hide();
-          $("#member-management").hide();
-          $("#ticket-management").hide();
-          $("#web-management").hide();
-          $("#customer-service").hide();
-      } else if (employeeaccess2.employeeAccess === "票卷管理員") {
-          $("#employee-management").hide();
-          $("#member-management").hide();
-          $("#firm-management").hide();
-          $("#web-management").hide();
-          $("#customer-service").hide();
-      } else if (employeeaccess2.employeeAccess === "網頁管理員") {
-          $("#employee-management").hide();
-          $("#member-management").hide();
-          $("#firm-management").hide();
-          $("#ticket-management").hide();
-          $("#customer-service").hide();
-      } else if (employeeaccess2.employeeAccess === "客服管理員") {
-          $("#employee-management").hide();
-          $("#member-management").hide();
-          $("#firm-management").hide();
-          $("#ticket-management").hide();
-          $("#web-management").hide();
-      }
-  //登出用
-    $("#logoutLink").click(function () {
-    	 $.ajax({
-    type: "GET",
-    	 url: "/BKlogout", 
-    	 success: function () {
-    window.location.href = "http://localhost:8080/back-end/login.html";
-      },
-    error: function () {
-       		}
-    	});
-    	});
+        $("#employee-access")
+            .text("員工:" + employeeaccess2.employeeName + "\n"
+                + "權限:" + employeeaccess2.employeeAccess);
+
+        // 根據帳限顯示導覽
+        if (employeeaccess2.employeeAccess === "超級管理員") {
+
+        } else if (employeeaccess2.employeeAccess === "員工管理員") {
+            $("#member-management").hide();
+            $("#firm-management").hide();
+            $("#ticket-management").hide();
+            $("#web-management").hide();
+            $("#customer-service").hide();
+        } else if (employeeaccess2.employeeAccess === "會員管理員") {
+            $("#employee-management").hide();
+            $("#firm-management").hide();
+            $("#ticket-management").hide();
+            $("#web-management").hide();
+            $("#customer-service").hide();
+        } else if (employeeaccess2.employeeAccess === "廠商管理員") {
+            $("#employee-management").hide();
+            $("#member-management").hide();
+            $("#ticket-management").hide();
+            $("#web-management").hide();
+            $("#customer-service").hide();
+        } else if (employeeaccess2.employeeAccess === "票卷管理員") {
+            $("#employee-management").hide();
+            $("#member-management").hide();
+            $("#firm-management").hide();
+            $("#web-management").hide();
+            $("#customer-service").hide();
+        } else if (employeeaccess2.employeeAccess === "網頁管理員") {
+            $("#employee-management").hide();
+            $("#member-management").hide();
+            $("#firm-management").hide();
+            $("#ticket-management").hide();
+            $("#customer-service").hide();
+        } else if (employeeaccess2.employeeAccess === "客服管理員") {
+            $("#employee-management").hide();
+            $("#member-management").hide();
+            $("#firm-management").hide();
+            $("#ticket-management").hide();
+            $("#web-management").hide();
+        }
+        //登出用
+        $("#logoutLink").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/BKlogout",
+                success: function () {
+                    window.location.href = "/back-end/login.html";
+                },
+                error: function () {
+                }
+            });
+        });
 
         // 假資料-訂單列表
         let result =
