@@ -14,7 +14,19 @@ if (user.level >= 10) {
 }
 
 // 設定蛇頭顏色
-var colorPicker = document.getElementById("colorPicker");
+let colorPicker = document.getElementById("colorPicker");
+let skinPicker = document.getElementById("skinPicker");
+
+// 如果等級大於15等，可以改顏色
+if (user.level < 15) {
+  colorPicker.style.display = "none";
+  colorPicker.parentNode.style.display = "none";
+}
+// 如果等級大於20等，可以改skin
+if (user.level < 20) {
+  skinPicker.style.display = "none";
+  skinPicker.parentNode.style.display = "none";
+}
 
 //獲取音樂
 let eatBeanAudio = document.getElementById("eatBean");
@@ -49,13 +61,17 @@ function createSnake() {
     // 蛇头变红
     if (i === 0) {
       snake.style.backgroundColor = snakeheadColor;
-      pikachuButton.addEventListener("click", function () {
-        pikachu(snake);
-      });
       colorPicker.addEventListener("change", function () {
         let selectedColor = colorPicker.value;
         snake.style.backgroundColor = selectedColor;
+        snake.style.backgroundImage = "";
         console.log("Selected color: " + selectedColor);
+      });
+      skinPicker.addEventListener("change", function () {
+        let selectedSkin = skinPicker.value;
+        snake.style.backgroundImage = `url('img/${selectedSkin}.png')`;
+        snake.style.backgroundSize = "contain";
+        snake.style.backgroundColor = "transparent";
       });
     }
     //         蛇的新关节推入数组
