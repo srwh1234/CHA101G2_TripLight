@@ -102,90 +102,51 @@
 		let accountValue = account.value.trim();
         let passwordValue = password.value.trim();
 
-            // // 驗證電子信箱
-            // if (mailValue.length < 1) {
-			// 	alert("請輸入電子信箱。");
-            //     mailError.innerHTML = "請輸入電子信箱。";
-			// 	mailValue.value="";
-            //     accountError.innerHTML = "";
-			// 	passwordValue.value="";
-            //     event.preventDefault();
-            // } else {
-            //     mailError.innerHTML = "";
-            // }
+		$(".signinbutton").on("click", function (e) {
+      	e.preventDefault();
 
-			// //驗證帳號
-			// if (accountValue.length < 1) {
-            //     accountError.innerHTML = "請輸入廠商帳號";
-			// 	mailValue.value="";
-            //     accountError.innerHTML = "";
-			// 	passwordValue.value="";
-			// 	alert("請輸入廠商帳號。");
-            //     event.preventDefault();
-            // } else {
-			// 	accountError.innerHTML = "";
-            // }
+		// 拿取表單資料
+		const vendorEmail = $("#vendor_email").val();
+		const loginAccount = $("#login_account").val();
+		const loginPassword = $("#login_password").val();
 
-            // // 驗證密碼
-            // if (passwordValue.length < 6 || passwordValue.length > 20) {
-            //     passwordError.innerHTML = "密碼長度必須介於6到20個字元。";
-			// 	mailValue.value="";
-            //     accountError.innerHTML = "";
-			// 	passwordValue.value="";;
-			// 	alert( "密碼長度必須介於6到20個字元。");
-            //     event.preventDefault();
-            // } else if (!passwordValue.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/)) {
-            //     passwordError.innerHTML = "密碼必須包含英文大小寫字母及數字。";
-			// 	alert("密碼必須包含英文大小寫字母及數字。");
-            //     event.preventDefault();
-			// 	mailValue.value="";
-            //     accountError.innerHTML = "";
-			// 	passwordValue.value="";
-            // } else {
-            //     passwordError.innerHTML = "";
-            // }
+		// 包裝成物件
+		let login = {
+			vendorEmail: vendorEmail,
+			loginAccount: loginAccount,
+			loginPassword: loginPassword,
+		};
 
-			$(".signinbutton").on("click", function (e) {
-      		e.preventDefault();
+		// 清空表單
+		$("#vendor_email").val();
+    	$("#login_account").val();
+    	$("#login_password").val();
 
-			// 拿取表單資料
-			const vendorEmail = $("#vendor_email").val();
-			const loginAccount = $("#login_account").val();
-			const loginPassword = $("#login_password").val();
+		//ajax
+		$.ajax({
+        	url: '/vendor/login',
+    		type: 'POST',
+        	data: JSON.stringify(login),
+        	contentType: 'application/json',
+        success: function(data) {
+		console.log(data);
+		if (data.success) {
+			// alert('登入成功');
+			// 資料庫驗證成功後跳轉到另一個畫面的 URL
+			document.location.href = "index.html";
+		} else {
+			alert('登入失敗，請檢查帳號密碼');
+			}
+		},
+			error: function() {
+				alert('發生錯誤');
+			}
+      	});	
 
-			// 包裝成物件
-			let login = {
-				vendorEmail: vendorEmail,
-				loginAccount: loginAccount,
-				loginPassword: loginPassword,
-			};
-
-			// 清空表單
-			$("#vendor_email").val();
-      		$("#login_account").val();
-      		$("#login_password").val();
-
-			//ajax
-		  	$.ajax({
-        	  url: 'http://localhost:8080/vendor/login',
-        	  type: 'POST',
-        	  data: JSON.stringify(login),
-        	  contentType: 'application/json',
-        	  success: function(data) {
-				console.log(data);
-				if (data.success) {
-					// alert('登入成功');
-					// 資料庫驗證成功後跳轉到另一個畫面的 URL
-					document.location.href = "index.html";
-				} else {
-						alert('登入失敗，請檢查帳號密碼');
-					}
-				},
-				error: function() {
-					alert('發生錯誤');
-				}
-      		});	
 		});
+
 	}); 
+
 </script>
+
 </html>

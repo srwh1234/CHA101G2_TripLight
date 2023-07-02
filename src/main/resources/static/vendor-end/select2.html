@@ -280,7 +280,7 @@
     $(document).ready(function() {
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/tourgroup/info',
+            url: '/tourgroup/info',
             contentType: 'application/json',
             success: function(response) {
                 console.log(response);
@@ -321,7 +321,7 @@
     $(document).ready(function() {
      $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/vendors/info',
+        url: '/vendors/info',
         contentType: 'application/json',
         success: function(response) {
             console.log("123"+response);
