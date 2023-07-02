@@ -178,11 +178,14 @@
 
 	<!-- 聊天室 -->
 	<div id="chat-icon">
-		<a href="/front-end/chat.html"><img src="images/chat-icon.svg" /></a>
+		<a href="/front-end/chat.html">
+			<img src="images/chat-icon.svg" /></a>
 	</div>
 	<div id="snake-icon">
-		<a href="/game-end/login.html"><img src="images/snake.jpg" /></a>
+		<a href="/game-end/login.html">
+			<img src="images/snake.jpg" /></a>
 	</div>
+
 	<!-- 聊天室 -->
 
 	<!-- banner -->
@@ -767,6 +770,25 @@
 		}
     // ==============================設定熱門行程==============================================
 	</script>
+<!--	選擇聊天室-->
+<script>
+	document.getElementById('chat-icon').addEventListener('click', function(e) {
+		e.preventDefault();
+		Swal.fire({
+			title: '選擇聊天室',
+			text: '你想要進入哪個聊天室？',
+			showCancelButton: true,
+			confirmButtonText: '公共聊天室',
+			cancelButtonText: '私人聊天室',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = '/front-end/chat.html';
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				window.location.href = '/front-end/user_chat.html';
+			}
+		});
+	});
+</script>
 </body>
 
 </html>

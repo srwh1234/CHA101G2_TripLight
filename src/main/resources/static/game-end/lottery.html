@@ -233,7 +233,7 @@ Note: The probability of winning is 5%.`;
 
             // 設計中獎機率
             let randomNumber = Math.floor(Math.random() * 20);  // 隨機數
-            console.log(randomNumber);
+
             if (randomNumber === 12) {
                 winlotteryAudio.play();
                 backgroundMusicAudio.pause();
@@ -280,7 +280,7 @@ Note: The probability of winning is 5%.`;
                 type: "GET",
                 url: "/prizePools/update",
                 success: function (response) {
-                    console.log(response);
+
                     $(this).text(Math.floor(0))
                     // 增加動畫
                     $(".count-number").animate(
@@ -329,7 +329,7 @@ Note: The probability of winning is 5%.`;
                 method: "PUT",
                 contentType: "application/json",
                 success: function (response) {
-                    console.log(response);
+
                 }
             });
         }

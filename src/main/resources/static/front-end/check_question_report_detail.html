@@ -437,7 +437,68 @@
         })
         .catch(error => console.error('Error:', error));
 
+    //找會員id
+    let theId = 0;
+    if (sessionStorage.getItem("test-login")) {
+        theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+    } else {
+        theId = null;
+    }
+    // <!-- 左邊會員照片+導覽列 -->
+    // ============================上傳大頭照=====================================
+    let camera = document.getElementById('camera');
+    camera.addEventListener('click', function () {
+        const input = document.createElement('input');
+        input.type = 'file';
 
+        input.addEventListener("change", function () {
+            const file = this.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                sessionStorage.setItem('uploadedPhoto', reader.result);
+                img.src = reader.result;
+            });
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+            var memberPic = sessionStorage.getItem('uploadedPhoto');
+            var formData = new FormData();
+            formData.append('memberPic', file);
+
+            $.ajax({
+                url: "/m_saveImg/" + theId,
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (response) => {
+                    console.log(response);
+                    console.log("儲存成功");
+                },
+                error: (error) => {
+                    console.log(error);
+                    console.log("儲存失敗");
+                }
+            });
+        });
+        input.click();
+    });
+    //顯示大頭照
+    $(document).ready(function () {
+        $.ajax({
+            url: "/img/members/" + theId,
+            method: "GET",
+            success: function (response) {
+                const imgUrl = "http://localhost:8080" + this.url;
+                $('.rounded-circle').attr('src', imgUrl);
+                console.log("圖片載入成功");
+            },
+            error: function (error) {
+                console.log("圖片載入失敗");
+            }
+        });
+    });
 </script>
 <!-- login顯示 -->
 <script src="js/Login.js"></script>

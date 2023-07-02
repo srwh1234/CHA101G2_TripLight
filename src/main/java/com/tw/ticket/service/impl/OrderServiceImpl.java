@@ -200,6 +200,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return
 	 */
 	private String getAllInOnePage(final int memberId, final TicketOrder order, final String backUrl) {
+		final int orderId = order.getTicketOrderId();
 		int couponId = 0;
 		String itemName = "TripLight訂單";
 
@@ -207,6 +208,16 @@ public class OrderServiceImpl implements OrderService {
 		if (coupon != null) {
 			couponId = coupon.getCouponId();
 			itemName += String.format(" (%s)", coupon.getName());
+		}
+
+		List<TicketOrderDetail> details = order.getTicketOrderDetails();
+
+		if (details.isEmpty()) {
+			details = ticketOrderDetailRepository.findByKeyTicketOrderId(orderId);
+		}
+
+		for (final TicketOrderDetail detail : details) {
+			itemName += "#" + detail.getKey().getTicketSn().getTicket().getName();
 		}
 		final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
 
@@ -222,7 +233,7 @@ public class OrderServiceImpl implements OrderService {
 		// 參數傳遞
 		obj.setCustomField1(String.valueOf(memberId));
 		obj.setCustomField2(String.valueOf(couponId));
-		obj.setCustomField3(String.valueOf(order.getTicketOrderId()));
+		obj.setCustomField3(String.valueOf(orderId));
 		obj.setNeedExtraPaidInfo("Y");
 
 		return new AllInOne("").aioCheckOut(obj, null);
