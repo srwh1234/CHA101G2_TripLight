@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/all")
     public List<User> getAllUsers(HttpSession session){
         User user = (User)session.getAttribute("user");
-        if (user.getEmail().equals("?") && user.getPassword().equals("!")) {
+        if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
             return userService.findAllUser();
         } else {
             return null;
@@ -100,7 +100,7 @@ public class UserController {
     public boolean updateUser(@PathVariable int userId, @RequestParam int money,HttpSession session){
         User manager = (User)session.getAttribute("user");
 
-        if (manager.getEmail().equals("?") && manager.getPassword().equals("!")) {
+        if (manager.getEmail().equals("???") && manager.getPassword().equals("!861229")) {
             User user = userService.findUserById(userId);
             System.out.println(money);
             user.setMoney(money);
@@ -127,7 +127,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public boolean deleteUser(@PathVariable int userId,HttpSession session){
         User user = (User)session.getAttribute("user");
-        if (user.getEmail().equals("?") && user.getPassword().equals("!")) {
+        if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
             if(userService.findUserById(userId)!= null){
                 userService.deleteUser(userId);
                 return true;
