@@ -35,24 +35,9 @@ import jakarta.servlet.http.HttpSession;
 	 
 	 @GetMapping("/info")
 	    public List<Trip2> getTripInfo(HttpSession httpSession) {
-		// Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
-//		 Trip2 trip = (Trip2) httpSession.getAttribute("trip");
-//
-//	        if (trip == null) {
-//	            int tripId = 1; // 假設 Vendor 的 ID 是 1
-//	            trip = tripRepository2.findById(tripId).orElse(null);
-//
-//	            if (trip != null) {
-//	                httpSession.setAttribute("trip", trip); // 將 Vendor 物件存儲到 HttpSession 中
-//	            }
-//	        }
-//
-//	        System.out.println(trip + " " + httpSession.getId());
-//	        return trip;
-		// System.out.println(vendor.getVendorId());
 		 System.out.println( " " + httpSession.getId());
-		 int v=1;
-		 return tripRepository2.findByVendorId(v);
+		 Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
+		 return tripRepository2.findByVendorId(vendor.getVendorId());
 	    }
 
 	 @PostMapping("/tripadd")
