@@ -301,7 +301,11 @@ error: function () {
 	});
 	});
 
-    let employeeId = 3;
+	let loginData = JSON.parse(sessionStorage.getItem('管理員'));
+	let employeeId = loginData.employeeId;
+	console.log(employeeId)
+    // let employeeId = 3;
+
     $("#logoutLink").click(function () {
         $.ajax({
             type: "GET",
