@@ -333,6 +333,7 @@ error: function () {
                 <td>${item.state === 0 ? '未解決' : '已解決'}</td>
             `;
 
+				//客服人員處理問題
                 const replyButton = document.createElement('button');
                 replyButton.className = "myButton";
                 replyButton.textContent = '處理訂單';
@@ -371,15 +372,14 @@ error: function () {
                                                 },
                                                 body: JSON.stringify({
                                                     replyContent: replyContent,
-                                                    employeeId: parseInt(employeeId)
+                                                    employeeId: employeeId
                                                 })
                                             })
                                                 .then(response => {
                                                     if (!response.ok) {
                                                         throw new Error('Network response was not ok');
-                                                    }
+                                                    }else
                                                     row.remove()
-
                                                 })
                                                 .catch((error) => {
                                                     console.error('Error:', error);
