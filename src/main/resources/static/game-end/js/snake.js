@@ -69,7 +69,7 @@ function createSnake() {
         let previousSkin = localStorage.getItem("selectedSkin");
         skinPicker.value = previousSkin;
         snake.style.backgroundImage = `url('img/${previousSkin}.png')`;
-        snake.style.backgroundSize = "contain";
+        snake.style.backgroundSize = "cover";
         snake.style.backgroundColor = "transparent";
       }
       // 檢查紀錄的color
@@ -95,7 +95,7 @@ function createSnake() {
       skinPicker.addEventListener("change", function () {
         let selectedSkin = skinPicker.value;
         snake.style.backgroundImage = `url('img/${selectedSkin}.png')`;
-        snake.style.backgroundSize = "contain";
+        snake.style.backgroundSize = "cover";
         snake.style.backgroundColor = "transparent";
 
         // 将当前选择保存到本地存储中
@@ -430,6 +430,6 @@ function playslowDownMusic() {
 // 自訂頭像
 function pikachu(snake) {
   snake.style.backgroundImage = "url('img/pikachu.png')";
-  snake.style.backgroundSize = "contain";
+  snake.style.backgroundSize = "cover";
   snake.style.backgroundColor = "transparent";
 }
