@@ -236,6 +236,11 @@
         width: 80px;
         height: 38px;
         margin-left: 5px;
+
+    }
+    .input-group {
+        display: flex;
+        flex-wrap: nowrap;
     }
 
     .chat-header {
@@ -302,6 +307,23 @@
             font-size: 1.1em;
         }
     }
+    a.primary {
+        display: inline-block;
+        background-color: #128ff2;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 15px;
+        transition: background-color 0.3s ease;
+        width: 70px;
+        height: 39px;
+        margin-left: 10px;
+    }
+
+    a.primary:hover {
+        background-color: #0a6aad;
+    }
+
+
 </style>
 <body>
 <noscript>
@@ -309,13 +331,13 @@
 </noscript>
 <div id="username-page">
     <div class="username-page-container">
-        <h1 class="title">Type your username</h1>
+        <h1 class="title">請輸入你的名稱：</h1>
         <form id="usernameForm" name="usernameForm">
             <div class="form-group">
-                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control"/>
+                <input type="text" id="name" placeholder="請輸入你的名稱" autocomplete="off" class="form-control"/>
             </div>
             <div class="form-group">
-                <button type="submit" class="accent username-submit">Start Chatting</button>
+                <button type="submit" class="accent username-submit">進入聊天室！！！</button>
             </div>
         </form>
     </div>
@@ -323,7 +345,7 @@
 <div id="chat-page" class="hidden">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Spring WebSocket Chat Demo</h2>
+            <h2>旅遊聊天室</h2>
         </div>
         <div class="connecting">
             Connecting...
@@ -333,9 +355,11 @@
         <form id="messageForm" name="messageForm">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off"
+                    <input type="text" id="message" placeholder="請輸入訊息..." autocomplete="off"
                            class="form-control"/>
-                    <button type="submit" class="primary">Send</button>
+                    <button type="submit" class="primary">送出</button>
+                    <a href="/front-end/index.html" class="primary">離開</a>
+
                 </div>
             </div>
         </form>
@@ -408,10 +432,10 @@
         var messageElement = document.createElement('li');
         if (message.type === 'JOIN') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' joined!';
+            message.content = message.sender + ' 進入聊天室了！';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';
+            message.content = message.sender + ' 離開聊天室了！';
         } else {
             messageElement.classList.add('chat-message');
             var avatarElement = document.createElement('i');
