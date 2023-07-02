@@ -47,7 +47,7 @@
 
             <!-- 導覽項目 -  -->
             <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8080/front-end/index.html">
+                <a class="nav-link" href="/front-end/index.html">
                     <span>TirpLight</span></a>
             </li>
             <!-- 導覽項目 - 頁面折疊選單 -->
@@ -280,7 +280,7 @@
 
                     $(document).ready(function () {
                         // fetch('/article/articles')
-                        fetch('http://localhost:8080/article/articles')
+                        fetch('/article/articles')
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data);
@@ -407,7 +407,7 @@
 
                             // 使用 Fetch 方法將修改的結果回傳到後端
                             // fetch('/article/updatearticle', {
-                            fetch('http://localhost:8080/article/updatearticle', {
+                            fetch('/article/updatearticle', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -445,7 +445,7 @@
 
                             // 使用 Fetch 方法將修改的結果回傳到後端
                             // fetch('/article/updatearticle', {
-                            fetch('http://localhost:8080/article/updatearticle', {
+                            fetch('/article/updatearticle', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
