@@ -4,12 +4,28 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface BkImageService {
 
-	// 後台新增圖片集合
+	/**
+	 * 新增多張圖片
+	 *
+	 * @param ticketId
+	 * @param files
+	 */
 	public void addImages(int ticketId, final MultipartFile[] files);
 
-	// 後台新增圖片
+	/**
+	 * 新增圖片
+	 *
+	 * @param ticketId
+	 * @param file
+	 * @return
+	 */
 	public String addImage(int ticketId, final MultipartFile file);
 
-	// 後台移除圖片
-	public boolean removeImage(final int employeeId, final int imageId);
+	/**
+	 * 移除圖片
+	 *
+	 * @param imageId
+	 * @return
+	 */
+	public boolean removeImage(final int imageId);
 }

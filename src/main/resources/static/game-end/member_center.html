@@ -322,6 +322,21 @@ ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的�
                                     background: "rgba(255, 255, 255, .7)"
                                 });
                             }
+                            if (response && user.level === 15) {
+                                Swal.fire({
+                                    title: `恭喜！您可開始自訂蛇的顏色`,
+                                    timer: 15000,
+                                    background: "rgba(255, 255, 255, .7)"
+                                });
+                            }
+                            if (response && user.level === 20) {
+                                Swal.fire({
+                                    title: `恭喜！您可開始自訂蛇的SKIN`,
+                                    timer: 15000,
+                                    background: "rgba(255, 255, 255, .7)"
+                                });
+                            }
+
                         }
                     });
 

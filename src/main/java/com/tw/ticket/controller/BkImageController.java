@@ -20,17 +20,21 @@ public class BkImageController {
 	@Autowired
 	private BkImageService bkImageService;
 
-	// 新增票券圖片 (使用FormData格式)
+	/**
+	 * 後台-票券資料管理-新增票券圖片 (FormData)
+	 */
 	@PostMapping("/addticketimageform")
 	public String addTicketImageForm(	//
 			@RequestParam("id") final int ticketId, @RequestPart("image") final MultipartFile file) {
 		return bkImageService.addImage(ticketId, file);
 	}
 
-	// 刪除票券圖片
+	//
+	/**
+	 * 後台-票券資料管理-刪除票券圖片
+	 */
 	@GetMapping("/removeticketimage")
-	public boolean removeTicketImage(//
-			@RequestParam("employeeId") final int employeeId, @RequestParam("imageId") final int imageId) {
-		return bkImageService.removeImage(employeeId, imageId);
+	public boolean removeTicketImage(@RequestParam("imageId") final int imageId) {
+		return bkImageService.removeImage(imageId);
 	}
 }

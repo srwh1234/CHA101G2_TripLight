@@ -4,6 +4,10 @@ package com.tw.trip.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.tw.member.model.Member;
+import com.tw.ticket.Config;
+import com.tw.ticket.MyUtils;
+import com.tw.ticket.thirdparty.ecpay.payment.integration.AllInOne;
+import com.tw.ticket.thirdparty.ecpay.payment.integration.domain.AioCheckOutALL;
 import com.tw.trip.dao.TripOrderDao;
 import com.tw.trip.pojo.TourGroup;
 import com.tw.trip.pojo.TourGroupDetail;
@@ -13,14 +17,14 @@ import jakarta.servlet.http.HttpSession;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class TripOrderController {
@@ -108,34 +112,90 @@ public class TripOrderController {
         return json;
     }
 
+//    @PostMapping("/updatePaymentStatus")
+//    public void updatePaymentStatus(HttpServletRequest request) throws IOException{
+//        BufferedReader reader = request.getReader();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String dataRead;
+//
+//        // ====== 1. retrieved data from request n store in stringBuilder ======
+//        while((dataRead=reader.readLine()) != null){
+//            stringBuilder.append(dataRead);
+//        }
+//
+//        reader.close();
+//
+//        // ====== 2. parse to JSON via JSONObject ======
+//        JSONObject jsonObject;
+//        try{
+//            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
+//            tripOrderService.updatePaymentStatus(
+//                    jsonObject.getInt("paymentStatus"),
+//                    jsonObject.getInt("tripOrderId")
+//            );
+//
+//
+//        }catch (JSONException e){
+//            e.printStackTrace();
+//
+//        }
+//
+//    }
+
+    @Autowired
+    private Config config;
+
     @PostMapping("/updatePaymentStatus")
-    public void updatePaymentStatus(HttpServletRequest request) throws IOException{
-        BufferedReader reader = request.getReader();
-        StringBuilder stringBuilder = new StringBuilder();
-        String dataRead;
+    @ResponseBody
+    public String ecpayCheckout(@RequestBody final Map<String, Object> map) {
+        return getAllInOnePage((String) map.get("tripOrderId"));
+    }
 
-        // ====== 1. retrieved data from request n store in stringBuilder ======
-        while((dataRead=reader.readLine()) != null){
-            stringBuilder.append(dataRead);
+    /**
+     * 綠界回傳的結帳結果
+     * XXX 需要Https才收的到callback <---------------- https 可用ngrok測試
+     * XXX map內的參數有很多
+     */
+    @PostMapping("/tripCallback")
+    public ResponseEntity<String> handleCallback(@RequestParam final Map<String, String> map) {
+        final int tripOrderId = Integer.parseInt(map.get("CustomField1"));
+        final int rtnCode = Integer.parseInt(map.get("RtnCode"));
+        final String payType = map.get("PaymentType");
+
+        System.out.println(map);
+        // 結帳
+        if (rtnCode == 1) {
+            tripOrderService.updatePaymentStatus(rtnCode, tripOrderId);
         }
+        return ResponseEntity.ok("OK");
+    }
 
-        reader.close();
+    /**
+     * 綠界付款介面的初始化 config.getEcpayReturnUrl() 在application.properties
+     *
+     * @return
+     */
+    private String getAllInOnePage(final String tripOrderId) {
 
-        // ====== 2. parse to JSON via JSONObject ======
-        JSONObject jsonObject;
-        try{
-            jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
-            tripOrderService.updatePaymentStatus(
-                    jsonObject.getInt("paymentStatus"),
-                    jsonObject.getInt("tripOrderId")
-            );
+        Integer tripOrderIdInt = Integer.parseInt(tripOrderId);
+        Integer amount = tripOrderService.getTripOrderAmount(tripOrderIdInt);
+        final String itemName = "TripLight訂單";
 
+        final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
 
-        }catch (JSONException e){
-            e.printStackTrace();
+        final AioCheckOutALL obj = new AioCheckOutALL();
+        obj.setMerchantTradeNo(uuId);
+        obj.setMerchantTradeDate(MyUtils.getNowDateTimeString());
+        obj.setTotalAmount(String.valueOf(amount));
+        obj.setTradeDesc("test Description");
+        obj.setItemName(itemName);
+        obj.setReturnURL(config.getEcpayReturnUrl() + "/tripCallback");
+        obj.setClientBackURL(config.getEcpayReturnUrl() + "/front-end/index.html");
 
-        }
-
+        // 參數傳遞
+        obj.setCustomField1(String.valueOf(tripOrderId));
+        obj.setNeedExtraPaidInfo("N");
+        return new AllInOne("").aioCheckOut(obj, null);
     }
 
 

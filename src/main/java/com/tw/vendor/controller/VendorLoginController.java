@@ -23,6 +23,7 @@ public class VendorLoginController {
 	
 	@PostMapping("/vendor/login")
 	public Integer vendorlogin(@RequestBody VendorLoginRequest request  , HttpSession httpSession) {
+		
 		System.out.println(request);
 		Vendor result = vendorLoginService.vendorlogin(request.getVendorEmail(), request.getLoginAccount(), request.getLoginPassword());
 		if(result == null) {
@@ -39,73 +40,6 @@ public class VendorLoginController {
 		
 	}
 	
-//	@PostMapping("/login")
-//	public String login(@RequestParam final String email, @RequestParam final String password, final HttpSession session) {
-//		final Member member = memberRepository.findMemberByMemberEmail(email);
-//		if (member != null) {
-//			session.setAttribute("member", member);
-//			return "redirect:/home";
-//		}
-//		return "login";
-//	}
-//
-//	@PostMapping("/register")
-//	public Boolean register(@RequestParam final String account, @RequestParam final String email, @RequestParam final String password) {
-//		try {
-//			// var member = new Member();
-//			// member.setMemberAccount(account);
-//			// member.setMemberEmail(email);
-//			// member.setMemberPassword(password);
-//			// memberRepository.save(member);
-//			// System.out.println("儲存成功：" + member);
-//			return true;
-//		} catch (final Exception e) {
-//			return false;
-//		}
-//	}
-//	@PostMapping("/login")
-//	public String login (@RequestBody String email, @RequestBody String password, HttpSession session) {
-//		if(email == login.)
-//		return null;
-//	}
-//	@PostMapping("/login")
-//	public String login(@RequestBody String email, @RequestBody String password, HttpSession session) {
-//
-//		Member result = loginService.login(email);
-//		if(result == null) {
-//			System.out.println("沒有此帳號");;
-//			return "redirect:login";
-//		}
-//		// 設置Session
-//		session.setAttribute("member", result);
-//		return "login";
-//	}
-//	@PostMapping("/register")
-//    public String registerMember(@RequestParam("email") String email,
-//                                 @RequestParam("password") String password,
-//                                 RedirectAttributes redirectAttributes) {
-//        boolean registrationStatus = memberService.register(email, password);
-//        if (registrationStatus) {
-//            redirectAttributes.addFlashAttribute("successMessage", "註冊成功");
-//        } else {
-//            redirectAttributes.addFlashAttribute("errorMessage", "用戶名已存在");
-//        }
-//
-//        return "redirect:/registration-status";
-//    }
-
-//	@PostMapping("/register2")
-//	public String register(@RequestParam String email, @RequestParam String password, @RequestParam String account) {
-//
-//		boolean registerStatus = vendorLoginService.register(email, password, account);
-//		if(registerStatus) {
-//			System.out.println("success");
-//			return "註冊成功";
-//		}else {
-//			System.out.println("fail");
-//			return "redirect:/front-end/supplier_form.html";
-//		}
-//	}
 	@GetMapping("/logout3")
 	public String logout(HttpSession session, SessionStatus sessionStatus) {
 
