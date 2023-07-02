@@ -406,7 +406,7 @@
     <script>
         $(document).ready(function () {
 
-            fetch('http://localhost:8080/articlefavorite/articlefavorite')
+            fetch('/articlefavorite/articlefavorite')
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
