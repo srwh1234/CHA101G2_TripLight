@@ -60,18 +60,47 @@ function createSnake() {
     let snake = document.createElement("div");
     // 蛇头变红
     if (i === 0) {
+      // 預設skin
       snake.style.backgroundColor = snakeheadColor;
+
+      // 檢查紀錄的skin
+      // 检查本地存储中是否存在之前的选择
+      if (localStorage.getItem("selectedSkin")) {
+        let previousSkin = localStorage.getItem("selectedSkin");
+        skinPicker.value = previousSkin;
+        snake.style.backgroundImage = `url('img/${previousSkin}.png')`;
+        snake.style.backgroundSize = "contain";
+        snake.style.backgroundColor = "transparent";
+      }
+      // 檢查紀錄的color
+      if (localStorage.getItem("selectedColor")) {
+        let previousColor = localStorage.getItem("selectedColor");
+        snake.style.backgroundColor = previousColor;
+        snake.style.backgroundImage = "";
+      }
+
+      // 監聽color
       colorPicker.addEventListener("change", function () {
         let selectedColor = colorPicker.value;
         snake.style.backgroundColor = selectedColor;
         snake.style.backgroundImage = "";
         console.log("Selected color: " + selectedColor);
+
+        // 儲存至本地
+        localStorage.removeItem("selectedSkin");
+        localStorage.setItem("selectedColor", selectedColor);
       });
+
+      // 監聽skin
       skinPicker.addEventListener("change", function () {
         let selectedSkin = skinPicker.value;
         snake.style.backgroundImage = `url('img/${selectedSkin}.png')`;
         snake.style.backgroundSize = "contain";
         snake.style.backgroundColor = "transparent";
+
+        // 将当前选择保存到本地存储中
+        localStorage.setItem("selectedSkin", selectedSkin);
+        localStorage.removeItem("selectedColor");
       });
     }
     //         蛇的新关节推入数组
