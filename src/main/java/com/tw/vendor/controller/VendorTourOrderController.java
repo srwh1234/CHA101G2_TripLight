@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.member.model.Member;
 import com.tw.member.model.dao.MemberRepository;
+import com.tw.ticket.Config;
 import com.tw.ticket.thirdparty.mail.MailService;
 import com.tw.trip.pojo.TripOrder;
 import com.tw.vendor.dao.TourGroupDetailRepository2;
@@ -139,6 +140,9 @@ public class VendorTourOrderController {
 		return true;
 	}
 
+	@Autowired
+	private Config config;
+
 	private void sendRefundOkMail(final Member member, final TripOrder order, final Trip2 trip, final boolean isOk) {
 		final String to = member.getMemberEmail();
 
@@ -174,12 +178,12 @@ public class VendorTourOrderController {
 		if (isOk) {
 			result = """
 					<p>出團請結帳</p>
-					<a href="http://localhost:8080/front-end/group_orderpayment.html?memberId=%d&tripOrderId=%d">
+					<a href="%s/front-end/group_orderpayment.html?memberId=%d&tripOrderId=%d">
 					前往結帳
 					</a>
 					""";
 
-			result = String.format(result, member.getMemberId(), order.getTripOrderId());
+			result = String.format(result, config.getEcpayReturnUrl(), member.getMemberId(), order.getTripOrderId());
 		}
 
 		final String text = String.format(html,				//

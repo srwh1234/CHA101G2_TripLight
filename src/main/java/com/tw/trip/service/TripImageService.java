@@ -11,9 +11,8 @@ import com.tw.trip.repository.TripImageRepository;
 public class TripImageService {
 	@Autowired
 	private TripImageRepository tripImageRepository;
-	
 
-	 public static String IMG_URL = "http://localhost:8080/img/trips/";
+	public static String IMG_URL = "/img/trips/";
 
 	public String findImgUrl(final int tripId) {
 		final List<Integer> arrays = tripImageRepository.findIdsByTripId(tripId);

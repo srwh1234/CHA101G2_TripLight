@@ -17,29 +17,28 @@ import com.tw.vendor.service.VendorImageService;
 @RestController("vendorImageController")
 @RequestMapping("/vendorimage")
 public class VendorImageController {
-	
-	 public static String IMG_URL = "http://localhost:8080/img/trips/";
 
-	 @Autowired
-     private VendorImageService  vendorImageService;
+	public static String IMG_URL = "/img/trips/";
 
-     @GetMapping("/vendorimage2")
-     public List<VendorImage> getVendorImage(){
-         return vendorImageService.findAll();
-     }
+	@Autowired
+	private VendorImageService vendorImageService;
 
+	@GetMapping("/vendorimage2")
+	public List<VendorImage> getVendorImage() {
+		return vendorImageService.findAll();
+	}
 
-     @PostMapping("/vendorimage3")
-     public String processVendorImage(@RequestBody VendorImage vendorImage){
-    	 vendorImageService.save(vendorImage);
-         System.out.println(vendorImage);
-         return "成功拿到資料";
-     }
+	@PostMapping("/vendorimage3")
+	public String processVendorImage(@RequestBody final VendorImage vendorImage) {
+		vendorImageService.save(vendorImage);
+		System.out.println(vendorImage);
+		return "成功拿到資料";
+	}
 
-// // 用於指定 {imgUrl} 只能由數字組成。 [0-9] 表示匹配一個數字字符，+ 表示匹配前面的表達式一次或多次。
-// @GetMapping(value = "/img/trips/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
-// public byte[] getPhoto(@PathVariable("imgUrl") final int id) {
-//     return tripService2.findImg(id);
-// }
-     
+	// // 用於指定 {imgUrl} 只能由數字組成。 [0-9] 表示匹配一個數字字符，+ 表示匹配前面的表達式一次或多次。
+	// @GetMapping(value = "/img/trips/{imgUrl:[0-9]+}", produces = MediaType.IMAGE_GIF_VALUE)
+	// public byte[] getPhoto(@PathVariable("imgUrl") final int id) {
+	// return tripService2.findImg(id);
+	// }
+
 }
