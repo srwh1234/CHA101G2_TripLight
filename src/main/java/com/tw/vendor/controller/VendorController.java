@@ -42,17 +42,6 @@ public class VendorController {
     @GetMapping("/vendors/info")
     public Vendor getVendorInfo(HttpSession httpSession) {
         Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
-
-        if (vendor == null) {
-            int vendorId = 1; // 假設 Vendor 的 ID 是 1
-            vendor = vendorRepository.findById(vendorId).orElse(null);
-
-            if (vendor != null) {
-                httpSession.setAttribute("vendor", vendor); // 將 Vendor 物件存儲到 HttpSession 中
-            }
-        }
-
-        System.out.println(vendor + " " + httpSession.getId());
         return vendor;
     }
 

@@ -182,20 +182,6 @@
         }
       })
 
-
-      // 等級下降
-      // $.ajax({
-      //   url: "/users",
-      //   method: "PUT",
-      //   data: JSON.stringify(user),
-      //   contentType: "application/json",
-      //   success: function (response) {
-      //     if (response) {
-      //       console.log(response);
-      //     }
-      //   }
-      // })
-
     } else {
       Swal.fire({
         position: 'top',
@@ -215,9 +201,7 @@
     if (event.data !== null) {
       let processedData = event.data.replace(/\\n/g, '\n');
       processedData = processedData.replace("\\s", " ");
-      // let value = event.data.replace(/\\n/g, "\n");
       document.getElementById("output").innerHTML += processedData;
-      // console.log(value)
     }
   });
 

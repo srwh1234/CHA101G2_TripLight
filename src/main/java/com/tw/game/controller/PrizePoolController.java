@@ -1,7 +1,5 @@
 package com.tw.game.controller;
 
-
-
 import com.tw.game.model.PrizePool;
 import com.tw.game.model.User;
 import com.tw.game.repository.PrizePoolRepository;
@@ -30,8 +28,13 @@ public class PrizePoolController {
 
     // 更新獎池資料
     @GetMapping("/prizePools/update")
-    public double getPrizePoolUpdate() {
+    public double getPrizePoolUpdate(HttpSession session) {
+        User user = (User) session.getAttribute("user");
         PrizePool prizePool = prizePoolRepository.findById(1).orElse(null);
+        // 如果玩家資金不夠，獎池不會增加
+        if(user.getMoney() < 100){
+            return prizePool.getLumpSum();
+        }
         if (prizePool != null) {
             prizePool.setLumpSum(prizePool.getLumpSum() + 100);
             prizePoolRepository.save(prizePool); // 保存更新後的獎池數據
@@ -45,10 +48,16 @@ public class PrizePoolController {
     public double updatePrizePoolToZero(HttpSession session){
         PrizePool prizePool = prizePoolRepository.findById(1).orElse(null);
         User user = (User) session.getAttribute("user");
-        user.setMoney((int) (user.getMoney()+prizePool.getLumpSum()));
-        userService.save(user);
-        prizePool.setLumpSum(0);
-        prizePoolRepository.save(prizePool);
+
+        // 避免漏洞玩家
+        if (user.getMoney() >= 0) {
+            user.setMoney((int) (user.getMoney() + prizePool.getLumpSum()));
+            userService.save(user);
+            prizePool.setLumpSum(0);
+            prizePoolRepository.save(prizePool);
+        }
         return prizePool.getLumpSum();
+
+
     }
 }

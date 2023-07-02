@@ -214,26 +214,18 @@ function generateGroup() {
 		},
 	});
 }
-// ==========================右邊會員資料--文章收藏 =====================================
-// 處理第一個分頁內容跑到別的分頁
-$(".nav-item")
-	.eq(2)
-	.on("click", function () {
-		$("#article_order .ticket_item_class").remove();
-		window.location.assign("/front-end/article_myfavorite.html")
-	});
 
 
 // ==========================右邊會員資料--AI收藏 =====================================
 // 處理第一個分頁內容跑到別的分頁
 $(".nav-item")
-	.eq(3)
+	.eq(2)
 	.on("click", function () {
 		$("#AI_order .ticket_item_class").remove();
 	});
 // 設定點擊AI行程規劃
 $(".nav-item")
-	.eq(3) // 選第四個
+	.eq(2) // 選第四個
 	.on("click", function () {
 		$(".tab-pane").eq(3).addClass("show active"); // 顯示
 		// 呼叫這個顯示行程卡片列表
@@ -251,13 +243,13 @@ function getAiFavorite() {
 			console.log(aiFavorite);
 			if (
 				!$(".tab-pane")
-					.eq(3)
+					.eq(2)
 					.find("#group_orderselect")
 					.next()
 					.hasClass("group_order_item_class")
 			) {
 				for (let i = 0; i < aiFavorite.length; i++) {
-					$(".tab-pane").eq(3).find("#group_orderselect")
+					$(".tab-pane").eq(2).find("#group_orderselect")
 						.after(`<div class="group_order_item_class">
             <div class="card-header">
               <div class="card-top">

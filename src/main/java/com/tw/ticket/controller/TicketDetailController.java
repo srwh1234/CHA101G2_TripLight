@@ -68,6 +68,7 @@ public class TicketDetailController {
 			this.note = ticket.getNote();
 			this.supplierName = ticket.getSupplierName();
 			this.city = ticket.getCity();
+			this.address = ticket.getAddress();
 			this.latitude = ticket.getLatitude();
 			this.longitude = ticket.getLongitude();
 			this.rating = ticket.getRatingSum() / ticket.getRatingCount();
@@ -86,6 +87,7 @@ public class TicketDetailController {
 		private String note;
 		private String supplierName;
 		private String city;
+		private String address;
 		private double latitude;
 		private double longitude;
 		private double rating;

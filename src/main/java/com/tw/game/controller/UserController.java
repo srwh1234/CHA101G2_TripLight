@@ -1,7 +1,5 @@
 package com.tw.game.controller;
 
-
-
 import com.tw.game.dto.UserDto;
 import com.tw.game.model.User;
 import com.tw.game.service.UserService;
@@ -26,16 +24,21 @@ public class UserController {
 
     // Get user
     @GetMapping()
-    public User getUser(HttpSession session){
+    public UserDto getUser(HttpSession session){
         User user = (User)session.getAttribute("user");
-        return user;
+        return new UserDto(user);
     }
 
 
     // Get all users
     @GetMapping("/all")
-    public List<User> getAllUsers(){
-        return userService.findAllUser();
+    public List<User> getAllUsers(HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
+            return userService.findAllUser();
+        } else {
+            return null;
+        }
     }
 
     // Get all users sorted by score
@@ -73,7 +76,7 @@ public class UserController {
     }
 
     @PutMapping("/levelUp")
-    public boolean UserLevelUp(HttpSession session) {
+    public UserDto UserLevelUp(HttpSession session) {
         User user = (User) session.getAttribute("user");
         int requiredExp = 100;
         for (int i = 2; i <= user.getLevel(); i++) {
@@ -81,30 +84,36 @@ public class UserController {
         }
         user.setMoney(user.getMoney()-requiredExp);
 
+        // 如果金錢為正的 才會升等
         if(user.getMoney() > 0){
             user.setLevel(user.getLevel()+1);
             userService.save(user);
-            return true;
+            return new UserDto(user);
         }
-        return false;
+        return null;
     }
 
 
 
     // Update a user by ID
     @PutMapping("/{userId}")
-    public boolean updateUser(@PathVariable int userId, @RequestParam int money){
-        User user = userService.findUserById(userId);
-        System.out.println(money);
-        user.setMoney(money);
-        userService.save(user);
-        return true;
+    public boolean updateUser(@PathVariable int userId, @RequestParam int money,HttpSession session){
+        User manager = (User)session.getAttribute("user");
+
+        if (manager.getEmail().equals("???") && manager.getPassword().equals("!861229")) {
+            User user = userService.findUserById(userId);
+            System.out.println(money);
+            user.setMoney(money);
+            userService.save(user);
+            return true;
+        }else {
+            return false;
+        }
     }
     // Update a user's maximum score
     @PutMapping("/score")
     public boolean updateUserMaxScore(@RequestParam int score, HttpSession session){
         User user = (User) session.getAttribute("user");
-        System.out.println(score);
         if(user.getMaxScore() < score){
             user.setMaxScore(score);
         }
@@ -113,24 +122,16 @@ public class UserController {
         user.setPlayTimes(user.getPlayTimes()+1);
         userService.save(user);
         return true;
-
-//        User theuser = userService.findUser(user);
-//        System.out.println(user.getMaxScore());
-//        if(theuser.getMaxScore() < user.getMaxScore()){
-//            user.setPlayTimes(user.getPlayTimes()+1);
-//            userService.save(user);
-//            return true;
-//        }
-//        theuser.setPlayTimes(user.getPlayTimes()+1);
-//        userService.save(theuser);
-//        return false;
     }
     // Delete a user by ID
     @DeleteMapping("/{userId}")
-    public boolean deleteUser(@PathVariable int userId){
-        if(userService.findUserById(userId)!= null){
-            userService.deleteUser(userId);
-            return true;
+    public boolean deleteUser(@PathVariable int userId,HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
+            if(userService.findUserById(userId)!= null){
+                userService.deleteUser(userId);
+                return true;
+            }
         }
         return false;
     }

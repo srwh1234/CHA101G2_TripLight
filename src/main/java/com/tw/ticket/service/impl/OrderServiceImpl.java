@@ -200,6 +200,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return
 	 */
 	private String getAllInOnePage(final int memberId, final TicketOrder order, final String backUrl) {
+		final int orderId = order.getTicketOrderId();
 		int couponId = 0;
 		String itemName = "TripLight訂單";
 
@@ -207,6 +208,16 @@ public class OrderServiceImpl implements OrderService {
 		if (coupon != null) {
 			couponId = coupon.getCouponId();
 			itemName += String.format(" (%s)", coupon.getName());
+		}
+
+		List<TicketOrderDetail> details = order.getTicketOrderDetails();
+
+		if (details.isEmpty()) {
+			details = ticketOrderDetailRepository.findByTicketOrderId(orderId);
+		}
+
+		for (final TicketOrderDetail detail : details) {
+			itemName += "#" + detail.getTicketSn().getTicket().getName();
 		}
 		final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
 
@@ -222,7 +233,7 @@ public class OrderServiceImpl implements OrderService {
 		// 參數傳遞
 		obj.setCustomField1(String.valueOf(memberId));
 		obj.setCustomField2(String.valueOf(couponId));
-		obj.setCustomField3(String.valueOf(order.getTicketOrderId()));
+		obj.setCustomField3(String.valueOf(orderId));
 		obj.setNeedExtraPaidInfo("Y");
 
 		return new AllInOne("").aioCheckOut(obj, null);
@@ -310,7 +321,9 @@ public class OrderServiceImpl implements OrderService {
 				snRepository.save(ticketSn);
 
 				// 訂單明細清單
-				final TicketOrderDetail detail = new TicketOrderDetail(null, ticketSn);
+				final TicketOrderDetail detail = new TicketOrderDetail();
+				detail.setTicketSn(ticketSn);
+
 				// 促銷
 				final int price = promotionService.getPrice(ticketSn.getTicket());
 				detail.setUnitPrice(price);
@@ -318,17 +331,10 @@ public class OrderServiceImpl implements OrderService {
 				orderDetails.add(detail);
 			}
 		}
+		order.setTicketOrderDetails(orderDetails);
 
 		// 存檔
 		ticketOrderRepository.save(order);
-
-		// 更新訂單明細中的訂單編號
-		orderDetails.forEach(detail -> {
-			detail.getKey().setTicketOrderId(order.getTicketOrderId());
-		});
-
-		// 存檔訂單明細
-		ticketOrderDetailRepository.saveAll(orderDetails);
 
 		// 清空購物車
 		ticketCartRepository.deleteByKeyMemberId(memberId);
@@ -346,13 +352,10 @@ public class OrderServiceImpl implements OrderService {
 		ticketOrderRepository.save(order);
 
 		// 票券銷售量
-		// 使用test按鈕時這邊的order.getTicketOrderDetails() 會是空的所以要自己讀
-		final List<TicketOrderDetail> details = //
-				ticketOrderDetailRepository.findByKeyTicketOrderId(orderId);
-
 		final HashSet<Ticket> tickets = new HashSet<>();
-		for (final TicketOrderDetail detail : details) {
-			final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+		for (final TicketOrderDetail detail : order.getTicketOrderDetails()) {
+			System.out.println(detail.getId());
+			final Ticket ticket = detail.getTicketSn().getTicket();
 			if (ticket != null) {
 				final int totalSales = ticket.getTotalSales() + 1;
 				ticket.setTotalSales(totalSales);

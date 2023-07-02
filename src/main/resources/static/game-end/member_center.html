@@ -79,13 +79,6 @@
                 </div>
                 <textarea name="myText" id="output" readonly></textarea>
 
-
-
-
-
-
-
-
                 <a href="chat_room.html" class="btn">
                     <span></span>
                     <span></span>
@@ -151,22 +144,6 @@
 <script src="./js/animated.js"></script>
 <script src="./js/common.js"></script>
 <script>
-    // 獲取 user 資料 確保隨時更新
-    function update() {
-        $.ajax({
-            type: "GET",
-            url: "/users",
-            success: function (response) {
-                let user = JSON.parse(sessionStorage.getItem("user"));
-                user.level = response.level;
-                user.money = response.money;
-                user.maxScore = response.maxScore;
-                let userString = JSON.stringify(user);
-                sessionStorage.setItem("user", userString);  // 將使用者資訊存入sessionStorage
-            }
-        });
-    }
-    update();
 
     //  防止圖片閃爍
     $(document).ready(function () {
@@ -179,8 +156,15 @@
         });
 
         // 歡迎光臨
-        let user = JSON.parse(sessionStorage.getItem("user"));
-        let message = `Welecome ${user.userName} !
+        $.ajax({
+            type: "GET",
+            url: "/users",
+            success: function (response) {
+                let user = response;
+                let userString = JSON.stringify(response);
+                sessionStorage.setItem("user", userString); // 將使用者資訊存入sessionStorage
+
+                let message = `Welecome ${user.userName} !
 LV：${user.level}
 $：${user.money}
 Max Score：${user.maxScore}
@@ -190,24 +174,24 @@ casino: Casino casino, where you can earn money. Each room has its own entry fee
 Snake: Snake mini-game. Each play costs $50, and you can earn $20 for each point scored. As the level increases, the speed decreases, making it relatively easier.
 Upgrade: Spend $100 to increase your EXP by 100.
 `;
-        let index = 0;
+                let index = 0;
 
-        function displayCharacters() {
-            if (index < message.length) {
-                let substring = message.substring(0, index + 1);
-                document.getElementById("output").innerHTML = substring;
-                index++;
-                setTimeout(displayCharacters, 5); // 0.2秒後再次呼叫函數
-            }
-        }
+                function displayCharacters() {
+                    if (index < message.length) {
+                        let substring = message.substring(0, index + 1);
+                        document.getElementById("output").innerHTML = substring;
+                        index++;
+                        setTimeout(displayCharacters, 5); // 0.2秒後再次呼叫函數
+                    }
+                }
 
-        displayCharacters();
+                displayCharacters();
 
-        // 監聽翻譯按鈕
-        $(".chinese_btn").on("click", changeLangurage);
-        // 中文翻譯
-        function changeLangurage() {
-            message = `歡迎 ${user.userName}！
+                // 監聽翻譯按鈕
+                $(".chinese_btn").on("click", changeLangurage);
+                // 中文翻譯
+                function changeLangurage() {
+                    message = `歡迎 ${user.userName}！
 等級：${user.level}
 金錢：${user.money}
 最高分數：${user.maxScore}
@@ -217,14 +201,14 @@ ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的�
 貪吃蛇：貪吃蛇小遊戲。每次遊玩需要花費50元，每得到一點分數可獲得20元。隨著等級的提高，速度會減慢，相對變得更容易。
 升級：每次點擊花費100美元，將您的EXP增加100，當EXP量條填滿即可升級，等級到達10以上可獲得緩速技能
 `;
-            index = 0;
-            displayCharacters();
-        }
+                    index = 0;
+                    displayCharacters();
+                }
 
-        // 監聽翻譯按鈕
-        $(".Japanese_btn").on("click",  // 日文翻譯
-            function () {
-                message = `ようこそ、${user.userName}さん！
+                // 監聽翻譯按鈕
+                $(".Japanese_btn").on("click",  // 日文翻譯
+                    function () {
+                        message = `ようこそ、${user.userName}さん！
 レベル：${user.level}
 所持金：${user.money}
 最高スコア：${user.maxScore}
@@ -234,14 +218,14 @@ ChatGPTチャットルーム：ここではChatGPTを使用することができ
 スネークゲーム：スネークゲームです。プレイするごとに50ドルかかり、1ポイントごとに20ドルを獲得できます。レベルが上がるにつれてスピードが遅くなり、より簡単になります。
 アップグレード：クリックごとに100ドルかかり、EXPが100増えます。EXPバーがいっぱいになるとレベルアップできます。レベル10以上ではスローモーションスキルが入手できます。
 `;
-                index = 0;
-                displayCharacters();
-            });
+                        index = 0;
+                        displayCharacters();
+                    });
 
-        // 監聽翻譯按鈕
-        $(".Arabic_btn").on("click",  // 阿拉伯文翻譯
-            function () {
-                message = `مرحبًا ${user.userName}!
+                // 監聽翻譯按鈕
+                $(".Arabic_btn").on("click",  // 阿拉伯文翻譯
+                    function () {
+                        message = `مرحبًا ${user.userName}!
 المستوى: ${user.level}
 الأموال: ${user.money}
 أعلى درجة: ${user.maxScore}
@@ -251,15 +235,15 @@ ChatGPTチャットルーム：ここではChatGPTを使用することができ
 لعبة الأفعى: لعبة الأفعى. يتطلب اللعب 50 دولارًا في كل مرة، ويمكنك الحصول على 50 دولارًا مقابل كل نقطة تحصل عليها. مع زيادة المستوى، ستصبح السرعة أبطأ، وبالتالي تصبح اللعبة أسهل.
 الترقية: يكلف النقرة الواحدة 100 دولار، وستزيد نقاط الخبرة لديك بمقدار 100 نقطة. عندما تمتلئ شريط الخبرة، يمكنك الصعود إلى المستوى التالي. عند الوصول إلى المستوى 10 فما فوق، يمكنك الحصول على مهارة البطء.
 `;
-                index = 0;
-                displayCharacters();
-            });
-
-
-
+                        index = 0;
+                        displayCharacters();
+                    });
+            }
+        });
         let progress = 0;
         let progressBar = $('#progress');
         let requiredExp = 100;
+        let user = JSON.parse(sessionStorage.getItem("user"));
         for (let i = 2; i <= user.level; i++) {
             requiredExp += 10 * (i - 1);
         }
@@ -281,20 +265,6 @@ ChatGPTチャットルーム：ここではChatGPTを使用することができ
 
                 function levelUp() {
                     user.level++;
-                    let userString = JSON.stringify(user);
-                    sessionStorage.setItem("user", userString); // 將使用者資訊存入sessionStorage
-
-                    message = `歡迎 ${user.userName}！
-等級：${user.level}
-金錢：${user.money}
-最高分數：${user.maxScore}
-ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的等級下降2級。
-排行榜：您可以在這裡查看排行榜。
-賭場：賭場會場，在這裡您可以賺錢。每個房間都有自己的入場費和相應的隨機獎勵。
-貪吃蛇：貪吃蛇小遊戲。每次遊玩需要花費50元，每得到一點分數可獲得20元。隨著等級的提高，速度會減慢，相對變得更容易。
-升級：每次點擊花費100美元，將您的EXP增加100，當EXP量條填滿即可升級，等級到達10級可獲得緩速技能`;
-                    index = 0;
-                    displayCharacters();
 
                     $.ajax({
                         url: "/users/levelUp",
@@ -307,6 +277,29 @@ ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的�
                                     showConfirmButton: false,
                                     background: "rgba(255, 255, 255, .7)"
                                 });
+                                let userString = JSON.stringify(response);
+                                sessionStorage.setItem("user", userString); // 將使用者資訊存入sessionStorage
+
+                                message = `歡迎 ${response.userName}！
+等級：${response.level}
+金錢：${response.money}
+最高分數：${response.maxScore}
+ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的等級下降2級。
+排行榜：您可以在這裡查看排行榜。
+賭場：賭場會場，在這裡您可以賺錢。每個房間都有自己的入場費和相應的隨機獎勵。
+貪吃蛇：貪吃蛇小遊戲。每次遊玩需要花費50元，每得到一點分數可獲得20元。隨著等級的提高，速度會減慢，相對變得更容易。
+升級：每次點擊花費100美元，將您的EXP增加100，當EXP量條填滿即可升級，等級到達10級可獲得緩速技能`;
+                                index = 0;
+
+                                function displayCharacters() {
+                                    if (index < message.length) {
+                                        let substring = message.substring(0, index + 1);
+                                        document.getElementById("output").innerHTML = substring;
+                                        index++;
+                                        setTimeout(displayCharacters, 5); // 0.2秒後再次呼叫函數
+                                    }
+                                }
+                                displayCharacters();
                             } else {
                                 Swal.fire({
                                     title: `請不要搞小動作！等級不會提升，並且會有罰款`,
@@ -322,6 +315,21 @@ ChatGPT 聊天室：您可以在這裡使用 ChatGPT。每次使用將使您的�
                                     background: "rgba(255, 255, 255, .7)"
                                 });
                             }
+                            if (response && user.level === 15) {
+                                Swal.fire({
+                                    title: `恭喜！您可開始自訂蛇的顏色`,
+                                    timer: 15000,
+                                    background: "rgba(255, 255, 255, .7)"
+                                });
+                            }
+                            if (response && user.level === 20) {
+                                Swal.fire({
+                                    title: `恭喜！您可開始自訂蛇的SKIN`,
+                                    timer: 15000,
+                                    background: "rgba(255, 255, 255, .7)"
+                                });
+                            }
+
                         }
                     });
 

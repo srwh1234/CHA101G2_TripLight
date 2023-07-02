@@ -28,6 +28,9 @@ public class LoginService {
         member.setMemberNameFirst(nameFirst);
         member.setMemberNameLast("");
         member.setMemberJoinTime(new Date());// 新增註冊時間
+        member.setMemberCity("");
+        member.setMemberDist("");
+        member.setMemberAddress("");
         member.setMemberStatus(1);
         member.setMemberGrade(0);
         memberRepository.save(member);        

@@ -61,7 +61,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		for (final TicketOrderDetail detail : order.getTicketOrderDetails()) {
 			final DetailDto detailDto = new DetailDto();
 
-			final TicketSn ticketSn = detail.getKey().getTicketSn();
+			final TicketSn ticketSn = detail.getTicketSn();
 			final Ticket ticket = ticketSn.getTicket();
 
 			detailDto.setTicketId(ticket.getTicketId());
@@ -126,7 +126,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 			return false;
 		}
 		// 票券的評價要累加
-		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+		final Ticket ticket = detail.getTicketSn().getTicket();
 		int ratingSum = ticket.getRatingSum() + reqDto.getRating();
 		final int ratingCount = ticket.getRatingCount() + 1;
 		final int avg = ratingSum / ratingCount;

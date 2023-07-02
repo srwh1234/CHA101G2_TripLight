@@ -20,22 +20,9 @@ public class RatingService {
 	private TicketOrderRepository ticketOrderRepository;
 	@Autowired
 	private TripOrderRepository tripOrderRepository;
-
-	// 計算單一會員訂單數
-//	
-//	public int sum(int id) {
-//	    List<TicketOrder> result = ticketOrderRepository.findByMemberId(id);
-//	    List<TicketOrder> filteredList = new ArrayList<>();
-//	    
-//	    
-//	    for (TicketOrder order : result) {
-//	        if (order.getMemberId() == id) {
-//	            filteredList.add(order);
-//	        }
-//	    }
-////	    System.out.println(filteredList.size());
-//	    return filteredList.size();
-//	}
+	
+	@Autowired
+	private MemberRepository memberRepository;
 
 	// 計算具有相同 memberId 的票券訂單數量
 	public int sum(int memberId) {
@@ -48,4 +35,12 @@ public class RatingService {
 		return result.size();
 	}
 	
+	//會員分級存回資料庫
+	public void upgradeRating (int id, int memberGrade) {
+		Member member = memberRepository.findByMemberId(id);
+		if(member != null) {
+			member.setMemberGrade(memberGrade);
+			memberRepository.save(member);
+		}
+	}
 }

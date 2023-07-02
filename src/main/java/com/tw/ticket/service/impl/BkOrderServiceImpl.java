@@ -103,13 +103,13 @@ public class BkOrderServiceImpl implements BkOrderService {
 	@Override
 	public List<DetailDto> getDetailItems(final int orderId) {
 		final List<DetailDto> result = new ArrayList<>();
-		final List<TicketOrderDetail> details = ticketOrderDetailRepository.findByKeyTicketOrderId(orderId);
+		final List<TicketOrderDetail> details = ticketOrderDetailRepository.findByTicketOrderId(orderId);
 
 		for (final TicketOrderDetail detail : details) {
-			final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+			final Ticket ticket = detail.getTicketSn().getTicket();
 
 			final DetailDto response = new DetailDto();
-			response.setTicketSnId(detail.getKey().getTicketSn().getTicketSnId());
+			response.setTicketSnId(detail.getTicketSn().getTicketSnId());
 			response.setName(ticket.getName());
 			response.setPrice(detail.getUnitPrice());
 			response.setExpiryDate(ticket.getExpiryDate());
@@ -155,7 +155,7 @@ public class BkOrderServiceImpl implements BkOrderService {
 
 		// 檢查票券狀態
 		final TicketOrderDetail detail = ticketOrderDetailRepository //
-																	.findByKeyTicketOrderIdAndKeyTicketSnTicketSnId(orderId, ticketSnId);
+				.findByTicketOrderIdAndTicketSnTicketSnId(orderId, ticketSnId);
 
 		if (detail == null || detail.getRefundStatus() != REFUND_REVIEW) {
 			return false;
@@ -190,7 +190,7 @@ public class BkOrderServiceImpl implements BkOrderService {
 		// if (member.getMemberId() == 1) {
 		// to = "srwh3577@gmail.com";
 		// }
-		final Ticket ticket = detail.getKey().getTicketSn().getTicket();
+		final Ticket ticket = detail.getTicketSn().getTicket();
 
 		final String subject = "TripLight退款通知";
 
@@ -214,7 +214,7 @@ public class BkOrderServiceImpl implements BkOrderService {
 				        </table></body></html>""";
 
 		final String text = String.format(html,		//
-				detail.getKey().getTicketOrderId(),	//
+				detail.getTicketOrderId(),	//
 				ticket.getName(),					//
 				detail.getUnitPrice(),				//
 				isOk ? "退款成功" : "無法退款"		//

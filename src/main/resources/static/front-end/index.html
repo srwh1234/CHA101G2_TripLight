@@ -178,11 +178,14 @@
 
 	<!-- 聊天室 -->
 	<div id="chat-icon">
-		<a href="/front-end/chat.html"><img src="images/chat-icon.svg" /></a>
+		<a href="/front-end/chat.html">
+			<img src="images/chat-icon.svg" /></a>
 	</div>
 	<div id="snake-icon">
-		<a href="/game-end/login.html"><img src="images/snake.jpg" /></a>
+		<a href="/game-end/login.html">
+			<img src="images/snake.jpg" /></a>
 	</div>
+
 	<!-- 聊天室 -->
 
 	<!-- banner -->
@@ -219,7 +222,7 @@
 									</h3>
 									<h4 class="text-wh">我們有專業的團隊來為您打造出最棒的套裝行程</h4>
 									<div class="buttons mt-4">
-										<a href="itinerary_search.html" class="btn">了解更多</a>
+										<a href="itinerary_search.html?index=1" class="btn">了解更多</a>
 									</div>
 								</div>
 							</div>
@@ -447,7 +450,7 @@
         </div> -->
 			</div>
 			<div class="view-package text-center mt-4">
-				<a href="itinerary_search.html">瀏覽所有套裝行程</a>
+				<a href="itinerary_search.html?index=1">瀏覽所有套裝行程</a>
 			</div>
 		</div>
 	</section>
@@ -696,7 +699,7 @@
 					for (let i = 0; i < packages.length; i++) {
 						$(".recommendTrip").append(`<div class="col-lg-3 col-sm-6 mb-3">
         <div class="image-tour position-relative">
-          <a href="itinerary_page.html" data-trip-id="${packages[i].tripId}" onclick="storeTripId(event)">
+          <a href="itinerary_page.html?tripId=${packages[i].tripId}" data-trip-id="${packages[i].tripId}" onclick="storeTripId(event)">
             <img src="${packages[i].tripImage}" alt="" class="card-img" />
           </a>
           <p><span class="fa fa-tags"></span> <span>${packages[i].priceAdult}起</span></p>
@@ -767,6 +770,25 @@
 		}
     // ==============================設定熱門行程==============================================
 	</script>
+<!--	選擇聊天室-->
+<script>
+	document.getElementById('chat-icon').addEventListener('click', function(e) {
+		e.preventDefault();
+		Swal.fire({
+			title: '選擇聊天室',
+			text: '你想要進入哪個聊天室？',
+			showCancelButton: true,
+			confirmButtonText: '公共聊天室',
+			cancelButtonText: '私人聊天室',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = '/front-end/chat.html';
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				window.location.href = '/front-end/user_chat.html';
+			}
+		});
+	});
+</script>
 </body>
 
 </html>

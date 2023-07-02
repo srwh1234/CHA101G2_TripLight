@@ -19,38 +19,24 @@
         rel="stylesheet">
     <script src="jquery-3.7.0.min.js"></script>
     <script src="login.js"></script>
-    <script src="EMPQuety.js"></script>
     <!-- 自訂樣式 -->
     <link href="css/TripLight.min.css" rel="stylesheet">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- 使用Bootstrap-table -->
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
+
     <style>
-        div.dataTables_wrapper div.dataTables_length select {
-            width: auto;
-            display: inline-block;
+        /* 避免表格被過度壓縮 */
+        .my-th-width {
+            min-width: 8rem;
         }
 
-        #dataTable_filter {
-            position: relative;
-        }
-
-        #dataTable_filter input {
-            position: absolute;
-            transform: translate(45px, -28px);
-            width: 180px;
-        }
-
-        #dataTable_filter label {
-            position: absolute;
-            transform: translate(260px, 5px);
-            /* 调整 label 的位置，使其与输入框对齐 */
-        }
-
-        #dataTable {
-            white-space: normal;
-            word-break: break-all;
-            white-space: nowrap
+        /* 避免表格被過度壓縮 小按鈕*/
+        .my-th-width-sm {
+            min-width: 6rem;
         }
     </style>
+    
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -174,7 +160,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">李蒸蚌</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="vendorName"></span>
                                 <i class="fas fa-user-circle fa-lg"></i>
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
@@ -281,20 +267,20 @@
             <script src="vendor/chart.js/Chart.min.js"></script>
 
             <!-- 頁面級別的自訂腳本 -->
-            <script src="js/demo/chart-area-demo.js"></script>
+            <!-- <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
-
-
-            <!--引入datables-->
             <script src="vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-            <script src="js/demo/datatables-demo.js"></script>
+            <script src="js/demo/datatables-demo.js"></script> -->
+            <script src="vendor/sweetalert/sweetalert.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle-5.2.3.js"></script>
+            <script src="js/bootstrap-table.min.js"></script>
 </body>
 <script>
     $(document).ready(function() {
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/tourgroup/info',
+            url: '/tourgroup/info',
             contentType: 'application/json',
             success: function(response) {
                 console.log(response);
@@ -330,6 +316,27 @@
                 console.log('獲取廠商行程資訊失敗。錯誤：' + error);
             }
         });
+    });
+
+    $(document).ready(function() {
+     $.ajax({
+        type: 'GET',
+        url: '/vendors/info',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log("123"+response);
+        // 將廠商資訊信息填充到頁面上相對應的欄位
+        $('#vendorName').text(response.vendorName);
+
+         console.log('廠商名字獲得成功');
+     },
+
+     error: function(error) {
+            console.log('獲取廠商名字失敗。錯誤：' + error);
+     }
+    
+     });
+
     });
 </script>
 

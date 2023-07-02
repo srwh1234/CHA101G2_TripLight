@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.vendor.dao.TourGroupRepository2;
 import com.tw.vendor.model.TourGroup2;
+import com.tw.vendor.model.Trip2;
 import com.tw.vendor.service.TourGroupService2;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,8 +36,8 @@ public class TourGroupController2 {
 	 @GetMapping("/info")
 	 public List<TourGroup2> getTourGroupInfo(HttpSession httpSession) {
 		 System.out.println(" " + httpSession.getId());
-		 int v = 1;
-		 return tourGroupRepository.findByTripId(v);
+		 Trip2 trip = (Trip2) httpSession.getAttribute("trip");
+		 return tourGroupRepository.findByTripId(trip.getTripId());
 	 }
 	
 	 @PostMapping("/tourgroupadd")

@@ -139,22 +139,21 @@
             <h3>登入</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-envelope icon2"></i>
-                    <input type="email" name="email" id="email" required />
-                    <label for="">信箱</label>
+                    <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
+                        for="">信箱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-lock icon2"></i>
-                    <input type="password" name="password" id="password" required />
+                    <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
                     <label for="">密碼</label>
                 </div>
                 <div class="check">
-                    <label><input type="checkbox" />記住我</label>
-                    <a href="#">忘記密碼</a>
+                    <label><input type="checkbox" />記住我</label> <a href="#" id="forgetPwd">忘記密碼</a>
                 </div>
                 <button type="submit" class="main-btn">Login</button>
                 <div class="register">
-                    <p>如果沒有帳號?<a href="#" class="register-link">點擊註冊</a></p>
+                    <p>
+                        如果沒有帳號?<a href="#" class="register-link">點擊註冊</a>
+                    </p>
                 </div>
             </form>
         </div>
@@ -163,26 +162,25 @@
             <h3>註冊</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-user icon2"></i>
-                    <input type="email" name="email" required />
-                    <label for="">使用者名稱</label>
+                    <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account"
+                        required /> <label for="">使用者名稱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-envelope icon2"></i>
-                    <input type="email" name="email" required />
-                    <label for="">信箱</label>
+                    <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email"
+                        required /> <label for="">信箱</label>
                 </div>
                 <div class="input-box">
-                    <i class="fas fa-lock icon2"></i>
-                    <input type="password" name="password" required />
-                    <label for="">密碼</label>
+                    <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
+                        required /> <label for="">密碼</label>
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />我同意所有條款</label>
                 </div>
                 <button type="submit" class="main-btn">註冊</button>
                 <div class="register">
-                    <p>已經有帳號?<a href="#" class="login-link">點擊登入</a></p>
+                    <p>
+                        已經有帳號?<a href="#" class="login-link">點擊登入</a>
+                    </p>
                 </div>
             </form>
         </div>
@@ -266,6 +264,7 @@
             </div>
             <!--留言串上方區塊結束 -->
             <!-- 留言串下方區塊開始 -->
+<<<<<<< HEAD
 
         </div>
         <div class="inner-container" id="messageContainer">
@@ -275,6 +274,30 @@
                     <div>
                         <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
                             <img src="" id="imgPinf">
+=======
+            <div class="inner-container" id="messageContainer">
+                <div class="pd-collapse-row">
+                    <!-- 	留言串開始 -->
+                    <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
+                        <div>
+                            <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
+                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="rating-star  ps-2 "
+                                style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
+                                <h6 style="font-weight: bold;">吳彼得</h6>
+                                <span style="font-weight: bold; color: lightgray;" class="align-text-end">
+                                    <div value="${articleMessage.messagePostTime}" var="parsedDateTime" type="both">
+                                    </div>
+                                </span>
+                            </div>
+                            <div style="display: inline-block; position: relative;">
+                                <span class="postcontent"
+                                    style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
+                            </div>
+>>>>>>> 1b93bfe7d62b9d8606c3471950884fbc718888e5
                         </div>
                     </div>
                     <div class="col">
@@ -300,7 +323,11 @@
                             <div class="text-sm-left p-3">
                                 <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
                                     aria-expanded="false" aria-controls="pd_add_review"
+<<<<<<< HEAD
                                     style="font-weight: bold; font-size: 1.3em; color: #625855;">
+=======
+                                    style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
+>>>>>>> 1b93bfe7d62b9d8606c3471950884fbc718888e5
                                 </a>
                             </div>
                             <!-- 會員留言開啟 -->

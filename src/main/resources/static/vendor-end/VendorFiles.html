@@ -157,7 +157,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">李蒸蚌</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="vendorName1"></span>
                                 <i class="fas fa-user-circle fa-lg"></i>
                             </a>
                             <!-- 下拉選單 - 使用者資訊 -->
@@ -238,42 +238,10 @@
 </body>
 <script>
 
-     // ajax form 表單
-     // http://localhost:8080/vendors/1
-
-    // var str = '{"vendorName":"澎湖銀海遊艇公司","vendorAdd":"澎湖縣白沙鄉鳥嶼村95之1號","vendorPhone":"06-9916007","ceoEmail":"abc123123@gmail.com","ceoName":"跨海大橋的看到鬼","ceoPhone":"0937-629424","applicationTime":"2023-05-21 20:42:57","review":"1","bankAccount":"台灣銀行004      024 001 106082","contractTerm":"合作條款","loginAccount":"vendor01","loginPassword":"vendor01","vendorEmail":"abc123123@gmail.com","_links":{"self":{"href":"http://localhost:8080/vendors/1"},"vendor":{"href":"http://localhost:8080/vendors/1"}}}';
-    // const obj = JSON.parse(str);
-    // document.getElementById("vendor-name").value = obj.vendorName;
-
-    //拿取表單資料
-    const vendorId = $("#vendorId").val();
-    const vendorName = $("#vendorName").val();
-    const vendorAdd = $("#vendorAdd").val();
-    const vendorPhone = $("#vendorPhone").val();
-    const vendorEmail = $("#vendorEmail").val();
-    const ceoName = $("#ceoName").val();
-    const ceoPhone = $("#ceoPhone").val();
-    const bankAccount = $("#bankAccount").val();
-    const status = $("#review").val();
-    
-    // 包裝成物件
-    let VendorFiles = {
-        vendorId: vendorId,
-        vendorName: vendorName,
-        vendorAdd: vendorAdd,
-        vendorPhone: vendorPhone,
-        vendorEmail: vendorEmail,
-        ceoName: ceoName,
-        ceoPhone: ceoPhone,
-        // applicationTime: 0,
-        bankAccount: bankAccount,
-        review: review
-    };
-
     $(document).ready(function() {
      $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/vendors/info',
+        url: '/vendors/info',
         contentType: 'application/json',
         success: function(response) {
             console.log("123"+response);
@@ -287,6 +255,7 @@
         $('#ceoPhone').val(response.ceoPhone);
         $('#bankAccount').val(response.bankAccount);
         $('#review').val(response.review);
+        $('#vendorName1').text(response.vendorName);
 
          console.log('廠商資訊獲得成功');
      },
@@ -297,8 +266,8 @@
     
      });
 
-
     });
+
  </script> 
 
 </html>

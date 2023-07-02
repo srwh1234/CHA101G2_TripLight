@@ -26,6 +26,11 @@
 <!-- 自訂樣式 -->
 <link href="css/TripLight.min.css" rel="stylesheet">
 <link href="css/empolyeeform.css" rel="stylesheet">
+<style>
+	#employee-access {
+	white-space: pre-line;
+	}
+	</style>
 </head>
 
 <body id="page-top" style="overflow-y: scroll;">
@@ -51,7 +56,7 @@
 
 			<!-- 導覽項目 -  -->
 			<li class="nav-item active"><a class="nav-link"
-				href="https://triplight.netlify.app/"> <span>TirpLight</span></a></li>
+				href="/front-end/index.html"> <span>TirpLight</span></a></li>
 			<!-- 導覽項目 - 頁面折疊選單 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseTwo"
@@ -189,8 +194,12 @@
 								id="employee-department" name="employeeAccount" required>
 						</div>
 						<div class="form-group">
-							<label for="employee-position">密碼</label> <input type="text"
-								id="employee-position" name="employeePassword" required>
+						<!-- 要跟登入一樣 驗證密碼 -->
+    					<label for="employee-position">密碼</label>
+   						 <input type="password" id="employee-position" name="employeePassword" 
+       				    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$"
+           				title="密碼長度必須介於6到20個字元、不得包含特殊符號"
+           				minlength="6" maxlength="20" required>
 						</div>
 						<div class="form-group">
 							<label for="employee-phone">電話</label> <input type="tel"
@@ -223,11 +232,55 @@
 				<script>	
 				$(document).ready(function() {
 				    // 獲取管理員秀在畫面上
-				    let employeeAccess = sessionStorage.getItem("管理員");
-				    let employeeaccess2 = JSON.parse(employeeAccess);
-				    $("#employee-access").text("員工:" + employeeaccess2.employeeName +
-				    	"\n" + "權限:" + employeeaccess2.employeeAccess);
+					 var employeeAccess = sessionStorage.getItem("管理員");
+				        var employeeaccess2 = JSON.parse(employeeAccess);
+				        	        
+				    	  $("#employee-access")
+				     	   .text("員工:"+employeeaccess2.employeeName +	 "\n" 
+				        	+ "權限:"+employeeaccess2.employeeAccess);
+				        
+				    	// 根據帳限顯示導覽
+				          if (employeeaccess2.employeeAccess === "超級管理員") {
+				        	  
+				          } else if (employeeaccess2.employeeAccess === "員工管理員") {
+				              $("#member-management").hide();
+				              $("#firm-management").hide();
+				              $("#ticket-management").hide();
+				              $("#web-management").hide();
+				              $("#customer-service").hide();
+				          } else if (employeeaccess2.employeeAccess === "會員管理員") {
+				              $("#employee-management").hide();
+				              $("#firm-management").hide();
+				              $("#ticket-management").hide();
+				              $("#web-management").hide();
+				              $("#customer-service").hide();
+				          } else if (employeeaccess2.employeeAccess === "廠商管理員") {
+				              $("#employee-management").hide();
+				              $("#member-management").hide();
+				              $("#ticket-management").hide();
+				              $("#web-management").hide();
+				              $("#customer-service").hide();
+				          } else if (employeeaccess2.employeeAccess === "票卷管理員") {
+				              $("#employee-management").hide();
+				              $("#member-management").hide();
+				              $("#firm-management").hide();
+				              $("#web-management").hide();
+				              $("#customer-service").hide();
+				          } else if (employeeaccess2.employeeAccess === "網頁管理員") {
+				              $("#employee-management").hide();
+				              $("#member-management").hide();
+				              $("#firm-management").hide();
+				              $("#ticket-management").hide();
+				              $("#customer-service").hide();
+				          } else if (employeeaccess2.employeeAccess === "客服管理員") {
+				              $("#employee-management").hide();
+				              $("#member-management").hide();
+				              $("#firm-management").hide();
+				              $("#ticket-management").hide();
+				              $("#web-management").hide();
+				          }
 
+				   
 				    // 提交表單
 				    $('#employee-form').submit(function(e) {
 				        e.preventDefault(); // 阻止表單默認的提交行為
@@ -285,7 +338,7 @@
 				            type: "GET",
 				            url: "/BKlogout",
 				            success: function() {
-				                window.location.href = "http://localhost:8080/back-end/login.html";
+				                window.location.href = "/back-end/login.html";
 				            },
 				            error: function() {}
 				        });

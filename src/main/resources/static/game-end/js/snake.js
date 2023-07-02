@@ -6,15 +6,34 @@ let user = JSON.parse(sessionStorage.getItem("user"));
 let speed = 70 + user.level; /*蛇移动初始速度：35+等級*/ // 數字越低越快
 let score, timer, board, bean; /*游戏初始分数显示区，定时器，面板，豆*/
 let trueScore;
+let snakeheadColor = "red";
 // 如果等級大於10等，可使用技能
 let isShiftPressed = true;
 if (user.level >= 10) {
   isShiftPressed = false;
 }
 
+// 設定蛇頭顏色
+let colorPicker = document.getElementById("colorPicker");
+let skinPicker = document.getElementById("skinPicker");
+
+// 如果等級大於15等，可以改顏色
+if (user.level < 15) {
+  colorPicker.style.display = "none";
+  colorPicker.parentNode.style.display = "none";
+}
+// 如果等級大於20等，可以改skin
+if (user.level < 20) {
+  skinPicker.style.display = "none";
+  skinPicker.parentNode.style.display = "none";
+}
+
 //獲取音樂
 let eatBeanAudio = document.getElementById("eatBean");
 let slowDownAudio = document.getElementById("slowDown");
+
+// 獲取按鈕
+let pikachuButton = document.getElementById("pikachuButton");
 
 // 初始化(){
 onload = () => {
@@ -39,9 +58,50 @@ function createSnake() {
   for (let i = 0; i < snakeSize; i++) {
     //         创造蛇的新关节，每个关节都是一个div
     let snake = document.createElement("div");
-    //         蛇头变红
+    // 蛇头变红
     if (i === 0) {
-      snake["style"]["backgroundColor"] = "red";
+      // 預設skin
+      snake.style.backgroundColor = snakeheadColor;
+
+      // 檢查紀錄的skin
+      // 检查本地存储中是否存在之前的选择
+      if (localStorage.getItem("selectedSkin")) {
+        let previousSkin = localStorage.getItem("selectedSkin");
+        skinPicker.value = previousSkin;
+        snake.style.backgroundImage = `url('img/${previousSkin}.png')`;
+        snake.style.backgroundSize = "cover";
+        snake.style.backgroundColor = "transparent";
+      }
+      // 檢查紀錄的color
+      if (localStorage.getItem("selectedColor")) {
+        let previousColor = localStorage.getItem("selectedColor");
+        snake.style.backgroundColor = previousColor;
+        snake.style.backgroundImage = "";
+      }
+
+      // 監聽color
+      colorPicker.addEventListener("change", function () {
+        let selectedColor = colorPicker.value;
+        snake.style.backgroundColor = selectedColor;
+        snake.style.backgroundImage = "";
+        console.log("Selected color: " + selectedColor);
+
+        // 儲存至本地
+        localStorage.removeItem("selectedSkin");
+        localStorage.setItem("selectedColor", selectedColor);
+      });
+
+      // 監聽skin
+      skinPicker.addEventListener("change", function () {
+        let selectedSkin = skinPicker.value;
+        snake.style.backgroundImage = `url('img/${selectedSkin}.png')`;
+        snake.style.backgroundSize = "cover";
+        snake.style.backgroundColor = "transparent";
+
+        // 将当前选择保存到本地存储中
+        localStorage.setItem("selectedSkin", selectedSkin);
+        localStorage.removeItem("selectedColor");
+      });
     }
     //         蛇的新关节推入数组
     snakeArray.push(snake);
@@ -153,7 +213,7 @@ function keyListener() {
 // 游戏开始(){
 function start() {
   // 判斷還有沒有錢
-  if (user.money < 100) {
+  if (user.money < 50) {
     Swal.fire({
       title: "You don't have enough money",
       timer: 1500,
@@ -313,8 +373,9 @@ function gameover() {
   saveScore();
 
   Swal.fire({
-    title: "Game Over",
-    timer: 1500,
+    title: `Game Over
+Your Score is ${trueScore}`,
+    timer: 3000,
     background: "rgba(255, 255, 255, .7)",
   }).then(() => {
     setTimeout(() => {
@@ -365,4 +426,11 @@ function playEatBeanMusic() {
 }
 function playslowDownMusic() {
   slowDownAudio.play();
+}
+
+// 自訂頭像
+function pikachu(snake) {
+  snake.style.backgroundImage = "url('img/pikachu.png')";
+  snake.style.backgroundSize = "cover";
+  snake.style.backgroundColor = "transparent";
 }

@@ -35,7 +35,13 @@
 	text-overflow: ellipsis;
 	max-width: 800px;
 	/* 你可以根據需要調整這個值 */
+	
+	
 }
+
+#employee-access {
+	white-space: pre-line;
+	}
 </style>
 </head>
 
@@ -59,7 +65,7 @@
 
 			<!-- 導覽項目 -  -->
 			<li class="nav-item active"><a class="nav-link"
-				href="https://triplight.netlify.app/"> <span>TirpLight</span></a></li>
+				href="http://localhost:8080/front-end/index.html"> <span>TirpLight</span></a></li>
 			<!-- 導覽項目 - 頁面折疊選單 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseTwo"
@@ -173,8 +179,8 @@
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">超級管理員</span>
-								<i class="fas fa-user-circle fa-lg"></i>
+								class="mr-2 d-none d-lg-inline text-gray-600 small"
+								id="employee-access"></span> <i class="fas fa-user-circle fa-lg"></i>
 						</a> <!-- 下拉選單 - 使用者資訊 -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -206,19 +212,6 @@
 				</div>
 
 
-				<script>
-$("#logoutLink").click(function () {
-	 $.ajax({
-type: "GET",
-	 url: "/BKlogout", 
-	 success: function () {
-window.location.href = "http://localhost:8080/back-end/login.html";
-  },
-error: function () {
-   		}
-	});
-	});
-</script>
 				<script src="vendor/jquery/jquery.min.js"></script>
 				<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -245,8 +238,74 @@ error: function () {
 	</div>
 </body>
 <script>
+var employeeAccess = sessionStorage.getItem("管理員");
+var employeeaccess2 = JSON.parse(employeeAccess);
+	        
+  $("#employee-access")
+	   .text("員工:"+employeeaccess2.employeeName +	 "\n" 
+	+ "權限:"+employeeaccess2.employeeAccess);
 
-    let employeeId = 3;
+// 根據帳限顯示導覽
+  if (employeeaccess2.employeeAccess === "超級管理員") {
+	  
+  } else if (employeeaccess2.employeeAccess === "員工管理員") {
+      $("#member-management").hide();
+      $("#firm-management").hide();
+      $("#ticket-management").hide();
+      $("#web-management").hide();
+      $("#customer-service").hide();
+  } else if (employeeaccess2.employeeAccess === "會員管理員") {
+      $("#employee-management").hide();
+      $("#firm-management").hide();
+      $("#ticket-management").hide();
+      $("#web-management").hide();
+      $("#customer-service").hide();
+  } else if (employeeaccess2.employeeAccess === "廠商管理員") {
+      $("#employee-management").hide();
+      $("#member-management").hide();
+      $("#ticket-management").hide();
+      $("#web-management").hide();
+      $("#customer-service").hide();
+  } else if (employeeaccess2.employeeAccess === "票卷管理員") {
+      $("#employee-management").hide();
+      $("#member-management").hide();
+      $("#firm-management").hide();
+      $("#web-management").hide();
+      $("#customer-service").hide();
+  } else if (employeeaccess2.employeeAccess === "網頁管理員") {
+      $("#employee-management").hide();
+      $("#member-management").hide();
+      $("#firm-management").hide();
+      $("#ticket-management").hide();
+      $("#customer-service").hide();
+  } else if (employeeaccess2.employeeAccess === "客服管理員") {
+      $("#employee-management").hide();
+      $("#member-management").hide();
+      $("#firm-management").hide();
+      $("#ticket-management").hide();
+      $("#web-management").hide();
+  }
+
+
+
+
+$("#logoutLink").click(function () {
+	 $.ajax({
+type: "GET",
+	 url: "/BKlogout", 
+	 success: function () {
+window.location.href = "http://localhost:8080/back-end/login.html";
+  },
+error: function () {
+   		}
+	});
+	});
+
+	let loginData = JSON.parse(sessionStorage.getItem('管理員'));
+	let employeeId = loginData.employeeId;
+	console.log(employeeId)
+    // let employeeId = 3;
+
     $("#logoutLink").click(function () {
         $.ajax({
             type: "GET",
@@ -274,6 +333,7 @@ error: function () {
                 <td>${item.state === 0 ? '未解決' : '已解決'}</td>
             `;
 
+				//客服人員處理問題
                 const replyButton = document.createElement('button');
                 replyButton.className = "myButton";
                 replyButton.textContent = '處理訂單';
@@ -312,15 +372,14 @@ error: function () {
                                                 },
                                                 body: JSON.stringify({
                                                     replyContent: replyContent,
-                                                    employeeId: parseInt(employeeId)
+                                                    employeeId: employeeId
                                                 })
                                             })
                                                 .then(response => {
                                                     if (!response.ok) {
                                                         throw new Error('Network response was not ok');
-                                                    }
+                                                    }else
                                                     row.remove()
-
                                                 })
                                                 .catch((error) => {
                                                     console.error('Error:', error);
@@ -336,7 +395,16 @@ error: function () {
             });
         })
         .catch(error => console.error('Error:', error));
-
+    	$("#logoutLink").click(function() {
+        $.ajax({
+            type: "GET",
+            url: "/BKlogout",
+            success: function() {
+                window.location.href = "http://localhost:8080/back-end/login.html";
+            },
+            error: function() {}
+    	    });
+   		 });
 
 </script>
 
