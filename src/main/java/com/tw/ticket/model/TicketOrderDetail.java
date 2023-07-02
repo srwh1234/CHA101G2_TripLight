@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 import com.tw.employee.model.Employee;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -25,13 +26,15 @@ public class TicketOrderDetail implements Serializable {
 	public static int REFUND_REVIEW = 1;
 	public static int REFUND_FINISH = 2;
 
-	// 建構子 只是為了輸入方便
-	public TicketOrderDetail(final Integer ticketOrderId, final TicketSn ticketSn) {
-		this.key = new PrimaryKey(ticketOrderId, ticketSn);
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-	@EmbeddedId
-	private PrimaryKey key;
+	private Integer ticketOrderId;// 票券訂單編號
+
+	@ManyToOne
+	@JoinColumn(name = "ticket_sn_id")
+	private TicketSn ticketSn;// 票券序號編號
 
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
@@ -43,17 +46,4 @@ public class TicketOrderDetail implements Serializable {
 
 	private String refundReason;// 退款原因
 
-	@Embeddable
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class PrimaryKey implements Serializable {
-		private static final long serialVersionUID = 1L;
-
-		private Integer ticketOrderId;// 票券訂單編號
-
-		@ManyToOne
-		@JoinColumn(name = "ticket_sn_id")
-		private TicketSn ticketSn;// 票券序號編號
-	}
 }
