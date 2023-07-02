@@ -28,7 +28,7 @@ public class VendorLoginService {
 	
 	public Vendor vendorlogin(String vendorEmail, String loginAccount, String loginPassword) {
 		Vendor vendor = vendorRepository.findByVendorEmail(vendorEmail);	
-		if(vendor != null && loginAccount.equals(vendor.getLoginAccount())) {
+		if(vendor != null && loginAccount.equals(vendor.getLoginAccount()) && loginPassword.equals(vendor.getLoginPassword())) {
 			return vendor;
 		}
 		return null;

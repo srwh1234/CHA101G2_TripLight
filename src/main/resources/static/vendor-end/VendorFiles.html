@@ -298,6 +298,35 @@
      });
 
     });
+
+    // 拿取
+    const vendorName1 = $('#vendorName').text();
+    
+    //組成
+    let vendorofName  = {
+        vendorName : vendorName1,
+    }
+
+    $(document).ready(function() {
+     $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/vendors/info',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log("123"+response);
+        // 將廠商資訊信息填充到頁面上相對應的欄位
+        $('#vendorName').text(response.vendorName);
+
+         console.log('廠商名字獲得成功');
+     },
+
+     error: function(error) {
+            console.log('獲取廠商名字失敗。錯誤：' + error);
+     }
+    
+     });
+
+    });
  </script> 
 
 </html>

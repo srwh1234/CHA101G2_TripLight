@@ -172,8 +172,9 @@
         	  data: JSON.stringify(login),
         	  contentType: 'application/json',
         	  success: function(data) {
-				if (data) {
-					alert('登入成功');
+				console.log(data);
+				if (data.success) {
+					// alert('登入成功');
 					// 資料庫驗證成功後跳轉到另一個畫面的 URL
 					document.location.href = "index.html";
 				} else {
