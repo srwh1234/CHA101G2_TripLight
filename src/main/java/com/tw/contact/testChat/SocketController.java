@@ -207,8 +207,8 @@ public class SocketController {
             // 將用戶的ID和消息添加到結果映射中
             result.put("msg", "用戶"+session.getId()+"："+message);
 
-            // 判斷用戶是否有服務的客服，如果有，則將消息發送給該客服
-            if (null != userSessionMap.get(session.getId()).getTargetSessionId()){
+            // 從上線中用戶找到該用戶並找到他的目標id不為null時發送訊息
+            if (userSessionMap.get(session.getId()).getTargetSessionId() != null){
                 sendMsg(serverSessionMap.get(userSessionMap.get(session.getId()).getTargetSessionId()).getSession(), JSON.toJSONString(result));
             }
         }
