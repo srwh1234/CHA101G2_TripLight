@@ -125,7 +125,7 @@
       contentType: "application/json",
       success: function (response) {
         // 判斷是否為管理員
-        if (response.email === "?" && response.password === "!") {
+        if (response.email === "???" && response.password.includes("!")) {
           window.location.href = "manage.html";
         } else if (response) {    // 判斷使用者是否存在
           let user = {
