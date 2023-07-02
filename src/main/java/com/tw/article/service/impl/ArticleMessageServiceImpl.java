@@ -5,7 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.tw.article.controller.ArticleMessageController.DataMessage;
 import com.tw.article.dao.ArticleMessageRepository;
+import com.tw.article.model.Article;
 import com.tw.article.model.ArticleMessage;
 import com.tw.article.service.ArticleMessageService;
 
@@ -65,5 +68,15 @@ public class ArticleMessageServiceImpl implements ArticleMessageService {
 	private boolean isExceedingCharacterLimit(String ArticleMessage) {
         return ArticleMessage.length() > 2500 ;
     }
+
+	@Override
+	public ArticleMessage save(ArticleMessage articleMessage) {
+		return articleMessageRepository.save(articleMessage);
+	}
 	
+	@Override
+	public ArticleMessage findbyId(Integer messageId) {
+		 Optional<ArticleMessage> optionalArticleMessage = articleMessageRepository.findById(messageId);
+	        return optionalArticleMessage.orElse(null);
+	};
 }

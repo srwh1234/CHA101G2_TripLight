@@ -31,7 +31,6 @@
       height: 150px;
       /* 設定圖片高度為150像素 */
       object-fit: cover;
-      /* 使用object-fit屬性調整圖片填滿區塊，可能需要進一步調整該屬性以符合您的需求 */
     }
 
     #body {
@@ -221,11 +220,11 @@
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
           aria-expanded="false" style="width: 250px;">標題</button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">遊記</a></li>
-          <li><a class="dropdown-item" href="#">食記</a></li>
-          <li><a class="dropdown-item" href="#">住宿</a></li>
-          <li><a class="dropdown-item" href="#">評論</a></li>
-          <li><a class="dropdown-item" href="#">問題</a></li>
+          <li><a class="dropdown-item" href="#" id="1">遊記</a></li>
+          <li><a class="dropdown-item" href="#" id="2">食記</a></li>
+          <li><a class="dropdown-item" href="#" id="3">住宿</a></li>
+          <li><a class="dropdown-item" href="#" id="4">評論</a></li>
+          <li><a class="dropdown-item" href="#" id="5">問題</a></li>
         </ul>
         <button type="button" class="btn btn-outline-secondary my-nav-link" style="width: 250px;"
           onclick="redirectToArticleList()">進入論壇</button>
@@ -269,20 +268,16 @@
         </div>
       </div>
       <div class="container align-items-center justify-content-between d-flex">
-        <div class="more-link">
+        <button class="more-link">
           <a href="article_list.html">更多文章</a>
-        </div>
-        <div class="question">
+        </button>
+        <button class="question">
           <a href="chat.html">我想發問</a>
-        </div>
+        </button>
       </div>
     </div>
   </section>
   <!-- tour packages -->
-
-  <!-- destinations Start-->
-
-  <!-- destinations End-->
 
   <!--footer -->
   <footer>
@@ -408,7 +403,8 @@
 
     $(document).ready(function () {
 
-      fetch('http://localhost:8080/article/articles')
+      fetch('/article/articles')
+      // fetch('http://localhost:8080/article/articles')
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -421,7 +417,7 @@
         for (let i = 0; i <= Math.min(data.length, 8); i++) {
           let article = data[i];
 
-          if (article.articleStatus === 1) {
+          if (!article || article.articleStatus == 1) {
             continue; // 狀態數字為1，跳過此次迴圈
           }
 
@@ -455,7 +451,7 @@
           let formattedDate = `${year}-${month}-${day}`;
 
           $('#articleContainer').append(`
-          <a href="http://localhost:8080/front-end/article_detail.html?id=${article.articleId}">
+          <a href="/front-end/article_detail.html?id=${article.articleId}">
             <div class="col mb-3">
                     <div class="card my-nav-link" position-relative">
                         <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image" />
@@ -484,6 +480,115 @@
         }
       }
     });
+
+    $('.dropdown-menu .dropdown-item').click(function () {
+      var selectedId = $(this).attr('id'); // 獲取選中選項的ID
+
+      // 發送 AJAX 請求到後端，獲取所有文章
+      fetch('/article/articles')
+      // fetch('http://localhost:8080/article/articles')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          select_article(data);
+        }) // 所有文章的陣列
+
+      function select_article(data) {
+        // 清空文章容器
+        $('#articleContainer').html('');
+
+        // 定義 allArticles 變數並將文章資料指派給它
+        var allArticles = data;
+
+        for (let i = 0; i <= Math.min(data.length, 8); i++) {
+          let article = data[i];
+
+          if (!article || article.articleStatus == 1) {
+            continue; // 狀態數字為1，跳過此次迴圈
+          }
+
+          // 根據選中的選項篩選文章
+          var filteredArticles = [];
+          allArticles.forEach(function (article) {
+            if (article.articleTypeId === selectedId) {
+              filteredArticles.push(article);
+            }
+          });
+
+          // 迭代每個篩選後的文章，渲染到網頁上
+          filteredArticles.forEach(function (article) {
+            var formattedDate = formatDate(article.articlePostTime); // 格式化文章日期
+            var articleType = getArticleType(article.articleTypeId); // 獲取文章類型名稱
+
+            // 使用模板字符串創建文章的HTML元素
+            $('#articleContainer').append(`
+        <a href="/front-end/article_detail.html?id=${article.articleId}">
+          <div class="col mb-3">
+            <div class="card my-nav-link" position-relative">
+              <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image" />
+            </div>
+            <div class="card-body" id="body">
+              <h5 class="card-title">
+                <span>【${articleType}】</span>
+                <span>${article.articleTitle}</span>
+              </h5>
+              <br>
+              <p class="card-text" id="clamp-lines">
+                ${article.articlePostContent}
+              </p>
+            </div>
+            <br>    
+            <div class="d-flex justify-content-between" style="padding: 0 10px;">
+              <p>${article.memberName}</p>
+              <p class="card-text">
+                <small class="text-muted">${formattedDate}</small>
+              </p>
+            </div>
+          </div>
+        </a>
+      `);
+
+            // 格式化日期的輔助函式，請根據實際需求自行實現
+            function formatDate(date) {
+              // 實現日期格式化邏輯，返回格式化後的日期字符串
+              let inputDate = article.articlePostTime;
+              let dateTime = new Date(inputDate);
+              let year = dateTime.getFullYear();
+              let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+              let day = String(dateTime.getDate()).padStart(2, "0");
+              let formattedDate = `${year}-${month}-${day}`;
+            }
+
+            // 獲取文章類型名稱的輔助函式，請根據實際需求自行實現
+            function getArticleType(articleTypeId) {
+              // 根據articleTypeId返回相應的文章類型名稱
+              let articleType;
+              switch (article.articleTypeId) {
+                case 1:
+                  articleType = '遊記';
+                  break;
+                case 2:
+                  articleType = '食記';
+                  break;
+                case 3:
+                  articleType = '住宿';
+                  break;
+                case 4:
+                  articleType = '評論';
+                  break;
+                case 5:
+                  articleType = '問題';
+                  break;
+                default:
+                  articleType = '未知類型';
+                  break;
+              }
+            }
+          })
+        }
+      }
+    });
+
   </script>
 
 </body>

@@ -54,8 +54,6 @@
     <!--會員登入-->
     <link href="css/login.css" rel="stylesheet" />
     <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
-    <!--datatable-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
     <!--sweet alert-->
     <script src="./js/sweetalert.js"></script>
 </head>
@@ -188,6 +186,7 @@
     <!-- //banner -->
 
     <section class="container-fluid" style="margin-bottom: 100px; width:90%">
+        <br>
         <div class="row">
             <div class="col-12 col-sm-6 col-md-6">
                 <h3 class="text-black mb-4">我的文章</h3>
@@ -200,15 +199,23 @@
             <div class="card-header py-3" style="border-width: 0px;background: rgb(23,25,33);">
                 <div class="row table-topper align-items-center">
                     <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">
-                        <p class="m-0 fw-bold" style="color: rgb(255,255,255);">全部列表</p>
+                        <h4 class="m-0 fw-bold" style="color: rgb(255,255,255);">全部列表</h4>
                     </div>
-                    <!-- <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;"><button
-                            class="btn btn-dark btn-sm reset" type="button" style="margin: 2px;">目前檢視</button><button
-                            id="zoom_in" class="btn btn-light btn-sm" type="button" zoomclick="ChangeZoomLevel(-10);"
-                            style="margin: 2px;"><i class="fa fa-search-plus"></i></button><button id="zoom_out"
-                            class="btn btn-light btn-sm" type="button" zoomclick="ChangeZoomLevel(-10);"
-                            style="margin: 2px;"><i class="fa fa-search-minus"></i></button></div>
-                </div> -->
+                    <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;">
+                        <button class="btn btn-dark btn-sm reset" type="button" style="margin: 2px;">操作提示
+                        </button>
+                        <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="#"
+                            style="color: #00bdff;"><i class="far fa-eye">觀看文章</i>
+                        </a>
+                        <a class="btn btnMaterial btn-flat success semicircle" role="button" href="#"
+                            style="color: rgb(0,197,179);"><i class="fas fa-pen">修改內容</i>
+                        </a>
+                        <a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button"
+                            style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal" href="#"><i
+                                class="fas fa-trash btnNoBorders" style="color: #DC3545;">刪除單篇</i>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -227,19 +234,33 @@
                                 <td style="color: rgb(255,255,255);">【問題】</td>
                                 <td style="color: rgb(255,255,255);">Luis</td>
                                 <td style="color: rgb(255,255,255);">桃園有哪裡好玩？</td>
-                                <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a
+                                <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
+                                    <a
                                         class="btn btnMaterial btn-flat primary semicircle" role="button" href="#"
-                                        style="color: #00bdff;"><i class="far fa-eye"></i></a><a
+                                        style="color: #00bdff;"><i class="far fa-eye"></i>
+                                    </a>
+                                    <a
                                         class="btn btnMaterial btn-flat success semicircle" role="button" href="#"
-                                        style="color: rgb(0,197,179);"><i class="fas fa-pen"></i></a><a
+                                        style="color: rgb(0,197,179);"><i class="fas fa-pen"></i>
+                                    </a>
+                                    <a
                                         class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button"
                                         style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                        href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a>
+                                        href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i>
+                                    </a>
                                 </td>
                             </tr> -->
                         </tbody>
                     </table>
                     <!-- </div> -->
+                </div>
+            </div>
+            <div class="align-items-between justify-content-between d-flex">
+                <div class="more-link">
+                    <a href="article_list.html">回討論區</a>
+                </div>
+                <div class="bottom-left">
+                    <a href="#">回到頂端</a>
                 </div>
             </div>
         </div>
@@ -358,7 +379,8 @@
 
         $(document).ready(function () {
 
-            fetch('http://localhost:8080/article/articles')
+            fetch('/article/articles')
+                // fetch('http://localhost:8080/article/articles')
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -409,11 +431,11 @@
                             <td style="color: rgb(255,255,255);">${article.memberName}</td>
                             <td style="color: rgb(255,255,255);">${article.articleTitle}</td>
                             <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
-                                <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="http://localhost:8080/front-end/article_detail.html?id=${article.articleId}" style="color: #00bdff;">
+                                <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="/front-end/article_detail.html?id=${article.articleId}" style="color: #00bdff;">
                                     <i class="far fa-eye">
                                     </i>
                                 </a>
-                                <a class="btn btnMaterial btn-flat success semicircle" role="button" href="http://localhost:8080/front-end/article_upgrade.html?id=${article.articleId}" style="color: rgb(0,197,179);">
+                                <a class="btn btnMaterial btn-flat success semicircle" role="button" href="/front-end/article_upgrade.html?id=${article.articleId}" style="color: rgb(0,197,179);">
                                     <i class="fas fa-pen">
                                     </i>
                                     </a>
@@ -427,31 +449,35 @@
                 }
             }
         });
-        function hideRow(e) {
-        };
 
         $(document).on('click', '#delete', function (e) {
             e.preventDefault(); // 防止表單提交
             var result = confirm("確定要刪除文章嗎？");
             if (result) {
                 const id = $(this).data('id');
+                var row = $(this).closest('.row');
                 //發請求
-                fetch(`http://localhost:8080/article/deletearticle/${id}`)
+                fetch(`/article/deletearticle/${id}`)
+                // fetch(`http://localhost:8080/article/deletearticle/${id}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data) {
                             alert('刪除成功');
-                            var row = document.getElementById("row");
-                            row.style.display = "none";
+                            hideRow(row); // 隐藏行
                             let articleStatus = 1;
                         } else {
                             alert('刪除失敗');
                         }
                     })
                     .catch(error => console.log(error));
-                console.log(article);
             }
         });
+
+        function hideRow(e) {
+            var row = document.getElementById("row");
+            row.style.display = "none";
+        };
+
     </script>
 
 </body>

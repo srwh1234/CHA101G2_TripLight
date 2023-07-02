@@ -193,18 +193,15 @@
     <!-- //banner -->
 
     <section class="container">
-
         <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">發表文章</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                 onclick="redirectToArticle()"></button>
         </div>
-
         <div class="articleTitle">
             <input type="text" id="articleTitle-input" placeholder="請在此輸入標題"
                 aria-label="Text input with dropdown button" style="width: 100%;">
         </div>
-
         <div class="radios">
             <input type="radio" id="1" name="articleTypeId" value="1" checked style="width: 16px; height: 16px">
             <label for="travel" style="font-size: 15PX;">遊記</label>
@@ -217,27 +214,22 @@
             <input type="radio" id="5" name="articleTypeId" value="5" style="width: 16px; height: 16px">
             <label for="question" style="font-size: 15PX;">問題</label>
         </div>
-
         <br>
         <input id="articlePicture" type="file" class="upl form-control" multiple="multiple;">
         <br>
-
         <div class="ckeditor">
             <div id="articlePostContent">
                 <textarea name="editor" id="editor1"></textarea>
             </div>
         </div>
-
         <div class="modal-footer">
             <!-- <input type="hidden" name="action" value="insert"> -->
             <input type="submit" id="confirm" value="文章送出" onclick="redirectToMyList()">
         </div>
-
         <div style="text-align: start;">
             <img class="preview" style="max-width: 250px; max-height: 300px;">
             <div class="size"></div>
         </div>
-
     </section>
 
     <!--footer -->
@@ -351,12 +343,14 @@
         CKEDITOR.replace('editor');
         CKEDITOR.editorConfig = function (config) {
             config.enterMode = CKEDITOR.ENTER_BR;
-            config.shiftenterMode = CKEDITOR.ENTER_BR;
+            config.shiftEnterMode = CKEDITOR.ENTER_BR;
             config.removePlugins = 'elementspath';
         };
+        CKEDITOR.config.removePlugins = 'paragraph'; // 使用 CKEDITOR.config 設定 removePlugins
+        CKEDITOR.config.allowedContent = true; // 使用 CKEDITOR.config 設定 allowedContent
         ClassicEditor.create(document.querySelector('#editor'), {
             removePlugins: 'paragraph', // 移除內建的段落樣式插件
-            allowedContent: true, // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
+            allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
         });
     </script>
 
@@ -406,16 +400,17 @@
             formData.append('article', JSON.stringify(article));
 
             //發請求
-            fetch(`http://localhost:8080/article/addarticle`, {
-                method: 'POST',
+            fetch(`/article/addarticle`, {
+            // fetch(`http://localhost:8080/article/addarticle`, {
+            method: 'POST',
                 body: formData,
             })
                 .then(response => response.text())
                 .then(data => {
                     if (data) {
                         // alert('上傳成功');
-                        Swal.fire( { icon: 'success', title: '成功發表' } )
-                          .then(()=>window.location.href = 'article_mylist.html');
+                        Swal.fire({ icon: 'success', title: '成功發表' })
+                            .then(() => window.location.href = 'article_mylist.html');
                     } else {
                         alert('發文失敗');
                     }

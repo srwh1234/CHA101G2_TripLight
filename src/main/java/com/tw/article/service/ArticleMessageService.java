@@ -1,6 +1,9 @@
 package com.tw.article.service;
 
 import java.util.List;
+
+import com.tw.article.controller.ArticleMessageController.DataMessage;
+
 import com.tw.article.model.ArticleMessage;
 
 public interface ArticleMessageService {
@@ -15,4 +18,10 @@ public interface ArticleMessageService {
     String getArticleMessageById(Integer articleMessageId);
     //查詢文章：全部
     List<ArticleMessage> getAllArticleMessages();
+    
+	ArticleMessage findbyId(Integer messageId);
+	
+//	ArticleMessage save(DataMessage message);
+	
+	ArticleMessage save(ArticleMessage articleMessage);
 }

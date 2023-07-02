@@ -55,8 +55,8 @@
     <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
     <!--datatable-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" />
-    <!-- <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.bootstrap5.min.css" /> -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
     <!--sweet alert-->
     <script src="./js/sweetalert.js"></script>
 </head>
@@ -231,7 +231,10 @@
     <div class="container align-items-center justify-content-between d-flex">
         <div class="container bottom">
             <button class="bottom-left">
-                <a href="#">Back to top</a>
+                <a href="#">回到頂端</a>
+            </button>
+            <button class="bottom-right">
+                <a href="article_mylist.html">我的文章</a>
             </button>
         </div>
     </div>
@@ -344,12 +347,17 @@
 
     <!--引用dataTables.js-->
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
 
+        function redirectToMyList() {
+            window.location.href = "article_mylist.html";
+        };
+
         $(document).ready(function () {
-            fetch('http://localhost:8080/article/articles')
+            fetch('/article/articles')
+            // fetch('http://localhost:8080/article/articles')
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -400,7 +408,6 @@
                     console.log(data1);
                     $('#myTable').DataTable({
                         lengthMenu: [[5, 10, 15, -1], [5, 10, 15, "全部"]],
-                        info: false,
                         autoWidth: false,
                         data: data1,
                         columns: [
@@ -408,26 +415,47 @@
                             {
                                 data: 'articleTitle', title: "文章標題",
                                 render: function (data, type, row) {
-                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
+                                    return `<a href="/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
                                 }
                             },
                             {
                                 data: 'memberName', title: "文章作者",
                                 render: function (data, type, row) {
-                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
+                                    return `<a href="/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
                                 }
                             },
                             {
                                 data: 'articlePostTime', title: "更新時間",
                                 render: function (data, type, row) {
-                                    return `<a href="http://localhost:8080/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
+                                    return `<a href="/front-end/article_detail.html?id=${row.articleId}" target="_blank">` + data + '</a>'
                                 }
                             },
                             { data: 'articleViews', title: "瀏覽次數" }
-                        ]
-                    })
+                        ],
+                        language: {
+                            "lengthMenu": "顯示資料筆數 _MENU_",
+                            "sSearch": "尋找:",
+                            "sZeroRecords": "没有匹配结果",
+                            "sInfo": "目前有 _MAX_ 筆資料",
+                            "sInfoEmpty": "目前共有 0 筆紀錄",
+                            "sInfoFiltered": " ",
+                            "sInfoPostFix": "",
+                            "sSearch": "關鍵字尋找:",
+                            "sUrl": "",
+                            "sEmptyTable": "尚未有資料紀錄存在",
+                            "sLoadingRecords": "載入資料中...",
+                            "sInfoThousands": ",",
+                            "oPaginate": {
+                                sFirst: "首頁",
+                                sPrevious: "上一頁",
+                                sNext: "下一頁",
+                                sLast: "最末頁",
+                            },
+                        }
+                    });
                 });
         });
+
     </script>
 
 </body>

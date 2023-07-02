@@ -68,63 +68,66 @@
 </head>
 
 <body>
-  <!-- header -->
-  <header>
-    <div class="container" style="padding-right: 0px">
-      <!-- nav -->
-      <nav class="py-md-4 py-3">
-        <div id="logo">
-          <h1 class="mt-md-0 mt-2">
-            <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
-              TripLight
-            </a>
-          </h1>
+    <!-- header -->
+    <header>
+        <div class="container" style="padding-right: 0px">
+            <!-- nav -->
+            <nav class="py-md-4 py-3">
+                <div id="logo">
+                    <h1 class="mt-md-0 mt-2">
+                        <a href="index.html"><img src="./images/icon.png" class="icon_triplight" />
+                            TripLight
+                        </a>
+                    </h1>
+                </div>
+                <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+                <input type="checkbox" id="drop" />
+                <ul class="menu ml-auto mt-1">
+                    <li class=""><a href="index.html">首頁</a></li>
+                    <li class=""><a href="booking.html">AI行程規劃</a></li>
+                    <li class=""><a href="tickets.html">票券</a></li>
+                    <li class=""><a href="itinerary_search.html">套裝行程</a></li>
+                    <li class=""><a href="articles.html">旅遊文章</a></li>
+                    <li class="booking"><a href="" id="login">登入/註冊</a></li>
+                    <li class="">
+                        <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- //nav -->
+            <div class="member">
+                <ul class="member_list">
+                    <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
+                    </li>
+                    <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
+                        <ul class="order_list">
+                            <li class="order_content"><a href="tickets_order.html"><i
+                                        class="fa-solid fa-ticket"></i>票券訂單</a></li>
+                            <li class="order_content"><a href="group_order.html"><i
+                                        class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
+                    <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a>
+                    </li>
+                    <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
+                    </li>
+                    <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
+                    </li>
+                    <li class="member_li"><a href="read_question_list.html"><i
+                                class="fa-regular fa-comment"></i>查看問題</a></li>
+                    <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu ml-auto mt-1">
-          <li class=""><a href="index.html">首頁</a></li>
-          <li class=""><a href="booking.html">AI行程規劃</a></li>
-          <li class=""><a href="tickets.html">票券</a></li>
-          <li class=""><a href="itinerary_search.html">套裝行程</a></li>
-          <li class=""><a href="articles.html">旅遊文章</a></li>
-          <li class="booking"><a href="" id="login">登入/註冊</a></li>
-          <li class="">
-            <a href="shopping_car.html"><img src="./images/shoppingCar.svg" alt="" style="width: 2em" /></a>
-          </li>
-        </ul>
-      </nav>
-      <!-- //nav -->
-      <div class="member">
-        <ul class="member_list">
-          <li class="member_li"><a href="login.html"><i class="fa-regular fa-user"></i>管理帳戶</a>
-          </li>
-          <li class="member_li" id="order_li"><a href=""><i class="fa-solid fa-plane"></i>訂單管理</a>
-            <ul class="order_list">
-              <li class="order_content"><a href="tickets_order.html"><i class="fa-solid fa-ticket"></i>票券訂單</a></li>
-              <li class="order_content"><a href="group_order.html"><i class="fa-solid fa-suitcase"></i>旅遊團訂單</a>
-              </li>
-            </ul>
-          </li>
-          <li class="member_li"><a href="my_favorite.html"><i class="fa-regular fa-heart"></i>我的收藏</a></li>
-          <li class="member_li"><a href="article_mylist.html"><i class="fa-solid fa-copy"></i>我的文章</a>
-          </li>
-          <li class="member_li"><a href="membership_rating.html"><i class="fa-regular fa-gem"></i>會員分級</a>
-          </li>
-          <li class="member_li"><a href="question_form.html"><i class="fa-regular fa-comment"></i>提出問題</a>
-          </li>
-          <li class="member_li"><a href="read_question_list.html"><i class="fa-regular fa-comment"></i>查看問題</a></li>
-          <li class="member_li" id="logout_li"><a href=""><i class="fa-solid fa-right-from-bracket"></i>登出</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </header>
-  <!-- header -->
+    </header>
+    <!-- header -->
 
     <!-- 登入 -->
-<div id="login-container">
-    <!---container--->
+    <div id="login-container">
+        <!---container--->
 
         <div class="main-box login">
             <h3>登入</h3>
@@ -191,18 +194,15 @@
     <!-- //banner -->
 
     <section class="container" id="upgradeContainer">
-
         <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">修改文章</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                 onclick="redirectToMyList()"></button>
         </div>
-
         <div class="articleTitle">
             <input type="text" id="articleTitle-input" placeholder="請在此輸入標題"
                 aria-label="Text input with dropdown button" style="width: 100%;">
         </div>
-
         <div class="radios">
             <input type="radio" id="1" name="articleTypeId" value="1" checked style="width: 16px; height: 16px">
             <label for="travel" style="font-size: 15PX;">遊記</label>
@@ -215,27 +215,22 @@
             <input type="radio" id="5" name="articleTypeId" value="5" style="width: 16px; height: 16px">
             <label for="question" style="font-size: 15PX;">問題</label>
         </div>
-
         <br>
         <input id="articlePicture" type="file" class="upl form-control" multiple="multiple;">
         <br>
-
         <div class="ckeditor">
             <div id="articlePostContent">
                 <textarea name="editor" id="editor1"></textarea>
             </div>
         </div>
-
         <div class="modal-footer">
             <!-- <input type="submit" id="confirm" value="文章送出"> -->
             <button id="confirm">文章送出</button>
         </div>
-
         <div style="text-align: start;">
             <img class="preview" style="max-width: 250px; max-height: 300px;">
             <div class="size"></div>
         </div>
-
     </section>
 
     <!--footer -->
@@ -383,7 +378,8 @@
             const articleId = urlParams.get("id");
             console.log(articleId);
 
-            fetch(`http://localhost:8080/article/articleId/${articleId}`)
+            fetch(`/article/articleId/${articleId}`)
+            // fetch(`http://localhost:8080/article/articleId/${articleId}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -464,7 +460,6 @@
                 </textarea>
             </div>
         </div>
-                
                 <div class="modal-footer">
                     <button id="confirm">文章送出</button>
         </div>
@@ -476,11 +471,18 @@
     `)
             }
 
-            $(document).on('click','#confirm', function (e) {
+            $(document).on('click', '#confirm', function (e) {
                 e.preventDefault(); // 防止表單提交
                 const urlParams = new URLSearchParams(window.location.search);
                 const articleId = urlParams.get("id");
                 console.log(articleId);
+
+                // 检查radios字段是否有選中值
+                const selectedRadio = $('input[name="articleTypeId"]:checked');
+                if (selectedRadio.length === 0) {
+                    alert('文章類型欄位需要重新點選');
+                    return;
+                }
 
                 const article = {
                     articleId: articleId,
@@ -489,7 +491,7 @@
                     articleTitle: $('#articleTitle-input').val(),
                     articlePostContent: $('#ckeditor').val(),
                     articlePostTime: null,
-                    articleStatus: 1,
+                    articleStatus: 0,
                     articleViews: document.articleViews,
                     articlePicture: null,
                 }
@@ -499,20 +501,19 @@
                 formData.append('image', $('#articlePicture').prop('files')[0]);
                 formData.append('article', JSON.stringify(article));
 
-                console.log(article);
-
                 //發請求
-                fetch(`http://localhost:8080/article/updatearticle`, {
+                fetch(`/article/updatearticle`, {
+                // fetch(`http://localhost:8080/article/updatearticle`, {
                     method: 'POST',
                     body: formData,
                 })
                     .then(response => response.text())
                     .then(data => {
                         if (data) {
-                          //  alert('上傳成功');
-                          Swal.fire( { icon: 'success', title: '更新成功' } )
-                          .then(()=>window.location.href = 'article_mylist.html');
-                          
+                            //  alert('上傳成功');
+                            Swal.fire({ icon: 'success', title: '更新成功' })
+                                .then(() => window.location.href = 'article_mylist.html');
+
                         } else {
                             alert('更新失敗');
                         }

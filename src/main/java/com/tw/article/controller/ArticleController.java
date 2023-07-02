@@ -132,8 +132,6 @@ public class ArticleController {
 	public boolean deletearticle(@PathVariable Integer id) {	
 		
 		Article article = articleService.findById(id);
-//              .orElseThrow(() -> new RuntimeException("Article not found with ID: " + articleId));
-//		articleService.deleteArticle(article);
 		article.setArticleStatus(1);
 		articleService.save(article);
 		return true;
