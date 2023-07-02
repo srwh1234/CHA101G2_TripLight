@@ -477,12 +477,12 @@
 
             $('#tripPage').on('click', function () {
                 sessionStorage.setItem('tripId', tripId);
-                window.location.href = `http://localhost:8080/front-end/itinerary_page.html`;
+                window.location.href = `/front-end/itinerary_page.html`;
             });
 
             let paymentStatus;
             // ====== 取得旅遊團人員資訊 ======
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getTravelerList?memberId=${memberId}&tourGroupId=${tourGroupId}&`, function (response) {
+            $.getJSON(`/groupOrderDetail/getTravelerList?memberId=${memberId}&tourGroupId=${tourGroupId}&`, function (response) {
 
                 let parentEl = $('#travelerList');
 
@@ -518,14 +518,14 @@
 
 
             // ====== 取得會員資訊 ======
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getMemberInfor?memberId=${memberId}`, function (response) {
+            $.getJSON(`/groupOrderDetail/getMemberInfor?memberId=${memberId}`, function (response) {
                 $('#memberName').html(`會員姓名: ${response.memberNameLast + response.memberNameFirst}`);
                 $('#memberPhone').html(`連絡電話: ${response.memberPhone}`);
 
             });
 
             // ====== 取得旅遊團日期 與 名稱 ======
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getTourGroupDate?tripId=${tripId}&tourGroupId=${tourGroupId}`, function (response) {
+            $.getJSON(`/groupOrderDetail/getTourGroupDate?tripId=${tripId}&tourGroupId=${tourGroupId}`, function (response) {
                 $('#tourGroupDate').html(`旅遊團日期: ${response.formattedStartDate} 至 ${response.formattedEndDate}`);
                 $('#tripName').html(`方案: ${response.tripName}`);
 
@@ -536,7 +536,7 @@
 
             // ====== 取得訂單資訊 ======
             $('#tripOrderId').text(`訂單編號: ${tripOrderId}`);
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getTripInfor?tripOrderId=${tripOrderId}`, function (response) {
+            $.getJSON(`/groupOrderDetail/getTripInfor?tripOrderId=${tripOrderId}`, function (response) {
                 paymentStatus = response[0].paymentStatus;
 
                 // paymentStatus 為0 則未付款並且付款日期內不會有資料
@@ -550,7 +550,7 @@
                 if (response[0].orderStatus == 0 && response[0].paymentStatus == 0) {
 
                     let childBtn = `
-                    <button onclick="location.href=http://localhost:8080/front-end/group_orderpayment.html?memberId=${memberId}&tripOrderId=${tripOrderId}">
+                    <button onclick="location.href=/front-end/group_orderpayment.html?memberId=${memberId}&tripOrderId=${tripOrderId}">
                      type="button" class="btn btn-secondary btn-rounded btn-lg mt-3">我要付款</button>
                     `;
 
@@ -584,7 +584,7 @@
             // ====== 取得評論次數，若已經評論過，則disable 評論按鈕 ======
             let editCount;
 
-            $.getJSON(`http://localhost:8080/groupOrderDetail/getEditCount?tripOrderId=${tripOrderId}`, function (response) {
+            $.getJSON(`/groupOrderDetail/getEditCount?tripOrderId=${tripOrderId}`, function (response) {
                 editCount = response;
 
                 if (editCount === 1) {
@@ -635,7 +635,7 @@
                     let datajson = JSON.stringify(data);
 
                     // ====== 將評論內容送至資料庫後，disable 評論按鈕的功能 ======
-                    $.post("http://localhost:8080/groupOrderDetail/addTripComments", datajson, function (response) {
+                    $.post("/groupOrderDetail/addTripComments", datajson, function (response) {
                         $('#btn_modal').text('評論完成');
                         $('#btn_modal').attr('data-bs-target', '#');
                         $('#btn_modal').on('click', function () {

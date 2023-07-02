@@ -374,7 +374,7 @@
             // ====== 渲染會員資訊 ======
 
             if (memberId !== 0) {
-                $.getJSON(`http://localhost:8080/getMemberInfor?memberId=${memberId}`, function (response) {
+                $.getJSON(`/getMemberInfor?memberId=${memberId}`, function (response) {
                     $('#memberName').val(`${response.memberFullName}`);
                     console.log(response.memberName);
                     $('#memberPhone').val(`${response.memberPhone}`);
@@ -708,7 +708,7 @@
                 };
 
                 let jsonData = JSON.stringify(data)
-                $.post("http://localhost:8080/order", jsonData, function (response) {
+                $.post("/order", jsonData, function (response) {
                     console.log('AJAX request successful');
                 })
 
@@ -723,7 +723,7 @@
                     }
                 }).then(function (result) {
                     if (result.isConfirmed) {
-                        window.location.href = 'http://localhost:8080/front-end/index.html';
+                        window.location.href = '/front-end/index.html';
                         $('input').val('');
 
 
@@ -738,7 +738,7 @@
             $('#tripName').text(`方案 : ${sessionStorage.getItem('tripName')}`);
             let tourGroupId = sessionStorage.getItem('tourGroupId');
 
-            $.getJSON(`http://localhost:8080/getTourGroup?tourGroupId=${tourGroupId}`, function (response) {
+            $.getJSON(`/getTourGroup?tourGroupId=${tourGroupId}`, function (response) {
                 let priceChild = parseInt(response.priceChild);
                 let priceAdult = parseInt(response.priceAdult);
 

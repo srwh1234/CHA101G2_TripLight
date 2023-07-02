@@ -255,7 +255,9 @@
 
 
 </body>
+
 <script>
+    
     $(".sent-butnn").on("click", function (e) {
       e.preventDefault();
 
@@ -306,7 +308,7 @@
       //ajax
       $.ajax({
         type: 'POST',
-        url: "http://localhost:8080/tourgroup/tourgroupadd",
+        url: "/tourgroup/tourgroupadd",
         data: JSON.stringify(tourGroup),
         // processData: false,
         contentType: "application/json",
@@ -320,18 +322,10 @@
       console.log(tourGroup); 
     });
 
-    // 拿取
-    const vendorName = $('#vendorName').text();
-    
-    //組成
-    let vendorofName  = {
-        vendorName : vendorName,
-    }
-
     $(document).ready(function() {
      $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/vendors/info',
+        url: '/vendors/info',
         contentType: 'application/json',
         success: function(response) {
             console.log("123"+response);
@@ -348,6 +342,7 @@
      });
 
     });
+
  </script>
 
 </html>

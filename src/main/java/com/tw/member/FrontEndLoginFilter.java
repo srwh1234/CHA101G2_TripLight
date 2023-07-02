@@ -14,7 +14,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-//@WebFilter("*.html")
+@WebFilter("*.html")
 public class FrontEndLoginFilter implements Filter {
 	 
 	private static HashSet<String> PROTECT = new HashSet<>();

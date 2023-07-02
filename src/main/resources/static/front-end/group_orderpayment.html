@@ -347,7 +347,7 @@
             // ====== 渲染金額 ======
 
             if (tripOrderId !== 0) {
-                $.getJSON(`http://localhost:8080/getOrderAmount?tripOrderId=${tripOrderId}`, function (response) {
+                $.getJSON(`/getOrderAmount?tripOrderId=${tripOrderId}`, function (response) {
                     $('#tripAmount').text(`訂購金額: ${response} 元`);
                     console.log(response);
                 });
@@ -358,7 +358,7 @@
             let email;
 
             if (memberId !== 0) {
-                $.getJSON(`http://localhost:8080/getMemberInfor?memberId=${memberId}`, function (response) {
+                $.getJSON(`/getMemberInfor?memberId=${memberId}`, function (response) {
                     $('#memberName').val(`${response.memberFullName}`);
                     $('#memberPhone').val(`${response.memberPhone}`);
                     $('#memberEmail').val(`${response.memberEmail}`);
@@ -483,7 +483,7 @@
             // })
 
             $('#order_confirmed').on("click", function (event) {
-                fetch(`http://localhost:8080/updatePaymentStatus`, {
+                fetch(`/updatePaymentStatus`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
