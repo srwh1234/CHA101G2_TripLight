@@ -241,35 +241,35 @@
                 <hr>
 
                 <!-- ====== 付款方式 ====== -->
-                <div class="row mt-5">
-                    <h3>付款方式</h3>
-                </div>
-                <hr>
+<!--                <div class="row mt-5">-->
+<!--                    <h3>付款方式</h3>-->
+<!--                </div>-->
+<!--                <hr>-->
 
-                <div class="row">
-                    <div class="col-auto">
+<!--                <div class="row">-->
+<!--                    <div class="col-auto">-->
 
-                        <div class="form-check">
-                            <label for="payType" class="col-form-label">信用卡/簽帳金融卡</label>
-                            <input type="text" id="payType" class="form-control" aria-describedby="passwordHelpInline">
-                        </div>
+<!--                        <div class="form-check">-->
+<!--                            <label for="payType" class="col-form-label">信用卡/簽帳金融卡</label>-->
+<!--                            <input type="text" id="payType" class="form-control" aria-describedby="passwordHelpInline">-->
+<!--                        </div>-->
 
 
-                    </div>
-                    <div class="col-auto">
-                        <label for="cardValid" class="col-form-label">有效日期</label>
-                        <input type="text" id="cardValid" class="form-control" aria-describedby="passwordHelpInline">
+<!--                    </div>-->
+<!--                    <div class="col-auto">-->
+<!--                        <label for="cardValid" class="col-form-label">有效日期</label>-->
+<!--                        <input type="text" id="cardValid" class="form-control" aria-describedby="passwordHelpInline">-->
 
-                    </div>
-                    <div class="col-1">
-                        <label for="scv" class="col-form-label">末三碼</label>
-                        <input type="text" id="scv" class="form-control" aria-describedby="passwordHelpInline">
-                    </div>
+<!--                    </div>-->
+<!--                    <div class="col-1">-->
+<!--                        <label for="scv" class="col-form-label">末三碼</label>-->
+<!--                        <input type="text" id="scv" class="form-control" aria-describedby="passwordHelpInline">-->
+<!--                    </div>-->
 
-                    <br>
-                    <br>
-                    <h6> *卡號用於保留資格 </h6>
-                </div>
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                    <h6> *卡號用於保留資格 </h6>-->
+<!--                </div>-->
 
 
             </div>
@@ -429,58 +429,77 @@
 
 
             // ====== 綁定我要付款按鈕，將名單傳送至資料庫 ======
+            // $('#order_confirmed').on("click", function (event) {
+            //
+            //     if ($('#payType').val().trim() === '') {
+            //         Swal.fire('請輸入信用卡號');
+            //         return;
+            //     } else if ($('#cardValid').val().trim() === '') {
+            //         Swal.fire('請輸入有效日期');
+            //         return;
+            //     } else if ($('#scv').val().trim() === '') {
+            //         Swal.fire('請輸入驗證碼');
+            //         return;
+            //     }
+            //
+            //     // ====== 付款後狀態碼改為1 ======
+            //     let data = {
+            //         'paymentStatus': '1',
+            //         'tripOrderId': tripOrderId
+            //     };
+            //
+            //     let jsonData = JSON.stringify(data)
+            //     $.post(`http://localhost:8080/updatePaymentStatus`, jsonData, function (response) {
+            //         console.log('AJAX request successful');
+            //     })
+            //
+            //     // ====== 感謝彈窗 ======
+            //     Swal.fire({
+            //         title: '付款成功唷',
+            //         showClass: {
+            //             popup: 'animate__animated animate__fadeInDown'
+            //         },
+            //         hideClass: {
+            //             popup: 'animate__animated animate__fadeOutUp'
+            //         }
+            //     }).then(function (result) {
+            //         if (result.isConfirmed) {
+            //             window.location.href = 'http://localhost:8080/front-end/index.html';
+            //
+            //             $('input').val('');
+            //             sessionStorage.clear();
+            //
+            //             let testLogin = {
+            //                 'email': email,
+            //                 'memberId': memberId
+            //             }
+            //
+            //             let json = JSON.stringify(testLogin);
+            //             sessionStorage.setItem('test-login', json);
+            //         }
+            //     });
+            //
+            //
+            // })
+
             $('#order_confirmed').on("click", function (event) {
-
-                if ($('#payType').val().trim() === '') {
-                    Swal.fire('請輸入信用卡號');
-                    return;
-                } else if ($('#cardValid').val().trim() === '') {
-                    Swal.fire('請輸入有效日期');
-                    return;
-                } else if ($('#scv').val().trim() === '') {
-                    Swal.fire('請輸入驗證碼');
-                    return;
-                }
-
-                // ====== 付款後狀態碼改為1 ======
-                let data = {
-                    'paymentStatus': '1',
-                    'tripOrderId': tripOrderId
-                };
-
-                let jsonData = JSON.stringify(data)
-                $.post(`http://localhost:8080/updatePaymentStatus`, jsonData, function (response) {
-                    console.log('AJAX request successful');
-                })
-
-                // ====== 感謝彈窗 ======
-                Swal.fire({
-                    title: '付款成功唷',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
+                fetch(`http://localhost:8080/updatePaymentStatus`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        window.location.href = 'http://localhost:8080/front-end/index.html';
-
-                        $('input').val('');
-                        sessionStorage.clear();
-
-                        let testLogin = {
-                            'email': email,
-                            'memberId': memberId
+                    body: JSON.stringify({
+                        'tripOrderId': tripOrderId
+                    }),
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data) {
+                            $('#tripOrder').html(data);
                         }
-
-                        let json = JSON.stringify(testLogin);
-                        sessionStorage.setItem('test-login', json);
-                    }
-                });
-
-
-            })
+                    })
+                    .catch(error => console.log(error));
+            });
 
 
 
