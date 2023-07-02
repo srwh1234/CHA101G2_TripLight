@@ -373,8 +373,9 @@ function gameover() {
   saveScore();
 
   Swal.fire({
-    title: "Game Over",
-    timer: 1500,
+    title: `Game Over
+Your Score is ${trueScore}`,
+    timer: 3000,
     background: "rgba(255, 255, 255, .7)",
   }).then(() => {
     setTimeout(() => {
