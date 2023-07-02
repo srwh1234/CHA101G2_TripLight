@@ -642,7 +642,7 @@
         let memberId = getMemberId();
 
         // ====== get trip infor from DB n display in headers ======
-        $.getJSON(`http://localhost:8080/tripPage/getTrip?tripId=${sessionTripId}`, function (response) {
+        $.getJSON(`/tripPage/getTrip?tripId=${sessionTripId}`, function (response) {
             $('#tripName').text(`${response.tripName}`);
             $('#city').text(`${response.city}`);
             sessionStorage.setItem('tripName', `${response.tripName}`);
@@ -682,7 +682,7 @@
         });
 
         // ====== 取得旅遊團資訊 ======
-        $.getJSON(`http://localhost:8080/tripPage/getTourGroup?tripId=${sessionTripId}`)
+        $.getJSON(`/tripPage/getTourGroup?tripId=${sessionTripId}`)
             .done(function (response) {
 
                 // ====== 沒有tourGroupId的情況 ======
@@ -1146,7 +1146,7 @@
 
         // ====== 評論區塊 ======
 
-        $.getJSON(`http://localhost:8080/tripPage/getTripComments?tripId=${sessionTripId}`, function (response) {
+        $.getJSON(`/tripPage/getTripComments?tripId=${sessionTripId}`, function (response) {
 
 
             let parentEl = $('#commentParent');
@@ -1304,11 +1304,11 @@
         // ====== //綁定選擇方案按鈕 ======
 
         // ====== 標頭圖片區 ======
-        $.getJSON(`http://localhost:8080/tripPage/getTripPics?tripId=${sessionTripId}`, function (response) {
+        $.getJSON(`/tripPage/getTripPics?tripId=${sessionTripId}`, function (response) {
 
             let parentEl = $('#tripPics');
             for (let i = 0; i < response.length; i++) {
-                let imageUrl = 'http://localhost:8080/img/trips/' + response[i];
+                let imageUrl = '/img/trips/' + response[i];
                 console.log(imageUrl);
                 let newChildEl = `
                 <div class="carousel-item active">

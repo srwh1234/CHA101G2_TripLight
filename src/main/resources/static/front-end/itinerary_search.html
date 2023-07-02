@@ -524,19 +524,19 @@
             <div class="d-flex justify-content-center align-items-center my-3">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=1"
+                        <a class="page-link" href="/front-end/itinerary_search.html?index=1"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li class="page-item"><a class="page-link"
-                            href="http://localhost:8080/front-end/itinerary_search.html?index=1">1</a></li>
+                            href="/front-end/itinerary_search.html?index=1">1</a></li>
                     <li class="page-item"><a class="page-link"
-                            href="http://localhost:8080/front-end/itinerary_search.html?index=2">2</a></li>
+                            href="/front-end/itinerary_search.html?index=2">2</a></li>
                     <li class="page-item"><a class="page-link"
-                            href="http://localhost:8080/front-end/itinerary_search.html?index=3">3</a></li>
+                            href="/front-end/itinerary_search.html?index=3">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="http://localhost:8080/front-end/itinerary_search.html?index=3"
+                        <a class="page-link" href="/front-end/itinerary_search.html?index=3"
                             aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
@@ -710,7 +710,7 @@
                 });
 
                 // 發送請求
-                $.post("http://localhost:8080/tripSearch/getTripsByCities", JSON.stringify(currentChecked), function (response) {
+                $.post("/tripSearch/getTripsByCities", JSON.stringify(currentChecked), function (response) {
 
                     let index2 = getIndex();
                     if (response.length === 0) {
@@ -747,7 +747,7 @@
                 });
 
                 // 發送請求
-                $.post("http://localhost:8080/tripSearch/getTripsByTypes", JSON.stringify(currentChecked), function (response) {
+                $.post("/tripSearch/getTripsByTypes", JSON.stringify(currentChecked), function (response) {
                     if (response.length === 0) {
                         let index2 = getIndex();
                         $('#productItems').empty();
@@ -779,7 +779,7 @@
 
 
                 // 發送請求
-                $.post("http://localhost:8080/tripSearch/getTripsByKeyword", JSON.stringify(currentChecked), function (response) {
+                $.post("/tripSearch/getTripsByKeyword", JSON.stringify(currentChecked), function (response) {
                     if (response.length === 0) {
                         let index2 = getIndex();
                         $('#productItems').empty();
@@ -805,7 +805,7 @@
 
             function searchByPrice() {
                 let index2 = getIndex();
-                $.getJSON(`http://localhost:8080/tripSearch/getTripListOrderByPrice?index=${index2}`, function (response) {
+                $.getJSON(`/tripSearch/getTripListOrderByPrice?index=${index2}`, function (response) {
 
                     render_search(response);
 
@@ -849,7 +849,7 @@
                 // ====== set ID in session storage ======
                 $('#productItems').on('click', '.changePage', function (event) {
                     let tripId = $(this).attr('tripId');
-                    window.location.href = `http://localhost:8080/front-end/itinerary_page.html?tripId=${tripId}`;
+                    window.location.href = `/front-end/itinerary_page.html?tripId=${tripId}`;
                 })
             }
 
@@ -887,7 +887,7 @@
 
             // ====== 網頁預設搜尋預設畫面 (全部) ======
             function defaultSearch() {
-                $.getJSON(`http://localhost:8080/tripSearch/getTripList?index=${index}`, function (response) {
+                $.getJSON(`/tripSearch/getTripList?index=${index}`, function (response) {
 
                     let parentEl = $('#productItems');
 
@@ -920,7 +920,7 @@
 
                     $('#productItems').on('click', '.changePage', function (event) {
                         let tripId = $(this).attr('tripId');
-                        window.location.href = `http://localhost:8080/front-end/itinerary_page.html?tripId=${tripId}`;
+                        window.location.href = `/front-end/itinerary_page.html?tripId=${tripId}`;
                     })
 
 

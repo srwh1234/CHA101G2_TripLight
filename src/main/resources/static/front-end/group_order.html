@@ -386,7 +386,7 @@
 
             // ====== 取得會員資訊並渲染 ======
 
-            $.getJSON(`http://localhost:8080/groupOrder/getMember?memberId=${memberId}`, function (response) {
+            $.getJSON(`/groupOrder/getMember?memberId=${memberId}`, function (response) {
                 // 會員圖片
                 let base64Url = 'data:image/gif;base64,' + response.memberPicBase64;
 
@@ -401,7 +401,7 @@
 
 
             // ====== 渲染訂單列表區 ======
-            $.getJSON(`http://localhost:8080/groupOrder/getTrips?memberId=${memberId}`, function (response) {
+            $.getJSON(`/groupOrder/getTrips?memberId=${memberId}`, function (response) {
 
                 let tripOrderParent = $('#tripOrderParent');
 
@@ -414,7 +414,7 @@
 
                     for (let i = 0; i < response.length; i++) {
 
-                        let imageUrl = 'http://localhost:8080/img/trips/' + response[i].id;
+                        let imageUrl = '/img/trips/' + response[i].id;
                         let html = `
 
                          <!-- 商品1 -->
@@ -450,7 +450,7 @@
                         sessionStorage.setItem('tripOrderId', `${tripOrderId}`);
                         sessionStorage.setItem('tripId', `${tripId}`);
                         sessionStorage.setItem('tourGroupId', `${tourGroupId}`);
-                        window.location.href = 'http://localhost:8080/front-end/group_orderdetail.html';
+                        window.location.href = '/front-end/group_orderdetail.html';
                     })
                 }
 
