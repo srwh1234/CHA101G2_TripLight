@@ -52,7 +52,7 @@ $(document).ready(function () {
 		url: "/img/members/" + theId,
 		method: "GET",
 		success: function (response) {
-			const imgUrl = "http://localhost:8080" + this.url;
+			const imgUrl =  this.url;
 			$('.rounded-circle').attr('src', imgUrl);
 			console.log("圖片載入成功");
 		},
@@ -85,7 +85,7 @@ function generateTicket() {
 				for (let i = 0; i < t_favorite.length; i++) {
 					$(".tab-pane").eq(0).find("#orderselect")
 						.after(`<div class="ticket_item_class">
-						<a href="http://localhost:8080/front-end/tickets_detail.html?id=${t_favorite[i].ticketId}" class="orderurl">                 
+						<a href="/front-end/tickets_detail.html?id=${t_favorite[i].ticketId}" class="orderurl">                 
                  <div class="item_img_class">
                   <img src="${t_favorite[i].imgUrl}" class="item_img">  
                  </div>
@@ -160,7 +160,7 @@ function generateGroup() {
 				for (let i = 0; i < g_favorite.length; i++) {
 					$(".tab-pane").eq(1).find("#group_orderselect")
 						.after(`<div class="group_item_class">
-						<a href="http://localhost:8080/front-end/itinerary_page.html?tripId=${g_favorite[i].tripId}" class="orderurl">	                
+						<a href="/front-end/itinerary_page.html?tripId=${g_favorite[i].tripId}" class="orderurl">	                
                  <div class="item_img_class">
                  	<img src="${g_favorite[i].imgUrl}" class="item_img"> 
                  </div>

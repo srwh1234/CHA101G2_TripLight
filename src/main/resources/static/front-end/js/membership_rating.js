@@ -136,7 +136,7 @@ $(document).ready(function () {
 		url: "/img/members/" + id,
 		method: "GET",
 		success: function (response) {
-			const imgUrl = "http://localhost:8080" + this.url;
+			const imgUrl =  this.url;
 			$('.rounded-circle').attr('src', imgUrl);
 			console.log("圖片載入成功");
 		},
