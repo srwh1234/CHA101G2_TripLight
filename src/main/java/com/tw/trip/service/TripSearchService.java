@@ -24,6 +24,7 @@ public class TripSearchService {
         @Autowired
         TripDao tripDao;
 
+        // ====== 一定要有圖片 ======
         public List<Trip> getTripListWithPic(Integer index){
             final String SQL = """
                     SELECT t.trip_id, t.trip_name, t.trip_day, t.city, t.trip_content, tm.id FROM trip t

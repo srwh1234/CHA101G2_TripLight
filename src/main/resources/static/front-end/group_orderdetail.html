@@ -221,7 +221,7 @@
             <!-- 麵包屑 -->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">訂單</a></li>
+                    <li class="breadcrumb-item" ><a href="http://localhost:8080/front-end/group_order.html">訂單</a></li>
                     <li class="breadcrumb-item active" aria-current="page">訂單詳情</li>
                 </ol>
             </nav>
@@ -550,11 +550,13 @@
                 if (response[0].orderStatus == 0 && response[0].paymentStatus == 0) {
 
                     let childBtn = `
-                    <button onclick="location.href=/front-end/group_orderpayment.html?memberId=${memberId}&tripOrderId=${tripOrderId}">
+                    <button onclick="location.href='/front-end/group_orderpayment.html?memberId=${memberId}&tripOrderId=${tripOrderId}'">
                      type="button" class="btn btn-secondary btn-rounded btn-lg mt-3">我要付款</button>
                     `;
 
                     $('#btn_parent').append()
+
+
                 }
 
                 // 判斷是否成團
