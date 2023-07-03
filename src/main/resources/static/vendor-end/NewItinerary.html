@@ -183,6 +183,14 @@
                             <input type="text" id="trip_date" name="trip_date" required/>
                         </div>
                         <div class="form-group mb-3">
+                            <label for="trip_type_id" class="mb-2">旅遊類型</label>
+                            <select id="trip_type_id" name="trip_type_id" required>
+                                <option value="1">一日來回</option>
+                                <option value="2">兩天一夜</option>
+                                <option value="3">三天含以上</option>
+                            </select>
+                        </div>        
+                        <div class="form-group mb-3">
                             <label for="price_adult" class="mb-2">價格/大人</label>
                             <input type="text" id="price_adult" name="price_adult" required/>
                         </div>
@@ -223,7 +231,7 @@
                                 <option value="其他">其他</option>
                             </select>
                         </div>
-                        <div class="form-group mb-3">
+                        <!-- <div class="form-group mb-3">
                             <label for="address" class="mb-2">地址</label>
                             <input
                               type="text"
@@ -232,7 +240,7 @@
                               name="address"
                               required
                             />
-                          </div>
+                          </div> -->
                         <div class="form-group mb-3">
                             <label for="trip_description" class="mb-2">行程內容</label>
                             <textarea
@@ -312,12 +320,13 @@
       const tripName = $("#trip_name").val();
       const tripContent = $("#trip_content").val();
       const tripDate = $("#trip_date").val();
+      const tripTypeId = $("#trip_type_id").val();
       const priceAdult = $("#price_adult").val();
       const priceChild = $("#price_child").val();
       const minTravelersNo = $("#minTravelersNo").val();
       const maxTravelersNo = $("#maxTravelersNo").val();
       const city = $("#city").val();
-      const address = $("#address").val();
+    //   const address = $("#address").val();
       const tripDescription = $("#trip_description").val();
       const tripNote = $("#trip_note").val();
       const trip_image = $("#trip_image").val();
@@ -325,15 +334,15 @@
       // 包裝成物件
       let trip = {
         vendorId:1,
-        tripTypeId:1,
         tripName: tripName,
         tripContent: tripContent,
         tripDay: tripDate,
+        tripTypeId: tripTypeId,
         priceAdult: priceAdult,
         priceChild: priceChild,
         minTravelersNo: minTravelersNo,
         minTravelersNo: maxTravelersNo,
-        city: city + address,
+        city: city,
         tripDescription: tripDescription,
         tripNote: tripNote,
         totalSales:0,
@@ -356,6 +365,7 @@
       $("#trip_name").val();
       $("#trip_content").val();
       $("#trip_date").val();
+      $("#trip_type_id").val();
       $("#price_adult").val();
       $("#price_child").val();
       $("#minTravelersNo").val();
