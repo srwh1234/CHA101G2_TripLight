@@ -89,7 +89,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="FirmInert.html">廠商資料</a>
                         <a class="collapse-item" href="FirmRevise.html">行程管理</a>
-				<!--<a class="collapse-item" href="FirmReport.html">檢舉廠商</a> -->
+                        <!--<a class="collapse-item" href="FirmReport.html">檢舉廠商</a> -->
                     </div>
                 </div>
             </li>
@@ -105,7 +105,7 @@
                         <a class="collapse-item" href="TicketManagement.html">票卷資料管理</a>
                         <a class="collapse-item" href="TicketOrderManagement.html">票卷訂單管理</a>
                         <a class="collapse-item" href="TicketPromotionManagement.html">票卷促銷管理</a>
-					<!--<a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a> -->
+                        <!--<a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a> -->
                     </div>
                 </div>
             </li>
@@ -119,7 +119,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="TravelArticles.html">文章管理</a>
-					<!-- <a class="collapse-item" href="ReportAriocles.html">檢舉管理</a> -->
+                        <!-- <a class="collapse-item" href="ReportAriocles.html">檢舉管理</a> -->
                     </div>
                 </div>
             </li>
@@ -289,9 +289,6 @@
                                 for (let i = 0; i < data.length; i++) {
                                     let currentArticle = data[i];
                                     let articleType;
-                                    // if (currentArticle.articleStatus === 1) {
-                                    //     continue; // 狀態數字為1，跳過此次迴圈
-                                    // }
                                     switch (currentArticle.articleTypeId) {
                                         case 1:
                                             articleType = '遊記';
@@ -312,6 +309,18 @@
                                             articleType = '未知類型';
                                             break;
                                     }
+                                    let statusText;
+                                    switch (currentArticle.articleStatus) {
+                                        case 0:
+                                            statusText = '顯示';
+                                            break;
+                                        case 1:
+                                            statusText = '隱藏';
+                                            break;
+                                        default:
+                                            statusText = '未知狀態';
+                                            break;
+                                    }
                                     let inputDate = currentArticle.articlePostTime;
                                     let dateTime = new Date(inputDate);
                                     let year = dateTime.getFullYear();
@@ -326,7 +335,7 @@
                                         'memberName': data[i].memberName,
                                         'articlePostTime': formattedDate,
                                         'articleViews': data[i].articleViews,
-                                        'articleStatus': data[i].articleStatus,
+                                        'articleStatus': statusText,
                                     })
                                 }
                                 console.log(data1);

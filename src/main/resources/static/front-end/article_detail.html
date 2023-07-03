@@ -666,9 +666,8 @@
                 articleMessageId: 0,
                 articleId: articleId,
                 memberId: 2,
-                messagePostContent: $('#replyContent').val(),
+                messagePostcontent: $('#replyContent').val(),
                 messagePostTime: null,
-                messagePrevious: null,
                 messageStatus: 0,
             }
 
@@ -686,7 +685,7 @@
                 .then(data => {
                     if (data) {
                         Swal.fire({ icon: 'success', title: '留言成功' })
-                            // .then(() => window.location.href = 'article_detail.html');
+                            .then(() => window.location.href = `/front-end/article_detail.html?id=${articleId}`);
                     } else {
                         alert('更新失敗')
                     }

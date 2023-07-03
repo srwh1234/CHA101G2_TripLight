@@ -201,7 +201,7 @@
                 aria-label="Text input with dropdown button" style="width: 100%;">
         </div>
         <div class="radios">
-            <input type="radio" id="1" name="articleTypeId" value="1" checked style="width: 16px; height: 16px">
+            <input type="radio" id="1" name="articleTypeId" value="1" style="width: 16px; height: 16px">
             <label for="travel" style="font-size: 15PX;">遊記</label>
             <input type="radio" id="2" name="articleTypeId" value="2" style="width: 16px; height: 16px">
             <label for="food" style="font-size: 15PX;">食記</label>
@@ -368,6 +368,14 @@
                         $('.preview').attr('src', e.target.result);
                         var KB = format_float(e.total / 1024, 2);
                         $('.size').text("檔案大小：" + KB + " KB");
+                    }
+                    // 檢查附加檔案大小
+                    if (e.total > 4000000) {
+                        alert('附加檔案超過4MB上限，請重新選擇一張圖片');
+                        $('.upl').val('');
+                        $('.preview').attr('src', '');
+                        $('.size').text('');
+                        return;
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
