@@ -352,38 +352,29 @@
       };
 
        // 送出成功動畫
-       Swal.fire({
-        icon: "success",
-        title: "送出成功",
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(function(result) {
-        if(result.isConfirmed) {
-            window.location.href = '/vendor-end/index.html';
-            $('input').val();
-        }
-      });
+
 
       console.log(trip);
 
       // 清空表單
-      $("#trip_name").val();
-      $("#trip_content").val();
-      $("#trip_date").val();
-      $("#trip_type_id").val();
-      $("#price_adult").val();
-      $("#price_child").val();
-      $("#minTravelersNo").val();
-      $("#maxTravelersNo").val();
-      $("#city").val();
-      $("#address").val();
-      $("#trip_description").val();
-      $("#trip_note").val();
-      $("#trip_image").val();
+      // $("#trip_name").val();
+      // $("#trip_content").val();
+      // $("#trip_date").val();
+      // $("#trip_type_id").val();
+      // $("#price_adult").val();
+      // $("#price_child").val();
+      // $("#minTravelersNo").val();
+      // $("#maxTravelersNo").val();
+      // $("#city").val();
+      // $("#address").val();
+      // $("#trip_description").val();
+      // $("#trip_note").val();
+      // $("#trip_image").val();
 
       const tripData = new FormData();
       tripData.append('trip_image', $('#trip_image').prop('files')[0]);
       tripData.append('trip', JSON.stringify(trip));
+
 
       //ajax
       $.ajax({
@@ -393,7 +384,24 @@
         processData: false,
         contentType: false,
         success: function(data) {
-            alert('上傳成功');
+
+            Swal.fire({
+                title: '上傳成功',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = '/vendor-end/index.html';
+                    $('input').val('');
+
+
+                }
+            });
+
         },
         error: function() {
             alert('上傳失敗');
