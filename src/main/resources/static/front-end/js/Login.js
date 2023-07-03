@@ -72,7 +72,7 @@ login33.addEventListener("click", function (e) {
 				$("#email").val("");
 				$("#password").val("");
 			} else {
-				
+
 				// 清空欄位
 				$("#email").val("");
 				$("#password").val("");
@@ -85,13 +85,13 @@ login33.addEventListener("click", function (e) {
 				// loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">Hello</i>`;
 				// container.classList.remove("active-popup");
 				loginbtn.removeEventListener("click", loginin);
-				
+
 				Swal.fire({
 					icon: "success",
 					title: "登入成功",
 					showConfirmButton: false,
 					timer: 1500,
-				}).then(()=>{
+				}).then(() => {
 					location.reload();
 				});
 			}
@@ -292,7 +292,7 @@ $("#forgetPwd").on("click", function () {
 		inputPlaceholder: '請輸入電子信箱',
 		showCancelButton: true,
 		confirmButtonText: '發送驗證信',
-		//canclButtonText: '取消',
+		cancelButtonText: '取消',
 	}).then(function (result) {
 		if (result.isConfirmed) {
 			let forgetPwdEmail = result.value;
@@ -303,16 +303,41 @@ $("#forgetPwd").on("click", function () {
 					forgetPwdEmail: forgetPwdEmail  // 直接傳遞對象
 				},
 				success: function (response) {
+
 					console.log('郵件傳送成功!');
-					console.log(response)
+					Swal.fire({
+						icon: "success",
+						title: "驗證信發送成功",
+						showConfirmButton: false,
+					})
+					// .then(() => {
+					// 	container.classList.remove("active-popup");
+					// 	container.classList.add("active-popup");
+					// });
 				},
 				error: function (xhr, status, error) {
+
 					console.log('郵件傳送失敗!');
 					console.log(error);
+					Swal.fire({
+						icon: "error",
+						title: "驗證信發送失敗",
+						text: "請聯絡客服",
+						showConfirmButton: false,
+					})
+					// .then(() => {
+					// 	container.classList.remove("active-popup");
+					// 	container.classList.add("active-popup");
+					// });
 				}
-			});
-			
+			})
 		}
-	}).finally(()=>container.classList.add("active-popup"));
+		// else {
+		// 	container.classList.add("active-popup");
+		// }
+	}).finally(() => {
+		container.classList.add("active-popup");
 
-})
+	});
+});
+
