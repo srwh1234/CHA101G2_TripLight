@@ -72,12 +72,7 @@ login33.addEventListener("click", function (e) {
 				$("#email").val("");
 				$("#password").val("");
 			} else {
-				Swal.fire({
-					icon: "success",
-					title: "登入成功",
-					showConfirmButton: false,
-					timer: 1500,
-				});
+				
 				// 清空欄位
 				$("#email").val("");
 				$("#password").val("");
@@ -87,9 +82,18 @@ login33.addEventListener("click", function (e) {
 					memberId: response,
 				};
 				sessionStorage.setItem("test-login", JSON.stringify(valid));
-				loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">Hello</i>`;
-				container.classList.remove("active-popup");
+				// loginbtn.innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">Hello</i>`;
+				// container.classList.remove("active-popup");
 				loginbtn.removeEventListener("click", loginin);
+				
+				Swal.fire({
+					icon: "success",
+					title: "登入成功",
+					showConfirmButton: false,
+					timer: 1500,
+				}).then(()=>{
+					location.reload();
+				});
 			}
 		},
 		error: function (xhr) {
