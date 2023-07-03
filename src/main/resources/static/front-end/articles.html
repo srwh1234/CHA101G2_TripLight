@@ -555,6 +555,7 @@
               let month = String(dateTime.getMonth() + 1).padStart(2, "0");
               let day = String(dateTime.getDate()).padStart(2, "0");
               let formattedDate = `${year}-${month}-${day}`;
+              return formattedDate;
             }
 
             // 獲取文章類型名稱的輔助函式，請根據實際需求自行實現
@@ -581,6 +582,7 @@
                   articleType = '未知類型';
                   break;
               }
+              return articleType;
             }
           })
         }

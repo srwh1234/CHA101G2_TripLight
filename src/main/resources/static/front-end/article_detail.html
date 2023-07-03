@@ -264,7 +264,6 @@
             </div>
             <!--留言串上方區塊結束 -->
             <!-- 留言串下方區塊開始 -->
-<<<<<<< HEAD
 
         </div>
         <div class="inner-container" id="messageContainer">
@@ -274,30 +273,6 @@
                     <div>
                         <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
                             <img src="" id="imgPinf">
-=======
-            <div class="inner-container" id="messageContainer">
-                <div class="pd-collapse-row">
-                    <!-- 	留言串開始 -->
-                    <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
-                        <div>
-                            <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
-                                <img src="https://picsum.photos/25/20/?random=54" id="imgPinf">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="rating-star  ps-2 "
-                                style="display: inline-block; position: relative; top: 2px; font-weight: bold;">
-                                <h6 style="font-weight: bold;">吳彼得</h6>
-                                <span style="font-weight: bold; color: lightgray;" class="align-text-end">
-                                    <div value="${articleMessage.messagePostTime}" var="parsedDateTime" type="both">
-                                    </div>
-                                </span>
-                            </div>
-                            <div style="display: inline-block; position: relative;">
-                                <span class="postcontent"
-                                    style="color: #2a2416; font-weight: border; font-size: 16px; padding-right: 30px;">真的要說就是桃園根本沒特色，就只有搭飛機出國的功能而已</span>
-                            </div>
->>>>>>> 1b93bfe7d62b9d8606c3471950884fbc718888e5
                         </div>
                     </div>
                     <div class="col">
@@ -323,11 +298,7 @@
                             <div class="text-sm-left p-3">
                                 <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
                                     aria-expanded="false" aria-controls="pd_add_review"
-<<<<<<< HEAD
                                     style="font-weight: bold; font-size: 1.3em; color: #625855;">
-=======
-                                    style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
->>>>>>> 1b93bfe7d62b9d8606c3471950884fbc718888e5
                                 </a>
                             </div>
                             <!-- 會員留言開啟 -->
@@ -482,7 +453,7 @@
         function redirectToArticleList() {
             window.location.href = "article_list.html";
         };
-
+        //文章
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get("id");
@@ -588,7 +559,9 @@
             };
         });
     </script>
+
     <script>
+        //查留言
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get("id");
@@ -682,14 +655,14 @@
                 `);
             }
         });
-
+        //增留言
         $(document).on('click', '#confirm', function (e) {
             e.preventDefault(); // 防止表單提交
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get("id");
             console.log(articleId);
 
-            const Message = {
+            const message = {
                 articleMessageId: 0,
                 articleId: articleId,
                 memberId: 2,
@@ -700,12 +673,9 @@
             }
 
             const formData = new FormData();
+            formData.append('Message', JSON.stringify(message));
+            console.log(message);
 
-            // formData.append('image', $('#articlePicture').prop('files')[0]);
-            formData.append('Message', JSON.stringify(Message));
-
-            console.log(Message);
-        
             //發請求
             fetch(`/articleMessage/addmessage`, {
             // fetch(`http://localhost:8080/articleMessage/addmessage`, {

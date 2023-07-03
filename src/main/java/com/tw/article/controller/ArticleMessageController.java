@@ -61,12 +61,12 @@ public class ArticleMessageController {
 	}
 
 	// 處理 GET 請求，顯示單個文章留言詳細資訊
-	@GetMapping("/{id}")
-	public String getArticleMessageById(@PathVariable("id") int id, Model model) {
-		String articleMessage = articleMessageService.getArticleMessageById(id);
-		model.addAttribute("articleMessage", articleMessage);
-		return "articleMessageDetail"; // 返回 articleMessageDetail.jsp 或其他顯示留言詳細資訊的視圖
-	}
+//	@GetMapping("/{id}")
+//	public String getArticleMessageById(@PathVariable("id") int id, Model model) {
+//		String articleMessage = articleMessageService.getArticleMessageById(id);
+//		model.addAttribute("articleMessage", articleMessage);
+//		return "articleMessageDetail"; // 返回 articleMessageDetail.jsp 或其他顯示留言詳細資訊的視圖
+//	}
 
 	// 處理 POST 請求，新增文章留言
 	@PostMapping("/addmessage")
