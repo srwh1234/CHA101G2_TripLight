@@ -3,7 +3,7 @@ let isPause = false; /*游戏是否暂停：未暂停*/
 let snakeSize = 5; /*蛇的初始长度*/
 let direct = "right"; /*蛇初始方向：向右*/
 let user = JSON.parse(sessionStorage.getItem("user"));
-let speed = 70 + user.level; /*蛇移动初始速度：35+等級*/ // 數字越低越快
+let speed = 70 + user.level; /*蛇移动初始速度：70+等級*/ // 數字越低越快
 let score, timer, board, bean; /*游戏初始分数显示区，定时器，面板，豆*/
 let trueScore;
 let snakeheadColor = "red";
@@ -32,39 +32,36 @@ if (user.level < 20) {
 let eatBeanAudio = document.getElementById("eatBean");
 let slowDownAudio = document.getElementById("slowDown");
 
-// 獲取按鈕
-let pikachuButton = document.getElementById("pikachuButton");
-
 // 初始化(){
 onload = () => {
   // 真實數字，避免被竄改
   trueScore = 0;
-  //     初始化游戏面板和游戏分数显示区
+  // 初始化遊戲面板和遊戲分數顯示區
   board = document.querySelector("#board");
   score = document.querySelector("#score");
-  //   畫面置中
+  // 畫面置中
   board.scrollIntoView({ behavior: "smooth", block: "center" });
-  //     造蛇()
+  // 造蛇()
   createSnake();
-  //     造豆()
+  // 造豆()
   createBean();
-  //     监听键盘()
+  // 監聽鍵盤()
   keyListener();
 };
 
 // 造蛇(){
 function createSnake() {
-  //     循环蛇初始化长度次{
+  //  循環蛇初始化長度次{
   for (let i = 0; i < snakeSize; i++) {
-    //         创造蛇的新关节，每个关节都是一个div
+    //  創造蛇的新關節，每個關節都是一個div
     let snake = document.createElement("div");
-    // 蛇头变红
+    // 蛇頭顏色設定
     if (i === 0) {
-      // 預設skin
+      // 預設color
       snake.style.backgroundColor = snakeheadColor;
 
       // 檢查紀錄的skin
-      // 检查本地存储中是否存在之前的选择
+      // 检查本地儲存中是否存在之前的選擇
       if (localStorage.getItem("selectedSkin")) {
         let previousSkin = localStorage.getItem("selectedSkin");
         skinPicker.value = previousSkin;
@@ -98,28 +95,28 @@ function createSnake() {
         snake.style.backgroundSize = "cover";
         snake.style.backgroundColor = "transparent";
 
-        // 将当前选择保存到本地存储中
+        // 將當前選擇保存到本地儲存中
         localStorage.setItem("selectedSkin", selectedSkin);
         localStorage.removeItem("selectedColor");
       });
     }
-    //         蛇的新关节推入数组
+    // 將蛇的新關節推入数組
     snakeArray.push(snake);
-    //         蛇的新关节的左距离为上一个蛇关节左侧
+    // 蛇的新關節的左距离為上一个蛇關節左侧
     snake["style"]["left"] = (snakeSize - i - 1) * 20 + "px";
-    //         蛇的新关节展示在面板上
+    // 蛇的新關節展示在面板上
     board.appendChild(snake);
   }
 }
 
 // 造豆(){
 function createBean() {
-  //     if(存在旧豆){
+  // if(存在舊豆){
   if (bean) {
-    //     从游戏面板上删除旧豆
+    // 從遊戲面板上删除舊豆
     board.removeChild(bean);
   }
-  //     创建新豆，每个豆都是一个span
+  // 創建新豆，每个豆都是一个span
   bean = document.createElement("span");
   let x = null,
     y = null;
