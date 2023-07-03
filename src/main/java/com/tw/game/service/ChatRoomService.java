@@ -62,13 +62,10 @@ public class ChatRoomService {
                 .put("max_tokens", MAX_TOKENS)
                 .put("stream", true);
 
-        // 將 message 編碼為 UTF-8
-        String encodedMessage = URLEncoder.encode(message, "UTF-8");
-
         // 添加陣列
         objectNode.putArray("messages").addObject()
                 .put("role", "user")
-                .put("content", encodedMessage);
+                .put("content", message);
 
         // 使用 objectMapper 將 ObjectNode 轉換為字串
         return objectMapper.writeValueAsString(objectNode);
@@ -103,7 +100,7 @@ public class ChatRoomService {
         OutputStream outputStream = connection.getOutputStream();
 
         // 將自串轉為位元，並將位元資料寫入輸出流
-        outputStream.write(data.getBytes());
+        outputStream.write(data.getBytes("UTF-8"));
 
         // 強制將緩衝區資料寫入
         outputStream.flush();
@@ -115,7 +112,7 @@ public class ChatRoomService {
         InputStream inputStream = connection.getInputStream();
 
         // 將位元輸入流轉為字元輸入流，使用 UTF-8 編碼
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
 
         // 將字元輸入流添加緩衝，減少 I/O 次數
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
