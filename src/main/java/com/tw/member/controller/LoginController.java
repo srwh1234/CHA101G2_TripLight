@@ -56,10 +56,10 @@ public class LoginController {
 
 		boolean registerStatus = loginService.register(email, password, account);
 		if (registerStatus) {
-			System.out.println("success");
+			//System.out.println("success");
 			return true;
 		} else {
-			System.out.println("fail");
+			//System.out.println("fail");
 //			return "redirect:/front-end/index.html";
 			return false;
 		}

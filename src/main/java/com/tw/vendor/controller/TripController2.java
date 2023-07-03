@@ -35,7 +35,7 @@ import jakarta.servlet.http.HttpSession;
 	 
 	 @GetMapping("/info")
 	    public List<Trip2> getTripInfo(HttpSession httpSession) {
-		 System.out.println( " " + httpSession.getId());
+		 //System.out.println( " " + httpSession.getId());
 		 Vendor vendor = (Vendor) httpSession.getAttribute("vendor");
 		 return tripRepository2.findByVendorId(vendor.getVendorId());
 	    }
@@ -43,7 +43,7 @@ import jakarta.servlet.http.HttpSession;
 	 @PostMapping("/tripadd")
 	 public String processTrip(@RequestBody final Trip2 trip) {
 		 tripService2.save(trip);
-		 System.out.println(trip);
+		 //System.out.println(trip);
 		 return "成功拿到資料";
 	 }
  }

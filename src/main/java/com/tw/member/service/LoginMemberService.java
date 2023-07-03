@@ -61,10 +61,10 @@ public class LoginMemberService {
 	public boolean getPwd(int id, String password) {
 		Member member = memberRepository.findByMemberId(id);
 		if (password.equals(member.getMemberPassword())) {
-			System.out.println("get old pwd");
+			//System.out.println("get old pwd");
 			return true;
 		}
-		System.out.println("get none");
+		//System.out.println("get none");
 		return false;
 	}
 
@@ -74,7 +74,7 @@ public class LoginMemberService {
 		if (existingMember != null) {
 			existingMember.setMemberPassword(password);
 			memberRepository.save(existingMember);
-			System.out.println("changed pwd successfully");
+			//System.out.println("changed pwd successfully");
 		}
 	}
 	//讀圖片
@@ -104,7 +104,7 @@ public class LoginMemberService {
 			image.setMemberPic(multipartFile.getBytes());
 			memberRepository.save(image);
 		 
-			System.out.println("上傳照片上傳照片");
+			//System.out.println("上傳照片上傳照片");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		

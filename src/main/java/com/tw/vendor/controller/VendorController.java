@@ -45,7 +45,7 @@ public class VendorController {
 	// @GetMapping("/vendors/info")
 	// public Vendor getVendorInfo(HttpSession httpSession) {
 	// Vendor vendor = (Vendor) httpSession.getServletContext().getAttribute("vendor");
-	// System.out.println(vendor +httpSession.getId());
+	// //System.out.println(vendor +httpSession.getId());
 	// return vendor;
 	// }
 
@@ -57,7 +57,7 @@ public class VendorController {
 
 	@PostMapping("/vendors")
 	public String processVendor(@RequestBody final Vendor vendor) {
-		System.out.println("Get");
+		//System.out.println("Get");
 		vendorService.save(vendor);
 		final String htmlFormat = HTMLFormat.getHTMLFormat("TripLight廠商申請表單", "blue", vendor.toString(), "前往後臺審核!", config.getEcpayReturnUrl()
 				+ "/back-end/index.html");

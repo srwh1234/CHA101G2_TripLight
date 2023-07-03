@@ -27,9 +27,9 @@
 //	@Override
 //	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterchain)
 //			throws IOException, ServletException {
-//		System.out.println("START doFilter2");
+//		//System.out.println("START doFilter2");
 //		filterchain.doFilter(request, response);
-//		System.out.println("END   doFilter2");
+//		//System.out.println("END   doFilter2");
 //	}
 //	
 ////	@Override
@@ -42,7 +42,7 @@
 ////		HttpSession session = req.getSession();
 ////		//放行...文件
 ////		String uri = new String(req.getRequestURI());  
-////		System.out.println("filter exist");
+////		//System.out.println("filter exist");
 //////		if(uri.contains("/css") || uri.contains("/images") || uri.contains("/js")) {
 //////			chain.doFilter(request, response);
 //////			return;
@@ -57,12 +57,12 @@
 //////		}
 ////		Object account = session.getAttribute("member");
 ////		if(account != null ) {
-////			System.out.println("good job");
+////			//System.out.println("good job");
 ////			if(uri.contains("login") || uri.contains("favorite") || uri.contains("co")) {
 ////				chain.doFilter(request, response);
 ////			}
 ////		}else {
-////			System.out.println("nono");
+////			//System.out.println("nono");
 ////			res.sendRedirect(req.getContextPath() + "/front-end/index.html");
 ////		}
 ////	}

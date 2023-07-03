@@ -41,7 +41,7 @@ public class FrontEndLoginFilter implements Filter {
 		
 		if(uri.contains("/front-end") && PROTECT.contains(htmlName)) {
 			final Member member = getClassFromSession(req, "member", Member.class);
-			System.out.println(member);
+			//System.out.println(member);
 			
 			if(member == null) {
 				res.sendRedirect("/front-end/index.html?1");

@@ -136,7 +136,7 @@ public class GroupOrderDetailService {
         tripComment.setTripOrderId(tripOrderId);
         tripCommentDao.insert(tripComment);
 
-        System.out.println("trip comments successfully updated!");
+        //System.out.println("trip comments successfully updated!");
     }
 
 

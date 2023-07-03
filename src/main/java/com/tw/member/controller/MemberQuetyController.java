@@ -27,7 +27,7 @@ public class MemberQuetyController {
 	//停權
 	@PostMapping("/suspension/{memberId}")
 	public Member suspension(@PathVariable("memberId") int memberId,@RequestParam int memberStatus ) {
-		System.out.println("find all control");
+		//System.out.println("find all control");
 		return memberQuetyService.suspension(memberId, memberStatus);
 	}  
 

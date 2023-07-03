@@ -28,7 +28,7 @@ public class ForgetPwdController {
     @PostMapping("/sendMail")
 	public void someMethod(@RequestParam String forgetPwdEmail) {
     	String randomPassword = generateRandomPassword();
-    	System.out.println(randomPassword);
+    	//System.out.println(randomPassword);
 		mailService.sendMail(forgetPwdEmail, "TripLight會員新密碼", "這是您的新密碼"+randomPassword);
 		//存新密碼到資料庫
 		Member member = memberRepository.findByMemberEmail(forgetPwdEmail);

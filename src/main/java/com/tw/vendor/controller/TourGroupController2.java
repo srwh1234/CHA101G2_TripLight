@@ -35,7 +35,7 @@ public class TourGroupController2 {
 	 
 	 @GetMapping("/info")
 	 public List<TourGroup2> getTourGroupInfo(HttpSession httpSession) {
-		 System.out.println(" " + httpSession.getId());
+		 //System.out.println(" " + httpSession.getId());
 		 Trip2 trip = (Trip2) httpSession.getAttribute("trip");
 		 return tourGroupRepository.findByTripId(trip.getTripId());
 	 }
@@ -43,7 +43,7 @@ public class TourGroupController2 {
 	 @PostMapping("/tourgroupadd")
 	 public String processTourGroup(@RequestBody final TourGroup2 tourGroup) {
 		 tourGroupService.save(tourGroup);
-		 System.out.println(tourGroup);
+		 //System.out.println(tourGroup);
 		 return "成功拿到資料";
 	 }
 	 

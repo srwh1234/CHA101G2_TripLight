@@ -354,7 +354,7 @@ public class OrderServiceImpl implements OrderService {
 		// 票券銷售量
 		final HashSet<Ticket> tickets = new HashSet<>();
 		for (final TicketOrderDetail detail : order.getTicketOrderDetails()) {
-			System.out.println(detail.getId());
+			//System.out.println(detail.getId());
 			final Ticket ticket = detail.getTicketSn().getTicket();
 			if (ticket != null) {
 				final int totalSales = ticket.getTotalSales() + 1;

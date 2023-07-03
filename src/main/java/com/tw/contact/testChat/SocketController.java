@@ -57,7 +57,7 @@ public class SocketController {
                 //因為找到客服所以更新在線"客戶"
                 userSessionMap.put(userInfo.getSessionId(), userInfo);
 
-               System.out.println("客服"+ serverInfo.getSessionId() + "正在為用戶" + userInfo.getSessionId() + "服務");
+               //System.out.println("客服"+ serverInfo.getSessionId() + "正在為用戶" + userInfo.getSessionId() + "服務");
 
                 Map<String, String> msg = new HashMap<>();
                 //客服顯示在為誰服務
@@ -73,7 +73,7 @@ public class SocketController {
             }
             //無論是否有連接會員都放進"在線客服",並提示客服上線成功
             serverSessionMap.put(session.getId(), serverInfo);
-            System.out.println("客服：" + serverInfo.getSessionId() + "連線成功,目前客服數量:" + serverSessionMap.size());
+            //System.out.println("客服：" + serverInfo.getSessionId() + "連線成功,目前客服數量:" + serverSessionMap.size());
         }
 
 
@@ -99,7 +99,7 @@ public class SocketController {
                 serverSessionMap.put(serverInfo.getSessionId(), serverInfo);
                 //將客戶的目標會話id綁定(客戶綁定客服)
                 userInfo.setTargetSessionId(serverInfo.getSessionId());
-                System.out.println("客服"+ serverInfo.getSessionId() + "正在為" + userInfo.getSessionId()+"服務");
+                //System.out.println("客服"+ serverInfo.getSessionId() + "正在為" + userInfo.getSessionId()+"服務");
 
                 Map<String, String> msg = new HashMap<>();
                 //客服顯示為誰服務
@@ -117,11 +117,11 @@ public class SocketController {
 
             //不管客戶是否有找到客服都要把它放進已上線的客戶
             userSessionMap.put(session.getId(), userInfo);
-            System.out.println("用戶編號：" + userInfo.getSessionId() + "伺服器在線用戶數量為:" + userSessionMap.size());
+            //System.out.println("用戶編號：" + userInfo.getSessionId() + "伺服器在線用戶數量為:" + userSessionMap.size());
         }
         //告訴客人訊息
         String result = JSON.toJSONString(state);
-        System.out.println(result);
+        //System.out.println(result);
         sendMsg(session, result);
     }
 
@@ -140,7 +140,7 @@ public class SocketController {
                 result.put("msg", "系統錯誤,請重新整理！");
                 sendMsg(userSessionMap.get(serverInfo.getTargetSessionId()).getSession(), JSON.toJSONString(result));
             }
-            System.out.println("客服編號：" + serverInfo.getSessionId() + "退出連線,目前客服上線數量:" + serverSessionMap.size());
+            //System.out.println("客服編號：" + serverInfo.getSessionId() + "退出連線,目前客服上線數量:" + serverSessionMap.size());
         } else {
             //將該用戶從在線用戶的map中移除
             userSessionMap.remove(session.getId());
@@ -151,7 +151,7 @@ public class SocketController {
                     //解除綁定
                     serverSocketInfo.setTargetSessionId(null);
                     serverSessionMap.put(serverSocketInfo.getSessionId(), serverSocketInfo);
-                    System.out.println("用戶編號：" + session.getId() + "斷開了與客服" + serverSocketInfo.getSessionId() + "的連接");
+                    //System.out.println("用戶編號：" + session.getId() + "斷開了與客服" + serverSocketInfo.getSessionId() + "的連接");
 
                     //客服解除綁定後，可能還會有在線排隊的用戶，就讓這個客服去服務
                     String lineUser = findLineUser();
@@ -161,7 +161,7 @@ public class SocketController {
                         serverSessionMap.put(serverSocketInfo.getSessionId(), serverSocketInfo);
                         //將該客服綁定到用戶
                         userSessionMap.get(lineUser).setTargetSessionId(serverSocketInfo.getSessionId());
-                        System.out.println("客服"+ serverSocketInfo.getSessionId() + "正在為" + lineUser+"服務");
+                        //System.out.println("客服"+ serverSocketInfo.getSessionId() + "正在為" + lineUser+"服務");
 
                         Map<String, String> result = new HashMap<>();
                         //客服顯示用戶資訊
@@ -173,7 +173,7 @@ public class SocketController {
                     }
                 }
             }
-            System.out.println("用戶編號：" + session.getId() + "退出了連接，當前在線用戶共計：" + userSessionMap.size());
+            //System.out.println("用戶編號：" + session.getId() + "退出了連接，當前在線用戶共計：" + userSessionMap.size());
         }
     }
 
@@ -190,7 +190,7 @@ public class SocketController {
         // 如果客服資訊不為空，則處理客服的消息
         if (serverInfo != null) {
             // 打印客服發送的消息和目標用戶的ID
-            System.out.println("客服"+ session.getId()+"發送消息：\""+ message +"\"給用戶"+serverSessionMap.get(session.getId()).getTargetSessionId());
+            //System.out.println("客服"+ session.getId()+"發送消息：\""+ message +"\"給用戶"+serverSessionMap.get(session.getId()).getTargetSessionId());
 
             // 將客服的ID和消息添加到結果映射中
             result.put("msg", "客服"+session.getId()+"："+message);
@@ -202,7 +202,7 @@ public class SocketController {
 
         } else { // 如果客服資訊為空，則處理用戶的消息
             // 打印用戶發送的消息和目標客服的ID
-            System.out.println("用戶"+ session.getId()+"發送消息：\""+ message +"\"給客服"+userSessionMap.get(session.getId()).getTargetSessionId());
+            //System.out.println("用戶"+ session.getId()+"發送消息：\""+ message +"\"給客服"+userSessionMap.get(session.getId()).getTargetSessionId());
 
             // 將用戶的ID和消息添加到結果映射中
             result.put("msg", "用戶"+session.getId()+"："+message);
@@ -217,7 +217,7 @@ public class SocketController {
     //異常處理
     @OnError
     public void onError(Session session, Throwable throwable) {
-        System.out.println("異常!");
+        //System.out.println("異常!");
         throwable.printStackTrace();
     }
 

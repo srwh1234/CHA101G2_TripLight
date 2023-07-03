@@ -30,7 +30,7 @@ public class VerifyAioCheckOut extends PaymentVerifyBase {
 			ele = (Element) nodeList.item(i);
 			if (ele.getAttribute("type").equalsIgnoreCase(mode)) {
 				url = ele.getTextContent();
-				System.out.println(url);
+				//System.out.println(url);
 				break;
 			}
 		}

@@ -62,7 +62,7 @@ public class MyFavoriteController {
 		public boolean removeTrip( 
 				@RequestParam("memberId") final int memberId, 
 				@RequestParam("tripId") final int tripId) {
-			 System.out.println("ddddddddddddd");
+			 //System.out.println("ddddddddddddd");
 			return myFavoriteService.removeTrip(memberId, tripId);
 		}
 

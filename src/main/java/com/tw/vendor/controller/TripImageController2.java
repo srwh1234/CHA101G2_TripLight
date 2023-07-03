@@ -40,7 +40,7 @@ public class TripImageController2 {
 	// @PostMapping("/tripImageadd")
 	// public String processTripImage(@RequestBody TripImage2 tripImage2){
 	// tripImageService2.save(tripImage2);
-	// System.out.println(tripImage2);
+	// //System.out.println(tripImage2);
 	// return "成功拿到資料";
 	// }
 
@@ -55,19 +55,14 @@ public class TripImageController2 {
 	public boolean uploadImg(//
 			@RequestParam("trip_image") final MultipartFile file, //
 			@RequestParam("trip") final String json) {
-		try {
-			System.out.println(file.getBytes().length);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(json);
+
+		// System.out.println(json);
 
 		// 以下都要放 service
 		try {
 			final Trip2 trip2 = new ObjectMapper().readValue(json, Trip2.class);
 			tripService2.save(trip2);
-			System.out.println(trip2.getTripId());
+			// System.out.println(trip2.getTripId());
 
 			final TripImage2 img2 = new TripImage2();
 			img2.setTripId(trip2.getTripId());

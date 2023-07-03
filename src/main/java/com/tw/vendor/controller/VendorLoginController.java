@@ -25,19 +25,19 @@ public class VendorLoginController {
 	@PostMapping("/vendor/login")
 	public VendorLoginResponse vendorlogin(@RequestBody VendorLoginRequest request  , HttpSession httpSession) {
 		
-		System.out.println(request);
+		//System.out.println(request);
 		Vendor result = vendorLoginService.vendorlogin(request.getVendorEmail(), request.getLoginAccount(), request.getLoginPassword());
 		VendorLoginResponse vendorLoginResponse = new VendorLoginResponse();
 		if(result == null) {
-			System.out.println("查無此帳號");
+			//System.out.println("查無此帳號");
 			vendorLoginResponse.setSuccess(false);
 			return vendorLoginResponse;
 		} else {
 			//設置session
 			httpSession.setAttribute("vendor", result);
-			System.out.println("VendorId" + httpSession.getAttribute("vendor"));
-			System.out.println("登入成功");
-			System.out.println(httpSession.getId());
+			//System.out.println("VendorId" + httpSession.getAttribute("vendor"));
+			//System.out.println("登入成功");
+			//System.out.println(httpSession.getId());
 			vendorLoginResponse.setVendorName(result.getVendorName());
 			vendorLoginResponse.setSuccess(true);
 			return vendorLoginResponse; 

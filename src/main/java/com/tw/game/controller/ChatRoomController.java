@@ -28,7 +28,7 @@ public class ChatRoomController {
         user.setLevel(user.getLevel()-2);
         userService.save(user);
         chatRoomService.readResponse(content);
-        System.out.println(content);
+        //System.out.println(content);
         return true;
     }
 

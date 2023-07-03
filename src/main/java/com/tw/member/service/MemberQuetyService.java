@@ -22,7 +22,7 @@ public class MemberQuetyService {
 		Member existingMember = memberRepository.findByMemberId(memberId);
 		if(existingMember != null) {
 			existingMember.setMemberStatus(memberStatus);
-			System.out.println("find all service");
+			//System.out.println("find all service");
 			return memberRepository.save(existingMember);
 		}
 		return null;

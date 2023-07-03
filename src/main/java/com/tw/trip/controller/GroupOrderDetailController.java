@@ -100,7 +100,7 @@ public class GroupOrderDetailController {
 
         }
 
-        System.out.println("TripComment successfully inserted!");
+        //System.out.println("TripComment successfully inserted!");
 
     }
 

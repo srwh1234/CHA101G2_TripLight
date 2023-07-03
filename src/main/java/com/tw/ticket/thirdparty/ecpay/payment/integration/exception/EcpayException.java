@@ -14,7 +14,7 @@ public class EcpayException extends Error{
 	}
 	public void ShowExceptionMessage(){
 		
-		System.out.println("發生錯誤: " + getNewExceptionMessage());
+		//System.out.println("發生錯誤: " + getNewExceptionMessage());
 	}
 	
 }

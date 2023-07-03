@@ -29,11 +29,11 @@ public class BKLoginController {
 
 		// 先檢查帳號密碼是否為員工表格內有的
 		if (result == null) {
-			System.out.println("查無此員工");
+			//System.out.println("查無此員工");
 			return null;
 			// 在檢查員工狀態要是在職、不是就不行登
 		} else if (result.getEmployeeStatus() == 0) {
-			System.out.println("員工狀態不符合");
+			//System.out.println("員工狀態不符合");
 			return null;
 			// 都通過就可以成功登入
 		} else {
@@ -41,7 +41,7 @@ public class BKLoginController {
 			.findEmployeeAccessByEmployeeAccount(result.getEmployeeAccount());
 			session.setAttribute("employee", result);
 			session.setAttribute("employeeAccess", employeeAccess);
-			System.out.println("EmployeeId: " + session.getAttribute("employee"));
+			//System.out.println("EmployeeId: " + session.getAttribute("employee"));
 			return result;
 
 		}

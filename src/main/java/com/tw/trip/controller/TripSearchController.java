@@ -84,7 +84,7 @@ public class TripSearchController {
             jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
 
             String cities = jsonObject.getString("cities");
-            System.out.println(cities);
+            //System.out.println(cities);
 
             String[] citiesArr = new Gson().fromJson(cities, String[].class);
 
@@ -123,7 +123,7 @@ public class TripSearchController {
 
             // ====== 2. deal with String[] cities ======
             String types = jsonObject.getString("tripDayTypes");
-            System.out.println(types);
+            //System.out.println(types);
 
             String[] typesArr = new Gson().fromJson(types, String[].class);
             Integer[] intArray = new Integer[typesArr.length];

@@ -39,10 +39,10 @@
 ////		
 ////		Member data = memberRepository.findByMemberEmail(email);
 ////		if(data == null) {
-////			System.out.println("無此帳號");
+////			//System.out.println("無此帳號");
 ////			return null;
 ////		}else {
-////			System.out.println("成功登入");
+////			//System.out.println("成功登入");
 ////			Member member = new Member();
 ////			member.setMemberEmail(data.getMemberEmail());
 ////			member.setMemberPassword(data.getMemberPassword());

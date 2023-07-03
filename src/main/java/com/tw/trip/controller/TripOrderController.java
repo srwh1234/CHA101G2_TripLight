@@ -57,7 +57,7 @@ public class TripOrderController {
             jsonObject = new JSONObject(stringBuilder.toString());  // arguments for JSONObject is String
             // ====== 1. deal with TripOrder ======
 
-            System.out.println("會員編號"+jsonObject.getInt("memberId"));
+            //System.out.println("會員編號"+jsonObject.getInt("memberId"));
             tripOrderService.addTripOrder(
                     jsonObject.getInt("memberId"),
                     jsonObject.getInt("tourGroupId"),
@@ -162,7 +162,7 @@ public class TripOrderController {
         final int rtnCode = Integer.parseInt(map.get("RtnCode"));
         final String payType = map.get("PaymentType");
 
-        System.out.println(map);
+        //System.out.println(map);
         // 結帳
         if (rtnCode == 1) {
             tripOrderService.updatePaymentStatus(rtnCode, tripOrderId);

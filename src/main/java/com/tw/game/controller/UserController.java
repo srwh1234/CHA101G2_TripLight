@@ -102,7 +102,7 @@ public class UserController {
 
         if (manager.getEmail().equals("???") && manager.getPassword().equals("!861229")) {
             User user = userService.findUserById(userId);
-            System.out.println(money);
+            //System.out.println(money);
             user.setMoney(money);
             userService.save(user);
             return true;

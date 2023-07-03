@@ -31,7 +31,7 @@ public class VendorImageController {
 	@PostMapping("/vendorimage3")
 	public String processVendorImage(@RequestBody final VendorImage vendorImage) {
 		vendorImageService.save(vendorImage);
-		System.out.println(vendorImage);
+		//System.out.println(vendorImage);
 		return "成功拿到資料";
 	}
 

@@ -74,7 +74,7 @@ public class LoginService {
 		        message.setSubject(subject);
 		        message.setText(messageText);
 		        mailSender.send(message);
-		        System.out.println("郵件傳送成功!");
+		        //System.out.println("郵件傳送成功!");
 		    }
 		}
 

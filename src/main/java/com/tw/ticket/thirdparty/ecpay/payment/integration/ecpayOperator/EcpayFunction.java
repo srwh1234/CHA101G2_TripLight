@@ -93,23 +93,23 @@ public class EcpayFunction {
 		final AlgorithmParameters iv = AlgorithmParameters.getInstance("AES");
 		iv.init(new IvParameterSpec(HashIV.getBytes("UTF-8")));
 		plaintext = pkcs7Padding(plaintext);
-		System.out.println(plaintext.length());
+		//System.out.println(plaintext.length());
 		final Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 		cipher.init(Cipher.ENCRYPT_MODE, key, iv);
 		final byte[] encrypt = cipher.doFinal(plaintext.getBytes("UTF-8"));
 		final Base64.Encoder encoder = Base64.getEncoder();
 		final String encodedText = encoder.encodeToString(encrypt);
-		// System.out.println(encodedText);
+		// //System.out.println(encodedText);
 		String urlEncode = urlEncode(encodedText);
-		// System.out.println(urlEncode);
+		// //System.out.println(urlEncode);
 		urlEncode = netUrlEncode(urlEncode);
 		urlEncode = urlEncode.toLowerCase();
-		// System.out.println(urlEncode);
+		// //System.out.println(urlEncode);
 		return urlEncode;
 	}
 
 	private final static String pkcs7Padding(String plaintext) {
-		// System.out.println(plaintext.length());
+		// //System.out.println(plaintext.length());
 		final int blockSize = 16;
 		int pad = 0;
 		if (plaintext.length() < blockSize) {
@@ -124,7 +124,7 @@ public class EcpayFunction {
 		for (int i = 0; i < pad; i++) {
 			plaintext += (char) pad;
 		}
-		// System.out.println(plaintext.length());
+		// //System.out.println(plaintext.length());
 		return plaintext;
 	}
 

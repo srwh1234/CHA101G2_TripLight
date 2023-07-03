@@ -68,7 +68,7 @@ public class TripFavoriteService {
 		final TripFavorite favorite = new TripFavorite();
 		favorite.setKey(new PrimaryKey2(reqDto.getMemberId(), trip));
 		favorite.setAddTime(Timestamp.from(Instant.now()));
-		System.out.println("加入收藏");
+		//System.out.println("加入收藏");
 		tripFavoriteRepository.save(favorite);
 
 		return FAVORITE_ADD_OK;
@@ -79,7 +79,7 @@ public class TripFavoriteService {
 	public boolean checkIfExists(final FavoriteReqDto reqDto) {
 		final Trip trip = tripRepository.findById(reqDto.getTripId()).orElse(null);
 		final boolean isFavorite = tripFavoriteRepository.existsById(new PrimaryKey2(reqDto.getMemberId(), trip));
-		System.out.println(isFavorite);
+		//System.out.println(isFavorite);
 		return isFavorite;
 	}
 

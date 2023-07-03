@@ -48,7 +48,7 @@ public class LoginMemberController {
 	// change password
 	@PostMapping("/changePwd")
 	public void changePwd(@RequestParam int id, @RequestParam String password) {
-		System.out.println("changePwd controller");
+		//System.out.println("changePwd controller");
 		memberService.changePwd(id, password);
 	}
 	// 讀取大頭貼

@@ -25,7 +25,7 @@ public class EmployeeController {
     
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        System.out.println("employeeAccess: " + employee.getEmployeeAccess()); 
+        //System.out.println("employeeAccess: " + employee.getEmployeeAccess()); 
         Employee createdEmployee = employeeService.saveEmployee(employee);
         return ResponseEntity.ok(createdEmployee);
     }

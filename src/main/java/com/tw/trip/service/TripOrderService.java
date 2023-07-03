@@ -38,7 +38,7 @@ public class TripOrderService {
         for (TourGroupDetail tourGroupDetail1 : tourGroupDetails){
             tourGroupDetailDao.insert(tourGroupDetail1);
         }
-        System.out.println("TourGroupDetail successfully inserted!");
+        //System.out.println("TourGroupDetail successfully inserted!");
     }
 
     public void addTripOrder(Integer memberId, Integer tourGroupId, Integer orderStatus,
@@ -64,7 +64,7 @@ public class TripOrderService {
         tripOrder.setPaymentStatus(0);
 
         tripOrderDao.insert(tripOrder);
-        System.out.println("TripOrder successfully inserted!");
+        //System.out.println("TripOrder successfully inserted!");
 
 
     }
@@ -113,7 +113,7 @@ public class TripOrderService {
                 .setParameter("paymentStatus", paymentStatus)
                 .executeUpdate();
 
-        System.out.println("paymentStatus successfully updated!");
+        //System.out.println("paymentStatus successfully updated!");
 
     }
 
