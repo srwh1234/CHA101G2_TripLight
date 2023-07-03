@@ -338,18 +338,18 @@
 
     <!-- ckeditor -->
     <script>
-        CKEDITOR.replace('editor');
-        CKEDITOR.editorConfig = function (config) {
-            config.enterMode = CKEDITOR.ENTER_BR;
-            config.shiftEnterMode = CKEDITOR.ENTER_BR;
-            config.removePlugins = 'elementspath';
-        };
         CKEDITOR.config.removePlugins = 'paragraph'; // 使用 CKEDITOR.config 設定 removePlugins
         CKEDITOR.config.allowedContent = true; // 使用 CKEDITOR.config 設定 allowedContent
         ClassicEditor.create(document.querySelector('#editor'), {
             removePlugins: 'paragraph', // 移除內建的段落樣式插件
             allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
         });
+        CKEDITOR.replace('editor');
+        CKEDITOR.editorConfig = function (config) {
+            config.enterMode = CKEDITOR.ENTER_BR;
+            config.shiftEnterMode = CKEDITOR.ENTER_BR;
+            config.removePlugins = 'elementspath';
+        };
     </script>
 
     <script>
