@@ -303,17 +303,14 @@ $("#forgetPwd").on("click", function () {
 					forgetPwdEmail: forgetPwdEmail  // 直接傳遞對象
 				},
 				success: function (response) {
-
 					console.log('郵件傳送成功!');
 					Swal.fire({
 						icon: "success",
 						title: "驗證信發送成功",
 						showConfirmButton: false,
+					}).then(() => {
+						window.location.href = "/front-end/index.html?1";
 					})
-					// .then(() => {
-					// 	container.classList.remove("active-popup");
-					// 	container.classList.add("active-popup");
-					// });
 				},
 				error: function (xhr, status, error) {
 
@@ -324,20 +321,14 @@ $("#forgetPwd").on("click", function () {
 						title: "驗證信發送失敗",
 						text: "請聯絡客服",
 						showConfirmButton: false,
+					}).then(() => {
+						window.location.href = "/front-end/index.html?1";
 					})
-					// .then(() => {
-					// 	container.classList.remove("active-popup");
-					// 	container.classList.add("active-popup");
-					// });
 				}
 			})
 		}
-		// else {
-		// 	container.classList.add("active-popup");
-		// }
-	}).finally(() => {
-		container.classList.add("active-popup");
-
-	});
+		else {
+			container.classList.add("active-popup");
+		}
+	})
 });
-
