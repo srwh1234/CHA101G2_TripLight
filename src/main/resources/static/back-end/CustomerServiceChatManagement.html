@@ -302,7 +302,8 @@
 
     //判斷瀏覽器是否支援websocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://127.0.0.1:8080/websocket/0");
+       // websocket = new WebSocket("ws://127.0.0.1:8080/websocket/0");
+        websocket = new WebSocket("ws://34.81.131.4:8080/websocket/0");
     } else {
         alert("Don't support websocket!")
     }
