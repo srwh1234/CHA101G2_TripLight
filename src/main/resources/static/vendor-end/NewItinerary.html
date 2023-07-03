@@ -166,6 +166,10 @@
                 <div class="form-container">
                     <form id="employee-form">
                         <div class="form-group mb-3" >
+                            <label for="vendor_id" class="mb-2">廠商編號</label>
+                            <input type="text" id="vendor_id" name="vendor_id" required/>
+                        </div>
+                        <div class="form-group mb-3" >
                             <label for="trip_name" class="mb-2">行程名稱</label>
                             <input type="text" id="trip_name" name="trip_name" required/>
                         </div>
@@ -317,6 +321,7 @@
       e.preventDefault();
 
       // 拿取表單資料
+      const vendorId = $("#vendor_id").val();
       const tripName = $("#trip_name").val();
       const tripContent = $("#trip_content").val();
       const tripDate = $("#trip_date").val();
@@ -333,7 +338,7 @@
 
       // 包裝成物件
       let trip = {
-        vendorId:1,
+        vendorId: vendorId,
         tripName: tripName,
         tripContent: tripContent,
         tripDay: tripDate,
@@ -422,6 +427,7 @@
             console.log("123"+response);
         // 將廠商資訊信息填充到頁面上相對應的欄位
         $('#vendorName').text(response.vendorName);
+        $('#vendor_id').text(response.vendorId);
 
         console.log('廠商名字獲得成功');
      },
