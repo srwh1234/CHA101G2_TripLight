@@ -338,18 +338,18 @@
 
     <!-- ckeditor -->
     <script>
-        CKEDITOR.config.removePlugins = 'paragraph'; // 使用 CKEDITOR.config 設定 removePlugins
-        CKEDITOR.config.allowedContent = true; // 使用 CKEDITOR.config 設定 allowedContent
-        ClassicEditor.create(document.querySelector('#editor'), {
-            removePlugins: 'paragraph', // 移除內建的段落樣式插件
-            allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
-        });
         CKEDITOR.replace('editor');
         CKEDITOR.editorConfig = function (config) {
             config.enterMode = CKEDITOR.ENTER_BR;
             config.shiftEnterMode = CKEDITOR.ENTER_BR;
             config.removePlugins = 'elementspath';
         };
+        CKEDITOR.config.removePlugins = 'paragraph'; // 使用 CKEDITOR.config 設定 removePlugins
+        CKEDITOR.config.allowedContent = true; // 使用 CKEDITOR.config 設定 allowedContent
+        ClassicEditor.create(document.querySelector('#editor'), {
+            removePlugins: 'paragraph', // 移除內建的段落樣式插件
+            allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
+        });
     </script>
 
     <script>
@@ -391,16 +391,34 @@
                 articleViews: 1,
                 articlePicture: null,
             }
-
+            //類型判斷
+            if (!article.articleTypeId) {
+                alert('文章類型必須點選');
+                return;
+            }
+            //標題判斷
+            if (!article.articleTitle) {
+                alert('標題必須輸入文字');
+                return;
+            }
+            //內容判斷
+            if (!article.articlePostContent) {
+                alert('文章內容必須輸入文字');
+                return;
+            }
+            //圖片判斷
+            if (!$('#articlePicture').prop('files')[0]) {
+                alert('務必上傳一張圖片');
+                return;
+            }
             const formData = new FormData();
-
             formData.append('image', $('#articlePicture').prop('files')[0]);
             formData.append('article', JSON.stringify(article));
 
             //發請求
             fetch(`/article/addarticle`, {
-            // fetch(`http://localhost:8080/article/addarticle`, {
-            method: 'POST',
+                // fetch(`http://localhost:8080/article/addarticle`, {
+                method: 'POST',
                 body: formData,
             })
                 .then(response => response.text())
