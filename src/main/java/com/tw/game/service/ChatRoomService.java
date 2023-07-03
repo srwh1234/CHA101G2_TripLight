@@ -13,6 +13,8 @@ import reactor.core.publisher.FluxSink;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Service
 @SessionScope
@@ -48,21 +50,25 @@ public class ChatRoomService {
 
 
     // 創建json 請求主體
-    private String createJSONPayload(String message) throws JsonProcessingException {
-        // 建立Object mapper
+    private String createJSONPayload(String message) throws JsonProcessingException, UnsupportedEncodingException {
+        // 建立 Object mapper
         ObjectMapper objectMapper = new ObjectMapper();
 
         // 使用 objectMapper 建立一個 ObjectNode
         ObjectNode objectNode = objectMapper.createObjectNode();
 
-        // 添加屬性, 分別為模型設定， token 數量（max_tokens），是否進行流傳輸（stream）
+        // 添加屬性，分別為模型設定，token 數量（max_tokens），是否進行流傳輸（stream）
         objectNode.put("model", MODEL)
                 .put("max_tokens", MAX_TOKENS)
                 .put("stream", true);
+
+        // 將 message 編碼為 UTF-8
+        String encodedMessage = URLEncoder.encode(message, "UTF-8");
+
         // 添加陣列
         objectNode.putArray("messages").addObject()
                 .put("role", "user")
-                .put("content", message);
+                .put("content", encodedMessage);
 
         // 使用 objectMapper 將 ObjectNode 轉換為字串
         return objectMapper.writeValueAsString(objectNode);
@@ -108,15 +114,16 @@ public class ChatRoomService {
         // 獲取與連線相關輸入流，這是從伺服器接收資料的通道
         InputStream inputStream = connection.getInputStream();
 
-        // 將位元輸入流轉為字元輸入流
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        // 將位元輸入流轉為字元輸入流，使用 UTF-8 編碼
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
-        // 將字元輸入流添加緩衝，減少I/O次數
+        // 將字元輸入流添加緩衝，減少 I/O 次數
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-        // 回傳輸入流，給呼叫的method自行處理
+        // 回傳輸入流，給呼叫的 method 自行處理
         return bufferedReader;
     }
+
 
 
     //讀取資料
