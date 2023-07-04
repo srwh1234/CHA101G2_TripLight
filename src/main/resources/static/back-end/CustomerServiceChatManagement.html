@@ -302,8 +302,8 @@
 
     //判斷瀏覽器是否支援websocket
     if ('WebSocket' in window) {
-       // websocket = new WebSocket("ws://127.0.0.1:8080/websocket/0");
-        websocket = new WebSocket("wss://triplight.ddns.net/websocket/0");
+       websocket = new WebSocket("ws://127.0.0.1:8080/websocket/0");
+       //  websocket = new WebSocket("wss://triplight.ddns.net/websocket/0");
     } else {
         alert("Don't support websocket!")
     }
@@ -313,29 +313,29 @@
         alert("Connect error!");
     };
 
-    //連線成功
+
+    //連線成功並且告知用戶
     websocket.onopen = function (event) {
-        setMessageInnerHTML("連線成功!上線中!");
-        setMessageInnerHTML("------------------------------------------");
+        setMessageInnerHTML("連線成功!<br>", 'red');
     }
 
-    //接收到消息的回调方法
+
+    //接收到來自用戶的訊息
     websocket.onmessage = function (event) {
         var result = event.data
         var ob = JSON.parse(result)
-        //判断用户状态
+        //判斷用戶狀態
         if (ob.state != undefined && ob.state != "success") {
-            setMessageInnerHTML("非法连接！");
+            setMessageInnerHTML("錯誤連線！", 'red');
             websocket.close();
         }
-
-        //判断是否有消息
+        //判斷是否有消息
         if (ob.msg != undefined) {
-            setMessageInnerHTML(ob.msg);
+            setMessageInnerHTML(ob.msg, 'green');
         }
     }
 
-    //連線關閉
+    //關閉ws連線關閉
     websocket.onclose = function () {
         setMessageInnerHTML("close");
     }
@@ -345,9 +345,14 @@
         websocket.close();
     }
 
-    //將訊息顯示
-    function setMessageInnerHTML(innerHTML) {
-        document.getElementById('message').innerHTML += innerHTML + '<br/>';
+    /*
+    定義常用function
+     */
+
+    //定義"系統訊息"顯示並"設定顏色"
+    function setMessageInnerHTML(innerHTML, color) {
+        color = color || 'black';
+        document.getElementById('message').innerHTML += '<span style="color: ' + color + ';">' + innerHTML + '</span>' + '<br/>';
     }
 
     //關閉連線
@@ -355,14 +360,14 @@
         websocket.close();
     }
 
-    //發送訊息
+    //客服發送的訊息
     function send(){
         var sendMsg = $("#sendMsg").val();
         if(sendMsg.trim() === "") {
             // 如果訊息為空，則不進行任何操作
             return;
         }
-        setMessageInnerHTML("我 ：" + sendMsg)
+        setMessageInnerHTML("我 ：" + sendMsg, 'blue')
         websocket.send(sendMsg);
         $("#sendMsg").val("");
     }

@@ -1,10 +1,10 @@
 package com.tw.contact.testChat;
 
-import com.alibaba.fastjson.JSON;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Component;
+import com.alibaba.fastjson.JSON;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SocketController {
 
-    //用本地线程保存session
+    //用本地執行緒保存session
     private static ThreadLocal<Session> sessions = new ThreadLocal<Session>();
     //保存上線客戶 String放SessionID
     private static Map<String, SocketUserInfo> userSessionMap = new ConcurrentHashMap<>();
@@ -29,7 +29,9 @@ public class SocketController {
 
         //設定狀態map
         Map<String, String> state = new HashMap<>();
-        state.put("state", "error");
+        Map<String, String> msg = new HashMap<>();
+        //預設連線失敗
+        state.put("state", "連線失敗");
 
         //執行緒獨立
         sessions.set(session);
@@ -59,17 +61,16 @@ public class SocketController {
 
                //System.out.println("客服"+ serverInfo.getSessionId() + "正在為用戶" + userInfo.getSessionId() + "服務");
 
-                Map<String, String> msg = new HashMap<>();
+//                Map<String, String> msg = new HashMap<>();
                 //客服顯示在為誰服務
                 msg.put("msg", "正在為用戶"+userInfo.getSessionId()+"服務！");
                 sendMsg(serverInfo.getSession(), JSON.toJSONString(msg));
-                msg.put("msg", "-----------------------------------------");
-                sendMsg(serverInfo.getSession(), JSON.toJSONString(msg));
+
                 //客戶顯示誰在為他服務
                 msg.put("msg", "客服"+serverInfo.getSessionId()+"正在為您服務！");
                 sendMsg(userInfo.getSession(), JSON.toJSONString(msg));
-                msg.put("msg", "-----------------------------------------");
-                sendMsg(serverInfo.getSession(), JSON.toJSONString(msg));
+
+
             }
             //無論是否有連接會員都放進"在線客服",並提示客服上線成功
             serverSessionMap.put(session.getId(), serverInfo);
@@ -88,8 +89,7 @@ public class SocketController {
             //告訴客戶連線狀態為成功
             state.put("state", "success");
 
-            //查詢是否有閒置客服
-            //有:進入 無:不進入
+            //查詢是否有連線到閒置客服
             if (findFreeServer() != null){
                 //透過SessionID找到閒置的客服
                 SocketUserInfo serverInfo = serverSessionMap.get(findFreeServer());
@@ -101,18 +101,19 @@ public class SocketController {
                 userInfo.setTargetSessionId(serverInfo.getSessionId());
                 //System.out.println("客服"+ serverInfo.getSessionId() + "正在為" + userInfo.getSessionId()+"服務");
 
-                Map<String, String> msg = new HashMap<>();
                 //客服顯示為誰服務
-                msg.put("msg", "正在為客戶"+userInfo.getSessionId()+"服務！");
+                msg.put("msg", "正在為用戶"+userInfo.getSessionId()+"服務！");
                 sendMsg(serverInfo.getSession(), JSON.toJSONString(msg));
-                msg.put("msg", "----------------------------------------");
-                sendMsg(serverInfo.getSession(), JSON.toJSONString(msg));
+
                 //客戶顯示誰在服務
                 msg.put("msg", "客服" + serverInfo.getSessionId() + "正在為您服務！");
                 sendMsg(userInfo.getSession(), JSON.toJSONString(msg));
 
-            } else {
-                state.put("msg", "系统繁忙！");
+            }
+            //沒有連線到客服人員
+            else {
+                state.put("msg", "目前客服人員忙線中！正在尋找客服人員");
+                sendMsg(userInfo.getSession(), JSON.toJSONString(state));
             }
 
             //不管客戶是否有找到客服都要把它放進已上線的客戶
@@ -120,11 +121,12 @@ public class SocketController {
             //System.out.println("用戶編號：" + userInfo.getSessionId() + "伺服器在線用戶數量為:" + userSessionMap.size());
         }
         //告訴客人訊息
-        String result = JSON.toJSONString(state);
-        //System.out.println(result);
-        sendMsg(session, result);
+//        String result = JSON.toJSONString(state);
+//        //System.out.println(result);
+//        sendMsg(session, result);
     }
 
+    //關閉連線
     @OnClose
     public void onClose(Session session) {
         //取得客服資訊
@@ -137,7 +139,7 @@ public class SocketController {
             if (null != serverInfo.getTargetSessionId()){
                 //向該用戶發送訊息
                 Map<String, String> result = new HashMap<>();
-                result.put("msg", "系統錯誤,請重新整理！");
+                result.put("msg", "網路異常,請重新整理！");
                 sendMsg(userSessionMap.get(serverInfo.getTargetSessionId()).getSession(), JSON.toJSONString(result));
             }
             //System.out.println("客服編號：" + serverInfo.getSessionId() + "退出連線,目前客服上線數量:" + serverSessionMap.size());
