@@ -279,7 +279,6 @@
                     });
 
                     $(document).ready(function () {
-                        // fetch('/article/articles')
                         fetch('/article/articles')
                             .then(response => response.json())
                             .then(data => {
@@ -335,7 +334,7 @@
                                         'memberName': data[i].memberName,
                                         'articlePostTime': formattedDate,
                                         'articleViews': data[i].articleViews,
-                                        'articleStatus': statusText,
+                                        'articleStatus': data[i].articleStatus,
                                     })
                                 }
                                 console.log(data1);
@@ -398,79 +397,81 @@
                     });
 
                     //顯示
-                    $(document).ready(function () {
-                        // 監聽點擊事件
-                        $('#myTable1').on('click', '#show', function () {
-                            // 取得所點擊的行的資料
-                            var table = $('#myTable1').DataTable();
-                            var data = table.row($(this).parents('tr')).data();
-
-                            // 將 articleStatus 改為 0
-                            data.articleStatus = 0;
-
-                            const formData = new FormData();
-
-                            formData.append('article', JSON.stringify(data));
-
-                            console.log(data);
-
-                            // 使用 Fetch 方法將修改的結果回傳到後端
-                            // fetch('/article/updatearticle', {
-                            fetch('/article/updatearticle', {
-                                method: 'POST',
+                    $('#myTable1').on('click', '#btn-show', function (e) {
+                        e.preventDefault(); // 防止表單提交
+                        var result = confirm("確定要恢復文章顯示嗎？");
+                        if (result) {
+                            var rowData = $(this).closest('tr').data(); // 取得點擊按鈕所在列的資料
+                            var articleId = $(this).closest("tr").find(".articleId").text();
+                            rowData.articleStatus = 0; // 修改 articleStatus 的值為 0
+                            // const urlParams = new URLSearchParams(window.location.search);
+                            // const articleId = urlParams.get("id");
+                            var dataToSend = {
+                                articleId: rowData.articleId,
+                                articleStatus: rowData.articleStatus
+                            };
+                            console.log(dataToSend);
+                            // 使用 Fetch API 將資料傳送到伺服器
+                            fetch('article/articleshow/', {
+                                method: 'POST', // 使用 POST 方法
                                 headers: {
-                                    'Content-Type': 'application/json'
+                                    'Content-Type': 'application/json' // 設定資料傳送格式為 JSON
                                 },
-                                body: JSON.stringify({ article: data })
+                                body: JSON.stringify(dataToSend) // 將資料物件轉換為 JSON 字串傳送
                             })
-                                .then(response => response.json())
-                                .then(result => {
-                                    console.log(result);
-                                    // 在這裡可以執行相應的操作，例如刷新頁面或顯示成功訊息
+                                .then(function (response) {
+                                    if (response.ok) {
+                                        console.log('恢復成功');
+                                        // 進行其他相應的處理
+                                    } else {
+                                        console.error('操作失敗');
+                                    }
                                 })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    // 在這裡可以處理錯誤，例如顯示錯誤訊息
+                                .catch(function (error) {
+                                    console.error('錯誤:', error);
                                 });
-                        });
+                        }
                     });
 
                     // //隱藏
-                    $(document).ready(function () {
-                        // 監聽點擊事件
-                        $('#myTable1').on('click', '#hide', function () {
-                            // 取得所點擊的行的資料
-                            var table = $('#myTable1').DataTable();
-                            var data = table.row($(this).parents('tr')).data();
-
-                            // 將 articleStatus 改為 1
-                            data.articleStatus = 1;
-
-                            const formData = new FormData();
-
-                            formData.append('article', JSON.stringify(data));
-
-                            console.log(data);
-
+                    $('#myTable1').on('click', '#btn-hide', function (e) {
+                        e.preventDefault(); // 防止表單提交
+                        var result = confirm("確定要隱藏文章顯示嗎？");
+                        if (result) {
+                            var rowData = $(this).closest('tr').data(); // 取得點擊按鈕所在列的資料
+                            rowData.articleStatus = 1; // 修改 articleStatus 的值為 1
+                            // if (confirmation) {
+                            //     // 將articleStatus值改為1
+                            //     var updatedData = data1.find(function (item) {
+                            //         return item.articleId === id;
+                            //     });
+                            //     if (updatedData) {
+                            //         updatedData.articleStatus = 1;
                             // 使用 Fetch 方法將修改的結果回傳到後端
-                            // fetch('/article/updatearticle', {
-                            fetch('/article/updatearticle', {
-                                method: 'POST',
+                            var dataToSend = {
+                                articleId: rowData.articleId,
+                                articleStatus: rowData.articleStatus
+                            };
+                            // 使用 Fetch API 將資料傳送到伺服器
+                            fetch('article/articlehide/', {
+                                method: 'POST', // 使用 POST 方法
                                 headers: {
-                                    'Content-Type': 'application/json'
+                                    'Content-Type': 'application/json' // 設定資料傳送格式為 JSON
                                 },
-                                body: JSON.stringify({ article: data })
+                                body: JSON.stringify(dataToSend) // 將資料物件轉換為 JSON 字串傳送
                             })
-                                .then(response => response.json())
-                                .then(result => {
-                                    console.log(result);
-                                    // 在這裡可以執行相應的操作，例如刷新頁面或顯示成功訊息
+                                .then(function (response) {
+                                    if (response.ok) {
+                                        console.log('恢復成功');
+                                        // 進行其他相應的處理
+                                    } else {
+                                        console.error('操作失敗');
+                                    }
                                 })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    // 在這裡可以處理錯誤，例如顯示錯誤訊息
+                                .catch(function (error) {
+                                    console.error('錯誤:', error);
                                 });
-                        });
+                        }
                     });
 
                 </script>
