@@ -62,33 +62,46 @@ public class UserController {
     @PutMapping("/money")
     public boolean saveUser(@RequestParam int money,HttpSession session) {
         User user = (User) session.getAttribute("user");
-        user.setMoney(user.getMoney()+money);
-        userService.save(user);
-        return true;
+        if(user != null){
+            user.setMoney(user.getMoney()+money);
+            userService.save(user);
+            return true;
+
+        }
+        return false;
     }
 
     @PutMapping("/money-50")
     public boolean UserMoneyDown(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        user.setMoney(user.getMoney()-50);
-        userService.save(user);
-        return true;
+        if (user != null) {
+            user.setMoney(user.getMoney() - 50);
+            userService.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     @PutMapping("/levelUp")
     public UserDto UserLevelUp(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        int requiredExp = 100;
-        for (int i = 2; i <= user.getLevel(); i++) {
-            requiredExp += 10 * (i - 1);
-        }
-        user.setMoney(user.getMoney()-requiredExp);
+        if (user != null) {
 
-        // 如果金錢為正的 才會升等
-        if(user.getMoney() > 0){
-            user.setLevel(user.getLevel()+1);
-            userService.save(user);
-            return new UserDto(user);
+            int requiredExp = 100;
+            for (int i = 2; i <= user.getLevel(); i++) {
+                requiredExp += 10 * (i - 1);
+            }
+            user.setMoney(user.getMoney() - requiredExp);
+
+            // 如果金錢為正的 才會升等
+            if (user.getMoney() > 0) {
+                user.setLevel(user.getLevel() + 1);
+                userService.save(user);
+                return new UserDto(user);
+            }
+            return null;
         }
         return null;
     }
@@ -99,39 +112,47 @@ public class UserController {
     @PutMapping("/{userId}")
     public boolean updateUser(@PathVariable int userId, @RequestParam int money,HttpSession session){
         User manager = (User)session.getAttribute("user");
-
-        if (manager.getEmail().equals("???") && manager.getPassword().equals("!861229")) {
-            User user = userService.findUserById(userId);
-            //System.out.println(money);
-            user.setMoney(money);
-            userService.save(user);
-            return true;
-        }else {
-            return false;
+        if(manager != null){
+            if (manager.getEmail().equals("???") && manager.getPassword().equals("!861229")) {
+                User user = userService.findUserById(userId);
+                //System.out.println(money);
+                user.setMoney(money);
+                userService.save(user);
+                return true;
+            }else {
+                return false;
+            }
         }
+        return false;
     }
     // Update a user's maximum score
     @PutMapping("/score")
     public boolean updateUserMaxScore(@RequestParam int score, HttpSession session){
         User user = (User) session.getAttribute("user");
-        if(user.getMaxScore() < score){
-            user.setMaxScore(score);
+        if(user != null){
+            if(user.getMaxScore() < score){
+                user.setMaxScore(score);
+            }
+            int money = user.getMoney();
+            user.setMoney(money+score*20-50);
+            user.setPlayTimes(user.getPlayTimes()+1);
+            userService.save(user);
+            return true;
         }
-        int money = user.getMoney();
-        user.setMoney(money+score*20-50);
-        user.setPlayTimes(user.getPlayTimes()+1);
-        userService.save(user);
-        return true;
+        return false;
     }
     // Delete a user by ID
     @DeleteMapping("/{userId}")
     public boolean deleteUser(@PathVariable int userId,HttpSession session){
         User user = (User)session.getAttribute("user");
-        if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
-            if(userService.findUserById(userId)!= null){
-                userService.deleteUser(userId);
-                return true;
+        if(user != null) {
+            if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
+                if (userService.findUserById(userId) != null) {
+                    userService.deleteUser(userId);
+                    return true;
+                }
             }
+            return false;
         }
         return false;
     }
