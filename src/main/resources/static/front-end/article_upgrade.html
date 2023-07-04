@@ -510,7 +510,7 @@
                         if (data) {
                             //  alert('上傳成功');
                             Swal.fire({ icon: 'success', title: '更新成功' })
-                                .then(() => window.location.href = 'article_mylist.html');
+                                .then(() => window.location.href = `/front-end/article_detail.html?id=${articleId}`);
 
                         } else {
                             alert('更新失敗');
