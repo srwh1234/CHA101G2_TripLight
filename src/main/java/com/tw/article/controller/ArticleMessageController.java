@@ -121,8 +121,8 @@ public class ArticleMessageController {
 		return message;
 	}
 
-	// 處理 POST 請求，刪除文章留言
-	@PostMapping("/deleteArticleMessage/{id}/")
+	// 處理 請求，刪除文章留言
+	@GetMapping("/deleteArticleMessage/{id}/")
 	public boolean deleteArticleMessage(@PathVariable Integer id) {
 		ArticleMessage articlemessage = articleMessageService.findbyId(id);
 		articlemessage.setMessageStatus(1);
