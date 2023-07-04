@@ -9,7 +9,7 @@ http://localhost:8080/testJsp
 新增一個application.properties檔案 並貼上以下內容
 
 # =========================================== Basic Configuration =====================================================
-spring.datasource.url=jdbc:mysql://localhost:3306/cha101_g2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+spring.datasource.url=jdbc:mysql://localhost:3306/cha101_g2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Taipei
 spring.datasource.username=root
 spring.datasource.password=asd880826
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver

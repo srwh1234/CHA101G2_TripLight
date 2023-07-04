@@ -160,7 +160,7 @@ public class ArticleController {
 		return true;
 	}
 	
-	@GetMapping("/articleshow/")
+	@PostMapping("/articleshow/")
 	public boolean articleshow(@PathVariable Integer articleId) {	
 		Article article = articleService.findById(articleId);
 		article.setArticleStatus(0);

@@ -52,108 +52,101 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div> -->
 
-            <!-- 導覽項目 -  -->
-            <li class="nav-item active">
-                <a class="nav-link" href="/front-end/index.html">
-                    <span>TripLight</span></a>
-            </li>
-            <!-- 導覽項目 - 頁面折疊選單 -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <span>員工管理</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="EmployeeQuety.html">查詢資料</a>
-                        <a class="collapse-item" href="EmployeeRevise.html">新增資料</a>
-                    </div>
-                </div>
-            </li>
+           <!-- 導覽項目 -  -->
+			<li class="nav-item active"><a class="nav-link"
+				href="/front-end/index.html"><span>TirpLight</span></a></li>
 
-            <!-- 導覽項目 - 公用程式折疊選單 -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <span>會員管理</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="MemberQuety.html">查詢資料</a>
-                    </div>
-                </div>
-            </li>
+			<!-- 導覽項目 - 頁面折疊選單 -->
+			<li class="nav-item" id="employee-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseTwo" aria-expanded="true"
+				aria-controls="collapseTwo"> <span>員工管理</span>
+			</a>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="EmployeeQuety.html">查詢資料</a> <a
+							class="collapse-item" href="EmployeeRevise.html">新增資料</a>
+					</div>
+				</div></li>
 
+			<!-- 導覽項目 - 公用程式折疊選單 -->
+			<li class="nav-item" id="member-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseUtilities" aria-expanded="true"
+				aria-controls="collapseUtilities"> <span>會員管理</span>
+			</a>
+				<div id="collapseUtilities" class="collapse"
+					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="MemberQuety.html">查詢資料</a>
+					</div>
+				</div></li>
 
-            <!-- 功能頁面 -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <span>廠商管理</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="FirmInert.html">廠商資料</a>
-                        <a class="collapse-item" href="FirmRevise.html">行程管理</a>
+			<!-- 功能頁面 -->
+			<li class="nav-item" id="firm-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapsePages" aria-expanded="true"
+				aria-controls="collapsePages"> <span>廠商管理</span>
+			</a>
+				<div id="collapsePages" class="collapse"
+					aria-labelledby="headingPages" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="FirmInert.html">廠商資料</a> <a
+							class="collapse-item" href="FirmRevise.html">行程管理</a>
 				<!--<a class="collapse-item" href="FirmReport.html">檢舉廠商</a> -->
-                    </div>
-                </div>
-            </li>
+					</div>
+				</div></li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets"
-                    aria-expanded="true" aria-controls="collapseTickets">
-                    <span>票卷管理</span>
-                </a>
-                <div id="collapseTickets" class="collapse" aria-labelledby="headingTickets"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="TicketManagement.html">票卷資料管理</a>
-                        <a class="collapse-item" href="TicketOrderManagement.html">票卷訂單管理</a>
-                        <a class="collapse-item" href="TicketPromotionManagement.html">票卷促銷管理</a>
+			<li class="nav-item" id="ticket-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseTickets" aria-expanded="true"
+				aria-controls="collapseTickets"> <span>票卷管理</span>
+			</a>
+				<div id="collapseTickets" class="collapse"
+					aria-labelledby="headingTickets" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="TicketManagement.html">票卷資料管理</a> <a
+							class="collapse-item" href="TicketOrderManagement.html">票卷訂單管理</a>
+						<a class="collapse-item" href="TicketPromotionManagement.html">票卷促銷管理</a>
 					<!--<a class="collapse-item" href="TicketSalesAnalysis.html">銷售分析</a> -->
-                    </div>
-                </div>
-            </li>
+					</div>
+				</div></li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWebManagement"
-                    aria-expanded="true" aria-controls="collapseWebManagement">
-                    <span>網頁管理</span>
-                </a>
-                <div id="collapseWebManagement" class="collapse" aria-labelledby="headingWebManagement"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="TravelArticles.html">文章管理</a>
+			<li class="nav-item" id="web-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseWebManagement" aria-expanded="true"
+				aria-controls="collapseWebManagement"> <span>網頁管理</span>
+			</a>
+				<div id="collapseWebManagement" class="collapse"
+					aria-labelledby="headingWebManagement"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="TravelArticles.html">文章管理</a>
 					<!-- <a class="collapse-item" href="ReportAriocles.html">檢舉管理</a> -->
-                    </div>
-                </div>
-            </li>
+					</div>
+				</div></li>
 
-
-           
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomerService"
-                    aria-expanded="true" aria-controls="collapseCustomerService">
-                    <span>客服中心</span>
-                </a>
-                <div id="collapseCustomerService" class="collapse" aria-labelledby="headingCustomerService"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="QuestionFormManagement.html">問題表單管理</a>
-                        <a class="collapse-item" href="CustomerServiceChatManagement.html">客服聊天管理</a>
-                    </div>
-                </div>
-            </li>
-
-
-            <!-- 側邊欄切換器（側邊欄） -->
-            <!-- <div class="text-center d-none d-md-inline">
+			<li class="nav-item" id="customer-service"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseCustomerService" aria-expanded="true"
+				aria-controls="collapseCustomerService"> <span>客服中心</span>
+			</a>
+				<div id="collapseCustomerService" class="collapse"
+					aria-labelledby="headingCustomerService"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="QuestionFormManagement.html">問題表單管理</a>
+						<a class="collapse-item" href="CustomerServiceChatManagement.html">客服聊天管理</a>
+					</div>
+				</div></li>
+			<!-- 側邊欄切換器（側邊欄） -->
+			<!-- <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div> -->
-        </ul>
-        <!-- 側邊導覽列結束 -->
+		</ul>
+		<!-- 側邊導覽列結束 -->
+
 
 
         <!-- 內容包裹區域 -->

@@ -629,7 +629,7 @@
                 </div>
             </div>
             <p>
-                <button id="delete"
+                <button type="button" id="upgrade" value="修改"
                     style="margin-right: 120px; border-radius: 9px; float: right;">修改
                 </button>
             </p>
@@ -708,7 +708,11 @@
                 .catch(error => console.log(error));
         })
         //改留言
-        
+        $(document).on('click', '#upgrade', function (e) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleMessageId = urlParams.get("id");
+            console.log(articleMessageId);
+        }); 
     </script>
 
 </body>
