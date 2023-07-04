@@ -811,7 +811,7 @@
     function render_rnd() {
       $('#ticketsContainer').html('');
 
-      for (let ticket of resultRnd) {
+      for (let ticket of resultRnd) {       
         $('#ticketsContainer').append(`
           <div class="col mb-3">
             <div class="image-tour position-relative">
@@ -825,7 +825,7 @@
                 <span class="fa fa-map-marker mr-2"></span>台灣, <span>${ticket.city}</span>
               </h6>
               <h5 class="my-2">${ticket.name}</h5>
-              <p class="">${ticket.description}</p>
+              <p class="">${ticket.description.replace(/<p>/g, '').replace(/<\/p>/g, '')}</p>
             </div>
           </div>
         `);
