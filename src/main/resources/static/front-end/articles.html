@@ -481,6 +481,7 @@
 
     $('.dropdown-menu .dropdown-item').click(function () {
       var selectedId = $(this).attr('id'); // 獲取選中選項的ID
+      console.log(selectedId);
 
       // 發送 AJAX 請求到後端，獲取所有文章
       fetch('/article/articles')
@@ -492,27 +493,26 @@
         }) // 所有文章的陣列
 
       function select_article(data) {
+        
         // 清空文章容器
         $('#articleContainer').html('');
-
-        // 定義 allArticles 變數並將文章資料指派給它
+        
         var allArticles = data;
-
+        // 根據選中的選項篩選文章
+        var filteredArticles = [];
+        allArticles.forEach(function (article) {
+          if (article.articleTypeId === selectedId) {
+            filteredArticles.push(article);
+          }
+        });
+        console.log(filteredArticles);
         for (let i = 0; i <= Math.min(data.length, 8); i++) {
           let article = data[i];
 
           if (!article || article.articleStatus == 1) {
             continue; // 狀態數字為1，跳過此次迴圈
           }
-
-          // 根據選中的選項篩選文章
-          var filteredArticles = [];
-          allArticles.forEach(function (article) {
-            if (article.articleTypeId === selectedId) {
-              filteredArticles.push(article);
-            }
-          });
-
+        
           // 迭代每個篩選後的文章，渲染到網頁上
           filteredArticles.forEach(function (article) {
             var formattedDate = formatDate(article.articlePostTime); // 格式化文章日期

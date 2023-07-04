@@ -26,7 +26,7 @@
 
     <style>
         .container {
-            /* display: flex; */
+            /* display:flex; */
             justify-content: center;
             align-items: center;
         }
@@ -35,6 +35,18 @@
             width: 600px;
             height: 300px;
             overflow: auto;
+        }
+
+        @media (max-width:1400px) and (min-width:1279px) {
+            #detailContainer {
+                width: 50%;
+            }
+        }
+
+        @media (min-width:1401px) and ( max-width:1550px) {
+            #detailContainer {
+                width: 45%;
+            }
         }
     </style>
 
@@ -197,9 +209,9 @@
         <div class="banner_inner_overlay"></div>
     </section>
     <!-- //banner -->
-    <div class="content-wrapper" style="display: flex; justify-content: center;">
-        <div class="inner-container" id="detailContainer" style="width: 50%">
-            <div class="row">
+    <div class="parent-container">
+        <div class="inner-container" id="detailContainer" style="display: flex; justify-content: center;">
+            <div class="row" style="display: flex; justify-content: center;">
                 <!-- 單一文章照片 -->
                 <div class="blog-image col-md-12" style="margin-top: 20px;">
                     <img src="https://picsum.photos/600/300/?random=53"
@@ -264,7 +276,6 @@
             </div>
             <!--留言串上方區塊結束 -->
             <!-- 留言串下方區塊開始 -->
-
         </div>
         <div class="inner-container" id="messageContainer">
             <div class="pd-collapse-row">
@@ -459,7 +470,7 @@
             const articleId = urlParams.get("id");
 
             fetch(`/article/articleId/${articleId}`)
-            // fetch(`http://localhost:8080/article/articleId/${articleId}`)
+                // fetch(`http://localhost:8080/article/articleId/${articleId}`)
                 .then(response => response.json())
                 .then(data => {
                     new_articledetail(data);
@@ -498,12 +509,12 @@
                 let formattedDate = `${year}-${month}-${day}`;
 
                 $('#detailContainer').append(`
-            <div class="row">
-                <div class="blog-image col-md-12" style="margin-top: 20px;">
+            <div class="row" style="display: flex; justify-content: center;">
+                <div class="blog-image" style="margin-top: 20px;">
                     <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image"
                         style="border-radius: 12%; backdrop-filter: blur(6px); width: 600px; height: 300px;" />
                 </div>
-                <div class="blog-info col-md-12">
+                <div class="blog-info">
                     <div class="box-content" style="margin-bottom: 7px;">
                         <h2 class="blog-title bolder"
                             style="display: block; border-left: 8px solid; margin: 0.33em 0 0.30em; padding-left: 1em;">
@@ -568,7 +579,7 @@
             console.log(articleId);
 
             fetch(`/articleMessage/messages/${articleId}`)
-            // fetch(`http://localhost:8080/articleMessage/messages/${articleId}`)
+                // fetch(`http://localhost:8080/articleMessage/messages/${articleId}`)
                 .then(response => response.json())
                 .then(data1 => {
                     console.log(data1);
@@ -617,6 +628,11 @@
                     </span>
                 </div>
             </div>
+            <p>
+                <button type="button" id="upgrade" value="修改"
+                    style="margin-right: 120px; border-radius: 9px; float: right;">修改
+                </button>
+            </p>
         </div>
     </div>  
             `);
@@ -643,7 +659,6 @@
                             </div>
                             <div class="col-sm-6 ">
                                 <input type="hidden" name="articleId" value="${articleId}">
-                                <input type="hidden" name="action" value="insert_reply">
                                 <input type="button" id="confirm" value="送出">
                             </div>
                         </div>
@@ -652,7 +667,7 @@
             </div>
         </div>
     </div> 
-                `);
+             `);
             }
         });
         //增留言
@@ -666,19 +681,18 @@
                 articleMessageId: 0,
                 articleId: articleId,
                 memberId: 2,
-                messagePostContent: $('#replyContent').val(),
+                messagePostcontent: $('#replyContent').val(),
                 messagePostTime: null,
-                messagePrevious: null,
                 messageStatus: 0,
             }
 
             const formData = new FormData();
-            formData.append('Message', JSON.stringify(message));
+            formData.append('message', JSON.stringify(message));
             console.log(message);
 
             //發請求
             fetch(`/articleMessage/addmessage`, {
-            // fetch(`http://localhost:8080/articleMessage/addmessage`, {
+                // fetch(`http://localhost:8080/articleMessage/addmessage`, {
                 method: 'POST',
                 body: formData,
             })
@@ -686,14 +700,19 @@
                 .then(data => {
                     if (data) {
                         Swal.fire({ icon: 'success', title: '留言成功' })
-                            // .then(() => window.location.href = 'article_detail.html');
+                            .then(() => window.location.href = `/front-end/article_detail.html?id=${articleId}`);
                     } else {
                         alert('更新失敗')
                     }
                 })
                 .catch(error => console.log(error));
         })
-
+        //改留言
+        $(document).on('click', '#upgrade', function (e) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleMessageId = urlParams.get("id");
+            console.log(articleMessageId);
+        }); 
     </script>
 
 </body>

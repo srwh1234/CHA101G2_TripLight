@@ -130,7 +130,6 @@ public class ArticleController {
 	// 定義DELETE請求處理方法
 	@GetMapping("/deletearticle/{id}")
 	public boolean deletearticle(@PathVariable Integer id) {	
-		
 		Article article = articleService.findById(id);
 		article.setArticleStatus(1);
 		articleService.save(article);
@@ -152,7 +151,23 @@ public class ArticleController {
 			@RequestParam("article") final String json) {
 		return articleService.uploadPicture(file, json);
 	}
-
+	
+	@GetMapping("/articlehide/")
+	public boolean articlehide(@PathVariable Integer articleId) {	
+		Article article = articleService.findById(articleId);
+		article.setArticleStatus(1);
+		articleService.save(article);
+		return true;
+	}
+	
+	@PostMapping("/articleshow/")
+	public boolean articleshow(@PathVariable Integer articleId) {	
+		Article article = articleService.findById(articleId);
+		article.setArticleStatus(0);
+		articleService.save(article);
+		return true;
+	}
+	
 	@Data
 	public static class DataArticle {
 

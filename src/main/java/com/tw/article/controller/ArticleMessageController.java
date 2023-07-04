@@ -72,14 +72,12 @@ public class ArticleMessageController {
 	@PostMapping("/addmessage")
 	public ArticleMessage addmessage(@RequestParam("message") String jsonString) {
 
+		// service
 		ArticleMessage message = null;
 
 		try {
 			message = new ObjectMapper().readValue(jsonString, ArticleMessage.class);
-			// service
-//			ArticleMessage msg;			
-//			articleMessageRepository.save(msg);
-//			dao.save (msg)
+
 			message.setMessagePostTime(new Timestamp(System.currentTimeMillis()));
 			articleMessageService.save(message);
 		} catch (IOException e) {

@@ -111,7 +111,7 @@ public class ChatGPTService {
         OutputStream outputStream = connection.getOutputStream();
 
         // 將字串轉為位元，並將位元資料寫入輸出流
-        outputStream.write(data.getBytes());
+        outputStream.write(data.getBytes("UTF-8"));
 
         // 強制將緩衝區資料寫入
         outputStream.flush();
@@ -123,7 +123,7 @@ public class ChatGPTService {
         InputStream inputStream = connection.getInputStream();
 
         // 將位元輸入流轉為字元輸入流
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
 
         // 將字元輸入流添加緩衝，減少I/O次數
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -184,7 +184,7 @@ public class ChatGPTService {
             getLocation(sessionID,output.get(sessionID));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("ChatGPT API 連線失敗");
         }
     }
 
