@@ -187,7 +187,6 @@ public class ChatRoomService {
             content = content.replace("\n", "\\n");
             content = content.replace(" ", "\\s");
             // 将数据存入变量
-            System.out.print(content);
             if (outputSink != null) {
                 outputSink.next(content); // 将新内容推送到 Flux
             }
