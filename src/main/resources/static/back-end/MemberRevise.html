@@ -65,11 +65,13 @@ thead tr th, tbody tr td {
 
 			<!-- 導覽項目 -  -->
 			<li class="nav-item active"><a class="nav-link"
-				href="/front-end/index.html"> <span>TirpLight</span></a></li>
+				href="/front-end/index.html"><span>TirpLight</span></a></li>
+
 			<!-- 導覽項目 - 頁面折疊選單 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseTwo"
-				aria-expanded="true" aria-controls="collapseTwo"> <span>員工管理</span>
+			<li class="nav-item" id="employee-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseTwo" aria-expanded="true"
+				aria-controls="collapseTwo"> <span>員工管理</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
@@ -80,23 +82,23 @@ thead tr th, tbody tr td {
 				</div></li>
 
 			<!-- 導覽項目 - 公用程式折疊選單 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> <span>會員管理</span>
+			<li class="nav-item" id="member-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseUtilities" aria-expanded="true"
+				aria-controls="collapseUtilities"> <span>會員管理</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="MemberQuety.html">查詢資料</a> <a
-							class="collapse-item" href="MemberRevise.html">修改資料</a>
+						<a class="collapse-item" href="MemberQuety.html">查詢資料</a>
 					</div>
 				</div></li>
 
-
 			<!-- 功能頁面 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapsePages"
-				aria-expanded="true" aria-controls="collapsePages"> <span>廠商管理</span>
+			<li class="nav-item" id="firm-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapsePages" aria-expanded="true"
+				aria-controls="collapsePages"> <span>廠商管理</span>
 			</a>
 				<div id="collapsePages" class="collapse"
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -107,9 +109,10 @@ thead tr th, tbody tr td {
 					</div>
 				</div></li>
 
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseTickets"
-				aria-expanded="true" aria-controls="collapseTickets"> <span>票卷管理</span>
+			<li class="nav-item" id="ticket-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseTickets" aria-expanded="true"
+				aria-controls="collapseTickets"> <span>票卷管理</span>
 			</a>
 				<div id="collapseTickets" class="collapse"
 					aria-labelledby="headingTickets" data-parent="#accordionSidebar">
@@ -121,9 +124,10 @@ thead tr th, tbody tr td {
 					</div>
 				</div></li>
 
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseWebManagement"
-				aria-expanded="true" aria-controls="collapseWebManagement"> <span>網頁管理</span>
+			<li class="nav-item" id="web-management"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseWebManagement" aria-expanded="true"
+				aria-controls="collapseWebManagement"> <span>網頁管理</span>
 			</a>
 				<div id="collapseWebManagement" class="collapse"
 					aria-labelledby="headingWebManagement"
@@ -134,11 +138,10 @@ thead tr th, tbody tr td {
 					</div>
 				</div></li>
 
-
-
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseCustomerService"
-				aria-expanded="true" aria-controls="collapseCustomerService"> <span>客服中心</span>
+			<li class="nav-item" id="customer-service"><a
+				class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseCustomerService" aria-expanded="true"
+				aria-controls="collapseCustomerService"> <span>客服中心</span>
 			</a>
 				<div id="collapseCustomerService" class="collapse"
 					aria-labelledby="headingCustomerService"
@@ -148,8 +151,6 @@ thead tr th, tbody tr td {
 						<a class="collapse-item" href="CustomerServiceChatManagement.html">客服聊天管理</a>
 					</div>
 				</div></li>
-
-
 			<!-- 側邊欄切換器（側邊欄） -->
 			<!-- <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
