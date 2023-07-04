@@ -4,17 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+
 
 @Service
 @SessionScope
@@ -27,6 +27,9 @@ public class ChatRoomService {
 
     @Value("${API_KEY}")
     private String API_KEY; // 你的 API 密鑰
+
+    private final Logger logger
+            = LoggerFactory.getLogger(this.getClass());
 
     // 創建 Flux 以發送數據
     private FluxSink<String> outputSink;
@@ -50,7 +53,7 @@ public class ChatRoomService {
 
 
     // 創建json 請求主體
-    private String createJSONPayload(String message) throws JsonProcessingException, UnsupportedEncodingException {
+    private String createJSONPayload(String message) throws JsonProcessingException{
         // 建立 Object mapper
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -99,7 +102,7 @@ public class ChatRoomService {
         // 獲取與連線相關的輸出流
         OutputStream outputStream = connection.getOutputStream();
 
-        // 將自串轉為位元，並將位元資料寫入輸出流
+        // 將字串轉為位元，並將位元資料寫入輸出流，備註資料為編碼為UTF-8
         outputStream.write(data.getBytes("UTF-8"));
 
         // 強制將緩衝區資料寫入
@@ -134,7 +137,7 @@ public class ChatRoomService {
                 processLine(line);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.error("ChatGPT API 連線失敗");
         }
     }
 
@@ -153,6 +156,7 @@ public class ChatRoomService {
                 processJsonNode(jsonNode);
             }catch (JsonProcessingException e){
                 // 針對json轉型失敗處理
+                logger.error("json轉型失敗");
             }
         }
     }

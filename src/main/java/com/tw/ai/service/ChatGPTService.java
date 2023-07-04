@@ -184,7 +184,7 @@ public class ChatGPTService {
             getLocation(sessionID,output.get(sessionID));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("ChatGPT API 連線失敗");
         }
     }
 
