@@ -37,7 +37,7 @@
             overflow: auto;
         }
 
-        @media (max-width:1400px) and (min-width:1279px) {
+        /* @media (max-width:1400px) and (min-width:1279px) {
             #detailContainer {
                 width: 50%;
             }
@@ -47,7 +47,7 @@
             #detailContainer {
                 width: 45%;
             }
-        }
+        } */
     </style>
 
     <!-- css files -->
@@ -210,8 +210,10 @@
     </section>
     <!-- //banner -->
     <div class="parent-container">
-        <div class="inner-container" id="detailContainer" style="display: flex; justify-content: center;">
-            <div class="row" style="display: flex; justify-content: center;">
+        <div class="inner-container" id="detailContainer" style="margin-left: 25%; width: 70%;">
+            <div class="row">
+                <!-- style="display: flex; justify-content: center;"> -->
+
                 <!-- 單一文章照片 -->
                 <div class="blog-image col-md-12" style="margin-top: 20px;">
                     <img src="https://picsum.photos/600/300/?random=53"
@@ -277,7 +279,7 @@
             <!--留言串上方區塊結束 -->
             <!-- 留言串下方區塊開始 -->
         </div>
-        <div class="inner-container" id="messageContainer">
+        <div class="inner-container" id="messageContainer" style="margin-left: 25%; width: 50%">
             <div class="pd-collapse-row">
                 <!-- 	留言串開始 -->
                 <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
@@ -509,7 +511,7 @@
                 let formattedDate = `${year}-${month}-${day}`;
 
                 $('#detailContainer').append(`
-            <div class="row" style="display: flex; justify-content: center;">
+            <div class="row">
                 <div class="blog-image" style="margin-top: 20px;">
                     <img src="data:image/*;base64,${article.articlePicture}" class="card-img-top fixed-size-image"
                         style="border-radius: 12%; backdrop-filter: blur(6px); width: 600px; height: 300px;" />
@@ -604,7 +606,7 @@
 
                     $('#messageContainer').append(`
     <br>                
-    <div class="pd-collapse-row">
+    <div class="pd-collapse-row" >
         <div class="d-flex border-top p-2  mt-1" style="background: white; border-radius: 3px;">
                 <div>
                     <div class="avatar avatar-lg " id="Pinf" style="display: inline-block;">
@@ -628,17 +630,11 @@
                     </span>
                 </div>
             </div>
-            <p>
-                <button type="button" id="upgrade" value="修改"
-                    style="margin-right: 120px; border-radius: 9px; float: right;">修改
-                </button>
-            </p>
         </div>
     </div>  
             `);
                 };
                 $('#messageContainer').append(`
-                
                 <div class="collapse show">
         <div class="pd-collapse-box">
             <div class="row align-items-end ">
@@ -677,10 +673,17 @@
             const articleId = urlParams.get("id");
             console.log(articleId);
 
+            let theId = 0;
+            if (sessionStorage.getItem("test-login")) {
+                theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+            } else {
+                theId = null;
+            }
+
             const message = {
                 articleMessageId: 0,
                 articleId: articleId,
-                memberId: 2,
+                memberId: theId,
                 messagePostcontent: $('#replyContent').val(),
                 messagePostTime: null,
                 messageStatus: 0,
@@ -707,12 +710,43 @@
                 })
                 .catch(error => console.log(error));
         })
-        //改留言
-        $(document).on('click', '#upgrade', function (e) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleMessageId = urlParams.get("id");
-            console.log(articleMessageId);
-        }); 
+        //刪留言
+        // <p>
+        //         <button type="button" id="delete" value="刪除"
+        //             style="margin-right: 120px; border-radius: 9px; float: right;">刪除
+        //         </button>
+        // </p>
+        // $(document).on('click', '#delete', function (e) {
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const articleMessageId = urlParams.get("id");
+        //     console.log(articleMessageId);
+
+        //     let theId = 0;
+        //     if (sessionStorage.getItem("test-login")) {
+        //         theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+        //     } else {
+        //         theId = null;
+        //     }
+
+        //     var result = confirm("確定要刪除留言嗎？");
+        //     if (result) {
+        //         const id = $(this).data('id');
+        //         var row = $(this).closest('.row');
+        //         fetch(`/articleMessage/deleteArticleMessage/${id}`)
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 if (data) {
+        //                     alert('刪除成功');
+        //                     var row = document.getElementById("row");
+        //                     row.style.display = "none";
+        //                     let articleStatus = 1;
+        //                 } else {
+        //                     alert('刪除失敗');
+        //                 }
+        //             })
+        //             .catch(error => console.log(error));
+        //     }
+        // }); 
     </script>
 
 </body>

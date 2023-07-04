@@ -152,19 +152,19 @@ public class ArticleController {
 		return articleService.uploadPicture(file, json);
 	}
 	
-	@GetMapping("/articlehide/")
-	public boolean articlehide(@PathVariable Integer articleId) {	
-		Article article = articleService.findById(articleId);
+	@GetMapping("/articlehide/{id}/{status}")
+	public boolean articlehide(@PathVariable int id, @PathVariable int status) {	
+		Article article = articleService.findById(id);
 		article.setArticleStatus(1);
 		articleService.save(article);
 		return true;
 	}
 	
-	@PostMapping("/articleshow/")
-	public boolean articleshow(@PathVariable Integer articleId) {	
-		Article article = articleService.findById(articleId);
+	@GetMapping("/articleshow/{id}/{status}")
+	public boolean articleshow(@PathVariable int id, @PathVariable int status) {	
+		Article article = articleService.findById(id);
 		article.setArticleStatus(0);
-		articleService.save(article);
+		articleService.save(article);	
 		return true;
 	}
 	

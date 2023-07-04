@@ -1061,16 +1061,16 @@
         </div>
         <hr class="my-5">
         <div class="my-5" id="ticketDesc">
-            <p class="">${ticket.description}</p>
+            <p>${ticket.description}</p>
         </div>     
       `);
       $('#ticketContent').html(`
         <h3>商品說明</h3>      
-        <div class="my-3 my-text-content">${ticket.content}</div>
+        <div class="my-3 my-text-content"><p>${ticket.content}</p></div>
       `);
       $('#ticketNote').html(`
         <h3>注意事項</h3>
-        <div class="my-3 my-text-content">${ticket.note}</div>
+        <div class="my-3 my-text-content"><p>${ticket.note}</p></div>
       `);
     }
 
