@@ -1,4 +1,4 @@
-package com.tw.contact.testChat;
+package com.tw.contact.privateChat;
 
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
