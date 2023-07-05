@@ -882,9 +882,9 @@
         //促銷的判斷
         let priceHtml = `<div class="my-ticket-price h4 fw-bold text-dark ms-auto">${ticket.price} 元</div>`;
         if (ticket.promotion) {
-          priceHtml = `
-            <div class="my-mark ms-auto">${ticket.promotion.startDate}~${ticket.promotion.endDate}</div>
-            <div class="my-ticket-price h4 fw-bold text-danger ms-auto">${ticket.promotion.price} 元</div>
+          priceHtml = `            
+              <div class="my-mark ms-auto">${ticket.promotion.startDate}~${ticket.promotion.endDate}</div>
+              <div class="my-ticket-price h4 fw-bold text-danger ms-auto">${ticket.promotion.price} 元</div>            
           `;
         }
 
@@ -906,7 +906,8 @@
                         <span>台灣, ${ticket.city}</span>
                       </small>
                     </div>
-                    <div class="mt-auto d-flex">
+                   
+                    <div class="mt-auto d-flex">                      
                       <div class="my-ratings my-text-lightgray mx-3">
                         <i class="fa fa-star ${ticket.rating >= 1 ? 'on' : ''}"></i>
                         <i class="fa fa-star ${ticket.rating >= 2 ? 'on' : ''}"></i>
@@ -917,6 +918,7 @@
                       <div class="my-text-lightgray">(${ticket.ratingPerson})</div>
                       ${priceHtml}
                     </div>
+                   
                   </div>
                 </div>
               </a>
