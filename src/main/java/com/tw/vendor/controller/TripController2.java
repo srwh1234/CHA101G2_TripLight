@@ -46,4 +46,11 @@ import jakarta.servlet.http.HttpSession;
 		 //System.out.println(trip);
 		 return "成功拿到資料";
 	 }
+	 
+	 @PostMapping("/edittrip")
+	 public String editTrip(@RequestBody final Trip2 trip) {
+		 tripService2.save(trip);
+		 //System.out.println(trip);
+		 return "成功拿到資料";
+	 }
  }

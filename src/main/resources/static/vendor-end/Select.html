@@ -240,14 +240,6 @@
                         <div class="modal-body">
                             <form id="editForm">
                                 <div class="form-group">
-                                    <label for="tripId">行程編號:</label>
-                                    <input type="text" class="form-control" id="tripId">
-                                </div>
-                                <div class="form-group">
-                                    <label for="vendorId">廠商編號:</label>
-                                    <input type="text" class="form-control" id="vendorId">
-                                </div>
-                                <div class="form-group">
                                     <label for="tripName">行程名稱:</label>
                                     <input type="text" class="form-control" id="tripName">
                                 </div>
@@ -390,6 +382,78 @@
      });
 
     });
+
+    $(document).ready(function () {
+    var originalContent; // 儲存原始內容
+
+    // 當編輯按鈕被點擊時
+    $(".btn-edit").click(function () {
+        // 獲取每個表單欄位的原始值
+        originalContent = {
+            tripName: $("#tripName").val(),
+            tripContent: $("#tripContent").val(),
+            tripDay: $("#tripDay").val(),
+            city: $("#city").val(),
+            priceAdult: $("#priceAdult").val(),
+            priceChild: $("#priceChild").val(),
+            minTravelersNo: $("#minTravelersNo").val(),
+            maxTravelersNo: $("#maxTravelersNo").val(),
+            tripDescription: $("#tripDescription").val(),
+            tripNote: $("#tripNote").val()
+        };
+    });
+
+    // 當儲存按鈕被點擊時
+    $("#btnSave").click(function () {
+        // 獲取編輯後的內容
+        var editedContent = {
+            tripName: $("#tripName").val(),
+            tripContent: $("#tripContent").val(),
+            tripDay: $("#tripDay").val(),
+            city: $("#city").val(),
+            priceAdult: $("#priceAdult").val(),
+            priceChild: $("#priceChild").val(),
+            minTravelersNo: $("#minTravelersNo").val(),
+            maxTravelersNo: $("#maxTravelersNo").val(),
+            tripDescription: $("#tripDescription").val(),
+            tripNote: $("#tripNote").val()
+        };
+
+        // 在這裡使用 Ajax 將編輯後的內容傳送給後端儲存到資料庫
+        // 這只是一個簡單的示例，實際上您需要將資料傳送給後端並在後端執行資料庫操作
+        $.ajax({
+            url: "/trip/edittrip", // 後端 API 的 URL
+            method: "POST",
+            data: editedContent,
+            success: function (response) {
+                // 儲存成功後的操作
+                console.log("儲存成功");
+                // 關閉模態框
+                $("#editModal").modal("hide");
+            },
+            error: function (error) {
+                // 發生錯誤時的操作
+                console.error("儲存失敗", error);
+            }
+        });
+    });
+
+    // 當模態框關閉時
+    $("#editModal").on("hidden.bs.modal", function () {
+        // 恢復原始內容到表單欄位
+        $("#tripName").val(originalContent.tripName);
+        $("#tripContent").val(originalContent.tripContent);
+        $("#tripDay").val(originalContent.tripDay);
+        $("#city").val(originalContent.city);
+        $("#priceAdult").val(originalContent.priceAdult);
+        $("#priceChild").val(originalContent.priceChild);
+        $("#minTravelersNo").val(originalContent.minTravelersNo);
+        $("#maxTravelersNo").val(originalContent.maxTravelersNo);
+        $("#tripDescription").val(originalContent.tripDescription);
+        $("#tripNote").val(originalContent.tripNote);
+    });
+ 
+});
 </script>
 
 </html>
