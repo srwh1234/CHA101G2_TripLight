@@ -325,19 +325,16 @@
 <!-- login顯示 -->
 <script>
     let websocket = null;
-
+    let memberId = 0;
     //判斷瀏覽器是否支援websocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://127.0.0.1:8080/websocket/1");
-        // websocket = new WebSocket("wss://triplight.ddns.net/websocket/1");
+        websocket = new WebSocket(`ws://127.0.0.1:8080/websocket/1/${memberId}`);
+        // websocket = new WebSocket(`ws://127.0.0.1:8080/websocket/1/${memberId}`);
     } else {
         alert("您的瀏覽器不支援聊天室服務！")
     }
 
-    //ws連線成功
-    websocket.onopen = function (event) {
-        setMessageInnerHTML("連線成功!", 'red', 2);
-    }
+    websocket.onopen = () => setMessageInnerHTML("正在為您尋找客人員！", 'red', 2)
 
     //當ws發生錯誤
     websocket.onerror = function () {
@@ -381,11 +378,10 @@
         document.getElementById('message').innerHTML += '<span style="color: ' + color + ';">' + innerHTML + '</span>' + brTags;
     }
 
-    //定義用戶發出的訊息
+    //用戶發送的訊息
     function send() {
         var sendMsg = document.getElementById('sendMsg').value;
         if (sendMsg.trim() === "") {
-            // 如果訊息為空，則不進行任何操作
             return;
         }
         setMessageInnerHTML("我 ：" + sendMsg, 'green')

@@ -377,7 +377,7 @@
             console.log(articleId);
 
             fetch(`/article/articleId/${articleId}`)
-            // fetch(`http://localhost:8080/article/articleId/${articleId}`)
+                // fetch(`http://localhost:8080/article/articleId/${articleId}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -482,15 +482,22 @@
                     return;
                 }
 
+                let theId = 0;
+                if (sessionStorage.getItem("test-login")) {
+                    theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+                } else {
+                    theId = null;
+                }
+
                 const article = {
                     articleId: articleId,
-                    memberId: 1,
+                    memberId: theId,
                     articleTypeId: $('input[name="articleTypeId"]:checked').val(),
                     articleTitle: $('#articleTitle-input').val(),
                     articlePostContent: $('#ckeditor').val(),
                     articlePostTime: null,
                     articleStatus: 0,
-                    articleViews: document.articleViews,
+                    articleViews: 1,
                     articlePicture: null,
                 }
 
@@ -501,7 +508,7 @@
 
                 //發請求
                 fetch(`/article/updatearticle`, {
-                // fetch(`http://localhost:8080/article/updatearticle`, {
+                    // fetch(`http://localhost:8080/article/updatearticle`, {
                     method: 'POST',
                     body: formData,
                 })

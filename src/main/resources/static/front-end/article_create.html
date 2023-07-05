@@ -388,9 +388,16 @@
         $('input[type="submit"]').on('click', function (e) {
             e.preventDefault(); // 防止表單提交
 
+            let theId = 0;
+            if (sessionStorage.getItem("test-login")) {
+                theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+            } else {
+                theId = null;
+            }
+
             const article = {
                 articleId: 0,
-                memberId: 1,
+                memberId: theId,
                 articleTypeId: $('input[name="articleTypeId"]:checked').val(),
                 articleTitle: $('#articleTitle-input').val(),
                 articlePostContent: CKEDITOR.instances.editor1.getData(),
@@ -399,6 +406,7 @@
                 articleViews: 1,
                 articlePicture: null,
             }
+
             //類型判斷
             if (!article.articleTypeId) {
                 alert('文章類型必須點選');

@@ -7,5 +7,7 @@ public class VendorLoginResponse {
 	
 	private String vendorName;
 	
+	private int vendorId;
+	
 	private boolean success; 
 }

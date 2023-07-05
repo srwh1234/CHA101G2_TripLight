@@ -39,6 +39,7 @@ public class VendorLoginController {
 			//System.out.println("登入成功");
 			//System.out.println(httpSession.getId());
 			vendorLoginResponse.setVendorName(result.getVendorName());
+			vendorLoginResponse.setVendorId(result.getVendorId());
 			vendorLoginResponse.setSuccess(true);
 			return vendorLoginResponse; 
 		}
