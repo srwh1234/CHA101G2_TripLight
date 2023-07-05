@@ -46,6 +46,8 @@ spring.mail.password=splbinrdwbzyequm
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 
+#mongodb
+spring.data.mongodb.uri=mongodb://localhost:27017/chatapp
 
 
 

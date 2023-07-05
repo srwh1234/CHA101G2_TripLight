@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint(value = "/websocket/{role}/{userId}")
 @Component
 public class SocketController {
-
     //用本地執行緒保存session
     private static ThreadLocal<Session> sessions = new ThreadLocal<Session>();
     //保存上線用戶 String放SessionID
@@ -115,7 +114,7 @@ public class SocketController {
 
     //關閉連線
     @OnClose
-    public void onClose(@PathParam(value = "role") int role, Session session) {
+    public void onClose(Session session, @PathParam(value = "role") int role) {
 
         SocketUserInfo serverInfo = serverSessionMap.get(session.getId());
         Map<String, String> msg = new HashMap<>();
@@ -171,6 +170,7 @@ public class SocketController {
     // 定義一個方法處理用戶和客服端互相傳遞的消息
     @OnMessage
     public void onMessage(String message,@PathParam(value = "role") int role, Session session) {
+
         // 創建一個映射來存儲消息
         Map<String, String> msg = new HashMap<>();
 
