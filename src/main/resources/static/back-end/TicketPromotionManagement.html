@@ -449,7 +449,7 @@
                         let websocket = null;
                         if ('WebSocket' in window) {
                            // websocket = new WebSocket(`ws://localhost:8080/TicketDetail`);
-                           websocket = new WebSocket(`wss://https://triplight.ddns.net//TicketDetail`);
+                           websocket = new WebSocket(`wss://triplight.ddns.net/TicketDetail`);
                         }
                         websocket.onopen = () => {
                             // alert('open');
