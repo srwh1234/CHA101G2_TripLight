@@ -346,10 +346,10 @@
         };
         CKEDITOR.config.removePlugins = 'paragraph'; // 使用 CKEDITOR.config 設定 removePlugins
         CKEDITOR.config.allowedContent = true; // 使用 CKEDITOR.config 設定 allowedContent
-        ClassicEditor.create(document.querySelector('#editor'), {
-            removePlugins: 'paragraph', // 移除內建的段落樣式插件
-            allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
-        });
+        // ClassicEditor.create(document.querySelector('#editor'), {
+        //     removePlugins: 'paragraph', // 移除內建的段落樣式插件
+        //     allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
+        // });
     </script>
 
     <script>
@@ -370,13 +370,13 @@
                         $('.size').text("檔案大小：" + KB + " KB");
                     }
                     // 檢查附加檔案大小
-                    if (e.total > 4000000) {
-                        alert('附加檔案超過4MB上限，請重新選擇一張圖片');
-                        $('.upl').val('');
-                        $('.preview').attr('src', '');
-                        $('.size').text('');
-                        return;
-                    }
+                    // if (e.total > 4000000) {
+                    //     alert('附加檔案超過4MB上限，請重新選擇一張圖片');
+                    //     $('.upl').val('');
+                    //     $('.preview').attr('src', '');
+                    //     $('.size').text('');
+                    //     return;
+                    // }
                     reader.readAsDataURL(input.files[0]);
                 }
             }
