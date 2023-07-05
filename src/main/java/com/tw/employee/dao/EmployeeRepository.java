@@ -17,5 +17,14 @@ public interface EmployeeRepository  extends JpaRepository<Employee , Integer> {
 	 
 	 @Query("SELECT e.employeeAccess FROM Employee e WHERE e.employeeAccount = :employeeAccount")
 	String findEmployeeAccessByEmployeeAccount(@Param("employeeAccount") String employeeAccount);
+	 
+	 boolean existsByEmployeeAccountAndEmployeePassword(String employeeAccount, String employeePassword);
+
+	    default boolean hasSameAccountAndPassword(Employee employee) {
+	        Employee existingEmployee = findByEmployeeAccount(employee.getEmployeeAccount());
+	        return existingEmployee != null && existingEmployee.getEmployeePassword().equals(employee.getEmployeePassword());
+	    }
+	 
+	 
 
 }

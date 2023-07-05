@@ -23,11 +23,11 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
     
+    
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        //System.out.println("employeeAccess: " + employee.getEmployeeAccess()); 
-        Employee createdEmployee = employeeService.saveEmployee(employee);
-        return ResponseEntity.ok(createdEmployee);
+        employeeService.createEmployee(employee);
+        return ResponseEntity.ok(employee);
     }
 
     // 根據ID查

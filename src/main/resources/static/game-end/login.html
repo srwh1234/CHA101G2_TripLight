@@ -39,15 +39,15 @@
       <h2 id="title">Login</h2>
       <form>
         <div class="user-box userName">
-          <input type="text" name="userName" required="" id="userName">
+          <input type="text" name="userName" required id="userName">
           <label>UserName</label>
         </div>
         <div class="user-box email">
-          <input type="text" name="email" required="" id="email">
+          <input type="text" name="email" required id="email">
           <label>Email</label>
         </div>
         <div class="user-box">
-          <input type="password" name="password" required="" id="password">
+          <input type="password" name="password" required id="password">
           <label>Password</label>
         </div>
         <a href="#" class="btn">
@@ -100,13 +100,44 @@
 
   $(".btn").on("click", function (e) {
     e.preventDefault();
-    // 如果為登入畫面
 
+    if (!$('#email').val()) {
+      Swal.fire({
+        position: 'top',
+        title: 'Please Fill in The Email.',
+        timer: 1500,
+        showConfirmButton: false,
+        background: 'rgba(255, 255, 255, .7)'
+      });
+      return
+    }
+    if (!$('#password').val()) {
+      Swal.fire({
+        position: 'top',
+        title: 'Please Fill in The Password.',
+        timer: 1500,
+        showConfirmButton: false,
+        background: 'rgba(255, 255, 255, .7)'
+      });
+      return
+    }
+
+    // 如果為登入畫面
     if ($('#title').text() == "Login") {
       login();
     }
 
     if ($('#title').text() == "Register") {
+      if (!$('#userName').val()) {
+        Swal.fire({
+          position: 'top',
+          title: 'Please Fill in The UserName.',
+          timer: 1500,
+          showConfirmButton: false,
+          background: 'rgba(255, 255, 255, .7)'
+        });
+        return
+      }
       register();
     }
   });

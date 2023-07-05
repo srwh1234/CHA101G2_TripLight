@@ -25,11 +25,13 @@ public class ChatRoomController {
     @PostMapping("/content")
     public Boolean login(@RequestParam String content, HttpSession session){
         User user = (User) session.getAttribute("user");
-        user.setLevel(user.getLevel()-2);
-        userService.save(user);
-        chatRoomService.readResponse(content);
-        //System.out.println(content);
-        return true;
+        if(user != null){
+            user.setLevel(user.getLevel()-2);
+            userService.save(user);
+            chatRoomService.readResponse(content);
+            return true;
+        }
+        return false;
     }
 
     // 這段程式碼是一個使用Spring WebFlux框架實現的Server-Sent Events（SSE）端點。SSE是一種基於HTTP的輕量級通訊協議，它允許服務器向客戶端推送持續的資料流。

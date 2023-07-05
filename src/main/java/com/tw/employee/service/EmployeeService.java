@@ -19,8 +19,13 @@ public class EmployeeService{
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public void createEmployee(Employee employee) {
+        if (employeeRepository.existsByEmployeeAccountAndEmployeePassword(employee.getEmployeeAccount(), employee.getEmployeePassword())) {
+            throw new IllegalArgumentException("相同的帳號和密碼已存在");
+        }
+
+        // 執行新增操作
+        employeeRepository.save(employee);
     }
 
     public List<Employee> getAllEmployees() {

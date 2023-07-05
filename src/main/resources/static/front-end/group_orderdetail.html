@@ -439,7 +439,6 @@
 
     <!-- 載入 Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-    <script src="vendors/jquery/jquery-3.6.4.min.js"></script>
 
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
@@ -594,6 +593,13 @@
                     $('#btn_modal').attr('data-bs-target', '#');
                     $('#btn_modal').on('click', function () {
                         Swal.fire('您已經評論過了唷');
+                    });
+                }else if(editCount === 0 && paymentStatus === 0){
+                    // 資料庫內無評論資料，並且paymentStatus === 1 顯示尚未付款，則評論的功能也無法使用
+                    $('#btn_modal').text('我要評論');
+                    $('#btn_modal').attr('data-bs-target', '#');
+                    $('#btn_modal').on('click', function () {
+                        Swal.fire('尚未付款，還不能評論唷');
                     });
                 }
             });

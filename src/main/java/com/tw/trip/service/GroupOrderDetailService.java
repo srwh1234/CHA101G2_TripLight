@@ -113,9 +113,11 @@ public class GroupOrderDetailService {
                 .setParameter("tripOrderId", tripOrderId)
                 .uniqueResult();
 
+       // 不等於null 裡面有評論
        if(editCount != null){
            return editCount;
        }else {
+           // == null 表示裡面還沒評論過
            return 0;
        }
 

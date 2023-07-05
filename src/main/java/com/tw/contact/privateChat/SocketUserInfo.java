@@ -9,7 +9,7 @@ public class SocketUserInfo {
 
     private Session session;
 
-    private String memberId;
+    private String name;
 
     private String targetSessionId;
 

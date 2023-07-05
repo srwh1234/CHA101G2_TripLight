@@ -283,57 +283,64 @@
 				          }
 
 				   
-				    // 提交表單
-				    $('#employee-form').submit(function(e) {
-				        e.preventDefault(); // 阻止表單默認的提交行為
+				       // 提交表單
+				          $('#employee-form').submit(function(e) {
+				              e.preventDefault(); // 阻止表單默認的提交行為
 
-				        // 獲取表單數據
-				        var employeeName = $('#employee-name').val();
-				        var employeeAccount = $('#employee-department').val();
-				        var employeePassword = $('#employee-position').val();
-				        var employeeTel = $('#employee-phone').val();
-				        var employeeStatus = $('#employee-permission').val();
-				        
-				        //獲取下拉選單的值
-				        var employeeAccess = $("select[id='employee-access'] :selected").text();
-				        
-				        
-				       
-				        // 創建包含表單數據的對象
-				        var formData = {
-				            employeeName: employeeName,
-				            employeeAccount: employeeAccount,
-				            employeePassword: employeePassword,
-				            employeeTel: employeeTel,
-				            employeeStatus: employeeStatus,
-				            employeeAccess: employeeAccess
-				        };
+				              // 獲取表單數據
+				              var employeeName = $('#employee-name').val();
+				              var employeeAccount = $('#employee-department').val();
+				              var employeePassword = $('#employee-position').val();
+				              var employeeTel = $('#employee-phone').val();
+				              var employeeStatus = $('#employee-permission').val();
 
-				
-				        // 發送AJAX請求
-				        $.ajax({
-				            url: $(this).attr('action'),
-				            type: $(this).attr('method'),
-				            data: JSON.stringify(formData),
-				            contentType: "application/json",
-				            success: function(response) {
-				                // 清空表單數據
-				                $('#employee-name').val('');
-				                $('#employee-department').val('');
-				                $('#employee-position').val('');
-				                $('#employee-phone').val('');
-				                $('#employee-permission').val('');
-				                $('#employee-access').val('');
+				              // 獲取下拉選單的值
+				              var employeeAccess = $("select[id='employee-access'] :selected").text();
 
-				                Swal.fire({
-				                    title: "新增成功",
-				                    icon: "success",
-				                    showConfirmButton: false,
-				                    timer: 500
-				                });
-				            },
-				        });
-				    });
+				              // 創建包含表單數據的對象
+				              var formData = {
+				                  employeeName: employeeName,
+				                  employeeAccount: employeeAccount,
+				                  employeePassword: employeePassword,
+				                  employeeTel: employeeTel,
+				                  employeeStatus: employeeStatus,
+				                  employeeAccess: employeeAccess
+				              };
+
+				              // 發送 AJAX 請求
+				              $.ajax({
+				                  url: $(this).attr('action'),
+				                  type: $(this).attr('method'),
+				                  data: JSON.stringify(formData),
+				                  contentType: "application/json",
+				                  success: function(response) {
+				                      // 清空表單數據
+				                      $('#employee-name').val('');
+				                      $('#employee-department').val('');
+				                      $('#employee-position').val('');
+				                      $('#employee-phone').val('');
+				                      $('#employee-permission').val('');
+				                      $('#employee-access').val('');
+
+				                      Swal.fire({
+				                          title: "新增成功",
+				                          icon: "success",
+				                          showConfirmButton: false,
+				                          timer: 500
+				                      });
+				                  },
+				                  error: function(xhr, status, error) {
+				                      var errorMessage = xhr.responseJSON.message;
+				                      Swal.fire({
+				                          title: "新增失敗",
+				                          text: "相同的帳號和密碼已存在，請更換",
+				                          icon: "error",
+				                          showConfirmButton: false,
+				                          timer: 1500
+				                      });
+				                  }
+				              });
+				          });
 
 				    $("#logoutLink").click(function() {
 				        $.ajax({
