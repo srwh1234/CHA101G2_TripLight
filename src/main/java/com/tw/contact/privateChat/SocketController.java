@@ -1,16 +1,18 @@
 package com.tw.contact.privateChat;
 
 
+import com.alibaba.fastjson.JSON;
 import com.tw.employee.dao.EmployeeRepository;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Component;
-import com.alibaba.fastjson.JSON;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 //参数role判断用户角色0是客服，1是用户
@@ -24,6 +26,7 @@ public class SocketController {
     private static Map<String, SocketUserInfo> userSessionMap = new ConcurrentHashMap<>();
     //保存上線客服 String放SessionID
     private static Map<String, SocketUserInfo> serverSessionMap = new ConcurrentHashMap<>();
+    String chatRoomId = UUID.randomUUID().toString();
 
     //連線設定
     @OnOpen
@@ -97,7 +100,6 @@ public class SocketController {
                 //用戶顯示誰在服務
                 msg.put("msg", "客服人員:" + serverInfo.getName() + "正在為您服務！");
                 sendMsg(userInfo.getSession(), JSON.toJSONString(msg));
-
             }
             //沒有連線到客服人員
             else {
@@ -180,6 +182,16 @@ public class SocketController {
             // 判斷客服是否有服務的用戶，如果有，則將消息發送給該用戶
             if (null != serverSessionMap.get(session.getId()).getTargetSessionId()) {
                 sendMsg(userSessionMap.get(serverInfo.getTargetSessionId()).getSession(), JSON.toJSONString(msg));
+                ChatRecordRepository chatRecordRepository = SpringApplicationContext.getBean(ChatRecordRepository.class);
+                ChatRecord chatRecord = new ChatRecord();
+                chatRecord.setChatRoomId(chatRoomId);
+//                chatRecord.setUser();
+                chatRecord.setCustomerName(serverInfo.getName());
+                chatRecord.setChatContent(JSON.toJSONString(msg));
+                chatRecord.setChatTime(LocalDateTime.now());
+                System.out.println(chatRecord);
+                chatRecordRepository.save(chatRecord);
+                System.out.println("成功存進資料庫!!");
             }
         }
         //處理用戶傳訊息給客服
@@ -198,7 +210,6 @@ public class SocketController {
     //異常處理
     @OnError
     public void onError(Session session, Throwable throwable) {
-        //System.out.println("異常!");
         throwable.printStackTrace();
     }
 

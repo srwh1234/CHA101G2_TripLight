@@ -161,6 +161,12 @@
 			<version>4.5.13</version>
 		</dependency>
 
+		<!-- mongodb -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+
 		<!--Jedis相關-->
 		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
 		<dependency>
