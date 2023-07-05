@@ -30,7 +30,11 @@ public class PrizePoolController {
     @GetMapping("/prizePools/update")
     public double getPrizePoolUpdate(HttpSession session) {
         User user = (User) session.getAttribute("user");
+
         PrizePool prizePool = prizePoolRepository.findById(1).orElse(null);
+        if(user == null){
+            return prizePool.getLumpSum();
+        }
         // 如果玩家資金不夠，獎池不會增加
         if(user.getMoney() < 100){
             return prizePool.getLumpSum();
@@ -48,6 +52,9 @@ public class PrizePoolController {
     public double updatePrizePoolToZero(HttpSession session){
         PrizePool prizePool = prizePoolRepository.findById(1).orElse(null);
         User user = (User) session.getAttribute("user");
+        if(user == null){
+            return prizePool.getLumpSum();
+        }
 
         // 避免漏洞玩家
         if (user.getMoney() >= 0) {
