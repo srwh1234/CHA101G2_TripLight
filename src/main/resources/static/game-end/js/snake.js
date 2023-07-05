@@ -120,7 +120,7 @@ function createBean() {
   bean = document.createElement("span");
   let x = null,
     y = null;
-  //     调用随机坐标()，为新豆生成出生坐标
+  // 調用隨機座標()，為新豆生成出生座標
   randomXY();
 
   //     随机坐标(){
