@@ -715,8 +715,6 @@
 
     $(function () {
 
-      //
-
       let websocket = null;
 
       //判斷瀏覽器是否支援websocket
@@ -1017,6 +1015,8 @@
           break;
         case 1:
           //Swal.fire({ icon: 'success', title: '加入購物車成功', });
+          sessionStorage.setItem('ShakeCart', '1')
+          $('img[src$="shoppingCar.svg"]').addClass('shake-animation');
 
           Swal.fire({
             icon: 'success', title: '加入購物車成功',
@@ -1032,6 +1032,7 @@
                 window.location.href = 'tickets.html';
               } else if (res.dismiss === 'cancel') {
                 //查看購物車
+                sessionStorage.removeItem('ShakeCart');
                 window.location.href = 'shopping_car.html';
               }
             })
