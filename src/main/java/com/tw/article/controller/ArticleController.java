@@ -51,10 +51,13 @@ public class ArticleController {
 		
 		DataArticle dataArticle = new DataArticle(article);
 		
-		Member member = memberRepository.findById(article.getMemberId()).orElse(null);
+		Member member = memberRepository.findById(article.getMemberId()).orElse(null);  
 
 		if (member != null) {
 			dataArticle.setMemberName(member.getMemberNameFirst() + member.getMemberNameLast());
+			dataArticle.setMemberId(article.getMemberId());
+			dataArticle.setMemberPic(member.getMemberPic());
+			
 		}
 		return dataArticle;
 	}
@@ -173,6 +176,7 @@ public class ArticleController {
 
 		public DataArticle(Article article) {
 			this.articleId = article.getArticleId();
+			this.memberId = article.getMemberId();
 			this.articleTypeId = article.getArticleTypeId();
 			this.articleTitle = article.getArticleTitle();
 			this.articlePostContent = article.getArticlePostContent();
@@ -185,6 +189,7 @@ public class ArticleController {
 
 		private Integer articleId;
 		private String memberName;
+		private Integer memberId;
 		private Integer articleTypeId;
 		private String articleTitle;
 		private String articlePostContent;
@@ -192,6 +197,6 @@ public class ArticleController {
 		private Integer articleStatus;
 		private Integer articleViews;
 		private byte[] articlePicture;
-//		private Integer articleLikesCount;
+		private byte[] memberPic;
 	}
 }

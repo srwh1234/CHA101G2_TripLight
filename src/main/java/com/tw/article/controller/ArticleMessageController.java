@@ -145,6 +145,8 @@ public class ArticleMessageController {
 				if (member != null) {
 					DataMessage dataMessage = new DataMessage(articleMessage);
 					dataMessage.setMemberName(member.getMemberNameFirst() + member.getMemberNameLast());
+					dataMessage.setMemberPic(member.getMemberPic());
+					dataMessage.setMemberId(articleMessage.getMemberId());
 					result.add(dataMessage);
 				}
 			}
@@ -158,7 +160,7 @@ public class ArticleMessageController {
 		public DataMessage(ArticleMessage articleMessage) {
 			this.articleId = articleMessage.getArticleId();
 			this.articleMessageId = articleMessage.getArticleMessageId();
-//			this.memberId = articleMessage.getMemberId();
+			this.memberId = articleMessage.getMemberId();
 			this.messagePostContent = articleMessage.getMessagePostcontent();
 			this.messagePostTime = articleMessage.getMessagePostTime();
 			this.messagePreviousId = articleMessage.getMessagePreviousId();
@@ -172,13 +174,14 @@ public class ArticleMessageController {
 
 		private Integer articleMessageId;
 		private String memberName;
+		private Integer memberId;
 		private Integer articleId;
 //		private String articleTitle;
 		private String messagePostContent;
 		private Timestamp messagePostTime;
 		private Integer messagePreviousId;
 		private Integer messageStatus;
-//		private byte[] articlePicture;
+		private byte[] memberPic;
 	}
 
 }
