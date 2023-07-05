@@ -67,9 +67,12 @@ public class Member implements Serializable {
 		this.memberEmail = memberEmail;
 	}
 
-	public Member(String memberNameLast, String memberNameFirst, byte[] memberPicArg){
-		this.memberFullName = memberNameLast + memberNameFirst;
-		memberPicBase64 = Base64.getEncoder().encodeToString(memberPicArg);
+	public Member(String memberFullName, byte[] memberPicArg){
+
+			System.out.println("test in member"+ memberFullName);
+			this.memberFullName = memberFullName;
+			memberPic = memberPicArg;
+
 	}
 
 	@Transient

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Transactional
@@ -25,14 +26,29 @@ public class GroupOrderService {
 
     public Member getMemberInfor(Integer memberId){
         final String HQL = """
-                SELECT new com.tw.member.model.Member(memberNameLast, memberNameFirst, memberPic) FROM Member
+                SELECT new com.tw.member.model.Member(concat(memberNameLast, memberNameFirst), memberPic) FROM Member
                 WHERE memberId= :memberId
                 """;
         Member member = session.createQuery(HQL,Member.class)
                 .setParameter("memberId", memberId)
                 .uniqueResult();
 
-        return member;
+        if(member.getMemberFullName() == null ||member.getMemberFullName().trim().equals("") && member.getMemberPic() != null){
+            member.setMemberFullName("會員");
+            member.setMemberPicBase64(Base64.getEncoder().encodeToString(member.getMemberPic()));
+            return member;
+
+        }else if(member.getMemberFullName() == null ||member.getMemberFullName().trim().equals("") && member.getMemberPic() == null){
+            member.setMemberFullName("會員");
+            member.setMemberPicBase64("0");
+            System.out.println("test in service" + member.getMemberPicBase64());
+            return member;
+
+        } else{
+            member.setMemberPicBase64(Base64.getEncoder().encodeToString(member.getMemberPic()));
+            return member;
+
+        }
 
     }
 
