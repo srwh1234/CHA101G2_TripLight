@@ -182,16 +182,16 @@ public class SocketController {
             // 判斷客服是否有服務的用戶，如果有，則將消息發送給該用戶
             if (null != serverSessionMap.get(session.getId()).getTargetSessionId()) {
                 sendMsg(userSessionMap.get(serverInfo.getTargetSessionId()).getSession(), JSON.toJSONString(msg));
-                ChatRecordRepository chatRecordRepository = SpringApplicationContext.getBean(ChatRecordRepository.class);
-                ChatRecord chatRecord = new ChatRecord();
-                chatRecord.setChatRoomId(chatRoomId);
-//                chatRecord.setUser();
-                chatRecord.setCustomerName(serverInfo.getName());
-                chatRecord.setChatContent(JSON.toJSONString(msg));
-                chatRecord.setChatTime(LocalDateTime.now());
-                System.out.println(chatRecord);
-                chatRecordRepository.save(chatRecord);
-                System.out.println("成功存進資料庫!!");
+//                ChatRecordRepository chatRecordRepository = SpringApplicationContext.getBean(ChatRecordRepository.class);
+//                ChatRecord chatRecord = new ChatRecord();
+//                chatRecord.setChatRoomId(chatRoomId);
+////                chatRecord.setUser();
+//                chatRecord.setCustomerName(serverInfo.getName());
+//                chatRecord.setChatContent(JSON.toJSONString(msg));
+//                chatRecord.setChatTime(LocalDateTime.now());
+//                System.out.println(chatRecord);
+//                chatRecordRepository.save(chatRecord);
+//                System.out.println("成功存進資料庫!!");
             }
         }
         //處理用戶傳訊息給客服
