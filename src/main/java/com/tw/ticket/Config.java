@@ -4,17 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 import com.google.maps.GeoApiContext;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
+@EnableWebSocket
 public class Config implements WebMvcConfigurer {
 
 	@Getter
@@ -37,10 +39,9 @@ public class Config implements WebMvcConfigurer {
 
 	// 新增：告訴 Spring MVC 在處理非同步請求時使用你配置的 TaskExecutor，以便提供更好的性能和容錯能力。
 	@Override
-	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+	public void configureAsyncSupport(final AsyncSupportConfigurer configurer) {
 		configurer.setTaskExecutor(threadPoolTaskExecutor());
 	}
-
 
 	// 單純不想在application.properties配置
 	@Bean
@@ -63,4 +64,5 @@ public class Config implements WebMvcConfigurer {
 		executor.initialize();
 		return executor;
 	}
+
 }

@@ -38,6 +38,7 @@ import com.tw.ticket.model.dao.TicketTypeRepository;
 import com.tw.ticket.service.BkImageService;
 import com.tw.ticket.service.BkTicketService;
 import com.tw.ticket.service.ImageService;
+import com.tw.ticket.websocket.TicketDetailMessage;
 
 @Service
 public class BkTicketServiceImpl implements BkTicketService {
@@ -61,6 +62,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 	@Autowired
 	private ImageService imageService;
+
+	@Autowired
+	private TicketDetailMessage ticketDetailMessage;
 
 	/**
 	 * @param reqDto 請求參數
@@ -153,6 +157,9 @@ public class BkTicketServiceImpl implements BkTicketService {
 
 		ticket.setStatus(status);
 		repository.save(ticket);
+
+		// 發送消息給客戶端
+		ticketDetailMessage.send("[updateCount]:" + status);
 		return true;
 	}
 

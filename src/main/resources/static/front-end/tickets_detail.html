@@ -715,6 +715,63 @@
 
     $(function () {
 
+      //
+
+      let websocket = null;
+
+      //判斷瀏覽器是否支援websocket
+      if ('WebSocket' in window) {
+        //websocket = new WebSocket(`ws://localhost:8080/TicketDetail`);
+        websocket = new WebSocket(`wss://https://triplight.ddns.net//TicketDetail`);
+      }
+
+      websocket.onopen = () => {
+        //alert('open');
+      }
+
+      //當ws發生錯誤
+      websocket.onerror = function () {
+        //alert("連線錯誤,請稍後再次嘗試！");
+      };
+
+      //接收來自客服的訊息
+      websocket.onmessage = function (event) {
+        let msg = event.data;
+
+        //console.log(msg);
+        if (msg.startsWith('[bk]:')) {
+          if (ticket.promotion) {
+            return;
+          }
+          const post = JSON.parse(msg.replace('[bk]:', ''));
+          const detail = post.promotionDetails.find(e => e.key.ticketId == ticket.ticketId);
+          if (detail) {
+            //location.reload();
+            ticket.promotion = {
+              price: detail.promotionPrice,
+              startDate: post.startDate,
+              endDate: post.endDate
+            };
+            render_price();
+          }
+        } else if (msg.startsWith('[updateCount]:')) {
+          const status = msg.replace('[updateCount]:', '');
+          ticket.status = parseInt(status);
+          render_price();
+        }
+
+      }
+
+      //離開網頁時關閉ws
+      window.onbeforeunload = function () {
+        websocket.close();
+        //console.log('close');
+      }
+      //
+
+
+
+
       //去後端拿資料
       fetch_data();
 
