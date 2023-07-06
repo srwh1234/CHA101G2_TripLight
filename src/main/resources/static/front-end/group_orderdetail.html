@@ -254,6 +254,10 @@
                         data-bs-toggle="modal" data-bs-target="#exampleModal" data-mdb-ripple-color="white"
                         id="btn_modal">我要評論</button>
                     <br>
+                    <button type="button" class="btn btnCustom btnCustom:hover btn-secondary btn-rounded btn-lg mt-3"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal" data-mdb-ripple-color="white"
+                            id="payment_btn">我要付款</button>
+                    <br>
 
 
                 </div>
@@ -476,10 +480,18 @@
             const tripId = sessionStorage.getItem('tripId');
             const tourGroupId = sessionStorage.getItem('tourGroupId');
 
-            $('#tripPage').on('click', function () {
-                sessionStorage.setItem('tripId', tripId);
-                window.location.href = `/front-end/itinerary_page.html`;
+            $('#tripPage').on('click', function (){
+                window.location.href = `/front-end/itinerary_page.html?tripId=${tripId}`;
             });
+
+            $('#payment_btn').on('click', function (){
+                window.location.href = `/front-end/group_orderpayment.html?memberId=${memberId}&tripOrderId=${tripOrderId}`;
+            });
+
+            // $('#tripPage').on('click', function () {
+            //     sessionStorage.setItem('tripId', tripId);
+            //     window.location.href = `/front-end/itinerary_page.html`;
+            // });
 
             let paymentStatus;
             // ====== 取得旅遊團人員資訊 ======

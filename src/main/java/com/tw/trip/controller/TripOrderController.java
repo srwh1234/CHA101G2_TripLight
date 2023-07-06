@@ -152,9 +152,9 @@ public class TripOrderController {
     }
 
     /**
-     * 綠界回傳的結帳結果
+     * 綠界回傳的結帳結果 ( map stores the result of the EC Pay situation
      * XXX 需要Https才收的到callback <---------------- https 可用ngrok測試
-     * XXX map內的參數有很多
+     * XXX map內的參數有很多，return the infor in
      */
     @PostMapping("/tripCallback")
     public ResponseEntity<String> handleCallback(@RequestParam final Map<String, String> map) {
@@ -182,6 +182,7 @@ public class TripOrderController {
         final String itemName = "TripLight訂單";
 
         final String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
+        // UUID for occur random number
 
         final AioCheckOutALL obj = new AioCheckOutALL();
         obj.setMerchantTradeNo(uuId);
