@@ -27,6 +27,9 @@ const closeIcon = document.querySelector(".close-icon");
 closeIcon.addEventListener("click", (e) => {
 	container.classList.remove("active-popup");
 });
+
+//更改註冊html屬性
+$("#register_account").attr("type", "text");
 //================================登入=====================================
 // 取得按鈕
 const login33 = document.querySelectorAll(".main-btn")[0];
