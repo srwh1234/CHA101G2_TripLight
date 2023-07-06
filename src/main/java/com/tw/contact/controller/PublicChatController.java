@@ -1,6 +1,6 @@
 package com.tw.contact.controller;
 
-import com.tw.contact.model.ChatMessage;
+import com.tw.contact.model.PublicChatMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -8,7 +8,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class ChatController {
+public class PublicChatController {
 
 
 
@@ -20,14 +20,14 @@ public class ChatController {
     @SendTo("/topic/public")
     // 此方法接收一個ChatMessage對象作為載荷（payload），並直接返回這個對象。
     // 這意味著，當一個客戶端發送一個消息到"/chat.sendMessage"目的地時，該消息將被轉發到"/topic/public"目的地。
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+    public PublicChatMessage sendMessage(@Payload PublicChatMessage chatMessage) {
         return chatMessage;
     }
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage,
-                               SimpMessageHeaderAccessor headerAccessor) {
+    public PublicChatMessage addUser(@Payload PublicChatMessage chatMessage,
+                                     SimpMessageHeaderAccessor headerAccessor) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;

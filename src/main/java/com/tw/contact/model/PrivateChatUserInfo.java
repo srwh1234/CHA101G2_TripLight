@@ -1,10 +1,10 @@
-package com.tw.contact.privateChat;
+package com.tw.contact.model;
 
 import jakarta.websocket.Session;
 import lombok.Data;
 
 @Data
-public class SocketUserInfo {
+public class PrivateChatUserInfo {
     private String sessionId;
 
     private Session session;

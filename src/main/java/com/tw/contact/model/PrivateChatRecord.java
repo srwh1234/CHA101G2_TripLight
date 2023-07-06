@@ -1,4 +1,4 @@
-package com.tw.contact.privateChat;
+package com.tw.contact.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Document(collection = "chat_records")
-public class ChatRecord {
+public class PrivateChatRecord {
     @Id
     private String id;
     private String chatRoomId;

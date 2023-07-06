@@ -1,6 +1,6 @@
 package com.tw.contact.listener;
 
-import com.tw.contact.model.ChatMessage;
+import com.tw.contact.model.PublicChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +42,8 @@ public class WebSocketEventListener {
         // 如果用戶名不為空，則記錄一條用戶斷開連接的日誌，並發送一條用戶離開的消息到/topic/public目的地
         if(username != null) {
             logger.info("User Disconnected : " + username);
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessage.MessageType.LEAVE);
+            PublicChatMessage chatMessage = new PublicChatMessage();
+            chatMessage.setType(PublicChatMessage.MessageType.LEAVE);
             chatMessage.setSender(username);
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }

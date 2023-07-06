@@ -1,7 +1,11 @@
-package com.tw.contact.privateChat;
+package com.tw.contact.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.tw.contact.model.PrivateChatRecord;
+import com.tw.contact.model.PrivateChatUserInfo;
+import com.tw.contact.model.dao.ChatRecordRepository;
+import com.tw.SpringApplicationContext;
 import com.tw.employee.dao.EmployeeRepository;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
@@ -10,8 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,13 +22,13 @@ import java.util.concurrent.ConcurrentHashMap;
 //参数role判断用户角色0是客服，1是用户
 @ServerEndpoint(value = "/websocket/{role}/{userId}")
 @Component
-public class SocketController {
+public class PrivateChatController {
     //用本地執行緒保存session
     private static ThreadLocal<Session> sessions = new ThreadLocal<Session>();
     //保存上線用戶 String放SessionID
-    private static Map<String, SocketUserInfo> userSessionMap = new ConcurrentHashMap<>();
+    private static Map<String, PrivateChatUserInfo> userSessionMap = new ConcurrentHashMap<>();
     //保存上線客服 String放SessionID
-    private static Map<String, SocketUserInfo> serverSessionMap = new ConcurrentHashMap<>();
+    private static Map<String, PrivateChatUserInfo> serverSessionMap = new ConcurrentHashMap<>();
     String chatRoomId = UUID.randomUUID().toString();
 
     //連線設定
@@ -42,7 +44,7 @@ public class SocketController {
         if (role == 0) {
             //建立一個客服資訊
             EmployeeRepository employeeRepository = SpringApplicationContext.getBean(EmployeeRepository.class);
-            SocketUserInfo serverInfo = new SocketUserInfo();
+            PrivateChatUserInfo serverInfo = new PrivateChatUserInfo();
             serverInfo.setName(employeeRepository.findByEmployeeId(userId).getEmployeeName());
             serverInfo.setSessionId(session.getId());
             serverInfo.setSession(session);
@@ -52,7 +54,7 @@ public class SocketController {
             //有:進入 無:不進入
             if (findLineUser() != null) {
                 //透過會話id取得用戶資訊
-                SocketUserInfo userInfo = userSessionMap.get(findLineUser());
+                PrivateChatUserInfo userInfo = userSessionMap.get(findLineUser());
                 //將用戶的目標會話id綁定(將用戶綁定客服)
                 userInfo.setTargetSessionId(serverInfo.getSessionId());
                 //將客服的目標會話id綁定(將客服綁定用戶)
@@ -77,7 +79,7 @@ public class SocketController {
         //當用戶進入聊天室
         if (role == 1) {
             //創建一個用戶身分
-            SocketUserInfo userInfo = new SocketUserInfo();
+            PrivateChatUserInfo userInfo = new PrivateChatUserInfo();
             userInfo.setSessionId(session.getId());
             userInfo.setSession(session);
             userInfo.setUserRole("用戶");
@@ -85,7 +87,7 @@ public class SocketController {
             //查詢是否有連線到閒置客服
             if (findFreeServer() != null) {
                 //透過SessionID找到閒置的客服
-                SocketUserInfo serverInfo = serverSessionMap.get(findFreeServer());
+                PrivateChatUserInfo serverInfo = serverSessionMap.get(findFreeServer());
                 //將客服的目標會話id綁定(客服綁定用戶)
                 serverInfo.setTargetSessionId(userInfo.getSessionId());
                 //更新該客服狀態(有綁定目標)
@@ -118,7 +120,7 @@ public class SocketController {
     @OnClose
     public void onClose(Session session, @PathParam(value = "role") int role) {
 
-        SocketUserInfo serverInfo = serverSessionMap.get(session.getId());
+        PrivateChatUserInfo serverInfo = serverSessionMap.get(session.getId());
         Map<String, String> msg = new HashMap<>();
         //客服取消連線
         if (role == 0) {
@@ -137,7 +139,7 @@ public class SocketController {
             userSessionMap.remove(session.getId());
 
             //從客服中解除該用戶的綁定
-            for (SocketUserInfo serverSocketInfo : serverSessionMap.values()) {
+            for (PrivateChatUserInfo serverSocketInfo : serverSessionMap.values()) {
 
                 msg.put("msg", "用戶的問題已得到解決！為您轉接其他用戶！");
                 sendMsg(serverSocketInfo.getSession(), JSON.toJSONString(msg));
@@ -179,21 +181,21 @@ public class SocketController {
         //客服傳訊息給用戶
         if (role == 0) {
             // 從在線客服的映射中獲取當前會話的客服資訊
-            SocketUserInfo serverInfo = serverSessionMap.get(session.getId());
+            PrivateChatUserInfo serverInfo = serverSessionMap.get(session.getId());
             msg.put("msg", "客服人員" + serverInfo.getName() + "：" + message);
             // 判斷客服是否有服務的用戶，如果有，則將消息發送給該用戶
             if (null != serverSessionMap.get(session.getId()).getTargetSessionId()) {
                 sendMsg(userSessionMap.get(serverInfo.getTargetSessionId()).getSession(), JSON.toJSONString(msg));
                 ChatRecordRepository chatRecordRepository = SpringApplicationContext.getBean(ChatRecordRepository.class);
-                ChatRecord chatRecord = new ChatRecord();
-                chatRecord.setChatRoomId(chatRoomId);
+                PrivateChatRecord privateChatRecord = new PrivateChatRecord();
+                privateChatRecord.setChatRoomId(chatRoomId);
 //                chatRecord.setUser();
 
-                chatRecord.setCustomerName(serverInfo.getName());
-                chatRecord.setChatContent(JSON.toJSONString(msg));
+                privateChatRecord.setCustomerName(serverInfo.getName());
+                privateChatRecord.setChatContent(JSON.toJSONString(msg));
                 //因為mongodb 轉換進去永遠是UTC+0故它會-8小時,所以我們加8來抵銷
-                chatRecord.setChatTime(LocalDateTime.now().plusHours(8));
-                chatRecordRepository.save(chatRecord);
+                privateChatRecord.setChatTime(LocalDateTime.now().plusHours(8));
+                chatRecordRepository.save(privateChatRecord);
                 System.out.println(LocalDateTime.now());
                 System.out.println("成功存進資料庫!!");
             }
@@ -203,7 +205,7 @@ public class SocketController {
             // 將用戶的ID和消息添加到結果映射中
             msg.put("msg", "用戶" + session.getId() + "：" + message);
 
-            SocketUserInfo userInfo = userSessionMap.get(session.getId());
+            PrivateChatUserInfo userInfo = userSessionMap.get(session.getId());
             // 從上線中用戶找到該用戶並找到他的目標id不為null時發送訊息
             if (userSessionMap.get(session.getId()).getTargetSessionId() != null) {
                 sendMsg(serverSessionMap.get(userInfo.getTargetSessionId()).getSession(), JSON.toJSONString(msg));
@@ -233,7 +235,7 @@ public class SocketController {
         // 檢查在線用戶的map是否有元素
         if (userSessionMap.size() > 0) {
             // 遍歷在線用戶的map
-            for (SocketUserInfo UserInfo : userSessionMap.values()) {
+            for (PrivateChatUserInfo UserInfo : userSessionMap.values()) {
                 // 檢查用戶是否沒有被客服服務，即目標會話ID是否為空
                 if (null == UserInfo.getTargetSessionId()) {
                     // 如果是，返回該用戶的會話ID
@@ -250,7 +252,7 @@ public class SocketController {
         // 檢查在線客服的map是否有元素
         if (serverSessionMap.size() > 0) {
             // 遍歷在線客服的map
-            for (SocketUserInfo serverInfo : serverSessionMap.values()) {
+            for (PrivateChatUserInfo serverInfo : serverSessionMap.values()) {
                 // 檢查客服是否沒有在服務用戶，即目標會話ID是否為空
                 if (null == serverInfo.getTargetSessionId()) {
                     // 如果是，返回該客服的會話ID

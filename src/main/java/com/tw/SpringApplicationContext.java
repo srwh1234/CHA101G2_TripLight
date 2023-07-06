@@ -1,4 +1,4 @@
-package com.tw.contact.privateChat;
+package com.tw;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
