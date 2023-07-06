@@ -93,6 +93,7 @@
         let mail = document.getElementById("vendor_email");
 		let account = document.getElementById("login_account");
         let password = document.getElementById("login_password");
+		password.type = "password";
         let mailError = document.getElementById("mail-error");
 		let accountError = document.getElementById("account-error");
         let passwordError = document.getElementById("password-error");
@@ -101,6 +102,7 @@
         let mailValue = mail.value.trim();
 		let accountValue = account.value.trim();
         let passwordValue = password.value.trim();
+
 
 		$(".signinbutton").on("click", function (e) {
       	e.preventDefault();

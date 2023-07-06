@@ -150,7 +150,7 @@
             <h3>註冊</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account"
+                    <i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account"
                         required /> <label for="">使用者名稱</label>
                 </div>
                 <div class="input-box">
@@ -160,6 +160,7 @@
                 <div class="input-box">
                     <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
                         required /> <label for="">密碼</label>
+                    <h6 id="pwdHint">密碼設定請超過八碼</h6>
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />我同意所有條款</label>
@@ -355,7 +356,7 @@
 
         $(document).ready(function () {
             fetch('/article/articles')
-            // fetch('http://localhost:8080/article/articles')
+                // fetch('http://localhost:8080/article/articles')
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -438,7 +439,7 @@
                             "sInfoEmpty": "目前共有 0 筆紀錄",
                             "sInfoFiltered": " ",
                             "sInfoPostFix": "",
-                            "sSearch": "關鍵字尋找:",
+                            "sSearch": "關鍵字查詢:",
                             "sUrl": "",
                             "sEmptyTable": "尚未有資料紀錄存在",
                             "sLoadingRecords": "載入資料中...",

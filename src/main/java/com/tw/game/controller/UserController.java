@@ -26,7 +26,11 @@ public class UserController {
     @GetMapping()
     public UserDto getUser(HttpSession session){
         User user = (User)session.getAttribute("user");
-        return new UserDto(user);
+        if(user != null){
+            return new UserDto(user);
+        }else {
+            return new UserDto("SomethingWrong",1,1,0);
+        }
     }
 
 
@@ -34,11 +38,14 @@ public class UserController {
     @GetMapping("/all")
     public List<User> getAllUsers(HttpSession session){
         User user = (User)session.getAttribute("user");
-        if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
-            return userService.findAllUser();
-        } else {
-            return null;
+        if(user != null){
+            if (user.getEmail().equals("???") && user.getPassword().equals("!861229")) {
+                return userService.findAllUser();
+            } else {
+                return null;
+            }
         }
+        return null;
     }
 
     // Get all users sorted by score

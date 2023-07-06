@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.tw.ticket.model.PromotionDetail;
 import com.tw.ticket.model.PromotionDetail.PrimaryKey;
 
+import jakarta.transaction.Transactional;
+
 @Repository
 public interface PromotionDetailRepository extends JpaRepository<PromotionDetail, PrimaryKey> {
 
@@ -19,4 +21,7 @@ public interface PromotionDetailRepository extends JpaRepository<PromotionDetail
 			+ "AND CURRENT_TIMESTAMP >= p.startDate "	//
 			+ "AND CURRENT_TIMESTAMP <= endDate")//
 	public List<PromotionDetail> findUsableByTicketId(@Param("id") int ticketId);
+
+	@Transactional
+	public void deleteByKeyPromotionId(int promotionId);
 }

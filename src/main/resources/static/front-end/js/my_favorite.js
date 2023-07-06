@@ -52,7 +52,7 @@ $(document).ready(function () {
 		url: "/img/members/" + theId,
 		method: "GET",
 		success: function (response) {
-			const imgUrl =  this.url;
+			const imgUrl = this.url;
 			$('.rounded-circle').attr('src', imgUrl);
 			console.log("圖片載入成功");
 		},
@@ -169,11 +169,11 @@ function generateGroup() {
                      <div class="box">
                          <p class="Number dynamic-text">${g_favorite[i].tripContent}</p>
                      </div>
-                     <div id="allPrice">
+                     <div id="allPrice2">
                          <p class="price">成人 TWD </p>
                          <p class="realPrice">${g_favorite[i].priceAdult}</p>
                      </div>
-                     <div id="allPrice">
+                     <div id="allPrice2">
                          <p class="price">小孩 TWD </p>
                          <p class="realPrice">${g_favorite[i].priceChild}</p>
                      </div>

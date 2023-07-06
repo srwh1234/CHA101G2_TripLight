@@ -9,6 +9,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
 body a {
   text-decoration: none;
   transition: 0.5s all;
@@ -37,6 +38,7 @@ input[type="search"] {
   -moz-transition: 0.5s all;
   -o-transition: 0.5s all;
   -ms-transition: 0.5s all;
+
 }
 
 h1,
@@ -48,6 +50,7 @@ h6 {
   margin: 0;
   color: #323648;
 }
+
 li {
   list-style-type: none;
 }
@@ -74,6 +77,7 @@ header {
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
 .icon_triplight {
   width: 3vw;
 }
@@ -100,6 +104,7 @@ nav {
   border: none;
   /* font-family: "Raleway", sans-serif; */
 }
+
 #logo a span.fa {
   color: #fff;
 }
@@ -142,6 +147,7 @@ nav a {
   font-size: 15px;
   vertical-align: middle;
 }
+
 nav li.booking a {
   border-radius: 30px;
   background: #09777d;
@@ -153,6 +159,7 @@ nav li.booking a {
   letter-spacing: 1px;
   font-size: 14px;
 }
+
 nav li.booking a:hover {
   color: #4bc3ca;
 }
@@ -182,7 +189,7 @@ nav ul ul {
 }
 
 /* Display Dropdowns on Hover */
-nav ul li:hover > ul {
+nav ul li:hover>ul {
   display: inherit;
 }
 
@@ -193,11 +200,13 @@ nav ul ul li {
   display: list-item;
   position: relative;
 }
+
 nav ul ul li a {
   color: #333;
   padding: 5px 10px;
   display: block;
 }
+
 /* Second, Third and more Tiers	
  * We move the 2nd and 3rd etc tier dropdowns to the left
  * by the amount of the width of the first tier.
@@ -210,7 +219,7 @@ nav ul ul ul li {
 }
 
 /* Change ' +' in order to change the Dropdown symbol */
-li > a:only-child:after {
+li>a:only-child:after {
   content: "";
 }
 
@@ -225,22 +234,26 @@ li > a:only-child:after {
     text-align: center;
     float: none;
   }
+
   .menu li.active a {
     color: #09777d;
   }
+
   nav ul li span {
     color: #333;
   }
+
   nav {
     margin: 0;
   }
+
   nav a {
     color: #333;
   }
 
   /* Hide the navigation menu by default */
   /* Also hide the  */
-  .toggle + a,
+  .toggle+a,
   .menu {
     display: none;
   }
@@ -256,6 +269,7 @@ li > a:only-child:after {
     background-color: #09777d;
     color: #fff;
   }
+
   .menu .toggle {
     float: none;
     text-align: center;
@@ -273,7 +287,7 @@ li > a:only-child:after {
   }
 
   /* Display Dropdown when clicked on Parent Lable */
-  [id^="drop"]:checked + ul {
+  [id^="drop"]:checked+ul {
     display: block;
     background: #fff;
     padding: 15px 0;
@@ -287,15 +301,19 @@ li > a:only-child:after {
     width: 100%;
     padding: 7px 0;
   }
+
   nav a {
     padding: 5px 0;
   }
+
   nav a:hover {
     color: #333;
   }
+
   .login-icon {
     text-align: center;
   }
+
   nav ul ul .toggle,
   nav ul ul a {
     padding: 0 40px;
@@ -322,12 +340,15 @@ li > a:only-child:after {
   nav ul ul a {
     background-color: #fff;
   }
+
   nav ul ul li a {
     font-size: 15px;
   }
+
   ul.inner-ul {
     padding: 0 !important;
   }
+
   /* Hide Dropdowns by Default */
   nav ul ul {
     float: none;
@@ -337,8 +358,8 @@ li > a:only-child:after {
   }
 
   /* Hide menus on hover */
-  nav ul ul li:hover > ul,
-  nav ul li:hover > ul {
+  nav ul ul li:hover>ul,
+  nav ul li:hover>ul {
     display: none;
   }
 
@@ -361,10 +382,12 @@ li > a:only-child:after {
     width: 94%;
   }
 }
+
 .user span.fa {
   font-size: 25px;
   color: #fff;
 }
+
 /*-- //header --*/
 
 /* 登入畫面 login */
@@ -391,10 +414,12 @@ li > a:only-child:after {
   transition: all ease 0.35s;
   background-color: #fff;
 }
+
 .main-box {
   padding: 50px;
   width: 100%;
 }
+
 .main-box h3 {
   color: #162938;
   text-align: center;
@@ -444,8 +469,8 @@ li > a:only-child:after {
 }
 
 /* 點擊input label 移動 */
-.input-box input:focus ~ label,
-.input-box input:valid ~ label {
+.input-box input:focus~label,
+.input-box input:valid~label {
   top: -3px;
 }
 
@@ -462,9 +487,11 @@ li > a:only-child:after {
   margin-right: 5px;
   accent-color: #162938;
 }
+
 .check a {
   color: #162938;
 }
+
 .check a:hover {
   text-decoration: underline;
 }
@@ -487,10 +514,12 @@ li > a:only-child:after {
   font-weight: 500;
   margin: 30px 0 10px;
 }
+
 .register p a {
   font-weight: 600;
   color: #162938;
 }
+
 .register p a:hover {
   text-decoration: underline;
 }
@@ -541,14 +570,19 @@ li > a:only-child:after {
 }
 
 #login-container {
-  position: fixed; /* 元素固定在視口中 */
-  top: 50%; /* 從上方居中 */
-  left: 50%; /* 從左側居中 */
-  transform: translate(-50%, -50%) scale(0); /* 將元素向左和向上移動 50%，並進行縮放 */
+  position: fixed;
+  /* 元素固定在視口中 */
+  top: 50%;
+  /* 從上方居中 */
+  left: 50%;
+  /* 從左側居中 */
+  transform: translate(-50%, -50%) scale(0);
+  /* 將元素向左和向上移動 50%，並進行縮放 */
 }
 
 #login-container.active-popup {
-  transform: translate(-50%, -50%) scale(1); /* 顯示元素 */
+  transform: translate(-50%, -50%) scale(1);
+  /* 顯示元素 */
 }
 
 /* 登入畫面 login*/
@@ -569,7 +603,7 @@ li > a:only-child:after {
   transition: transform 1s ease;
 }
 
-#snake-icon{
+#snake-icon {
   background-color: #0dcaf0;
   position: fixed;
   bottom: 50px;
@@ -585,7 +619,8 @@ li > a:only-child:after {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: transform 1s ease;
 }
-#snake-icon:hover{
+
+#snake-icon:hover {
   transform: scale(2);
 }
 
@@ -619,10 +654,12 @@ li > a:only-child:after {
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-30px);
   }
 }
+
 /* 地圖 */
 
 /* banner style */
@@ -689,6 +726,7 @@ li > a:only-child:after {
   text-transform: capitalize;
   font-weight: 200;
 }
+
 .banner-info a.btn {
   border: 2px solid #fff;
   border-radius: 0px;
@@ -700,6 +738,7 @@ li > a:only-child:after {
   transition: all 0.5s ease;
   /* font-family: "Raleway", sans-serif; */
 }
+
 .banner-info a.btn:hover {
   color: #09777d;
   background-color: #fff;
@@ -711,11 +750,13 @@ li > a:only-child:after {
 .banner-top3 {
   min-height: 750px;
 }
+
 .overlay {
   height: 100vh;
   min-height: 750px;
   background: rgba(0, 0, 0, 0.5);
 }
+
 .overlay1 {
   min-height: 750px;
   background: rgba(0, 0, 0, 0.6);
@@ -731,10 +772,12 @@ li > a:only-child:after {
   font-weight: 400;
   letter-spacing: 1px;
 }
+
 .about-right img.abt-image {
   border-radius: 6%;
   width: 100%;
 }
+
 /*-- //about --*/
 
 /*-- stats --*/
@@ -765,9 +808,11 @@ p.count-text {
 .book {
   background: #09777d;
 }
+
 .book h2.heading {
   color: #fff;
 }
+
 .grid-info h4 {
   color: #fff;
   letter-spacing: 2px;
@@ -775,9 +820,11 @@ p.count-text {
   font-size: 21px;
   text-transform: uppercase;
 }
+
 .grid-info p {
   color: #ddd;
 }
+
 .icon {
   background: #fff;
   width: 80px;
@@ -786,14 +833,17 @@ p.count-text {
   margin: 0em auto 1.5em;
   border-radius: 50%;
 }
+
 .icon span.fa {
   font-size: 25px;
   line-height: 80px;
   color: #09777d;
 }
+
 .grid-info {
   padding: 0 1em;
 }
+
 /*-- book --*/
 
 /*--footer--*/
@@ -836,6 +886,7 @@ p.count-text {
   color: #707070;
   margin: 5px 0;
 }
+
 .footer-grid:nth-child(2) {
   border-left: 1px solid #1b1b1b;
   border-right: 1px solid #1b1b1b;
@@ -897,11 +948,13 @@ button.btn1 {
   float: right;
   width: 15%;
 }
+
 .footer-grid_section_1 form {
   border: 1px solid #808080;
   width: 100%;
   margin-top: 20px;
 }
+
 ul.social_section_1info li {
   display: inline-block;
 }
@@ -918,6 +971,7 @@ ul.social_section_1info a {
   line-height: 35px;
   letter-spacing: 1px;
 }
+
 ul.social_section_1info a:hover {
   color: #fff;
 }
@@ -925,6 +979,7 @@ ul.social_section_1info a:hover {
 .phone p a {
   color: #808080;
 }
+
 .phone p a:hover {
   color: #fff;
 }
@@ -933,14 +988,17 @@ ul.links li {
   list-style-type: none;
   margin: 5px 0;
 }
+
 ul.links li a {
   color: #707070;
   font-size: 15px;
   letter-spacing: 0.5px;
 }
+
 ul.links li a:hover {
   color: #999;
 }
+
 .footer-title a i {
   font-size: 1em;
   width: 55px;
@@ -952,6 +1010,7 @@ ul.links li a:hover {
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.69);
 }
+
 .footer-title a {
   font-size: 33px;
   text-transform: capitalize;
@@ -963,18 +1022,22 @@ li.facebook a {
   color: #fff;
   background: #3b5998;
 }
+
 li.twitter a {
   color: #fff;
   background: #1da1f2;
 }
+
 li.google a {
   color: #fff;
   background: #dd4b39;
 }
+
 li.linkedin a {
   color: #fff;
   background: #0077b5;
 }
+
 /*--//footer--*/
 
 /*-- text --*/
@@ -988,6 +1051,7 @@ li.linkedin a {
   -moz-background-size: cover;
   position: relative;
 }
+
 .overlay-inner {
   background: rgba(0, 0, 0, 0.5);
 }
@@ -996,9 +1060,11 @@ li.linkedin a {
   font-size: 4em;
   font-weight: 600;
 }
+
 .test-info p {
   color: #eee;
 }
+
 h4.tittle {
   font-size: 3.3em;
   color: #fff;
@@ -1008,6 +1074,7 @@ h4.tittle {
   letter-spacing: 2px;
   margin: 0;
 }
+
 .test-info a {
   border: 2px solid #fff;
   border-radius: 0px;
@@ -1018,6 +1085,7 @@ h4.tittle {
   text-transform: capitalize;
   display: inline-block;
 }
+
 .test-info a:hover {
   background-color: #fff;
   color: #09777d;
@@ -1026,6 +1094,7 @@ h4.tittle {
 .test-info {
   max-width: 700px;
 }
+
 /*-- //text --*/
 
 /*-- packages --*/
@@ -1034,10 +1103,12 @@ h3.heading,
 h2.heading {
   font-size: 43px;
 }
+
 p.text {
   max-width: 700px;
   margin: auto;
 }
+
 .package-info {
   padding: 1.5em 1em;
   background: #fafafa;
@@ -1056,6 +1127,7 @@ p.text {
   font-size: 15px;
   display: none;
 }
+
 .storage-planning a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -1070,9 +1142,11 @@ p.text {
   margin-top: 10px;
   display: inline-block;
 }
+
 .view-package a:hover {
   color: #4bc3ca;
 }
+
 .package-info h5 {
   text-transform: capitalize;
   font-weight: 600;
@@ -1081,22 +1155,28 @@ p.text {
   line-height: 1.5em;
   max-height: 3em;
   min-height: 3em;
-  overflow: hidden; /* 控制文字溢出部分隱藏 */
+  overflow: hidden;
+  /* 控制文字溢出部分隱藏 */
 }
+
 .package-info p {
   font-size: 15px;
   line-height: 1.6em;
   max-height: 4.5em;
   min-height: 4.5em;
-  text-overflow: ellipsis; /* 超出部分顯示省略號 */
-  overflow: hidden; /* 控制文字溢出部分隱藏 */
+  text-overflow: ellipsis;
+  /* 超出部分顯示省略號 */
+  overflow: hidden;
+  /* 控制文字溢出部分隱藏 */
 }
+
 .package-info h6 {
   font-size: 16px;
   letter-spacing: 1px;
   color: #707579;
   text-transform: capitalize;
 }
+
 .image-tour {
   overflow: hidden;
   max-height: 15em;
@@ -1128,21 +1208,26 @@ p.text {
   padding: 5px 10px;
   color: #fff;
 }
+
 .package-info h6 span.fa {
   color: #09777d;
 }
+
 ul.listing li {
   letter-spacing: 0px;
   color: #707579;
   font-size: 15px;
 }
+
 ul.listing li span {
   font-weight: 600;
 }
+
 ul.listing li span.fa {
   font-weight: normal;
   color: #09777d;
 }
+
 /*-- //packages --*/
 
 /* destinations */
@@ -1158,14 +1243,17 @@ ul.listing li span.fa {
   color: #fff;
   letter-spacing: 1px;
 }
+
 h4.destination {
   text-transform: uppercase;
   font-size: 20px;
   letter-spacing: 3px;
 }
+
 .rating ul li {
   display: inline-block;
 }
+
 .rating ul li span.fa {
   color: #fff;
   font-size: 13px;
@@ -1178,6 +1266,7 @@ h4.destination {
   top: 1%;
   padding: 0px 10px 5px;
 }
+
 .caption a {
   font-size: 15px;
   background: none;
@@ -1214,11 +1303,9 @@ h4.destination {
 }
 
 /* destinations responsive */
-@media (max-width: 1080px) {
-}
+@media (max-width: 1080px) {}
 
-@media (max-width: 1024px) {
-}
+@media (max-width: 1024px) {}
 
 @media (max-width: 991px) {
   .destinations-grids {
@@ -1230,17 +1317,13 @@ h4.destination {
   }
 }
 
-@media (max-width: 736px) {
-}
+@media (max-width: 736px) {}
 
-@media (max-width: 480px) {
-}
+@media (max-width: 480px) {}
 
-@media (max-width: 440px) {
-}
+@media (max-width: 440px) {}
 
-@media (max-width: 414px) {
-}
+@media (max-width: 414px) {}
 
 @media (max-width: 384px) {
   .destinations-grids {
@@ -1248,8 +1331,7 @@ h4.destination {
   }
 }
 
-@media (max-width: 320px) {
-}
+@media (max-width: 320px) {}
 
 /* //destinations responsive */
 /* //destinations */
@@ -1258,9 +1340,11 @@ h4.destination {
 .copyright {
   background: #222;
 }
+
 .copyright p a {
   color: #aaa;
 }
+
 /*-- //copy right --*/
 
 /*-- move top --*/
@@ -1282,8 +1366,10 @@ a.move-top span {
   height: 36px;
   border: transparent;
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
   background: #09777d;
   border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -1309,6 +1395,7 @@ a.move-top span:hover {
   -moz-background-size: cover;
   min-height: 300px;
 }
+
 .banner_inner_overlay {
   background: rgba(0, 0, 0, 0.5);
   min-height: 300px;
@@ -1361,10 +1448,12 @@ a.move-top span:hover {
   border-radius: 10px;
   height: 17em;
 }
+
 .inner-sec-grid span.fa {
   font-size: 2em;
   color: #09777d;
 }
+
 .choose {
   background: url(../images/choose.jpg) no-repeat center;
   background-size: cover;
@@ -1373,12 +1462,15 @@ a.move-top span:hover {
   -o-background-size: cover;
   -moz-background-size: cover;
 }
+
 .choose h2.heading {
   color: #fff;
 }
+
 .overlay-all {
   background: rgba(0, 0, 0, 0.5);
 }
+
 .inner-www-wrap p {
   font-size: 15px;
   color: #ccc;
@@ -1434,15 +1526,15 @@ a.move-top span:hover {
   cursor: pointer;
 }
 
-.tab-main input:checked + label {
+.tab-main input:checked+label {
   background: #09777d;
   color: #fff;
 }
 
-.tab-main #tab1:checked ~ #content1,
-.tab-main #tab2:checked ~ #content2,
-.tab-main #tab3:checked ~ #content3,
-.tab-main #tab4:checked ~ #content4 {
+.tab-main #tab1:checked~#content1,
+.tab-main #tab2:checked~#content2,
+.tab-main #tab3:checked~#content3,
+.tab-main #tab4:checked~#content4 {
   display: block;
 }
 
@@ -1460,6 +1552,11 @@ a.move-top span:hover {
 }
 
 /*-- //tabs --*/
+
+.text-li {
+  height: 10px;
+  font-size: 10px;
+}
 
 /*-- testimonials --*/
 
@@ -1498,15 +1595,18 @@ a.move-top span:hover {
   letter-spacing: 1px;
   margin: 1em 0;
 }
+
 .adress-www-info a {
   color: #777;
   letter-spacing: 1px;
 }
+
 .adress-icon span.fa {
   color: #09777d;
   font-size: 2em;
   vertical-align: middle;
 }
+
 .contact-forms input,
 .contact-forms textarea,
 .contact-forms select {
@@ -1520,11 +1620,13 @@ a.move-top span:hover {
   border-radius: 0px;
   outline: none !important;
 }
+
 .contact-forms select {
   padding: 0em 1em;
   height: 52px !important;
   color: #777;
 }
+
 button.sent-butnn {
   font-size: 16px;
   text-decoration: none;
@@ -1550,9 +1652,11 @@ button.sent-butnn:hover {
   background: #fff;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
 }
+
 .contact-right {
   margin-left: 1em;
 }
+
 .contact-right h4 {
   font-size: 30px;
   text-transform: capitalize;
@@ -1560,17 +1664,20 @@ button.sent-butnn:hover {
   line-height: 40px;
   font-weight: 600;
 }
+
 .contact-right h5 {
   font-size: 25px;
   letter-spacing: 1px;
   font-weight: 600;
 }
+
 .map iframe {
   border: none;
   outline: none;
   height: 350px;
   width: 100%;
 }
+
 /*-- contact --*/
 
 /* map */
@@ -1579,6 +1686,7 @@ button.sent-butnn:hover {
   width: 50vw;
   border-radius: 10px;
 }
+
 /* map */
 
 /*-- services --*/
@@ -1586,6 +1694,7 @@ button.sent-butnn:hover {
   font-size: 2em;
   color: #09777d;
 }
+
 .main-title-text h4 {
   font-size: 22px;
   text-transform: capitalize;
@@ -1597,6 +1706,7 @@ button.sent-butnn:hover {
   color: #fff;
   padding: 20px;
 }
+
 /*-- //services --*/
 
 /* places */
@@ -1608,11 +1718,13 @@ h3.tittle {
   max-width: 700px;
   font-size: 13px;
 }
+
 .right-cont ul li span.fa {
   color: #09777d;
   margin-right: 3px;
   font-size: 14px;
 }
+
 p.duration {
   letter-spacing: 0px;
 }
@@ -1638,6 +1750,7 @@ p.duration {
 ::-webkit-scrollbar-thumb:hover {
   background: #4bc3ca;
 }
+
 /* scrollar bar */
 
 /* //places */
@@ -1645,6 +1758,7 @@ p.duration {
 /*-- Responsive design --*/
 
 @media (max-width: 1366px) {
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1654,7 +1768,9 @@ p.duration {
     min-height: 750px;
   }
 }
+
 @media (max-width: 1280px) {
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1663,18 +1779,23 @@ p.duration {
   .overlay1 {
     min-height: 720px;
   }
+
   .banner-info {
     padding-top: 16em;
   }
+
   .banner_inner_overlay,
   .banner_inner {
     min-height: 280px;
   }
+
   .contact-right h4 {
     font-size: 27px;
   }
 }
+
 @media (max-width: 1080px) {
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1683,114 +1804,145 @@ p.duration {
   .overlay1 {
     min-height: 650px;
   }
+
   .banner-info h3 {
     font-size: 3em;
   }
+
   h4.tittle {
     font-size: 3em;
   }
+
   .banner-info {
     padding-top: 14em;
   }
+
   .package-info h5 {
     font-size: 17px;
   }
+
   h3.heading,
   h2.heading {
     font-size: 40px;
   }
+
   ul.links {
     padding-right: 0;
   }
+
   .footer p,
   .footer a {
     font-size: 14px;
   }
+
   .banner_inner_overlay,
   .banner_inner {
     min-height: 250px;
   }
+
   .testi-info h3 {
     font-size: 18px;
   }
+
   .service-grid-wthree {
     padding: 0 10px;
   }
+
   .ser-sevice-grid h4 {
     font-size: 22px;
   }
+
   h4.tm-clr {
     font-size: 22px;
   }
+
   .right-cont p {
     font-size: 14px;
   }
+
   #map {
     height: 50vw;
     width: 60vw;
   }
 }
+
 @media (max-width: 1024px) {
   .timer {
     font-size: 2.5em;
   }
+
   .counter span.fa {
     font-size: 1.8em;
   }
+
   .grid-info {
     padding: 0 0em;
   }
+
   .icon {
     width: 75px;
     height: 75px;
     line-height: 75px;
   }
+
   .icon span.fa {
     font-size: 22px;
     line-height: 75px;
   }
+
   .grid-info h4 {
     letter-spacing: 1px;
     font-size: 20px;
   }
+
   .package-info p {
     font-size: 14px;
   }
+
   .contact-right h4 {
     font-size: 25px;
     line-height: 36px;
   }
+
   #map {
     height: 52vw;
     width: 65vw;
   }
 }
+
 @media (max-width: 991px) {
   nav li.booking a {
     display: inline-block;
   }
+
   .banner-info h3 {
     font-size: 2.8em;
     line-height: 58px;
   }
+
   .image-tour img {
     width: 100%;
   }
+
   .caption a {
     font-size: 14px;
     padding: 10px 20px;
   }
+
   .destinations-grids .caption h4 {
     font-size: 18px;
   }
+
   .contact-right {
     margin-left: 0em;
   }
+
   .contact-right h4,
   .contact-right h5 {
     font-size: 23px;
     margin-top: 1em;
   }
+
   .destinations-info {
     height: 9em;
   }
@@ -1798,25 +1950,31 @@ p.duration {
   .map iframe {
     height: 300px;
   }
+
   .adress-www-info p {
     font-size: 14px;
   }
+
   #map {
     height: 55vw;
     width: 67vw;
   }
 }
+
 @media (max-width: 800px) {
   .banner-info h3 {
     font-size: 2.6em;
   }
+
   .icon_triplight {
     width: 5vw;
   }
+
   .banner-info h4 {
     letter-spacing: 3px;
     font-size: 22px;
   }
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1825,33 +1983,41 @@ p.duration {
   .overlay1 {
     min-height: 620px;
   }
+
   h4.tittle {
     font-size: 2.5em;
   }
+
   #map {
     height: 58vw;
     width: 70vw;
   }
 }
+
 @media (max-width: 768px) {
   .banner-info {
     margin-left: 2em;
   }
+
   .icon_triplight {
     width: 6vw;
   }
+
   h3.heading,
   h2.heading {
     font-size: 36px;
   }
+
   .banner_inner_overlay,
   .banner_inner {
     min-height: 200px;
   }
+
   .adress-www-info h6 {
     font-size: 1.1em;
     margin: 1em 0 0.5em;
   }
+
   #map {
     height: 65vw;
     width: 80vw;
@@ -1861,25 +2027,31 @@ p.duration {
     height: 12em;
   }
 }
+
 @media (max-width: 736px) {
   .banner-info {
     margin-left: 0em;
   }
+
   .icon_triplight {
     width: 7vw;
   }
+
   .banner-info h3 {
     font-size: 2.4em;
     line-height: 52px;
     letter-spacing: 0px;
   }
+
   .banner-info h4 {
     letter-spacing: 3px;
     font-size: 20px;
   }
+
   .banner-info {
     padding-top: 11em;
   }
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1888,36 +2060,45 @@ p.duration {
   .overlay1 {
     min-height: 520px;
   }
+
   .about-left h3 {
     font-size: 25px;
   }
+
   p.count-text {
     letter-spacing: 1px;
   }
+
   .copyright p {
     font-size: 14px;
   }
+
   .footer_w3layouts_section_1its h3,
   .footer_w3layouts_section_1its h2 {
     letter-spacing: 1px;
   }
 }
+
 @media (max-width: 600px) {
   .banner-info h3 {
     font-size: 2.2em;
     line-height: 50px;
   }
+
   .icon_triplight {
     width: 8vw;
   }
+
   .banner-info {
     margin-left: 1em;
   }
+
   .banner-info h4 {
     letter-spacing: 2px;
     margin: 0.5em 0 1.5em;
     font-size: 19px;
   }
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1926,67 +2107,85 @@ p.duration {
   .overlay1 {
     min-height: 490px;
   }
+
   .timer {
     font-size: 2.2em;
   }
+
   h4.tittle {
     font-size: 2.2em;
   }
+
   .adress-icon span.fa {
     font-size: 1.5em;
   }
+
   #map {
     height: 80vh;
     width: 90vw;
   }
 }
+
 @media (max-width: 568px) {
   .destinations-grids {
     padding: 0 5px;
     width: 80%;
     margin: auto;
   }
+
   .banner-info {
     padding-top: 10em;
   }
+
   .tab-main label {
     padding: 10px 20px;
     font-size: 15px;
     margin-bottom: 0;
   }
+
   .inner-www-wrap h4 {
     font-size: 20px;
   }
+
   .inner-sec-grid {
     padding: 2em 2em;
   }
+
   .contact-grids {
     margin: 0 2em;
   }
 }
+
 @media (max-width: 480px) {
+
   h3.heading,
   h2.heading {
     font-size: 30px;
   }
+
   .icon_triplight {
     width: 9vw;
   }
+
   .about-left h3 {
     font-size: 22px;
     letter-spacing: 0px;
   }
+
   p.count-text {
     letter-spacing: 1px;
     font-size: 14px;
   }
+
   .banner-info {
     padding-top: 9em;
   }
+
   .banner-info h3 {
     font-size: 1.8em;
     line-height: 45px;
   }
+
   .banner-top,
   .banner-top1,
   .banner-top2,
@@ -1995,6 +2194,7 @@ p.duration {
   .overlay1 {
     min-height: 440px;
   }
+
   .banner-info a.btn {
     padding: 10px 25px;
     font-size: 15px;
@@ -2005,102 +2205,130 @@ p.duration {
     letter-spacing: 2px;
     font-size: 17px;
   }
+
   #logo a {
     font-size: 0.6em;
   }
+
   .banner-info h3 {
     font-size: 1.7em;
     line-height: 40px;
   }
-  .csslider > .arrows {
+
+  .csslider>.arrows {
     width: 99% !important;
   }
+
   .service-grid-wthree {
     padding: 0 15px;
   }
+
   .main-title-text h4 {
     font-size: 20px;
     line-height: 30px;
   }
 }
+
 @media (max-width: 415px) {
   p {
     font-size: 14px;
   }
+
   .icon_triplight {
     width: 10vw;
   }
+
   .destinations-grids h4 {
     font-size: 17px;
     letter-spacing: 2px;
   }
+
   .rating ul li span.fa {
     font-size: 12px;
   }
+
   .copyright {
     padding: 0 20px;
   }
+
   .banner_inner_overlay,
   .banner_inner {
     min-height: 150px;
   }
+
   .main-title-text h4 {
     font-size: 18px;
     line-height: 30px;
     padding: 15px;
   }
+
   .ser-sevice-grid h4 {
     font-size: 20px;
   }
+
   .contact-right h4,
   .contact-right h5 {
     font-size: 21px;
     line-height: 32px;
   }
+
   .map iframe {
     height: 250px;
   }
 }
+
 @media (max-width: 384px) {
   .banner-info {
     padding-top: 8em;
   }
+
   .icon_triplight {
     width: 11vw;
   }
+
   .about-left h3 {
     line-height: 35px;
   }
+
   .timer {
     font-size: 2em;
   }
+
   p.count-text {
     font-size: 13px;
   }
+
   h4.tittle {
     font-size: 1.8em;
   }
+
   nav ul li {
     padding: 5px 0;
   }
+
   li.booking {
     margin-top: 10px;
   }
+
   .toggle {
     padding: 4px 15px;
     font-size: 17px;
   }
+
   .contact-grids {
     margin: 0 1em;
   }
 }
+
 @media (max-width: 375px) {
+
   .contact-right h4,
   .contact-right h5 {
     font-size: 20px;
     line-height: 32px;
   }
 }
-@media (max-width: 320px) {
-}
+
+@media (max-width: 320px) {}
+
 /*-- //Responsive design --*/

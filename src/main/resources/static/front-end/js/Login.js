@@ -8,12 +8,10 @@ loginbtn.href = "";
 
 //點擊註冊
 registerLink.addEventListener("click", () => {
-	console.log('111');
 	container.classList.add("active");
 });
 //點擊登入
 loginLink.addEventListener("click", () => {
-	console.log('222');
 	container.classList.remove("active");
 });
 
@@ -29,6 +27,9 @@ const closeIcon = document.querySelector(".close-icon");
 closeIcon.addEventListener("click", (e) => {
 	container.classList.remove("active-popup");
 });
+
+//更改註冊html屬性
+$("#register_account").attr("type", "text");
 //================================登入=====================================
 // 取得按鈕
 const login33 = document.querySelectorAll(".main-btn")[0];
@@ -182,7 +183,6 @@ register_btn.on("click", (e) => {
 				});
 			}
 		},
-		// 當請求失敗時，將錯誤訊息印出到console中
 		error: function (xhr) {
 			console.log(xhr.responseText);
 		},
@@ -215,7 +215,6 @@ window.addEventListener("load", function () {
 						"#login"
 					).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">會員您好</i>`;
 				}
-
 			}, error: (error) => {
 				console.log(error)
 			}
@@ -313,7 +312,6 @@ $("#forgetPwd").on("click", function () {
 					})
 				},
 				error: function (xhr, status, error) {
-
 					console.log('郵件傳送失敗!');
 					console.log(error);
 					Swal.fire({
@@ -332,3 +330,28 @@ $("#forgetPwd").on("click", function () {
 		}
 	})
 });
+
+// 姐~這邊借我放一下  購物車抖動效果
+if (sessionStorage.getItem('ShakeCart')) {
+	$('img[src$="shoppingCar.svg"]').addClass('shake-animation');
+}
+$('img[src$="shoppingCar.svg"]').on('click', () => sessionStorage.removeItem('ShakeCart'));
+
+
+// 註冊密碼提示=====================================================
+$("#register_password").on("focus", (e) => {
+	if ($("#register_password").val().length < 8) {
+		$("#pwdHint").addClass("-on");
+	} else {
+		$("#pwdHint").removeClass("-on");
+
+	}
+})
+$("#register_password").on("blur", (e) => {
+	if ($("#register_password").val().length < 8) {
+		$("#pwdHint").addClass("-on");
+	} else {
+		$("#pwdHint").removeClass("-on");
+
+	}
+})

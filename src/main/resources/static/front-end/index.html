@@ -156,6 +156,7 @@
 				<div class="input-box">
 					<i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
 						required /> <label for="">密碼</label>
+					<h6 id="pwdHint">密碼設定請超過八碼</h6>
 				</div>
 				<div class="check">
 					<label><input type="checkbox" />我同意所有條款</label>
@@ -770,25 +771,25 @@
 		}
     // ==============================設定熱門行程==============================================
 	</script>
-<!--	選擇聊天室-->
-<script>
-	document.getElementById('chat-icon').addEventListener('click', function(e) {
-		e.preventDefault();
-		Swal.fire({
-			title: '選擇聊天室',
-			text: '你想要進入哪個聊天室？',
-			showCancelButton: true,
-			confirmButtonText: '公共聊天室',
-			cancelButtonText: '客服聊天室',
-		}).then((result) => {
-			if (result.isConfirmed) {
-				window.location.href = '/front-end/chat.html';
-			} else if (result.dismiss === Swal.DismissReason.cancel) {
-				window.location.href = '/front-end/user_chat.html';
-			}
+	<!--	選擇聊天室-->
+	<script>
+		document.getElementById('chat-icon').addEventListener('click', function (e) {
+			e.preventDefault();
+			Swal.fire({
+				title: '選擇聊天室',
+				text: '你想要進入哪個聊天室？',
+				showCancelButton: true,
+				confirmButtonText: '公共聊天室',
+				cancelButtonText: '私人聊天室',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = '/front-end/chat.html';
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					window.location.href = '/front-end/user_chat.html';
+				}
+			});
 		});
-	});
-</script>
+	</script>
 </body>
 
 </html>

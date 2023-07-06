@@ -154,7 +154,7 @@
             <h3>註冊</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account"
+                    <i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account"
                         required /> <label for="">使用者名稱</label>
                 </div>
                 <div class="input-box">
@@ -164,6 +164,7 @@
                 <div class="input-box">
                     <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
                         required /> <label for="">密碼</label>
+                    <h6 id="pwdHint">密碼設定請超過八碼</h6>
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />我同意所有條款</label>
@@ -346,10 +347,10 @@
         };
         CKEDITOR.config.removePlugins = 'paragraph'; // 使用 CKEDITOR.config 設定 removePlugins
         CKEDITOR.config.allowedContent = true; // 使用 CKEDITOR.config 設定 allowedContent
-        ClassicEditor.create(document.querySelector('#editor'), {
-            removePlugins: 'paragraph', // 移除內建的段落樣式插件
-            allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
-        });
+        // ClassicEditor.create(document.querySelector('#editor'), {
+        //     removePlugins: 'paragraph', // 移除內建的段落樣式插件
+        //     allowedContent: true // 允許所有內容的輸入，不會自動包裹 <p></p> 標籤
+        // });
     </script>
 
     <script>
@@ -370,13 +371,13 @@
                         $('.size').text("檔案大小：" + KB + " KB");
                     }
                     // 檢查附加檔案大小
-                    if (e.total > 4000000) {
-                        alert('附加檔案超過4MB上限，請重新選擇一張圖片');
-                        $('.upl').val('');
-                        $('.preview').attr('src', '');
-                        $('.size').text('');
-                        return;
-                    }
+                    // if (e.total > 4000000) {
+                    //     alert('附加檔案超過4MB上限，請重新選擇一張圖片');
+                    //     $('.upl').val('');
+                    //     $('.preview').attr('src', '');
+                    //     $('.size').text('');
+                    //     return;
+                    // }
                     reader.readAsDataURL(input.files[0]);
                 }
             }

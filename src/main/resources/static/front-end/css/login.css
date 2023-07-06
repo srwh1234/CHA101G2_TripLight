@@ -186,3 +186,46 @@ li.list-group-item>a {
 #editEmail {
     width: 100%
 }
+
+/* 姐~這邊借我放一下  購物車抖動效果*/
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    40% {
+        transform: translateX(5px) rotate(5deg);
+    }
+
+    60% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    80% {
+        transform: translateX(5px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake-animation {
+    animation: shake 0.4s infinite;
+}
+
+/* 註冊密碼提示===================================================== */
+#pwdHint.-on {
+    display: block;
+    /* float: left; */
+    transform: translate(-25%, 0);
+    color: rgba(171, 163, 163, 0.758);
+}
+
+#pwdHint {
+    display: none;
+}

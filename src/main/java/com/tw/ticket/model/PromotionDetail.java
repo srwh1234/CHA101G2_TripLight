@@ -2,8 +2,6 @@ package com.tw.ticket.model;
 
 import java.io.Serializable;
 
-import org.springframework.data.rest.core.annotation.RestResource;
-
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -26,7 +24,6 @@ public class PromotionDetail {
 
 	@OneToOne
 	@JoinColumn(name = "ticketId", insertable = false, updatable = false)
-	@RestResource(exported = false) // 不導出url
 	private Ticket ticket;
 
 	@Embeddable

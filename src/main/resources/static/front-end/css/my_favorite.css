@@ -91,7 +91,7 @@
 .dynamic-text {
 
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -100,7 +100,11 @@
 
 
 #allPrice {
-    transform: translate(80%, -18px);
+    transform: translate(70%, -30px);
+}
+
+#allPrice2 {
+    transform: translate(70%, -65px);
 }
 
 @media screen and (max-width: 767.98px) {

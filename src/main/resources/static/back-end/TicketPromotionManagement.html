@@ -347,7 +347,69 @@
                         </div>
                     </div>
                 </div>
+                <!-- 編輯促銷的燈箱 -->
+                <div class="modal fade" id="editPromotionModal" data-bs-backdrop="static" aria-hidden="true">
+                    <div class="modal-dialog  modal-lg  modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">編輯促銷<span id="editPromotionId"></span></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="editPromotionStartDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="editPromotionStartDate">開始日期</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-floating m-3">
+                                            <input type="date" class="form-control" id="editPromotionExpiryDate" placeholder=".">
+                                            <label class="my-text-lightgray" for="editPromotionExpiryDate">到期日期</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating m-3">
+                                            <input type="text" class="form-control" id="editPromotionName" placeholder=".">
+                                            <label class="my-text-lightgray" for="editPromotionName">名稱</label>
+                                        </div>
+                                        <div class="m-3">
+                                            <select class="form-select" id="editTicketSelect">
+                                                <option value="1">qq</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
+
+
+                                    <div class="col-12" id="editSelectContainer">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="my-th-width-sm">票券編號</th>
+                                                        <th class="my-th-width">票券名稱</th>
+                                                        <th class="my-th-width-sm">原價</th>
+                                                        <th class="my-th-width-sm">促銷價</th>
+                                                        <th class="my-th-width-sm"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 內容給JS填 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="m-3 d-flex justify-content-end">
+                                    <button class="btn btn-primary" id="editPromotionSubmit">確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Bootstrap 核心 JavaScript -->
                 <script src="vendor/jquery/jquery.min.js"></script>
@@ -375,81 +437,26 @@
                 <!-- TODO: -->
                 <script>
 
-                    var employeeAccess = sessionStorage.getItem("管理員");
-                    var employeeaccess2 = JSON.parse(employeeAccess);
-
-                    $("#employee-access")
-                        .text("員工:" + employeeaccess2.employeeName + "\n"
-                            + "權限:" + employeeaccess2.employeeAccess);
-
-                    // 根據帳限顯示導覽
-                    if (employeeaccess2.employeeAccess === "超級管理員") {
-
-                    } else if (employeeaccess2.employeeAccess === "員工管理員") {
-                        $("#member-management").hide();
-                        $("#firm-management").hide();
-                        $("#ticket-management").hide();
-                        $("#web-management").hide();
-                        $("#customer-service").hide();
-                    } else if (employeeaccess2.employeeAccess === "會員管理員") {
-                        $("#employee-management").hide();
-                        $("#firm-management").hide();
-                        $("#ticket-management").hide();
-                        $("#web-management").hide();
-                        $("#customer-service").hide();
-                    } else if (employeeaccess2.employeeAccess === "廠商管理員") {
-                        $("#employee-management").hide();
-                        $("#member-management").hide();
-                        $("#ticket-management").hide();
-                        $("#web-management").hide();
-                        $("#customer-service").hide();
-                    } else if (employeeaccess2.employeeAccess === "票卷管理員") {
-                        $("#employee-management").hide();
-                        $("#member-management").hide();
-                        $("#firm-management").hide();
-                        $("#web-management").hide();
-                        $("#customer-service").hide();
-                    } else if (employeeaccess2.employeeAccess === "網頁管理員") {
-                        $("#employee-management").hide();
-                        $("#member-management").hide();
-                        $("#firm-management").hide();
-                        $("#ticket-management").hide();
-                        $("#customer-service").hide();
-                    } else if (employeeaccess2.employeeAccess === "客服管理員") {
-                        $("#employee-management").hide();
-                        $("#member-management").hide();
-                        $("#firm-management").hide();
-                        $("#ticket-management").hide();
-                        $("#web-management").hide();
-                    }
 
 
-                    //登出用
-                    $("#logoutLink").click(function () {
-                        $.ajax({
-                            type: "GET",
-                            url: "/BKlogout",
-                            success: function () {
-                                window.location.href = "/back-end/login.html";
-                            },
-                            error: function () {
-                            }
-                        });
-                    });
 
 
-                    let currentIndex = 0;
                     let resultData;
 
-                    //下拉選單與列表
-                    let selecterData = [];
-                    let tableData = [];
+
+                    //下拉選單與列表 
+                    let selecterData = [];//裡面放的是票券
+                    let tableData = [];//裡面放的是票券
+
+                    let editSelecterData = [];//裡面放的是票券
+                    let editTableData = [];//裡面放的是明細
+
                     $(function () {
 
                         let websocket = null;
                         if ('WebSocket' in window) {
-                           // websocket = new WebSocket(`ws://localhost:8080/TicketDetail`);
-                           websocket = new WebSocket(`wss://triplight.ddns.net/TicketDetail`);
+                            // websocket = new WebSocket(`ws://localhost:8080/TicketDetail`);
+                            websocket = new WebSocket(`wss://triplight.ddns.net/TicketDetail`);
                         }
                         websocket.onopen = () => {
                             // alert('open');
@@ -466,11 +473,11 @@
                         //離開網頁時關閉ws
                         window.onbeforeunload = function () {
                             websocket.close();
-                           // console.log('close');
+                            // console.log('close');
                         }
                         function send(post) {
                             if (websocket) {
-                                websocket.send('[bk]:'+JSON.stringify(post));
+                                websocket.send('[bk]:' + JSON.stringify(post));
                             }
                         }
 
@@ -497,6 +504,86 @@
                         $('.form-floating .form-select').on('change', function () {
                             renderTextColor(this);
                         });
+
+                        //確認編輯的按鈕
+                        $('#editPromotionSubmit').on('click', function () {
+                            const promotionId = $('#editPromotionId').text();
+                            const post = {
+                                promotionId: promotionId,
+                                promotionTitle: $('#editPromotionName').val(),
+                                startDate: $('#editPromotionStartDate').val(),
+                                endDate: $('#editPromotionExpiryDate').val(),
+                                promotionDetails: [
+                                    {
+                                        key: {
+                                            promotionId: 0,
+                                            ticketId: 1,
+                                        },
+
+                                        promotionPrice: 1,
+                                    },
+                                ]
+                            }
+                            post.promotionDetails = [];
+
+                            for (let d of editTableData.sort((a, b) => a.ticket.ticketId - b.ticket.ticketId)) {
+
+
+                                const promotionPrice = $(`#editPromotionPrice${d.ticket.ticketId}`).val();
+
+
+
+                                if (!promotionPrice) {
+                                    Swal.fire({ icon: 'error', title: '促銷價格未輸入' });
+                                    return false;
+                                }
+                                if (promotionPrice <= 0) {
+                                    Swal.fire({ icon: 'error', title: '促銷價格不可小於等於0' });
+                                    return false;
+                                }
+                                if (promotionPrice >= d.ticket.price) {
+                                    Swal.fire({ icon: 'error', title: '促銷價格高於原價...?' });
+                                    return false;
+                                }
+
+                                post.promotionDetails.push(
+                                    {
+                                        key: {
+                                            promotionId: promotionId,
+                                            ticketId: d.ticket.ticketId,
+                                        },
+
+                                        promotionPrice: promotionPrice,
+                                    }
+                                );
+                            }
+
+                            if (!check(post)) {
+                                return false;
+                            }
+
+
+                            fetch(`${getDomainName()}/bk/updatepromotion`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(post),
+                            })
+                                .then(response => response.json())
+                                .then(data => Swal.fire({ icon: 'success', title: '編輯成功' }))
+                                .catch(error => Swal.fire({ icon: 'error', title: '編輯失敗' }))
+                                .finally(() => {
+                                    fetch_data();
+                                    $('#editPromotionModal').modal('hide');
+                                    //通知客戶端變更了
+                                    send(post);
+                                });
+
+                        });
+
+
+
 
                         //確認送出的按鈕
                         $('#addPromotionSubmit').on('click', function () {
@@ -545,6 +632,33 @@
                                 );
                             }
 
+                            if (!check(post)) {
+                                return false;
+                            }
+
+
+                            fetch(`${getDomainName()}/bk/addpromotion`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(post),
+                            })
+                                .then(response => response.json())
+                                .then(data => Swal.fire({ icon: 'success', title: '新增成功' }))
+                                .catch(error => Swal.fire({ icon: 'error', title: '新增失敗' }))
+                                .finally(() => {
+                                    fetch_data();
+                                    $('#addPromotionModal').modal('hide');
+
+                                    //通知客戶端變更了
+                                    send(post);
+                                });
+                        });
+
+
+
+                        function check(post) {
                             if (!post.promotionTitle) {
                                 Swal.fire({ icon: 'error', title: '促銷名稱未輸入' });
                                 return false;
@@ -573,28 +687,8 @@
                                 Swal.fire({ icon: 'error', title: '未選擇促銷商品' });
                                 return false;
                             }
-
-                            fetch(`${getDomainName()}/promotions`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(post),
-                            })
-                                .then(response => response.json())
-                                .then(data => Swal.fire({ icon: 'success', title: '新增成功' }))
-                                .catch(error => Swal.fire({ icon: 'error', title: '新增失敗' }))
-                                .finally(() => {
-                                    fetch_data();
-                                    $('#addPromotionModal').modal('hide');
-
-                                    send(post);
-                                });
-
-                            //console.log(post)
-                        });
-
-
+                            return true;
+                        }
 
                         // 促銷列表物件的取消
                         $(document).on('click', '.my-btn-cancel', function () {
@@ -632,15 +726,19 @@
 
                         // 新增促銷
                         $('#addPromotionBtn').on('click', function () {
-                            fetch(`${getDomainName()}/promotetickets`)
+                            fetch(`${getDomainName()}/bk/promotetickets`)
                                 .then(response => response.json())
-                                .then(data => selecterData = data)
+                                .then(data => {
+                                    tableData = [];
+                                    //未促銷的票券
+                                    selecterData = data;
+                                })
                                 .catch(error => console.log(error))
                                 .finally(() => {
                                     render_select();
+                                    render_table();
                                     $('#addPromotionModal').modal('show');
-                                }
-                                );
+                                });
                         });
 
 
@@ -648,47 +746,171 @@
 
                         // 點選列的事件
                         $(document).on('click', '#promotionContainer tbody tr', function () {
-                            currentIndex = $(this).find('td').first().text();
+                            const promotionId = $(this).find('td').first().text();
+                            $('#promotionId').text(promotionId);
 
-                            $('#promotionId').text(currentIndex);
-                            const promotion = resultData._embedded.promotions[currentIndex];
+                            fetch(`/bk/promotion/${promotionId}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    $('#detailContainer').removeClass('d-none');
+                                    $('#detailContainer table tbody').html('');
 
-                            $('#detailContainer').removeClass('d-none');
-                            $('#detailContainer table tbody').html('');
+                                    const promotion = data;
 
-                            let index = 0;
-                            for (let detail of promotion.promotionDetails) {
-                                const ticket = detail.ticket;
-                                // const src = ticket._links.ticketType.href;
-                                // const ticketTypeId = src.substring(src.lastIndexOf('/') + 1);
+                                    for (let detail of promotion.promotionDetails) {
+                                        const ticket = detail.ticket;
 
+                                        $('#detailContainer table tbody').append(`
+                                            <tr>
+                                                <td>${ticket.ticketId}</td>
+                                                <td>${ticket.name}</td>
+                                                <td>${ticket.price}</td>
+                                                <td>${detail.promotionPrice}</td>
+                                            </tr>
+                                        `);
+                                    }
 
-                                $('#detailContainer table tbody').append(`
-                                    <tr>
-                                        <td>${++index}</td>
-                                        <td>${ticket.name}</td>
-                                        <td>${ticket.price}</td>
-                                        <td>${detail.promotionPrice}</td>
-                                    </tr>
-                                `);
-                            }
+                                })
+                                .catch(error => console.log(error));
                         });
                     })
 
-                    //----------------------------------fetch
-                    function fetch_data() {
-                        fetch(`${getDomainName()}/promotions`)
+
+                    //編輯的按鈕
+                    $(document).on('click', '.my-btn-edit', function () {
+                        $('#detailContainer').addClass('d-none');
+                        const promotionId = $(this).closest('tr').find('td').first().text();
+
+
+                        //取得促銷本人
+                        fetch(`/bk/promotion/${promotionId}`)
                             .then(response => response.json())
                             .then(data => {
-                                //給一個索引
-                                let index = 0;
-                                for (let promotion of data._embedded.promotions) {
-                                    promotion['index'] = index++;
+                                const promotion = data;
+                                $('#editPromotionId').text(promotion.promotionId);
+                                $('#editPromotionName').val(promotion.promotionTitle);
+                                $('#editPromotionStartDate').val(promotion.startDate);
+                                $('#editPromotionExpiryDate').val(promotion.endDate);
+
+                                //填入值
+                                editTableData = [];
+                                for (detail of promotion.promotionDetails) {
+                                    editTableData.push(detail);
                                 }
-                                resultData = data;
-                                $('#promotionContainer table').bootstrapTable('load', data._embedded.promotions);
+                                render_table_edit();
+
+                                $('#editPromotionModal').modal('show');
+                            })
+                            .catch(error => console.log(error));
+
+                        //取得未促銷的票券
+                        fetch(`${getDomainName()}/bk/promotetickets`)
+                            .then(response => response.json())
+                            .then(data => {
+
+                                //未促銷的票券
+                                editSelecterData = data;
                             })
                             .catch(error => console.log(error))
+                            .finally(() => {
+                                render_select_edit();
+
+                            });
+                        return false;
+                    });
+
+                    //編輯下拉選單事件
+                    $('#editTicketSelect').on('change', function () {
+                        const ticketId = $(this).val();
+                        const ticket = editSelecterData.find(e => e.ticketId == ticketId);
+
+                        if (ticket) {
+                            //從select移除
+                            editSelecterData = editSelecterData.filter(e => e.ticketId != ticketId);
+                            render_select_edit();
+
+                            //放到table
+                            editTableData.push({
+                                promotionPrice: ticket.price,
+                                ticket: ticket,
+                            });
+                            render_table_edit();
+                        }
+
+                    });
+
+                    // 編輯促銷列表物件的取消
+                    $(document).on('click', '.my-btn-cancel-edit', function () {
+                        const ticketId = $(this).closest('tr').find('td').first().text();
+                        const detail = editTableData.find(e => e.ticket.ticketId == ticketId);
+                        if (detail) {
+                            //從table移除
+                            editTableData = editTableData.filter(e => e.ticket.ticketId != ticketId);
+                            render_table_edit();
+
+                            //放回select
+                            editSelecterData.push(detail.ticket);
+                            render_select_edit();
+                        }
+                    });
+
+
+
+                    function render_select_edit() {
+                        $('#editTicketSelect').html('<option value="0" disabled>未選擇</option>');
+                        for (let t of editSelecterData.sort((a, b) => a.ticketId - b.ticketId)) {
+                            $('#editTicketSelect').append(`
+                               <option value="${t.ticketId}">${t.name}</option>
+                            `);
+                        }
+                        $('#editTicketSelect').val(0);
+                    }
+                    function render_table_edit() {
+                        $('#editSelectContainer table tbody').html('');
+                        for (let d of editTableData.sort((a, b) => a.ticket.ticketId - b.ticket.ticketId)) {
+                            $('#editSelectContainer table tbody').append(`
+                                <tr>
+                                    <td>${d.ticket.ticketId}</td>
+                                    <td>${d.ticket.name}</td>
+                                    <td>${d.ticket.price}</td>
+                                    <td>
+                                        <input class="form-control" type="number" min="1" value="${d.promotionPrice}" id="editPromotionPrice${d.ticket.ticketId}">
+                                    </td>
+                                    <td>                                        
+                                        <button class="btn btn-danger my-btn-cancel-edit">取消</button>                                        
+                                    </td>
+                                 </tr>
+                            `);
+                        }
+                    }
+                    //----------------------------------fetch
+                    function fetch_data() {
+
+
+                        $('#promotionContainer table').bootstrapTable('destroy');
+
+                        $('#promotionContainer table').bootstrapTable({
+                            sortable: true,
+                            sortClass: 'table-active',
+                            search: true,
+                            searchAlign: 'left',
+                            url: '/bk/promotions',
+                            columns: [
+                                { field: 'promotionId', title: '促銷編號', "sortable": true },
+                                { field: 'promotionTitle', title: '促銷名稱', "sortable": true },
+                                { field: 'startDate', title: '開始日期', "sortable": true, formatter: formatPayDate },
+                                { field: 'endDate', title: '結束日期', "sortable": true, formatter: formatPayDate },
+                                { field: 'action', title: '操作', formatter: formatActions },
+                            ]
+                        });
+
+
+                    }
+                    function formatPayDate(value, row, index) {
+                        return df(value);
+                    }
+                    function formatActions(value, row, index) {
+                        return '<button class="btn btn-primary my-btn-edit">編輯</button> ';
                     }
 
                     //--------------------------------------render
@@ -773,6 +995,79 @@
                         return inputDate.getTime() > inputDate2.getTime();
                     }
 
+                    //日期格式
+                    function df(dateStr) {
+                        if (!dateStr) {
+                            return '--';
+                        }
+                        const date = new Date(dateStr);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0'); // 使用 padStart 填充月份前面的零
+                        const day = String(date.getDate()).padStart(2, '0'); // 使用 padStart 填充日期前面的零
+                        return `${year}/${month}/${day}`;
+                    }
+
+                    var employeeAccess = sessionStorage.getItem("管理員");
+                    var employeeaccess2 = JSON.parse(employeeAccess);
+
+                    $("#employee-access")
+                        .text("員工:" + employeeaccess2.employeeName + "\n"
+                            + "權限:" + employeeaccess2.employeeAccess);
+
+                    // 根據帳限顯示導覽
+                    if (employeeaccess2.employeeAccess === "超級管理員") {
+
+                    } else if (employeeaccess2.employeeAccess === "員工管理員") {
+                        $("#member-management").hide();
+                        $("#firm-management").hide();
+                        $("#ticket-management").hide();
+                        $("#web-management").hide();
+                        $("#customer-service").hide();
+                    } else if (employeeaccess2.employeeAccess === "會員管理員") {
+                        $("#employee-management").hide();
+                        $("#firm-management").hide();
+                        $("#ticket-management").hide();
+                        $("#web-management").hide();
+                        $("#customer-service").hide();
+                    } else if (employeeaccess2.employeeAccess === "廠商管理員") {
+                        $("#employee-management").hide();
+                        $("#member-management").hide();
+                        $("#ticket-management").hide();
+                        $("#web-management").hide();
+                        $("#customer-service").hide();
+                    } else if (employeeaccess2.employeeAccess === "票卷管理員") {
+                        $("#employee-management").hide();
+                        $("#member-management").hide();
+                        $("#firm-management").hide();
+                        $("#web-management").hide();
+                        $("#customer-service").hide();
+                    } else if (employeeaccess2.employeeAccess === "網頁管理員") {
+                        $("#employee-management").hide();
+                        $("#member-management").hide();
+                        $("#firm-management").hide();
+                        $("#ticket-management").hide();
+                        $("#customer-service").hide();
+                    } else if (employeeaccess2.employeeAccess === "客服管理員") {
+                        $("#employee-management").hide();
+                        $("#member-management").hide();
+                        $("#firm-management").hide();
+                        $("#ticket-management").hide();
+                        $("#web-management").hide();
+                    }
+
+
+                    //登出用
+                    $("#logoutLink").click(function () {
+                        $.ajax({
+                            type: "GET",
+                            url: "/BKlogout",
+                            success: function () {
+                                window.location.href = "/back-end/login.html";
+                            },
+                            error: function () {
+                            }
+                        });
+                    });
                 </script>
 
 </body>

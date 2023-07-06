@@ -176,7 +176,7 @@
       <h3>註冊</h3>
       <form action="">
         <div class="input-box">
-          <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account" required /> <label
+          <i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account" required /> <label
             for="">使用者名稱</label>
         </div>
         <div class="input-box">
@@ -186,6 +186,7 @@
         <div class="input-box">
           <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password" required />
           <label for="">密碼</label>
+          <h6 id="pwdHint">密碼設定請超過八碼</h6>
         </div>
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
@@ -270,7 +271,7 @@
           <a href="article_list.html">更多文章</a>
         </button>
         <button class="question">
-          <a href="chat.html">我想發問</a>
+          <a href="user_chat.html">我想發問</a>
         </button>
       </div>
     </div>
@@ -412,6 +413,13 @@
       function new_article(data) {
         $('#articleContainer').html('');
 
+        // 对文章按照时间进行排序
+        data.sort(function (a, b) {
+          let timeA = new Date(a.articlePostTime);
+          let timeB = new Date(b.articlePostTime);
+          return timeB - timeA;
+        });
+
         for (let i = 0; i <= Math.min(data.length, 8); i++) {
           let article = data[i];
 
@@ -495,29 +503,27 @@
       // 清空文章容器
       $('#articleContainer').html('');
 
+      console.log(data);
+      console.log(selectedId);
+
       var allArticles = data;
-      
-      
-      // 根據選中的選項篩選文章
       var filteredArticles = [];
 
       for (let article of allArticles) {
         if (article.articleTypeId == selectedId) {
-          filteredArticles.push(article);
+          if (article.articleStatus !== 1) {
+            filteredArticles.push(article);
+          }
         }
       }
 
-      for (let i = 0; i <= Math.min(data.length, 8); i++) {
+      for (let i = 0; i < 1; i++) {
         let article = filteredArticles[i];
-
-        if (!article || article.articleStatus == 1) {
-          continue; // 狀態數字為1，跳過此次迴圈
-        }
-
         // 迭代每個篩選後的文章，渲染到網頁上
         filteredArticles.forEach(function (article) {
           var formattedDate = formatDate(article.articlePostTime); // 格式化文章日期
           var articleType = getArticleType(article.articleTypeId); // 獲取文章類型名稱
+          console.log(111);
 
           // 使用模板字符串創建文章的HTML元素
           $('#articleContainer').append(`
@@ -588,7 +594,7 @@
         })
       }
     };
-    
+
 
   </script>
 
