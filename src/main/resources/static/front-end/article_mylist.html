@@ -383,22 +383,19 @@
                     memberId = item.memberId;
                 }
 
-                console.log(memberId);
             fetch('/article/articles')
                 // fetch('http://localhost:8080/article/articles')
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    new_articlelist(data)
+                    const filteredData = data.filter(article => article.memberId === memberId);
+                    new_articlelist(filteredData)
                 })
 
-            function new_articlelist(data) {
-
-              
-
+            function new_articlelist(filteredData) {
+                console.log(filteredData);
                 $('#mylistContainer').html('');
 
-                for (let article of data) {
+                for (let article of filteredData) {
 
                     if (article.articleStatus === 1) {
                         continue; // 狀態數字為1，跳過此次迴圈
