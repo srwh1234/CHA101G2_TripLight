@@ -413,6 +413,13 @@
       function new_article(data) {
         $('#articleContainer').html('');
 
+        // 对文章按照时间进行排序
+        data.sort(function (a, b) {
+          let timeA = new Date(a.articlePostTime);
+          let timeB = new Date(b.articlePostTime);
+          return timeB - timeA;
+        });
+
         for (let i = 0; i <= Math.min(data.length, 8); i++) {
           let article = data[i];
 
