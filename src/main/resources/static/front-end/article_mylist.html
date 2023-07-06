@@ -377,7 +377,13 @@
         };
 
         $(document).ready(function () {
+            let memberId = 0;
+                const item = JSON.parse(sessionStorage.getItem('test-login'));
+                if (item) {
+                    memberId = item.memberId;
+                }
 
+                console.log(memberId);
             fetch('/article/articles')
                 // fetch('http://localhost:8080/article/articles')
                 .then(response => response.json())
@@ -387,6 +393,9 @@
                 })
 
             function new_articlelist(data) {
+
+              
+
                 $('#mylistContainer').html('');
 
                 for (let article of data) {
