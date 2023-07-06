@@ -332,3 +332,9 @@ $("#forgetPwd").on("click", function () {
 		}
 	})
 });
+
+// 姐~這邊借我放一下  購物車抖動效果
+if (sessionStorage.getItem('ShakeCart')) {
+	$('img[src$="shoppingCar.svg"]').addClass('shake-animation');
+}
+$('img[src$="shoppingCar.svg"]').on('click', () => sessionStorage.removeItem('ShakeCart'));

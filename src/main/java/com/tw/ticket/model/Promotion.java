@@ -3,10 +3,9 @@ package com.tw.ticket.model;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.data.rest.core.annotation.RestResource;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,9 +31,8 @@ public class Promotion {
 
 	private Date endDate;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "promotionId")
-	@RestResource(exported = false) // 不導出url
 	private List<PromotionDetail> promotionDetails;
 
 }
