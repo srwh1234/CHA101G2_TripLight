@@ -217,3 +217,15 @@ li.list-group-item>a {
 .shake-animation {
     animation: shake 0.4s infinite;
 }
+
+/* 註冊密碼提示===================================================== */
+#pwdHint.-on {
+    display: block;
+    /* float: left; */
+    transform: translate(-25%, 0);
+    color: rgba(171, 163, 163, 0.758);
+}
+
+#pwdHint {
+    display: none;
+}

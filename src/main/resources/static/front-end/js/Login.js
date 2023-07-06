@@ -8,12 +8,10 @@ loginbtn.href = "";
 
 //點擊註冊
 registerLink.addEventListener("click", () => {
-	console.log('111');
 	container.classList.add("active");
 });
 //點擊登入
 loginLink.addEventListener("click", () => {
-	console.log('222');
 	container.classList.remove("active");
 });
 
@@ -182,7 +180,6 @@ register_btn.on("click", (e) => {
 				});
 			}
 		},
-		// 當請求失敗時，將錯誤訊息印出到console中
 		error: function (xhr) {
 			console.log(xhr.responseText);
 		},
@@ -215,7 +212,6 @@ window.addEventListener("load", function () {
 						"#login"
 					).innerHTML = ` <i class="fa-regular fa-lightbulb" style="color: #dcdfe5;">會員您好</i>`;
 				}
-
 			}, error: (error) => {
 				console.log(error)
 			}
@@ -313,7 +309,6 @@ $("#forgetPwd").on("click", function () {
 					})
 				},
 				error: function (xhr, status, error) {
-
 					console.log('郵件傳送失敗!');
 					console.log(error);
 					Swal.fire({
@@ -338,3 +333,22 @@ if (sessionStorage.getItem('ShakeCart')) {
 	$('img[src$="shoppingCar.svg"]').addClass('shake-animation');
 }
 $('img[src$="shoppingCar.svg"]').on('click', () => sessionStorage.removeItem('ShakeCart'));
+
+
+// 註冊密碼提示=====================================================
+$("#register_password").on("focus", (e) => {
+	if ($("#register_password").val().length < 8) {
+		$("#pwdHint").addClass("-on");
+	} else {
+		$("#pwdHint").removeClass("-on");
+
+	}
+})
+$("#register_password").on("blur", (e) => {
+	if ($("#register_password").val().length < 8) {
+		$("#pwdHint").addClass("-on");
+	} else {
+		$("#pwdHint").removeClass("-on");
+
+	}
+})
