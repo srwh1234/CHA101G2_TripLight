@@ -662,7 +662,7 @@
             <div class="row align-items-end ">
                 <div class="text-sm-left p-3">
                     <a class="me-4" data-bs-toggle="collapse" href="#pd_add_review" role="button"
-                        aria-expanded="false" aria-controls="pd_add_review"
+                        aria-expanded="false" aria-controls="pd_add_review" id="reply"
                         style="font-weight: bold; font-size: 1.3em; color: #625855;">留言
                     </a>
                 </div>
@@ -688,6 +688,25 @@
              `);
             }
         });
+        //身分判別
+        $(document).on('click', '#reply', function (e) {
+            e.preventDefault(); // 防止表單提交
+
+            let theId = null;
+            if (sessionStorage.getItem("test-login")) {
+                theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
+            } else {
+                theId = null;
+            }
+
+            if (!theId) {
+                alert('必須先登入會員後才可留言');
+                return false;
+            }
+
+            const replySection = document.getElementById("pd_add_review");
+            replySection.classList.remove("show");
+        });
         //增留言
         $(document).on('click', '#confirm', function (e) {
             e.preventDefault(); // 防止表單提交
@@ -700,6 +719,11 @@
                 theId = JSON.parse(sessionStorage.getItem("test-login")).memberId;
             } else {
                 theId = null;
+            }
+
+            if (!theId) {
+                alert('必須先登入會員後才可留言');
+                return;
             }
 
             const message = {
@@ -736,7 +760,7 @@
                     }
                 })
                 .catch(error => console.log(error));
-        })
+        });
         //刪留言
         // <p>
         //         <button type="button" id="delete" value="刪除"
