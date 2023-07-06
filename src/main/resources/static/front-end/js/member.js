@@ -63,7 +63,7 @@ $(document).ready(function () {
 		url: "/img/members/" + theId,
 		method: "GET",
 		success: function (response) {
-			const imgUrl =  this.url;
+			const imgUrl = this.url;
 			$('.rounded-circle').attr('src', imgUrl);
 			console.log("圖片載入成功");
 		},
@@ -158,7 +158,6 @@ $(function () {
 	$("#inputBD").datepicker();
 
 	$("#saveData").on("click", function () {
-		console.log("btn ok");
 		getData();
 	});
 });
@@ -226,7 +225,7 @@ $(document).ready(function () {
 			$('#inputLastName').val(member.memberNameLast);
 			$('#inputFirstName').val(member.memberNameFirst);
 			$('#inputIdNumber').val(member.memberIdCard);
-			$('#inputBD').val(member.memberBirth);
+			// $('#inputBD').val(member.memberBirth);
 			$('#inputPhoneNumber').val(member.memberPhone);
 			$('#inputGender').val(member.memberGender);
 			$('#city').val(member.memberCity);
@@ -238,6 +237,24 @@ $(document).ready(function () {
 				$('#city').trigger('change');
 			} else {
 			}
+
+			// 從資料庫獲取的日期換格式
+			const databaseDate = member.memberBirth;
+			if (databaseDate === null) {
+				$('#inputBD').val(databaseDate);
+			} else {
+				const date = new Date(databaseDate);
+
+				const year = date.getFullYear();
+				const month = ('0' + (date.getMonth() + 1)).slice(-2);
+				const day = ('0' + date.getDate()).slice(-2);
+
+				// 格式化日期為 "mm/dd/yyyy" 的格式
+				const formattedDate = `${month}/${day}/${year}`;
+				$('#inputBD').val(formattedDate);
+
+			}
+
 		},
 		error: function (error) {
 			console.log(error);
