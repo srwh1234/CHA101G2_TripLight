@@ -308,7 +308,7 @@ $("#forgetPwd").on("click", function () {
 						title: "驗證信發送成功",
 						showConfirmButton: false,
 					}).then(() => {
-						window.location.href = "/front-end/index.html?1";
+						window.location.href = "/front-end/index.html";
 					})
 				},
 				error: function (xhr, status, error) {
