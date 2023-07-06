@@ -152,7 +152,7 @@
             <h3>註冊</h3>
             <form action="">
                 <div class="input-box">
-                    <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account"
+                    <i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account"
                         required /> <label for="">使用者名稱</label>
                 </div>
                 <div class="input-box">
@@ -161,7 +161,9 @@
                 </div>
                 <div class="input-box">
                     <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password"
-                        required /> <label for="">密碼</label>
+                        required />
+                    <label for="">密碼</label>
+                    <h6 id="pwdHint">密碼設定請超過八碼</h6>
                 </div>
                 <div class="check">
                     <label><input type="checkbox" />我同意所有條款</label>
@@ -228,23 +230,23 @@
     </div>
 
     <!-- ======================== 分頁 ============================================-->
-<!--    <div class="d-flex justify-content-center align-items-center my-3">-->
-<!--        <ul class="pagination">-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="#" aria-label="Previous">-->
-<!--                    <span aria-hidden="true">&laquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="#" aria-label="Next">-->
-<!--                    <span aria-hidden="true">&raquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <!--    <div class="d-flex justify-content-center align-items-center my-3">-->
+    <!--        <ul class="pagination">-->
+    <!--            <li class="page-item">-->
+    <!--                <a class="page-link" href="#" aria-label="Previous">-->
+    <!--                    <span aria-hidden="true">&laquo;</span>-->
+    <!--                </a>-->
+    <!--            </li>-->
+    <!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+    <!--            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+    <!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+    <!--            <li class="page-item">-->
+    <!--                <a class="page-link" href="#" aria-label="Next">-->
+    <!--                    <span aria-hidden="true">&raquo;</span>-->
+    <!--                </a>-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--    </div>-->
     <!-- ======================== //分頁 ============================================-->
     <!-- ======================== footer ============================================-->
 
@@ -388,12 +390,12 @@
 
             $.getJSON(`/groupOrder/getMember?memberId=${memberId}`, function (response) {
 
-                if(response.memberPicBase64 === "0"){
+                if (response.memberPicBase64 === "0") {
                     let childEl = `<img src="#" alt="目前沒有大頭照喔" class="rounded-circle" width="180"
                                             class="img-fluid rounded-start" id="memberPic">`;
                     $('#memberPicParent').append(childEl);
 
-                }else {
+                } else {
                     // 會員圖片
                     let base64Url = 'data:image/gif;base64,' + response.memberPicBase64;
 

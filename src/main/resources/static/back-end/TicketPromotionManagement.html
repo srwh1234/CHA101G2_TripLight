@@ -778,6 +778,7 @@
 
                     //編輯的按鈕
                     $(document).on('click', '.my-btn-edit', function () {
+                        $('#detailContainer').addClass('d-none');
                         const promotionId = $(this).closest('tr').find('td').first().text();
 
 

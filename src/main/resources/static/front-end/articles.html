@@ -176,7 +176,7 @@
       <h3>註冊</h3>
       <form action="">
         <div class="input-box">
-          <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account" required /> <label
+          <i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account" required /> <label
             for="">使用者名稱</label>
         </div>
         <div class="input-box">
@@ -186,6 +186,7 @@
         <div class="input-box">
           <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password" required />
           <label for="">密碼</label>
+          <h6 id="pwdHint">密碼設定請超過八碼</h6>
         </div>
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
@@ -505,6 +506,10 @@
         if (article.articleTypeId == selectedId) {
           if (article.articleStatus !== 1) {
             filteredArticles.push(article);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6f0c9da9fb3d633923dd99d1048cb7cca7087c55
           }
         }
       }
@@ -517,8 +522,8 @@
           var articleType = getArticleType(article.articleTypeId); // 獲取文章類型名稱
           console.log(111);
 
-        // 使用模板字符串創建文章的HTML元素
-        $('#articleContainer').append(`
+          // 使用模板字符串創建文章的HTML元素
+          $('#articleContainer').append(`
         <a href="/front-end/article_detail.html?id=${article.articleId}">
           <div class="col mb-3">
             <div class="card my-nav-link" position-relative">
@@ -545,45 +550,45 @@
         </a>
       `);
 
-        // 格式化日期的輔助函式，請根據實際需求自行實現
-        function formatDate(date) {
-          // 實現日期格式化邏輯，返回格式化後的日期字符串
-          let inputDate = article.articlePostTime;
-          let dateTime = new Date(inputDate);
-          let year = dateTime.getFullYear();
-          let month = String(dateTime.getMonth() + 1).padStart(2, "0");
-          let day = String(dateTime.getDate()).padStart(2, "0");
-          let formattedDate = `${year}-${month}-${day}`;
-          return formattedDate;
-        }
-
-        // 獲取文章類型名稱的輔助函式，請根據實際需求自行實現
-        function getArticleType(articleTypeId) {
-          // 根據articleTypeId返回相應的文章類型名稱
-          let articleType;
-          switch (article.articleTypeId) {
-            case 1:
-              articleType = '遊記';
-              break;
-            case 2:
-              articleType = '食記';
-              break;
-            case 3:
-              articleType = '住宿';
-              break;
-            case 4:
-              articleType = '評論';
-              break;
-            case 5:
-              articleType = '問題';
-              break;
-            default:
-              articleType = '未知類型';
-              break;
+          // 格式化日期的輔助函式，請根據實際需求自行實現
+          function formatDate(date) {
+            // 實現日期格式化邏輯，返回格式化後的日期字符串
+            let inputDate = article.articlePostTime;
+            let dateTime = new Date(inputDate);
+            let year = dateTime.getFullYear();
+            let month = String(dateTime.getMonth() + 1).padStart(2, "0");
+            let day = String(dateTime.getDate()).padStart(2, "0");
+            let formattedDate = `${year}-${month}-${day}`;
+            return formattedDate;
           }
-          return articleType;
-        }
-      }) 
+
+          // 獲取文章類型名稱的輔助函式，請根據實際需求自行實現
+          function getArticleType(articleTypeId) {
+            // 根據articleTypeId返回相應的文章類型名稱
+            let articleType;
+            switch (article.articleTypeId) {
+              case 1:
+                articleType = '遊記';
+                break;
+              case 2:
+                articleType = '食記';
+                break;
+              case 3:
+                articleType = '住宿';
+                break;
+              case 4:
+                articleType = '評論';
+                break;
+              case 5:
+                articleType = '問題';
+                break;
+              default:
+                articleType = '未知類型';
+                break;
+            }
+            return articleType;
+          }
+        })
       }
     };
 

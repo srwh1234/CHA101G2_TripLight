@@ -284,7 +284,7 @@
       <form action="">
         <div class="input-box">
           <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="email" required /> <label
-                 for="">信箱</label>
+            for="">信箱</label>
         </div>
         <div class="input-box">
           <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="password" required />
@@ -306,16 +306,17 @@
       <h3>註冊</h3>
       <form action="">
         <div class="input-box">
-          <i class="fas fa-user icon2"></i> <input type="input" name="account" id="register_account" required /> <label
-                 for="">使用者名稱</label>
+          <i class="fas fa-user icon2"></i> <input type="email" name="account" id="register_account" required /> <label
+            for="">使用者名稱</label>
         </div>
         <div class="input-box">
           <i class="fas fa-envelope icon2"></i> <input type="email" name="email" id="register_email" required /> <label
-                 for="">信箱</label>
+            for="">信箱</label>
         </div>
         <div class="input-box">
           <i class="fas fa-lock icon2"></i> <input type="password" name="password" id="register_password" required />
           <label for="">密碼</label>
+          <h6 id="pwdHint">密碼設定請超過八碼</h6>
         </div>
         <div class="check">
           <label><input type="checkbox" />我同意所有條款</label>
@@ -419,7 +420,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                   選擇類型
                 </button>
               </h2>
@@ -435,7 +436,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingTwo">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
+                  aria-expanded="true" aria-controls="collapseTwo">
                   選擇縣市
                 </button>
               </h2>
@@ -536,14 +537,14 @@
               </li>
               <li>
                 <a href="https://www.instagram.com/tibame_wiedu/"><img src="./images/instagram.svg"
-                       alt="instagram" /></a>
+                    alt="instagram" /></a>
               </li>
               <li>
                 <a href="https://twitter.com/"><img src="./images/twitter.svg" alt="twitter" /></a>
               </li>
               <li class="youtube">
                 <a href="https://www.youtube.com/channel/UClhecf7eOGHwbKW5e7l_pTA"><img src="./images/youtube.svg"
-                       alt="youtube" /></a>
+                    alt="youtube" /></a>
               </li>
             </ul>
           </div>
@@ -811,7 +812,7 @@
     function render_rnd() {
       $('#ticketsContainer').html('');
 
-      for (let ticket of resultRnd) {       
+      for (let ticket of resultRnd) {
         $('#ticketsContainer').append(`
           <div class="col mb-3">
             <div class="image-tour position-relative">
