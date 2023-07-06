@@ -47,14 +47,6 @@ public class TicketController {
 		return ticketService.getSearchItem(reqDto);
 	}
 
-	/**
-	 * 後台-設定促銷-未促銷的票券清單
-	 */
-	@GetMapping("promotetickets")
-	public List<Ticket> ticketsWithoutPromote() {
-		return ticketService.getItemsWithoutPromote();
-	}
-
 	// 定義請求物件
 	@Data
 	public static class PageReqDto {
